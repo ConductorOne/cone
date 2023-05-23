@@ -1,6 +1,7 @@
 package main
 
 import (
+	"errors"
 	"fmt"
 
 	"github.com/mitchellh/mapstructure"
@@ -25,7 +26,8 @@ func initConfig() error {
 
 	err := viper.ReadInConfig()
 	if err != nil {
-		if _, ok := err.(viper.ConfigFileNotFoundError); ok {
+		notFoundErr := &viper.ConfigFileNotFoundError{}
+		if ok := errors.As(err, notFoundErr); ok {
 			err = createDefaultConfig()
 			if err != nil {
 				return err

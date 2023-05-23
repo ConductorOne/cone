@@ -11,7 +11,8 @@ import (
 var version = "dev"
 
 func main() {
-	ctx := context.Background()
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
 
 	err := initConfig()
 	if err != nil {

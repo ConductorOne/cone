@@ -8,7 +8,7 @@ import (
 
 func dropCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "get",
+		Use:   "drop",
 		Short: "Remove a specific entitlement grant",
 		RunE:  runDrop,
 	}

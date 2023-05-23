@@ -1,8 +1,6 @@
 package main
 
 import (
-	"fmt"
-
 	"github.com/spf13/cobra"
 )
 
@@ -26,11 +24,10 @@ func runDrop(cmd *cobra.Command, args []string) error {
 	if err != nil {
 		return err
 	}
-	profile, err := getProfile(cmd, profileName)
+	_, err = getProfile(cmd, profileName)
 	if err != nil {
 		return err
 	}
-	fmt.Println(profile.ClientID, profile.ClientSecret)
 
 	// TODO: Implement this
 	return nil

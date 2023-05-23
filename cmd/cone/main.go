@@ -11,13 +11,17 @@ import (
 var version = "dev"
 
 func main() {
+	os.Exit(runCli())
+}
+
+func runCli() int {
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 
 	err := initConfig()
 	if err != nil {
 		fmt.Fprintln(os.Stderr, err.Error())
-		os.Exit(1)
+		return 1
 	}
 
 	cliCmd := &cobra.Command{
@@ -35,6 +39,8 @@ func main() {
 	err = cliCmd.ExecuteContext(ctx)
 	if err != nil {
 		fmt.Fprintln(os.Stderr, err.Error())
-		os.Exit(1)
+		return 1
 	}
+
+	return 0
 }

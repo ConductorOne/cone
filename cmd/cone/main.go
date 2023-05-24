@@ -6,6 +6,7 @@ import (
 	"os"
 
 	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 )
 
 var version = "dev"
@@ -32,9 +33,10 @@ func runCli() int {
 
 	cliCmd.PersistentFlags().StringP("profile", "p", "default", "The conig profile to use.")
 	cliCmd.PersistentFlags().BoolP("non-interactive", "i", false, "Disable prompts.")
-
+	viper.GetString("profile")
 	cliCmd.AddCommand(getCmd())
 	cliCmd.AddCommand(dropCmd())
+	cliCmd.AddCommand(whoAmICmd())
 
 	err = cliCmd.ExecuteContext(ctx)
 	if err != nil {

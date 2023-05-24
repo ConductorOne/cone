@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	"go.uber.org/zap"
+	"golang.org/x/oauth2"
 )
 
 type tlsClientConfigOption struct {
@@ -37,6 +38,21 @@ func WithLogger(log bool, logger *zap.Logger) Option {
 	return loggerOption{
 		log:    log,
 		logger: logger,
+	}
+}
+
+type tokenSourceOption struct {
+	tokenSource oauth2.TokenSource
+}
+
+func (t tokenSourceOption) Apply(c *Transport) {
+	c.tokenSource = t.tokenSource
+}
+
+// WithTokenSource sets a token source option to the transport layer.
+func WithTokenSource(tokenSource oauth2.TokenSource) Option {
+	return tokenSourceOption{
+		tokenSource: tokenSource,
 	}
 }
 

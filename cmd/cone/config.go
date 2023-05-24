@@ -14,8 +14,8 @@ type Config struct {
 }
 
 type ConfigProfile struct {
-	ClientID     string `yaml:"client_id"`
-	ClientSecret string `yaml:"client_secret"`
+	ClientID     string `yaml:"client-id"`
+	ClientSecret string `yaml:"client-secret"`
 }
 
 func initConfig() error {

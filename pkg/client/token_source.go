@@ -1,4 +1,4 @@
-package ugrpc
+package client
 
 import (
 	"bytes"

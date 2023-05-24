@@ -12,6 +12,7 @@ import (
 	"github.com/grpc-ecosystem/go-grpc-middleware/logging/zap/ctxzap"
 	"go.uber.org/zap"
 	"golang.org/x/net/http2"
+	"golang.org/x/oauth2"
 )
 
 // NewTransport creates a new Transport, applies the options, and then cycles the transport.
@@ -29,6 +30,7 @@ func NewTransport(ctx context.Context, options ...Option) (*Transport, error) {
 
 type Transport struct {
 	userAgent       string
+	tokenSource     oauth2.TokenSource
 	tlsClientConfig *tls.Config
 	roundTripper    http.RoundTripper
 	logger          *zap.Logger
@@ -82,6 +84,23 @@ func (uat *userAgentTripper) RoundTrip(req *http.Request) (*http.Response, error
 	return uat.next.RoundTrip(req)
 }
 
+type tokenSourceTripper struct {
+	next        http.RoundTripper
+	tokenSource oauth2.TokenSource
+}
+
+func (uts *tokenSourceTripper) RoundTrip(req *http.Request) (*http.Response, error) {
+	if uts.tokenSource == nil {
+		return uts.next.RoundTrip(req)
+	}
+	token, err := uts.tokenSource.Token()
+	if err != nil {
+		return nil, err
+	}
+	token.SetAuthHeader(req)
+	return uts.next.RoundTrip(req)
+}
+
 func (t *Transport) make(ctx context.Context) (http.RoundTripper, error) {
 	// based on http.DefaultTransport
 	baseTransport := &http.Transport{
@@ -105,6 +124,7 @@ func (t *Transport) make(ctx context.Context) (http.RoundTripper, error) {
 	var rv http.RoundTripper = baseTransport
 	t.userAgent = t.userAgent + " cone"
 	rv = &userAgentTripper{next: rv, userAgent: t.userAgent}
+	rv = &tokenSourceTripper{next: rv, tokenSource: t.tokenSource}
 	return rv, nil
 }
 

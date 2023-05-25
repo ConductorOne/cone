@@ -19,6 +19,7 @@ type client struct {
 
 type C1Client interface {
 	WhoAmI(ctx context.Context) (interface{}, error)
+	GetUser(ctx context.Context, userID string) (interface{}, error)
 }
 
 func (c *client) WhoAmI(ctx context.Context) (interface{}, error) {
@@ -27,6 +28,7 @@ func (c *client) WhoAmI(ctx context.Context) (interface{}, error) {
 		Host:   c.apiHost(),
 		Path:   "/api/v1/auth/introspect",
 	}
+
 	req, err := http.NewRequestWithContext(ctx, http.MethodGet, u.String(), nil)
 	if err != nil {
 		return nil, err
@@ -40,10 +42,32 @@ func (c *client) WhoAmI(ctx context.Context) (interface{}, error) {
 	if err != nil {
 		return nil, err
 	}
-	// out, err := json.MarshalIndent(body, "", "  ")
-	// if err != nil {
-	// 	return nil, err
-	// }
+
+	fmt.Println(string(body))
+	return nil, nil
+}
+
+func (c *client) GetUser(ctx context.Context, userID string) (interface{}, error) {
+	u := url.URL{
+		Scheme: "https",
+		Host:   c.apiHost(),
+		Path:   fmt.Sprintf("/api/v1/user/get/%s", userID),
+	}
+
+	req, err := http.NewRequestWithContext(ctx, http.MethodGet, u.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := c.httpClient.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+	body, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return nil, err
+	}
+
 	fmt.Println(string(body))
 	return nil, nil
 }

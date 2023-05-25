@@ -3,10 +3,14 @@ package main
 import (
 	"errors"
 	"fmt"
+	"strings"
 
-	"github.com/mitchellh/mapstructure"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
+)
+
+const (
+	envPrefix = "cone"
 )
 
 type Config struct {
@@ -18,9 +22,14 @@ type ConfigProfile struct {
 	ClientSecret string `yaml:"client-secret"`
 }
 
-func initConfig() error {
+func initConfig(cmd *cobra.Command) error {
 	viper.SetConfigName("config")
 	viper.SetConfigType("yaml")
+
+	configPath := viper.GetString("config")
+	if configPath != "" {
+		viper.AddConfigPath(configPath)
+	}
 	viper.AddConfigPath("$HOME/.cone")
 	viper.AddConfigPath(".")
 
@@ -36,25 +45,16 @@ func initConfig() error {
 		}
 		return fmt.Errorf("fatal error config file: %w", err)
 	}
+
+	viper.SetEnvPrefix(envPrefix)
+	viper.SetEnvKeyReplacer(strings.NewReplacer("-", "_"))
+	viper.AutomaticEnv()
+
+	if err := viper.BindPFlag("profile", cmd.PersistentFlags().Lookup("profile")); err != nil {
+		return err
+	}
+
 	return nil
-}
-
-func getProfile(cmd *cobra.Command, key string) (*ConfigProfile, error) {
-	var config Config
-
-	if err := viper.Unmarshal(&config, viper.DecoderConfigOption(func(decoderConfig *mapstructure.DecoderConfig) {
-		decoderConfig.TagName = "yaml"
-	})); err != nil {
-		return nil, fmt.Errorf("failed to unmarshal config: %w", err)
-	}
-	if config.Profiles == nil {
-		return nil, fmt.Errorf("no profiles found in config file")
-	}
-	configProfile, ok := config.Profiles[key]
-	if !ok {
-		return nil, fmt.Errorf("'%s' profile is not in the config file", key)
-	}
-	return &configProfile, nil
 }
 
 func createDefaultConfig() error {
@@ -73,4 +73,25 @@ func createDefaultConfig() error {
 		return fmt.Errorf("failed creating config file: %w", err)
 	}
 	return nil
+}
+
+func getSubViperForProfile(cmd *cobra.Command) (*viper.Viper, error) {
+	profile := viper.GetString("profile")
+	if profile == "" {
+		profile = "default"
+	}
+
+	v := viper.Sub(fmt.Sprintf("profiles.%s", profile))
+	v.SetEnvPrefix(envPrefix)
+	v.SetEnvKeyReplacer(strings.NewReplacer("-", "_"))
+	v.AutomaticEnv()
+
+	if err := v.BindPFlags(cmd.PersistentFlags()); err != nil {
+		return nil, err
+	}
+	if err := v.BindPFlags(cmd.Flags()); err != nil {
+		return nil, err
+	}
+
+	return v, nil
 }

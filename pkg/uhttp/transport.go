@@ -122,7 +122,7 @@ func (t *Transport) make(ctx context.Context) (http.RoundTripper, error) {
 		return nil, err
 	}
 	var rv http.RoundTripper = baseTransport
-	t.userAgent = t.userAgent + " cone"
+	t.userAgent = fmt.Sprintf("%s cone", t.userAgent)
 	rv = &userAgentTripper{next: rv, userAgent: t.userAgent}
 	rv = &tokenSourceTripper{next: rv, tokenSource: t.tokenSource}
 	return rv, nil

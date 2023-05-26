@@ -20,15 +20,6 @@ func getCmd() *cobra.Command {
 }
 
 func runGet(cmd *cobra.Command, args []string) error {
-	profileName, err := cmd.Flags().GetString("profile")
-	if err != nil {
-		return err
-	}
-	_, err = getProfile(cmd, profileName)
-	if err != nil {
-		return err
-	}
-
 	// TODO: Implement this
 	return nil
 }

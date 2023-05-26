@@ -72,7 +72,7 @@ func (c *client) GetUser(ctx context.Context, userID string) (interface{}, error
 	return nil, nil
 }
 
-func NewC1Client(ctx context.Context, clientId string, clientSecret string) (C1Client, error) {
+func New(ctx context.Context, clientId string, clientSecret string) (C1Client, error) {
 	tokenSrc, clientName, tokenHost, err := NewC1TokenSource(ctx, clientId, clientSecret)
 	if err != nil {
 		return nil, err
@@ -91,7 +91,7 @@ func NewC1Client(ctx context.Context, clientId string, clientSecret string) (C1C
 }
 
 func (c *client) apiHost() string {
-	if envHost, ok := os.LookupEnv("CONE_C1_API_HOST"); ok {
+	if envHost, ok := os.LookupEnv("CONE_API_ENDPOINT"); ok {
 		return envHost
 	}
 	return c.tokenHost

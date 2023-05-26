@@ -6,7 +6,6 @@ import (
 
 	"github.com/conductorone/cone/pkg/client"
 	"github.com/spf13/cobra"
-	"github.com/spf13/viper"
 )
 
 func getUserCmd() *cobra.Command {
@@ -36,11 +35,11 @@ func getUserRun(cmd *cobra.Command, args []string) error {
 
 	userID := args[0]
 
-	c, err := client.NewC1Client(ctx, clientId, clientSecret)
+	c, err := client.New(ctx, clientId, clientSecret)
 	if err != nil {
 		return err
 	}
-	viper.AutomaticEnv()
+
 	_, err = c.GetUser(ctx, userID)
 	if err != nil {
 		return err

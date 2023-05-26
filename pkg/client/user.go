@@ -49,7 +49,7 @@ type User struct {
 	DirectoryIds            []string `json:"directory_ids"`
 }
 
-func (c *client) GetUser(ctx context.Context, userID string) (interface{}, error) {
+func (c *client) GetUser(ctx context.Context, userID string) (*UserResponse, error) {
 	u := url.URL{
 		Scheme: "https",
 		Host:   c.apiHost(),

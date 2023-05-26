@@ -15,8 +15,8 @@ type client struct {
 }
 
 type C1Client interface {
-	WhoAmI(ctx context.Context) (interface{}, error)
-	GetUser(ctx context.Context, userID string) (interface{}, error)
+	WhoAmI(ctx context.Context) (*whoamiResponse, error)
+	GetUser(ctx context.Context, userID string) (*UserResponse, error)
 }
 
 func New(ctx context.Context, clientId string, clientSecret string) (C1Client, error) {

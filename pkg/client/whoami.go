@@ -18,7 +18,7 @@ type whoamiResponse struct {
 	Features      []string `json:"features"`
 }
 
-func (c *client) WhoAmI(ctx context.Context) (interface{}, error) {
+func (c *client) WhoAmI(ctx context.Context) (*whoamiResponse, error) {
 	u := url.URL{
 		Scheme: "https",
 		Host:   c.apiHost(),

@@ -12,7 +12,10 @@ func PrintOutput(data interface{}, pretty bool) error {
 		if err != nil {
 			return err
 		}
-		fmt.Fprint(os.Stdout, string(prettyJSON))
+		_, err = fmt.Fprint(os.Stdout, string(prettyJSON))
+		if err != nil {
+			return err
+		}
 		return nil
 	}
 
@@ -20,7 +23,10 @@ func PrintOutput(data interface{}, pretty bool) error {
 	if err != nil {
 		return err
 	}
-	fmt.Fprint(os.Stdout, string(plainJSON))
+	_, err = fmt.Fprint(os.Stdout, string(plainJSON))
+	if err != nil {
+		return err
+	}
 
 	return nil
 }

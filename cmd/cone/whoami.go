@@ -40,7 +40,10 @@ func whoAmIRun(cmd *cobra.Command, args []string) error {
 	}
 
 	pretty := v.GetBool("pretty-output")
-	output.PrintOutput(whoamiResp, pretty)
+	err = output.PrintOutput(whoamiResp, pretty)
+	if err != nil {
+		return err
+	}
 
 	return nil
 }

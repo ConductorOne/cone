@@ -47,7 +47,10 @@ func getUserRun(cmd *cobra.Command, args []string) error {
 	}
 
 	pretty := v.GetBool("pretty-output")
-	output.PrintOutput(userResp, pretty)
+	err = output.PrintOutput(userResp, pretty)
+	if err != nil {
+		return err
+	}
 
 	return nil
 }

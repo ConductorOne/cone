@@ -27,8 +27,10 @@ func getUserRun(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
-	clientId := v.GetString("client_id")
-	clientSecret := v.GetString("client_secret")
+	clientId, clientSecret, err := getCredentials(v)
+	if err != nil {
+		return err
+	}
 
 	if len(args) != 1 {
 		return fmt.Errorf("expected 1 argument, got %d", len(args))

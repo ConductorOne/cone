@@ -10,7 +10,8 @@ import (
 )
 
 const (
-	envPrefix = "cone"
+	envPrefix         = "cone"
+	defaultConfigPath = "$HOME/.conductorone"
 )
 
 type Config struct {
@@ -25,53 +26,34 @@ type ConfigProfile struct {
 func initConfig(cmd *cobra.Command) error {
 	viper.SetConfigName("config")
 	viper.SetConfigType("yaml")
+	viper.SetEnvPrefix(envPrefix)
+	viper.SetEnvKeyReplacer(strings.NewReplacer("-", "_"))
+	viper.AutomaticEnv()
 
 	configPath := viper.GetString("config-path")
 	if configPath != "" {
 		viper.AddConfigPath(configPath)
+	} else {
+		viper.AddConfigPath(defaultConfigPath)
 	}
-	viper.AddConfigPath("$HOME/.cone")
-	viper.AddConfigPath(".")
 
 	err := viper.ReadInConfig()
 	if err != nil {
 		notFoundErr := &viper.ConfigFileNotFoundError{}
+		// Explicitly ignore the not found error case
 		if ok := errors.As(err, notFoundErr); ok {
-			err = createDefaultConfig()
-			if err != nil {
-				return err
-			}
 			return nil
 		}
 		return fmt.Errorf("fatal error config file: %w", err)
 	}
 
-	viper.SetEnvPrefix(envPrefix)
-	viper.SetEnvKeyReplacer(strings.NewReplacer("-", "_"))
-	viper.AutomaticEnv()
-
-	if err := viper.BindPFlag("profile", cmd.PersistentFlags().Lookup("profile")); err != nil {
+	if err := viper.BindPFlags(cmd.PersistentFlags()); err != nil {
+		return err
+	}
+	if err := viper.BindPFlags(cmd.Flags()); err != nil {
 		return err
 	}
 
-	return nil
-}
-
-func createDefaultConfig() error {
-	defaultConfig := Config{
-		Profiles: map[string]ConfigProfile{
-			"default": {
-				ClientID:     "<client-id>",
-				ClientSecret: "<client-secret>",
-			},
-		},
-	}
-
-	viper.SetDefault("profiles", defaultConfig.Profiles)
-	err := viper.SafeWriteConfigAs("config")
-	if err != nil {
-		return fmt.Errorf("failed creating config file: %w", err)
-	}
 	return nil
 }
 
@@ -82,6 +64,10 @@ func getSubViperForProfile(cmd *cobra.Command) (*viper.Viper, error) {
 	}
 
 	v := viper.Sub(fmt.Sprintf("profiles.%s", profile))
+	if v == nil {
+		// No profile found, so create a new viper instance
+		v = viper.New()
+	}
 	v.SetEnvPrefix(envPrefix)
 	v.SetEnvKeyReplacer(strings.NewReplacer("-", "_"))
 	v.AutomaticEnv()
@@ -94,4 +80,15 @@ func getSubViperForProfile(cmd *cobra.Command) (*viper.Viper, error) {
 	}
 
 	return v, nil
+}
+
+// Validate credentials are set, and return them. (client-id, client-secret, error)
+func getCredentials(v *viper.Viper) (string, string, error) {
+	clientId := v.GetString("client-id")
+	clientSecret := v.GetString("client-secret")
+
+	if clientId == "" || clientSecret == "" {
+		return "", "", fmt.Errorf("client-id and client-secret must be set")
+	}
+	return clientId, clientSecret, nil
 }

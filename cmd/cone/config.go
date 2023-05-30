@@ -82,7 +82,7 @@ func getSubViperForProfile(cmd *cobra.Command) (*viper.Viper, error) {
 	return v, nil
 }
 
-// Validate credentials are set, and return them. (client-id, client-secret, error)
+// Validate credentials are set, and return them (client-id, client-secret, error).
 func getCredentials(v *viper.Viper) (string, string, error) {
 	clientId := v.GetString("client-id")
 	clientSecret := v.GetString("client-secret")

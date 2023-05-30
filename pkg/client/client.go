@@ -3,6 +3,7 @@ package client
 import (
 	"context"
 	"net/http"
+	"net/url"
 	"os"
 
 	"github.com/conductorone/cone/internal/c1api"
@@ -39,14 +40,19 @@ func New(ctx context.Context, clientId string, clientSecret string) (C1Client, e
 	apiCfg := c1api.NewConfiguration()
 	apiCfg.HTTPClient = uclient
 
+	var apiHostname string
 	// If the API host is set in the environment, use that instead of the default
 	// HACK(jirwin): Instead of using the generated client's server address, use the hostname from the token.
 	if apiHost, ok := os.LookupEnv("CONE_API_ENDPOINT"); ok {
-		apiCfg.Servers[0].URL = apiHost
+		apiHostname = apiHost
 	} else {
-		apiCfg.Servers[0].URL = c.tokenHost
+		apiHostname = c.tokenHost
 	}
-
+	apiURL := url.URL{
+		Scheme: "https",
+		Host:   apiHostname,
+	}
+	apiCfg.Servers[0].URL = apiURL.String()
 	c.apiClient = c1api.NewAPIClient(apiCfg)
 
 	return c, nil

@@ -34,7 +34,7 @@ build-c1api:
 	podman run --rm -v \
 		"${PWD}/build/c1api:/output" \
 		docker.io/openapitools/openapi-generator-cli generate \
-		-i https://insulator.conductor.one/api/v1/openapi.json \
+		-i https://insulator.conductor.one/api/v1/openapi.yaml \
 		-g go \
 	    -o /output \
 		--additional-properties=enumClassPrefix=true,hideGenerationTimestamp=true,structPrefix=true,disallowAdditionalPropertiesIfNotPresent=false,packageName=c1api,isGoSubmodule=true

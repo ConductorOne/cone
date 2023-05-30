@@ -26,8 +26,10 @@ func whoAmIRun(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
-	clientId := v.GetString("client_id")
-	clientSecret := v.GetString("client_secret")
+	clientId, clientSecret, err := getCredentials(v)
+	if err != nil {
+		return err
+	}
 
 	c, err := client.New(ctx, clientId, clientSecret)
 	if err != nil {

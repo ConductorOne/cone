@@ -1,0 +1,257 @@
+openapi: 3.1.0
+info:
+  description: The ConductorOne API is a HTTP API for managing ConductorOne resources.
+  title: ConductorOne API
+  version: 0.1.0-alpha
+servers:
+- description: The ConductorOne API server for the current tenant.
+  url: "https://{tenantDomain}.jirwin.dev.ductone.com:2443"
+  variables:
+    tenantDomain:
+      default: invalid-example
+      description: The domain of the tenant to use for this request.
+paths:
+  /api/v1/auth/introspect:
+    get:
+      description: Invokes the c1.api.auth.v1.Auth.Introspect method.
+      operationId: c1.api.auth.v1.Auth.Introspect
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/c1.api.auth.v1.IntrospectResponse'
+          description: Succesful response
+  /api/v1/user/get/{id}:
+    get:
+      description: Invokes the c1.api.user.v1.UserService.Get method.
+      operationId: c1.api.user.v1.UserService.Get
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema: {}
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/c1.api.user.v1.UserServiceGetResponse'
+          description: Succesful response
+components:
+  schemas:
+    c1.api.auth.v1.IntrospectResponse:
+      description: The IntrospectResponse message.
+      example:
+        accessTokenId: ""
+        features: ""
+        permissions: ""
+        roles: ""
+        tenantId: ""
+        userId: ""
+        principleId: ""
+      properties:
+        accessTokenId: {}
+        features:
+          description: The features field.
+          items: {}
+          nullable: true
+        permissions:
+          description: The permissions field.
+          items: {}
+          nullable: true
+        principleId: {}
+        roles:
+          description: The roles field.
+          items: {}
+          nullable: true
+        tenantId: {}
+        userId: {}
+    c1.api.user.v1.User:
+      description: The User message.
+      example:
+        employmentStatusSources: ""
+        directoryStatusSources: ""
+        departmentSources: ""
+        employmentType: ""
+        delegatedUserId: ""
+        displayName: ""
+        jobTitle: ""
+        jobTitleSources: ""
+        employmentStatus: ""
+        createdAt: ""
+        deletedAt: ""
+        managerIds: ""
+        managerSources: ""
+        roleIds: ""
+        directoryStatus: ""
+        employmentTypeSources: ""
+        id: ""
+        department: ""
+        directoryIds: ""
+        email: ""
+        status: ""
+        updatedAt: ""
+      properties:
+        createdAt:
+          format: date-time
+        delegatedUserId: {}
+        deletedAt:
+          format: date-time
+        department: {}
+        departmentSources:
+          description: The departmentSources field.
+          items:
+            $ref: '#/components/schemas/c1.api.user.v1.UserAttributeMappingSource'
+          nullable: true
+        directoryIds:
+          description: The directoryIds field.
+          items: {}
+          nullable: true
+        directoryStatus:
+          description: The directoryStatus field.
+          enum:
+          - UNKNOWN
+          - ENABLED
+          - DISABLED
+          - DELETED
+        directoryStatusSources:
+          description: The directoryStatusSources field.
+          items:
+            $ref: '#/components/schemas/c1.api.user.v1.UserAttributeMappingSource'
+          nullable: true
+        displayName: {}
+        email: {}
+        employmentStatus: {}
+        employmentStatusSources:
+          description: The employmentStatusSources field.
+          items:
+            $ref: '#/components/schemas/c1.api.user.v1.UserAttributeMappingSource'
+          nullable: true
+        employmentType: {}
+        employmentTypeSources:
+          description: The employmentTypeSources field.
+          items:
+            $ref: '#/components/schemas/c1.api.user.v1.UserAttributeMappingSource'
+          nullable: true
+        id: {}
+        jobTitle: {}
+        jobTitleSources:
+          description: The jobTitleSources field.
+          items:
+            $ref: '#/components/schemas/c1.api.user.v1.UserAttributeMappingSource'
+          nullable: true
+        managerIds:
+          description: The managerIds field.
+          items: {}
+          nullable: true
+        managerSources:
+          description: The managerSources field.
+          items:
+            $ref: '#/components/schemas/c1.api.user.v1.UserAttributeMappingSource'
+          nullable: true
+        roleIds:
+          description: The roleIds field.
+          items: {}
+          nullable: true
+        status:
+          description: The status field.
+          enum:
+          - UNKNOWN
+          - ENABLED
+          - DISABLED
+          - DELETED
+        updatedAt:
+          format: date-time
+    c1.api.user.v1.UserAttributeMappingSource:
+      description: The UserAttributeMappingSource message.
+      properties:
+        appId: {}
+        appUserId: {}
+        appUserProfileAttributeKey: {}
+        userAttributeMappingId: {}
+        value: {}
+    c1.api.user.v1.UserServiceGetResponse:
+      description: The UserServiceGetResponse message.
+      example:
+        expanded: ""
+        userView:
+          managersPath: ""
+          rolesPath: ""
+          delegatedUserPath: ""
+          directoriesPath: ""
+          user:
+            employmentStatusSources: ""
+            directoryStatusSources: ""
+            departmentSources: ""
+            employmentType: ""
+            delegatedUserId: ""
+            displayName: ""
+            jobTitle: ""
+            jobTitleSources: ""
+            employmentStatus: ""
+            createdAt: ""
+            deletedAt: ""
+            managerIds: ""
+            managerSources: ""
+            roleIds: ""
+            directoryStatus: ""
+            employmentTypeSources: ""
+            id: ""
+            department: ""
+            directoryIds: ""
+            email: ""
+            status: ""
+            updatedAt: ""
+      properties:
+        expanded:
+          description: The expanded field.
+          items:
+            additionalProperties: {}
+            description: Contains an arbitrary serialized message along with a @type
+              that describes the type of the serialized message.
+            properties:
+              '@type':
+                description: The type of the serialized message.
+          nullable: true
+        userView:
+          $ref: '#/components/schemas/c1.api.user.v1.UserView'
+    c1.api.user.v1.UserView:
+      description: The UserView message.
+      example:
+        managersPath: ""
+        rolesPath: ""
+        delegatedUserPath: ""
+        directoriesPath: ""
+        user:
+          employmentStatusSources: ""
+          directoryStatusSources: ""
+          departmentSources: ""
+          employmentType: ""
+          delegatedUserId: ""
+          displayName: ""
+          jobTitle: ""
+          jobTitleSources: ""
+          employmentStatus: ""
+          createdAt: ""
+          deletedAt: ""
+          managerIds: ""
+          managerSources: ""
+          roleIds: ""
+          directoryStatus: ""
+          employmentTypeSources: ""
+          id: ""
+          department: ""
+          directoryIds: ""
+          email: ""
+          status: ""
+          updatedAt: ""
+      properties:
+        delegatedUserPath: {}
+        directoriesPath: {}
+        managersPath: {}
+        rolesPath: {}
+        user:
+          $ref: '#/components/schemas/c1.api.user.v1.User'

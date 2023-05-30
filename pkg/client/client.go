@@ -18,8 +18,8 @@ type client struct {
 }
 
 type C1Client interface {
-	WhoAmI(ctx context.Context) (*whoamiResponse, error)
-	GetUser(ctx context.Context, userID string) (*UserResponse, error)
+	WhoAmI(ctx context.Context) (*c1api.C1ApiAuthV1IntrospectResponse, error)
+	GetUser(ctx context.Context, userID string) (*c1api.C1ApiUserV1UserServiceGetResponse, error)
 }
 
 func New(ctx context.Context, clientId string, clientSecret string) (C1Client, error) {
@@ -56,13 +56,6 @@ func New(ctx context.Context, clientId string, clientSecret string) (C1Client, e
 	c.apiClient = c1api.NewAPIClient(apiCfg)
 
 	return c, nil
-}
-
-func (c *client) apiHost() string {
-	if envHost, ok := os.LookupEnv("CONE_API_ENDPOINT"); ok {
-		return envHost
-	}
-	return c.tokenHost
 }
 
 // The c1api client uses the context to set various configuration options. Do that here.

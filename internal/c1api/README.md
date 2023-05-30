@@ -73,7 +73,7 @@ ctx = context.WithValue(context.Background(), c1api.ContextOperationServerVariab
 
 ## Documentation for API Endpoints
 
-All URIs are relative to *https://invalid-example.jirwin.dev.ductone.com:2443*
+All URIs are relative to *https://invalid-example.conductor.one*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------

@@ -31,11 +31,10 @@ lint:
 build-c1api:
 	rm -rf build/c1api
 	mkdir -p build/c1api
-	# TODO: Update this to the correct URL once the API is deployed
 	podman run --rm -v \
 		"${PWD}/build/c1api:/output" \
 		docker.io/openapitools/openapi-generator-cli generate \
-		-i https://c1dev.jirwin.dev.ductone.com:2443/api/v1/openapi.yaml \
+		-i https://insulator.conductor.one/api/v1/openapi.yaml \
 		-g go \
 	    -o /output \
 		--additional-properties=enumClassPrefix=true,hideGenerationTimestamp=true,structPrefix=true,disallowAdditionalPropertiesIfNotPresent=false,packageName=c1api,isGoSubmodule=true

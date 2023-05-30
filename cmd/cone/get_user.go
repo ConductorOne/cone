@@ -5,6 +5,7 @@ import (
 	"fmt"
 
 	"github.com/conductorone/cone/pkg/client"
+	"github.com/conductorone/cone/pkg/output"
 	"github.com/spf13/cobra"
 )
 
@@ -40,7 +41,13 @@ func getUserRun(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
-	_, err = c.GetUser(ctx, userID)
+	userResp, err := c.GetUser(ctx, userID)
+	if err != nil {
+		return err
+	}
+
+	pretty := v.GetBool("pretty-output")
+	err = output.PrintOutput(userResp, pretty)
 	if err != nil {
 		return err
 	}

@@ -4,6 +4,7 @@ import (
 	"context"
 
 	"github.com/conductorone/cone/pkg/client"
+	"github.com/conductorone/cone/pkg/output"
 	"github.com/spf13/cobra"
 )
 
@@ -33,7 +34,13 @@ func whoAmIRun(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
-	_, err = c.WhoAmI(ctx)
+	whoamiResp, err := c.WhoAmI(ctx)
+	if err != nil {
+		return err
+	}
+
+	pretty := v.GetBool("pretty-output")
+	err = output.PrintOutput(whoamiResp, pretty)
 	if err != nil {
 		return err
 	}

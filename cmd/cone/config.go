@@ -26,7 +26,7 @@ func initConfig(cmd *cobra.Command) error {
 	viper.SetConfigName("config")
 	viper.SetConfigType("yaml")
 
-	configPath := viper.GetString("config")
+	configPath := viper.GetString("config-path")
 	if configPath != "" {
 		viper.AddConfigPath(configPath)
 	}

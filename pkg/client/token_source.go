@@ -149,7 +149,7 @@ func (c *c1TokenSource) Token() (*oauth2.Token, error) {
 	}
 
 	tokenHost := c.tokenHost
-	if envHost, ok := os.LookupEnv("CONE_C1_API_HOST"); ok {
+	if envHost, ok := os.LookupEnv("CONE_API_ENDPOINT"); ok {
 		tokenHost = envHost
 	}
 	tokenUrl := url.URL{

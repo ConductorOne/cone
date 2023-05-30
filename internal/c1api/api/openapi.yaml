@@ -5,7 +5,7 @@ info:
   version: 0.1.0-alpha
 servers:
 - description: The ConductorOne API server for the current tenant.
-  url: "https://{tenantDomain}.jirwin.dev.ductone.com:2443"
+  url: "https://{tenantDomain}.conductor.one"
   variables:
     tenantDomain:
       default: invalid-example

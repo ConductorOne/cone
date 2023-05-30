@@ -8,7 +8,7 @@ require (
 	go.uber.org/zap v1.21.0
 	golang.org/x/net v0.10.0
 	google.golang.org/grpc v1.52.0
-	google.golang.org/protobuf v1.28.1
+	google.golang.org/protobuf v1.28.1 // indirect
 )
 
 require (

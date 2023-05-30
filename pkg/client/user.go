@@ -7,10 +7,11 @@ import (
 )
 
 func (c *client) GetUser(ctx context.Context, userID string) (*c1api.C1ApiUserV1UserServiceGetResponse, error) {
-	resp, _, err := c.apiClient.DefaultAPI.C1ApiUserV1UserServiceGet(ctx, userID).Execute()
+	userResp, resp, err := c.apiClient.DefaultAPI.C1ApiUserV1UserServiceGet(ctx, userID).Execute()
 	if err != nil {
 		return nil, err
 	}
+	defer resp.Body.Close()
 
-	return resp, nil
+	return userResp, nil
 }

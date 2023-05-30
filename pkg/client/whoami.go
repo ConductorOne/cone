@@ -7,10 +7,11 @@ import (
 )
 
 func (c *client) WhoAmI(ctx context.Context) (*c1api.C1ApiAuthV1IntrospectResponse, error) {
-	resp, _, err := c.apiClient.DefaultAPI.C1ApiAuthV1AuthIntrospect(ctx).Execute()
+	introspectResp, resp, err := c.apiClient.DefaultAPI.C1ApiAuthV1AuthIntrospect(ctx).Execute()
 	if err != nil {
 		return nil, err
 	}
+	defer resp.Body.Close()
 
-	return resp, nil
+	return introspectResp, nil
 }

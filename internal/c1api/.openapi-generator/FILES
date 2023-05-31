@@ -6,6 +6,7 @@ api/openapi.yaml
 api_default.go
 client.go
 configuration.go
+docs/C1ApiAppV1App.md
 docs/C1ApiAppV1AppEntitlement.md
 docs/C1ApiAppV1AppEntitlementExpandMask.md
 docs/C1ApiAppV1AppEntitlementView.md
@@ -27,9 +28,11 @@ docs/C1ApiUserV1UserAttributeMappingSource.md
 docs/C1ApiUserV1UserServiceGetResponse.md
 docs/C1ApiUserV1UserView.md
 docs/DefaultAPI.md
+docs/GoogleProtobufFieldMask.md
 git_push.sh
 go.mod
 go.sum
+model_c1_api_app_v1_app.go
 model_c1_api_app_v1_app_entitlement.go
 model_c1_api_app_v1_app_entitlement_expand_mask.go
 model_c1_api_app_v1_app_entitlement_view.go
@@ -50,6 +53,7 @@ model_c1_api_user_v1_user.go
 model_c1_api_user_v1_user_attribute_mapping_source.go
 model_c1_api_user_v1_user_service_get_response.go
 model_c1_api_user_v1_user_view.go
+model_google_protobuf_field_mask.go
 response.go
 test/api_default_test.go
 utils.go

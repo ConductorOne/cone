@@ -6,6 +6,7 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**C1ApiAppV1AppResourceServiceGet**](DefaultAPI.md#C1ApiAppV1AppResourceServiceGet) | **Get** /api/v1/app_resource/{app_id}/{app_resource_type_id}/{id} | 
 [**C1ApiAppV1AppResourceTypeServiceGet**](DefaultAPI.md#C1ApiAppV1AppResourceTypeServiceGet) | **Get** /api/v1/app_resource_type/{app_id}/{id} | 
+[**C1ApiAppV1AppsGet**](DefaultAPI.md#C1ApiAppV1AppsGet) | **Get** /api/v1/app/{id} | 
 [**C1ApiAuthV1AuthIntrospect**](DefaultAPI.md#C1ApiAuthV1AuthIntrospect) | **Get** /api/v1/auth/introspect | 
 [**C1ApiRequestcatalogV1RequestCatalogSearchServiceSearchEntitlements**](DefaultAPI.md#C1ApiRequestcatalogV1RequestCatalogSearchServiceSearchEntitlements) | **Post** /api/v1/entitlement/search | 
 [**C1ApiUserV1UserServiceGet**](DefaultAPI.md#C1ApiUserV1UserServiceGet) | **Get** /api/v1/user/get/{id} | 
@@ -146,6 +147,76 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**C1ApiAppV1AppResourceTypeServiceGetResponse**](C1ApiAppV1AppResourceTypeServiceGetResponse.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## C1ApiAppV1AppsGet
+
+> C1ApiAppV1App C1ApiAppV1AppsGet(ctx, id).Execute()
+
+
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "github.com/conductorone/cone/internal/c1api"
+)
+
+func main() {
+    id := "id_example" // string | 
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    resp, r, err := apiClient.DefaultAPI.C1ApiAppV1AppsGet(context.Background(), id).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.C1ApiAppV1AppsGet``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+    // response from `C1ApiAppV1AppsGet`: C1ApiAppV1App
+    fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.C1ApiAppV1AppsGet`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**id** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiC1ApiAppV1AppsGetRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**C1ApiAppV1App**](C1ApiAppV1App.md)
 
 ### Authorization
 

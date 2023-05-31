@@ -53,6 +53,20 @@ func Test_c1api_DefaultAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test DefaultAPIService C1ApiAppV1AppsGet", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var id string
+
+		resp, httpRes, err := apiClient.DefaultAPI.C1ApiAppV1AppsGet(context.Background(), id).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test DefaultAPIService C1ApiAuthV1AuthIntrospect", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test

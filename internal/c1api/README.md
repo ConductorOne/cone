@@ -79,6 +79,7 @@ Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
 *DefaultAPI* | [**C1ApiAppV1AppResourceServiceGet**](docs/DefaultAPI.md#c1apiappv1appresourceserviceget) | **Get** /api/v1/app_resource/{app_id}/{app_resource_type_id}/{id} | 
 *DefaultAPI* | [**C1ApiAppV1AppResourceTypeServiceGet**](docs/DefaultAPI.md#c1apiappv1appresourcetypeserviceget) | **Get** /api/v1/app_resource_type/{app_id}/{id} | 
+*DefaultAPI* | [**C1ApiAppV1AppsGet**](docs/DefaultAPI.md#c1apiappv1appsget) | **Get** /api/v1/app/{id} | 
 *DefaultAPI* | [**C1ApiAuthV1AuthIntrospect**](docs/DefaultAPI.md#c1apiauthv1authintrospect) | **Get** /api/v1/auth/introspect | 
 *DefaultAPI* | [**C1ApiRequestcatalogV1RequestCatalogSearchServiceSearchEntitlements**](docs/DefaultAPI.md#c1apirequestcatalogv1requestcatalogsearchservicesearchentitlements) | **Post** /api/v1/entitlement/search | 
 *DefaultAPI* | [**C1ApiUserV1UserServiceGet**](docs/DefaultAPI.md#c1apiuserv1userserviceget) | **Get** /api/v1/user/get/{id} | 
@@ -86,6 +87,7 @@ Class | Method | HTTP request | Description
 
 ## Documentation For Models
 
+ - [C1ApiAppV1App](docs/C1ApiAppV1App.md)
  - [C1ApiAppV1AppEntitlement](docs/C1ApiAppV1AppEntitlement.md)
  - [C1ApiAppV1AppEntitlementExpandMask](docs/C1ApiAppV1AppEntitlementExpandMask.md)
  - [C1ApiAppV1AppEntitlementView](docs/C1ApiAppV1AppEntitlementView.md)
@@ -106,6 +108,7 @@ Class | Method | HTTP request | Description
  - [C1ApiUserV1UserAttributeMappingSource](docs/C1ApiUserV1UserAttributeMappingSource.md)
  - [C1ApiUserV1UserServiceGetResponse](docs/C1ApiUserV1UserServiceGetResponse.md)
  - [C1ApiUserV1UserView](docs/C1ApiUserV1UserView.md)
+ - [GoogleProtobufFieldMask](docs/GoogleProtobufFieldMask.md)
 
 
 ## Documentation For Authorization

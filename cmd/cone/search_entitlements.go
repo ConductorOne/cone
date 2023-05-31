@@ -2,6 +2,8 @@ package main
 
 import (
 	"context"
+
+	"github.com/conductorone/cone/internal/c1api"
 	"github.com/conductorone/cone/pkg/client"
 	"github.com/conductorone/cone/pkg/output"
 	"github.com/spf13/cobra"
@@ -16,6 +18,12 @@ func searchEntitlementsCmd() *cobra.Command {
 	addEntitlementAliasFlag(cmd)
 	addQueryFlag(cmd)
 	return cmd
+}
+
+type ExpandedEntitlement struct {
+	Entitlement     *c1api.C1ApiAppV1AppEntitlement
+	AppResource     *c1api.C1ApiAppV1AppResource
+	AppResourceType *c1api.C1ApiAppV1AppResourceType
 }
 
 func searchEntitlementsRun(cmd *cobra.Command, args []string) error {
@@ -49,6 +57,11 @@ func searchEntitlementsRun(cmd *cobra.Command, args []string) error {
 	if err != nil {
 		return err
 	}
+
+	//for _, item := range resp.List {
+	//
+	//	c.GetResource(ctx, item.AppId, item.ResourceTypeId, item.ResourceId)
+	//}
 
 	pretty := v.GetBool("pretty-output")
 	err = output.PrintOutput(resp, pretty)

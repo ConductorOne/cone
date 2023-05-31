@@ -30,6 +30,7 @@ func runCli() int {
 	cliCmd.PersistentFlags().String("client-secret", "", "Client secret")
 	cliCmd.PersistentFlags().String("config-path", "", "path to config file")
 	cliCmd.PersistentFlags().Bool("pretty-output", false, "Whether to pretty print output")
+	cliCmd.PersistentFlags().Bool("debug", false, "Whether to enable debug logging")
 
 	err := initConfig(cliCmd)
 	if err != nil {

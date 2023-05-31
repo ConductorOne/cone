@@ -15,6 +15,7 @@ type client struct {
 	clientName string
 	tokenHost  string
 	apiClient  *c1api.APIClient
+	config     clientConfig
 }
 
 type C1Client interface {
@@ -22,12 +23,19 @@ type C1Client interface {
 	GetUser(ctx context.Context, userID string) (*UserResponse, error)
 }
 
-func New(ctx context.Context, clientId string, clientSecret string) (C1Client, error) {
+func New(
+	ctx context.Context,
+	clientId string,
+	clientSecret string,
+	optionFuncs ...ClientOptionFunc,
+) (C1Client, error) {
 	tokenSrc, clientName, tokenHost, err := NewC1TokenSource(ctx, clientId, clientSecret)
 	if err != nil {
 		return nil, err
 	}
-	uclient, err := uhttp.NewClient(ctx, uhttp.WithTokenSource(tokenSrc))
+
+	opt := applyOpts(optionFuncs)
+	uclient, err := uhttp.NewClient(ctx, uhttp.WithTokenSource(tokenSrc), uhttp.WithDebug(opt.Debug))
 	if err != nil {
 		return nil, err
 	}
@@ -35,6 +43,7 @@ func New(ctx context.Context, clientId string, clientSecret string) (C1Client, e
 		tokenHost:  tokenHost,
 		clientName: clientName,
 		httpClient: uclient,
+		config:     opt,
 	}
 
 	apiCfg := c1api.NewConfiguration()

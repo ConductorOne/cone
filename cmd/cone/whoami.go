@@ -31,7 +31,7 @@ func whoAmIRun(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
-	c, err := client.New(ctx, clientId, clientSecret)
+	c, err := client.New(ctx, clientId, clientSecret, client.WithDebug(v.GetBool("debug")))
 	if err != nil {
 		return err
 	}

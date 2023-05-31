@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/conductorone/cone/internal/c1api"
 	"github.com/conductorone/cone/pkg/client"
@@ -60,8 +59,8 @@ func (r *C1ApiAuthV1IntrospectResponse) Header() []string {
 }
 func (r *C1ApiAuthV1IntrospectResponse) Rows() [][]string {
 	return [][]string{{
-		fmt.Sprintf("%+v", r.AdditionalProperties["principle_id"]),
-		fmt.Sprintf("%+v", r.AdditionalProperties["user_id"]),
-		fmt.Sprintf("%+v", r.AdditionalProperties["access_token_id"]),
+		output.FromPtr(r.PrincipleId),
+		output.FromPtr(r.UserId),
+		output.FromPtr(r.AccessTokenId),
 	}}
 }

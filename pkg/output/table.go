@@ -26,12 +26,28 @@ func (c *tableManager) Output(ctx context.Context, out interface{}) error {
 	return nil
 }
 
+func FormatTime(ts *time.Time) string {
+	if ts == nil {
+		return ""
+	}
+
+	return ts.Format(time.RFC3339)
+}
+
 func FormatTimestamp(ts *timestamppb.Timestamp) string {
 	if ts == nil {
 		return ""
 	}
 
 	return ts.AsTime().Format(time.RFC3339)
+}
+
+func FromPtr(s *string) string {
+	if s == nil {
+		return ""
+	}
+
+	return *s
 }
 
 type TablePrint interface {

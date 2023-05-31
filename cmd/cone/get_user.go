@@ -8,7 +8,6 @@ import (
 	"github.com/conductorone/cone/pkg/client"
 	"github.com/conductorone/cone/pkg/output"
 	"github.com/spf13/cobra"
-	"google.golang.org/protobuf/types/known/timestamppb"
 )
 
 func getUserCmd() *cobra.Command {
@@ -76,21 +75,16 @@ func (r *C1ApiUserV1UserServiceGetResponse) Header() []string {
 }
 
 func (r *C1ApiUserV1UserServiceGetResponse) Rows() [][]string {
-	createdAt := r.UserView.GetUser().CreatedAt
-	var ts *timestamppb.Timestamp
-	if createdAt != nil {
-		ts = r.UserView.GetUser().CreatedAt.(*timestamppb.Timestamp)
-	}
 	return [][]string{
 		{
-			fmt.Sprintf("%+v", r.UserView.GetUser().Id),
-			fmt.Sprintf("%+v", r.UserView.GetUser().Email),
-			fmt.Sprintf("%+v", r.UserView.GetUser().Status),
-			fmt.Sprintf("%+v", r.UserView.GetUser().JobTitle),
-			fmt.Sprintf("%+v", r.UserView.GetUser().Department),
-			fmt.Sprintf("%+v", r.UserView.GetUser().EmploymentStatus),
-			fmt.Sprintf("%+v", r.UserView.GetUser().EmploymentType),
-			fmt.Sprintf("%+v", output.FormatTimestamp(ts)),
+			output.FromPtr(r.UserView.GetUser().Id),
+			output.FromPtr(r.UserView.GetUser().Email),
+			output.FromPtr(r.UserView.GetUser().Status),
+			output.FromPtr(r.UserView.GetUser().JobTitle),
+			output.FromPtr(r.UserView.GetUser().Department),
+			output.FromPtr(r.UserView.GetUser().EmploymentStatus),
+			output.FromPtr(r.UserView.GetUser().EmploymentType),
+			output.FormatTime(r.UserView.GetUser().CreatedAt),
 		},
 	}
 }

@@ -51,7 +51,7 @@ func searchEntitlementsRun(cmd *cobra.Command, args []string) error {
 	// TODO(morgabra) 2-phase search: Accept a positional arg:
 	// 1. Test if it's a direct alias
 	// 2. Use it as a query
-	resp, err := c.SearchEntitlements(ctx, &client.SearchEntitlementsFilter{
+	searchResp, err := c.SearchEntitlements(ctx, &client.SearchEntitlementsFilter{
 		Query:            query,
 		EntitlementAlias: alias,
 	})
@@ -84,11 +84,31 @@ func searchEntitlementsRun(cmd *cobra.Command, args []string) error {
 		})
 	}
 
-	pretty := v.GetBool("pretty-output")
-	err = output.PrintOutput(entitlements, pretty)
+	resp := C1ApiRequestcatalogV2SearchEntitlementsResponse(*searchResp)
+	outputManager := output.NewManager(ctx, v)
+	err = outputManager.Output(ctx, &resp)
 	if err != nil {
 		return err
 	}
 
 	return nil
+}
+
+type C1ApiRequestcatalogV2SearchEntitlementsResponse c1api.C1ApiRequestcatalogV2SearchEntitlementsResponse
+
+func (r *C1ApiRequestcatalogV2SearchEntitlementsResponse) Header() []string {
+	return []string{"Id", "Display Name", "Slug", "Alias", "Description"}
+}
+func (r *C1ApiRequestcatalogV2SearchEntitlementsResponse) Rows() [][]string {
+	rows := [][]string{}
+	for _, entitlement := range r.List {
+		rows = append(rows, []string{
+			output.FromPtr(entitlement.Id),
+			output.FromPtr(entitlement.DisplayName),
+			output.FromPtr(entitlement.Slug),
+			output.FromPtr(entitlement.Alias),
+			output.FromPtr(entitlement.Description),
+		})
+	}
+	return rows
 }

@@ -75,6 +75,31 @@ components:
                     format: date-time
                     type: string
             type: object
+        c1.api.app.v1.AppEntitlementExpandMask:
+            description: The AppEntitlementExpandMask message.
+            properties:
+                paths:
+                    description: The paths field.
+                    items:
+                        type: string
+                    nullable: true
+                    type: array
+            type: object
+        c1.api.app.v1.AppEntitlementView:
+            description: The AppEntitlementView message.
+            properties:
+                appEntitlement:
+                    $ref: '#/components/schemas/c1.api.app.v1.AppEntitlement'
+                appPath:
+                    description: The appPath field.
+                    type: string
+                appResourcePath:
+                    description: The appResourcePath field.
+                    type: string
+                appResourceTypePath:
+                    description: The appResourceTypePath field.
+                    type: string
+            type: object
         c1.api.app.v1.AppResource:
             description: The AppResource message.
             properties:
@@ -270,12 +295,14 @@ components:
                 manual:
                     $ref: '#/components/schemas/c1.api.policy.v1.ManualProvision'
             type: object
-        c1.api.requestcatalog.v2.SearchEntitlementsRequest:
-            description: The SearchEntitlementsRequest message.
+        c1.api.requestcatalog.v1.RequestCatalogSearchServiceSearchEntitlementsRequest:
+            description: The RequestCatalogSearchServiceSearchEntitlementsRequest message.
             properties:
                 entitlementAlias:
                     description: The entitlementAlias field.
                     type: string
+                expandMask:
+                    $ref: '#/components/schemas/c1.api.app.v1.AppEntitlementExpandMask'
                 pageSize:
                     description: The pageSize field.
                     format: int32
@@ -287,13 +314,26 @@ components:
                     description: The query field.
                     type: string
             type: object
-        c1.api.requestcatalog.v2.SearchEntitlementsResponse:
-            description: The SearchEntitlementsResponse message.
+        c1.api.requestcatalog.v1.RequestCatalogSearchServiceSearchEntitlementsResponse:
+            description: The RequestCatalogSearchServiceSearchEntitlementsResponse message.
             properties:
+                expanded:
+                    description: The expanded field.
+                    items:
+                        additionalProperties:
+                            oneOf: []
+                        description: Contains an arbitrary serialized message along with a @type that describes the type of the serialized message.
+                        properties:
+                            '@type':
+                                description: The type of the serialized message.
+                                type: string
+                        type: object
+                    nullable: true
+                    type: array
                 list:
                     description: The list field.
                     items:
-                        $ref: '#/components/schemas/c1.api.app.v1.AppEntitlement'
+                        $ref: '#/components/schemas/c1.api.app.v1.AppEntitlementView'
                     nullable: true
                     type: array
                 nextPageToken:
@@ -467,7 +507,7 @@ info:
     description: The ConductorOne API is a HTTP API for managing ConductorOne resources.
     title: ConductorOne API
     version: 0.1.0-alpha
-openapi: 3.1.0
+openapi: 3.0.3
 paths:
     /api/v1/app_resource/{app_id}/{app_resource_type_id}/{id}:
         get:
@@ -536,19 +576,19 @@ paths:
                     description: Successful response
     /api/v1/entitlement/search:
         post:
-            description: Invokes the c1.api.requestcatalog.v2.RequestCatalogSearchService.SearchEntitlements method.
-            operationId: c1.api.requestcatalog.v2.RequestCatalogSearchService.SearchEntitlements
+            description: Invokes the c1.api.requestcatalog.v1.RequestCatalogSearchService.SearchEntitlements method.
+            operationId: c1.api.requestcatalog.v1.RequestCatalogSearchService.SearchEntitlements
             requestBody:
                 content:
                     application/json:
                         schema:
-                            $ref: '#/components/schemas/c1.api.requestcatalog.v2.SearchEntitlementsRequest'
+                            $ref: '#/components/schemas/c1.api.requestcatalog.v1.RequestCatalogSearchServiceSearchEntitlementsRequest'
             responses:
                 "200":
                     content:
                         application/json:
                             schema:
-                                $ref: '#/components/schemas/c1.api.requestcatalog.v2.SearchEntitlementsResponse'
+                                $ref: '#/components/schemas/c1.api.requestcatalog.v1.RequestCatalogSearchServiceSearchEntitlementsResponse'
                     description: Successful response
     /api/v1/user/get/{id}:
         get:

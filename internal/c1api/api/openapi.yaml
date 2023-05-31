@@ -1,4 +1,4 @@
-openapi: 3.1.0
+openapi: 3.0.3
 info:
   description: The ConductorOne API is a HTTP API for managing ConductorOne resources.
   title: ConductorOne API
@@ -22,6 +22,7 @@ paths:
         required: true
         schema:
           description: The appId field.
+          type: string
         style: simple
       - explode: false
         in: path
@@ -29,6 +30,7 @@ paths:
         required: true
         schema:
           description: The appResourceTypeId field.
+          type: string
         style: simple
       - explode: false
         in: path
@@ -36,6 +38,7 @@ paths:
         required: true
         schema:
           description: The id field.
+          type: string
         style: simple
       responses:
         "200":
@@ -55,6 +58,7 @@ paths:
         required: true
         schema:
           description: The appId field.
+          type: string
         style: simple
       - explode: false
         in: path
@@ -62,6 +66,7 @@ paths:
         required: true
         schema:
           description: The id field.
+          type: string
         style: simple
       responses:
         "200":
@@ -83,20 +88,20 @@ paths:
           description: Successful response
   /api/v1/entitlement/search:
     post:
-      description: Invokes the c1.api.requestcatalog.v2.RequestCatalogSearchService.SearchEntitlements
+      description: Invokes the c1.api.requestcatalog.v1.RequestCatalogSearchService.SearchEntitlements
         method.
-      operationId: c1.api.requestcatalog.v2.RequestCatalogSearchService.SearchEntitlements
+      operationId: c1.api.requestcatalog.v1.RequestCatalogSearchService.SearchEntitlements
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/c1.api.requestcatalog.v2.SearchEntitlementsRequest'
+              $ref: '#/components/schemas/c1.api.requestcatalog.v1.RequestCatalogSearchServiceSearchEntitlementsRequest'
       responses:
         "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/c1.api.requestcatalog.v2.SearchEntitlementsResponse'
+                $ref: '#/components/schemas/c1.api.requestcatalog.v1.RequestCatalogSearchServiceSearchEntitlementsResponse'
           description: Successful response
   /api/v1/user/get/{id}:
     get:
@@ -109,6 +114,7 @@ paths:
         required: true
         schema:
           description: The id field.
+          type: string
         style: simple
       responses:
         "200":
@@ -126,257 +132,428 @@ components:
         This message contains a oneof named max_grant_duration. Only a single field of the following list may be set at a time:
           - durationUnset
           - durationGrant
+      example:
+        appResourceId: appResourceId
+        complianceFrameworkValueIds:
+        - complianceFrameworkValueIds
+        - complianceFrameworkValueIds
+        displayName: displayName
+        durationGrant: durationGrant
+        durationUnset: "{}"
+        systemBuiltin: true
+        grantCount: grantCount
+        description: description
+        certifyPolicyId: certifyPolicyId
+        appResourceTypeId: appResourceTypeId
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        deletedAt: 2000-01-23T04:56:07.000+00:00
+        revokePolicyId: revokePolicyId
+        grantPolicyId: grantPolicyId
+        appId: appId
+        riskLevelValueId: riskLevelValueId
+        alias: alias
+        id: id
+        slug: slug
+        provisionerPolicy:
+          connector: "{}"
+          delegated:
+            appId: appId
+            entitlementId: entitlementId
+          manual:
+            instructions: instructions
+            userIds:
+            - userIds
+            - userIds
+        updatedAt: 2000-01-23T04:56:07.000+00:00
       properties:
         alias:
           description: The alias field.
+          type: string
         appId:
           description: The appId field.
+          type: string
         appResourceId:
           description: The appResourceId field.
+          type: string
         appResourceTypeId:
           description: The appResourceTypeId field.
+          type: string
         certifyPolicyId:
           description: The certifyPolicyId field.
+          type: string
         complianceFrameworkValueIds:
           description: The complianceFrameworkValueIds field.
-          items: {}
+          items:
+            type: string
           nullable: true
+          type: array
         createdAt:
           format: date-time
+          type: string
         deletedAt:
           format: date-time
+          type: string
         description:
           description: The description field.
+          type: string
         displayName:
           description: The displayName field.
+          type: string
         durationGrant:
           format: duration
+          type: string
         durationUnset:
           nullable: true
+          type: object
         grantCount:
           description: The grantCount field.
           format: int64
+          type: string
         grantPolicyId:
           description: The grantPolicyId field.
+          type: string
         id:
           description: The id field.
+          type: string
         provisionerPolicy:
           $ref: '#/components/schemas/c1.api.policy.v1.ProvisionPolicy'
         revokePolicyId:
           description: The revokePolicyId field.
+          type: string
         riskLevelValueId:
           description: The riskLevelValueId field.
+          type: string
         slug:
           description: The slug field.
+          type: string
         systemBuiltin:
           description: The systemBuiltin field.
+          type: boolean
         updatedAt:
           format: date-time
+          type: string
+      type: object
+    c1.api.app.v1.AppEntitlementExpandMask:
+      description: The AppEntitlementExpandMask message.
+      properties:
+        paths:
+          description: The paths field.
+          items:
+            type: string
+          nullable: true
+          type: array
+      type: object
+    c1.api.app.v1.AppEntitlementView:
+      description: The AppEntitlementView message.
+      example:
+        appEntitlement:
+          appResourceId: appResourceId
+          complianceFrameworkValueIds:
+          - complianceFrameworkValueIds
+          - complianceFrameworkValueIds
+          displayName: displayName
+          durationGrant: durationGrant
+          durationUnset: "{}"
+          systemBuiltin: true
+          grantCount: grantCount
+          description: description
+          certifyPolicyId: certifyPolicyId
+          appResourceTypeId: appResourceTypeId
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          deletedAt: 2000-01-23T04:56:07.000+00:00
+          revokePolicyId: revokePolicyId
+          grantPolicyId: grantPolicyId
+          appId: appId
+          riskLevelValueId: riskLevelValueId
+          alias: alias
+          id: id
+          slug: slug
+          provisionerPolicy:
+            connector: "{}"
+            delegated:
+              appId: appId
+              entitlementId: entitlementId
+            manual:
+              instructions: instructions
+              userIds:
+              - userIds
+              - userIds
+          updatedAt: 2000-01-23T04:56:07.000+00:00
+        appResourcePath: appResourcePath
+        appResourceTypePath: appResourceTypePath
+        appPath: appPath
+      properties:
+        appEntitlement:
+          $ref: '#/components/schemas/c1.api.app.v1.AppEntitlement'
+        appPath:
+          description: The appPath field.
+          type: string
+        appResourcePath:
+          description: The appResourcePath field.
+          type: string
+        appResourceTypePath:
+          description: The appResourceTypePath field.
+          type: string
+      type: object
     c1.api.app.v1.AppResource:
       description: The AppResource message.
       example:
-        createdAt: ""
-        deletedAt: ""
-        customDescription: ""
-        displayName: ""
-        appId: ""
-        grantCount: ""
-        description: ""
-        id: ""
-        appResourceTypeId: ""
-        updatedAt: ""
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        deletedAt: 2000-01-23T04:56:07.000+00:00
+        customDescription: customDescription
+        displayName: displayName
+        appId: appId
+        grantCount: grantCount
+        description: description
+        id: id
+        appResourceTypeId: appResourceTypeId
+        updatedAt: 2000-01-23T04:56:07.000+00:00
       properties:
         appId:
           description: The appId field.
+          type: string
         appResourceTypeId:
           description: The appResourceTypeId field.
+          type: string
         createdAt:
           format: date-time
+          type: string
         customDescription:
           description: The customDescription field.
+          type: string
         deletedAt:
           format: date-time
+          type: string
         description:
           description: The description field.
+          type: string
         displayName:
           description: The displayName field.
+          type: string
         grantCount:
           description: The grantCount field.
           format: int64
+          type: string
         id:
           description: The id field.
+          type: string
         updatedAt:
           format: date-time
+          type: string
+      type: object
     c1.api.app.v1.AppResourceServiceGetResponse:
       description: The AppResourceServiceGetResponse message.
       example:
-        expanded: ""
+        expanded:
+        - '@type': '@type'
+        - '@type': '@type'
         appResourceView:
           appResource:
-            createdAt: ""
-            deletedAt: ""
-            customDescription: ""
-            displayName: ""
-            appId: ""
-            grantCount: ""
-            description: ""
-            id: ""
-            appResourceTypeId: ""
-            updatedAt: ""
-          resourceTypePath: ""
-          appPath: ""
+            createdAt: 2000-01-23T04:56:07.000+00:00
+            deletedAt: 2000-01-23T04:56:07.000+00:00
+            customDescription: customDescription
+            displayName: displayName
+            appId: appId
+            grantCount: grantCount
+            description: description
+            id: id
+            appResourceTypeId: appResourceTypeId
+            updatedAt: 2000-01-23T04:56:07.000+00:00
+          resourceTypePath: resourceTypePath
+          appPath: appPath
       properties:
         appResourceView:
           $ref: '#/components/schemas/c1.api.app.v1.AppResourceView'
         expanded:
           description: The expanded field.
           items:
-            additionalProperties: {}
-            description: Contains an arbitrary serialized message along with a @type
-              that describes the type of the serialized message.
-            properties:
-              '@type':
-                description: The type of the serialized message.
+            $ref: '#/components/schemas/c1_api_app_v1_AppResourceServiceGetResponse_expanded_inner'
           nullable: true
+          type: array
+      type: object
     c1.api.app.v1.AppResourceType:
       description: The AppResourceType message.
       example:
-        createdAt: ""
-        deletedAt: ""
-        displayName: ""
-        appId: ""
-        id: ""
-        updatedAt: ""
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        deletedAt: 2000-01-23T04:56:07.000+00:00
+        displayName: displayName
+        appId: appId
+        id: id
+        updatedAt: 2000-01-23T04:56:07.000+00:00
       properties:
         appId:
           description: The appId field.
+          type: string
         createdAt:
           format: date-time
+          type: string
         deletedAt:
           format: date-time
+          type: string
         displayName:
           description: The displayName field.
+          type: string
         id:
           description: The id field.
+          type: string
         updatedAt:
           format: date-time
+          type: string
+      type: object
     c1.api.app.v1.AppResourceTypeServiceGetResponse:
       description: The AppResourceTypeServiceGetResponse message.
       example:
-        expanded: ""
+        expanded:
+        - '@type': '@type'
+        - '@type': '@type'
         appResourceTypeView:
           appResourceType:
-            createdAt: ""
-            deletedAt: ""
-            displayName: ""
-            appId: ""
-            id: ""
-            updatedAt: ""
-          appPath: ""
+            createdAt: 2000-01-23T04:56:07.000+00:00
+            deletedAt: 2000-01-23T04:56:07.000+00:00
+            displayName: displayName
+            appId: appId
+            id: id
+            updatedAt: 2000-01-23T04:56:07.000+00:00
+          appPath: appPath
       properties:
         appResourceTypeView:
           $ref: '#/components/schemas/c1.api.app.v1.AppResourceTypeView'
         expanded:
           description: The expanded field.
           items:
-            additionalProperties: {}
-            description: Contains an arbitrary serialized message along with a @type
-              that describes the type of the serialized message.
-            properties:
-              '@type':
-                description: The type of the serialized message.
+            $ref: '#/components/schemas/c1_api_app_v1_AppResourceServiceGetResponse_expanded_inner'
           nullable: true
+          type: array
+      type: object
     c1.api.app.v1.AppResourceTypeView:
       description: The AppResourceTypeView message.
       example:
         appResourceType:
-          createdAt: ""
-          deletedAt: ""
-          displayName: ""
-          appId: ""
-          id: ""
-          updatedAt: ""
-        appPath: ""
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          deletedAt: 2000-01-23T04:56:07.000+00:00
+          displayName: displayName
+          appId: appId
+          id: id
+          updatedAt: 2000-01-23T04:56:07.000+00:00
+        appPath: appPath
       properties:
         appPath:
           description: The appPath field.
+          type: string
         appResourceType:
           $ref: '#/components/schemas/c1.api.app.v1.AppResourceType'
+      type: object
     c1.api.app.v1.AppResourceView:
       description: The AppResourceView message.
       example:
         appResource:
-          createdAt: ""
-          deletedAt: ""
-          customDescription: ""
-          displayName: ""
-          appId: ""
-          grantCount: ""
-          description: ""
-          id: ""
-          appResourceTypeId: ""
-          updatedAt: ""
-        resourceTypePath: ""
-        appPath: ""
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          deletedAt: 2000-01-23T04:56:07.000+00:00
+          customDescription: customDescription
+          displayName: displayName
+          appId: appId
+          grantCount: grantCount
+          description: description
+          id: id
+          appResourceTypeId: appResourceTypeId
+          updatedAt: 2000-01-23T04:56:07.000+00:00
+        resourceTypePath: resourceTypePath
+        appPath: appPath
       properties:
         appPath:
           description: The appPath field.
+          type: string
         appResource:
           $ref: '#/components/schemas/c1.api.app.v1.AppResource'
         resourceTypePath:
           description: The resourceTypePath field.
+          type: string
+      type: object
     c1.api.auth.v1.IntrospectResponse:
       description: The IntrospectResponse message.
       example:
-        accessTokenId: ""
-        features: ""
-        permissions: ""
-        roles: ""
-        tenantId: ""
-        userId: ""
-        principleId: ""
+        accessTokenId: accessTokenId
+        features:
+        - features
+        - features
+        permissions:
+        - permissions
+        - permissions
+        roles:
+        - roles
+        - roles
+        tenantId: tenantId
+        userId: userId
+        principleId: principleId
       properties:
         accessTokenId:
           description: The accessTokenId field.
+          type: string
         features:
           description: The features field.
-          items: {}
+          items:
+            type: string
           nullable: true
+          type: array
         permissions:
           description: The permissions field.
-          items: {}
+          items:
+            type: string
           nullable: true
+          type: array
         principleId:
           description: The principleId field.
+          type: string
         roles:
           description: The roles field.
-          items: {}
+          items:
+            type: string
           nullable: true
+          type: array
         tenantId:
           description: The tenantId field.
+          type: string
         userId:
           description: The userId field.
+          type: string
+      type: object
     c1.api.policy.v1.ConnectorProvision:
       description: The ConnectorProvision message.
       nullable: true
+      type: object
     c1.api.policy.v1.DelegatedProvision:
       description: The DelegatedProvision message.
+      example:
+        appId: appId
+        entitlementId: entitlementId
+      nullable: true
       properties:
         appId:
           description: The appId field.
+          type: string
         entitlementId:
           description: The entitlementId field.
-      nullable: true
+          type: string
+      type: object
     c1.api.policy.v1.ManualProvision:
       description: The ManualProvision message.
+      example:
+        instructions: instructions
+        userIds:
+        - userIds
+        - userIds
+      nullable: true
       properties:
         instructions:
           description: The instructions field.
+          type: string
         userIds:
           description: The userIds field.
-          items: {}
+          items:
+            type: string
           nullable: true
-      nullable: true
+          type: array
+      type: object
     c1.api.policy.v1.ProvisionPolicy:
       description: |
         The ProvisionPolicy message.
@@ -385,82 +562,258 @@ components:
           - connector
           - manual
           - delegated
+      example:
+        connector: "{}"
+        delegated:
+          appId: appId
+          entitlementId: entitlementId
+        manual:
+          instructions: instructions
+          userIds:
+          - userIds
+          - userIds
       properties:
         connector:
           description: The ConnectorProvision message.
           nullable: true
+          type: object
         delegated:
           $ref: '#/components/schemas/c1.api.policy.v1.DelegatedProvision'
         manual:
           $ref: '#/components/schemas/c1.api.policy.v1.ManualProvision'
-    c1.api.requestcatalog.v2.SearchEntitlementsRequest:
-      description: The SearchEntitlementsRequest message.
+      type: object
+    c1.api.requestcatalog.v1.RequestCatalogSearchServiceSearchEntitlementsRequest:
+      description: The RequestCatalogSearchServiceSearchEntitlementsRequest message.
       properties:
         entitlementAlias:
           description: The entitlementAlias field.
+          type: string
+        expandMask:
+          $ref: '#/components/schemas/c1.api.app.v1.AppEntitlementExpandMask'
         pageSize:
           description: The pageSize field.
           format: int32
+          type: number
         pageToken:
           description: The pageToken field.
+          type: string
         query:
           description: The query field.
-    c1.api.requestcatalog.v2.SearchEntitlementsResponse:
-      description: The SearchEntitlementsResponse message.
+          type: string
+      type: object
+    c1.api.requestcatalog.v1.RequestCatalogSearchServiceSearchEntitlementsResponse:
+      description: The RequestCatalogSearchServiceSearchEntitlementsResponse message.
       example:
-        nextPageToken: ""
-        list: ""
+        expanded:
+        - '@type': '@type'
+        - '@type': '@type'
+        nextPageToken: nextPageToken
+        list:
+        - appEntitlement:
+            appResourceId: appResourceId
+            complianceFrameworkValueIds:
+            - complianceFrameworkValueIds
+            - complianceFrameworkValueIds
+            displayName: displayName
+            durationGrant: durationGrant
+            durationUnset: "{}"
+            systemBuiltin: true
+            grantCount: grantCount
+            description: description
+            certifyPolicyId: certifyPolicyId
+            appResourceTypeId: appResourceTypeId
+            createdAt: 2000-01-23T04:56:07.000+00:00
+            deletedAt: 2000-01-23T04:56:07.000+00:00
+            revokePolicyId: revokePolicyId
+            grantPolicyId: grantPolicyId
+            appId: appId
+            riskLevelValueId: riskLevelValueId
+            alias: alias
+            id: id
+            slug: slug
+            provisionerPolicy:
+              connector: "{}"
+              delegated:
+                appId: appId
+                entitlementId: entitlementId
+              manual:
+                instructions: instructions
+                userIds:
+                - userIds
+                - userIds
+            updatedAt: 2000-01-23T04:56:07.000+00:00
+          appResourcePath: appResourcePath
+          appResourceTypePath: appResourceTypePath
+          appPath: appPath
+        - appEntitlement:
+            appResourceId: appResourceId
+            complianceFrameworkValueIds:
+            - complianceFrameworkValueIds
+            - complianceFrameworkValueIds
+            displayName: displayName
+            durationGrant: durationGrant
+            durationUnset: "{}"
+            systemBuiltin: true
+            grantCount: grantCount
+            description: description
+            certifyPolicyId: certifyPolicyId
+            appResourceTypeId: appResourceTypeId
+            createdAt: 2000-01-23T04:56:07.000+00:00
+            deletedAt: 2000-01-23T04:56:07.000+00:00
+            revokePolicyId: revokePolicyId
+            grantPolicyId: grantPolicyId
+            appId: appId
+            riskLevelValueId: riskLevelValueId
+            alias: alias
+            id: id
+            slug: slug
+            provisionerPolicy:
+              connector: "{}"
+              delegated:
+                appId: appId
+                entitlementId: entitlementId
+              manual:
+                instructions: instructions
+                userIds:
+                - userIds
+                - userIds
+            updatedAt: 2000-01-23T04:56:07.000+00:00
+          appResourcePath: appResourcePath
+          appResourceTypePath: appResourceTypePath
+          appPath: appPath
       properties:
+        expanded:
+          description: The expanded field.
+          items:
+            $ref: '#/components/schemas/c1_api_app_v1_AppResourceServiceGetResponse_expanded_inner'
+          nullable: true
+          type: array
         list:
           description: The list field.
           items:
-            $ref: '#/components/schemas/c1.api.app.v1.AppEntitlement'
+            $ref: '#/components/schemas/c1.api.app.v1.AppEntitlementView'
           nullable: true
+          type: array
         nextPageToken:
           description: The nextPageToken field.
+          type: string
+      type: object
     c1.api.user.v1.User:
       description: The User message.
       example:
-        employmentStatusSources: ""
-        directoryStatusSources: ""
-        departmentSources: ""
-        employmentType: ""
-        delegatedUserId: ""
-        displayName: ""
-        jobTitle: ""
-        jobTitleSources: ""
-        employmentStatus: ""
-        createdAt: ""
-        deletedAt: ""
-        managerIds: ""
-        managerSources: ""
-        roleIds: ""
-        directoryStatus: ""
-        employmentTypeSources: ""
-        id: ""
-        department: ""
-        directoryIds: ""
-        email: ""
-        status: ""
-        updatedAt: ""
+        employmentStatusSources:
+        - appId: appId
+          appUserId: appUserId
+          appUserProfileAttributeKey: appUserProfileAttributeKey
+          userAttributeMappingId: userAttributeMappingId
+          value: value
+        - appId: appId
+          appUserId: appUserId
+          appUserProfileAttributeKey: appUserProfileAttributeKey
+          userAttributeMappingId: userAttributeMappingId
+          value: value
+        directoryStatusSources:
+        - appId: appId
+          appUserId: appUserId
+          appUserProfileAttributeKey: appUserProfileAttributeKey
+          userAttributeMappingId: userAttributeMappingId
+          value: value
+        - appId: appId
+          appUserId: appUserId
+          appUserProfileAttributeKey: appUserProfileAttributeKey
+          userAttributeMappingId: userAttributeMappingId
+          value: value
+        departmentSources:
+        - appId: appId
+          appUserId: appUserId
+          appUserProfileAttributeKey: appUserProfileAttributeKey
+          userAttributeMappingId: userAttributeMappingId
+          value: value
+        - appId: appId
+          appUserId: appUserId
+          appUserProfileAttributeKey: appUserProfileAttributeKey
+          userAttributeMappingId: userAttributeMappingId
+          value: value
+        employmentType: employmentType
+        delegatedUserId: delegatedUserId
+        displayName: displayName
+        jobTitle: jobTitle
+        jobTitleSources:
+        - appId: appId
+          appUserId: appUserId
+          appUserProfileAttributeKey: appUserProfileAttributeKey
+          userAttributeMappingId: userAttributeMappingId
+          value: value
+        - appId: appId
+          appUserId: appUserId
+          appUserProfileAttributeKey: appUserProfileAttributeKey
+          userAttributeMappingId: userAttributeMappingId
+          value: value
+        employmentStatus: employmentStatus
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        deletedAt: 2000-01-23T04:56:07.000+00:00
+        managerIds:
+        - managerIds
+        - managerIds
+        managerSources:
+        - appId: appId
+          appUserId: appUserId
+          appUserProfileAttributeKey: appUserProfileAttributeKey
+          userAttributeMappingId: userAttributeMappingId
+          value: value
+        - appId: appId
+          appUserId: appUserId
+          appUserProfileAttributeKey: appUserProfileAttributeKey
+          userAttributeMappingId: userAttributeMappingId
+          value: value
+        roleIds:
+        - roleIds
+        - roleIds
+        directoryStatus: UNKNOWN
+        employmentTypeSources:
+        - appId: appId
+          appUserId: appUserId
+          appUserProfileAttributeKey: appUserProfileAttributeKey
+          userAttributeMappingId: userAttributeMappingId
+          value: value
+        - appId: appId
+          appUserId: appUserId
+          appUserProfileAttributeKey: appUserProfileAttributeKey
+          userAttributeMappingId: userAttributeMappingId
+          value: value
+        id: id
+        department: department
+        directoryIds:
+        - directoryIds
+        - directoryIds
+        email: email
+        status: UNKNOWN
+        updatedAt: 2000-01-23T04:56:07.000+00:00
       properties:
         createdAt:
           format: date-time
+          type: string
         delegatedUserId:
           description: The delegatedUserId field.
+          type: string
         deletedAt:
           format: date-time
+          type: string
         department:
           description: The department field.
+          type: string
         departmentSources:
           description: The departmentSources field.
           items:
             $ref: '#/components/schemas/c1.api.user.v1.UserAttributeMappingSource'
           nullable: true
+          type: array
         directoryIds:
           description: The directoryIds field.
-          items: {}
+          items:
+            type: string
           nullable: true
+          type: array
         directoryStatus:
           description: The directoryStatus field.
           enum:
@@ -468,51 +821,67 @@ components:
           - ENABLED
           - DISABLED
           - DELETED
+          type: string
         directoryStatusSources:
           description: The directoryStatusSources field.
           items:
             $ref: '#/components/schemas/c1.api.user.v1.UserAttributeMappingSource'
           nullable: true
+          type: array
         displayName:
           description: The displayName field.
+          type: string
         email:
           description: The email field.
+          type: string
         employmentStatus:
           description: The employmentStatus field.
+          type: string
         employmentStatusSources:
           description: The employmentStatusSources field.
           items:
             $ref: '#/components/schemas/c1.api.user.v1.UserAttributeMappingSource'
           nullable: true
+          type: array
         employmentType:
           description: The employmentType field.
+          type: string
         employmentTypeSources:
           description: The employmentTypeSources field.
           items:
             $ref: '#/components/schemas/c1.api.user.v1.UserAttributeMappingSource'
           nullable: true
+          type: array
         id:
           description: The id field.
+          type: string
         jobTitle:
           description: The jobTitle field.
+          type: string
         jobTitleSources:
           description: The jobTitleSources field.
           items:
             $ref: '#/components/schemas/c1.api.user.v1.UserAttributeMappingSource'
           nullable: true
+          type: array
         managerIds:
           description: The managerIds field.
-          items: {}
+          items:
+            type: string
           nullable: true
+          type: array
         managerSources:
           description: The managerSources field.
           items:
             $ref: '#/components/schemas/c1.api.user.v1.UserAttributeMappingSource'
           nullable: true
+          type: array
         roleIds:
           description: The roleIds field.
-          items: {}
+          items:
+            type: string
           nullable: true
+          type: array
         status:
           description: The status field.
           enum:
@@ -520,104 +889,266 @@ components:
           - ENABLED
           - DISABLED
           - DELETED
+          type: string
         updatedAt:
           format: date-time
+          type: string
+      type: object
     c1.api.user.v1.UserAttributeMappingSource:
       description: The UserAttributeMappingSource message.
+      example:
+        appId: appId
+        appUserId: appUserId
+        appUserProfileAttributeKey: appUserProfileAttributeKey
+        userAttributeMappingId: userAttributeMappingId
+        value: value
       properties:
         appId:
           description: The appId field.
+          type: string
         appUserId:
           description: The appUserId field.
+          type: string
         appUserProfileAttributeKey:
           description: The appUserProfileAttributeKey field.
+          type: string
         userAttributeMappingId:
           description: The userAttributeMappingId field.
+          type: string
         value:
           description: The value field.
+          type: string
+      type: object
     c1.api.user.v1.UserServiceGetResponse:
       description: The UserServiceGetResponse message.
       example:
-        expanded: ""
+        expanded:
+        - '@type': '@type'
+        - '@type': '@type'
         userView:
-          managersPath: ""
-          rolesPath: ""
-          delegatedUserPath: ""
-          directoriesPath: ""
+          managersPath: managersPath
+          rolesPath: rolesPath
+          delegatedUserPath: delegatedUserPath
+          directoriesPath: directoriesPath
           user:
-            employmentStatusSources: ""
-            directoryStatusSources: ""
-            departmentSources: ""
-            employmentType: ""
-            delegatedUserId: ""
-            displayName: ""
-            jobTitle: ""
-            jobTitleSources: ""
-            employmentStatus: ""
-            createdAt: ""
-            deletedAt: ""
-            managerIds: ""
-            managerSources: ""
-            roleIds: ""
-            directoryStatus: ""
-            employmentTypeSources: ""
-            id: ""
-            department: ""
-            directoryIds: ""
-            email: ""
-            status: ""
-            updatedAt: ""
+            employmentStatusSources:
+            - appId: appId
+              appUserId: appUserId
+              appUserProfileAttributeKey: appUserProfileAttributeKey
+              userAttributeMappingId: userAttributeMappingId
+              value: value
+            - appId: appId
+              appUserId: appUserId
+              appUserProfileAttributeKey: appUserProfileAttributeKey
+              userAttributeMappingId: userAttributeMappingId
+              value: value
+            directoryStatusSources:
+            - appId: appId
+              appUserId: appUserId
+              appUserProfileAttributeKey: appUserProfileAttributeKey
+              userAttributeMappingId: userAttributeMappingId
+              value: value
+            - appId: appId
+              appUserId: appUserId
+              appUserProfileAttributeKey: appUserProfileAttributeKey
+              userAttributeMappingId: userAttributeMappingId
+              value: value
+            departmentSources:
+            - appId: appId
+              appUserId: appUserId
+              appUserProfileAttributeKey: appUserProfileAttributeKey
+              userAttributeMappingId: userAttributeMappingId
+              value: value
+            - appId: appId
+              appUserId: appUserId
+              appUserProfileAttributeKey: appUserProfileAttributeKey
+              userAttributeMappingId: userAttributeMappingId
+              value: value
+            employmentType: employmentType
+            delegatedUserId: delegatedUserId
+            displayName: displayName
+            jobTitle: jobTitle
+            jobTitleSources:
+            - appId: appId
+              appUserId: appUserId
+              appUserProfileAttributeKey: appUserProfileAttributeKey
+              userAttributeMappingId: userAttributeMappingId
+              value: value
+            - appId: appId
+              appUserId: appUserId
+              appUserProfileAttributeKey: appUserProfileAttributeKey
+              userAttributeMappingId: userAttributeMappingId
+              value: value
+            employmentStatus: employmentStatus
+            createdAt: 2000-01-23T04:56:07.000+00:00
+            deletedAt: 2000-01-23T04:56:07.000+00:00
+            managerIds:
+            - managerIds
+            - managerIds
+            managerSources:
+            - appId: appId
+              appUserId: appUserId
+              appUserProfileAttributeKey: appUserProfileAttributeKey
+              userAttributeMappingId: userAttributeMappingId
+              value: value
+            - appId: appId
+              appUserId: appUserId
+              appUserProfileAttributeKey: appUserProfileAttributeKey
+              userAttributeMappingId: userAttributeMappingId
+              value: value
+            roleIds:
+            - roleIds
+            - roleIds
+            directoryStatus: UNKNOWN
+            employmentTypeSources:
+            - appId: appId
+              appUserId: appUserId
+              appUserProfileAttributeKey: appUserProfileAttributeKey
+              userAttributeMappingId: userAttributeMappingId
+              value: value
+            - appId: appId
+              appUserId: appUserId
+              appUserProfileAttributeKey: appUserProfileAttributeKey
+              userAttributeMappingId: userAttributeMappingId
+              value: value
+            id: id
+            department: department
+            directoryIds:
+            - directoryIds
+            - directoryIds
+            email: email
+            status: UNKNOWN
+            updatedAt: 2000-01-23T04:56:07.000+00:00
       properties:
         expanded:
           description: The expanded field.
           items:
-            additionalProperties: {}
-            description: Contains an arbitrary serialized message along with a @type
-              that describes the type of the serialized message.
-            properties:
-              '@type':
-                description: The type of the serialized message.
+            $ref: '#/components/schemas/c1_api_app_v1_AppResourceServiceGetResponse_expanded_inner'
           nullable: true
+          type: array
         userView:
           $ref: '#/components/schemas/c1.api.user.v1.UserView'
+      type: object
     c1.api.user.v1.UserView:
       description: The UserView message.
       example:
-        managersPath: ""
-        rolesPath: ""
-        delegatedUserPath: ""
-        directoriesPath: ""
+        managersPath: managersPath
+        rolesPath: rolesPath
+        delegatedUserPath: delegatedUserPath
+        directoriesPath: directoriesPath
         user:
-          employmentStatusSources: ""
-          directoryStatusSources: ""
-          departmentSources: ""
-          employmentType: ""
-          delegatedUserId: ""
-          displayName: ""
-          jobTitle: ""
-          jobTitleSources: ""
-          employmentStatus: ""
-          createdAt: ""
-          deletedAt: ""
-          managerIds: ""
-          managerSources: ""
-          roleIds: ""
-          directoryStatus: ""
-          employmentTypeSources: ""
-          id: ""
-          department: ""
-          directoryIds: ""
-          email: ""
-          status: ""
-          updatedAt: ""
+          employmentStatusSources:
+          - appId: appId
+            appUserId: appUserId
+            appUserProfileAttributeKey: appUserProfileAttributeKey
+            userAttributeMappingId: userAttributeMappingId
+            value: value
+          - appId: appId
+            appUserId: appUserId
+            appUserProfileAttributeKey: appUserProfileAttributeKey
+            userAttributeMappingId: userAttributeMappingId
+            value: value
+          directoryStatusSources:
+          - appId: appId
+            appUserId: appUserId
+            appUserProfileAttributeKey: appUserProfileAttributeKey
+            userAttributeMappingId: userAttributeMappingId
+            value: value
+          - appId: appId
+            appUserId: appUserId
+            appUserProfileAttributeKey: appUserProfileAttributeKey
+            userAttributeMappingId: userAttributeMappingId
+            value: value
+          departmentSources:
+          - appId: appId
+            appUserId: appUserId
+            appUserProfileAttributeKey: appUserProfileAttributeKey
+            userAttributeMappingId: userAttributeMappingId
+            value: value
+          - appId: appId
+            appUserId: appUserId
+            appUserProfileAttributeKey: appUserProfileAttributeKey
+            userAttributeMappingId: userAttributeMappingId
+            value: value
+          employmentType: employmentType
+          delegatedUserId: delegatedUserId
+          displayName: displayName
+          jobTitle: jobTitle
+          jobTitleSources:
+          - appId: appId
+            appUserId: appUserId
+            appUserProfileAttributeKey: appUserProfileAttributeKey
+            userAttributeMappingId: userAttributeMappingId
+            value: value
+          - appId: appId
+            appUserId: appUserId
+            appUserProfileAttributeKey: appUserProfileAttributeKey
+            userAttributeMappingId: userAttributeMappingId
+            value: value
+          employmentStatus: employmentStatus
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          deletedAt: 2000-01-23T04:56:07.000+00:00
+          managerIds:
+          - managerIds
+          - managerIds
+          managerSources:
+          - appId: appId
+            appUserId: appUserId
+            appUserProfileAttributeKey: appUserProfileAttributeKey
+            userAttributeMappingId: userAttributeMappingId
+            value: value
+          - appId: appId
+            appUserId: appUserId
+            appUserProfileAttributeKey: appUserProfileAttributeKey
+            userAttributeMappingId: userAttributeMappingId
+            value: value
+          roleIds:
+          - roleIds
+          - roleIds
+          directoryStatus: UNKNOWN
+          employmentTypeSources:
+          - appId: appId
+            appUserId: appUserId
+            appUserProfileAttributeKey: appUserProfileAttributeKey
+            userAttributeMappingId: userAttributeMappingId
+            value: value
+          - appId: appId
+            appUserId: appUserId
+            appUserProfileAttributeKey: appUserProfileAttributeKey
+            userAttributeMappingId: userAttributeMappingId
+            value: value
+          id: id
+          department: department
+          directoryIds:
+          - directoryIds
+          - directoryIds
+          email: email
+          status: UNKNOWN
+          updatedAt: 2000-01-23T04:56:07.000+00:00
       properties:
         delegatedUserPath:
           description: The delegatedUserPath field.
+          type: string
         directoriesPath:
           description: The directoriesPath field.
+          type: string
         managersPath:
           description: The managersPath field.
+          type: string
         rolesPath:
           description: The rolesPath field.
+          type: string
         user:
           $ref: '#/components/schemas/c1.api.user.v1.User'
+      type: object
+    c1_api_app_v1_AppResourceServiceGetResponse_expanded_inner:
+      additionalProperties: {}
+      description: Contains an arbitrary serialized message along with a @type that
+        describes the type of the serialized message.
+      example:
+        '@type': '@type'
+      properties:
+        '@type':
+          description: The type of the serialized message.
+          type: string
+      type: object

@@ -20,13 +20,13 @@ var _ MappedNullable = &C1ApiUserV1UserView{}
 // C1ApiUserV1UserView The UserView message.
 type C1ApiUserV1UserView struct {
 	// The delegatedUserPath field.
-	DelegatedUserPath interface{} `json:"delegatedUserPath,omitempty"`
+	DelegatedUserPath *string `json:"delegatedUserPath,omitempty"`
 	// The directoriesPath field.
-	DirectoriesPath interface{} `json:"directoriesPath,omitempty"`
+	DirectoriesPath *string `json:"directoriesPath,omitempty"`
 	// The managersPath field.
-	ManagersPath interface{} `json:"managersPath,omitempty"`
+	ManagersPath *string `json:"managersPath,omitempty"`
 	// The rolesPath field.
-	RolesPath interface{} `json:"rolesPath,omitempty"`
+	RolesPath *string `json:"rolesPath,omitempty"`
 	User *C1ApiUserV1User `json:"user,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
@@ -50,136 +50,132 @@ func NewC1ApiUserV1UserViewWithDefaults() *C1ApiUserV1UserView {
 	return &this
 }
 
-// GetDelegatedUserPath returns the DelegatedUserPath field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *C1ApiUserV1UserView) GetDelegatedUserPath() interface{} {
-	if o == nil {
-		var ret interface{}
+// GetDelegatedUserPath returns the DelegatedUserPath field value if set, zero value otherwise.
+func (o *C1ApiUserV1UserView) GetDelegatedUserPath() string {
+	if o == nil || IsNil(o.DelegatedUserPath) {
+		var ret string
 		return ret
 	}
-	return o.DelegatedUserPath
+	return *o.DelegatedUserPath
 }
 
 // GetDelegatedUserPathOk returns a tuple with the DelegatedUserPath field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *C1ApiUserV1UserView) GetDelegatedUserPathOk() (*interface{}, bool) {
+func (o *C1ApiUserV1UserView) GetDelegatedUserPathOk() (*string, bool) {
 	if o == nil || IsNil(o.DelegatedUserPath) {
 		return nil, false
 	}
-	return &o.DelegatedUserPath, true
+	return o.DelegatedUserPath, true
 }
 
 // HasDelegatedUserPath returns a boolean if a field has been set.
 func (o *C1ApiUserV1UserView) HasDelegatedUserPath() bool {
-	if o != nil && IsNil(o.DelegatedUserPath) {
+	if o != nil && !IsNil(o.DelegatedUserPath) {
 		return true
 	}
 
 	return false
 }
 
-// SetDelegatedUserPath gets a reference to the given interface{} and assigns it to the DelegatedUserPath field.
-func (o *C1ApiUserV1UserView) SetDelegatedUserPath(v interface{}) {
-	o.DelegatedUserPath = v
+// SetDelegatedUserPath gets a reference to the given string and assigns it to the DelegatedUserPath field.
+func (o *C1ApiUserV1UserView) SetDelegatedUserPath(v string) {
+	o.DelegatedUserPath = &v
 }
 
-// GetDirectoriesPath returns the DirectoriesPath field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *C1ApiUserV1UserView) GetDirectoriesPath() interface{} {
-	if o == nil {
-		var ret interface{}
+// GetDirectoriesPath returns the DirectoriesPath field value if set, zero value otherwise.
+func (o *C1ApiUserV1UserView) GetDirectoriesPath() string {
+	if o == nil || IsNil(o.DirectoriesPath) {
+		var ret string
 		return ret
 	}
-	return o.DirectoriesPath
+	return *o.DirectoriesPath
 }
 
 // GetDirectoriesPathOk returns a tuple with the DirectoriesPath field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *C1ApiUserV1UserView) GetDirectoriesPathOk() (*interface{}, bool) {
+func (o *C1ApiUserV1UserView) GetDirectoriesPathOk() (*string, bool) {
 	if o == nil || IsNil(o.DirectoriesPath) {
 		return nil, false
 	}
-	return &o.DirectoriesPath, true
+	return o.DirectoriesPath, true
 }
 
 // HasDirectoriesPath returns a boolean if a field has been set.
 func (o *C1ApiUserV1UserView) HasDirectoriesPath() bool {
-	if o != nil && IsNil(o.DirectoriesPath) {
+	if o != nil && !IsNil(o.DirectoriesPath) {
 		return true
 	}
 
 	return false
 }
 
-// SetDirectoriesPath gets a reference to the given interface{} and assigns it to the DirectoriesPath field.
-func (o *C1ApiUserV1UserView) SetDirectoriesPath(v interface{}) {
-	o.DirectoriesPath = v
+// SetDirectoriesPath gets a reference to the given string and assigns it to the DirectoriesPath field.
+func (o *C1ApiUserV1UserView) SetDirectoriesPath(v string) {
+	o.DirectoriesPath = &v
 }
 
-// GetManagersPath returns the ManagersPath field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *C1ApiUserV1UserView) GetManagersPath() interface{} {
-	if o == nil {
-		var ret interface{}
+// GetManagersPath returns the ManagersPath field value if set, zero value otherwise.
+func (o *C1ApiUserV1UserView) GetManagersPath() string {
+	if o == nil || IsNil(o.ManagersPath) {
+		var ret string
 		return ret
 	}
-	return o.ManagersPath
+	return *o.ManagersPath
 }
 
 // GetManagersPathOk returns a tuple with the ManagersPath field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *C1ApiUserV1UserView) GetManagersPathOk() (*interface{}, bool) {
+func (o *C1ApiUserV1UserView) GetManagersPathOk() (*string, bool) {
 	if o == nil || IsNil(o.ManagersPath) {
 		return nil, false
 	}
-	return &o.ManagersPath, true
+	return o.ManagersPath, true
 }
 
 // HasManagersPath returns a boolean if a field has been set.
 func (o *C1ApiUserV1UserView) HasManagersPath() bool {
-	if o != nil && IsNil(o.ManagersPath) {
+	if o != nil && !IsNil(o.ManagersPath) {
 		return true
 	}
 
 	return false
 }
 
-// SetManagersPath gets a reference to the given interface{} and assigns it to the ManagersPath field.
-func (o *C1ApiUserV1UserView) SetManagersPath(v interface{}) {
-	o.ManagersPath = v
+// SetManagersPath gets a reference to the given string and assigns it to the ManagersPath field.
+func (o *C1ApiUserV1UserView) SetManagersPath(v string) {
+	o.ManagersPath = &v
 }
 
-// GetRolesPath returns the RolesPath field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *C1ApiUserV1UserView) GetRolesPath() interface{} {
-	if o == nil {
-		var ret interface{}
+// GetRolesPath returns the RolesPath field value if set, zero value otherwise.
+func (o *C1ApiUserV1UserView) GetRolesPath() string {
+	if o == nil || IsNil(o.RolesPath) {
+		var ret string
 		return ret
 	}
-	return o.RolesPath
+	return *o.RolesPath
 }
 
 // GetRolesPathOk returns a tuple with the RolesPath field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *C1ApiUserV1UserView) GetRolesPathOk() (*interface{}, bool) {
+func (o *C1ApiUserV1UserView) GetRolesPathOk() (*string, bool) {
 	if o == nil || IsNil(o.RolesPath) {
 		return nil, false
 	}
-	return &o.RolesPath, true
+	return o.RolesPath, true
 }
 
 // HasRolesPath returns a boolean if a field has been set.
 func (o *C1ApiUserV1UserView) HasRolesPath() bool {
-	if o != nil && IsNil(o.RolesPath) {
+	if o != nil && !IsNil(o.RolesPath) {
 		return true
 	}
 
 	return false
 }
 
-// SetRolesPath gets a reference to the given interface{} and assigns it to the RolesPath field.
-func (o *C1ApiUserV1UserView) SetRolesPath(v interface{}) {
-	o.RolesPath = v
+// SetRolesPath gets a reference to the given string and assigns it to the RolesPath field.
+func (o *C1ApiUserV1UserView) SetRolesPath(v string) {
+	o.RolesPath = &v
 }
 
 // GetUser returns the User field value if set, zero value otherwise.
@@ -224,16 +220,16 @@ func (o C1ApiUserV1UserView) MarshalJSON() ([]byte, error) {
 
 func (o C1ApiUserV1UserView) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if o.DelegatedUserPath != nil {
+	if !IsNil(o.DelegatedUserPath) {
 		toSerialize["delegatedUserPath"] = o.DelegatedUserPath
 	}
-	if o.DirectoriesPath != nil {
+	if !IsNil(o.DirectoriesPath) {
 		toSerialize["directoriesPath"] = o.DirectoriesPath
 	}
-	if o.ManagersPath != nil {
+	if !IsNil(o.ManagersPath) {
 		toSerialize["managersPath"] = o.ManagersPath
 	}
-	if o.RolesPath != nil {
+	if !IsNil(o.RolesPath) {
 		toSerialize["rolesPath"] = o.RolesPath
 	}
 	if !IsNil(o.User) {

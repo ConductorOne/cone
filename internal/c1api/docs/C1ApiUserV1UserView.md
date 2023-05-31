@@ -4,10 +4,10 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**DelegatedUserPath** | Pointer to **interface{}** | The delegatedUserPath field. | [optional] 
-**DirectoriesPath** | Pointer to **interface{}** | The directoriesPath field. | [optional] 
-**ManagersPath** | Pointer to **interface{}** | The managersPath field. | [optional] 
-**RolesPath** | Pointer to **interface{}** | The rolesPath field. | [optional] 
+**DelegatedUserPath** | Pointer to **string** | The delegatedUserPath field. | [optional] 
+**DirectoriesPath** | Pointer to **string** | The directoriesPath field. | [optional] 
+**ManagersPath** | Pointer to **string** | The managersPath field. | [optional] 
+**RolesPath** | Pointer to **string** | The rolesPath field. | [optional] 
 **User** | Pointer to [**C1ApiUserV1User**](C1ApiUserV1User.md) |  | [optional] 
 
 ## Methods
@@ -31,20 +31,20 @@ but it doesn't guarantee that properties required by API are set
 
 ### GetDelegatedUserPath
 
-`func (o *C1ApiUserV1UserView) GetDelegatedUserPath() interface{}`
+`func (o *C1ApiUserV1UserView) GetDelegatedUserPath() string`
 
 GetDelegatedUserPath returns the DelegatedUserPath field if non-nil, zero value otherwise.
 
 ### GetDelegatedUserPathOk
 
-`func (o *C1ApiUserV1UserView) GetDelegatedUserPathOk() (*interface{}, bool)`
+`func (o *C1ApiUserV1UserView) GetDelegatedUserPathOk() (*string, bool)`
 
 GetDelegatedUserPathOk returns a tuple with the DelegatedUserPath field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetDelegatedUserPath
 
-`func (o *C1ApiUserV1UserView) SetDelegatedUserPath(v interface{})`
+`func (o *C1ApiUserV1UserView) SetDelegatedUserPath(v string)`
 
 SetDelegatedUserPath sets DelegatedUserPath field to given value.
 
@@ -54,32 +54,22 @@ SetDelegatedUserPath sets DelegatedUserPath field to given value.
 
 HasDelegatedUserPath returns a boolean if a field has been set.
 
-### SetDelegatedUserPathNil
-
-`func (o *C1ApiUserV1UserView) SetDelegatedUserPathNil(b bool)`
-
- SetDelegatedUserPathNil sets the value for DelegatedUserPath to be an explicit nil
-
-### UnsetDelegatedUserPath
-`func (o *C1ApiUserV1UserView) UnsetDelegatedUserPath()`
-
-UnsetDelegatedUserPath ensures that no value is present for DelegatedUserPath, not even an explicit nil
 ### GetDirectoriesPath
 
-`func (o *C1ApiUserV1UserView) GetDirectoriesPath() interface{}`
+`func (o *C1ApiUserV1UserView) GetDirectoriesPath() string`
 
 GetDirectoriesPath returns the DirectoriesPath field if non-nil, zero value otherwise.
 
 ### GetDirectoriesPathOk
 
-`func (o *C1ApiUserV1UserView) GetDirectoriesPathOk() (*interface{}, bool)`
+`func (o *C1ApiUserV1UserView) GetDirectoriesPathOk() (*string, bool)`
 
 GetDirectoriesPathOk returns a tuple with the DirectoriesPath field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetDirectoriesPath
 
-`func (o *C1ApiUserV1UserView) SetDirectoriesPath(v interface{})`
+`func (o *C1ApiUserV1UserView) SetDirectoriesPath(v string)`
 
 SetDirectoriesPath sets DirectoriesPath field to given value.
 
@@ -89,32 +79,22 @@ SetDirectoriesPath sets DirectoriesPath field to given value.
 
 HasDirectoriesPath returns a boolean if a field has been set.
 
-### SetDirectoriesPathNil
-
-`func (o *C1ApiUserV1UserView) SetDirectoriesPathNil(b bool)`
-
- SetDirectoriesPathNil sets the value for DirectoriesPath to be an explicit nil
-
-### UnsetDirectoriesPath
-`func (o *C1ApiUserV1UserView) UnsetDirectoriesPath()`
-
-UnsetDirectoriesPath ensures that no value is present for DirectoriesPath, not even an explicit nil
 ### GetManagersPath
 
-`func (o *C1ApiUserV1UserView) GetManagersPath() interface{}`
+`func (o *C1ApiUserV1UserView) GetManagersPath() string`
 
 GetManagersPath returns the ManagersPath field if non-nil, zero value otherwise.
 
 ### GetManagersPathOk
 
-`func (o *C1ApiUserV1UserView) GetManagersPathOk() (*interface{}, bool)`
+`func (o *C1ApiUserV1UserView) GetManagersPathOk() (*string, bool)`
 
 GetManagersPathOk returns a tuple with the ManagersPath field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetManagersPath
 
-`func (o *C1ApiUserV1UserView) SetManagersPath(v interface{})`
+`func (o *C1ApiUserV1UserView) SetManagersPath(v string)`
 
 SetManagersPath sets ManagersPath field to given value.
 
@@ -124,32 +104,22 @@ SetManagersPath sets ManagersPath field to given value.
 
 HasManagersPath returns a boolean if a field has been set.
 
-### SetManagersPathNil
-
-`func (o *C1ApiUserV1UserView) SetManagersPathNil(b bool)`
-
- SetManagersPathNil sets the value for ManagersPath to be an explicit nil
-
-### UnsetManagersPath
-`func (o *C1ApiUserV1UserView) UnsetManagersPath()`
-
-UnsetManagersPath ensures that no value is present for ManagersPath, not even an explicit nil
 ### GetRolesPath
 
-`func (o *C1ApiUserV1UserView) GetRolesPath() interface{}`
+`func (o *C1ApiUserV1UserView) GetRolesPath() string`
 
 GetRolesPath returns the RolesPath field if non-nil, zero value otherwise.
 
 ### GetRolesPathOk
 
-`func (o *C1ApiUserV1UserView) GetRolesPathOk() (*interface{}, bool)`
+`func (o *C1ApiUserV1UserView) GetRolesPathOk() (*string, bool)`
 
 GetRolesPathOk returns a tuple with the RolesPath field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetRolesPath
 
-`func (o *C1ApiUserV1UserView) SetRolesPath(v interface{})`
+`func (o *C1ApiUserV1UserView) SetRolesPath(v string)`
 
 SetRolesPath sets RolesPath field to given value.
 
@@ -159,16 +129,6 @@ SetRolesPath sets RolesPath field to given value.
 
 HasRolesPath returns a boolean if a field has been set.
 
-### SetRolesPathNil
-
-`func (o *C1ApiUserV1UserView) SetRolesPathNil(b bool)`
-
- SetRolesPathNil sets the value for RolesPath to be an explicit nil
-
-### UnsetRolesPath
-`func (o *C1ApiUserV1UserView) UnsetRolesPath()`
-
-UnsetRolesPath ensures that no value is present for RolesPath, not even an explicit nil
 ### GetUser
 
 `func (o *C1ApiUserV1UserView) GetUser() C1ApiUserV1User`

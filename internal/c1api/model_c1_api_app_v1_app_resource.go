@@ -12,6 +12,7 @@ package c1api
 
 import (
 	"encoding/json"
+	"time"
 )
 
 // checks if the C1ApiAppV1AppResource type satisfies the MappedNullable interface at compile time
@@ -20,22 +21,22 @@ var _ MappedNullable = &C1ApiAppV1AppResource{}
 // C1ApiAppV1AppResource The AppResource message.
 type C1ApiAppV1AppResource struct {
 	// The appId field.
-	AppId interface{} `json:"appId,omitempty"`
+	AppId *string `json:"appId,omitempty"`
 	// The appResourceTypeId field.
-	AppResourceTypeId interface{} `json:"appResourceTypeId,omitempty"`
-	CreatedAt interface{} `json:"createdAt,omitempty"`
+	AppResourceTypeId *string `json:"appResourceTypeId,omitempty"`
+	CreatedAt *time.Time `json:"createdAt,omitempty"`
 	// The customDescription field.
-	CustomDescription interface{} `json:"customDescription,omitempty"`
-	DeletedAt interface{} `json:"deletedAt,omitempty"`
+	CustomDescription *string `json:"customDescription,omitempty"`
+	DeletedAt *time.Time `json:"deletedAt,omitempty"`
 	// The description field.
-	Description interface{} `json:"description,omitempty"`
+	Description *string `json:"description,omitempty"`
 	// The displayName field.
-	DisplayName interface{} `json:"displayName,omitempty"`
+	DisplayName *string `json:"displayName,omitempty"`
 	// The grantCount field.
-	GrantCount interface{} `json:"grantCount,omitempty"`
+	GrantCount *string `json:"grantCount,omitempty"`
 	// The id field.
-	Id interface{} `json:"id,omitempty"`
-	UpdatedAt interface{} `json:"updatedAt,omitempty"`
+	Id *string `json:"id,omitempty"`
+	UpdatedAt *time.Time `json:"updatedAt,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -58,334 +59,324 @@ func NewC1ApiAppV1AppResourceWithDefaults() *C1ApiAppV1AppResource {
 	return &this
 }
 
-// GetAppId returns the AppId field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *C1ApiAppV1AppResource) GetAppId() interface{} {
-	if o == nil {
-		var ret interface{}
+// GetAppId returns the AppId field value if set, zero value otherwise.
+func (o *C1ApiAppV1AppResource) GetAppId() string {
+	if o == nil || IsNil(o.AppId) {
+		var ret string
 		return ret
 	}
-	return o.AppId
+	return *o.AppId
 }
 
 // GetAppIdOk returns a tuple with the AppId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *C1ApiAppV1AppResource) GetAppIdOk() (*interface{}, bool) {
+func (o *C1ApiAppV1AppResource) GetAppIdOk() (*string, bool) {
 	if o == nil || IsNil(o.AppId) {
 		return nil, false
 	}
-	return &o.AppId, true
+	return o.AppId, true
 }
 
 // HasAppId returns a boolean if a field has been set.
 func (o *C1ApiAppV1AppResource) HasAppId() bool {
-	if o != nil && IsNil(o.AppId) {
+	if o != nil && !IsNil(o.AppId) {
 		return true
 	}
 
 	return false
 }
 
-// SetAppId gets a reference to the given interface{} and assigns it to the AppId field.
-func (o *C1ApiAppV1AppResource) SetAppId(v interface{}) {
-	o.AppId = v
+// SetAppId gets a reference to the given string and assigns it to the AppId field.
+func (o *C1ApiAppV1AppResource) SetAppId(v string) {
+	o.AppId = &v
 }
 
-// GetAppResourceTypeId returns the AppResourceTypeId field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *C1ApiAppV1AppResource) GetAppResourceTypeId() interface{} {
-	if o == nil {
-		var ret interface{}
+// GetAppResourceTypeId returns the AppResourceTypeId field value if set, zero value otherwise.
+func (o *C1ApiAppV1AppResource) GetAppResourceTypeId() string {
+	if o == nil || IsNil(o.AppResourceTypeId) {
+		var ret string
 		return ret
 	}
-	return o.AppResourceTypeId
+	return *o.AppResourceTypeId
 }
 
 // GetAppResourceTypeIdOk returns a tuple with the AppResourceTypeId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *C1ApiAppV1AppResource) GetAppResourceTypeIdOk() (*interface{}, bool) {
+func (o *C1ApiAppV1AppResource) GetAppResourceTypeIdOk() (*string, bool) {
 	if o == nil || IsNil(o.AppResourceTypeId) {
 		return nil, false
 	}
-	return &o.AppResourceTypeId, true
+	return o.AppResourceTypeId, true
 }
 
 // HasAppResourceTypeId returns a boolean if a field has been set.
 func (o *C1ApiAppV1AppResource) HasAppResourceTypeId() bool {
-	if o != nil && IsNil(o.AppResourceTypeId) {
+	if o != nil && !IsNil(o.AppResourceTypeId) {
 		return true
 	}
 
 	return false
 }
 
-// SetAppResourceTypeId gets a reference to the given interface{} and assigns it to the AppResourceTypeId field.
-func (o *C1ApiAppV1AppResource) SetAppResourceTypeId(v interface{}) {
-	o.AppResourceTypeId = v
+// SetAppResourceTypeId gets a reference to the given string and assigns it to the AppResourceTypeId field.
+func (o *C1ApiAppV1AppResource) SetAppResourceTypeId(v string) {
+	o.AppResourceTypeId = &v
 }
 
-// GetCreatedAt returns the CreatedAt field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *C1ApiAppV1AppResource) GetCreatedAt() interface{} {
-	if o == nil {
-		var ret interface{}
+// GetCreatedAt returns the CreatedAt field value if set, zero value otherwise.
+func (o *C1ApiAppV1AppResource) GetCreatedAt() time.Time {
+	if o == nil || IsNil(o.CreatedAt) {
+		var ret time.Time
 		return ret
 	}
-	return o.CreatedAt
+	return *o.CreatedAt
 }
 
 // GetCreatedAtOk returns a tuple with the CreatedAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *C1ApiAppV1AppResource) GetCreatedAtOk() (*interface{}, bool) {
+func (o *C1ApiAppV1AppResource) GetCreatedAtOk() (*time.Time, bool) {
 	if o == nil || IsNil(o.CreatedAt) {
 		return nil, false
 	}
-	return &o.CreatedAt, true
+	return o.CreatedAt, true
 }
 
 // HasCreatedAt returns a boolean if a field has been set.
 func (o *C1ApiAppV1AppResource) HasCreatedAt() bool {
-	if o != nil && IsNil(o.CreatedAt) {
+	if o != nil && !IsNil(o.CreatedAt) {
 		return true
 	}
 
 	return false
 }
 
-// SetCreatedAt gets a reference to the given interface{} and assigns it to the CreatedAt field.
-func (o *C1ApiAppV1AppResource) SetCreatedAt(v interface{}) {
-	o.CreatedAt = v
+// SetCreatedAt gets a reference to the given time.Time and assigns it to the CreatedAt field.
+func (o *C1ApiAppV1AppResource) SetCreatedAt(v time.Time) {
+	o.CreatedAt = &v
 }
 
-// GetCustomDescription returns the CustomDescription field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *C1ApiAppV1AppResource) GetCustomDescription() interface{} {
-	if o == nil {
-		var ret interface{}
+// GetCustomDescription returns the CustomDescription field value if set, zero value otherwise.
+func (o *C1ApiAppV1AppResource) GetCustomDescription() string {
+	if o == nil || IsNil(o.CustomDescription) {
+		var ret string
 		return ret
 	}
-	return o.CustomDescription
+	return *o.CustomDescription
 }
 
 // GetCustomDescriptionOk returns a tuple with the CustomDescription field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *C1ApiAppV1AppResource) GetCustomDescriptionOk() (*interface{}, bool) {
+func (o *C1ApiAppV1AppResource) GetCustomDescriptionOk() (*string, bool) {
 	if o == nil || IsNil(o.CustomDescription) {
 		return nil, false
 	}
-	return &o.CustomDescription, true
+	return o.CustomDescription, true
 }
 
 // HasCustomDescription returns a boolean if a field has been set.
 func (o *C1ApiAppV1AppResource) HasCustomDescription() bool {
-	if o != nil && IsNil(o.CustomDescription) {
+	if o != nil && !IsNil(o.CustomDescription) {
 		return true
 	}
 
 	return false
 }
 
-// SetCustomDescription gets a reference to the given interface{} and assigns it to the CustomDescription field.
-func (o *C1ApiAppV1AppResource) SetCustomDescription(v interface{}) {
-	o.CustomDescription = v
+// SetCustomDescription gets a reference to the given string and assigns it to the CustomDescription field.
+func (o *C1ApiAppV1AppResource) SetCustomDescription(v string) {
+	o.CustomDescription = &v
 }
 
-// GetDeletedAt returns the DeletedAt field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *C1ApiAppV1AppResource) GetDeletedAt() interface{} {
-	if o == nil {
-		var ret interface{}
+// GetDeletedAt returns the DeletedAt field value if set, zero value otherwise.
+func (o *C1ApiAppV1AppResource) GetDeletedAt() time.Time {
+	if o == nil || IsNil(o.DeletedAt) {
+		var ret time.Time
 		return ret
 	}
-	return o.DeletedAt
+	return *o.DeletedAt
 }
 
 // GetDeletedAtOk returns a tuple with the DeletedAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *C1ApiAppV1AppResource) GetDeletedAtOk() (*interface{}, bool) {
+func (o *C1ApiAppV1AppResource) GetDeletedAtOk() (*time.Time, bool) {
 	if o == nil || IsNil(o.DeletedAt) {
 		return nil, false
 	}
-	return &o.DeletedAt, true
+	return o.DeletedAt, true
 }
 
 // HasDeletedAt returns a boolean if a field has been set.
 func (o *C1ApiAppV1AppResource) HasDeletedAt() bool {
-	if o != nil && IsNil(o.DeletedAt) {
+	if o != nil && !IsNil(o.DeletedAt) {
 		return true
 	}
 
 	return false
 }
 
-// SetDeletedAt gets a reference to the given interface{} and assigns it to the DeletedAt field.
-func (o *C1ApiAppV1AppResource) SetDeletedAt(v interface{}) {
-	o.DeletedAt = v
+// SetDeletedAt gets a reference to the given time.Time and assigns it to the DeletedAt field.
+func (o *C1ApiAppV1AppResource) SetDeletedAt(v time.Time) {
+	o.DeletedAt = &v
 }
 
-// GetDescription returns the Description field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *C1ApiAppV1AppResource) GetDescription() interface{} {
-	if o == nil {
-		var ret interface{}
+// GetDescription returns the Description field value if set, zero value otherwise.
+func (o *C1ApiAppV1AppResource) GetDescription() string {
+	if o == nil || IsNil(o.Description) {
+		var ret string
 		return ret
 	}
-	return o.Description
+	return *o.Description
 }
 
 // GetDescriptionOk returns a tuple with the Description field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *C1ApiAppV1AppResource) GetDescriptionOk() (*interface{}, bool) {
+func (o *C1ApiAppV1AppResource) GetDescriptionOk() (*string, bool) {
 	if o == nil || IsNil(o.Description) {
 		return nil, false
 	}
-	return &o.Description, true
+	return o.Description, true
 }
 
 // HasDescription returns a boolean if a field has been set.
 func (o *C1ApiAppV1AppResource) HasDescription() bool {
-	if o != nil && IsNil(o.Description) {
+	if o != nil && !IsNil(o.Description) {
 		return true
 	}
 
 	return false
 }
 
-// SetDescription gets a reference to the given interface{} and assigns it to the Description field.
-func (o *C1ApiAppV1AppResource) SetDescription(v interface{}) {
-	o.Description = v
+// SetDescription gets a reference to the given string and assigns it to the Description field.
+func (o *C1ApiAppV1AppResource) SetDescription(v string) {
+	o.Description = &v
 }
 
-// GetDisplayName returns the DisplayName field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *C1ApiAppV1AppResource) GetDisplayName() interface{} {
-	if o == nil {
-		var ret interface{}
+// GetDisplayName returns the DisplayName field value if set, zero value otherwise.
+func (o *C1ApiAppV1AppResource) GetDisplayName() string {
+	if o == nil || IsNil(o.DisplayName) {
+		var ret string
 		return ret
 	}
-	return o.DisplayName
+	return *o.DisplayName
 }
 
 // GetDisplayNameOk returns a tuple with the DisplayName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *C1ApiAppV1AppResource) GetDisplayNameOk() (*interface{}, bool) {
+func (o *C1ApiAppV1AppResource) GetDisplayNameOk() (*string, bool) {
 	if o == nil || IsNil(o.DisplayName) {
 		return nil, false
 	}
-	return &o.DisplayName, true
+	return o.DisplayName, true
 }
 
 // HasDisplayName returns a boolean if a field has been set.
 func (o *C1ApiAppV1AppResource) HasDisplayName() bool {
-	if o != nil && IsNil(o.DisplayName) {
+	if o != nil && !IsNil(o.DisplayName) {
 		return true
 	}
 
 	return false
 }
 
-// SetDisplayName gets a reference to the given interface{} and assigns it to the DisplayName field.
-func (o *C1ApiAppV1AppResource) SetDisplayName(v interface{}) {
-	o.DisplayName = v
+// SetDisplayName gets a reference to the given string and assigns it to the DisplayName field.
+func (o *C1ApiAppV1AppResource) SetDisplayName(v string) {
+	o.DisplayName = &v
 }
 
-// GetGrantCount returns the GrantCount field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *C1ApiAppV1AppResource) GetGrantCount() interface{} {
-	if o == nil {
-		var ret interface{}
+// GetGrantCount returns the GrantCount field value if set, zero value otherwise.
+func (o *C1ApiAppV1AppResource) GetGrantCount() string {
+	if o == nil || IsNil(o.GrantCount) {
+		var ret string
 		return ret
 	}
-	return o.GrantCount
+	return *o.GrantCount
 }
 
 // GetGrantCountOk returns a tuple with the GrantCount field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *C1ApiAppV1AppResource) GetGrantCountOk() (*interface{}, bool) {
+func (o *C1ApiAppV1AppResource) GetGrantCountOk() (*string, bool) {
 	if o == nil || IsNil(o.GrantCount) {
 		return nil, false
 	}
-	return &o.GrantCount, true
+	return o.GrantCount, true
 }
 
 // HasGrantCount returns a boolean if a field has been set.
 func (o *C1ApiAppV1AppResource) HasGrantCount() bool {
-	if o != nil && IsNil(o.GrantCount) {
+	if o != nil && !IsNil(o.GrantCount) {
 		return true
 	}
 
 	return false
 }
 
-// SetGrantCount gets a reference to the given interface{} and assigns it to the GrantCount field.
-func (o *C1ApiAppV1AppResource) SetGrantCount(v interface{}) {
-	o.GrantCount = v
+// SetGrantCount gets a reference to the given string and assigns it to the GrantCount field.
+func (o *C1ApiAppV1AppResource) SetGrantCount(v string) {
+	o.GrantCount = &v
 }
 
-// GetId returns the Id field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *C1ApiAppV1AppResource) GetId() interface{} {
-	if o == nil {
-		var ret interface{}
+// GetId returns the Id field value if set, zero value otherwise.
+func (o *C1ApiAppV1AppResource) GetId() string {
+	if o == nil || IsNil(o.Id) {
+		var ret string
 		return ret
 	}
-	return o.Id
+	return *o.Id
 }
 
 // GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *C1ApiAppV1AppResource) GetIdOk() (*interface{}, bool) {
+func (o *C1ApiAppV1AppResource) GetIdOk() (*string, bool) {
 	if o == nil || IsNil(o.Id) {
 		return nil, false
 	}
-	return &o.Id, true
+	return o.Id, true
 }
 
 // HasId returns a boolean if a field has been set.
 func (o *C1ApiAppV1AppResource) HasId() bool {
-	if o != nil && IsNil(o.Id) {
+	if o != nil && !IsNil(o.Id) {
 		return true
 	}
 
 	return false
 }
 
-// SetId gets a reference to the given interface{} and assigns it to the Id field.
-func (o *C1ApiAppV1AppResource) SetId(v interface{}) {
-	o.Id = v
+// SetId gets a reference to the given string and assigns it to the Id field.
+func (o *C1ApiAppV1AppResource) SetId(v string) {
+	o.Id = &v
 }
 
-// GetUpdatedAt returns the UpdatedAt field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *C1ApiAppV1AppResource) GetUpdatedAt() interface{} {
-	if o == nil {
-		var ret interface{}
+// GetUpdatedAt returns the UpdatedAt field value if set, zero value otherwise.
+func (o *C1ApiAppV1AppResource) GetUpdatedAt() time.Time {
+	if o == nil || IsNil(o.UpdatedAt) {
+		var ret time.Time
 		return ret
 	}
-	return o.UpdatedAt
+	return *o.UpdatedAt
 }
 
 // GetUpdatedAtOk returns a tuple with the UpdatedAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *C1ApiAppV1AppResource) GetUpdatedAtOk() (*interface{}, bool) {
+func (o *C1ApiAppV1AppResource) GetUpdatedAtOk() (*time.Time, bool) {
 	if o == nil || IsNil(o.UpdatedAt) {
 		return nil, false
 	}
-	return &o.UpdatedAt, true
+	return o.UpdatedAt, true
 }
 
 // HasUpdatedAt returns a boolean if a field has been set.
 func (o *C1ApiAppV1AppResource) HasUpdatedAt() bool {
-	if o != nil && IsNil(o.UpdatedAt) {
+	if o != nil && !IsNil(o.UpdatedAt) {
 		return true
 	}
 
 	return false
 }
 
-// SetUpdatedAt gets a reference to the given interface{} and assigns it to the UpdatedAt field.
-func (o *C1ApiAppV1AppResource) SetUpdatedAt(v interface{}) {
-	o.UpdatedAt = v
+// SetUpdatedAt gets a reference to the given time.Time and assigns it to the UpdatedAt field.
+func (o *C1ApiAppV1AppResource) SetUpdatedAt(v time.Time) {
+	o.UpdatedAt = &v
 }
 
 func (o C1ApiAppV1AppResource) MarshalJSON() ([]byte, error) {
@@ -398,34 +389,34 @@ func (o C1ApiAppV1AppResource) MarshalJSON() ([]byte, error) {
 
 func (o C1ApiAppV1AppResource) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if o.AppId != nil {
+	if !IsNil(o.AppId) {
 		toSerialize["appId"] = o.AppId
 	}
-	if o.AppResourceTypeId != nil {
+	if !IsNil(o.AppResourceTypeId) {
 		toSerialize["appResourceTypeId"] = o.AppResourceTypeId
 	}
-	if o.CreatedAt != nil {
+	if !IsNil(o.CreatedAt) {
 		toSerialize["createdAt"] = o.CreatedAt
 	}
-	if o.CustomDescription != nil {
+	if !IsNil(o.CustomDescription) {
 		toSerialize["customDescription"] = o.CustomDescription
 	}
-	if o.DeletedAt != nil {
+	if !IsNil(o.DeletedAt) {
 		toSerialize["deletedAt"] = o.DeletedAt
 	}
-	if o.Description != nil {
+	if !IsNil(o.Description) {
 		toSerialize["description"] = o.Description
 	}
-	if o.DisplayName != nil {
+	if !IsNil(o.DisplayName) {
 		toSerialize["displayName"] = o.DisplayName
 	}
-	if o.GrantCount != nil {
+	if !IsNil(o.GrantCount) {
 		toSerialize["grantCount"] = o.GrantCount
 	}
-	if o.Id != nil {
+	if !IsNil(o.Id) {
 		toSerialize["id"] = o.Id
 	}
-	if o.UpdatedAt != nil {
+	if !IsNil(o.UpdatedAt) {
 		toSerialize["updatedAt"] = o.UpdatedAt
 	}
 

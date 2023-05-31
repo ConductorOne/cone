@@ -20,9 +20,9 @@ var _ MappedNullable = &C1ApiPolicyV1ManualProvision{}
 // C1ApiPolicyV1ManualProvision The ManualProvision message.
 type C1ApiPolicyV1ManualProvision struct {
 	// The instructions field.
-	Instructions interface{} `json:"instructions,omitempty"`
+	Instructions *string `json:"instructions,omitempty"`
 	// The userIds field.
-	UserIds interface{} `json:"userIds,omitempty"`
+	UserIds []string `json:"userIds,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -45,43 +45,42 @@ func NewC1ApiPolicyV1ManualProvisionWithDefaults() *C1ApiPolicyV1ManualProvision
 	return &this
 }
 
-// GetInstructions returns the Instructions field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *C1ApiPolicyV1ManualProvision) GetInstructions() interface{} {
-	if o == nil {
-		var ret interface{}
+// GetInstructions returns the Instructions field value if set, zero value otherwise.
+func (o *C1ApiPolicyV1ManualProvision) GetInstructions() string {
+	if o == nil || IsNil(o.Instructions) {
+		var ret string
 		return ret
 	}
-	return o.Instructions
+	return *o.Instructions
 }
 
 // GetInstructionsOk returns a tuple with the Instructions field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *C1ApiPolicyV1ManualProvision) GetInstructionsOk() (*interface{}, bool) {
+func (o *C1ApiPolicyV1ManualProvision) GetInstructionsOk() (*string, bool) {
 	if o == nil || IsNil(o.Instructions) {
 		return nil, false
 	}
-	return &o.Instructions, true
+	return o.Instructions, true
 }
 
 // HasInstructions returns a boolean if a field has been set.
 func (o *C1ApiPolicyV1ManualProvision) HasInstructions() bool {
-	if o != nil && IsNil(o.Instructions) {
+	if o != nil && !IsNil(o.Instructions) {
 		return true
 	}
 
 	return false
 }
 
-// SetInstructions gets a reference to the given interface{} and assigns it to the Instructions field.
-func (o *C1ApiPolicyV1ManualProvision) SetInstructions(v interface{}) {
-	o.Instructions = v
+// SetInstructions gets a reference to the given string and assigns it to the Instructions field.
+func (o *C1ApiPolicyV1ManualProvision) SetInstructions(v string) {
+	o.Instructions = &v
 }
 
 // GetUserIds returns the UserIds field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *C1ApiPolicyV1ManualProvision) GetUserIds() interface{} {
+func (o *C1ApiPolicyV1ManualProvision) GetUserIds() []string {
 	if o == nil {
-		var ret interface{}
+		var ret []string
 		return ret
 	}
 	return o.UserIds
@@ -90,11 +89,11 @@ func (o *C1ApiPolicyV1ManualProvision) GetUserIds() interface{} {
 // GetUserIdsOk returns a tuple with the UserIds field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *C1ApiPolicyV1ManualProvision) GetUserIdsOk() (*interface{}, bool) {
+func (o *C1ApiPolicyV1ManualProvision) GetUserIdsOk() ([]string, bool) {
 	if o == nil || IsNil(o.UserIds) {
 		return nil, false
 	}
-	return &o.UserIds, true
+	return o.UserIds, true
 }
 
 // HasUserIds returns a boolean if a field has been set.
@@ -106,8 +105,8 @@ func (o *C1ApiPolicyV1ManualProvision) HasUserIds() bool {
 	return false
 }
 
-// SetUserIds gets a reference to the given interface{} and assigns it to the UserIds field.
-func (o *C1ApiPolicyV1ManualProvision) SetUserIds(v interface{}) {
+// SetUserIds gets a reference to the given []string and assigns it to the UserIds field.
+func (o *C1ApiPolicyV1ManualProvision) SetUserIds(v []string) {
 	o.UserIds = v
 }
 
@@ -121,7 +120,7 @@ func (o C1ApiPolicyV1ManualProvision) MarshalJSON() ([]byte, error) {
 
 func (o C1ApiPolicyV1ManualProvision) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if o.Instructions != nil {
+	if !IsNil(o.Instructions) {
 		toSerialize["instructions"] = o.Instructions
 	}
 	if o.UserIds != nil {

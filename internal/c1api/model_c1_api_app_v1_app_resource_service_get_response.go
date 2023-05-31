@@ -21,7 +21,7 @@ var _ MappedNullable = &C1ApiAppV1AppResourceServiceGetResponse{}
 type C1ApiAppV1AppResourceServiceGetResponse struct {
 	AppResourceView *C1ApiAppV1AppResourceView `json:"appResourceView,omitempty"`
 	// The expanded field.
-	Expanded interface{} `json:"expanded,omitempty"`
+	Expanded []C1ApiAppV1AppResourceServiceGetResponseExpandedInner `json:"expanded,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -77,9 +77,9 @@ func (o *C1ApiAppV1AppResourceServiceGetResponse) SetAppResourceView(v C1ApiAppV
 }
 
 // GetExpanded returns the Expanded field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *C1ApiAppV1AppResourceServiceGetResponse) GetExpanded() interface{} {
+func (o *C1ApiAppV1AppResourceServiceGetResponse) GetExpanded() []C1ApiAppV1AppResourceServiceGetResponseExpandedInner {
 	if o == nil {
-		var ret interface{}
+		var ret []C1ApiAppV1AppResourceServiceGetResponseExpandedInner
 		return ret
 	}
 	return o.Expanded
@@ -88,11 +88,11 @@ func (o *C1ApiAppV1AppResourceServiceGetResponse) GetExpanded() interface{} {
 // GetExpandedOk returns a tuple with the Expanded field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *C1ApiAppV1AppResourceServiceGetResponse) GetExpandedOk() (*interface{}, bool) {
+func (o *C1ApiAppV1AppResourceServiceGetResponse) GetExpandedOk() ([]C1ApiAppV1AppResourceServiceGetResponseExpandedInner, bool) {
 	if o == nil || IsNil(o.Expanded) {
 		return nil, false
 	}
-	return &o.Expanded, true
+	return o.Expanded, true
 }
 
 // HasExpanded returns a boolean if a field has been set.
@@ -104,8 +104,8 @@ func (o *C1ApiAppV1AppResourceServiceGetResponse) HasExpanded() bool {
 	return false
 }
 
-// SetExpanded gets a reference to the given interface{} and assigns it to the Expanded field.
-func (o *C1ApiAppV1AppResourceServiceGetResponse) SetExpanded(v interface{}) {
+// SetExpanded gets a reference to the given []C1ApiAppV1AppResourceServiceGetResponseExpandedInner and assigns it to the Expanded field.
+func (o *C1ApiAppV1AppResourceServiceGetResponse) SetExpanded(v []C1ApiAppV1AppResourceServiceGetResponseExpandedInner) {
 	o.Expanded = v
 }
 

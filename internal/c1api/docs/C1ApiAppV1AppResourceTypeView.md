@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**AppPath** | Pointer to **interface{}** | The appPath field. | [optional] 
+**AppPath** | Pointer to **string** | The appPath field. | [optional] 
 **AppResourceType** | Pointer to [**C1ApiAppV1AppResourceType**](C1ApiAppV1AppResourceType.md) |  | [optional] 
 
 ## Methods
@@ -28,20 +28,20 @@ but it doesn't guarantee that properties required by API are set
 
 ### GetAppPath
 
-`func (o *C1ApiAppV1AppResourceTypeView) GetAppPath() interface{}`
+`func (o *C1ApiAppV1AppResourceTypeView) GetAppPath() string`
 
 GetAppPath returns the AppPath field if non-nil, zero value otherwise.
 
 ### GetAppPathOk
 
-`func (o *C1ApiAppV1AppResourceTypeView) GetAppPathOk() (*interface{}, bool)`
+`func (o *C1ApiAppV1AppResourceTypeView) GetAppPathOk() (*string, bool)`
 
 GetAppPathOk returns a tuple with the AppPath field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetAppPath
 
-`func (o *C1ApiAppV1AppResourceTypeView) SetAppPath(v interface{})`
+`func (o *C1ApiAppV1AppResourceTypeView) SetAppPath(v string)`
 
 SetAppPath sets AppPath field to given value.
 
@@ -51,16 +51,6 @@ SetAppPath sets AppPath field to given value.
 
 HasAppPath returns a boolean if a field has been set.
 
-### SetAppPathNil
-
-`func (o *C1ApiAppV1AppResourceTypeView) SetAppPathNil(b bool)`
-
- SetAppPathNil sets the value for AppPath to be an explicit nil
-
-### UnsetAppPath
-`func (o *C1ApiAppV1AppResourceTypeView) UnsetAppPath()`
-
-UnsetAppPath ensures that no value is present for AppPath, not even an explicit nil
 ### GetAppResourceType
 
 `func (o *C1ApiAppV1AppResourceTypeView) GetAppResourceType() C1ApiAppV1AppResourceType`

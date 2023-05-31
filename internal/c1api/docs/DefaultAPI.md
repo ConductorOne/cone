@@ -7,7 +7,7 @@ Method | HTTP request | Description
 [**C1ApiAppV1AppResourceServiceGet**](DefaultAPI.md#C1ApiAppV1AppResourceServiceGet) | **Get** /api/v1/app_resource/{app_id}/{app_resource_type_id}/{id} | 
 [**C1ApiAppV1AppResourceTypeServiceGet**](DefaultAPI.md#C1ApiAppV1AppResourceTypeServiceGet) | **Get** /api/v1/app_resource_type/{app_id}/{id} | 
 [**C1ApiAuthV1AuthIntrospect**](DefaultAPI.md#C1ApiAuthV1AuthIntrospect) | **Get** /api/v1/auth/introspect | 
-[**C1ApiRequestcatalogV2RequestCatalogSearchServiceSearchEntitlements**](DefaultAPI.md#C1ApiRequestcatalogV2RequestCatalogSearchServiceSearchEntitlements) | **Post** /api/v1/entitlement/search | 
+[**C1ApiRequestcatalogV1RequestCatalogSearchServiceSearchEntitlements**](DefaultAPI.md#C1ApiRequestcatalogV1RequestCatalogSearchServiceSearchEntitlements) | **Post** /api/v1/entitlement/search | 
 [**C1ApiUserV1UserServiceGet**](DefaultAPI.md#C1ApiUserV1UserServiceGet) | **Get** /api/v1/user/get/{id} | 
 
 
@@ -33,9 +33,9 @@ import (
 )
 
 func main() {
-    appId := TODO // interface{} | 
-    appResourceTypeId := TODO // interface{} | 
-    id := TODO // interface{} | 
+    appId := "appId_example" // string | 
+    appResourceTypeId := "appResourceTypeId_example" // string | 
+    id := "id_example" // string | 
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -55,9 +55,9 @@ func main() {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**appId** | [**interface{}**](.md) |  | 
-**appResourceTypeId** | [**interface{}**](.md) |  | 
-**id** | [**interface{}**](.md) |  | 
+**appId** | **string** |  | 
+**appResourceTypeId** | **string** |  | 
+**id** | **string** |  | 
 
 ### Other Parameters
 
@@ -109,8 +109,8 @@ import (
 )
 
 func main() {
-    appId := TODO // interface{} | 
-    id := TODO // interface{} | 
+    appId := "appId_example" // string | 
+    id := "id_example" // string | 
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -130,8 +130,8 @@ func main() {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**appId** | [**interface{}**](.md) |  | 
-**id** | [**interface{}**](.md) |  | 
+**appId** | **string** |  | 
+**id** | **string** |  | 
 
 ### Other Parameters
 
@@ -222,9 +222,9 @@ No authorization required
 [[Back to README]](../README.md)
 
 
-## C1ApiRequestcatalogV2RequestCatalogSearchServiceSearchEntitlements
+## C1ApiRequestcatalogV1RequestCatalogSearchServiceSearchEntitlements
 
-> C1ApiRequestcatalogV2SearchEntitlementsResponse C1ApiRequestcatalogV2RequestCatalogSearchServiceSearchEntitlements(ctx).C1ApiRequestcatalogV2SearchEntitlementsRequest(c1ApiRequestcatalogV2SearchEntitlementsRequest).Execute()
+> C1ApiRequestcatalogV1RequestCatalogSearchServiceSearchEntitlementsResponse C1ApiRequestcatalogV1RequestCatalogSearchServiceSearchEntitlements(ctx).C1ApiRequestcatalogV1RequestCatalogSearchServiceSearchEntitlementsRequest(c1ApiRequestcatalogV1RequestCatalogSearchServiceSearchEntitlementsRequest).Execute()
 
 
 
@@ -243,17 +243,17 @@ import (
 )
 
 func main() {
-    c1ApiRequestcatalogV2SearchEntitlementsRequest := *openapiclient.NewC1ApiRequestcatalogV2SearchEntitlementsRequest() // C1ApiRequestcatalogV2SearchEntitlementsRequest |  (optional)
+    c1ApiRequestcatalogV1RequestCatalogSearchServiceSearchEntitlementsRequest := *openapiclient.NewC1ApiRequestcatalogV1RequestCatalogSearchServiceSearchEntitlementsRequest() // C1ApiRequestcatalogV1RequestCatalogSearchServiceSearchEntitlementsRequest |  (optional)
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultAPI.C1ApiRequestcatalogV2RequestCatalogSearchServiceSearchEntitlements(context.Background()).C1ApiRequestcatalogV2SearchEntitlementsRequest(c1ApiRequestcatalogV2SearchEntitlementsRequest).Execute()
+    resp, r, err := apiClient.DefaultAPI.C1ApiRequestcatalogV1RequestCatalogSearchServiceSearchEntitlements(context.Background()).C1ApiRequestcatalogV1RequestCatalogSearchServiceSearchEntitlementsRequest(c1ApiRequestcatalogV1RequestCatalogSearchServiceSearchEntitlementsRequest).Execute()
     if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.C1ApiRequestcatalogV2RequestCatalogSearchServiceSearchEntitlements``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.C1ApiRequestcatalogV1RequestCatalogSearchServiceSearchEntitlements``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
     }
-    // response from `C1ApiRequestcatalogV2RequestCatalogSearchServiceSearchEntitlements`: C1ApiRequestcatalogV2SearchEntitlementsResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.C1ApiRequestcatalogV2RequestCatalogSearchServiceSearchEntitlements`: %v\n", resp)
+    // response from `C1ApiRequestcatalogV1RequestCatalogSearchServiceSearchEntitlements`: C1ApiRequestcatalogV1RequestCatalogSearchServiceSearchEntitlementsResponse
+    fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.C1ApiRequestcatalogV1RequestCatalogSearchServiceSearchEntitlements`: %v\n", resp)
 }
 ```
 
@@ -263,16 +263,16 @@ func main() {
 
 ### Other Parameters
 
-Other parameters are passed through a pointer to a apiC1ApiRequestcatalogV2RequestCatalogSearchServiceSearchEntitlementsRequest struct via the builder pattern
+Other parameters are passed through a pointer to a apiC1ApiRequestcatalogV1RequestCatalogSearchServiceSearchEntitlementsRequest struct via the builder pattern
 
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **c1ApiRequestcatalogV2SearchEntitlementsRequest** | [**C1ApiRequestcatalogV2SearchEntitlementsRequest**](C1ApiRequestcatalogV2SearchEntitlementsRequest.md) |  | 
+ **c1ApiRequestcatalogV1RequestCatalogSearchServiceSearchEntitlementsRequest** | [**C1ApiRequestcatalogV1RequestCatalogSearchServiceSearchEntitlementsRequest**](C1ApiRequestcatalogV1RequestCatalogSearchServiceSearchEntitlementsRequest.md) |  | 
 
 ### Return type
 
-[**C1ApiRequestcatalogV2SearchEntitlementsResponse**](C1ApiRequestcatalogV2SearchEntitlementsResponse.md)
+[**C1ApiRequestcatalogV1RequestCatalogSearchServiceSearchEntitlementsResponse**](C1ApiRequestcatalogV1RequestCatalogSearchServiceSearchEntitlementsResponse.md)
 
 ### Authorization
 
@@ -309,7 +309,7 @@ import (
 )
 
 func main() {
-    id := TODO // interface{} | 
+    id := "id_example" // string | 
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -329,7 +329,7 @@ func main() {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**id** | [**interface{}**](.md) |  | 
+**id** | **string** |  | 
 
 ### Other Parameters
 

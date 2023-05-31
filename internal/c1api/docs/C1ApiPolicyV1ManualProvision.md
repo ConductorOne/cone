@@ -4,8 +4,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Instructions** | Pointer to **interface{}** | The instructions field. | [optional] 
-**UserIds** | Pointer to **interface{}** | The userIds field. | [optional] 
+**Instructions** | Pointer to **string** | The instructions field. | [optional] 
+**UserIds** | Pointer to **[]string** | The userIds field. | [optional] 
 
 ## Methods
 
@@ -28,20 +28,20 @@ but it doesn't guarantee that properties required by API are set
 
 ### GetInstructions
 
-`func (o *C1ApiPolicyV1ManualProvision) GetInstructions() interface{}`
+`func (o *C1ApiPolicyV1ManualProvision) GetInstructions() string`
 
 GetInstructions returns the Instructions field if non-nil, zero value otherwise.
 
 ### GetInstructionsOk
 
-`func (o *C1ApiPolicyV1ManualProvision) GetInstructionsOk() (*interface{}, bool)`
+`func (o *C1ApiPolicyV1ManualProvision) GetInstructionsOk() (*string, bool)`
 
 GetInstructionsOk returns a tuple with the Instructions field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetInstructions
 
-`func (o *C1ApiPolicyV1ManualProvision) SetInstructions(v interface{})`
+`func (o *C1ApiPolicyV1ManualProvision) SetInstructions(v string)`
 
 SetInstructions sets Instructions field to given value.
 
@@ -51,32 +51,22 @@ SetInstructions sets Instructions field to given value.
 
 HasInstructions returns a boolean if a field has been set.
 
-### SetInstructionsNil
-
-`func (o *C1ApiPolicyV1ManualProvision) SetInstructionsNil(b bool)`
-
- SetInstructionsNil sets the value for Instructions to be an explicit nil
-
-### UnsetInstructions
-`func (o *C1ApiPolicyV1ManualProvision) UnsetInstructions()`
-
-UnsetInstructions ensures that no value is present for Instructions, not even an explicit nil
 ### GetUserIds
 
-`func (o *C1ApiPolicyV1ManualProvision) GetUserIds() interface{}`
+`func (o *C1ApiPolicyV1ManualProvision) GetUserIds() []string`
 
 GetUserIds returns the UserIds field if non-nil, zero value otherwise.
 
 ### GetUserIdsOk
 
-`func (o *C1ApiPolicyV1ManualProvision) GetUserIdsOk() (*interface{}, bool)`
+`func (o *C1ApiPolicyV1ManualProvision) GetUserIdsOk() (*[]string, bool)`
 
 GetUserIdsOk returns a tuple with the UserIds field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetUserIds
 
-`func (o *C1ApiPolicyV1ManualProvision) SetUserIds(v interface{})`
+`func (o *C1ApiPolicyV1ManualProvision) SetUserIds(v []string)`
 
 SetUserIds sets UserIds field to given value.
 

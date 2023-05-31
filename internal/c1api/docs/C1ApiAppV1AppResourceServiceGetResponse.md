@@ -5,7 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **AppResourceView** | Pointer to [**C1ApiAppV1AppResourceView**](C1ApiAppV1AppResourceView.md) |  | [optional] 
-**Expanded** | Pointer to **interface{}** | The expanded field. | [optional] 
+**Expanded** | Pointer to [**[]C1ApiAppV1AppResourceServiceGetResponseExpandedInner**](C1ApiAppV1AppResourceServiceGetResponseExpandedInner.md) | The expanded field. | [optional] 
 
 ## Methods
 
@@ -53,20 +53,20 @@ HasAppResourceView returns a boolean if a field has been set.
 
 ### GetExpanded
 
-`func (o *C1ApiAppV1AppResourceServiceGetResponse) GetExpanded() interface{}`
+`func (o *C1ApiAppV1AppResourceServiceGetResponse) GetExpanded() []C1ApiAppV1AppResourceServiceGetResponseExpandedInner`
 
 GetExpanded returns the Expanded field if non-nil, zero value otherwise.
 
 ### GetExpandedOk
 
-`func (o *C1ApiAppV1AppResourceServiceGetResponse) GetExpandedOk() (*interface{}, bool)`
+`func (o *C1ApiAppV1AppResourceServiceGetResponse) GetExpandedOk() (*[]C1ApiAppV1AppResourceServiceGetResponseExpandedInner, bool)`
 
 GetExpandedOk returns a tuple with the Expanded field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetExpanded
 
-`func (o *C1ApiAppV1AppResourceServiceGetResponse) SetExpanded(v interface{})`
+`func (o *C1ApiAppV1AppResourceServiceGetResponse) SetExpanded(v []C1ApiAppV1AppResourceServiceGetResponseExpandedInner)`
 
 SetExpanded sets Expanded field to given value.
 

@@ -20,7 +20,7 @@ var _ MappedNullable = &C1ApiAppV1AppResourceTypeView{}
 // C1ApiAppV1AppResourceTypeView The AppResourceTypeView message.
 type C1ApiAppV1AppResourceTypeView struct {
 	// The appPath field.
-	AppPath interface{} `json:"appPath,omitempty"`
+	AppPath *string `json:"appPath,omitempty"`
 	AppResourceType *C1ApiAppV1AppResourceType `json:"appResourceType,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
@@ -44,37 +44,36 @@ func NewC1ApiAppV1AppResourceTypeViewWithDefaults() *C1ApiAppV1AppResourceTypeVi
 	return &this
 }
 
-// GetAppPath returns the AppPath field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *C1ApiAppV1AppResourceTypeView) GetAppPath() interface{} {
-	if o == nil {
-		var ret interface{}
+// GetAppPath returns the AppPath field value if set, zero value otherwise.
+func (o *C1ApiAppV1AppResourceTypeView) GetAppPath() string {
+	if o == nil || IsNil(o.AppPath) {
+		var ret string
 		return ret
 	}
-	return o.AppPath
+	return *o.AppPath
 }
 
 // GetAppPathOk returns a tuple with the AppPath field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *C1ApiAppV1AppResourceTypeView) GetAppPathOk() (*interface{}, bool) {
+func (o *C1ApiAppV1AppResourceTypeView) GetAppPathOk() (*string, bool) {
 	if o == nil || IsNil(o.AppPath) {
 		return nil, false
 	}
-	return &o.AppPath, true
+	return o.AppPath, true
 }
 
 // HasAppPath returns a boolean if a field has been set.
 func (o *C1ApiAppV1AppResourceTypeView) HasAppPath() bool {
-	if o != nil && IsNil(o.AppPath) {
+	if o != nil && !IsNil(o.AppPath) {
 		return true
 	}
 
 	return false
 }
 
-// SetAppPath gets a reference to the given interface{} and assigns it to the AppPath field.
-func (o *C1ApiAppV1AppResourceTypeView) SetAppPath(v interface{}) {
-	o.AppPath = v
+// SetAppPath gets a reference to the given string and assigns it to the AppPath field.
+func (o *C1ApiAppV1AppResourceTypeView) SetAppPath(v string) {
+	o.AppPath = &v
 }
 
 // GetAppResourceType returns the AppResourceType field value if set, zero value otherwise.
@@ -119,7 +118,7 @@ func (o C1ApiAppV1AppResourceTypeView) MarshalJSON() ([]byte, error) {
 
 func (o C1ApiAppV1AppResourceTypeView) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if o.AppPath != nil {
+	if !IsNil(o.AppPath) {
 		toSerialize["appPath"] = o.AppPath
 	}
 	if !IsNil(o.AppResourceType) {

@@ -26,9 +26,9 @@ func Test_c1api_DefaultAPIService(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
-		var appId interface{}
-		var appResourceTypeId interface{}
-		var id interface{}
+		var appId string
+		var appResourceTypeId string
+		var id string
 
 		resp, httpRes, err := apiClient.DefaultAPI.C1ApiAppV1AppResourceServiceGet(context.Background(), appId, appResourceTypeId, id).Execute()
 
@@ -42,8 +42,8 @@ func Test_c1api_DefaultAPIService(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
-		var appId interface{}
-		var id interface{}
+		var appId string
+		var id string
 
 		resp, httpRes, err := apiClient.DefaultAPI.C1ApiAppV1AppResourceTypeServiceGet(context.Background(), appId, id).Execute()
 
@@ -65,11 +65,11 @@ func Test_c1api_DefaultAPIService(t *testing.T) {
 
 	})
 
-	t.Run("Test DefaultAPIService C1ApiRequestcatalogV2RequestCatalogSearchServiceSearchEntitlements", func(t *testing.T) {
+	t.Run("Test DefaultAPIService C1ApiRequestcatalogV1RequestCatalogSearchServiceSearchEntitlements", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
-		resp, httpRes, err := apiClient.DefaultAPI.C1ApiRequestcatalogV2RequestCatalogSearchServiceSearchEntitlements(context.Background()).Execute()
+		resp, httpRes, err := apiClient.DefaultAPI.C1ApiRequestcatalogV1RequestCatalogSearchServiceSearchEntitlements(context.Background()).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -81,7 +81,7 @@ func Test_c1api_DefaultAPIService(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
-		var id interface{}
+		var id string
 
 		resp, httpRes, err := apiClient.DefaultAPI.C1ApiUserV1UserServiceGet(context.Background(), id).Execute()
 

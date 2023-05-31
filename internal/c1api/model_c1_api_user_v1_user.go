@@ -12,6 +12,7 @@ package c1api
 
 import (
 	"encoding/json"
+	"time"
 )
 
 // checks if the C1ApiUserV1User type satisfies the MappedNullable interface at compile time
@@ -19,47 +20,47 @@ var _ MappedNullable = &C1ApiUserV1User{}
 
 // C1ApiUserV1User The User message.
 type C1ApiUserV1User struct {
-	CreatedAt interface{} `json:"createdAt,omitempty"`
+	CreatedAt *time.Time `json:"createdAt,omitempty"`
 	// The delegatedUserId field.
-	DelegatedUserId interface{} `json:"delegatedUserId,omitempty"`
-	DeletedAt interface{} `json:"deletedAt,omitempty"`
+	DelegatedUserId *string `json:"delegatedUserId,omitempty"`
+	DeletedAt *time.Time `json:"deletedAt,omitempty"`
 	// The department field.
-	Department interface{} `json:"department,omitempty"`
+	Department *string `json:"department,omitempty"`
 	// The departmentSources field.
-	DepartmentSources interface{} `json:"departmentSources,omitempty"`
+	DepartmentSources []C1ApiUserV1UserAttributeMappingSource `json:"departmentSources,omitempty"`
 	// The directoryIds field.
-	DirectoryIds interface{} `json:"directoryIds,omitempty"`
+	DirectoryIds []string `json:"directoryIds,omitempty"`
 	// The directoryStatus field.
-	DirectoryStatus interface{} `json:"directoryStatus,omitempty"`
+	DirectoryStatus *string `json:"directoryStatus,omitempty"`
 	// The directoryStatusSources field.
-	DirectoryStatusSources interface{} `json:"directoryStatusSources,omitempty"`
+	DirectoryStatusSources []C1ApiUserV1UserAttributeMappingSource `json:"directoryStatusSources,omitempty"`
 	// The displayName field.
-	DisplayName interface{} `json:"displayName,omitempty"`
+	DisplayName *string `json:"displayName,omitempty"`
 	// The email field.
-	Email interface{} `json:"email,omitempty"`
+	Email *string `json:"email,omitempty"`
 	// The employmentStatus field.
-	EmploymentStatus interface{} `json:"employmentStatus,omitempty"`
+	EmploymentStatus *string `json:"employmentStatus,omitempty"`
 	// The employmentStatusSources field.
-	EmploymentStatusSources interface{} `json:"employmentStatusSources,omitempty"`
+	EmploymentStatusSources []C1ApiUserV1UserAttributeMappingSource `json:"employmentStatusSources,omitempty"`
 	// The employmentType field.
-	EmploymentType interface{} `json:"employmentType,omitempty"`
+	EmploymentType *string `json:"employmentType,omitempty"`
 	// The employmentTypeSources field.
-	EmploymentTypeSources interface{} `json:"employmentTypeSources,omitempty"`
+	EmploymentTypeSources []C1ApiUserV1UserAttributeMappingSource `json:"employmentTypeSources,omitempty"`
 	// The id field.
-	Id interface{} `json:"id,omitempty"`
+	Id *string `json:"id,omitempty"`
 	// The jobTitle field.
-	JobTitle interface{} `json:"jobTitle,omitempty"`
+	JobTitle *string `json:"jobTitle,omitempty"`
 	// The jobTitleSources field.
-	JobTitleSources interface{} `json:"jobTitleSources,omitempty"`
+	JobTitleSources []C1ApiUserV1UserAttributeMappingSource `json:"jobTitleSources,omitempty"`
 	// The managerIds field.
-	ManagerIds interface{} `json:"managerIds,omitempty"`
+	ManagerIds []string `json:"managerIds,omitempty"`
 	// The managerSources field.
-	ManagerSources interface{} `json:"managerSources,omitempty"`
+	ManagerSources []C1ApiUserV1UserAttributeMappingSource `json:"managerSources,omitempty"`
 	// The roleIds field.
-	RoleIds interface{} `json:"roleIds,omitempty"`
+	RoleIds []string `json:"roleIds,omitempty"`
 	// The status field.
-	Status interface{} `json:"status,omitempty"`
-	UpdatedAt interface{} `json:"updatedAt,omitempty"`
+	Status *string `json:"status,omitempty"`
+	UpdatedAt *time.Time `json:"updatedAt,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -82,142 +83,138 @@ func NewC1ApiUserV1UserWithDefaults() *C1ApiUserV1User {
 	return &this
 }
 
-// GetCreatedAt returns the CreatedAt field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *C1ApiUserV1User) GetCreatedAt() interface{} {
-	if o == nil {
-		var ret interface{}
+// GetCreatedAt returns the CreatedAt field value if set, zero value otherwise.
+func (o *C1ApiUserV1User) GetCreatedAt() time.Time {
+	if o == nil || IsNil(o.CreatedAt) {
+		var ret time.Time
 		return ret
 	}
-	return o.CreatedAt
+	return *o.CreatedAt
 }
 
 // GetCreatedAtOk returns a tuple with the CreatedAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *C1ApiUserV1User) GetCreatedAtOk() (*interface{}, bool) {
+func (o *C1ApiUserV1User) GetCreatedAtOk() (*time.Time, bool) {
 	if o == nil || IsNil(o.CreatedAt) {
 		return nil, false
 	}
-	return &o.CreatedAt, true
+	return o.CreatedAt, true
 }
 
 // HasCreatedAt returns a boolean if a field has been set.
 func (o *C1ApiUserV1User) HasCreatedAt() bool {
-	if o != nil && IsNil(o.CreatedAt) {
+	if o != nil && !IsNil(o.CreatedAt) {
 		return true
 	}
 
 	return false
 }
 
-// SetCreatedAt gets a reference to the given interface{} and assigns it to the CreatedAt field.
-func (o *C1ApiUserV1User) SetCreatedAt(v interface{}) {
-	o.CreatedAt = v
+// SetCreatedAt gets a reference to the given time.Time and assigns it to the CreatedAt field.
+func (o *C1ApiUserV1User) SetCreatedAt(v time.Time) {
+	o.CreatedAt = &v
 }
 
-// GetDelegatedUserId returns the DelegatedUserId field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *C1ApiUserV1User) GetDelegatedUserId() interface{} {
-	if o == nil {
-		var ret interface{}
+// GetDelegatedUserId returns the DelegatedUserId field value if set, zero value otherwise.
+func (o *C1ApiUserV1User) GetDelegatedUserId() string {
+	if o == nil || IsNil(o.DelegatedUserId) {
+		var ret string
 		return ret
 	}
-	return o.DelegatedUserId
+	return *o.DelegatedUserId
 }
 
 // GetDelegatedUserIdOk returns a tuple with the DelegatedUserId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *C1ApiUserV1User) GetDelegatedUserIdOk() (*interface{}, bool) {
+func (o *C1ApiUserV1User) GetDelegatedUserIdOk() (*string, bool) {
 	if o == nil || IsNil(o.DelegatedUserId) {
 		return nil, false
 	}
-	return &o.DelegatedUserId, true
+	return o.DelegatedUserId, true
 }
 
 // HasDelegatedUserId returns a boolean if a field has been set.
 func (o *C1ApiUserV1User) HasDelegatedUserId() bool {
-	if o != nil && IsNil(o.DelegatedUserId) {
+	if o != nil && !IsNil(o.DelegatedUserId) {
 		return true
 	}
 
 	return false
 }
 
-// SetDelegatedUserId gets a reference to the given interface{} and assigns it to the DelegatedUserId field.
-func (o *C1ApiUserV1User) SetDelegatedUserId(v interface{}) {
-	o.DelegatedUserId = v
+// SetDelegatedUserId gets a reference to the given string and assigns it to the DelegatedUserId field.
+func (o *C1ApiUserV1User) SetDelegatedUserId(v string) {
+	o.DelegatedUserId = &v
 }
 
-// GetDeletedAt returns the DeletedAt field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *C1ApiUserV1User) GetDeletedAt() interface{} {
-	if o == nil {
-		var ret interface{}
+// GetDeletedAt returns the DeletedAt field value if set, zero value otherwise.
+func (o *C1ApiUserV1User) GetDeletedAt() time.Time {
+	if o == nil || IsNil(o.DeletedAt) {
+		var ret time.Time
 		return ret
 	}
-	return o.DeletedAt
+	return *o.DeletedAt
 }
 
 // GetDeletedAtOk returns a tuple with the DeletedAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *C1ApiUserV1User) GetDeletedAtOk() (*interface{}, bool) {
+func (o *C1ApiUserV1User) GetDeletedAtOk() (*time.Time, bool) {
 	if o == nil || IsNil(o.DeletedAt) {
 		return nil, false
 	}
-	return &o.DeletedAt, true
+	return o.DeletedAt, true
 }
 
 // HasDeletedAt returns a boolean if a field has been set.
 func (o *C1ApiUserV1User) HasDeletedAt() bool {
-	if o != nil && IsNil(o.DeletedAt) {
+	if o != nil && !IsNil(o.DeletedAt) {
 		return true
 	}
 
 	return false
 }
 
-// SetDeletedAt gets a reference to the given interface{} and assigns it to the DeletedAt field.
-func (o *C1ApiUserV1User) SetDeletedAt(v interface{}) {
-	o.DeletedAt = v
+// SetDeletedAt gets a reference to the given time.Time and assigns it to the DeletedAt field.
+func (o *C1ApiUserV1User) SetDeletedAt(v time.Time) {
+	o.DeletedAt = &v
 }
 
-// GetDepartment returns the Department field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *C1ApiUserV1User) GetDepartment() interface{} {
-	if o == nil {
-		var ret interface{}
+// GetDepartment returns the Department field value if set, zero value otherwise.
+func (o *C1ApiUserV1User) GetDepartment() string {
+	if o == nil || IsNil(o.Department) {
+		var ret string
 		return ret
 	}
-	return o.Department
+	return *o.Department
 }
 
 // GetDepartmentOk returns a tuple with the Department field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *C1ApiUserV1User) GetDepartmentOk() (*interface{}, bool) {
+func (o *C1ApiUserV1User) GetDepartmentOk() (*string, bool) {
 	if o == nil || IsNil(o.Department) {
 		return nil, false
 	}
-	return &o.Department, true
+	return o.Department, true
 }
 
 // HasDepartment returns a boolean if a field has been set.
 func (o *C1ApiUserV1User) HasDepartment() bool {
-	if o != nil && IsNil(o.Department) {
+	if o != nil && !IsNil(o.Department) {
 		return true
 	}
 
 	return false
 }
 
-// SetDepartment gets a reference to the given interface{} and assigns it to the Department field.
-func (o *C1ApiUserV1User) SetDepartment(v interface{}) {
-	o.Department = v
+// SetDepartment gets a reference to the given string and assigns it to the Department field.
+func (o *C1ApiUserV1User) SetDepartment(v string) {
+	o.Department = &v
 }
 
 // GetDepartmentSources returns the DepartmentSources field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *C1ApiUserV1User) GetDepartmentSources() interface{} {
+func (o *C1ApiUserV1User) GetDepartmentSources() []C1ApiUserV1UserAttributeMappingSource {
 	if o == nil {
-		var ret interface{}
+		var ret []C1ApiUserV1UserAttributeMappingSource
 		return ret
 	}
 	return o.DepartmentSources
@@ -226,11 +223,11 @@ func (o *C1ApiUserV1User) GetDepartmentSources() interface{} {
 // GetDepartmentSourcesOk returns a tuple with the DepartmentSources field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *C1ApiUserV1User) GetDepartmentSourcesOk() (*interface{}, bool) {
+func (o *C1ApiUserV1User) GetDepartmentSourcesOk() ([]C1ApiUserV1UserAttributeMappingSource, bool) {
 	if o == nil || IsNil(o.DepartmentSources) {
 		return nil, false
 	}
-	return &o.DepartmentSources, true
+	return o.DepartmentSources, true
 }
 
 // HasDepartmentSources returns a boolean if a field has been set.
@@ -242,15 +239,15 @@ func (o *C1ApiUserV1User) HasDepartmentSources() bool {
 	return false
 }
 
-// SetDepartmentSources gets a reference to the given interface{} and assigns it to the DepartmentSources field.
-func (o *C1ApiUserV1User) SetDepartmentSources(v interface{}) {
+// SetDepartmentSources gets a reference to the given []C1ApiUserV1UserAttributeMappingSource and assigns it to the DepartmentSources field.
+func (o *C1ApiUserV1User) SetDepartmentSources(v []C1ApiUserV1UserAttributeMappingSource) {
 	o.DepartmentSources = v
 }
 
 // GetDirectoryIds returns the DirectoryIds field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *C1ApiUserV1User) GetDirectoryIds() interface{} {
+func (o *C1ApiUserV1User) GetDirectoryIds() []string {
 	if o == nil {
-		var ret interface{}
+		var ret []string
 		return ret
 	}
 	return o.DirectoryIds
@@ -259,11 +256,11 @@ func (o *C1ApiUserV1User) GetDirectoryIds() interface{} {
 // GetDirectoryIdsOk returns a tuple with the DirectoryIds field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *C1ApiUserV1User) GetDirectoryIdsOk() (*interface{}, bool) {
+func (o *C1ApiUserV1User) GetDirectoryIdsOk() ([]string, bool) {
 	if o == nil || IsNil(o.DirectoryIds) {
 		return nil, false
 	}
-	return &o.DirectoryIds, true
+	return o.DirectoryIds, true
 }
 
 // HasDirectoryIds returns a boolean if a field has been set.
@@ -275,48 +272,47 @@ func (o *C1ApiUserV1User) HasDirectoryIds() bool {
 	return false
 }
 
-// SetDirectoryIds gets a reference to the given interface{} and assigns it to the DirectoryIds field.
-func (o *C1ApiUserV1User) SetDirectoryIds(v interface{}) {
+// SetDirectoryIds gets a reference to the given []string and assigns it to the DirectoryIds field.
+func (o *C1ApiUserV1User) SetDirectoryIds(v []string) {
 	o.DirectoryIds = v
 }
 
-// GetDirectoryStatus returns the DirectoryStatus field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *C1ApiUserV1User) GetDirectoryStatus() interface{} {
-	if o == nil {
-		var ret interface{}
+// GetDirectoryStatus returns the DirectoryStatus field value if set, zero value otherwise.
+func (o *C1ApiUserV1User) GetDirectoryStatus() string {
+	if o == nil || IsNil(o.DirectoryStatus) {
+		var ret string
 		return ret
 	}
-	return o.DirectoryStatus
+	return *o.DirectoryStatus
 }
 
 // GetDirectoryStatusOk returns a tuple with the DirectoryStatus field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *C1ApiUserV1User) GetDirectoryStatusOk() (*interface{}, bool) {
+func (o *C1ApiUserV1User) GetDirectoryStatusOk() (*string, bool) {
 	if o == nil || IsNil(o.DirectoryStatus) {
 		return nil, false
 	}
-	return &o.DirectoryStatus, true
+	return o.DirectoryStatus, true
 }
 
 // HasDirectoryStatus returns a boolean if a field has been set.
 func (o *C1ApiUserV1User) HasDirectoryStatus() bool {
-	if o != nil && IsNil(o.DirectoryStatus) {
+	if o != nil && !IsNil(o.DirectoryStatus) {
 		return true
 	}
 
 	return false
 }
 
-// SetDirectoryStatus gets a reference to the given interface{} and assigns it to the DirectoryStatus field.
-func (o *C1ApiUserV1User) SetDirectoryStatus(v interface{}) {
-	o.DirectoryStatus = v
+// SetDirectoryStatus gets a reference to the given string and assigns it to the DirectoryStatus field.
+func (o *C1ApiUserV1User) SetDirectoryStatus(v string) {
+	o.DirectoryStatus = &v
 }
 
 // GetDirectoryStatusSources returns the DirectoryStatusSources field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *C1ApiUserV1User) GetDirectoryStatusSources() interface{} {
+func (o *C1ApiUserV1User) GetDirectoryStatusSources() []C1ApiUserV1UserAttributeMappingSource {
 	if o == nil {
-		var ret interface{}
+		var ret []C1ApiUserV1UserAttributeMappingSource
 		return ret
 	}
 	return o.DirectoryStatusSources
@@ -325,11 +321,11 @@ func (o *C1ApiUserV1User) GetDirectoryStatusSources() interface{} {
 // GetDirectoryStatusSourcesOk returns a tuple with the DirectoryStatusSources field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *C1ApiUserV1User) GetDirectoryStatusSourcesOk() (*interface{}, bool) {
+func (o *C1ApiUserV1User) GetDirectoryStatusSourcesOk() ([]C1ApiUserV1UserAttributeMappingSource, bool) {
 	if o == nil || IsNil(o.DirectoryStatusSources) {
 		return nil, false
 	}
-	return &o.DirectoryStatusSources, true
+	return o.DirectoryStatusSources, true
 }
 
 // HasDirectoryStatusSources returns a boolean if a field has been set.
@@ -341,114 +337,111 @@ func (o *C1ApiUserV1User) HasDirectoryStatusSources() bool {
 	return false
 }
 
-// SetDirectoryStatusSources gets a reference to the given interface{} and assigns it to the DirectoryStatusSources field.
-func (o *C1ApiUserV1User) SetDirectoryStatusSources(v interface{}) {
+// SetDirectoryStatusSources gets a reference to the given []C1ApiUserV1UserAttributeMappingSource and assigns it to the DirectoryStatusSources field.
+func (o *C1ApiUserV1User) SetDirectoryStatusSources(v []C1ApiUserV1UserAttributeMappingSource) {
 	o.DirectoryStatusSources = v
 }
 
-// GetDisplayName returns the DisplayName field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *C1ApiUserV1User) GetDisplayName() interface{} {
-	if o == nil {
-		var ret interface{}
+// GetDisplayName returns the DisplayName field value if set, zero value otherwise.
+func (o *C1ApiUserV1User) GetDisplayName() string {
+	if o == nil || IsNil(o.DisplayName) {
+		var ret string
 		return ret
 	}
-	return o.DisplayName
+	return *o.DisplayName
 }
 
 // GetDisplayNameOk returns a tuple with the DisplayName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *C1ApiUserV1User) GetDisplayNameOk() (*interface{}, bool) {
+func (o *C1ApiUserV1User) GetDisplayNameOk() (*string, bool) {
 	if o == nil || IsNil(o.DisplayName) {
 		return nil, false
 	}
-	return &o.DisplayName, true
+	return o.DisplayName, true
 }
 
 // HasDisplayName returns a boolean if a field has been set.
 func (o *C1ApiUserV1User) HasDisplayName() bool {
-	if o != nil && IsNil(o.DisplayName) {
+	if o != nil && !IsNil(o.DisplayName) {
 		return true
 	}
 
 	return false
 }
 
-// SetDisplayName gets a reference to the given interface{} and assigns it to the DisplayName field.
-func (o *C1ApiUserV1User) SetDisplayName(v interface{}) {
-	o.DisplayName = v
+// SetDisplayName gets a reference to the given string and assigns it to the DisplayName field.
+func (o *C1ApiUserV1User) SetDisplayName(v string) {
+	o.DisplayName = &v
 }
 
-// GetEmail returns the Email field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *C1ApiUserV1User) GetEmail() interface{} {
-	if o == nil {
-		var ret interface{}
+// GetEmail returns the Email field value if set, zero value otherwise.
+func (o *C1ApiUserV1User) GetEmail() string {
+	if o == nil || IsNil(o.Email) {
+		var ret string
 		return ret
 	}
-	return o.Email
+	return *o.Email
 }
 
 // GetEmailOk returns a tuple with the Email field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *C1ApiUserV1User) GetEmailOk() (*interface{}, bool) {
+func (o *C1ApiUserV1User) GetEmailOk() (*string, bool) {
 	if o == nil || IsNil(o.Email) {
 		return nil, false
 	}
-	return &o.Email, true
+	return o.Email, true
 }
 
 // HasEmail returns a boolean if a field has been set.
 func (o *C1ApiUserV1User) HasEmail() bool {
-	if o != nil && IsNil(o.Email) {
+	if o != nil && !IsNil(o.Email) {
 		return true
 	}
 
 	return false
 }
 
-// SetEmail gets a reference to the given interface{} and assigns it to the Email field.
-func (o *C1ApiUserV1User) SetEmail(v interface{}) {
-	o.Email = v
+// SetEmail gets a reference to the given string and assigns it to the Email field.
+func (o *C1ApiUserV1User) SetEmail(v string) {
+	o.Email = &v
 }
 
-// GetEmploymentStatus returns the EmploymentStatus field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *C1ApiUserV1User) GetEmploymentStatus() interface{} {
-	if o == nil {
-		var ret interface{}
+// GetEmploymentStatus returns the EmploymentStatus field value if set, zero value otherwise.
+func (o *C1ApiUserV1User) GetEmploymentStatus() string {
+	if o == nil || IsNil(o.EmploymentStatus) {
+		var ret string
 		return ret
 	}
-	return o.EmploymentStatus
+	return *o.EmploymentStatus
 }
 
 // GetEmploymentStatusOk returns a tuple with the EmploymentStatus field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *C1ApiUserV1User) GetEmploymentStatusOk() (*interface{}, bool) {
+func (o *C1ApiUserV1User) GetEmploymentStatusOk() (*string, bool) {
 	if o == nil || IsNil(o.EmploymentStatus) {
 		return nil, false
 	}
-	return &o.EmploymentStatus, true
+	return o.EmploymentStatus, true
 }
 
 // HasEmploymentStatus returns a boolean if a field has been set.
 func (o *C1ApiUserV1User) HasEmploymentStatus() bool {
-	if o != nil && IsNil(o.EmploymentStatus) {
+	if o != nil && !IsNil(o.EmploymentStatus) {
 		return true
 	}
 
 	return false
 }
 
-// SetEmploymentStatus gets a reference to the given interface{} and assigns it to the EmploymentStatus field.
-func (o *C1ApiUserV1User) SetEmploymentStatus(v interface{}) {
-	o.EmploymentStatus = v
+// SetEmploymentStatus gets a reference to the given string and assigns it to the EmploymentStatus field.
+func (o *C1ApiUserV1User) SetEmploymentStatus(v string) {
+	o.EmploymentStatus = &v
 }
 
 // GetEmploymentStatusSources returns the EmploymentStatusSources field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *C1ApiUserV1User) GetEmploymentStatusSources() interface{} {
+func (o *C1ApiUserV1User) GetEmploymentStatusSources() []C1ApiUserV1UserAttributeMappingSource {
 	if o == nil {
-		var ret interface{}
+		var ret []C1ApiUserV1UserAttributeMappingSource
 		return ret
 	}
 	return o.EmploymentStatusSources
@@ -457,11 +450,11 @@ func (o *C1ApiUserV1User) GetEmploymentStatusSources() interface{} {
 // GetEmploymentStatusSourcesOk returns a tuple with the EmploymentStatusSources field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *C1ApiUserV1User) GetEmploymentStatusSourcesOk() (*interface{}, bool) {
+func (o *C1ApiUserV1User) GetEmploymentStatusSourcesOk() ([]C1ApiUserV1UserAttributeMappingSource, bool) {
 	if o == nil || IsNil(o.EmploymentStatusSources) {
 		return nil, false
 	}
-	return &o.EmploymentStatusSources, true
+	return o.EmploymentStatusSources, true
 }
 
 // HasEmploymentStatusSources returns a boolean if a field has been set.
@@ -473,48 +466,47 @@ func (o *C1ApiUserV1User) HasEmploymentStatusSources() bool {
 	return false
 }
 
-// SetEmploymentStatusSources gets a reference to the given interface{} and assigns it to the EmploymentStatusSources field.
-func (o *C1ApiUserV1User) SetEmploymentStatusSources(v interface{}) {
+// SetEmploymentStatusSources gets a reference to the given []C1ApiUserV1UserAttributeMappingSource and assigns it to the EmploymentStatusSources field.
+func (o *C1ApiUserV1User) SetEmploymentStatusSources(v []C1ApiUserV1UserAttributeMappingSource) {
 	o.EmploymentStatusSources = v
 }
 
-// GetEmploymentType returns the EmploymentType field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *C1ApiUserV1User) GetEmploymentType() interface{} {
-	if o == nil {
-		var ret interface{}
+// GetEmploymentType returns the EmploymentType field value if set, zero value otherwise.
+func (o *C1ApiUserV1User) GetEmploymentType() string {
+	if o == nil || IsNil(o.EmploymentType) {
+		var ret string
 		return ret
 	}
-	return o.EmploymentType
+	return *o.EmploymentType
 }
 
 // GetEmploymentTypeOk returns a tuple with the EmploymentType field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *C1ApiUserV1User) GetEmploymentTypeOk() (*interface{}, bool) {
+func (o *C1ApiUserV1User) GetEmploymentTypeOk() (*string, bool) {
 	if o == nil || IsNil(o.EmploymentType) {
 		return nil, false
 	}
-	return &o.EmploymentType, true
+	return o.EmploymentType, true
 }
 
 // HasEmploymentType returns a boolean if a field has been set.
 func (o *C1ApiUserV1User) HasEmploymentType() bool {
-	if o != nil && IsNil(o.EmploymentType) {
+	if o != nil && !IsNil(o.EmploymentType) {
 		return true
 	}
 
 	return false
 }
 
-// SetEmploymentType gets a reference to the given interface{} and assigns it to the EmploymentType field.
-func (o *C1ApiUserV1User) SetEmploymentType(v interface{}) {
-	o.EmploymentType = v
+// SetEmploymentType gets a reference to the given string and assigns it to the EmploymentType field.
+func (o *C1ApiUserV1User) SetEmploymentType(v string) {
+	o.EmploymentType = &v
 }
 
 // GetEmploymentTypeSources returns the EmploymentTypeSources field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *C1ApiUserV1User) GetEmploymentTypeSources() interface{} {
+func (o *C1ApiUserV1User) GetEmploymentTypeSources() []C1ApiUserV1UserAttributeMappingSource {
 	if o == nil {
-		var ret interface{}
+		var ret []C1ApiUserV1UserAttributeMappingSource
 		return ret
 	}
 	return o.EmploymentTypeSources
@@ -523,11 +515,11 @@ func (o *C1ApiUserV1User) GetEmploymentTypeSources() interface{} {
 // GetEmploymentTypeSourcesOk returns a tuple with the EmploymentTypeSources field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *C1ApiUserV1User) GetEmploymentTypeSourcesOk() (*interface{}, bool) {
+func (o *C1ApiUserV1User) GetEmploymentTypeSourcesOk() ([]C1ApiUserV1UserAttributeMappingSource, bool) {
 	if o == nil || IsNil(o.EmploymentTypeSources) {
 		return nil, false
 	}
-	return &o.EmploymentTypeSources, true
+	return o.EmploymentTypeSources, true
 }
 
 // HasEmploymentTypeSources returns a boolean if a field has been set.
@@ -539,81 +531,79 @@ func (o *C1ApiUserV1User) HasEmploymentTypeSources() bool {
 	return false
 }
 
-// SetEmploymentTypeSources gets a reference to the given interface{} and assigns it to the EmploymentTypeSources field.
-func (o *C1ApiUserV1User) SetEmploymentTypeSources(v interface{}) {
+// SetEmploymentTypeSources gets a reference to the given []C1ApiUserV1UserAttributeMappingSource and assigns it to the EmploymentTypeSources field.
+func (o *C1ApiUserV1User) SetEmploymentTypeSources(v []C1ApiUserV1UserAttributeMappingSource) {
 	o.EmploymentTypeSources = v
 }
 
-// GetId returns the Id field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *C1ApiUserV1User) GetId() interface{} {
-	if o == nil {
-		var ret interface{}
+// GetId returns the Id field value if set, zero value otherwise.
+func (o *C1ApiUserV1User) GetId() string {
+	if o == nil || IsNil(o.Id) {
+		var ret string
 		return ret
 	}
-	return o.Id
+	return *o.Id
 }
 
 // GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *C1ApiUserV1User) GetIdOk() (*interface{}, bool) {
+func (o *C1ApiUserV1User) GetIdOk() (*string, bool) {
 	if o == nil || IsNil(o.Id) {
 		return nil, false
 	}
-	return &o.Id, true
+	return o.Id, true
 }
 
 // HasId returns a boolean if a field has been set.
 func (o *C1ApiUserV1User) HasId() bool {
-	if o != nil && IsNil(o.Id) {
+	if o != nil && !IsNil(o.Id) {
 		return true
 	}
 
 	return false
 }
 
-// SetId gets a reference to the given interface{} and assigns it to the Id field.
-func (o *C1ApiUserV1User) SetId(v interface{}) {
-	o.Id = v
+// SetId gets a reference to the given string and assigns it to the Id field.
+func (o *C1ApiUserV1User) SetId(v string) {
+	o.Id = &v
 }
 
-// GetJobTitle returns the JobTitle field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *C1ApiUserV1User) GetJobTitle() interface{} {
-	if o == nil {
-		var ret interface{}
+// GetJobTitle returns the JobTitle field value if set, zero value otherwise.
+func (o *C1ApiUserV1User) GetJobTitle() string {
+	if o == nil || IsNil(o.JobTitle) {
+		var ret string
 		return ret
 	}
-	return o.JobTitle
+	return *o.JobTitle
 }
 
 // GetJobTitleOk returns a tuple with the JobTitle field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *C1ApiUserV1User) GetJobTitleOk() (*interface{}, bool) {
+func (o *C1ApiUserV1User) GetJobTitleOk() (*string, bool) {
 	if o == nil || IsNil(o.JobTitle) {
 		return nil, false
 	}
-	return &o.JobTitle, true
+	return o.JobTitle, true
 }
 
 // HasJobTitle returns a boolean if a field has been set.
 func (o *C1ApiUserV1User) HasJobTitle() bool {
-	if o != nil && IsNil(o.JobTitle) {
+	if o != nil && !IsNil(o.JobTitle) {
 		return true
 	}
 
 	return false
 }
 
-// SetJobTitle gets a reference to the given interface{} and assigns it to the JobTitle field.
-func (o *C1ApiUserV1User) SetJobTitle(v interface{}) {
-	o.JobTitle = v
+// SetJobTitle gets a reference to the given string and assigns it to the JobTitle field.
+func (o *C1ApiUserV1User) SetJobTitle(v string) {
+	o.JobTitle = &v
 }
 
 // GetJobTitleSources returns the JobTitleSources field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *C1ApiUserV1User) GetJobTitleSources() interface{} {
+func (o *C1ApiUserV1User) GetJobTitleSources() []C1ApiUserV1UserAttributeMappingSource {
 	if o == nil {
-		var ret interface{}
+		var ret []C1ApiUserV1UserAttributeMappingSource
 		return ret
 	}
 	return o.JobTitleSources
@@ -622,11 +612,11 @@ func (o *C1ApiUserV1User) GetJobTitleSources() interface{} {
 // GetJobTitleSourcesOk returns a tuple with the JobTitleSources field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *C1ApiUserV1User) GetJobTitleSourcesOk() (*interface{}, bool) {
+func (o *C1ApiUserV1User) GetJobTitleSourcesOk() ([]C1ApiUserV1UserAttributeMappingSource, bool) {
 	if o == nil || IsNil(o.JobTitleSources) {
 		return nil, false
 	}
-	return &o.JobTitleSources, true
+	return o.JobTitleSources, true
 }
 
 // HasJobTitleSources returns a boolean if a field has been set.
@@ -638,15 +628,15 @@ func (o *C1ApiUserV1User) HasJobTitleSources() bool {
 	return false
 }
 
-// SetJobTitleSources gets a reference to the given interface{} and assigns it to the JobTitleSources field.
-func (o *C1ApiUserV1User) SetJobTitleSources(v interface{}) {
+// SetJobTitleSources gets a reference to the given []C1ApiUserV1UserAttributeMappingSource and assigns it to the JobTitleSources field.
+func (o *C1ApiUserV1User) SetJobTitleSources(v []C1ApiUserV1UserAttributeMappingSource) {
 	o.JobTitleSources = v
 }
 
 // GetManagerIds returns the ManagerIds field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *C1ApiUserV1User) GetManagerIds() interface{} {
+func (o *C1ApiUserV1User) GetManagerIds() []string {
 	if o == nil {
-		var ret interface{}
+		var ret []string
 		return ret
 	}
 	return o.ManagerIds
@@ -655,11 +645,11 @@ func (o *C1ApiUserV1User) GetManagerIds() interface{} {
 // GetManagerIdsOk returns a tuple with the ManagerIds field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *C1ApiUserV1User) GetManagerIdsOk() (*interface{}, bool) {
+func (o *C1ApiUserV1User) GetManagerIdsOk() ([]string, bool) {
 	if o == nil || IsNil(o.ManagerIds) {
 		return nil, false
 	}
-	return &o.ManagerIds, true
+	return o.ManagerIds, true
 }
 
 // HasManagerIds returns a boolean if a field has been set.
@@ -671,15 +661,15 @@ func (o *C1ApiUserV1User) HasManagerIds() bool {
 	return false
 }
 
-// SetManagerIds gets a reference to the given interface{} and assigns it to the ManagerIds field.
-func (o *C1ApiUserV1User) SetManagerIds(v interface{}) {
+// SetManagerIds gets a reference to the given []string and assigns it to the ManagerIds field.
+func (o *C1ApiUserV1User) SetManagerIds(v []string) {
 	o.ManagerIds = v
 }
 
 // GetManagerSources returns the ManagerSources field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *C1ApiUserV1User) GetManagerSources() interface{} {
+func (o *C1ApiUserV1User) GetManagerSources() []C1ApiUserV1UserAttributeMappingSource {
 	if o == nil {
-		var ret interface{}
+		var ret []C1ApiUserV1UserAttributeMappingSource
 		return ret
 	}
 	return o.ManagerSources
@@ -688,11 +678,11 @@ func (o *C1ApiUserV1User) GetManagerSources() interface{} {
 // GetManagerSourcesOk returns a tuple with the ManagerSources field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *C1ApiUserV1User) GetManagerSourcesOk() (*interface{}, bool) {
+func (o *C1ApiUserV1User) GetManagerSourcesOk() ([]C1ApiUserV1UserAttributeMappingSource, bool) {
 	if o == nil || IsNil(o.ManagerSources) {
 		return nil, false
 	}
-	return &o.ManagerSources, true
+	return o.ManagerSources, true
 }
 
 // HasManagerSources returns a boolean if a field has been set.
@@ -704,15 +694,15 @@ func (o *C1ApiUserV1User) HasManagerSources() bool {
 	return false
 }
 
-// SetManagerSources gets a reference to the given interface{} and assigns it to the ManagerSources field.
-func (o *C1ApiUserV1User) SetManagerSources(v interface{}) {
+// SetManagerSources gets a reference to the given []C1ApiUserV1UserAttributeMappingSource and assigns it to the ManagerSources field.
+func (o *C1ApiUserV1User) SetManagerSources(v []C1ApiUserV1UserAttributeMappingSource) {
 	o.ManagerSources = v
 }
 
 // GetRoleIds returns the RoleIds field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *C1ApiUserV1User) GetRoleIds() interface{} {
+func (o *C1ApiUserV1User) GetRoleIds() []string {
 	if o == nil {
-		var ret interface{}
+		var ret []string
 		return ret
 	}
 	return o.RoleIds
@@ -721,11 +711,11 @@ func (o *C1ApiUserV1User) GetRoleIds() interface{} {
 // GetRoleIdsOk returns a tuple with the RoleIds field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *C1ApiUserV1User) GetRoleIdsOk() (*interface{}, bool) {
+func (o *C1ApiUserV1User) GetRoleIdsOk() ([]string, bool) {
 	if o == nil || IsNil(o.RoleIds) {
 		return nil, false
 	}
-	return &o.RoleIds, true
+	return o.RoleIds, true
 }
 
 // HasRoleIds returns a boolean if a field has been set.
@@ -737,75 +727,73 @@ func (o *C1ApiUserV1User) HasRoleIds() bool {
 	return false
 }
 
-// SetRoleIds gets a reference to the given interface{} and assigns it to the RoleIds field.
-func (o *C1ApiUserV1User) SetRoleIds(v interface{}) {
+// SetRoleIds gets a reference to the given []string and assigns it to the RoleIds field.
+func (o *C1ApiUserV1User) SetRoleIds(v []string) {
 	o.RoleIds = v
 }
 
-// GetStatus returns the Status field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *C1ApiUserV1User) GetStatus() interface{} {
-	if o == nil {
-		var ret interface{}
+// GetStatus returns the Status field value if set, zero value otherwise.
+func (o *C1ApiUserV1User) GetStatus() string {
+	if o == nil || IsNil(o.Status) {
+		var ret string
 		return ret
 	}
-	return o.Status
+	return *o.Status
 }
 
 // GetStatusOk returns a tuple with the Status field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *C1ApiUserV1User) GetStatusOk() (*interface{}, bool) {
+func (o *C1ApiUserV1User) GetStatusOk() (*string, bool) {
 	if o == nil || IsNil(o.Status) {
 		return nil, false
 	}
-	return &o.Status, true
+	return o.Status, true
 }
 
 // HasStatus returns a boolean if a field has been set.
 func (o *C1ApiUserV1User) HasStatus() bool {
-	if o != nil && IsNil(o.Status) {
+	if o != nil && !IsNil(o.Status) {
 		return true
 	}
 
 	return false
 }
 
-// SetStatus gets a reference to the given interface{} and assigns it to the Status field.
-func (o *C1ApiUserV1User) SetStatus(v interface{}) {
-	o.Status = v
+// SetStatus gets a reference to the given string and assigns it to the Status field.
+func (o *C1ApiUserV1User) SetStatus(v string) {
+	o.Status = &v
 }
 
-// GetUpdatedAt returns the UpdatedAt field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *C1ApiUserV1User) GetUpdatedAt() interface{} {
-	if o == nil {
-		var ret interface{}
+// GetUpdatedAt returns the UpdatedAt field value if set, zero value otherwise.
+func (o *C1ApiUserV1User) GetUpdatedAt() time.Time {
+	if o == nil || IsNil(o.UpdatedAt) {
+		var ret time.Time
 		return ret
 	}
-	return o.UpdatedAt
+	return *o.UpdatedAt
 }
 
 // GetUpdatedAtOk returns a tuple with the UpdatedAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *C1ApiUserV1User) GetUpdatedAtOk() (*interface{}, bool) {
+func (o *C1ApiUserV1User) GetUpdatedAtOk() (*time.Time, bool) {
 	if o == nil || IsNil(o.UpdatedAt) {
 		return nil, false
 	}
-	return &o.UpdatedAt, true
+	return o.UpdatedAt, true
 }
 
 // HasUpdatedAt returns a boolean if a field has been set.
 func (o *C1ApiUserV1User) HasUpdatedAt() bool {
-	if o != nil && IsNil(o.UpdatedAt) {
+	if o != nil && !IsNil(o.UpdatedAt) {
 		return true
 	}
 
 	return false
 }
 
-// SetUpdatedAt gets a reference to the given interface{} and assigns it to the UpdatedAt field.
-func (o *C1ApiUserV1User) SetUpdatedAt(v interface{}) {
-	o.UpdatedAt = v
+// SetUpdatedAt gets a reference to the given time.Time and assigns it to the UpdatedAt field.
+func (o *C1ApiUserV1User) SetUpdatedAt(v time.Time) {
+	o.UpdatedAt = &v
 }
 
 func (o C1ApiUserV1User) MarshalJSON() ([]byte, error) {
@@ -818,16 +806,16 @@ func (o C1ApiUserV1User) MarshalJSON() ([]byte, error) {
 
 func (o C1ApiUserV1User) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if o.CreatedAt != nil {
+	if !IsNil(o.CreatedAt) {
 		toSerialize["createdAt"] = o.CreatedAt
 	}
-	if o.DelegatedUserId != nil {
+	if !IsNil(o.DelegatedUserId) {
 		toSerialize["delegatedUserId"] = o.DelegatedUserId
 	}
-	if o.DeletedAt != nil {
+	if !IsNil(o.DeletedAt) {
 		toSerialize["deletedAt"] = o.DeletedAt
 	}
-	if o.Department != nil {
+	if !IsNil(o.Department) {
 		toSerialize["department"] = o.Department
 	}
 	if o.DepartmentSources != nil {
@@ -836,34 +824,34 @@ func (o C1ApiUserV1User) ToMap() (map[string]interface{}, error) {
 	if o.DirectoryIds != nil {
 		toSerialize["directoryIds"] = o.DirectoryIds
 	}
-	if o.DirectoryStatus != nil {
+	if !IsNil(o.DirectoryStatus) {
 		toSerialize["directoryStatus"] = o.DirectoryStatus
 	}
 	if o.DirectoryStatusSources != nil {
 		toSerialize["directoryStatusSources"] = o.DirectoryStatusSources
 	}
-	if o.DisplayName != nil {
+	if !IsNil(o.DisplayName) {
 		toSerialize["displayName"] = o.DisplayName
 	}
-	if o.Email != nil {
+	if !IsNil(o.Email) {
 		toSerialize["email"] = o.Email
 	}
-	if o.EmploymentStatus != nil {
+	if !IsNil(o.EmploymentStatus) {
 		toSerialize["employmentStatus"] = o.EmploymentStatus
 	}
 	if o.EmploymentStatusSources != nil {
 		toSerialize["employmentStatusSources"] = o.EmploymentStatusSources
 	}
-	if o.EmploymentType != nil {
+	if !IsNil(o.EmploymentType) {
 		toSerialize["employmentType"] = o.EmploymentType
 	}
 	if o.EmploymentTypeSources != nil {
 		toSerialize["employmentTypeSources"] = o.EmploymentTypeSources
 	}
-	if o.Id != nil {
+	if !IsNil(o.Id) {
 		toSerialize["id"] = o.Id
 	}
-	if o.JobTitle != nil {
+	if !IsNil(o.JobTitle) {
 		toSerialize["jobTitle"] = o.JobTitle
 	}
 	if o.JobTitleSources != nil {
@@ -878,10 +866,10 @@ func (o C1ApiUserV1User) ToMap() (map[string]interface{}, error) {
 	if o.RoleIds != nil {
 		toSerialize["roleIds"] = o.RoleIds
 	}
-	if o.Status != nil {
+	if !IsNil(o.Status) {
 		toSerialize["status"] = o.Status
 	}
-	if o.UpdatedAt != nil {
+	if !IsNil(o.UpdatedAt) {
 		toSerialize["updatedAt"] = o.UpdatedAt
 	}
 

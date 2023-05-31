@@ -4,13 +4,13 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**AccessTokenId** | Pointer to **interface{}** | The accessTokenId field. | [optional] 
-**Features** | Pointer to **interface{}** | The features field. | [optional] 
-**Permissions** | Pointer to **interface{}** | The permissions field. | [optional] 
-**PrincipleId** | Pointer to **interface{}** | The principleId field. | [optional] 
-**Roles** | Pointer to **interface{}** | The roles field. | [optional] 
-**TenantId** | Pointer to **interface{}** | The tenantId field. | [optional] 
-**UserId** | Pointer to **interface{}** | The userId field. | [optional] 
+**AccessTokenId** | Pointer to **string** | The accessTokenId field. | [optional] 
+**Features** | Pointer to **[]string** | The features field. | [optional] 
+**Permissions** | Pointer to **[]string** | The permissions field. | [optional] 
+**PrincipleId** | Pointer to **string** | The principleId field. | [optional] 
+**Roles** | Pointer to **[]string** | The roles field. | [optional] 
+**TenantId** | Pointer to **string** | The tenantId field. | [optional] 
+**UserId** | Pointer to **string** | The userId field. | [optional] 
 
 ## Methods
 
@@ -33,20 +33,20 @@ but it doesn't guarantee that properties required by API are set
 
 ### GetAccessTokenId
 
-`func (o *C1ApiAuthV1IntrospectResponse) GetAccessTokenId() interface{}`
+`func (o *C1ApiAuthV1IntrospectResponse) GetAccessTokenId() string`
 
 GetAccessTokenId returns the AccessTokenId field if non-nil, zero value otherwise.
 
 ### GetAccessTokenIdOk
 
-`func (o *C1ApiAuthV1IntrospectResponse) GetAccessTokenIdOk() (*interface{}, bool)`
+`func (o *C1ApiAuthV1IntrospectResponse) GetAccessTokenIdOk() (*string, bool)`
 
 GetAccessTokenIdOk returns a tuple with the AccessTokenId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetAccessTokenId
 
-`func (o *C1ApiAuthV1IntrospectResponse) SetAccessTokenId(v interface{})`
+`func (o *C1ApiAuthV1IntrospectResponse) SetAccessTokenId(v string)`
 
 SetAccessTokenId sets AccessTokenId field to given value.
 
@@ -56,32 +56,22 @@ SetAccessTokenId sets AccessTokenId field to given value.
 
 HasAccessTokenId returns a boolean if a field has been set.
 
-### SetAccessTokenIdNil
-
-`func (o *C1ApiAuthV1IntrospectResponse) SetAccessTokenIdNil(b bool)`
-
- SetAccessTokenIdNil sets the value for AccessTokenId to be an explicit nil
-
-### UnsetAccessTokenId
-`func (o *C1ApiAuthV1IntrospectResponse) UnsetAccessTokenId()`
-
-UnsetAccessTokenId ensures that no value is present for AccessTokenId, not even an explicit nil
 ### GetFeatures
 
-`func (o *C1ApiAuthV1IntrospectResponse) GetFeatures() interface{}`
+`func (o *C1ApiAuthV1IntrospectResponse) GetFeatures() []string`
 
 GetFeatures returns the Features field if non-nil, zero value otherwise.
 
 ### GetFeaturesOk
 
-`func (o *C1ApiAuthV1IntrospectResponse) GetFeaturesOk() (*interface{}, bool)`
+`func (o *C1ApiAuthV1IntrospectResponse) GetFeaturesOk() (*[]string, bool)`
 
 GetFeaturesOk returns a tuple with the Features field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetFeatures
 
-`func (o *C1ApiAuthV1IntrospectResponse) SetFeatures(v interface{})`
+`func (o *C1ApiAuthV1IntrospectResponse) SetFeatures(v []string)`
 
 SetFeatures sets Features field to given value.
 
@@ -103,20 +93,20 @@ HasFeatures returns a boolean if a field has been set.
 UnsetFeatures ensures that no value is present for Features, not even an explicit nil
 ### GetPermissions
 
-`func (o *C1ApiAuthV1IntrospectResponse) GetPermissions() interface{}`
+`func (o *C1ApiAuthV1IntrospectResponse) GetPermissions() []string`
 
 GetPermissions returns the Permissions field if non-nil, zero value otherwise.
 
 ### GetPermissionsOk
 
-`func (o *C1ApiAuthV1IntrospectResponse) GetPermissionsOk() (*interface{}, bool)`
+`func (o *C1ApiAuthV1IntrospectResponse) GetPermissionsOk() (*[]string, bool)`
 
 GetPermissionsOk returns a tuple with the Permissions field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetPermissions
 
-`func (o *C1ApiAuthV1IntrospectResponse) SetPermissions(v interface{})`
+`func (o *C1ApiAuthV1IntrospectResponse) SetPermissions(v []string)`
 
 SetPermissions sets Permissions field to given value.
 
@@ -138,20 +128,20 @@ HasPermissions returns a boolean if a field has been set.
 UnsetPermissions ensures that no value is present for Permissions, not even an explicit nil
 ### GetPrincipleId
 
-`func (o *C1ApiAuthV1IntrospectResponse) GetPrincipleId() interface{}`
+`func (o *C1ApiAuthV1IntrospectResponse) GetPrincipleId() string`
 
 GetPrincipleId returns the PrincipleId field if non-nil, zero value otherwise.
 
 ### GetPrincipleIdOk
 
-`func (o *C1ApiAuthV1IntrospectResponse) GetPrincipleIdOk() (*interface{}, bool)`
+`func (o *C1ApiAuthV1IntrospectResponse) GetPrincipleIdOk() (*string, bool)`
 
 GetPrincipleIdOk returns a tuple with the PrincipleId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetPrincipleId
 
-`func (o *C1ApiAuthV1IntrospectResponse) SetPrincipleId(v interface{})`
+`func (o *C1ApiAuthV1IntrospectResponse) SetPrincipleId(v string)`
 
 SetPrincipleId sets PrincipleId field to given value.
 
@@ -161,32 +151,22 @@ SetPrincipleId sets PrincipleId field to given value.
 
 HasPrincipleId returns a boolean if a field has been set.
 
-### SetPrincipleIdNil
-
-`func (o *C1ApiAuthV1IntrospectResponse) SetPrincipleIdNil(b bool)`
-
- SetPrincipleIdNil sets the value for PrincipleId to be an explicit nil
-
-### UnsetPrincipleId
-`func (o *C1ApiAuthV1IntrospectResponse) UnsetPrincipleId()`
-
-UnsetPrincipleId ensures that no value is present for PrincipleId, not even an explicit nil
 ### GetRoles
 
-`func (o *C1ApiAuthV1IntrospectResponse) GetRoles() interface{}`
+`func (o *C1ApiAuthV1IntrospectResponse) GetRoles() []string`
 
 GetRoles returns the Roles field if non-nil, zero value otherwise.
 
 ### GetRolesOk
 
-`func (o *C1ApiAuthV1IntrospectResponse) GetRolesOk() (*interface{}, bool)`
+`func (o *C1ApiAuthV1IntrospectResponse) GetRolesOk() (*[]string, bool)`
 
 GetRolesOk returns a tuple with the Roles field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetRoles
 
-`func (o *C1ApiAuthV1IntrospectResponse) SetRoles(v interface{})`
+`func (o *C1ApiAuthV1IntrospectResponse) SetRoles(v []string)`
 
 SetRoles sets Roles field to given value.
 
@@ -208,20 +188,20 @@ HasRoles returns a boolean if a field has been set.
 UnsetRoles ensures that no value is present for Roles, not even an explicit nil
 ### GetTenantId
 
-`func (o *C1ApiAuthV1IntrospectResponse) GetTenantId() interface{}`
+`func (o *C1ApiAuthV1IntrospectResponse) GetTenantId() string`
 
 GetTenantId returns the TenantId field if non-nil, zero value otherwise.
 
 ### GetTenantIdOk
 
-`func (o *C1ApiAuthV1IntrospectResponse) GetTenantIdOk() (*interface{}, bool)`
+`func (o *C1ApiAuthV1IntrospectResponse) GetTenantIdOk() (*string, bool)`
 
 GetTenantIdOk returns a tuple with the TenantId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetTenantId
 
-`func (o *C1ApiAuthV1IntrospectResponse) SetTenantId(v interface{})`
+`func (o *C1ApiAuthV1IntrospectResponse) SetTenantId(v string)`
 
 SetTenantId sets TenantId field to given value.
 
@@ -231,32 +211,22 @@ SetTenantId sets TenantId field to given value.
 
 HasTenantId returns a boolean if a field has been set.
 
-### SetTenantIdNil
-
-`func (o *C1ApiAuthV1IntrospectResponse) SetTenantIdNil(b bool)`
-
- SetTenantIdNil sets the value for TenantId to be an explicit nil
-
-### UnsetTenantId
-`func (o *C1ApiAuthV1IntrospectResponse) UnsetTenantId()`
-
-UnsetTenantId ensures that no value is present for TenantId, not even an explicit nil
 ### GetUserId
 
-`func (o *C1ApiAuthV1IntrospectResponse) GetUserId() interface{}`
+`func (o *C1ApiAuthV1IntrospectResponse) GetUserId() string`
 
 GetUserId returns the UserId field if non-nil, zero value otherwise.
 
 ### GetUserIdOk
 
-`func (o *C1ApiAuthV1IntrospectResponse) GetUserIdOk() (*interface{}, bool)`
+`func (o *C1ApiAuthV1IntrospectResponse) GetUserIdOk() (*string, bool)`
 
 GetUserIdOk returns a tuple with the UserId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetUserId
 
-`func (o *C1ApiAuthV1IntrospectResponse) SetUserId(v interface{})`
+`func (o *C1ApiAuthV1IntrospectResponse) SetUserId(v string)`
 
 SetUserId sets UserId field to given value.
 
@@ -266,16 +236,6 @@ SetUserId sets UserId field to given value.
 
 HasUserId returns a boolean if a field has been set.
 
-### SetUserIdNil
-
-`func (o *C1ApiAuthV1IntrospectResponse) SetUserIdNil(b bool)`
-
- SetUserIdNil sets the value for UserId to be an explicit nil
-
-### UnsetUserId
-`func (o *C1ApiAuthV1IntrospectResponse) UnsetUserId()`
-
-UnsetUserId ensures that no value is present for UserId, not even an explicit nil
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

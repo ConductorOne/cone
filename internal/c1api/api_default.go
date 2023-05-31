@@ -26,9 +26,9 @@ type DefaultAPIService service
 type DefaultAPIC1ApiAppV1AppResourceServiceGetRequest struct {
 	ctx context.Context
 	ApiService *DefaultAPIService
-	appId interface{}
-	appResourceTypeId interface{}
-	id interface{}
+	appId string
+	appResourceTypeId string
+	id string
 }
 
 func (r DefaultAPIC1ApiAppV1AppResourceServiceGetRequest) Execute() (*C1ApiAppV1AppResourceServiceGetResponse, *http.Response, error) {
@@ -46,7 +46,7 @@ Invokes the c1.api.app.v1.AppResourceService.Get method.
  @param id
  @return DefaultAPIC1ApiAppV1AppResourceServiceGetRequest
 */
-func (a *DefaultAPIService) C1ApiAppV1AppResourceServiceGet(ctx context.Context, appId interface{}, appResourceTypeId interface{}, id interface{}) DefaultAPIC1ApiAppV1AppResourceServiceGetRequest {
+func (a *DefaultAPIService) C1ApiAppV1AppResourceServiceGet(ctx context.Context, appId string, appResourceTypeId string, id string) DefaultAPIC1ApiAppV1AppResourceServiceGetRequest {
 	return DefaultAPIC1ApiAppV1AppResourceServiceGetRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -137,8 +137,8 @@ func (a *DefaultAPIService) C1ApiAppV1AppResourceServiceGetExecute(r DefaultAPIC
 type DefaultAPIC1ApiAppV1AppResourceTypeServiceGetRequest struct {
 	ctx context.Context
 	ApiService *DefaultAPIService
-	appId interface{}
-	id interface{}
+	appId string
+	id string
 }
 
 func (r DefaultAPIC1ApiAppV1AppResourceTypeServiceGetRequest) Execute() (*C1ApiAppV1AppResourceTypeServiceGetResponse, *http.Response, error) {
@@ -155,7 +155,7 @@ Invokes the c1.api.app.v1.AppResourceTypeService.Get method.
  @param id
  @return DefaultAPIC1ApiAppV1AppResourceTypeServiceGetRequest
 */
-func (a *DefaultAPIService) C1ApiAppV1AppResourceTypeServiceGet(ctx context.Context, appId interface{}, id interface{}) DefaultAPIC1ApiAppV1AppResourceTypeServiceGetRequest {
+func (a *DefaultAPIService) C1ApiAppV1AppResourceTypeServiceGet(ctx context.Context, appId string, id string) DefaultAPIC1ApiAppV1AppResourceTypeServiceGetRequest {
 	return DefaultAPIC1ApiAppV1AppResourceTypeServiceGetRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -340,47 +340,47 @@ func (a *DefaultAPIService) C1ApiAuthV1AuthIntrospectExecute(r DefaultAPIC1ApiAu
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type DefaultAPIC1ApiRequestcatalogV2RequestCatalogSearchServiceSearchEntitlementsRequest struct {
+type DefaultAPIC1ApiRequestcatalogV1RequestCatalogSearchServiceSearchEntitlementsRequest struct {
 	ctx context.Context
 	ApiService *DefaultAPIService
-	c1ApiRequestcatalogV2SearchEntitlementsRequest *C1ApiRequestcatalogV2SearchEntitlementsRequest
+	c1ApiRequestcatalogV1RequestCatalogSearchServiceSearchEntitlementsRequest *C1ApiRequestcatalogV1RequestCatalogSearchServiceSearchEntitlementsRequest
 }
 
-func (r DefaultAPIC1ApiRequestcatalogV2RequestCatalogSearchServiceSearchEntitlementsRequest) C1ApiRequestcatalogV2SearchEntitlementsRequest(c1ApiRequestcatalogV2SearchEntitlementsRequest C1ApiRequestcatalogV2SearchEntitlementsRequest) DefaultAPIC1ApiRequestcatalogV2RequestCatalogSearchServiceSearchEntitlementsRequest {
-	r.c1ApiRequestcatalogV2SearchEntitlementsRequest = &c1ApiRequestcatalogV2SearchEntitlementsRequest
+func (r DefaultAPIC1ApiRequestcatalogV1RequestCatalogSearchServiceSearchEntitlementsRequest) C1ApiRequestcatalogV1RequestCatalogSearchServiceSearchEntitlementsRequest(c1ApiRequestcatalogV1RequestCatalogSearchServiceSearchEntitlementsRequest C1ApiRequestcatalogV1RequestCatalogSearchServiceSearchEntitlementsRequest) DefaultAPIC1ApiRequestcatalogV1RequestCatalogSearchServiceSearchEntitlementsRequest {
+	r.c1ApiRequestcatalogV1RequestCatalogSearchServiceSearchEntitlementsRequest = &c1ApiRequestcatalogV1RequestCatalogSearchServiceSearchEntitlementsRequest
 	return r
 }
 
-func (r DefaultAPIC1ApiRequestcatalogV2RequestCatalogSearchServiceSearchEntitlementsRequest) Execute() (*C1ApiRequestcatalogV2SearchEntitlementsResponse, *http.Response, error) {
-	return r.ApiService.C1ApiRequestcatalogV2RequestCatalogSearchServiceSearchEntitlementsExecute(r)
+func (r DefaultAPIC1ApiRequestcatalogV1RequestCatalogSearchServiceSearchEntitlementsRequest) Execute() (*C1ApiRequestcatalogV1RequestCatalogSearchServiceSearchEntitlementsResponse, *http.Response, error) {
+	return r.ApiService.C1ApiRequestcatalogV1RequestCatalogSearchServiceSearchEntitlementsExecute(r)
 }
 
 /*
-C1ApiRequestcatalogV2RequestCatalogSearchServiceSearchEntitlements Method for C1ApiRequestcatalogV2RequestCatalogSearchServiceSearchEntitlements
+C1ApiRequestcatalogV1RequestCatalogSearchServiceSearchEntitlements Method for C1ApiRequestcatalogV1RequestCatalogSearchServiceSearchEntitlements
 
-Invokes the c1.api.requestcatalog.v2.RequestCatalogSearchService.SearchEntitlements method.
+Invokes the c1.api.requestcatalog.v1.RequestCatalogSearchService.SearchEntitlements method.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return DefaultAPIC1ApiRequestcatalogV2RequestCatalogSearchServiceSearchEntitlementsRequest
+ @return DefaultAPIC1ApiRequestcatalogV1RequestCatalogSearchServiceSearchEntitlementsRequest
 */
-func (a *DefaultAPIService) C1ApiRequestcatalogV2RequestCatalogSearchServiceSearchEntitlements(ctx context.Context) DefaultAPIC1ApiRequestcatalogV2RequestCatalogSearchServiceSearchEntitlementsRequest {
-	return DefaultAPIC1ApiRequestcatalogV2RequestCatalogSearchServiceSearchEntitlementsRequest{
+func (a *DefaultAPIService) C1ApiRequestcatalogV1RequestCatalogSearchServiceSearchEntitlements(ctx context.Context) DefaultAPIC1ApiRequestcatalogV1RequestCatalogSearchServiceSearchEntitlementsRequest {
+	return DefaultAPIC1ApiRequestcatalogV1RequestCatalogSearchServiceSearchEntitlementsRequest{
 		ApiService: a,
 		ctx: ctx,
 	}
 }
 
 // Execute executes the request
-//  @return C1ApiRequestcatalogV2SearchEntitlementsResponse
-func (a *DefaultAPIService) C1ApiRequestcatalogV2RequestCatalogSearchServiceSearchEntitlementsExecute(r DefaultAPIC1ApiRequestcatalogV2RequestCatalogSearchServiceSearchEntitlementsRequest) (*C1ApiRequestcatalogV2SearchEntitlementsResponse, *http.Response, error) {
+//  @return C1ApiRequestcatalogV1RequestCatalogSearchServiceSearchEntitlementsResponse
+func (a *DefaultAPIService) C1ApiRequestcatalogV1RequestCatalogSearchServiceSearchEntitlementsExecute(r DefaultAPIC1ApiRequestcatalogV1RequestCatalogSearchServiceSearchEntitlementsRequest) (*C1ApiRequestcatalogV1RequestCatalogSearchServiceSearchEntitlementsResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *C1ApiRequestcatalogV2SearchEntitlementsResponse
+		localVarReturnValue  *C1ApiRequestcatalogV1RequestCatalogSearchServiceSearchEntitlementsResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.C1ApiRequestcatalogV2RequestCatalogSearchServiceSearchEntitlements")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.C1ApiRequestcatalogV1RequestCatalogSearchServiceSearchEntitlements")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -409,7 +409,7 @@ func (a *DefaultAPIService) C1ApiRequestcatalogV2RequestCatalogSearchServiceSear
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	// body params
-	localVarPostBody = r.c1ApiRequestcatalogV2SearchEntitlementsRequest
+	localVarPostBody = r.c1ApiRequestcatalogV1RequestCatalogSearchServiceSearchEntitlementsRequest
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -450,7 +450,7 @@ func (a *DefaultAPIService) C1ApiRequestcatalogV2RequestCatalogSearchServiceSear
 type DefaultAPIC1ApiUserV1UserServiceGetRequest struct {
 	ctx context.Context
 	ApiService *DefaultAPIService
-	id interface{}
+	id string
 }
 
 func (r DefaultAPIC1ApiUserV1UserServiceGetRequest) Execute() (*C1ApiUserV1UserServiceGetResponse, *http.Response, error) {
@@ -466,7 +466,7 @@ Invokes the c1.api.user.v1.UserService.Get method.
  @param id
  @return DefaultAPIC1ApiUserV1UserServiceGetRequest
 */
-func (a *DefaultAPIService) C1ApiUserV1UserServiceGet(ctx context.Context, id interface{}) DefaultAPIC1ApiUserV1UserServiceGetRequest {
+func (a *DefaultAPIService) C1ApiUserV1UserServiceGet(ctx context.Context, id string) DefaultAPIC1ApiUserV1UserServiceGetRequest {
 	return DefaultAPIC1ApiUserV1UserServiceGetRequest{
 		ApiService: a,
 		ctx: ctx,

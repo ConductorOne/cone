@@ -24,13 +24,13 @@ func runCli() int {
 		Version: version,
 	}
 
-	cliCmd.PersistentFlags().StringP("profile", "p", "default", "The conig profile to use.")
+	cliCmd.PersistentFlags().StringP("profile", "p", "default", "The config profile to use.")
 	cliCmd.PersistentFlags().BoolP("non-interactive", "i", false, "Disable prompts.")
 	cliCmd.PersistentFlags().String("client-id", "", "Client ID")
 	cliCmd.PersistentFlags().String("client-secret", "", "Client secret")
 	cliCmd.PersistentFlags().String("config-path", "", "path to config file")
-	cliCmd.PersistentFlags().Bool("pretty-output", false, "Whether to pretty print output")
-	cliCmd.PersistentFlags().Bool("debug", false, "Whether to enable debug logging")
+	cliCmd.PersistentFlags().StringP("output", "o", "table", "Output format. Valid values: table, json, json-pretty.")
+	cliCmd.PersistentFlags().Bool("debug", false, "Enable debug logging")
 
 	err := initConfig(cliCmd)
 	if err != nil {

@@ -18,9 +18,23 @@ type client struct {
 	config     clientConfig
 }
 
+func stringPtr(s string) *string {
+	if s == "" {
+		return nil
+	}
+	return &s
+}
+
+func float32Ptr(i int) *float32 {
+	f := float32(i)
+	return &f
+}
+
 type C1Client interface {
 	WhoAmI(ctx context.Context) (*c1api.C1ApiAuthV1IntrospectResponse, error)
 	GetUser(ctx context.Context, userID string) (*c1api.C1ApiUserV1UserServiceGetResponse, error)
+
+	SearchEntitlements(ctx context.Context, filter *SearchEntitlementsFilter) (*c1api.C1ApiRequestcatalogV2SearchEntitlementsResponse, error)
 }
 
 func New(

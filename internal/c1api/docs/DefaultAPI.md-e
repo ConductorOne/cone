@@ -27,7 +27,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/conductorone/cone/internal/c1api"
+    openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID/c1api"
 )
 
 func main() {
@@ -88,7 +88,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/conductorone/cone/internal/c1api"
+    openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID/c1api"
 )
 
 func main() {
@@ -154,7 +154,7 @@ import (
     "context"
     "fmt"
     "os"
-    openapiclient "github.com/conductorone/cone/internal/c1api"
+    openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID/c1api"
 )
 
 func main() {

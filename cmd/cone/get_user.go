@@ -38,7 +38,7 @@ func getUserRun(cmd *cobra.Command, args []string) error {
 
 	userID := args[0]
 
-	c, err := client.New(ctx, clientId, clientSecret)
+	c, err := client.New(ctx, clientId, clientSecret, client.WithDebug(v.GetBool("debug")))
 	if err != nil {
 		return err
 	}

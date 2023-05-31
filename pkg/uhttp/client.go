@@ -71,6 +71,20 @@ func WithUserAgent(userAgent string) Option {
 	}
 }
 
+type debugOption struct {
+	debug bool
+}
+
+func (o debugOption) Apply(c *Transport) {
+	c.debug = o.debug
+}
+
+func WithDebug(debug bool) Option {
+	return debugOption{
+		debug: debug,
+	}
+}
+
 type Option interface {
 	Apply(*Transport)
 }

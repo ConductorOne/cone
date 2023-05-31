@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"net"
 	"net/http"
+	"net/http/httputil"
 	"sync"
 	"time"
 
@@ -37,6 +38,7 @@ type Transport struct {
 	log             bool
 	nextCycle       time.Time
 	mtx             sync.RWMutex
+	debug           bool
 }
 
 func newTransport() *Transport {
@@ -84,6 +86,38 @@ func (uat *userAgentTripper) RoundTrip(req *http.Request) (*http.Response, error
 	return uat.next.RoundTrip(req)
 }
 
+type debugTripper struct {
+	next  http.RoundTripper
+	debug bool
+}
+
+func (uat *debugTripper) RoundTrip(req *http.Request) (*http.Response, error) {
+	if !uat.debug {
+		return uat.next.RoundTrip(req)
+	}
+
+	requestBytes, err := httputil.DumpRequest(req, true)
+	if err != nil {
+		return nil, err
+	}
+	//nolint:forbidigo
+	fmt.Println(string(requestBytes))
+
+	resp, err := uat.next.RoundTrip(req)
+	if err != nil {
+		return nil, err
+	}
+
+	responseBytes, err := httputil.DumpResponse(resp, true)
+	if err != nil {
+		return nil, err
+	}
+	//nolint:forbidigo
+	fmt.Println(string(responseBytes))
+
+	return resp, nil
+}
+
 type tokenSourceTripper struct {
 	next        http.RoundTripper
 	tokenSource oauth2.TokenSource
@@ -123,6 +157,7 @@ func (t *Transport) make(ctx context.Context) (http.RoundTripper, error) {
 	}
 	var rv http.RoundTripper = baseTransport
 	t.userAgent = fmt.Sprintf("%s cone", t.userAgent)
+	rv = &debugTripper{next: rv, debug: t.debug}
 	rv = &userAgentTripper{next: rv, userAgent: t.userAgent}
 	rv = &tokenSourceTripper{next: rv, tokenSource: t.tokenSource}
 	return rv, nil

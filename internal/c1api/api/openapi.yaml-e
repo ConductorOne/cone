@@ -21,7 +21,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/c1.api.auth.v1.IntrospectResponse'
-          description: Succesful response
+          description: Successful response
   /api/v1/entitlement/search:
     post:
       description: Invokes the c1.api.requestcatalog.v2.RequestCatalogSearchService.SearchEntitlements
@@ -38,7 +38,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/c1.api.requestcatalog.v2.SearchEntitlementsResponse'
-          description: Succesful response
+          description: Successful response
   /api/v1/user/get/{id}:
     get:
       description: Invokes the c1.api.user.v1.UserService.Get method.
@@ -58,7 +58,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/c1.api.user.v1.UserServiceGetResponse'
-          description: Succesful response
+          description: Successful response
 components:
   schemas:
     c1.api.app.v1.AppEntitlement:

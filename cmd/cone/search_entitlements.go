@@ -4,7 +4,6 @@ import (
 	"context"
 	"github.com/conductorone/cone/pkg/client"
 	"github.com/conductorone/cone/pkg/output"
-	"github.com/davecgh/go-spew/spew"
 	"github.com/spf13/cobra"
 )
 
@@ -50,8 +49,6 @@ func searchEntitlementsRun(cmd *cobra.Command, args []string) error {
 	if err != nil {
 		return err
 	}
-
-	spew.Dump(resp)
 
 	pretty := v.GetBool("pretty-output")
 	err = output.PrintOutput(resp, pretty)

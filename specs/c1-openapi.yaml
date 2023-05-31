@@ -363,7 +363,7 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/c1.api.auth.v1.IntrospectResponse'
-                    description: Succesful response
+                    description: Successful response
     /api/v1/entitlement/search:
         post:
             description: Invokes the c1.api.requestcatalog.v2.RequestCatalogSearchService.SearchEntitlements method.
@@ -379,7 +379,7 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/c1.api.requestcatalog.v2.SearchEntitlementsResponse'
-                    description: Succesful response
+                    description: Successful response
     /api/v1/user/get/{id}:
         get:
             description: Invokes the c1.api.user.v1.UserService.Get method.
@@ -397,7 +397,7 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/c1.api.user.v1.UserServiceGetResponse'
-                    description: Succesful response
+                    description: Successful response
 servers:
     - description: The ConductorOne API server for the current tenant.
       url: https://{tenantDomain}.morgabra.dev.ductone.com:2443

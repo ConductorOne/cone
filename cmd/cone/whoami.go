@@ -2,7 +2,9 @@ package main
 
 import (
 	"context"
+	"fmt"
 
+	"github.com/conductorone/cone/internal/c1api"
 	"github.com/conductorone/cone/pkg/client"
 	"github.com/conductorone/cone/pkg/output"
 	"github.com/spf13/cobra"
@@ -41,11 +43,25 @@ func whoAmIRun(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
-	pretty := v.GetBool("pretty-output")
-	err = output.PrintOutput(whoamiResp, pretty)
+	resp := C1ApiAuthV1IntrospectResponse(*whoamiResp)
+	outputManager := output.NewManager(ctx, v)
+	err = outputManager.Output(ctx, &resp)
 	if err != nil {
 		return err
 	}
 
 	return nil
+}
+
+type C1ApiAuthV1IntrospectResponse c1api.C1ApiAuthV1IntrospectResponse
+
+func (r *C1ApiAuthV1IntrospectResponse) Header() []string {
+	return []string{"PrincipleId", "UserId", "AccessTokenId"}
+}
+func (r *C1ApiAuthV1IntrospectResponse) Rows() [][]string {
+	return [][]string{{
+		fmt.Sprintf("%+v", r.AdditionalProperties["principle_id"]),
+		fmt.Sprintf("%+v", r.AdditionalProperties["user_id"]),
+		fmt.Sprintf("%+v", r.AdditionalProperties["access_token_id"]),
+	}}
 }

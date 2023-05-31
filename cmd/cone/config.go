@@ -3,6 +3,7 @@ package main
 import (
 	"errors"
 	"fmt"
+	"os"
 	"strings"
 
 	"github.com/spf13/cobra"
@@ -10,8 +11,11 @@ import (
 )
 
 const (
-	envPrefix         = "cone"
-	defaultConfigPath = "$HOME/.conductorone"
+	envPrefix = "cone"
+)
+
+var (
+	defaultConfigPath = strings.Join([]string{"$HOME", ".conductorone"}, string(os.PathSeparator))
 )
 
 type Config struct {

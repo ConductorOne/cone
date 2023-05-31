@@ -100,6 +100,7 @@ func (uat *debugTripper) RoundTrip(req *http.Request) (*http.Response, error) {
 	if err != nil {
 		return nil, err
 	}
+	//nolint:forbidigo
 	fmt.Println(string(requestBytes))
 
 	resp, err := uat.next.RoundTrip(req)
@@ -111,6 +112,7 @@ func (uat *debugTripper) RoundTrip(req *http.Request) (*http.Response, error) {
 	if err != nil {
 		return nil, err
 	}
+	//nolint:forbidigo
 	fmt.Println(string(responseBytes))
 
 	return resp, nil

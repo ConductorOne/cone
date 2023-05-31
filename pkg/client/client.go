@@ -33,9 +33,10 @@ func float32Ptr(i int) *float32 {
 type C1Client interface {
 	WhoAmI(ctx context.Context) (*c1api.C1ApiAuthV1IntrospectResponse, error)
 	GetUser(ctx context.Context, userID string) (*c1api.C1ApiUserV1UserServiceGetResponse, error)
-	SearchEntitlements(ctx context.Context, filter *SearchEntitlementsFilter) (*c1api.C1ApiRequestcatalogV2SearchEntitlementsResponse, error)
+	SearchEntitlements(ctx context.Context, filter *SearchEntitlementsFilter) (*c1api.C1ApiRequestcatalogV1RequestCatalogSearchServiceSearchEntitlementsResponse, error)
 	GetResource(ctx context.Context, appID string, resourceID string, resourceTypeID string) (*c1api.C1ApiAppV1AppResourceServiceGetResponse, error)
 	GetResourceType(ctx context.Context, appID string, resourceTypeID string) (*c1api.C1ApiAppV1AppResourceTypeServiceGetResponse, error)
+	GetApp(ctx context.Context, appID string) (*c1api.C1ApiAppV1App, error)
 }
 
 func New(

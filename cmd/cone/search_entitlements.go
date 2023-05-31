@@ -24,6 +24,7 @@ type ExpandedEntitlement struct {
 	Entitlement     *c1api.C1ApiAppV1AppEntitlement
 	AppResource     *c1api.C1ApiAppV1AppResource
 	AppResourceType *c1api.C1ApiAppV1AppResourceType
+	App             *c1api.C1ApiAppV1App
 }
 
 func searchEntitlementsRun(cmd *cobra.Command, args []string) error {
@@ -58,13 +59,33 @@ func searchEntitlementsRun(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
-	//for _, item := range resp.List {
-	//
-	//	c.GetResource(ctx, item.AppId, item.ResourceTypeId, item.ResourceId)
-	//}
+	entitlements := make([]ExpandedEntitlement, 0)
+	for _, item := range resp.List {
+		app, err := c.GetApp(ctx, *item.AppEntitlement.AppId)
+		if err != nil {
+			return err
+		}
+
+		resourceType, err := c.GetResourceType(ctx, *item.AppEntitlement.AppId, *item.AppEntitlement.AppResourceTypeId)
+		if err != nil {
+			return err
+		}
+
+		resource, err := c.GetResource(ctx, *item.AppEntitlement.AppId, *item.AppEntitlement.AppResourceTypeId, *item.AppEntitlement.AppResourceId)
+		if err != nil {
+			return err
+		}
+
+		entitlements = append(entitlements, ExpandedEntitlement{
+			Entitlement:     item.AppEntitlement,
+			App:             app,
+			AppResource:     resource.AppResourceView.AppResource,
+			AppResourceType: resourceType.AppResourceTypeView.AppResourceType,
+		})
+	}
 
 	pretty := v.GetBool("pretty-output")
-	err = output.PrintOutput(resp, pretty)
+	err = output.PrintOutput(entitlements, pretty)
 	if err != nil {
 		return err
 	}

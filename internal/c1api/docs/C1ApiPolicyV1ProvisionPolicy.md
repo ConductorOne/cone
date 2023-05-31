@@ -4,9 +4,9 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Connector** | Pointer to **map[string]interface{}** | The ConnectorProvision message. | [optional] 
-**Delegated** | Pointer to [**NullableC1ApiPolicyV1DelegatedProvision**](C1ApiPolicyV1DelegatedProvision.md) |  | [optional] 
-**Manual** | Pointer to [**NullableC1ApiPolicyV1ManualProvision**](C1ApiPolicyV1ManualProvision.md) |  | [optional] 
+**Connector** | Pointer to **interface{}** | The ConnectorProvision message. | [optional] 
+**Delegated** | Pointer to [**C1ApiPolicyV1DelegatedProvision**](C1ApiPolicyV1DelegatedProvision.md) |  | [optional] 
+**Manual** | Pointer to [**C1ApiPolicyV1ManualProvision**](C1ApiPolicyV1ManualProvision.md) |  | [optional] 
 
 ## Methods
 
@@ -29,20 +29,20 @@ but it doesn't guarantee that properties required by API are set
 
 ### GetConnector
 
-`func (o *C1ApiPolicyV1ProvisionPolicy) GetConnector() map[string]interface{}`
+`func (o *C1ApiPolicyV1ProvisionPolicy) GetConnector() interface{}`
 
 GetConnector returns the Connector field if non-nil, zero value otherwise.
 
 ### GetConnectorOk
 
-`func (o *C1ApiPolicyV1ProvisionPolicy) GetConnectorOk() (*map[string]interface{}, bool)`
+`func (o *C1ApiPolicyV1ProvisionPolicy) GetConnectorOk() (*interface{}, bool)`
 
 GetConnectorOk returns a tuple with the Connector field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetConnector
 
-`func (o *C1ApiPolicyV1ProvisionPolicy) SetConnector(v map[string]interface{})`
+`func (o *C1ApiPolicyV1ProvisionPolicy) SetConnector(v interface{})`
 
 SetConnector sets Connector field to given value.
 
@@ -87,16 +87,6 @@ SetDelegated sets Delegated field to given value.
 
 HasDelegated returns a boolean if a field has been set.
 
-### SetDelegatedNil
-
-`func (o *C1ApiPolicyV1ProvisionPolicy) SetDelegatedNil(b bool)`
-
- SetDelegatedNil sets the value for Delegated to be an explicit nil
-
-### UnsetDelegated
-`func (o *C1ApiPolicyV1ProvisionPolicy) UnsetDelegated()`
-
-UnsetDelegated ensures that no value is present for Delegated, not even an explicit nil
 ### GetManual
 
 `func (o *C1ApiPolicyV1ProvisionPolicy) GetManual() C1ApiPolicyV1ManualProvision`
@@ -122,16 +112,6 @@ SetManual sets Manual field to given value.
 
 HasManual returns a boolean if a field has been set.
 
-### SetManualNil
-
-`func (o *C1ApiPolicyV1ProvisionPolicy) SetManualNil(b bool)`
-
- SetManualNil sets the value for Manual to be an explicit nil
-
-### UnsetManual
-`func (o *C1ApiPolicyV1ProvisionPolicy) UnsetManual()`
-
-UnsetManual ensures that no value is present for Manual, not even an explicit nil
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

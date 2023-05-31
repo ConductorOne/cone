@@ -20,13 +20,13 @@ var _ MappedNullable = &C1ApiRequestcatalogV2SearchEntitlementsRequest{}
 // C1ApiRequestcatalogV2SearchEntitlementsRequest The SearchEntitlementsRequest message.
 type C1ApiRequestcatalogV2SearchEntitlementsRequest struct {
 	// The entitlementAlias field.
-	EntitlementAlias *string `json:"entitlementAlias,omitempty"`
+	EntitlementAlias interface{} `json:"entitlementAlias,omitempty"`
 	// The pageSize field.
-	PageSize *float32 `json:"pageSize,omitempty"`
+	PageSize interface{} `json:"pageSize,omitempty"`
 	// The pageToken field.
-	PageToken *string `json:"pageToken,omitempty"`
+	PageToken interface{} `json:"pageToken,omitempty"`
 	// The query field.
-	Query *string `json:"query,omitempty"`
+	Query interface{} `json:"query,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -49,132 +49,136 @@ func NewC1ApiRequestcatalogV2SearchEntitlementsRequestWithDefaults() *C1ApiReque
 	return &this
 }
 
-// GetEntitlementAlias returns the EntitlementAlias field value if set, zero value otherwise.
-func (o *C1ApiRequestcatalogV2SearchEntitlementsRequest) GetEntitlementAlias() string {
-	if o == nil || IsNil(o.EntitlementAlias) {
-		var ret string
+// GetEntitlementAlias returns the EntitlementAlias field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *C1ApiRequestcatalogV2SearchEntitlementsRequest) GetEntitlementAlias() interface{} {
+	if o == nil {
+		var ret interface{}
 		return ret
 	}
-	return *o.EntitlementAlias
+	return o.EntitlementAlias
 }
 
 // GetEntitlementAliasOk returns a tuple with the EntitlementAlias field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *C1ApiRequestcatalogV2SearchEntitlementsRequest) GetEntitlementAliasOk() (*string, bool) {
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *C1ApiRequestcatalogV2SearchEntitlementsRequest) GetEntitlementAliasOk() (*interface{}, bool) {
 	if o == nil || IsNil(o.EntitlementAlias) {
 		return nil, false
 	}
-	return o.EntitlementAlias, true
+	return &o.EntitlementAlias, true
 }
 
 // HasEntitlementAlias returns a boolean if a field has been set.
 func (o *C1ApiRequestcatalogV2SearchEntitlementsRequest) HasEntitlementAlias() bool {
-	if o != nil && !IsNil(o.EntitlementAlias) {
+	if o != nil && IsNil(o.EntitlementAlias) {
 		return true
 	}
 
 	return false
 }
 
-// SetEntitlementAlias gets a reference to the given string and assigns it to the EntitlementAlias field.
-func (o *C1ApiRequestcatalogV2SearchEntitlementsRequest) SetEntitlementAlias(v string) {
-	o.EntitlementAlias = &v
+// SetEntitlementAlias gets a reference to the given interface{} and assigns it to the EntitlementAlias field.
+func (o *C1ApiRequestcatalogV2SearchEntitlementsRequest) SetEntitlementAlias(v interface{}) {
+	o.EntitlementAlias = v
 }
 
-// GetPageSize returns the PageSize field value if set, zero value otherwise.
-func (o *C1ApiRequestcatalogV2SearchEntitlementsRequest) GetPageSize() float32 {
-	if o == nil || IsNil(o.PageSize) {
-		var ret float32
+// GetPageSize returns the PageSize field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *C1ApiRequestcatalogV2SearchEntitlementsRequest) GetPageSize() interface{} {
+	if o == nil {
+		var ret interface{}
 		return ret
 	}
-	return *o.PageSize
+	return o.PageSize
 }
 
 // GetPageSizeOk returns a tuple with the PageSize field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *C1ApiRequestcatalogV2SearchEntitlementsRequest) GetPageSizeOk() (*float32, bool) {
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *C1ApiRequestcatalogV2SearchEntitlementsRequest) GetPageSizeOk() (*interface{}, bool) {
 	if o == nil || IsNil(o.PageSize) {
 		return nil, false
 	}
-	return o.PageSize, true
+	return &o.PageSize, true
 }
 
 // HasPageSize returns a boolean if a field has been set.
 func (o *C1ApiRequestcatalogV2SearchEntitlementsRequest) HasPageSize() bool {
-	if o != nil && !IsNil(o.PageSize) {
+	if o != nil && IsNil(o.PageSize) {
 		return true
 	}
 
 	return false
 }
 
-// SetPageSize gets a reference to the given float32 and assigns it to the PageSize field.
-func (o *C1ApiRequestcatalogV2SearchEntitlementsRequest) SetPageSize(v float32) {
-	o.PageSize = &v
+// SetPageSize gets a reference to the given interface{} and assigns it to the PageSize field.
+func (o *C1ApiRequestcatalogV2SearchEntitlementsRequest) SetPageSize(v interface{}) {
+	o.PageSize = v
 }
 
-// GetPageToken returns the PageToken field value if set, zero value otherwise.
-func (o *C1ApiRequestcatalogV2SearchEntitlementsRequest) GetPageToken() string {
-	if o == nil || IsNil(o.PageToken) {
-		var ret string
+// GetPageToken returns the PageToken field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *C1ApiRequestcatalogV2SearchEntitlementsRequest) GetPageToken() interface{} {
+	if o == nil {
+		var ret interface{}
 		return ret
 	}
-	return *o.PageToken
+	return o.PageToken
 }
 
 // GetPageTokenOk returns a tuple with the PageToken field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *C1ApiRequestcatalogV2SearchEntitlementsRequest) GetPageTokenOk() (*string, bool) {
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *C1ApiRequestcatalogV2SearchEntitlementsRequest) GetPageTokenOk() (*interface{}, bool) {
 	if o == nil || IsNil(o.PageToken) {
 		return nil, false
 	}
-	return o.PageToken, true
+	return &o.PageToken, true
 }
 
 // HasPageToken returns a boolean if a field has been set.
 func (o *C1ApiRequestcatalogV2SearchEntitlementsRequest) HasPageToken() bool {
-	if o != nil && !IsNil(o.PageToken) {
+	if o != nil && IsNil(o.PageToken) {
 		return true
 	}
 
 	return false
 }
 
-// SetPageToken gets a reference to the given string and assigns it to the PageToken field.
-func (o *C1ApiRequestcatalogV2SearchEntitlementsRequest) SetPageToken(v string) {
-	o.PageToken = &v
+// SetPageToken gets a reference to the given interface{} and assigns it to the PageToken field.
+func (o *C1ApiRequestcatalogV2SearchEntitlementsRequest) SetPageToken(v interface{}) {
+	o.PageToken = v
 }
 
-// GetQuery returns the Query field value if set, zero value otherwise.
-func (o *C1ApiRequestcatalogV2SearchEntitlementsRequest) GetQuery() string {
-	if o == nil || IsNil(o.Query) {
-		var ret string
+// GetQuery returns the Query field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *C1ApiRequestcatalogV2SearchEntitlementsRequest) GetQuery() interface{} {
+	if o == nil {
+		var ret interface{}
 		return ret
 	}
-	return *o.Query
+	return o.Query
 }
 
 // GetQueryOk returns a tuple with the Query field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *C1ApiRequestcatalogV2SearchEntitlementsRequest) GetQueryOk() (*string, bool) {
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *C1ApiRequestcatalogV2SearchEntitlementsRequest) GetQueryOk() (*interface{}, bool) {
 	if o == nil || IsNil(o.Query) {
 		return nil, false
 	}
-	return o.Query, true
+	return &o.Query, true
 }
 
 // HasQuery returns a boolean if a field has been set.
 func (o *C1ApiRequestcatalogV2SearchEntitlementsRequest) HasQuery() bool {
-	if o != nil && !IsNil(o.Query) {
+	if o != nil && IsNil(o.Query) {
 		return true
 	}
 
 	return false
 }
 
-// SetQuery gets a reference to the given string and assigns it to the Query field.
-func (o *C1ApiRequestcatalogV2SearchEntitlementsRequest) SetQuery(v string) {
-	o.Query = &v
+// SetQuery gets a reference to the given interface{} and assigns it to the Query field.
+func (o *C1ApiRequestcatalogV2SearchEntitlementsRequest) SetQuery(v interface{}) {
+	o.Query = v
 }
 
 func (o C1ApiRequestcatalogV2SearchEntitlementsRequest) MarshalJSON() ([]byte, error) {
@@ -187,16 +191,16 @@ func (o C1ApiRequestcatalogV2SearchEntitlementsRequest) MarshalJSON() ([]byte, e
 
 func (o C1ApiRequestcatalogV2SearchEntitlementsRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.EntitlementAlias) {
+	if o.EntitlementAlias != nil {
 		toSerialize["entitlementAlias"] = o.EntitlementAlias
 	}
-	if !IsNil(o.PageSize) {
+	if o.PageSize != nil {
 		toSerialize["pageSize"] = o.PageSize
 	}
-	if !IsNil(o.PageToken) {
+	if o.PageToken != nil {
 		toSerialize["pageToken"] = o.PageToken
 	}
-	if !IsNil(o.Query) {
+	if o.Query != nil {
 		toSerialize["query"] = o.Query
 	}
 

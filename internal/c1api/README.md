@@ -73,10 +73,12 @@ ctx = context.WithValue(context.Background(), c1api.ContextOperationServerVariab
 
 ## Documentation for API Endpoints
 
-All URIs are relative to *https://invalid-example.morgabra.dev.ductone.com:2443*
+All URIs are relative to *https://invalid-example.logan.dev.ductone.com:2443*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
+*DefaultAPI* | [**C1ApiAppV1AppResourceServiceGet**](docs/DefaultAPI.md#c1apiappv1appresourceserviceget) | **Get** /api/v1/app_resource/{app_id}/{app_resource_type_id}/{id} | 
+*DefaultAPI* | [**C1ApiAppV1AppResourceTypeServiceGet**](docs/DefaultAPI.md#c1apiappv1appresourcetypeserviceget) | **Get** /api/v1/app_resource_type/{app_id}/{id} | 
 *DefaultAPI* | [**C1ApiAuthV1AuthIntrospect**](docs/DefaultAPI.md#c1apiauthv1authintrospect) | **Get** /api/v1/auth/introspect | 
 *DefaultAPI* | [**C1ApiRequestcatalogV2RequestCatalogSearchServiceSearchEntitlements**](docs/DefaultAPI.md#c1apirequestcatalogv2requestcatalogsearchservicesearchentitlements) | **Post** /api/v1/entitlement/search | 
 *DefaultAPI* | [**C1ApiUserV1UserServiceGet**](docs/DefaultAPI.md#c1apiuserv1userserviceget) | **Get** /api/v1/user/get/{id} | 
@@ -85,6 +87,12 @@ Class | Method | HTTP request | Description
 ## Documentation For Models
 
  - [C1ApiAppV1AppEntitlement](docs/C1ApiAppV1AppEntitlement.md)
+ - [C1ApiAppV1AppResource](docs/C1ApiAppV1AppResource.md)
+ - [C1ApiAppV1AppResourceServiceGetResponse](docs/C1ApiAppV1AppResourceServiceGetResponse.md)
+ - [C1ApiAppV1AppResourceType](docs/C1ApiAppV1AppResourceType.md)
+ - [C1ApiAppV1AppResourceTypeServiceGetResponse](docs/C1ApiAppV1AppResourceTypeServiceGetResponse.md)
+ - [C1ApiAppV1AppResourceTypeView](docs/C1ApiAppV1AppResourceTypeView.md)
+ - [C1ApiAppV1AppResourceView](docs/C1ApiAppV1AppResourceView.md)
  - [C1ApiAuthV1IntrospectResponse](docs/C1ApiAuthV1IntrospectResponse.md)
  - [C1ApiPolicyV1DelegatedProvision](docs/C1ApiPolicyV1DelegatedProvision.md)
  - [C1ApiPolicyV1ManualProvision](docs/C1ApiPolicyV1ManualProvision.md)
@@ -94,7 +102,6 @@ Class | Method | HTTP request | Description
  - [C1ApiUserV1User](docs/C1ApiUserV1User.md)
  - [C1ApiUserV1UserAttributeMappingSource](docs/C1ApiUserV1UserAttributeMappingSource.md)
  - [C1ApiUserV1UserServiceGetResponse](docs/C1ApiUserV1UserServiceGetResponse.md)
- - [C1ApiUserV1UserServiceGetResponseExpandedInner](docs/C1ApiUserV1UserServiceGetResponseExpandedInner.md)
  - [C1ApiUserV1UserView](docs/C1ApiUserV1UserView.md)
 
 

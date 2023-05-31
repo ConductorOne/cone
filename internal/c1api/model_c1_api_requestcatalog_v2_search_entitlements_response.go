@@ -20,9 +20,9 @@ var _ MappedNullable = &C1ApiRequestcatalogV2SearchEntitlementsResponse{}
 // C1ApiRequestcatalogV2SearchEntitlementsResponse The SearchEntitlementsResponse message.
 type C1ApiRequestcatalogV2SearchEntitlementsResponse struct {
 	// The list field.
-	List []C1ApiAppV1AppEntitlement `json:"list,omitempty"`
+	List interface{} `json:"list,omitempty"`
 	// The nextPageToken field.
-	NextPageToken *string `json:"nextPageToken,omitempty"`
+	NextPageToken interface{} `json:"nextPageToken,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -46,9 +46,9 @@ func NewC1ApiRequestcatalogV2SearchEntitlementsResponseWithDefaults() *C1ApiRequ
 }
 
 // GetList returns the List field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *C1ApiRequestcatalogV2SearchEntitlementsResponse) GetList() []C1ApiAppV1AppEntitlement {
+func (o *C1ApiRequestcatalogV2SearchEntitlementsResponse) GetList() interface{} {
 	if o == nil {
-		var ret []C1ApiAppV1AppEntitlement
+		var ret interface{}
 		return ret
 	}
 	return o.List
@@ -57,11 +57,11 @@ func (o *C1ApiRequestcatalogV2SearchEntitlementsResponse) GetList() []C1ApiAppV1
 // GetListOk returns a tuple with the List field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *C1ApiRequestcatalogV2SearchEntitlementsResponse) GetListOk() ([]C1ApiAppV1AppEntitlement, bool) {
+func (o *C1ApiRequestcatalogV2SearchEntitlementsResponse) GetListOk() (*interface{}, bool) {
 	if o == nil || IsNil(o.List) {
 		return nil, false
 	}
-	return o.List, true
+	return &o.List, true
 }
 
 // HasList returns a boolean if a field has been set.
@@ -73,41 +73,42 @@ func (o *C1ApiRequestcatalogV2SearchEntitlementsResponse) HasList() bool {
 	return false
 }
 
-// SetList gets a reference to the given []C1ApiAppV1AppEntitlement and assigns it to the List field.
-func (o *C1ApiRequestcatalogV2SearchEntitlementsResponse) SetList(v []C1ApiAppV1AppEntitlement) {
+// SetList gets a reference to the given interface{} and assigns it to the List field.
+func (o *C1ApiRequestcatalogV2SearchEntitlementsResponse) SetList(v interface{}) {
 	o.List = v
 }
 
-// GetNextPageToken returns the NextPageToken field value if set, zero value otherwise.
-func (o *C1ApiRequestcatalogV2SearchEntitlementsResponse) GetNextPageToken() string {
-	if o == nil || IsNil(o.NextPageToken) {
-		var ret string
+// GetNextPageToken returns the NextPageToken field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *C1ApiRequestcatalogV2SearchEntitlementsResponse) GetNextPageToken() interface{} {
+	if o == nil {
+		var ret interface{}
 		return ret
 	}
-	return *o.NextPageToken
+	return o.NextPageToken
 }
 
 // GetNextPageTokenOk returns a tuple with the NextPageToken field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *C1ApiRequestcatalogV2SearchEntitlementsResponse) GetNextPageTokenOk() (*string, bool) {
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *C1ApiRequestcatalogV2SearchEntitlementsResponse) GetNextPageTokenOk() (*interface{}, bool) {
 	if o == nil || IsNil(o.NextPageToken) {
 		return nil, false
 	}
-	return o.NextPageToken, true
+	return &o.NextPageToken, true
 }
 
 // HasNextPageToken returns a boolean if a field has been set.
 func (o *C1ApiRequestcatalogV2SearchEntitlementsResponse) HasNextPageToken() bool {
-	if o != nil && !IsNil(o.NextPageToken) {
+	if o != nil && IsNil(o.NextPageToken) {
 		return true
 	}
 
 	return false
 }
 
-// SetNextPageToken gets a reference to the given string and assigns it to the NextPageToken field.
-func (o *C1ApiRequestcatalogV2SearchEntitlementsResponse) SetNextPageToken(v string) {
-	o.NextPageToken = &v
+// SetNextPageToken gets a reference to the given interface{} and assigns it to the NextPageToken field.
+func (o *C1ApiRequestcatalogV2SearchEntitlementsResponse) SetNextPageToken(v interface{}) {
+	o.NextPageToken = v
 }
 
 func (o C1ApiRequestcatalogV2SearchEntitlementsResponse) MarshalJSON() ([]byte, error) {
@@ -123,7 +124,7 @@ func (o C1ApiRequestcatalogV2SearchEntitlementsResponse) ToMap() (map[string]int
 	if o.List != nil {
 		toSerialize["list"] = o.List
 	}
-	if !IsNil(o.NextPageToken) {
+	if o.NextPageToken != nil {
 		toSerialize["nextPageToken"] = o.NextPageToken
 	}
 

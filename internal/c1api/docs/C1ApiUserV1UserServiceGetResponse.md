@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Expanded** | Pointer to [**[]C1ApiUserV1UserServiceGetResponseExpandedInner**](C1ApiUserV1UserServiceGetResponseExpandedInner.md) | The expanded field. | [optional] 
+**Expanded** | Pointer to **interface{}** | The expanded field. | [optional] 
 **UserView** | Pointer to [**C1ApiUserV1UserView**](C1ApiUserV1UserView.md) |  | [optional] 
 
 ## Methods
@@ -28,20 +28,20 @@ but it doesn't guarantee that properties required by API are set
 
 ### GetExpanded
 
-`func (o *C1ApiUserV1UserServiceGetResponse) GetExpanded() []C1ApiUserV1UserServiceGetResponseExpandedInner`
+`func (o *C1ApiUserV1UserServiceGetResponse) GetExpanded() interface{}`
 
 GetExpanded returns the Expanded field if non-nil, zero value otherwise.
 
 ### GetExpandedOk
 
-`func (o *C1ApiUserV1UserServiceGetResponse) GetExpandedOk() (*[]C1ApiUserV1UserServiceGetResponseExpandedInner, bool)`
+`func (o *C1ApiUserV1UserServiceGetResponse) GetExpandedOk() (*interface{}, bool)`
 
 GetExpandedOk returns a tuple with the Expanded field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetExpanded
 
-`func (o *C1ApiUserV1UserServiceGetResponse) SetExpanded(v []C1ApiUserV1UserServiceGetResponseExpandedInner)`
+`func (o *C1ApiUserV1UserServiceGetResponse) SetExpanded(v interface{})`
 
 SetExpanded sets Expanded field to given value.
 

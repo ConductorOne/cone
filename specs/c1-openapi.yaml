@@ -75,6 +75,122 @@ components:
                     format: date-time
                     type: string
             type: object
+        c1.api.app.v1.AppResource:
+            description: The AppResource message.
+            properties:
+                appId:
+                    description: The appId field.
+                    type: string
+                appResourceTypeId:
+                    description: The appResourceTypeId field.
+                    type: string
+                createdAt:
+                    format: date-time
+                    type: string
+                customDescription:
+                    description: The customDescription field.
+                    type: string
+                deletedAt:
+                    format: date-time
+                    type: string
+                description:
+                    description: The description field.
+                    type: string
+                displayName:
+                    description: The displayName field.
+                    type: string
+                grantCount:
+                    description: The grantCount field.
+                    format: int64
+                    type: string
+                id:
+                    description: The id field.
+                    type: string
+                updatedAt:
+                    format: date-time
+                    type: string
+            type: object
+        c1.api.app.v1.AppResourceServiceGetResponse:
+            description: The AppResourceServiceGetResponse message.
+            properties:
+                appResourceView:
+                    $ref: '#/components/schemas/c1.api.app.v1.AppResourceView'
+                expanded:
+                    description: The expanded field.
+                    items:
+                        additionalProperties:
+                            oneOf: []
+                        description: Contains an arbitrary serialized message along with a @type that describes the type of the serialized message.
+                        properties:
+                            '@type':
+                                description: The type of the serialized message.
+                                type: string
+                        type: object
+                    nullable: true
+                    type: array
+            type: object
+        c1.api.app.v1.AppResourceType:
+            description: The AppResourceType message.
+            properties:
+                appId:
+                    description: The appId field.
+                    type: string
+                createdAt:
+                    format: date-time
+                    type: string
+                deletedAt:
+                    format: date-time
+                    type: string
+                displayName:
+                    description: The displayName field.
+                    type: string
+                id:
+                    description: The id field.
+                    type: string
+                updatedAt:
+                    format: date-time
+                    type: string
+            type: object
+        c1.api.app.v1.AppResourceTypeServiceGetResponse:
+            description: The AppResourceTypeServiceGetResponse message.
+            properties:
+                appResourceTypeView:
+                    $ref: '#/components/schemas/c1.api.app.v1.AppResourceTypeView'
+                expanded:
+                    description: The expanded field.
+                    items:
+                        additionalProperties:
+                            oneOf: []
+                        description: Contains an arbitrary serialized message along with a @type that describes the type of the serialized message.
+                        properties:
+                            '@type':
+                                description: The type of the serialized message.
+                                type: string
+                        type: object
+                    nullable: true
+                    type: array
+            type: object
+        c1.api.app.v1.AppResourceTypeView:
+            description: The AppResourceTypeView message.
+            properties:
+                appPath:
+                    description: The appPath field.
+                    type: string
+                appResourceType:
+                    $ref: '#/components/schemas/c1.api.app.v1.AppResourceType'
+            type: object
+        c1.api.app.v1.AppResourceView:
+            description: The AppResourceView message.
+            properties:
+                appPath:
+                    description: The appPath field.
+                    type: string
+                appResource:
+                    $ref: '#/components/schemas/c1.api.app.v1.AppResource'
+                resourceTypePath:
+                    description: The resourceTypePath field.
+                    type: string
+            type: object
         c1.api.auth.v1.IntrospectResponse:
             description: The IntrospectResponse message.
             properties:
@@ -351,8 +467,62 @@ info:
     description: The ConductorOne API is a HTTP API for managing ConductorOne resources.
     title: ConductorOne API
     version: 0.1.0-alpha
-openapi: 3.0.3
+openapi: 3.1.0
 paths:
+    /api/v1/app_resource/{app_id}/{app_resource_type_id}/{id}:
+        get:
+            description: Invokes the c1.api.app.v1.AppResourceService.Get method.
+            operationId: c1.api.app.v1.AppResourceService.Get
+            parameters:
+                - in: path
+                  name: app_id
+                  required: true
+                  schema:
+                    description: The appId field.
+                    type: string
+                - in: path
+                  name: app_resource_type_id
+                  required: true
+                  schema:
+                    description: The appResourceTypeId field.
+                    type: string
+                - in: path
+                  name: id
+                  required: true
+                  schema:
+                    description: The id field.
+                    type: string
+            responses:
+                "200":
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/c1.api.app.v1.AppResourceServiceGetResponse'
+                    description: Successful response
+    /api/v1/app_resource_type/{app_id}/{id}:
+        get:
+            description: Invokes the c1.api.app.v1.AppResourceTypeService.Get method.
+            operationId: c1.api.app.v1.AppResourceTypeService.Get
+            parameters:
+                - in: path
+                  name: app_id
+                  required: true
+                  schema:
+                    description: The appId field.
+                    type: string
+                - in: path
+                  name: id
+                  required: true
+                  schema:
+                    description: The id field.
+                    type: string
+            responses:
+                "200":
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/c1.api.app.v1.AppResourceTypeServiceGetResponse'
+                    description: Successful response
     /api/v1/auth/introspect:
         get:
             description: Invokes the c1.api.auth.v1.Auth.Introspect method.
@@ -400,7 +570,7 @@ paths:
                     description: Successful response
 servers:
     - description: The ConductorOne API server for the current tenant.
-      url: https://{tenantDomain}.morgabra.dev.ductone.com:2443
+      url: https://{tenantDomain}.logan.dev.ductone.com:2443
       variables:
         tenantDomain:
             default: invalid-example

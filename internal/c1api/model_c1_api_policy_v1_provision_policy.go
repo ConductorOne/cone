@@ -20,9 +20,9 @@ var _ MappedNullable = &C1ApiPolicyV1ProvisionPolicy{}
 // C1ApiPolicyV1ProvisionPolicy The ProvisionPolicy message.  This message contains a oneof named typ. Only a single field of the following list may be set at a time:   - connector   - manual   - delegated 
 type C1ApiPolicyV1ProvisionPolicy struct {
 	// The ConnectorProvision message.
-	Connector map[string]interface{} `json:"connector,omitempty"`
-	Delegated NullableC1ApiPolicyV1DelegatedProvision `json:"delegated,omitempty"`
-	Manual NullableC1ApiPolicyV1ManualProvision `json:"manual,omitempty"`
+	Connector interface{} `json:"connector,omitempty"`
+	Delegated *C1ApiPolicyV1DelegatedProvision `json:"delegated,omitempty"`
+	Manual *C1ApiPolicyV1ManualProvision `json:"manual,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -46,9 +46,9 @@ func NewC1ApiPolicyV1ProvisionPolicyWithDefaults() *C1ApiPolicyV1ProvisionPolicy
 }
 
 // GetConnector returns the Connector field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *C1ApiPolicyV1ProvisionPolicy) GetConnector() map[string]interface{} {
+func (o *C1ApiPolicyV1ProvisionPolicy) GetConnector() interface{} {
 	if o == nil {
-		var ret map[string]interface{}
+		var ret interface{}
 		return ret
 	}
 	return o.Connector
@@ -57,11 +57,11 @@ func (o *C1ApiPolicyV1ProvisionPolicy) GetConnector() map[string]interface{} {
 // GetConnectorOk returns a tuple with the Connector field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *C1ApiPolicyV1ProvisionPolicy) GetConnectorOk() (map[string]interface{}, bool) {
+func (o *C1ApiPolicyV1ProvisionPolicy) GetConnectorOk() (*interface{}, bool) {
 	if o == nil || IsNil(o.Connector) {
-		return map[string]interface{}{}, false
+		return nil, false
 	}
-	return o.Connector, true
+	return &o.Connector, true
 }
 
 // HasConnector returns a boolean if a field has been set.
@@ -73,93 +73,73 @@ func (o *C1ApiPolicyV1ProvisionPolicy) HasConnector() bool {
 	return false
 }
 
-// SetConnector gets a reference to the given map[string]interface{} and assigns it to the Connector field.
-func (o *C1ApiPolicyV1ProvisionPolicy) SetConnector(v map[string]interface{}) {
+// SetConnector gets a reference to the given interface{} and assigns it to the Connector field.
+func (o *C1ApiPolicyV1ProvisionPolicy) SetConnector(v interface{}) {
 	o.Connector = v
 }
 
-// GetDelegated returns the Delegated field value if set, zero value otherwise (both if not set or set to explicit null).
+// GetDelegated returns the Delegated field value if set, zero value otherwise.
 func (o *C1ApiPolicyV1ProvisionPolicy) GetDelegated() C1ApiPolicyV1DelegatedProvision {
-	if o == nil || IsNil(o.Delegated.Get()) {
+	if o == nil || IsNil(o.Delegated) {
 		var ret C1ApiPolicyV1DelegatedProvision
 		return ret
 	}
-	return *o.Delegated.Get()
+	return *o.Delegated
 }
 
 // GetDelegatedOk returns a tuple with the Delegated field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *C1ApiPolicyV1ProvisionPolicy) GetDelegatedOk() (*C1ApiPolicyV1DelegatedProvision, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Delegated) {
 		return nil, false
 	}
-	return o.Delegated.Get(), o.Delegated.IsSet()
+	return o.Delegated, true
 }
 
 // HasDelegated returns a boolean if a field has been set.
 func (o *C1ApiPolicyV1ProvisionPolicy) HasDelegated() bool {
-	if o != nil && o.Delegated.IsSet() {
+	if o != nil && !IsNil(o.Delegated) {
 		return true
 	}
 
 	return false
 }
 
-// SetDelegated gets a reference to the given NullableC1ApiPolicyV1DelegatedProvision and assigns it to the Delegated field.
+// SetDelegated gets a reference to the given C1ApiPolicyV1DelegatedProvision and assigns it to the Delegated field.
 func (o *C1ApiPolicyV1ProvisionPolicy) SetDelegated(v C1ApiPolicyV1DelegatedProvision) {
-	o.Delegated.Set(&v)
-}
-// SetDelegatedNil sets the value for Delegated to be an explicit nil
-func (o *C1ApiPolicyV1ProvisionPolicy) SetDelegatedNil() {
-	o.Delegated.Set(nil)
+	o.Delegated = &v
 }
 
-// UnsetDelegated ensures that no value is present for Delegated, not even an explicit nil
-func (o *C1ApiPolicyV1ProvisionPolicy) UnsetDelegated() {
-	o.Delegated.Unset()
-}
-
-// GetManual returns the Manual field value if set, zero value otherwise (both if not set or set to explicit null).
+// GetManual returns the Manual field value if set, zero value otherwise.
 func (o *C1ApiPolicyV1ProvisionPolicy) GetManual() C1ApiPolicyV1ManualProvision {
-	if o == nil || IsNil(o.Manual.Get()) {
+	if o == nil || IsNil(o.Manual) {
 		var ret C1ApiPolicyV1ManualProvision
 		return ret
 	}
-	return *o.Manual.Get()
+	return *o.Manual
 }
 
 // GetManualOk returns a tuple with the Manual field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *C1ApiPolicyV1ProvisionPolicy) GetManualOk() (*C1ApiPolicyV1ManualProvision, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Manual) {
 		return nil, false
 	}
-	return o.Manual.Get(), o.Manual.IsSet()
+	return o.Manual, true
 }
 
 // HasManual returns a boolean if a field has been set.
 func (o *C1ApiPolicyV1ProvisionPolicy) HasManual() bool {
-	if o != nil && o.Manual.IsSet() {
+	if o != nil && !IsNil(o.Manual) {
 		return true
 	}
 
 	return false
 }
 
-// SetManual gets a reference to the given NullableC1ApiPolicyV1ManualProvision and assigns it to the Manual field.
+// SetManual gets a reference to the given C1ApiPolicyV1ManualProvision and assigns it to the Manual field.
 func (o *C1ApiPolicyV1ProvisionPolicy) SetManual(v C1ApiPolicyV1ManualProvision) {
-	o.Manual.Set(&v)
-}
-// SetManualNil sets the value for Manual to be an explicit nil
-func (o *C1ApiPolicyV1ProvisionPolicy) SetManualNil() {
-	o.Manual.Set(nil)
-}
-
-// UnsetManual ensures that no value is present for Manual, not even an explicit nil
-func (o *C1ApiPolicyV1ProvisionPolicy) UnsetManual() {
-	o.Manual.Unset()
+	o.Manual = &v
 }
 
 func (o C1ApiPolicyV1ProvisionPolicy) MarshalJSON() ([]byte, error) {
@@ -175,11 +155,11 @@ func (o C1ApiPolicyV1ProvisionPolicy) ToMap() (map[string]interface{}, error) {
 	if o.Connector != nil {
 		toSerialize["connector"] = o.Connector
 	}
-	if o.Delegated.IsSet() {
-		toSerialize["delegated"] = o.Delegated.Get()
+	if !IsNil(o.Delegated) {
+		toSerialize["delegated"] = o.Delegated
 	}
-	if o.Manual.IsSet() {
-		toSerialize["manual"] = o.Manual.Get()
+	if !IsNil(o.Manual) {
+		toSerialize["manual"] = o.Manual
 	}
 
 	for key, value := range o.AdditionalProperties {

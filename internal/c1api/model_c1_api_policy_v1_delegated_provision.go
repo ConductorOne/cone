@@ -20,9 +20,9 @@ var _ MappedNullable = &C1ApiPolicyV1DelegatedProvision{}
 // C1ApiPolicyV1DelegatedProvision The DelegatedProvision message.
 type C1ApiPolicyV1DelegatedProvision struct {
 	// The appId field.
-	AppId *string `json:"appId,omitempty"`
+	AppId interface{} `json:"appId,omitempty"`
 	// The entitlementId field.
-	EntitlementId *string `json:"entitlementId,omitempty"`
+	EntitlementId interface{} `json:"entitlementId,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -45,68 +45,70 @@ func NewC1ApiPolicyV1DelegatedProvisionWithDefaults() *C1ApiPolicyV1DelegatedPro
 	return &this
 }
 
-// GetAppId returns the AppId field value if set, zero value otherwise.
-func (o *C1ApiPolicyV1DelegatedProvision) GetAppId() string {
-	if o == nil || IsNil(o.AppId) {
-		var ret string
+// GetAppId returns the AppId field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *C1ApiPolicyV1DelegatedProvision) GetAppId() interface{} {
+	if o == nil {
+		var ret interface{}
 		return ret
 	}
-	return *o.AppId
+	return o.AppId
 }
 
 // GetAppIdOk returns a tuple with the AppId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *C1ApiPolicyV1DelegatedProvision) GetAppIdOk() (*string, bool) {
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *C1ApiPolicyV1DelegatedProvision) GetAppIdOk() (*interface{}, bool) {
 	if o == nil || IsNil(o.AppId) {
 		return nil, false
 	}
-	return o.AppId, true
+	return &o.AppId, true
 }
 
 // HasAppId returns a boolean if a field has been set.
 func (o *C1ApiPolicyV1DelegatedProvision) HasAppId() bool {
-	if o != nil && !IsNil(o.AppId) {
+	if o != nil && IsNil(o.AppId) {
 		return true
 	}
 
 	return false
 }
 
-// SetAppId gets a reference to the given string and assigns it to the AppId field.
-func (o *C1ApiPolicyV1DelegatedProvision) SetAppId(v string) {
-	o.AppId = &v
+// SetAppId gets a reference to the given interface{} and assigns it to the AppId field.
+func (o *C1ApiPolicyV1DelegatedProvision) SetAppId(v interface{}) {
+	o.AppId = v
 }
 
-// GetEntitlementId returns the EntitlementId field value if set, zero value otherwise.
-func (o *C1ApiPolicyV1DelegatedProvision) GetEntitlementId() string {
-	if o == nil || IsNil(o.EntitlementId) {
-		var ret string
+// GetEntitlementId returns the EntitlementId field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *C1ApiPolicyV1DelegatedProvision) GetEntitlementId() interface{} {
+	if o == nil {
+		var ret interface{}
 		return ret
 	}
-	return *o.EntitlementId
+	return o.EntitlementId
 }
 
 // GetEntitlementIdOk returns a tuple with the EntitlementId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *C1ApiPolicyV1DelegatedProvision) GetEntitlementIdOk() (*string, bool) {
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *C1ApiPolicyV1DelegatedProvision) GetEntitlementIdOk() (*interface{}, bool) {
 	if o == nil || IsNil(o.EntitlementId) {
 		return nil, false
 	}
-	return o.EntitlementId, true
+	return &o.EntitlementId, true
 }
 
 // HasEntitlementId returns a boolean if a field has been set.
 func (o *C1ApiPolicyV1DelegatedProvision) HasEntitlementId() bool {
-	if o != nil && !IsNil(o.EntitlementId) {
+	if o != nil && IsNil(o.EntitlementId) {
 		return true
 	}
 
 	return false
 }
 
-// SetEntitlementId gets a reference to the given string and assigns it to the EntitlementId field.
-func (o *C1ApiPolicyV1DelegatedProvision) SetEntitlementId(v string) {
-	o.EntitlementId = &v
+// SetEntitlementId gets a reference to the given interface{} and assigns it to the EntitlementId field.
+func (o *C1ApiPolicyV1DelegatedProvision) SetEntitlementId(v interface{}) {
+	o.EntitlementId = v
 }
 
 func (o C1ApiPolicyV1DelegatedProvision) MarshalJSON() ([]byte, error) {
@@ -119,10 +121,10 @@ func (o C1ApiPolicyV1DelegatedProvision) MarshalJSON() ([]byte, error) {
 
 func (o C1ApiPolicyV1DelegatedProvision) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.AppId) {
+	if o.AppId != nil {
 		toSerialize["appId"] = o.AppId
 	}
-	if !IsNil(o.EntitlementId) {
+	if o.EntitlementId != nil {
 		toSerialize["entitlementId"] = o.EntitlementId
 	}
 

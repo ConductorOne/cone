@@ -60,7 +60,8 @@ func runDrop(cmd *cobra.Command, args []string) error {
 }
 
 func runTask(cmd *cobra.Command, args []string, run func(c client.C1Client, ctx context.Context, appId string, entitlementId string, userId string) (*c1api.C1ApiTaskV1Task, error)) error {
-	ctx := context.Background()
+	ctx := cmd.Context()
+
 	alias := ""
 
 	v, err := getSubViperForProfile(cmd)
@@ -129,7 +130,11 @@ func runTask(cmd *cobra.Command, args []string, run func(c client.C1Client, ctx 
 	if wait, _ := cmd.Flags().GetBool("wait"); wait {
 		spinner, _ := pterm.DefaultSpinner.Start("Waiting for ticket to close.")
 		for {
-			time.Sleep(1 * time.Second)
+			select {
+			case <-ctx.Done():
+				return ctx.Err()
+			case <-time.After(1 * time.Second):
+			}
 			task, err := c.GetTask(ctx, client.StringFromPtr(task.Id))
 			if err != nil {
 				return err
@@ -163,9 +168,21 @@ func (r *C1ApiTaskV1Task) Rows() [][]string {
 	return [][]string{{
 		client.StringFromPtr(r.task.NumericId),
 		client.StringFromPtr(r.task.DisplayName),
-		client.StringFromPtr(r.task.State),
-		client.StringFromPtr(r.task.Processing),
+		taskStateToString[client.StringFromPtr(r.task.State)],
+		processStateToString[client.StringFromPtr(r.task.Processing)],
 	}}
+}
+
+var processStateToString = map[string]string{
+	"TASK_PROCESSING_TYPE_UNSPECIFIED": "Unknown Processing",
+	"TASK_PROCESSING_TYPE_PROCESSING":  "Processing",
+	"TASK_PROCESSING_TYPE_WAITING":     "Waiting for Action",
+	"TASK_PROCESSING_TYPE_DONE":        "Done",
+}
+
+var taskStateToString = map[string]string{
+	"TASK_STATE_OPEN":   "Open",
+	"TASK_STATE_CLOSED": "Closed",
 }
 
 func (r *C1ApiTaskV1Task) Pretext() string {

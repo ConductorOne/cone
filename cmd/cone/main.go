@@ -4,6 +4,8 @@ import (
 	"context"
 	"fmt"
 	"os"
+	"os/signal"
+	"syscall"
 
 	"github.com/spf13/cobra"
 )
@@ -11,17 +13,35 @@ import (
 var version = "dev"
 
 func main() {
-	os.Exit(runCli())
-}
+	// Create a channel to receive the signals
+	signalCh := make(chan os.Signal, 1)
 
-func runCli() int {
+	// Notify the channel for specified signals
+	signal.Notify(signalCh, os.Interrupt, syscall.SIGTERM)
+
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 
+	go func() {
+		// Block until a signal is received
+		<-signalCh
+		cancel()
+	}()
+
+	os.Exit(runCli(ctx))
+}
+
+func runCli(ctx context.Context) int {
 	cliCmd := &cobra.Command{
 		Use:     "cone",
 		Short:   "cone is... a cone", // TODO: Change this
 		Version: version,
+		PersistentPreRunE: func(cmd *cobra.Command, args []string) error {
+			cmd.SetContext(ctx)
+			return nil
+		},
+		SilenceUsage:  true,
+		SilenceErrors: true,
 	}
 
 	cliCmd.PersistentFlags().StringP("profile", "p", "default", "The config profile to use.")

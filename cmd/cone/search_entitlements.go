@@ -60,7 +60,7 @@ func searchEntitlementsRun(cmd *cobra.Command, args []string) error {
 	}
 
 	entitlements := make([]ExpandedEntitlement, 0)
-	for _, item := range resp.List {
+	for _, item := range searchResp.List {
 		app, err := c.GetApp(ctx, *item.AppEntitlement.AppId)
 		if err != nil {
 			return err
@@ -84,7 +84,7 @@ func searchEntitlementsRun(cmd *cobra.Command, args []string) error {
 		})
 	}
 
-	resp := C1ApiRequestcatalogV2SearchEntitlementsResponse(*searchResp)
+	resp := ExpandedEntitlementsResponse(entitlements)
 	outputManager := output.NewManager(ctx, v)
 	err = outputManager.Output(ctx, &resp)
 	if err != nil {
@@ -94,20 +94,23 @@ func searchEntitlementsRun(cmd *cobra.Command, args []string) error {
 	return nil
 }
 
-type C1ApiRequestcatalogV2SearchEntitlementsResponse c1api.C1ApiRequestcatalogV2SearchEntitlementsResponse
+type ExpandedEntitlementsResponse []ExpandedEntitlement
 
-func (r *C1ApiRequestcatalogV2SearchEntitlementsResponse) Header() []string {
-	return []string{"Id", "Display Name", "Slug", "Alias", "Description"}
+func (r ExpandedEntitlementsResponse) Header() []string {
+	return []string{"Id", "Display Name", "App", "Resource", "Resource Type", "Slug", "Alias", "Description"}
 }
-func (r *C1ApiRequestcatalogV2SearchEntitlementsResponse) Rows() [][]string {
+func (r ExpandedEntitlementsResponse) Rows() [][]string {
 	rows := [][]string{}
-	for _, entitlement := range r.List {
+	for _, entitlement := range r {
 		rows = append(rows, []string{
-			output.FromPtr(entitlement.Id),
-			output.FromPtr(entitlement.DisplayName),
-			output.FromPtr(entitlement.Slug),
-			output.FromPtr(entitlement.Alias),
-			output.FromPtr(entitlement.Description),
+			output.FromPtr(entitlement.Entitlement.Id),
+			output.FromPtr(entitlement.Entitlement.DisplayName),
+			output.FromPtr(entitlement.App.DisplayName),
+			output.FromPtr(entitlement.AppResource.DisplayName),
+			output.FromPtr(entitlement.AppResourceType.DisplayName),
+			output.FromPtr(entitlement.Entitlement.Slug),
+			output.FromPtr(entitlement.Entitlement.Alias),
+			output.FromPtr(entitlement.Entitlement.Description),
 		})
 	}
 	return rows

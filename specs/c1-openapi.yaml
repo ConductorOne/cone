@@ -1168,6 +1168,9 @@ components:
                 appId:
                     description: The appId field.
                     type: string
+                appUserId:
+                    description: The appUserId field.
+                    type: string
                 description:
                     description: The description field.
                     type: string
@@ -1179,6 +1182,25 @@ components:
                 identityUserId:
                     description: The identityUserId field.
                     type: string
+            type: object
+        c1.api.task.v1.TaskServiceCreateGrantResponse:
+            description: The TaskServiceCreateGrantResponse message.
+            properties:
+                expanded:
+                    description: The expanded field.
+                    items:
+                        additionalProperties:
+                            oneOf: []
+                        description: Contains an arbitrary serialized message along with a @type that describes the type of the serialized message.
+                        properties:
+                            '@type':
+                                description: The type of the serialized message.
+                                type: string
+                        type: object
+                    nullable: true
+                    type: array
+                taskView:
+                    $ref: '#/components/schemas/c1.api.task.v1.TaskView'
             type: object
         c1.api.task.v1.TaskServiceCreateRevokeRequest:
             description: The TaskServiceCreateRevokeRequest message.
@@ -1197,6 +1219,28 @@ components:
                     type: string
                 expandMask:
                     $ref: '#/components/schemas/c1.api.task.v1.TaskExpandMask'
+                identityUserId:
+                    description: The identityUserId field.
+                    type: string
+            type: object
+        c1.api.task.v1.TaskServiceCreateRevokeResponse:
+            description: The TaskServiceCreateRevokeResponse message.
+            properties:
+                expanded:
+                    description: The expanded field.
+                    items:
+                        additionalProperties:
+                            oneOf: []
+                        description: Contains an arbitrary serialized message along with a @type that describes the type of the serialized message.
+                        properties:
+                            '@type':
+                                description: The type of the serialized message.
+                                type: string
+                        type: object
+                    nullable: true
+                    type: array
+                taskView:
+                    $ref: '#/components/schemas/c1.api.task.v1.TaskView'
             type: object
         c1.api.task.v1.TaskServiceGetResponse:
             description: The TaskServiceGetResponse message.
@@ -1683,7 +1727,7 @@ paths:
                     content:
                         application/json:
                             schema:
-                                $ref: '#/components/schemas/c1.api.task.v1.TaskServiceGetResponse'
+                                $ref: '#/components/schemas/c1.api.task.v1.TaskServiceCreateGrantResponse'
                     description: Successful response
     /api/v1/task/revoke:
         post:
@@ -1699,7 +1743,7 @@ paths:
                     content:
                         application/json:
                             schema:
-                                $ref: '#/components/schemas/c1.api.task.v1.TaskServiceGetResponse'
+                                $ref: '#/components/schemas/c1.api.task.v1.TaskServiceCreateRevokeResponse'
                     description: Successful response
     /api/v1/tasks/{id}:
         get:

@@ -561,7 +561,7 @@ func (r DefaultAPIC1ApiTaskV1TaskServiceCreateGrantTaskRequest) C1ApiTaskV1TaskS
 	return r
 }
 
-func (r DefaultAPIC1ApiTaskV1TaskServiceCreateGrantTaskRequest) Execute() (*C1ApiTaskV1TaskServiceGetResponse, *http.Response, error) {
+func (r DefaultAPIC1ApiTaskV1TaskServiceCreateGrantTaskRequest) Execute() (*C1ApiTaskV1TaskServiceCreateGrantResponse, *http.Response, error) {
 	return r.ApiService.C1ApiTaskV1TaskServiceCreateGrantTaskExecute(r)
 }
 
@@ -581,13 +581,13 @@ func (a *DefaultAPIService) C1ApiTaskV1TaskServiceCreateGrantTask(ctx context.Co
 }
 
 // Execute executes the request
-//  @return C1ApiTaskV1TaskServiceGetResponse
-func (a *DefaultAPIService) C1ApiTaskV1TaskServiceCreateGrantTaskExecute(r DefaultAPIC1ApiTaskV1TaskServiceCreateGrantTaskRequest) (*C1ApiTaskV1TaskServiceGetResponse, *http.Response, error) {
+//  @return C1ApiTaskV1TaskServiceCreateGrantResponse
+func (a *DefaultAPIService) C1ApiTaskV1TaskServiceCreateGrantTaskExecute(r DefaultAPIC1ApiTaskV1TaskServiceCreateGrantTaskRequest) (*C1ApiTaskV1TaskServiceCreateGrantResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *C1ApiTaskV1TaskServiceGetResponse
+		localVarReturnValue  *C1ApiTaskV1TaskServiceCreateGrantResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.C1ApiTaskV1TaskServiceCreateGrantTask")
@@ -668,7 +668,7 @@ func (r DefaultAPIC1ApiTaskV1TaskServiceCreateRevokeTaskRequest) C1ApiTaskV1Task
 	return r
 }
 
-func (r DefaultAPIC1ApiTaskV1TaskServiceCreateRevokeTaskRequest) Execute() (*C1ApiTaskV1TaskServiceGetResponse, *http.Response, error) {
+func (r DefaultAPIC1ApiTaskV1TaskServiceCreateRevokeTaskRequest) Execute() (*C1ApiTaskV1TaskServiceCreateRevokeResponse, *http.Response, error) {
 	return r.ApiService.C1ApiTaskV1TaskServiceCreateRevokeTaskExecute(r)
 }
 
@@ -688,13 +688,13 @@ func (a *DefaultAPIService) C1ApiTaskV1TaskServiceCreateRevokeTask(ctx context.C
 }
 
 // Execute executes the request
-//  @return C1ApiTaskV1TaskServiceGetResponse
-func (a *DefaultAPIService) C1ApiTaskV1TaskServiceCreateRevokeTaskExecute(r DefaultAPIC1ApiTaskV1TaskServiceCreateRevokeTaskRequest) (*C1ApiTaskV1TaskServiceGetResponse, *http.Response, error) {
+//  @return C1ApiTaskV1TaskServiceCreateRevokeResponse
+func (a *DefaultAPIService) C1ApiTaskV1TaskServiceCreateRevokeTaskExecute(r DefaultAPIC1ApiTaskV1TaskServiceCreateRevokeTaskRequest) (*C1ApiTaskV1TaskServiceCreateRevokeResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *C1ApiTaskV1TaskServiceGetResponse
+		localVarReturnValue  *C1ApiTaskV1TaskServiceCreateRevokeResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.C1ApiTaskV1TaskServiceCreateRevokeTask")

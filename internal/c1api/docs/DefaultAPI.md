@@ -364,7 +364,7 @@ No authorization required
 
 ## C1ApiTaskV1TaskServiceCreateGrantTask
 
-> C1ApiTaskV1TaskServiceGetResponse C1ApiTaskV1TaskServiceCreateGrantTask(ctx).C1ApiTaskV1TaskServiceCreateGrantRequest(c1ApiTaskV1TaskServiceCreateGrantRequest).Execute()
+> C1ApiTaskV1TaskServiceCreateGrantResponse C1ApiTaskV1TaskServiceCreateGrantTask(ctx).C1ApiTaskV1TaskServiceCreateGrantRequest(c1ApiTaskV1TaskServiceCreateGrantRequest).Execute()
 
 
 
@@ -392,7 +392,7 @@ func main() {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.C1ApiTaskV1TaskServiceCreateGrantTask``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
     }
-    // response from `C1ApiTaskV1TaskServiceCreateGrantTask`: C1ApiTaskV1TaskServiceGetResponse
+    // response from `C1ApiTaskV1TaskServiceCreateGrantTask`: C1ApiTaskV1TaskServiceCreateGrantResponse
     fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.C1ApiTaskV1TaskServiceCreateGrantTask`: %v\n", resp)
 }
 ```
@@ -412,7 +412,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**C1ApiTaskV1TaskServiceGetResponse**](C1ApiTaskV1TaskServiceGetResponse.md)
+[**C1ApiTaskV1TaskServiceCreateGrantResponse**](C1ApiTaskV1TaskServiceCreateGrantResponse.md)
 
 ### Authorization
 
@@ -430,7 +430,7 @@ No authorization required
 
 ## C1ApiTaskV1TaskServiceCreateRevokeTask
 
-> C1ApiTaskV1TaskServiceGetResponse C1ApiTaskV1TaskServiceCreateRevokeTask(ctx).C1ApiTaskV1TaskServiceCreateRevokeRequest(c1ApiTaskV1TaskServiceCreateRevokeRequest).Execute()
+> C1ApiTaskV1TaskServiceCreateRevokeResponse C1ApiTaskV1TaskServiceCreateRevokeTask(ctx).C1ApiTaskV1TaskServiceCreateRevokeRequest(c1ApiTaskV1TaskServiceCreateRevokeRequest).Execute()
 
 
 
@@ -458,7 +458,7 @@ func main() {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.C1ApiTaskV1TaskServiceCreateRevokeTask``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
     }
-    // response from `C1ApiTaskV1TaskServiceCreateRevokeTask`: C1ApiTaskV1TaskServiceGetResponse
+    // response from `C1ApiTaskV1TaskServiceCreateRevokeTask`: C1ApiTaskV1TaskServiceCreateRevokeResponse
     fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.C1ApiTaskV1TaskServiceCreateRevokeTask`: %v\n", resp)
 }
 ```
@@ -478,7 +478,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**C1ApiTaskV1TaskServiceGetResponse**](C1ApiTaskV1TaskServiceGetResponse.md)
+[**C1ApiTaskV1TaskServiceCreateRevokeResponse**](C1ApiTaskV1TaskServiceCreateRevokeResponse.md)
 
 ### Authorization
 

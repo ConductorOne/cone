@@ -45,6 +45,8 @@ type C1Client interface {
 	GetResource(ctx context.Context, appID string, resourceID string, resourceTypeID string) (*c1api.C1ApiAppV1AppResourceServiceGetResponse, error)
 	GetResourceType(ctx context.Context, appID string, resourceTypeID string) (*c1api.C1ApiAppV1AppResourceTypeServiceGetResponse, error)
 	GetApp(ctx context.Context, appID string) (*c1api.C1ApiAppV1App, error)
+	CreateGrantTask(ctx context.Context, appId string, appEntitlementId string, identityUserId string) (*c1api.C1ApiTaskV1TaskServiceCreateGrantResponse, error)
+	CreateRevokeTask(ctx context.Context, appId string, appEntitlementId string, identityUserId string) (*c1api.C1ApiTaskV1TaskServiceCreateRevokeResponse, error)
 }
 
 func New(

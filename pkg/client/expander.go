@@ -10,7 +10,7 @@ import (
 )
 
 const (
-	expanderConcurrency = 10
+	expanderConcurrency = 5
 )
 
 type Expander struct {

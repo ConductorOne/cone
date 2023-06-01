@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"fmt"
+	"time"
 
 	"github.com/conductorone/cone/internal/c1api"
 	"github.com/conductorone/cone/pkg/client"
@@ -17,11 +18,7 @@ func getCmd() *cobra.Command {
 		RunE:  runGet,
 	}
 
-	addWaitFlag(cmd)
-	addAppIdFlag(cmd)
-	addEntitlementIdFlag(cmd)
-
-	return cmd
+	return taskCmd(cmd)
 }
 
 func dropCmd() *cobra.Command {
@@ -31,10 +28,13 @@ func dropCmd() *cobra.Command {
 		RunE:  runDrop,
 	}
 
+	return taskCmd(cmd)
+}
+
+func taskCmd(cmd *cobra.Command) *cobra.Command {
 	addWaitFlag(cmd)
 	addAppIdFlag(cmd)
 	addEntitlementIdFlag(cmd)
-
 	return cmd
 }
 
@@ -118,11 +118,31 @@ func runTask(cmd *cobra.Command, args []string, run func(c client.C1Client, ctx 
 		return err
 	}
 
-	taskResp := C1ApiTaskV1Task(*task)
 	outputManager := output.NewManager(ctx, v)
+	taskResp := C1ApiTaskV1Task(*task)
 	err = outputManager.Output(ctx, &taskResp)
 	if err != nil {
 		return err
+	}
+
+	if wait, _ := cmd.Flags().GetBool("wait"); wait {
+		for {
+			task, err := c.GetTask(ctx, client.StringFromPtr(task.Id))
+			if err != nil {
+				return err
+			}
+
+			taskItem := task.TaskView.Task
+			taskResp = C1ApiTaskV1Task(*taskItem)
+			err = outputManager.Output(ctx, &taskResp)
+			if err != nil {
+				return err
+			}
+			if client.StringFromPtr(taskItem.State) == "TASK_STATE_OPEN" {
+				break
+			}
+			time.Sleep(1 * time.Second)
+		}
 	}
 
 	return nil

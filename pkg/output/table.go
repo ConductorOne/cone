@@ -6,10 +6,11 @@ import (
 	"time"
 
 	"github.com/pterm/pterm"
-	"google.golang.org/protobuf/types/known/timestamppb"
 )
 
-type tableManager struct{}
+type tableManager struct {
+	waiting bool
+}
 
 func (c *tableManager) Output(ctx context.Context, out interface{}) error {
 	m, ok := out.(TablePrint)
@@ -23,6 +24,7 @@ func (c *tableManager) Output(ctx context.Context, out interface{}) error {
 	if err != nil {
 		return err
 	}
+
 	return nil
 }
 
@@ -32,14 +34,6 @@ func FormatTime(ts *time.Time) string {
 	}
 
 	return ts.Format(time.RFC3339)
-}
-
-func FormatTimestamp(ts *timestamppb.Timestamp) string {
-	if ts == nil {
-		return ""
-	}
-
-	return ts.AsTime().Format(time.RFC3339)
 }
 
 type TablePrint interface {

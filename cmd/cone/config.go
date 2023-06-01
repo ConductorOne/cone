@@ -18,15 +18,6 @@ var (
 	defaultConfigPath = filepath.Join("$HOME", ".conductorone")
 )
 
-type Config struct {
-	Profiles map[string]ConfigProfile `yaml:"profiles"`
-}
-
-type ConfigProfile struct {
-	ClientID     string `yaml:"client-id"`
-	ClientSecret string `yaml:"client-secret"`
-}
-
 func initConfig(cmd *cobra.Command) error {
 	viper.SetConfigName("config")
 	viper.SetConfigType("yaml")

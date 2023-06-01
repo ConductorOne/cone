@@ -8,6 +8,7 @@ import (
 	"github.com/conductorone/cone/internal/c1api"
 	"github.com/conductorone/cone/pkg/client"
 	"github.com/conductorone/cone/pkg/output"
+	"github.com/pterm/pterm"
 	"github.com/spf13/cobra"
 )
 
@@ -119,46 +120,54 @@ func runTask(cmd *cobra.Command, args []string, run func(c client.C1Client, ctx 
 	}
 
 	outputManager := output.NewManager(ctx, v)
-	taskResp := C1ApiTaskV1Task(*task)
+	taskResp := C1ApiTaskV1Task{task: task, client: c}
 	err = outputManager.Output(ctx, &taskResp)
 	if err != nil {
 		return err
 	}
 
 	if wait, _ := cmd.Flags().GetBool("wait"); wait {
+		spinner, _ := pterm.DefaultSpinner.Start("Waiting for ticket to close.")
 		for {
+			time.Sleep(1 * time.Second)
 			task, err := c.GetTask(ctx, client.StringFromPtr(task.Id))
 			if err != nil {
 				return err
 			}
 
 			taskItem := task.TaskView.Task
-			taskResp = C1ApiTaskV1Task(*taskItem)
+			taskResp = C1ApiTaskV1Task{task: taskItem, client: c}
 			err = outputManager.Output(ctx, &taskResp)
 			if err != nil {
 				return err
 			}
-			if client.StringFromPtr(taskItem.State) == "TASK_STATE_OPEN" {
+			if client.StringFromPtr(taskItem.State) == "TASK_STATE_CLOSED" {
 				break
 			}
-			time.Sleep(1 * time.Second)
 		}
+		spinner.Success("Ticket closed.")
 	}
 
 	return nil
 }
 
-type C1ApiTaskV1Task c1api.C1ApiTaskV1Task
+type C1ApiTaskV1Task struct {
+	task   *c1api.C1ApiTaskV1Task
+	client client.C1Client
+}
 
 func (r *C1ApiTaskV1Task) Header() []string {
-	return []string{"Numeric Id", "Id", "Display Name", "State", "Processing"}
+	return []string{"Id", "Display Name", "State", "Processing"}
 }
 func (r *C1ApiTaskV1Task) Rows() [][]string {
 	return [][]string{{
-		client.StringFromPtr(r.NumericId),
-		client.StringFromPtr(r.Id),
-		client.StringFromPtr(r.DisplayName),
-		client.StringFromPtr(r.State),
-		client.StringFromPtr(r.Processing),
+		client.StringFromPtr(r.task.NumericId),
+		client.StringFromPtr(r.task.DisplayName),
+		client.StringFromPtr(r.task.State),
+		client.StringFromPtr(r.task.Processing),
 	}}
+}
+
+func (r *C1ApiTaskV1Task) Pretext() string {
+	return fmt.Sprintf("Ticket URL: %s/task/%s", r.client.BaseURL(), client.StringFromPtr(r.task.NumericId))
 }

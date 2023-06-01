@@ -13,7 +13,7 @@ const (
 )
 
 func addWaitFlag(cmd *cobra.Command) {
-	cmd.Flags().StringP(waitFlag, "w", "", "Wait for the task to be approved and provisioned.")
+	cmd.Flags().BoolP(waitFlag, "w", false, "Wait for the task to be approved and provisioned.")
 }
 
 func addEntitlementIdFlag(cmd *cobra.Command) {

@@ -16,6 +16,7 @@ type client struct {
 	tokenHost  string
 	apiClient  *c1api.APIClient
 	config     clientConfig
+	baseURL    *url.URL
 }
 
 func StringFromPtr(s *string) string {
@@ -39,6 +40,8 @@ func float32Ptr(i int) *float32 {
 }
 
 type C1Client interface {
+	BaseURL() string
+
 	WhoAmI(ctx context.Context) (*c1api.C1ApiAuthV1IntrospectResponse, error)
 	GetUser(ctx context.Context, userID string) (*c1api.C1ApiUserV1UserServiceGetResponse, error)
 	SearchEntitlements(ctx context.Context, filter *SearchEntitlementsFilter) (*c1api.C1ApiRequestcatalogV1RequestCatalogSearchServiceSearchEntitlementsResponse, error)
@@ -48,6 +51,10 @@ type C1Client interface {
 	GetTask(ctx context.Context, taskId string) (*c1api.C1ApiTaskV1TaskServiceGetResponse, error)
 	CreateGrantTask(ctx context.Context, appId string, appEntitlementId string, identityUserId string) (*c1api.C1ApiTaskV1TaskServiceCreateGrantResponse, error)
 	CreateRevokeTask(ctx context.Context, appId string, appEntitlementId string, identityUserId string) (*c1api.C1ApiTaskV1TaskServiceCreateRevokeResponse, error)
+}
+
+func (c *client) BaseURL() string {
+	return c.baseURL.String()
 }
 
 func New(
@@ -90,6 +97,7 @@ func New(
 	}
 	apiCfg.Servers[0].URL = apiURL.String()
 	c.apiClient = c1api.NewAPIClient(apiCfg)
+	c.baseURL = &apiURL
 
 	return c, nil
 }

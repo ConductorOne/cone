@@ -3,6 +3,7 @@ package output
 import (
 	"context"
 
+	"github.com/pterm/pterm"
 	"github.com/spf13/viper"
 )
 
@@ -11,14 +12,19 @@ type Manager interface {
 }
 
 func NewManager(ctx context.Context, v *viper.Viper) Manager {
+	var area *pterm.AreaPrinter
+	if v.GetBool("wait") {
+		area, _ = pterm.DefaultArea.Start()
+	}
+
 	switch v.GetString("output") {
 	case "table":
-		return &tableManager{}
+		return &tableManager{area: area}
 	case "json":
 		return &jsonManager{}
 	case "json-pretty":
 		return &jsonManager{pretty: true}
 	default:
-		return &tableManager{}
+		return &tableManager{area: area}
 	}
 }

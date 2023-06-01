@@ -550,6 +550,323 @@ func (a *DefaultAPIService) C1ApiRequestcatalogV1RequestCatalogSearchServiceSear
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type DefaultAPIC1ApiTaskV1TaskServiceCreateGrantTaskRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	c1ApiTaskV1TaskServiceCreateGrantRequest *C1ApiTaskV1TaskServiceCreateGrantRequest
+}
+
+func (r DefaultAPIC1ApiTaskV1TaskServiceCreateGrantTaskRequest) C1ApiTaskV1TaskServiceCreateGrantRequest(c1ApiTaskV1TaskServiceCreateGrantRequest C1ApiTaskV1TaskServiceCreateGrantRequest) DefaultAPIC1ApiTaskV1TaskServiceCreateGrantTaskRequest {
+	r.c1ApiTaskV1TaskServiceCreateGrantRequest = &c1ApiTaskV1TaskServiceCreateGrantRequest
+	return r
+}
+
+func (r DefaultAPIC1ApiTaskV1TaskServiceCreateGrantTaskRequest) Execute() (*C1ApiTaskV1TaskServiceGetResponse, *http.Response, error) {
+	return r.ApiService.C1ApiTaskV1TaskServiceCreateGrantTaskExecute(r)
+}
+
+/*
+C1ApiTaskV1TaskServiceCreateGrantTask Method for C1ApiTaskV1TaskServiceCreateGrantTask
+
+Invokes the c1.api.task.v1.TaskService.CreateGrantTask method.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return DefaultAPIC1ApiTaskV1TaskServiceCreateGrantTaskRequest
+*/
+func (a *DefaultAPIService) C1ApiTaskV1TaskServiceCreateGrantTask(ctx context.Context) DefaultAPIC1ApiTaskV1TaskServiceCreateGrantTaskRequest {
+	return DefaultAPIC1ApiTaskV1TaskServiceCreateGrantTaskRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+//  @return C1ApiTaskV1TaskServiceGetResponse
+func (a *DefaultAPIService) C1ApiTaskV1TaskServiceCreateGrantTaskExecute(r DefaultAPIC1ApiTaskV1TaskServiceCreateGrantTaskRequest) (*C1ApiTaskV1TaskServiceGetResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *C1ApiTaskV1TaskServiceGetResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.C1ApiTaskV1TaskServiceCreateGrantTask")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/api/v1/task/grant"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.c1ApiTaskV1TaskServiceCreateGrantRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type DefaultAPIC1ApiTaskV1TaskServiceCreateRevokeTaskRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	c1ApiTaskV1TaskServiceCreateRevokeRequest *C1ApiTaskV1TaskServiceCreateRevokeRequest
+}
+
+func (r DefaultAPIC1ApiTaskV1TaskServiceCreateRevokeTaskRequest) C1ApiTaskV1TaskServiceCreateRevokeRequest(c1ApiTaskV1TaskServiceCreateRevokeRequest C1ApiTaskV1TaskServiceCreateRevokeRequest) DefaultAPIC1ApiTaskV1TaskServiceCreateRevokeTaskRequest {
+	r.c1ApiTaskV1TaskServiceCreateRevokeRequest = &c1ApiTaskV1TaskServiceCreateRevokeRequest
+	return r
+}
+
+func (r DefaultAPIC1ApiTaskV1TaskServiceCreateRevokeTaskRequest) Execute() (*C1ApiTaskV1TaskServiceGetResponse, *http.Response, error) {
+	return r.ApiService.C1ApiTaskV1TaskServiceCreateRevokeTaskExecute(r)
+}
+
+/*
+C1ApiTaskV1TaskServiceCreateRevokeTask Method for C1ApiTaskV1TaskServiceCreateRevokeTask
+
+Invokes the c1.api.task.v1.TaskService.CreateRevokeTask method.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return DefaultAPIC1ApiTaskV1TaskServiceCreateRevokeTaskRequest
+*/
+func (a *DefaultAPIService) C1ApiTaskV1TaskServiceCreateRevokeTask(ctx context.Context) DefaultAPIC1ApiTaskV1TaskServiceCreateRevokeTaskRequest {
+	return DefaultAPIC1ApiTaskV1TaskServiceCreateRevokeTaskRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+//  @return C1ApiTaskV1TaskServiceGetResponse
+func (a *DefaultAPIService) C1ApiTaskV1TaskServiceCreateRevokeTaskExecute(r DefaultAPIC1ApiTaskV1TaskServiceCreateRevokeTaskRequest) (*C1ApiTaskV1TaskServiceGetResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *C1ApiTaskV1TaskServiceGetResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.C1ApiTaskV1TaskServiceCreateRevokeTask")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/api/v1/task/revoke"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.c1ApiTaskV1TaskServiceCreateRevokeRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type DefaultAPIC1ApiTaskV1TaskServiceGetRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	id string
+}
+
+func (r DefaultAPIC1ApiTaskV1TaskServiceGetRequest) Execute() (*C1ApiTaskV1TaskServiceGetResponse, *http.Response, error) {
+	return r.ApiService.C1ApiTaskV1TaskServiceGetExecute(r)
+}
+
+/*
+C1ApiTaskV1TaskServiceGet Method for C1ApiTaskV1TaskServiceGet
+
+Invokes the c1.api.task.v1.TaskService.Get method.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param id
+ @return DefaultAPIC1ApiTaskV1TaskServiceGetRequest
+*/
+func (a *DefaultAPIService) C1ApiTaskV1TaskServiceGet(ctx context.Context, id string) DefaultAPIC1ApiTaskV1TaskServiceGetRequest {
+	return DefaultAPIC1ApiTaskV1TaskServiceGetRequest{
+		ApiService: a,
+		ctx: ctx,
+		id: id,
+	}
+}
+
+// Execute executes the request
+//  @return C1ApiTaskV1TaskServiceGetResponse
+func (a *DefaultAPIService) C1ApiTaskV1TaskServiceGetExecute(r DefaultAPIC1ApiTaskV1TaskServiceGetRequest) (*C1ApiTaskV1TaskServiceGetResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *C1ApiTaskV1TaskServiceGetResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.C1ApiTaskV1TaskServiceGet")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/api/v1/tasks/{id}"
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type DefaultAPIC1ApiUserV1UserServiceGetRequest struct {
 	ctx context.Context
 	ApiService *DefaultAPIService

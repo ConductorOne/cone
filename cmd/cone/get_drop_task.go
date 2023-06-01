@@ -99,15 +99,30 @@ func runTask(cmd *cobra.Command, args []string, run func(c client.C1Client, ctx 
 		if err != nil {
 			return err
 		}
+
 		if len(entitlement.List) == 0 {
 			return fmt.Errorf("no entitlement found with alias %s", alias)
 		}
-		if len(entitlement.List) > 1 {
-			// TODO: this should show a list and prompt for input.
-			return fmt.Errorf("multiple entitlements found with alias %s", alias)
+		if len(entitlement.List) == 1 {
+			entitlementId = client.StringFromPtr(entitlement.List[0].AppEntitlement.Id)
+			appId = client.StringFromPtr(entitlement.List[0].AppEntitlement.AppId)
 		}
-		entitlementId = client.StringFromPtr(entitlement.List[0].AppEntitlement.Id)
-		appId = client.StringFromPtr(entitlement.List[0].AppEntitlement.AppId)
+		if len(entitlement.List) > 1 {
+			optionToEntitlementMap := make(map[string]c1api.C1ApiAppV1AppEntitlementView)
+			entitlementOptions := make([]string, len(entitlement.List))
+			for _, e := range entitlement.List {
+				entitlementOptionName := fmt.Sprintf("%s:%s:%s",
+					client.StringFromPtr(e.AppEntitlement.DisplayName),
+					client.StringFromPtr(e.AppEntitlement.AppId),
+					client.StringFromPtr(e.AppEntitlement.Id),
+				)
+				entitlementOptions = append(entitlementOptions, entitlementOptionName)
+				optionToEntitlementMap[entitlementOptionName] = e
+			}
+			selectedOption, _ := pterm.DefaultInteractiveSelect.WithOptions(entitlementOptions).WithDefaultText("Please select an entitlement").Show()
+			entitlementId = client.StringFromPtr(optionToEntitlementMap[selectedOption].AppEntitlement.Id)
+			appId = client.StringFromPtr(optionToEntitlementMap[selectedOption].AppEntitlement.AppId)
+		}
 	}
 
 	resp, err := c.WhoAmI(ctx)

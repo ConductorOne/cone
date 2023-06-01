@@ -18,6 +18,14 @@ type client struct {
 	config     clientConfig
 }
 
+func StringFromPtr(s *string) string {
+	if s == nil {
+		return ""
+	}
+
+	return *s
+}
+
 func stringPtr(s string) *string {
 	if s == "" {
 		return nil

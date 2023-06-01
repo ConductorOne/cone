@@ -59,8 +59,8 @@ func (r *C1ApiAuthV1IntrospectResponse) Header() []string {
 }
 func (r *C1ApiAuthV1IntrospectResponse) Rows() [][]string {
 	return [][]string{{
-		output.FromPtr(r.PrincipleId),
-		output.FromPtr(r.UserId),
-		output.FromPtr(r.AccessTokenId),
+		client.StringFromPtr(r.PrincipleId),
+		client.StringFromPtr(r.UserId),
+		client.StringFromPtr(r.AccessTokenId),
 	}}
 }

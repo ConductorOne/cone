@@ -77,13 +77,13 @@ func (r *C1ApiUserV1UserServiceGetResponse) Header() []string {
 func (r *C1ApiUserV1UserServiceGetResponse) Rows() [][]string {
 	return [][]string{
 		{
-			output.FromPtr(r.UserView.GetUser().Id),
-			output.FromPtr(r.UserView.GetUser().Email),
-			output.FromPtr(r.UserView.GetUser().Status),
-			output.FromPtr(r.UserView.GetUser().JobTitle),
-			output.FromPtr(r.UserView.GetUser().Department),
-			output.FromPtr(r.UserView.GetUser().EmploymentStatus),
-			output.FromPtr(r.UserView.GetUser().EmploymentType),
+			client.StringFromPtr(r.UserView.GetUser().Id),
+			client.StringFromPtr(r.UserView.GetUser().Email),
+			client.StringFromPtr(r.UserView.GetUser().Status),
+			client.StringFromPtr(r.UserView.GetUser().JobTitle),
+			client.StringFromPtr(r.UserView.GetUser().Department),
+			client.StringFromPtr(r.UserView.GetUser().EmploymentStatus),
+			client.StringFromPtr(r.UserView.GetUser().EmploymentType),
 			output.FormatTime(r.UserView.GetUser().CreatedAt),
 		},
 	}

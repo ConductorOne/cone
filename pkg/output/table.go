@@ -42,14 +42,6 @@ func FormatTimestamp(ts *timestamppb.Timestamp) string {
 	return ts.AsTime().Format(time.RFC3339)
 }
 
-func FromPtr(s *string) string {
-	if s == nil {
-		return ""
-	}
-
-	return *s
-}
-
 type TablePrint interface {
 	Header() []string
 	Rows() [][]string

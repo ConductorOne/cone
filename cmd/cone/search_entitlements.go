@@ -103,14 +103,14 @@ func (r ExpandedEntitlementsResponse) Rows() [][]string {
 	rows := [][]string{}
 	for _, entitlement := range r {
 		rows = append(rows, []string{
-			output.FromPtr(entitlement.Entitlement.Id),
-			output.FromPtr(entitlement.Entitlement.DisplayName),
-			output.FromPtr(entitlement.App.DisplayName),
-			output.FromPtr(entitlement.AppResource.DisplayName),
-			output.FromPtr(entitlement.AppResourceType.DisplayName),
-			output.FromPtr(entitlement.Entitlement.Slug),
-			output.FromPtr(entitlement.Entitlement.Alias),
-			output.FromPtr(entitlement.Entitlement.Description),
+			client.StringFromPtr(entitlement.Entitlement.Id),
+			client.StringFromPtr(entitlement.Entitlement.DisplayName),
+			client.StringFromPtr(entitlement.App.DisplayName),
+			client.StringFromPtr(entitlement.AppResource.DisplayName),
+			client.StringFromPtr(entitlement.AppResourceType.DisplayName),
+			client.StringFromPtr(entitlement.Entitlement.Slug),
+			client.StringFromPtr(entitlement.Entitlement.Alias),
+			client.StringFromPtr(entitlement.Entitlement.Description),
 		})
 	}
 	return rows

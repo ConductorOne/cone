@@ -3,7 +3,7 @@ package main
 import (
 	"errors"
 	"fmt"
-	"os"
+	"path/filepath"
 	"strings"
 
 	"github.com/spf13/cobra"
@@ -15,7 +15,7 @@ const (
 )
 
 var (
-	defaultConfigPath = strings.Join([]string{"$HOME", ".conductorone"}, string(os.PathSeparator))
+	defaultConfigPath = filepath.Join("$HOME", ".conductorone")
 )
 
 type Config struct {

@@ -1,6 +1,10 @@
 package main
 
 import (
+	"context"
+	"fmt"
+
+	"github.com/conductorone/cone/pkg/client"
 	"github.com/spf13/cobra"
 )
 
@@ -20,6 +24,34 @@ func getCmd() *cobra.Command {
 }
 
 func runGet(cmd *cobra.Command, args []string) error {
-	// TODO: Implement this
+	ctx := context.Background()
+	alias := ""
+
+	v, err := getSubViperForProfile(cmd)
+	if err != nil {
+		return err
+	}
+
+	clientId, clientSecret, err := getCredentials(v)
+	if err != nil {
+		return err
+	}
+
+	entitlementId := v.GetString(entitlementIdFlag)
+	appId := v.GetString(AppIdFlag)
+
+	if len(args) == 1 {
+		alias = args[0]
+	}
+
+	if alias == "" && (appId == "" || entitlementId == "") {
+		return fmt.Errorf("must provide either an alias or an entitlement id and app id")
+	}
+
+	c, err := client.New(ctx, clientId, clientSecret, client.WithDebug(v.GetBool("debug")))
+	if err != nil {
+		return err
+	}
+
 	return nil
 }

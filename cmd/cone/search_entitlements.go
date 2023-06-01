@@ -22,9 +22,9 @@ func searchEntitlementsCmd() *cobra.Command {
 
 type ExpandedEntitlement struct {
 	Entitlement     *c1api.C1ApiAppV1AppEntitlement
-	AppResource     *c1api.C1ApiAppV1AppResource
-	AppResourceType *c1api.C1ApiAppV1AppResourceType
-	App             *c1api.C1ApiAppV1App
+	AppResource     *client.C1ApiAppV1AppResource
+	AppResourceType *client.C1ApiAppV1AppResourceType
+	App             *client.C1ApiAppV1App
 }
 
 func searchEntitlementsRun(cmd *cobra.Command, args []string) error {
@@ -59,19 +59,35 @@ func searchEntitlementsRun(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
+	appCache := &ItemCache[*client.C1ApiAppV1App]{}
+	resourceTypeCache := &ItemCache[*client.C1ApiAppV1AppResourceType]{}
+	resourceCache := &ItemCache[*client.C1ApiAppV1AppResource]{}
 	entitlements := make([]ExpandedEntitlement, 0)
 	for _, item := range searchResp.List {
-		app, err := c.GetApp(ctx, *item.AppEntitlement.AppId)
+		app, err := appCache.Run(client.AppCacheKey(item.AppEntitlement.AppId), func() (*client.C1ApiAppV1App, error) {
+			return c.GetApp(ctx, *item.AppEntitlement.AppId)
+		})
 		if err != nil {
 			return err
 		}
 
-		resourceType, err := c.GetResourceType(ctx, *item.AppEntitlement.AppId, *item.AppEntitlement.AppResourceTypeId)
+		resourceType, err := resourceTypeCache.Run(client.ResourceTypeCacheKey(
+			item.AppEntitlement.AppId,
+			item.AppEntitlement.AppResourceTypeId,
+		), func() (*client.C1ApiAppV1AppResourceType, error) {
+			return c.GetResourceType(ctx, *item.AppEntitlement.AppId, *item.AppEntitlement.AppResourceTypeId)
+		})
 		if err != nil {
 			return err
 		}
 
-		resource, err := c.GetResource(ctx, *item.AppEntitlement.AppId, *item.AppEntitlement.AppResourceTypeId, *item.AppEntitlement.AppResourceId)
+		resource, err := resourceCache.Run(client.ResourceCacheKey(
+			item.AppEntitlement.AppId,
+			item.AppEntitlement.AppResourceTypeId,
+			item.AppEntitlement.AppResourceId,
+		), func() (*client.C1ApiAppV1AppResource, error) {
+			return c.GetResource(ctx, *item.AppEntitlement.AppId, *item.AppEntitlement.AppResourceTypeId, *item.AppEntitlement.AppResourceId)
+		})
 		if err != nil {
 			return err
 		}
@@ -79,8 +95,8 @@ func searchEntitlementsRun(cmd *cobra.Command, args []string) error {
 		entitlements = append(entitlements, ExpandedEntitlement{
 			Entitlement:     item.AppEntitlement,
 			App:             app,
-			AppResource:     resource.AppResourceView.AppResource,
-			AppResourceType: resourceType.AppResourceTypeView.AppResourceType,
+			AppResource:     resource,
+			AppResourceType: resourceType,
 		})
 	}
 

@@ -19,16 +19,20 @@ var _ MappedNullable = &C1ApiAuthV1IntrospectResponse{}
 
 // C1ApiAuthV1IntrospectResponse The IntrospectResponse message.
 type C1ApiAuthV1IntrospectResponse struct {
-	AccessTokenId interface{} `json:"accessTokenId,omitempty"`
+	// The accessTokenId field.
+	AccessTokenId *string `json:"accessTokenId,omitempty"`
 	// The features field.
-	Features interface{} `json:"features,omitempty"`
+	Features []string `json:"features,omitempty"`
 	// The permissions field.
-	Permissions interface{} `json:"permissions,omitempty"`
-	PrincipleId interface{} `json:"principleId,omitempty"`
+	Permissions []string `json:"permissions,omitempty"`
+	// The principleId field.
+	PrincipleId *string `json:"principleId,omitempty"`
 	// The roles field.
-	Roles interface{} `json:"roles,omitempty"`
-	TenantId interface{} `json:"tenantId,omitempty"`
-	UserId interface{} `json:"userId,omitempty"`
+	Roles []string `json:"roles,omitempty"`
+	// The tenantId field.
+	TenantId *string `json:"tenantId,omitempty"`
+	// The userId field.
+	UserId *string `json:"userId,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -51,43 +55,42 @@ func NewC1ApiAuthV1IntrospectResponseWithDefaults() *C1ApiAuthV1IntrospectRespon
 	return &this
 }
 
-// GetAccessTokenId returns the AccessTokenId field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *C1ApiAuthV1IntrospectResponse) GetAccessTokenId() interface{} {
-	if o == nil {
-		var ret interface{}
+// GetAccessTokenId returns the AccessTokenId field value if set, zero value otherwise.
+func (o *C1ApiAuthV1IntrospectResponse) GetAccessTokenId() string {
+	if o == nil || IsNil(o.AccessTokenId) {
+		var ret string
 		return ret
 	}
-	return o.AccessTokenId
+	return *o.AccessTokenId
 }
 
 // GetAccessTokenIdOk returns a tuple with the AccessTokenId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *C1ApiAuthV1IntrospectResponse) GetAccessTokenIdOk() (*interface{}, bool) {
+func (o *C1ApiAuthV1IntrospectResponse) GetAccessTokenIdOk() (*string, bool) {
 	if o == nil || IsNil(o.AccessTokenId) {
 		return nil, false
 	}
-	return &o.AccessTokenId, true
+	return o.AccessTokenId, true
 }
 
 // HasAccessTokenId returns a boolean if a field has been set.
 func (o *C1ApiAuthV1IntrospectResponse) HasAccessTokenId() bool {
-	if o != nil && IsNil(o.AccessTokenId) {
+	if o != nil && !IsNil(o.AccessTokenId) {
 		return true
 	}
 
 	return false
 }
 
-// SetAccessTokenId gets a reference to the given interface{} and assigns it to the AccessTokenId field.
-func (o *C1ApiAuthV1IntrospectResponse) SetAccessTokenId(v interface{}) {
-	o.AccessTokenId = v
+// SetAccessTokenId gets a reference to the given string and assigns it to the AccessTokenId field.
+func (o *C1ApiAuthV1IntrospectResponse) SetAccessTokenId(v string) {
+	o.AccessTokenId = &v
 }
 
 // GetFeatures returns the Features field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *C1ApiAuthV1IntrospectResponse) GetFeatures() interface{} {
+func (o *C1ApiAuthV1IntrospectResponse) GetFeatures() []string {
 	if o == nil {
-		var ret interface{}
+		var ret []string
 		return ret
 	}
 	return o.Features
@@ -96,11 +99,11 @@ func (o *C1ApiAuthV1IntrospectResponse) GetFeatures() interface{} {
 // GetFeaturesOk returns a tuple with the Features field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *C1ApiAuthV1IntrospectResponse) GetFeaturesOk() (*interface{}, bool) {
+func (o *C1ApiAuthV1IntrospectResponse) GetFeaturesOk() ([]string, bool) {
 	if o == nil || IsNil(o.Features) {
 		return nil, false
 	}
-	return &o.Features, true
+	return o.Features, true
 }
 
 // HasFeatures returns a boolean if a field has been set.
@@ -112,15 +115,15 @@ func (o *C1ApiAuthV1IntrospectResponse) HasFeatures() bool {
 	return false
 }
 
-// SetFeatures gets a reference to the given interface{} and assigns it to the Features field.
-func (o *C1ApiAuthV1IntrospectResponse) SetFeatures(v interface{}) {
+// SetFeatures gets a reference to the given []string and assigns it to the Features field.
+func (o *C1ApiAuthV1IntrospectResponse) SetFeatures(v []string) {
 	o.Features = v
 }
 
 // GetPermissions returns the Permissions field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *C1ApiAuthV1IntrospectResponse) GetPermissions() interface{} {
+func (o *C1ApiAuthV1IntrospectResponse) GetPermissions() []string {
 	if o == nil {
-		var ret interface{}
+		var ret []string
 		return ret
 	}
 	return o.Permissions
@@ -129,11 +132,11 @@ func (o *C1ApiAuthV1IntrospectResponse) GetPermissions() interface{} {
 // GetPermissionsOk returns a tuple with the Permissions field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *C1ApiAuthV1IntrospectResponse) GetPermissionsOk() (*interface{}, bool) {
+func (o *C1ApiAuthV1IntrospectResponse) GetPermissionsOk() ([]string, bool) {
 	if o == nil || IsNil(o.Permissions) {
 		return nil, false
 	}
-	return &o.Permissions, true
+	return o.Permissions, true
 }
 
 // HasPermissions returns a boolean if a field has been set.
@@ -145,48 +148,47 @@ func (o *C1ApiAuthV1IntrospectResponse) HasPermissions() bool {
 	return false
 }
 
-// SetPermissions gets a reference to the given interface{} and assigns it to the Permissions field.
-func (o *C1ApiAuthV1IntrospectResponse) SetPermissions(v interface{}) {
+// SetPermissions gets a reference to the given []string and assigns it to the Permissions field.
+func (o *C1ApiAuthV1IntrospectResponse) SetPermissions(v []string) {
 	o.Permissions = v
 }
 
-// GetPrincipleId returns the PrincipleId field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *C1ApiAuthV1IntrospectResponse) GetPrincipleId() interface{} {
-	if o == nil {
-		var ret interface{}
+// GetPrincipleId returns the PrincipleId field value if set, zero value otherwise.
+func (o *C1ApiAuthV1IntrospectResponse) GetPrincipleId() string {
+	if o == nil || IsNil(o.PrincipleId) {
+		var ret string
 		return ret
 	}
-	return o.PrincipleId
+	return *o.PrincipleId
 }
 
 // GetPrincipleIdOk returns a tuple with the PrincipleId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *C1ApiAuthV1IntrospectResponse) GetPrincipleIdOk() (*interface{}, bool) {
+func (o *C1ApiAuthV1IntrospectResponse) GetPrincipleIdOk() (*string, bool) {
 	if o == nil || IsNil(o.PrincipleId) {
 		return nil, false
 	}
-	return &o.PrincipleId, true
+	return o.PrincipleId, true
 }
 
 // HasPrincipleId returns a boolean if a field has been set.
 func (o *C1ApiAuthV1IntrospectResponse) HasPrincipleId() bool {
-	if o != nil && IsNil(o.PrincipleId) {
+	if o != nil && !IsNil(o.PrincipleId) {
 		return true
 	}
 
 	return false
 }
 
-// SetPrincipleId gets a reference to the given interface{} and assigns it to the PrincipleId field.
-func (o *C1ApiAuthV1IntrospectResponse) SetPrincipleId(v interface{}) {
-	o.PrincipleId = v
+// SetPrincipleId gets a reference to the given string and assigns it to the PrincipleId field.
+func (o *C1ApiAuthV1IntrospectResponse) SetPrincipleId(v string) {
+	o.PrincipleId = &v
 }
 
 // GetRoles returns the Roles field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *C1ApiAuthV1IntrospectResponse) GetRoles() interface{} {
+func (o *C1ApiAuthV1IntrospectResponse) GetRoles() []string {
 	if o == nil {
-		var ret interface{}
+		var ret []string
 		return ret
 	}
 	return o.Roles
@@ -195,11 +197,11 @@ func (o *C1ApiAuthV1IntrospectResponse) GetRoles() interface{} {
 // GetRolesOk returns a tuple with the Roles field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *C1ApiAuthV1IntrospectResponse) GetRolesOk() (*interface{}, bool) {
+func (o *C1ApiAuthV1IntrospectResponse) GetRolesOk() ([]string, bool) {
 	if o == nil || IsNil(o.Roles) {
 		return nil, false
 	}
-	return &o.Roles, true
+	return o.Roles, true
 }
 
 // HasRoles returns a boolean if a field has been set.
@@ -211,75 +213,73 @@ func (o *C1ApiAuthV1IntrospectResponse) HasRoles() bool {
 	return false
 }
 
-// SetRoles gets a reference to the given interface{} and assigns it to the Roles field.
-func (o *C1ApiAuthV1IntrospectResponse) SetRoles(v interface{}) {
+// SetRoles gets a reference to the given []string and assigns it to the Roles field.
+func (o *C1ApiAuthV1IntrospectResponse) SetRoles(v []string) {
 	o.Roles = v
 }
 
-// GetTenantId returns the TenantId field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *C1ApiAuthV1IntrospectResponse) GetTenantId() interface{} {
-	if o == nil {
-		var ret interface{}
+// GetTenantId returns the TenantId field value if set, zero value otherwise.
+func (o *C1ApiAuthV1IntrospectResponse) GetTenantId() string {
+	if o == nil || IsNil(o.TenantId) {
+		var ret string
 		return ret
 	}
-	return o.TenantId
+	return *o.TenantId
 }
 
 // GetTenantIdOk returns a tuple with the TenantId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *C1ApiAuthV1IntrospectResponse) GetTenantIdOk() (*interface{}, bool) {
+func (o *C1ApiAuthV1IntrospectResponse) GetTenantIdOk() (*string, bool) {
 	if o == nil || IsNil(o.TenantId) {
 		return nil, false
 	}
-	return &o.TenantId, true
+	return o.TenantId, true
 }
 
 // HasTenantId returns a boolean if a field has been set.
 func (o *C1ApiAuthV1IntrospectResponse) HasTenantId() bool {
-	if o != nil && IsNil(o.TenantId) {
+	if o != nil && !IsNil(o.TenantId) {
 		return true
 	}
 
 	return false
 }
 
-// SetTenantId gets a reference to the given interface{} and assigns it to the TenantId field.
-func (o *C1ApiAuthV1IntrospectResponse) SetTenantId(v interface{}) {
-	o.TenantId = v
+// SetTenantId gets a reference to the given string and assigns it to the TenantId field.
+func (o *C1ApiAuthV1IntrospectResponse) SetTenantId(v string) {
+	o.TenantId = &v
 }
 
-// GetUserId returns the UserId field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *C1ApiAuthV1IntrospectResponse) GetUserId() interface{} {
-	if o == nil {
-		var ret interface{}
+// GetUserId returns the UserId field value if set, zero value otherwise.
+func (o *C1ApiAuthV1IntrospectResponse) GetUserId() string {
+	if o == nil || IsNil(o.UserId) {
+		var ret string
 		return ret
 	}
-	return o.UserId
+	return *o.UserId
 }
 
 // GetUserIdOk returns a tuple with the UserId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *C1ApiAuthV1IntrospectResponse) GetUserIdOk() (*interface{}, bool) {
+func (o *C1ApiAuthV1IntrospectResponse) GetUserIdOk() (*string, bool) {
 	if o == nil || IsNil(o.UserId) {
 		return nil, false
 	}
-	return &o.UserId, true
+	return o.UserId, true
 }
 
 // HasUserId returns a boolean if a field has been set.
 func (o *C1ApiAuthV1IntrospectResponse) HasUserId() bool {
-	if o != nil && IsNil(o.UserId) {
+	if o != nil && !IsNil(o.UserId) {
 		return true
 	}
 
 	return false
 }
 
-// SetUserId gets a reference to the given interface{} and assigns it to the UserId field.
-func (o *C1ApiAuthV1IntrospectResponse) SetUserId(v interface{}) {
-	o.UserId = v
+// SetUserId gets a reference to the given string and assigns it to the UserId field.
+func (o *C1ApiAuthV1IntrospectResponse) SetUserId(v string) {
+	o.UserId = &v
 }
 
 func (o C1ApiAuthV1IntrospectResponse) MarshalJSON() ([]byte, error) {
@@ -292,7 +292,7 @@ func (o C1ApiAuthV1IntrospectResponse) MarshalJSON() ([]byte, error) {
 
 func (o C1ApiAuthV1IntrospectResponse) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if o.AccessTokenId != nil {
+	if !IsNil(o.AccessTokenId) {
 		toSerialize["accessTokenId"] = o.AccessTokenId
 	}
 	if o.Features != nil {
@@ -301,16 +301,16 @@ func (o C1ApiAuthV1IntrospectResponse) ToMap() (map[string]interface{}, error) {
 	if o.Permissions != nil {
 		toSerialize["permissions"] = o.Permissions
 	}
-	if o.PrincipleId != nil {
+	if !IsNil(o.PrincipleId) {
 		toSerialize["principleId"] = o.PrincipleId
 	}
 	if o.Roles != nil {
 		toSerialize["roles"] = o.Roles
 	}
-	if o.TenantId != nil {
+	if !IsNil(o.TenantId) {
 		toSerialize["tenantId"] = o.TenantId
 	}
-	if o.UserId != nil {
+	if !IsNil(o.UserId) {
 		toSerialize["userId"] = o.UserId
 	}
 

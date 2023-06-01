@@ -73,17 +73,84 @@ ctx = context.WithValue(context.Background(), c1api.ContextOperationServerVariab
 
 ## Documentation for API Endpoints
 
-All URIs are relative to *https://invalid-example.conductor.one*
+All URIs are relative to *https://invalid-example.logan.dev.ductone.com:2443*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
+*DefaultAPI* | [**C1ApiAppV1AppResourceServiceGet**](docs/DefaultAPI.md#c1apiappv1appresourceserviceget) | **Get** /api/v1/app_resource/{app_id}/{app_resource_type_id}/{id} | 
+*DefaultAPI* | [**C1ApiAppV1AppResourceTypeServiceGet**](docs/DefaultAPI.md#c1apiappv1appresourcetypeserviceget) | **Get** /api/v1/app_resource_type/{app_id}/{id} | 
+*DefaultAPI* | [**C1ApiAppV1AppsGet**](docs/DefaultAPI.md#c1apiappv1appsget) | **Get** /api/v1/app/{id} | 
 *DefaultAPI* | [**C1ApiAuthV1AuthIntrospect**](docs/DefaultAPI.md#c1apiauthv1authintrospect) | **Get** /api/v1/auth/introspect | 
+*DefaultAPI* | [**C1ApiRequestcatalogV1RequestCatalogSearchServiceSearchEntitlements**](docs/DefaultAPI.md#c1apirequestcatalogv1requestcatalogsearchservicesearchentitlements) | **Post** /api/v1/entitlement/search | 
+*DefaultAPI* | [**C1ApiTaskV1TaskServiceCreateGrantTask**](docs/DefaultAPI.md#c1apitaskv1taskservicecreategranttask) | **Post** /api/v1/task/grant | 
+*DefaultAPI* | [**C1ApiTaskV1TaskServiceCreateRevokeTask**](docs/DefaultAPI.md#c1apitaskv1taskservicecreaterevoketask) | **Post** /api/v1/task/revoke | 
+*DefaultAPI* | [**C1ApiTaskV1TaskServiceGet**](docs/DefaultAPI.md#c1apitaskv1taskserviceget) | **Get** /api/v1/tasks/{id} | 
 *DefaultAPI* | [**C1ApiUserV1UserServiceGet**](docs/DefaultAPI.md#c1apiuserv1userserviceget) | **Get** /api/v1/user/get/{id} | 
 
 
 ## Documentation For Models
 
+ - [C1ApiAppV1App](docs/C1ApiAppV1App.md)
+ - [C1ApiAppV1AppEntitlement](docs/C1ApiAppV1AppEntitlement.md)
+ - [C1ApiAppV1AppEntitlementExpandMask](docs/C1ApiAppV1AppEntitlementExpandMask.md)
+ - [C1ApiAppV1AppEntitlementView](docs/C1ApiAppV1AppEntitlementView.md)
+ - [C1ApiAppV1AppProfile](docs/C1ApiAppV1AppProfile.md)
+ - [C1ApiAppV1AppResource](docs/C1ApiAppV1AppResource.md)
+ - [C1ApiAppV1AppResourceServiceGetResponse](docs/C1ApiAppV1AppResourceServiceGetResponse.md)
+ - [C1ApiAppV1AppResourceServiceGetResponseExpandedInner](docs/C1ApiAppV1AppResourceServiceGetResponseExpandedInner.md)
+ - [C1ApiAppV1AppResourceType](docs/C1ApiAppV1AppResourceType.md)
+ - [C1ApiAppV1AppResourceTypeServiceGetResponse](docs/C1ApiAppV1AppResourceTypeServiceGetResponse.md)
+ - [C1ApiAppV1AppResourceTypeView](docs/C1ApiAppV1AppResourceTypeView.md)
+ - [C1ApiAppV1AppResourceView](docs/C1ApiAppV1AppResourceView.md)
  - [C1ApiAuthV1IntrospectResponse](docs/C1ApiAuthV1IntrospectResponse.md)
+ - [C1ApiPolicyV1AppEntitlementReference](docs/C1ApiPolicyV1AppEntitlementReference.md)
+ - [C1ApiPolicyV1AppGroupApproval](docs/C1ApiPolicyV1AppGroupApproval.md)
+ - [C1ApiPolicyV1AppOwnerApproval](docs/C1ApiPolicyV1AppOwnerApproval.md)
+ - [C1ApiPolicyV1Approval](docs/C1ApiPolicyV1Approval.md)
+ - [C1ApiPolicyV1ApprovalInstance](docs/C1ApiPolicyV1ApprovalInstance.md)
+ - [C1ApiPolicyV1ApprovedAction](docs/C1ApiPolicyV1ApprovedAction.md)
+ - [C1ApiPolicyV1CancelledAction](docs/C1ApiPolicyV1CancelledAction.md)
+ - [C1ApiPolicyV1CompletedAction](docs/C1ApiPolicyV1CompletedAction.md)
+ - [C1ApiPolicyV1DelegatedProvision](docs/C1ApiPolicyV1DelegatedProvision.md)
+ - [C1ApiPolicyV1DeniedAction](docs/C1ApiPolicyV1DeniedAction.md)
+ - [C1ApiPolicyV1EntitlementOwnerApproval](docs/C1ApiPolicyV1EntitlementOwnerApproval.md)
+ - [C1ApiPolicyV1ErroredAction](docs/C1ApiPolicyV1ErroredAction.md)
+ - [C1ApiPolicyV1ManagerApproval](docs/C1ApiPolicyV1ManagerApproval.md)
+ - [C1ApiPolicyV1ManualProvision](docs/C1ApiPolicyV1ManualProvision.md)
+ - [C1ApiPolicyV1Policy](docs/C1ApiPolicyV1Policy.md)
+ - [C1ApiPolicyV1PolicyInstance](docs/C1ApiPolicyV1PolicyInstance.md)
+ - [C1ApiPolicyV1PolicyPostActions](docs/C1ApiPolicyV1PolicyPostActions.md)
+ - [C1ApiPolicyV1PolicyStep](docs/C1ApiPolicyV1PolicyStep.md)
+ - [C1ApiPolicyV1PolicyStepInstance](docs/C1ApiPolicyV1PolicyStepInstance.md)
+ - [C1ApiPolicyV1PolicySteps](docs/C1ApiPolicyV1PolicySteps.md)
+ - [C1ApiPolicyV1Provision](docs/C1ApiPolicyV1Provision.md)
+ - [C1ApiPolicyV1ProvisionInstance](docs/C1ApiPolicyV1ProvisionInstance.md)
+ - [C1ApiPolicyV1ProvisionPolicy](docs/C1ApiPolicyV1ProvisionPolicy.md)
+ - [C1ApiPolicyV1ReassignedAction](docs/C1ApiPolicyV1ReassignedAction.md)
+ - [C1ApiPolicyV1ReassignedByErrorAction](docs/C1ApiPolicyV1ReassignedByErrorAction.md)
+ - [C1ApiPolicyV1RestartAction](docs/C1ApiPolicyV1RestartAction.md)
+ - [C1ApiPolicyV1SelfApproval](docs/C1ApiPolicyV1SelfApproval.md)
+ - [C1ApiPolicyV1UserApproval](docs/C1ApiPolicyV1UserApproval.md)
+ - [C1ApiRequestcatalogV1RequestCatalogSearchServiceSearchEntitlementsRequest](docs/C1ApiRequestcatalogV1RequestCatalogSearchServiceSearchEntitlementsRequest.md)
+ - [C1ApiRequestcatalogV1RequestCatalogSearchServiceSearchEntitlementsResponse](docs/C1ApiRequestcatalogV1RequestCatalogSearchServiceSearchEntitlementsResponse.md)
+ - [C1ApiTaskV1ExternalRef](docs/C1ApiTaskV1ExternalRef.md)
+ - [C1ApiTaskV1GrantEntitlementInstance](docs/C1ApiTaskV1GrantEntitlementInstance.md)
+ - [C1ApiTaskV1Task](docs/C1ApiTaskV1Task.md)
+ - [C1ApiTaskV1TaskExpandMask](docs/C1ApiTaskV1TaskExpandMask.md)
+ - [C1ApiTaskV1TaskRevokeSource](docs/C1ApiTaskV1TaskRevokeSource.md)
+ - [C1ApiTaskV1TaskRevokeSourceExpired](docs/C1ApiTaskV1TaskRevokeSourceExpired.md)
+ - [C1ApiTaskV1TaskRevokeSourceNonUsage](docs/C1ApiTaskV1TaskRevokeSourceNonUsage.md)
+ - [C1ApiTaskV1TaskRevokeSourceRequest](docs/C1ApiTaskV1TaskRevokeSourceRequest.md)
+ - [C1ApiTaskV1TaskRevokeSourceReview](docs/C1ApiTaskV1TaskRevokeSourceReview.md)
+ - [C1ApiTaskV1TaskServiceCreateGrantRequest](docs/C1ApiTaskV1TaskServiceCreateGrantRequest.md)
+ - [C1ApiTaskV1TaskServiceCreateRevokeRequest](docs/C1ApiTaskV1TaskServiceCreateRevokeRequest.md)
+ - [C1ApiTaskV1TaskServiceGetResponse](docs/C1ApiTaskV1TaskServiceGetResponse.md)
+ - [C1ApiTaskV1TaskType](docs/C1ApiTaskV1TaskType.md)
+ - [C1ApiTaskV1TaskTypeAccessRequest](docs/C1ApiTaskV1TaskTypeAccessRequest.md)
+ - [C1ApiTaskV1TaskTypeCertify](docs/C1ApiTaskV1TaskTypeCertify.md)
+ - [C1ApiTaskV1TaskTypeGrant](docs/C1ApiTaskV1TaskTypeGrant.md)
+ - [C1ApiTaskV1TaskTypeRevoke](docs/C1ApiTaskV1TaskTypeRevoke.md)
+ - [C1ApiTaskV1TaskView](docs/C1ApiTaskV1TaskView.md)
  - [C1ApiUserV1User](docs/C1ApiUserV1User.md)
  - [C1ApiUserV1UserAttributeMappingSource](docs/C1ApiUserV1UserAttributeMappingSource.md)
  - [C1ApiUserV1UserServiceGetResponse](docs/C1ApiUserV1UserServiceGetResponse.md)

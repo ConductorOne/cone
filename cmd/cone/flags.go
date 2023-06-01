@@ -5,10 +5,11 @@ import (
 )
 
 const (
-	waitFlag          = "wait"
-	entitlementIdFlag = "entitlement-id"
-	entitlementAlias  = "alias"
-	AppIdFlag         = "app-id"
+	waitFlag             = "wait"
+	entitlementIdFlag    = "entitlement-id"
+	appIdFlag            = "app-id"
+	entitlementAliasFlag = "alias"
+	queryFlag            = "query"
 )
 
 func addWaitFlag(cmd *cobra.Command) {
@@ -19,10 +20,14 @@ func addEntitlementIdFlag(cmd *cobra.Command) {
 	cmd.Flags().StringP(entitlementIdFlag, "e", "", "The entitlement id to filter by")
 }
 
-func addEntitlementAliasFlag(cmd *cobra.Command) {
-	cmd.Flags().StringP(entitlementAlias, "x", "", "The entitlement alias to filter by")
+func addAppIdFlag(cmd *cobra.Command) {
+	cmd.Flags().StringP(appIdFlag, "a", "", "The app id to filter by")
 }
 
-func addAppIdFlag(cmd *cobra.Command) {
-	cmd.Flags().StringP(AppIdFlag, "a", "", "The app id to filter by")
+func addQueryFlag(cmd *cobra.Command) {
+	cmd.Flags().StringP(queryFlag, "q", "", "The query to filter by")
+}
+
+func addEntitlementAliasFlag(cmd *cobra.Command) {
+	cmd.Flags().StringP(entitlementAliasFlag, "", "", "The entitlement alias to filter by")
 }

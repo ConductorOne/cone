@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/conductorone/cone/internal/c1api"
 	"github.com/conductorone/cone/pkg/client"
 	"github.com/conductorone/cone/pkg/output"
 	"github.com/spf13/cobra"
@@ -48,11 +49,42 @@ func getUserRun(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
-	pretty := v.GetBool("pretty-output")
-	err = output.PrintOutput(userResp, pretty)
+	resp := C1ApiUserV1UserServiceGetResponse(*userResp)
+	outputManager := output.NewManager(ctx, v)
+	err = outputManager.Output(ctx, &resp)
 	if err != nil {
 		return err
 	}
 
 	return nil
+}
+
+type C1ApiUserV1UserServiceGetResponse c1api.C1ApiUserV1UserServiceGetResponse
+
+func (r *C1ApiUserV1UserServiceGetResponse) Header() []string {
+	return []string{
+		"Id",
+		"Email",
+		"Status",
+		"Job Title",
+		"Department",
+		"Employment Status",
+		"Employment Type",
+		"Created At",
+	}
+}
+
+func (r *C1ApiUserV1UserServiceGetResponse) Rows() [][]string {
+	return [][]string{
+		{
+			client.StringFromPtr(r.UserView.GetUser().Id),
+			client.StringFromPtr(r.UserView.GetUser().Email),
+			client.StringFromPtr(r.UserView.GetUser().Status),
+			client.StringFromPtr(r.UserView.GetUser().JobTitle),
+			client.StringFromPtr(r.UserView.GetUser().Department),
+			client.StringFromPtr(r.UserView.GetUser().EmploymentStatus),
+			client.StringFromPtr(r.UserView.GetUser().EmploymentType),
+			output.FormatTime(r.UserView.GetUser().CreatedAt),
+		},
+	}
 }

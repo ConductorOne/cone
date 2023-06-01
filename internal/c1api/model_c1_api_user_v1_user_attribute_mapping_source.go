@@ -19,11 +19,16 @@ var _ MappedNullable = &C1ApiUserV1UserAttributeMappingSource{}
 
 // C1ApiUserV1UserAttributeMappingSource The UserAttributeMappingSource message.
 type C1ApiUserV1UserAttributeMappingSource struct {
-	AppId interface{} `json:"appId,omitempty"`
-	AppUserId interface{} `json:"appUserId,omitempty"`
-	AppUserProfileAttributeKey interface{} `json:"appUserProfileAttributeKey,omitempty"`
-	UserAttributeMappingId interface{} `json:"userAttributeMappingId,omitempty"`
-	Value interface{} `json:"value,omitempty"`
+	// The appId field.
+	AppId *string `json:"appId,omitempty"`
+	// The appUserId field.
+	AppUserId *string `json:"appUserId,omitempty"`
+	// The appUserProfileAttributeKey field.
+	AppUserProfileAttributeKey *string `json:"appUserProfileAttributeKey,omitempty"`
+	// The userAttributeMappingId field.
+	UserAttributeMappingId *string `json:"userAttributeMappingId,omitempty"`
+	// The value field.
+	Value *string `json:"value,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -46,169 +51,164 @@ func NewC1ApiUserV1UserAttributeMappingSourceWithDefaults() *C1ApiUserV1UserAttr
 	return &this
 }
 
-// GetAppId returns the AppId field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *C1ApiUserV1UserAttributeMappingSource) GetAppId() interface{} {
-	if o == nil {
-		var ret interface{}
+// GetAppId returns the AppId field value if set, zero value otherwise.
+func (o *C1ApiUserV1UserAttributeMappingSource) GetAppId() string {
+	if o == nil || IsNil(o.AppId) {
+		var ret string
 		return ret
 	}
-	return o.AppId
+	return *o.AppId
 }
 
 // GetAppIdOk returns a tuple with the AppId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *C1ApiUserV1UserAttributeMappingSource) GetAppIdOk() (*interface{}, bool) {
+func (o *C1ApiUserV1UserAttributeMappingSource) GetAppIdOk() (*string, bool) {
 	if o == nil || IsNil(o.AppId) {
 		return nil, false
 	}
-	return &o.AppId, true
+	return o.AppId, true
 }
 
 // HasAppId returns a boolean if a field has been set.
 func (o *C1ApiUserV1UserAttributeMappingSource) HasAppId() bool {
-	if o != nil && IsNil(o.AppId) {
+	if o != nil && !IsNil(o.AppId) {
 		return true
 	}
 
 	return false
 }
 
-// SetAppId gets a reference to the given interface{} and assigns it to the AppId field.
-func (o *C1ApiUserV1UserAttributeMappingSource) SetAppId(v interface{}) {
-	o.AppId = v
+// SetAppId gets a reference to the given string and assigns it to the AppId field.
+func (o *C1ApiUserV1UserAttributeMappingSource) SetAppId(v string) {
+	o.AppId = &v
 }
 
-// GetAppUserId returns the AppUserId field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *C1ApiUserV1UserAttributeMappingSource) GetAppUserId() interface{} {
-	if o == nil {
-		var ret interface{}
+// GetAppUserId returns the AppUserId field value if set, zero value otherwise.
+func (o *C1ApiUserV1UserAttributeMappingSource) GetAppUserId() string {
+	if o == nil || IsNil(o.AppUserId) {
+		var ret string
 		return ret
 	}
-	return o.AppUserId
+	return *o.AppUserId
 }
 
 // GetAppUserIdOk returns a tuple with the AppUserId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *C1ApiUserV1UserAttributeMappingSource) GetAppUserIdOk() (*interface{}, bool) {
+func (o *C1ApiUserV1UserAttributeMappingSource) GetAppUserIdOk() (*string, bool) {
 	if o == nil || IsNil(o.AppUserId) {
 		return nil, false
 	}
-	return &o.AppUserId, true
+	return o.AppUserId, true
 }
 
 // HasAppUserId returns a boolean if a field has been set.
 func (o *C1ApiUserV1UserAttributeMappingSource) HasAppUserId() bool {
-	if o != nil && IsNil(o.AppUserId) {
+	if o != nil && !IsNil(o.AppUserId) {
 		return true
 	}
 
 	return false
 }
 
-// SetAppUserId gets a reference to the given interface{} and assigns it to the AppUserId field.
-func (o *C1ApiUserV1UserAttributeMappingSource) SetAppUserId(v interface{}) {
-	o.AppUserId = v
+// SetAppUserId gets a reference to the given string and assigns it to the AppUserId field.
+func (o *C1ApiUserV1UserAttributeMappingSource) SetAppUserId(v string) {
+	o.AppUserId = &v
 }
 
-// GetAppUserProfileAttributeKey returns the AppUserProfileAttributeKey field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *C1ApiUserV1UserAttributeMappingSource) GetAppUserProfileAttributeKey() interface{} {
-	if o == nil {
-		var ret interface{}
+// GetAppUserProfileAttributeKey returns the AppUserProfileAttributeKey field value if set, zero value otherwise.
+func (o *C1ApiUserV1UserAttributeMappingSource) GetAppUserProfileAttributeKey() string {
+	if o == nil || IsNil(o.AppUserProfileAttributeKey) {
+		var ret string
 		return ret
 	}
-	return o.AppUserProfileAttributeKey
+	return *o.AppUserProfileAttributeKey
 }
 
 // GetAppUserProfileAttributeKeyOk returns a tuple with the AppUserProfileAttributeKey field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *C1ApiUserV1UserAttributeMappingSource) GetAppUserProfileAttributeKeyOk() (*interface{}, bool) {
+func (o *C1ApiUserV1UserAttributeMappingSource) GetAppUserProfileAttributeKeyOk() (*string, bool) {
 	if o == nil || IsNil(o.AppUserProfileAttributeKey) {
 		return nil, false
 	}
-	return &o.AppUserProfileAttributeKey, true
+	return o.AppUserProfileAttributeKey, true
 }
 
 // HasAppUserProfileAttributeKey returns a boolean if a field has been set.
 func (o *C1ApiUserV1UserAttributeMappingSource) HasAppUserProfileAttributeKey() bool {
-	if o != nil && IsNil(o.AppUserProfileAttributeKey) {
+	if o != nil && !IsNil(o.AppUserProfileAttributeKey) {
 		return true
 	}
 
 	return false
 }
 
-// SetAppUserProfileAttributeKey gets a reference to the given interface{} and assigns it to the AppUserProfileAttributeKey field.
-func (o *C1ApiUserV1UserAttributeMappingSource) SetAppUserProfileAttributeKey(v interface{}) {
-	o.AppUserProfileAttributeKey = v
+// SetAppUserProfileAttributeKey gets a reference to the given string and assigns it to the AppUserProfileAttributeKey field.
+func (o *C1ApiUserV1UserAttributeMappingSource) SetAppUserProfileAttributeKey(v string) {
+	o.AppUserProfileAttributeKey = &v
 }
 
-// GetUserAttributeMappingId returns the UserAttributeMappingId field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *C1ApiUserV1UserAttributeMappingSource) GetUserAttributeMappingId() interface{} {
-	if o == nil {
-		var ret interface{}
+// GetUserAttributeMappingId returns the UserAttributeMappingId field value if set, zero value otherwise.
+func (o *C1ApiUserV1UserAttributeMappingSource) GetUserAttributeMappingId() string {
+	if o == nil || IsNil(o.UserAttributeMappingId) {
+		var ret string
 		return ret
 	}
-	return o.UserAttributeMappingId
+	return *o.UserAttributeMappingId
 }
 
 // GetUserAttributeMappingIdOk returns a tuple with the UserAttributeMappingId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *C1ApiUserV1UserAttributeMappingSource) GetUserAttributeMappingIdOk() (*interface{}, bool) {
+func (o *C1ApiUserV1UserAttributeMappingSource) GetUserAttributeMappingIdOk() (*string, bool) {
 	if o == nil || IsNil(o.UserAttributeMappingId) {
 		return nil, false
 	}
-	return &o.UserAttributeMappingId, true
+	return o.UserAttributeMappingId, true
 }
 
 // HasUserAttributeMappingId returns a boolean if a field has been set.
 func (o *C1ApiUserV1UserAttributeMappingSource) HasUserAttributeMappingId() bool {
-	if o != nil && IsNil(o.UserAttributeMappingId) {
+	if o != nil && !IsNil(o.UserAttributeMappingId) {
 		return true
 	}
 
 	return false
 }
 
-// SetUserAttributeMappingId gets a reference to the given interface{} and assigns it to the UserAttributeMappingId field.
-func (o *C1ApiUserV1UserAttributeMappingSource) SetUserAttributeMappingId(v interface{}) {
-	o.UserAttributeMappingId = v
+// SetUserAttributeMappingId gets a reference to the given string and assigns it to the UserAttributeMappingId field.
+func (o *C1ApiUserV1UserAttributeMappingSource) SetUserAttributeMappingId(v string) {
+	o.UserAttributeMappingId = &v
 }
 
-// GetValue returns the Value field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *C1ApiUserV1UserAttributeMappingSource) GetValue() interface{} {
-	if o == nil {
-		var ret interface{}
+// GetValue returns the Value field value if set, zero value otherwise.
+func (o *C1ApiUserV1UserAttributeMappingSource) GetValue() string {
+	if o == nil || IsNil(o.Value) {
+		var ret string
 		return ret
 	}
-	return o.Value
+	return *o.Value
 }
 
 // GetValueOk returns a tuple with the Value field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *C1ApiUserV1UserAttributeMappingSource) GetValueOk() (*interface{}, bool) {
+func (o *C1ApiUserV1UserAttributeMappingSource) GetValueOk() (*string, bool) {
 	if o == nil || IsNil(o.Value) {
 		return nil, false
 	}
-	return &o.Value, true
+	return o.Value, true
 }
 
 // HasValue returns a boolean if a field has been set.
 func (o *C1ApiUserV1UserAttributeMappingSource) HasValue() bool {
-	if o != nil && IsNil(o.Value) {
+	if o != nil && !IsNil(o.Value) {
 		return true
 	}
 
 	return false
 }
 
-// SetValue gets a reference to the given interface{} and assigns it to the Value field.
-func (o *C1ApiUserV1UserAttributeMappingSource) SetValue(v interface{}) {
-	o.Value = v
+// SetValue gets a reference to the given string and assigns it to the Value field.
+func (o *C1ApiUserV1UserAttributeMappingSource) SetValue(v string) {
+	o.Value = &v
 }
 
 func (o C1ApiUserV1UserAttributeMappingSource) MarshalJSON() ([]byte, error) {
@@ -221,19 +221,19 @@ func (o C1ApiUserV1UserAttributeMappingSource) MarshalJSON() ([]byte, error) {
 
 func (o C1ApiUserV1UserAttributeMappingSource) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if o.AppId != nil {
+	if !IsNil(o.AppId) {
 		toSerialize["appId"] = o.AppId
 	}
-	if o.AppUserId != nil {
+	if !IsNil(o.AppUserId) {
 		toSerialize["appUserId"] = o.AppUserId
 	}
-	if o.AppUserProfileAttributeKey != nil {
+	if !IsNil(o.AppUserProfileAttributeKey) {
 		toSerialize["appUserProfileAttributeKey"] = o.AppUserProfileAttributeKey
 	}
-	if o.UserAttributeMappingId != nil {
+	if !IsNil(o.UserAttributeMappingId) {
 		toSerialize["userAttributeMappingId"] = o.UserAttributeMappingId
 	}
-	if o.Value != nil {
+	if !IsNil(o.Value) {
 		toSerialize["value"] = o.Value
 	}
 

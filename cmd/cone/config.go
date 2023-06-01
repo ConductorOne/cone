@@ -3,6 +3,7 @@ package main
 import (
 	"errors"
 	"fmt"
+	"path/filepath"
 	"strings"
 
 	"github.com/spf13/cobra"
@@ -10,18 +11,12 @@ import (
 )
 
 const (
-	envPrefix         = "cone"
-	defaultConfigPath = "$HOME/.conductorone"
+	envPrefix = "cone"
 )
 
-type Config struct {
-	Profiles map[string]ConfigProfile `yaml:"profiles"`
-}
-
-type ConfigProfile struct {
-	ClientID     string `yaml:"client-id"`
-	ClientSecret string `yaml:"client-secret"`
-}
+var (
+	defaultConfigPath = filepath.Join("$HOME", ".conductorone")
+)
 
 func initConfig(cmd *cobra.Command) error {
 	viper.SetConfigName("config")

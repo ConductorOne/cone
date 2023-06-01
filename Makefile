@@ -29,12 +29,13 @@ lint:
 
 .PHONY: build-c1api
 build-c1api:
+	echo "Building c1api openapi client... (source: /specs/c1-openapi.yaml)"
 	rm -rf build/c1api
 	mkdir -p build/c1api
-	podman run --rm -v \
-		"${PWD}/build/c1api:/output" \
+	podman run --rm -v "${PWD}/build/c1api:/output" \
+		-v "${PWD}/specs:/specs" \
 		docker.io/openapitools/openapi-generator-cli generate \
-		-i https://insulator.conductor.one/api/v1/openapi.yaml \
+		-i /specs/c1-openapi.yaml \
 		-g go \
 	    -o /output \
 		--additional-properties=enumClassPrefix=true,hideGenerationTimestamp=true,structPrefix=true,disallowAdditionalPropertiesIfNotPresent=false,packageName=c1api,isGoSubmodule=true
@@ -42,6 +43,6 @@ build-c1api:
 	rm -rf internal/c1api
 	mkdir -p internal/c1api
 	mv build/c1api internal/
-	find internal/c1api \( -type d -name .git -prune \) -o -type f -print0 | xargs -0 sed -i 's/GIT_USER_ID\/GIT_REPO_ID/conductorone\/cone\/internal/g'
+	find internal/c1api \( -type d -name .git -prune \) -o -type f -print0 | xargs -0 sed -i'' -e 's/GIT_USER_ID\/GIT_REPO_ID/conductorone\/cone\/internal/g'
 	go mod tidy -v
 	go mod vendor

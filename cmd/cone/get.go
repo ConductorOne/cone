@@ -85,7 +85,6 @@ func runGet(cmd *cobra.Command, args []string) error {
 	}
 
 	taskResp := C1ApiTaskV1Task(*accessRequest.TaskView.Task)
-
 	outputManager := output.NewManager(ctx, v)
 	err = outputManager.Output(ctx, &taskResp)
 	if err != nil {
@@ -98,14 +97,13 @@ func runGet(cmd *cobra.Command, args []string) error {
 type C1ApiTaskV1Task c1api.C1ApiTaskV1Task
 
 func (r *C1ApiTaskV1Task) Header() []string {
-	return []string{"NumericId", "Id", "DisplayName", "Description", "State", "Processing"}
+	return []string{"Numeric Id", "Id", "Display Name", "State", "Processing"}
 }
 func (r *C1ApiTaskV1Task) Rows() [][]string {
 	return [][]string{{
 		client.StringFromPtr(r.NumericId),
 		client.StringFromPtr(r.Id),
 		client.StringFromPtr(r.DisplayName),
-		client.StringFromPtr(r.Description),
 		client.StringFromPtr(r.State),
 		client.StringFromPtr(r.Processing),
 	}}

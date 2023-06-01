@@ -4,10 +4,25 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/conductorone/cone/internal/c1api"
 	"github.com/conductorone/cone/pkg/client"
 	"github.com/conductorone/cone/pkg/output"
 	"github.com/spf13/cobra"
 )
+
+func getCmd() *cobra.Command {
+	cmd := &cobra.Command{
+		Use:   "get",
+		Short: "Create an access request for an entitlement by slug",
+		RunE:  runGet,
+	}
+
+	addWaitFlag(cmd)
+	addAppIdFlag(cmd)
+	addEntitlementIdFlag(cmd)
+
+	return cmd
+}
 
 func dropCmd() *cobra.Command {
 	cmd := &cobra.Command{
@@ -23,7 +38,27 @@ func dropCmd() *cobra.Command {
 	return cmd
 }
 
+func runGet(cmd *cobra.Command, args []string) error {
+	return runTask(cmd, args, func(c client.C1Client, ctx context.Context, appId string, entitlementId string, userId string) (*c1api.C1ApiTaskV1Task, error) {
+		accessRequest, err := c.CreateGrantTask(ctx, appId, entitlementId, userId)
+		if err != nil {
+			return nil, err
+		}
+		return accessRequest.TaskView.Task, nil
+	})
+}
+
 func runDrop(cmd *cobra.Command, args []string) error {
+	return runTask(cmd, args, func(c client.C1Client, ctx context.Context, appId string, entitlementId string, userId string) (*c1api.C1ApiTaskV1Task, error) {
+		accessRequest, err := c.CreateRevokeTask(ctx, appId, entitlementId, userId)
+		if err != nil {
+			return nil, err
+		}
+		return accessRequest.TaskView.Task, nil
+	})
+}
+
+func runTask(cmd *cobra.Command, args []string, run func(c client.C1Client, ctx context.Context, appId string, entitlementId string, userId string) (*c1api.C1ApiTaskV1Task, error)) error {
 	ctx := context.Background()
 	alias := ""
 
@@ -78,12 +113,12 @@ func runDrop(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
-	accessRequest, err := c.CreateRevokeTask(ctx, appId, entitlementId, client.StringFromPtr(resp.UserId))
+	task, err := run(c, ctx, appId, entitlementId, client.StringFromPtr(resp.UserId))
 	if err != nil {
 		return err
 	}
 
-	taskResp := C1ApiTaskV1Task(*accessRequest.TaskView.Task)
+	taskResp := C1ApiTaskV1Task(*task)
 	outputManager := output.NewManager(ctx, v)
 	err = outputManager.Output(ctx, &taskResp)
 	if err != nil {
@@ -91,4 +126,20 @@ func runDrop(cmd *cobra.Command, args []string) error {
 	}
 
 	return nil
+
+}
+
+type C1ApiTaskV1Task c1api.C1ApiTaskV1Task
+
+func (r *C1ApiTaskV1Task) Header() []string {
+	return []string{"Numeric Id", "Id", "Display Name", "State", "Processing"}
+}
+func (r *C1ApiTaskV1Task) Rows() [][]string {
+	return [][]string{{
+		client.StringFromPtr(r.NumericId),
+		client.StringFromPtr(r.Id),
+		client.StringFromPtr(r.DisplayName),
+		client.StringFromPtr(r.State),
+		client.StringFromPtr(r.Processing),
+	}}
 }

@@ -126,7 +126,6 @@ func runTask(cmd *cobra.Command, args []string, run func(c client.C1Client, ctx 
 	}
 
 	return nil
-
 }
 
 type C1ApiTaskV1Task c1api.C1ApiTaskV1Task

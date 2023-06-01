@@ -25,7 +25,8 @@ func runCli() int {
 	}
 
 	cliCmd.PersistentFlags().StringP("profile", "p", "default", "The config profile to use.")
-	cliCmd.PersistentFlags().BoolP("non-interactive", "i", false, "Disable prompts.")
+	// TODO: Interactive mode doesn't exist, so non-interactive doesn't change anything
+	//cliCmd.PersistentFlags().BoolP("non-interactive", "i", false, "Disable prompts.")
 	cliCmd.PersistentFlags().String("client-id", "", "Client ID")
 	cliCmd.PersistentFlags().String("client-secret", "", "Client secret")
 	cliCmd.PersistentFlags().String("config-path", "", "path to config file")

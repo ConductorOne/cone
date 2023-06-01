@@ -58,7 +58,7 @@ func getUserRun(cmd *cobra.Command, args []string) error {
 	return nil
 }
 
-type C1ApiUserV1UserServiceGetResponse c1api.C1ApiUserV1UserServiceGetResponse
+type C1ApiUserV1UserServiceGetResponse c1api.C1ApiUserV1User
 
 func (r *C1ApiUserV1UserServiceGetResponse) Header() []string {
 	return []string{
@@ -76,14 +76,14 @@ func (r *C1ApiUserV1UserServiceGetResponse) Header() []string {
 func (r *C1ApiUserV1UserServiceGetResponse) Rows() [][]string {
 	return [][]string{
 		{
-			client.StringFromPtr(r.UserView.GetUser().Id),
-			client.StringFromPtr(r.UserView.GetUser().Email),
-			client.StringFromPtr(r.UserView.GetUser().Status),
-			client.StringFromPtr(r.UserView.GetUser().JobTitle),
-			client.StringFromPtr(r.UserView.GetUser().Department),
-			client.StringFromPtr(r.UserView.GetUser().EmploymentStatus),
-			client.StringFromPtr(r.UserView.GetUser().EmploymentType),
-			output.FormatTime(r.UserView.GetUser().CreatedAt),
+			client.StringFromPtr(r.Id),
+			client.StringFromPtr(r.Email),
+			client.StringFromPtr(r.Status),
+			client.StringFromPtr(r.JobTitle),
+			client.StringFromPtr(r.Department),
+			client.StringFromPtr(r.EmploymentStatus),
+			client.StringFromPtr(r.EmploymentType),
+			output.FormatTime(r.CreatedAt),
 		},
 	}
 }

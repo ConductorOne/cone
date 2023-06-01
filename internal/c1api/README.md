@@ -155,7 +155,6 @@ Class | Method | HTTP request | Description
  - [C1ApiUserV1UserAttributeMappingSource](docs/C1ApiUserV1UserAttributeMappingSource.md)
  - [C1ApiUserV1UserServiceGetResponse](docs/C1ApiUserV1UserServiceGetResponse.md)
  - [C1ApiUserV1UserView](docs/C1ApiUserV1UserView.md)
- - [GoogleProtobufFieldMask](docs/GoogleProtobufFieldMask.md)
 
 
 ## Documentation For Authorization

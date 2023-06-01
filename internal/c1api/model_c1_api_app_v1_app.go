@@ -32,7 +32,7 @@ type C1ApiAppV1App struct {
 	Description *string `json:"description,omitempty"`
 	// The displayName field.
 	DisplayName *string `json:"displayName,omitempty"`
-	FieldMask *GoogleProtobufFieldMask `json:"fieldMask,omitempty"`
+	FieldMask NullableString `json:"fieldMask,omitempty"`
 	// The grantPolicyId field.
 	GrantPolicyId *string `json:"grantPolicyId,omitempty"`
 	// The iconUrl field.
@@ -296,36 +296,46 @@ func (o *C1ApiAppV1App) SetDisplayName(v string) {
 	o.DisplayName = &v
 }
 
-// GetFieldMask returns the FieldMask field value if set, zero value otherwise.
-func (o *C1ApiAppV1App) GetFieldMask() GoogleProtobufFieldMask {
-	if o == nil || IsNil(o.FieldMask) {
-		var ret GoogleProtobufFieldMask
+// GetFieldMask returns the FieldMask field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *C1ApiAppV1App) GetFieldMask() string {
+	if o == nil || IsNil(o.FieldMask.Get()) {
+		var ret string
 		return ret
 	}
-	return *o.FieldMask
+	return *o.FieldMask.Get()
 }
 
 // GetFieldMaskOk returns a tuple with the FieldMask field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *C1ApiAppV1App) GetFieldMaskOk() (*GoogleProtobufFieldMask, bool) {
-	if o == nil || IsNil(o.FieldMask) {
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *C1ApiAppV1App) GetFieldMaskOk() (*string, bool) {
+	if o == nil {
 		return nil, false
 	}
-	return o.FieldMask, true
+	return o.FieldMask.Get(), o.FieldMask.IsSet()
 }
 
 // HasFieldMask returns a boolean if a field has been set.
 func (o *C1ApiAppV1App) HasFieldMask() bool {
-	if o != nil && !IsNil(o.FieldMask) {
+	if o != nil && o.FieldMask.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetFieldMask gets a reference to the given GoogleProtobufFieldMask and assigns it to the FieldMask field.
-func (o *C1ApiAppV1App) SetFieldMask(v GoogleProtobufFieldMask) {
-	o.FieldMask = &v
+// SetFieldMask gets a reference to the given NullableString and assigns it to the FieldMask field.
+func (o *C1ApiAppV1App) SetFieldMask(v string) {
+	o.FieldMask.Set(&v)
+}
+// SetFieldMaskNil sets the value for FieldMask to be an explicit nil
+func (o *C1ApiAppV1App) SetFieldMaskNil() {
+	o.FieldMask.Set(nil)
+}
+
+// UnsetFieldMask ensures that no value is present for FieldMask, not even an explicit nil
+func (o *C1ApiAppV1App) UnsetFieldMask() {
+	o.FieldMask.Unset()
 }
 
 // GetGrantPolicyId returns the GrantPolicyId field value if set, zero value otherwise.
@@ -647,8 +657,8 @@ func (o C1ApiAppV1App) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.DisplayName) {
 		toSerialize["displayName"] = o.DisplayName
 	}
-	if !IsNil(o.FieldMask) {
-		toSerialize["fieldMask"] = o.FieldMask
+	if o.FieldMask.IsSet() {
+		toSerialize["fieldMask"] = o.FieldMask.Get()
 	}
 	if !IsNil(o.GrantPolicyId) {
 		toSerialize["grantPolicyId"] = o.GrantPolicyId

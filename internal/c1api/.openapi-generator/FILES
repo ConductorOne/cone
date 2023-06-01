@@ -72,7 +72,6 @@ docs/C1ApiUserV1UserAttributeMappingSource.md
 docs/C1ApiUserV1UserServiceGetResponse.md
 docs/C1ApiUserV1UserView.md
 docs/DefaultAPI.md
-docs/GoogleProtobufFieldMask.md
 git_push.sh
 go.mod
 go.sum
@@ -141,7 +140,6 @@ model_c1_api_user_v1_user.go
 model_c1_api_user_v1_user_attribute_mapping_source.go
 model_c1_api_user_v1_user_service_get_response.go
 model_c1_api_user_v1_user_view.go
-model_google_protobuf_field_mask.go
 response.go
 test/api_default_test.go
 utils.go

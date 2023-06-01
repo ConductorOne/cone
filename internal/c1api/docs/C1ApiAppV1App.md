@@ -11,7 +11,7 @@ Name | Type | Description | Notes
 **DeletedAt** | Pointer to **time.Time** |  | [optional] 
 **Description** | Pointer to **string** | The description field. | [optional] 
 **DisplayName** | Pointer to **string** | The displayName field. | [optional] 
-**FieldMask** | Pointer to [**GoogleProtobufFieldMask**](GoogleProtobufFieldMask.md) |  | [optional] 
+**FieldMask** | Pointer to **NullableString** |  | [optional] 
 **GrantPolicyId** | Pointer to **string** | The grantPolicyId field. | [optional] 
 **IconUrl** | Pointer to **string** | The iconUrl field. | [optional] 
 **Id** | Pointer to **string** | The id field. | [optional] 
@@ -218,20 +218,20 @@ HasDisplayName returns a boolean if a field has been set.
 
 ### GetFieldMask
 
-`func (o *C1ApiAppV1App) GetFieldMask() GoogleProtobufFieldMask`
+`func (o *C1ApiAppV1App) GetFieldMask() string`
 
 GetFieldMask returns the FieldMask field if non-nil, zero value otherwise.
 
 ### GetFieldMaskOk
 
-`func (o *C1ApiAppV1App) GetFieldMaskOk() (*GoogleProtobufFieldMask, bool)`
+`func (o *C1ApiAppV1App) GetFieldMaskOk() (*string, bool)`
 
 GetFieldMaskOk returns a tuple with the FieldMask field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetFieldMask
 
-`func (o *C1ApiAppV1App) SetFieldMask(v GoogleProtobufFieldMask)`
+`func (o *C1ApiAppV1App) SetFieldMask(v string)`
 
 SetFieldMask sets FieldMask field to given value.
 
@@ -241,6 +241,16 @@ SetFieldMask sets FieldMask field to given value.
 
 HasFieldMask returns a boolean if a field has been set.
 
+### SetFieldMaskNil
+
+`func (o *C1ApiAppV1App) SetFieldMaskNil(b bool)`
+
+ SetFieldMaskNil sets the value for FieldMask to be an explicit nil
+
+### UnsetFieldMask
+`func (o *C1ApiAppV1App) UnsetFieldMask()`
+
+UnsetFieldMask ensures that no value is present for FieldMask, not even an explicit nil
 ### GetGrantPolicyId
 
 `func (o *C1ApiAppV1App) GetGrantPolicyId() string`

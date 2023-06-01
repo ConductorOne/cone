@@ -28,6 +28,8 @@ type C1ApiTaskV1TaskServiceCreateRevokeRequest struct {
 	// The description field.
 	Description *string `json:"description,omitempty"`
 	ExpandMask *C1ApiTaskV1TaskExpandMask `json:"expandMask,omitempty"`
+	// The identityUserId field.
+	IdentityUserId *string `json:"identityUserId,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -210,6 +212,38 @@ func (o *C1ApiTaskV1TaskServiceCreateRevokeRequest) SetExpandMask(v C1ApiTaskV1T
 	o.ExpandMask = &v
 }
 
+// GetIdentityUserId returns the IdentityUserId field value if set, zero value otherwise.
+func (o *C1ApiTaskV1TaskServiceCreateRevokeRequest) GetIdentityUserId() string {
+	if o == nil || IsNil(o.IdentityUserId) {
+		var ret string
+		return ret
+	}
+	return *o.IdentityUserId
+}
+
+// GetIdentityUserIdOk returns a tuple with the IdentityUserId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *C1ApiTaskV1TaskServiceCreateRevokeRequest) GetIdentityUserIdOk() (*string, bool) {
+	if o == nil || IsNil(o.IdentityUserId) {
+		return nil, false
+	}
+	return o.IdentityUserId, true
+}
+
+// HasIdentityUserId returns a boolean if a field has been set.
+func (o *C1ApiTaskV1TaskServiceCreateRevokeRequest) HasIdentityUserId() bool {
+	if o != nil && !IsNil(o.IdentityUserId) {
+		return true
+	}
+
+	return false
+}
+
+// SetIdentityUserId gets a reference to the given string and assigns it to the IdentityUserId field.
+func (o *C1ApiTaskV1TaskServiceCreateRevokeRequest) SetIdentityUserId(v string) {
+	o.IdentityUserId = &v
+}
+
 func (o C1ApiTaskV1TaskServiceCreateRevokeRequest) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -235,6 +269,9 @@ func (o C1ApiTaskV1TaskServiceCreateRevokeRequest) ToMap() (map[string]interface
 	if !IsNil(o.ExpandMask) {
 		toSerialize["expandMask"] = o.ExpandMask
 	}
+	if !IsNil(o.IdentityUserId) {
+		toSerialize["identityUserId"] = o.IdentityUserId
+	}
 
 	for key, value := range o.AdditionalProperties {
 		toSerialize[key] = value
@@ -258,6 +295,7 @@ func (o *C1ApiTaskV1TaskServiceCreateRevokeRequest) UnmarshalJSON(bytes []byte) 
 		delete(additionalProperties, "appUserId")
 		delete(additionalProperties, "description")
 		delete(additionalProperties, "expandMask")
+		delete(additionalProperties, "identityUserId")
 		o.AdditionalProperties = additionalProperties
 	}
 

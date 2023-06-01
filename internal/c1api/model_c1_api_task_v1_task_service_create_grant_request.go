@@ -23,6 +23,8 @@ type C1ApiTaskV1TaskServiceCreateGrantRequest struct {
 	AppEntitlementId *string `json:"appEntitlementId,omitempty"`
 	// The appId field.
 	AppId *string `json:"appId,omitempty"`
+	// The appUserId field.
+	AppUserId *string `json:"appUserId,omitempty"`
 	// The description field.
 	Description *string `json:"description,omitempty"`
 	ExpandMask *C1ApiTaskV1TaskExpandMask `json:"expandMask,omitempty"`
@@ -113,6 +115,38 @@ func (o *C1ApiTaskV1TaskServiceCreateGrantRequest) HasAppId() bool {
 // SetAppId gets a reference to the given string and assigns it to the AppId field.
 func (o *C1ApiTaskV1TaskServiceCreateGrantRequest) SetAppId(v string) {
 	o.AppId = &v
+}
+
+// GetAppUserId returns the AppUserId field value if set, zero value otherwise.
+func (o *C1ApiTaskV1TaskServiceCreateGrantRequest) GetAppUserId() string {
+	if o == nil || IsNil(o.AppUserId) {
+		var ret string
+		return ret
+	}
+	return *o.AppUserId
+}
+
+// GetAppUserIdOk returns a tuple with the AppUserId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *C1ApiTaskV1TaskServiceCreateGrantRequest) GetAppUserIdOk() (*string, bool) {
+	if o == nil || IsNil(o.AppUserId) {
+		return nil, false
+	}
+	return o.AppUserId, true
+}
+
+// HasAppUserId returns a boolean if a field has been set.
+func (o *C1ApiTaskV1TaskServiceCreateGrantRequest) HasAppUserId() bool {
+	if o != nil && !IsNil(o.AppUserId) {
+		return true
+	}
+
+	return false
+}
+
+// SetAppUserId gets a reference to the given string and assigns it to the AppUserId field.
+func (o *C1ApiTaskV1TaskServiceCreateGrantRequest) SetAppUserId(v string) {
+	o.AppUserId = &v
 }
 
 // GetDescription returns the Description field value if set, zero value otherwise.
@@ -259,6 +293,9 @@ func (o C1ApiTaskV1TaskServiceCreateGrantRequest) ToMap() (map[string]interface{
 	if !IsNil(o.AppId) {
 		toSerialize["appId"] = o.AppId
 	}
+	if !IsNil(o.AppUserId) {
+		toSerialize["appUserId"] = o.AppUserId
+	}
 	if !IsNil(o.Description) {
 		toSerialize["description"] = o.Description
 	}
@@ -291,6 +328,7 @@ func (o *C1ApiTaskV1TaskServiceCreateGrantRequest) UnmarshalJSON(bytes []byte) (
 	if err = json.Unmarshal(bytes, &additionalProperties); err == nil {
 		delete(additionalProperties, "appEntitlementId")
 		delete(additionalProperties, "appId")
+		delete(additionalProperties, "appUserId")
 		delete(additionalProperties, "description")
 		delete(additionalProperties, "expandMask")
 		delete(additionalProperties, "grantDuration")

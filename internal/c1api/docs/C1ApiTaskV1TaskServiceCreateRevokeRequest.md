@@ -9,6 +9,7 @@ Name | Type | Description | Notes
 **AppUserId** | Pointer to **string** | The appUserId field. | [optional] 
 **Description** | Pointer to **string** | The description field. | [optional] 
 **ExpandMask** | Pointer to [**C1ApiTaskV1TaskExpandMask**](C1ApiTaskV1TaskExpandMask.md) |  | [optional] 
+**IdentityUserId** | Pointer to **string** | The identityUserId field. | [optional] 
 
 ## Methods
 
@@ -153,6 +154,31 @@ SetExpandMask sets ExpandMask field to given value.
 `func (o *C1ApiTaskV1TaskServiceCreateRevokeRequest) HasExpandMask() bool`
 
 HasExpandMask returns a boolean if a field has been set.
+
+### GetIdentityUserId
+
+`func (o *C1ApiTaskV1TaskServiceCreateRevokeRequest) GetIdentityUserId() string`
+
+GetIdentityUserId returns the IdentityUserId field if non-nil, zero value otherwise.
+
+### GetIdentityUserIdOk
+
+`func (o *C1ApiTaskV1TaskServiceCreateRevokeRequest) GetIdentityUserIdOk() (*string, bool)`
+
+GetIdentityUserIdOk returns a tuple with the IdentityUserId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetIdentityUserId
+
+`func (o *C1ApiTaskV1TaskServiceCreateRevokeRequest) SetIdentityUserId(v string)`
+
+SetIdentityUserId sets IdentityUserId field to given value.
+
+### HasIdentityUserId
+
+`func (o *C1ApiTaskV1TaskServiceCreateRevokeRequest) HasIdentityUserId() bool`
+
+HasIdentityUserId returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

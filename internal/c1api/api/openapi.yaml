@@ -137,7 +137,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/c1.api.task.v1.TaskServiceGetResponse'
+                $ref: '#/components/schemas/c1.api.task.v1.TaskServiceCreateGrantResponse'
           description: Successful response
   /api/v1/task/revoke:
     post:
@@ -153,7 +153,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/c1.api.task.v1.TaskServiceGetResponse'
+                $ref: '#/components/schemas/c1.api.task.v1.TaskServiceCreateRevokeResponse'
           description: Successful response
   /api/v1/tasks/{id}:
     get:
@@ -3588,6 +3588,9 @@ components:
         appId:
           description: The appId field.
           type: string
+        appUserId:
+          description: The appUserId field.
+          type: string
         description:
           description: The description field.
           type: string
@@ -3599,6 +3602,711 @@ components:
         identityUserId:
           description: The identityUserId field.
           type: string
+      type: object
+    c1.api.task.v1.TaskServiceCreateGrantResponse:
+      description: The TaskServiceCreateGrantResponse message.
+      example:
+        expanded:
+        - '@type': '@type'
+        - '@type': '@type'
+        taskView:
+          appUserPath: appUserPath
+          entitlementsPath: entitlementsPath
+          task:
+            createdByUserId: createdByUserId
+            numericId: numericId
+            displayName: displayName
+            externalRefs:
+            - externalRefSource: JIRA
+              name: name
+              url: url
+            - externalRefSource: JIRA
+              name: name
+              url: url
+            annotations:
+            - '@type': '@type'
+            - '@type': '@type'
+            description: description
+            type:
+              accessRequest:
+                identityUserId: identityUserId
+                outcomeTime: 2000-01-23T04:56:07.000+00:00
+                appProfile:
+                  createdAt: 2000-01-23T04:56:07.000+00:00
+                  appEntitlementIds:
+                  - appEntitlementIds
+                  - appEntitlementIds
+                  deletedAt: 2000-01-23T04:56:07.000+00:00
+                  displayName: displayName
+                  appId: appId
+                  description: description
+                  id: id
+                  notificationToken: notificationToken
+                  updatedAt: 2000-01-23T04:56:07.000+00:00
+                appUserId: appUserId
+                outcome: ACCESS_REQUEST_OUTCOME_UNSPECIFIED
+              certify:
+                accessReviewId: accessReviewId
+                identityUserId: identityUserId
+                appEntitlementIds:
+                - appEntitlementIds
+                - appEntitlementIds
+                outcomeTime: 2000-01-23T04:56:07.000+00:00
+                accessReviewSelection: accessReviewSelection
+                appId: appId
+                appUserId: appUserId
+                outcome: CERTIFY_OUTCOME_UNSPECIFIED
+              revoke:
+                identityUserId: identityUserId
+                appEntitlementIds:
+                - appEntitlementIds
+                - appEntitlementIds
+                outcomeTime: 2000-01-23T04:56:07.000+00:00
+                appId: appId
+                source:
+                  request:
+                    requestUserId: requestUserId
+                  expired:
+                    expiredAt: 2000-01-23T04:56:07.000+00:00
+                  review:
+                    accessReviewId: accessReviewId
+                    accessReviewDisplayName: accessReviewDisplayName
+                    certTicketId: certTicketId
+                  nonUsage:
+                    lastLogin: 2000-01-23T04:56:07.000+00:00
+                    expiresAt: 2000-01-23T04:56:07.000+00:00
+                appUserId: appUserId
+                outcome: REVOKE_OUTCOME_UNSPECIFIED
+              grant:
+                identityUserId: identityUserId
+                appEntitlementIds:
+                - appEntitlementIds
+                - appEntitlementIds
+                outcomeTime: 2000-01-23T04:56:07.000+00:00
+                appId: appId
+                entitlementInstances:
+                - entitlementId: entitlementId
+                  grantDuration: grantDuration
+                  state: GRANT_ENTITLEMENT_STATE_UNSPECIFIED
+                - entitlementId: entitlementId
+                  grantDuration: grantDuration
+                  state: GRANT_ENTITLEMENT_STATE_UNSPECIFIED
+                appUserId: appUserId
+                outcome: GRANT_OUTCOME_UNSPECIFIED
+            userId: userId
+            commentCount: 0.8008281904610115
+            stepApproverIds:
+            - stepApproverIds
+            - stepApproverIds
+            createdAt: 2000-01-23T04:56:07.000+00:00
+            deletedAt: 2000-01-23T04:56:07.000+00:00
+            analysisId: analysisId
+            processing: TASK_PROCESSING_TYPE_UNSPECIFIED
+            id: id
+            state: TASK_STATE_UNSPECIFIED
+            actions:
+            - TASK_ACTION_TYPE_UNSPECIFIED
+            - TASK_ACTION_TYPE_UNSPECIFIED
+            policy:
+              next:
+              - webhook: "{}"
+                approval:
+                  requireApprovalReason: true
+                  entitlementOwners:
+                    allowSelfApproval: true
+                    fallback: true
+                    fallbackUserIds:
+                    - fallbackUserIds
+                    - fallbackUserIds
+                  manager:
+                    allowSelfApproval: true
+                    assignedUserIds:
+                    - assignedUserIds
+                    - assignedUserIds
+                    fallback: true
+                    fallbackUserIds:
+                    - fallbackUserIds
+                    - fallbackUserIds
+                  requireReassignmentReason: true
+                  self:
+                    assignedUserIds:
+                    - assignedUserIds
+                    - assignedUserIds
+                    fallback: true
+                    fallbackUserIds:
+                    - fallbackUserIds
+                    - fallbackUserIds
+                  assigned: true
+                  appOwners:
+                    allowSelfApproval: true
+                  allowReassignment: true
+                  users:
+                    allowSelfApproval: true
+                    userIds:
+                    - userIds
+                    - userIds
+                  group:
+                    allowSelfApproval: true
+                    appGroupId: appGroupId
+                    appId: appId
+                    fallback: true
+                    fallbackUserIds:
+                    - fallbackUserIds
+                    - fallbackUserIds
+                provision:
+                  provisionPolicy:
+                    connector: "{}"
+                    delegated:
+                      appId: appId
+                      entitlementId: entitlementId
+                    manual:
+                      instructions: instructions
+                      userIds:
+                      - userIds
+                      - userIds
+                  assigned: true
+                notify: "{}"
+              - webhook: "{}"
+                approval:
+                  requireApprovalReason: true
+                  entitlementOwners:
+                    allowSelfApproval: true
+                    fallback: true
+                    fallbackUserIds:
+                    - fallbackUserIds
+                    - fallbackUserIds
+                  manager:
+                    allowSelfApproval: true
+                    assignedUserIds:
+                    - assignedUserIds
+                    - assignedUserIds
+                    fallback: true
+                    fallbackUserIds:
+                    - fallbackUserIds
+                    - fallbackUserIds
+                  requireReassignmentReason: true
+                  self:
+                    assignedUserIds:
+                    - assignedUserIds
+                    - assignedUserIds
+                    fallback: true
+                    fallbackUserIds:
+                    - fallbackUserIds
+                    - fallbackUserIds
+                  assigned: true
+                  appOwners:
+                    allowSelfApproval: true
+                  allowReassignment: true
+                  users:
+                    allowSelfApproval: true
+                    userIds:
+                    - userIds
+                    - userIds
+                  group:
+                    allowSelfApproval: true
+                    appGroupId: appGroupId
+                    appId: appId
+                    fallback: true
+                    fallbackUserIds:
+                    - fallbackUserIds
+                    - fallbackUserIds
+                provision:
+                  provisionPolicy:
+                    connector: "{}"
+                    delegated:
+                      appId: appId
+                      entitlementId: entitlementId
+                    manual:
+                      instructions: instructions
+                      userIds:
+                      - userIds
+                      - userIds
+                  assigned: true
+                notify: "{}"
+              current:
+                webhook: "{}"
+                approval:
+                  approved:
+                    entitlements:
+                    - appId: appId
+                      appEntitlementId: appEntitlementId
+                    - appId: appId
+                      appEntitlementId: appEntitlementId
+                    approvedAt: 2000-01-23T04:56:07.000+00:00
+                    userId: userId
+                  restarted:
+                    oldPolicyStepId: oldPolicyStepId
+                    userId: userId
+                    restartedAt: 2000-01-23T04:56:07.000+00:00
+                  approval:
+                    requireApprovalReason: true
+                    entitlementOwners:
+                      allowSelfApproval: true
+                      fallback: true
+                      fallbackUserIds:
+                      - fallbackUserIds
+                      - fallbackUserIds
+                    manager:
+                      allowSelfApproval: true
+                      assignedUserIds:
+                      - assignedUserIds
+                      - assignedUserIds
+                      fallback: true
+                      fallbackUserIds:
+                      - fallbackUserIds
+                      - fallbackUserIds
+                    requireReassignmentReason: true
+                    self:
+                      assignedUserIds:
+                      - assignedUserIds
+                      - assignedUserIds
+                      fallback: true
+                      fallbackUserIds:
+                      - fallbackUserIds
+                      - fallbackUserIds
+                    assigned: true
+                    appOwners:
+                      allowSelfApproval: true
+                    allowReassignment: true
+                    users:
+                      allowSelfApproval: true
+                      userIds:
+                      - userIds
+                      - userIds
+                    group:
+                      allowSelfApproval: true
+                      appGroupId: appGroupId
+                      appId: appId
+                      fallback: true
+                      fallbackUserIds:
+                      - fallbackUserIds
+                      - fallbackUserIds
+                  reassigned:
+                    reassignedAt: 2000-01-23T04:56:07.000+00:00
+                    newPolicyStepId: newPolicyStepId
+                    userId: userId
+                  state: APPROVAL_INSTANCE_STATE_UNSPECIFIED
+                  denied:
+                    deniedAt: 2000-01-23T04:56:07.000+00:00
+                    userId: userId
+                  reassignedByError:
+                    erroredAt: 2000-01-23T04:56:07.000+00:00
+                    description: description
+                    errorCode: errorCode
+                    reassignedAt: 2000-01-23T04:56:07.000+00:00
+                    newPolicyStepId: newPolicyStepId
+                    errorUserId: errorUserId
+                provision:
+                  provision:
+                    provisionPolicy:
+                      connector: "{}"
+                      delegated:
+                        appId: appId
+                        entitlementId: entitlementId
+                      manual:
+                        instructions: instructions
+                        userIds:
+                        - userIds
+                        - userIds
+                    assigned: true
+                  cancelled:
+                    cancelledAt: 2000-01-23T04:56:07.000+00:00
+                    cancelledByUserId: cancelledByUserId
+                  notificationId: notificationId
+                  completed:
+                    entitlements:
+                    - appId: appId
+                      appEntitlementId: appEntitlementId
+                    - appId: appId
+                      appEntitlementId: appEntitlementId
+                    completedAt: 2000-01-23T04:56:07.000+00:00
+                    userId: userId
+                  state: PROVISION_INSTANCE_STATE_UNSPECIFIED
+                  reassignedByError:
+                    erroredAt: 2000-01-23T04:56:07.000+00:00
+                    description: description
+                    errorCode: errorCode
+                    reassignedAt: 2000-01-23T04:56:07.000+00:00
+                    newPolicyStepId: newPolicyStepId
+                    errorUserId: errorUserId
+                  errored:
+                    erroredAt: 2000-01-23T04:56:07.000+00:00
+                    description: description
+                    errorCode: errorCode
+                id: id
+                state: POLICY_STEP_STATE_UNSPECIFIED
+                notify: "{}"
+              history:
+              - webhook: "{}"
+                approval:
+                  approved:
+                    entitlements:
+                    - appId: appId
+                      appEntitlementId: appEntitlementId
+                    - appId: appId
+                      appEntitlementId: appEntitlementId
+                    approvedAt: 2000-01-23T04:56:07.000+00:00
+                    userId: userId
+                  restarted:
+                    oldPolicyStepId: oldPolicyStepId
+                    userId: userId
+                    restartedAt: 2000-01-23T04:56:07.000+00:00
+                  approval:
+                    requireApprovalReason: true
+                    entitlementOwners:
+                      allowSelfApproval: true
+                      fallback: true
+                      fallbackUserIds:
+                      - fallbackUserIds
+                      - fallbackUserIds
+                    manager:
+                      allowSelfApproval: true
+                      assignedUserIds:
+                      - assignedUserIds
+                      - assignedUserIds
+                      fallback: true
+                      fallbackUserIds:
+                      - fallbackUserIds
+                      - fallbackUserIds
+                    requireReassignmentReason: true
+                    self:
+                      assignedUserIds:
+                      - assignedUserIds
+                      - assignedUserIds
+                      fallback: true
+                      fallbackUserIds:
+                      - fallbackUserIds
+                      - fallbackUserIds
+                    assigned: true
+                    appOwners:
+                      allowSelfApproval: true
+                    allowReassignment: true
+                    users:
+                      allowSelfApproval: true
+                      userIds:
+                      - userIds
+                      - userIds
+                    group:
+                      allowSelfApproval: true
+                      appGroupId: appGroupId
+                      appId: appId
+                      fallback: true
+                      fallbackUserIds:
+                      - fallbackUserIds
+                      - fallbackUserIds
+                  reassigned:
+                    reassignedAt: 2000-01-23T04:56:07.000+00:00
+                    newPolicyStepId: newPolicyStepId
+                    userId: userId
+                  state: APPROVAL_INSTANCE_STATE_UNSPECIFIED
+                  denied:
+                    deniedAt: 2000-01-23T04:56:07.000+00:00
+                    userId: userId
+                  reassignedByError:
+                    erroredAt: 2000-01-23T04:56:07.000+00:00
+                    description: description
+                    errorCode: errorCode
+                    reassignedAt: 2000-01-23T04:56:07.000+00:00
+                    newPolicyStepId: newPolicyStepId
+                    errorUserId: errorUserId
+                provision:
+                  provision:
+                    provisionPolicy:
+                      connector: "{}"
+                      delegated:
+                        appId: appId
+                        entitlementId: entitlementId
+                      manual:
+                        instructions: instructions
+                        userIds:
+                        - userIds
+                        - userIds
+                    assigned: true
+                  cancelled:
+                    cancelledAt: 2000-01-23T04:56:07.000+00:00
+                    cancelledByUserId: cancelledByUserId
+                  notificationId: notificationId
+                  completed:
+                    entitlements:
+                    - appId: appId
+                      appEntitlementId: appEntitlementId
+                    - appId: appId
+                      appEntitlementId: appEntitlementId
+                    completedAt: 2000-01-23T04:56:07.000+00:00
+                    userId: userId
+                  state: PROVISION_INSTANCE_STATE_UNSPECIFIED
+                  reassignedByError:
+                    erroredAt: 2000-01-23T04:56:07.000+00:00
+                    description: description
+                    errorCode: errorCode
+                    reassignedAt: 2000-01-23T04:56:07.000+00:00
+                    newPolicyStepId: newPolicyStepId
+                    errorUserId: errorUserId
+                  errored:
+                    erroredAt: 2000-01-23T04:56:07.000+00:00
+                    description: description
+                    errorCode: errorCode
+                id: id
+                state: POLICY_STEP_STATE_UNSPECIFIED
+                notify: "{}"
+              - webhook: "{}"
+                approval:
+                  approved:
+                    entitlements:
+                    - appId: appId
+                      appEntitlementId: appEntitlementId
+                    - appId: appId
+                      appEntitlementId: appEntitlementId
+                    approvedAt: 2000-01-23T04:56:07.000+00:00
+                    userId: userId
+                  restarted:
+                    oldPolicyStepId: oldPolicyStepId
+                    userId: userId
+                    restartedAt: 2000-01-23T04:56:07.000+00:00
+                  approval:
+                    requireApprovalReason: true
+                    entitlementOwners:
+                      allowSelfApproval: true
+                      fallback: true
+                      fallbackUserIds:
+                      - fallbackUserIds
+                      - fallbackUserIds
+                    manager:
+                      allowSelfApproval: true
+                      assignedUserIds:
+                      - assignedUserIds
+                      - assignedUserIds
+                      fallback: true
+                      fallbackUserIds:
+                      - fallbackUserIds
+                      - fallbackUserIds
+                    requireReassignmentReason: true
+                    self:
+                      assignedUserIds:
+                      - assignedUserIds
+                      - assignedUserIds
+                      fallback: true
+                      fallbackUserIds:
+                      - fallbackUserIds
+                      - fallbackUserIds
+                    assigned: true
+                    appOwners:
+                      allowSelfApproval: true
+                    allowReassignment: true
+                    users:
+                      allowSelfApproval: true
+                      userIds:
+                      - userIds
+                      - userIds
+                    group:
+                      allowSelfApproval: true
+                      appGroupId: appGroupId
+                      appId: appId
+                      fallback: true
+                      fallbackUserIds:
+                      - fallbackUserIds
+                      - fallbackUserIds
+                  reassigned:
+                    reassignedAt: 2000-01-23T04:56:07.000+00:00
+                    newPolicyStepId: newPolicyStepId
+                    userId: userId
+                  state: APPROVAL_INSTANCE_STATE_UNSPECIFIED
+                  denied:
+                    deniedAt: 2000-01-23T04:56:07.000+00:00
+                    userId: userId
+                  reassignedByError:
+                    erroredAt: 2000-01-23T04:56:07.000+00:00
+                    description: description
+                    errorCode: errorCode
+                    reassignedAt: 2000-01-23T04:56:07.000+00:00
+                    newPolicyStepId: newPolicyStepId
+                    errorUserId: errorUserId
+                provision:
+                  provision:
+                    provisionPolicy:
+                      connector: "{}"
+                      delegated:
+                        appId: appId
+                        entitlementId: entitlementId
+                      manual:
+                        instructions: instructions
+                        userIds:
+                        - userIds
+                        - userIds
+                    assigned: true
+                  cancelled:
+                    cancelledAt: 2000-01-23T04:56:07.000+00:00
+                    cancelledByUserId: cancelledByUserId
+                  notificationId: notificationId
+                  completed:
+                    entitlements:
+                    - appId: appId
+                      appEntitlementId: appEntitlementId
+                    - appId: appId
+                      appEntitlementId: appEntitlementId
+                    completedAt: 2000-01-23T04:56:07.000+00:00
+                    userId: userId
+                  state: PROVISION_INSTANCE_STATE_UNSPECIFIED
+                  reassignedByError:
+                    erroredAt: 2000-01-23T04:56:07.000+00:00
+                    description: description
+                    errorCode: errorCode
+                    reassignedAt: 2000-01-23T04:56:07.000+00:00
+                    newPolicyStepId: newPolicyStepId
+                    errorUserId: errorUserId
+                  errored:
+                    erroredAt: 2000-01-23T04:56:07.000+00:00
+                    description: description
+                    errorCode: errorCode
+                id: id
+                state: POLICY_STEP_STATE_UNSPECIFIED
+                notify: "{}"
+              policy:
+                reassignTasksToDelegates: true
+                createdAt: 2000-01-23T04:56:07.000+00:00
+                deletedAt: 2000-01-23T04:56:07.000+00:00
+                displayName: displayName
+                policyType: POLICY_TYPE_UNSPECIFIED
+                systemBuiltin: true
+                postActions:
+                - certifyRemediateImmediately: true
+                - certifyRemediateImmediately: true
+                description: description
+                id: id
+                policySteps:
+                  key:
+                    steps:
+                    - webhook: "{}"
+                      approval:
+                        requireApprovalReason: true
+                        entitlementOwners:
+                          allowSelfApproval: true
+                          fallback: true
+                          fallbackUserIds:
+                          - fallbackUserIds
+                          - fallbackUserIds
+                        manager:
+                          allowSelfApproval: true
+                          assignedUserIds:
+                          - assignedUserIds
+                          - assignedUserIds
+                          fallback: true
+                          fallbackUserIds:
+                          - fallbackUserIds
+                          - fallbackUserIds
+                        requireReassignmentReason: true
+                        self:
+                          assignedUserIds:
+                          - assignedUserIds
+                          - assignedUserIds
+                          fallback: true
+                          fallbackUserIds:
+                          - fallbackUserIds
+                          - fallbackUserIds
+                        assigned: true
+                        appOwners:
+                          allowSelfApproval: true
+                        allowReassignment: true
+                        users:
+                          allowSelfApproval: true
+                          userIds:
+                          - userIds
+                          - userIds
+                        group:
+                          allowSelfApproval: true
+                          appGroupId: appGroupId
+                          appId: appId
+                          fallback: true
+                          fallbackUserIds:
+                          - fallbackUserIds
+                          - fallbackUserIds
+                      provision:
+                        provisionPolicy:
+                          connector: "{}"
+                          delegated:
+                            appId: appId
+                            entitlementId: entitlementId
+                          manual:
+                            instructions: instructions
+                            userIds:
+                            - userIds
+                            - userIds
+                        assigned: true
+                      notify: "{}"
+                    - webhook: "{}"
+                      approval:
+                        requireApprovalReason: true
+                        entitlementOwners:
+                          allowSelfApproval: true
+                          fallback: true
+                          fallbackUserIds:
+                          - fallbackUserIds
+                          - fallbackUserIds
+                        manager:
+                          allowSelfApproval: true
+                          assignedUserIds:
+                          - assignedUserIds
+                          - assignedUserIds
+                          fallback: true
+                          fallbackUserIds:
+                          - fallbackUserIds
+                          - fallbackUserIds
+                        requireReassignmentReason: true
+                        self:
+                          assignedUserIds:
+                          - assignedUserIds
+                          - assignedUserIds
+                          fallback: true
+                          fallbackUserIds:
+                          - fallbackUserIds
+                          - fallbackUserIds
+                        assigned: true
+                        appOwners:
+                          allowSelfApproval: true
+                        allowReassignment: true
+                        users:
+                          allowSelfApproval: true
+                          userIds:
+                          - userIds
+                          - userIds
+                        group:
+                          allowSelfApproval: true
+                          appGroupId: appGroupId
+                          appId: appId
+                          fallback: true
+                          fallbackUserIds:
+                          - fallbackUserIds
+                          - fallbackUserIds
+                      provision:
+                        provisionPolicy:
+                          connector: "{}"
+                          delegated:
+                            appId: appId
+                            entitlementId: entitlementId
+                          manual:
+                            instructions: instructions
+                            userIds:
+                            - userIds
+                            - userIds
+                        assigned: true
+                      notify: "{}"
+                updatedAt: 2000-01-23T04:56:07.000+00:00
+            updatedAt: 2000-01-23T04:56:07.000+00:00
+          createdByUserPath: createdByUserPath
+          identityUserPath: identityUserPath
+          stepApproversPath: stepApproversPath
+          accessReviewPath: accessReviewPath
+          userPath: userPath
+          appPath: appPath
+      properties:
+        expanded:
+          description: The expanded field.
+          items:
+            $ref: '#/components/schemas/c1_api_app_v1_AppResourceServiceGetResponse_expanded_inner'
+          nullable: true
+          type: array
+        taskView:
+          $ref: '#/components/schemas/c1.api.task.v1.TaskView'
       type: object
     c1.api.task.v1.TaskServiceCreateRevokeRequest:
       description: The TaskServiceCreateRevokeRequest message.
@@ -3617,6 +4325,714 @@ components:
           type: string
         expandMask:
           $ref: '#/components/schemas/c1.api.task.v1.TaskExpandMask'
+        identityUserId:
+          description: The identityUserId field.
+          type: string
+      type: object
+    c1.api.task.v1.TaskServiceCreateRevokeResponse:
+      description: The TaskServiceCreateRevokeResponse message.
+      example:
+        expanded:
+        - '@type': '@type'
+        - '@type': '@type'
+        taskView:
+          appUserPath: appUserPath
+          entitlementsPath: entitlementsPath
+          task:
+            createdByUserId: createdByUserId
+            numericId: numericId
+            displayName: displayName
+            externalRefs:
+            - externalRefSource: JIRA
+              name: name
+              url: url
+            - externalRefSource: JIRA
+              name: name
+              url: url
+            annotations:
+            - '@type': '@type'
+            - '@type': '@type'
+            description: description
+            type:
+              accessRequest:
+                identityUserId: identityUserId
+                outcomeTime: 2000-01-23T04:56:07.000+00:00
+                appProfile:
+                  createdAt: 2000-01-23T04:56:07.000+00:00
+                  appEntitlementIds:
+                  - appEntitlementIds
+                  - appEntitlementIds
+                  deletedAt: 2000-01-23T04:56:07.000+00:00
+                  displayName: displayName
+                  appId: appId
+                  description: description
+                  id: id
+                  notificationToken: notificationToken
+                  updatedAt: 2000-01-23T04:56:07.000+00:00
+                appUserId: appUserId
+                outcome: ACCESS_REQUEST_OUTCOME_UNSPECIFIED
+              certify:
+                accessReviewId: accessReviewId
+                identityUserId: identityUserId
+                appEntitlementIds:
+                - appEntitlementIds
+                - appEntitlementIds
+                outcomeTime: 2000-01-23T04:56:07.000+00:00
+                accessReviewSelection: accessReviewSelection
+                appId: appId
+                appUserId: appUserId
+                outcome: CERTIFY_OUTCOME_UNSPECIFIED
+              revoke:
+                identityUserId: identityUserId
+                appEntitlementIds:
+                - appEntitlementIds
+                - appEntitlementIds
+                outcomeTime: 2000-01-23T04:56:07.000+00:00
+                appId: appId
+                source:
+                  request:
+                    requestUserId: requestUserId
+                  expired:
+                    expiredAt: 2000-01-23T04:56:07.000+00:00
+                  review:
+                    accessReviewId: accessReviewId
+                    accessReviewDisplayName: accessReviewDisplayName
+                    certTicketId: certTicketId
+                  nonUsage:
+                    lastLogin: 2000-01-23T04:56:07.000+00:00
+                    expiresAt: 2000-01-23T04:56:07.000+00:00
+                appUserId: appUserId
+                outcome: REVOKE_OUTCOME_UNSPECIFIED
+              grant:
+                identityUserId: identityUserId
+                appEntitlementIds:
+                - appEntitlementIds
+                - appEntitlementIds
+                outcomeTime: 2000-01-23T04:56:07.000+00:00
+                appId: appId
+                entitlementInstances:
+                - entitlementId: entitlementId
+                  grantDuration: grantDuration
+                  state: GRANT_ENTITLEMENT_STATE_UNSPECIFIED
+                - entitlementId: entitlementId
+                  grantDuration: grantDuration
+                  state: GRANT_ENTITLEMENT_STATE_UNSPECIFIED
+                appUserId: appUserId
+                outcome: GRANT_OUTCOME_UNSPECIFIED
+            userId: userId
+            commentCount: 0.8008281904610115
+            stepApproverIds:
+            - stepApproverIds
+            - stepApproverIds
+            createdAt: 2000-01-23T04:56:07.000+00:00
+            deletedAt: 2000-01-23T04:56:07.000+00:00
+            analysisId: analysisId
+            processing: TASK_PROCESSING_TYPE_UNSPECIFIED
+            id: id
+            state: TASK_STATE_UNSPECIFIED
+            actions:
+            - TASK_ACTION_TYPE_UNSPECIFIED
+            - TASK_ACTION_TYPE_UNSPECIFIED
+            policy:
+              next:
+              - webhook: "{}"
+                approval:
+                  requireApprovalReason: true
+                  entitlementOwners:
+                    allowSelfApproval: true
+                    fallback: true
+                    fallbackUserIds:
+                    - fallbackUserIds
+                    - fallbackUserIds
+                  manager:
+                    allowSelfApproval: true
+                    assignedUserIds:
+                    - assignedUserIds
+                    - assignedUserIds
+                    fallback: true
+                    fallbackUserIds:
+                    - fallbackUserIds
+                    - fallbackUserIds
+                  requireReassignmentReason: true
+                  self:
+                    assignedUserIds:
+                    - assignedUserIds
+                    - assignedUserIds
+                    fallback: true
+                    fallbackUserIds:
+                    - fallbackUserIds
+                    - fallbackUserIds
+                  assigned: true
+                  appOwners:
+                    allowSelfApproval: true
+                  allowReassignment: true
+                  users:
+                    allowSelfApproval: true
+                    userIds:
+                    - userIds
+                    - userIds
+                  group:
+                    allowSelfApproval: true
+                    appGroupId: appGroupId
+                    appId: appId
+                    fallback: true
+                    fallbackUserIds:
+                    - fallbackUserIds
+                    - fallbackUserIds
+                provision:
+                  provisionPolicy:
+                    connector: "{}"
+                    delegated:
+                      appId: appId
+                      entitlementId: entitlementId
+                    manual:
+                      instructions: instructions
+                      userIds:
+                      - userIds
+                      - userIds
+                  assigned: true
+                notify: "{}"
+              - webhook: "{}"
+                approval:
+                  requireApprovalReason: true
+                  entitlementOwners:
+                    allowSelfApproval: true
+                    fallback: true
+                    fallbackUserIds:
+                    - fallbackUserIds
+                    - fallbackUserIds
+                  manager:
+                    allowSelfApproval: true
+                    assignedUserIds:
+                    - assignedUserIds
+                    - assignedUserIds
+                    fallback: true
+                    fallbackUserIds:
+                    - fallbackUserIds
+                    - fallbackUserIds
+                  requireReassignmentReason: true
+                  self:
+                    assignedUserIds:
+                    - assignedUserIds
+                    - assignedUserIds
+                    fallback: true
+                    fallbackUserIds:
+                    - fallbackUserIds
+                    - fallbackUserIds
+                  assigned: true
+                  appOwners:
+                    allowSelfApproval: true
+                  allowReassignment: true
+                  users:
+                    allowSelfApproval: true
+                    userIds:
+                    - userIds
+                    - userIds
+                  group:
+                    allowSelfApproval: true
+                    appGroupId: appGroupId
+                    appId: appId
+                    fallback: true
+                    fallbackUserIds:
+                    - fallbackUserIds
+                    - fallbackUserIds
+                provision:
+                  provisionPolicy:
+                    connector: "{}"
+                    delegated:
+                      appId: appId
+                      entitlementId: entitlementId
+                    manual:
+                      instructions: instructions
+                      userIds:
+                      - userIds
+                      - userIds
+                  assigned: true
+                notify: "{}"
+              current:
+                webhook: "{}"
+                approval:
+                  approved:
+                    entitlements:
+                    - appId: appId
+                      appEntitlementId: appEntitlementId
+                    - appId: appId
+                      appEntitlementId: appEntitlementId
+                    approvedAt: 2000-01-23T04:56:07.000+00:00
+                    userId: userId
+                  restarted:
+                    oldPolicyStepId: oldPolicyStepId
+                    userId: userId
+                    restartedAt: 2000-01-23T04:56:07.000+00:00
+                  approval:
+                    requireApprovalReason: true
+                    entitlementOwners:
+                      allowSelfApproval: true
+                      fallback: true
+                      fallbackUserIds:
+                      - fallbackUserIds
+                      - fallbackUserIds
+                    manager:
+                      allowSelfApproval: true
+                      assignedUserIds:
+                      - assignedUserIds
+                      - assignedUserIds
+                      fallback: true
+                      fallbackUserIds:
+                      - fallbackUserIds
+                      - fallbackUserIds
+                    requireReassignmentReason: true
+                    self:
+                      assignedUserIds:
+                      - assignedUserIds
+                      - assignedUserIds
+                      fallback: true
+                      fallbackUserIds:
+                      - fallbackUserIds
+                      - fallbackUserIds
+                    assigned: true
+                    appOwners:
+                      allowSelfApproval: true
+                    allowReassignment: true
+                    users:
+                      allowSelfApproval: true
+                      userIds:
+                      - userIds
+                      - userIds
+                    group:
+                      allowSelfApproval: true
+                      appGroupId: appGroupId
+                      appId: appId
+                      fallback: true
+                      fallbackUserIds:
+                      - fallbackUserIds
+                      - fallbackUserIds
+                  reassigned:
+                    reassignedAt: 2000-01-23T04:56:07.000+00:00
+                    newPolicyStepId: newPolicyStepId
+                    userId: userId
+                  state: APPROVAL_INSTANCE_STATE_UNSPECIFIED
+                  denied:
+                    deniedAt: 2000-01-23T04:56:07.000+00:00
+                    userId: userId
+                  reassignedByError:
+                    erroredAt: 2000-01-23T04:56:07.000+00:00
+                    description: description
+                    errorCode: errorCode
+                    reassignedAt: 2000-01-23T04:56:07.000+00:00
+                    newPolicyStepId: newPolicyStepId
+                    errorUserId: errorUserId
+                provision:
+                  provision:
+                    provisionPolicy:
+                      connector: "{}"
+                      delegated:
+                        appId: appId
+                        entitlementId: entitlementId
+                      manual:
+                        instructions: instructions
+                        userIds:
+                        - userIds
+                        - userIds
+                    assigned: true
+                  cancelled:
+                    cancelledAt: 2000-01-23T04:56:07.000+00:00
+                    cancelledByUserId: cancelledByUserId
+                  notificationId: notificationId
+                  completed:
+                    entitlements:
+                    - appId: appId
+                      appEntitlementId: appEntitlementId
+                    - appId: appId
+                      appEntitlementId: appEntitlementId
+                    completedAt: 2000-01-23T04:56:07.000+00:00
+                    userId: userId
+                  state: PROVISION_INSTANCE_STATE_UNSPECIFIED
+                  reassignedByError:
+                    erroredAt: 2000-01-23T04:56:07.000+00:00
+                    description: description
+                    errorCode: errorCode
+                    reassignedAt: 2000-01-23T04:56:07.000+00:00
+                    newPolicyStepId: newPolicyStepId
+                    errorUserId: errorUserId
+                  errored:
+                    erroredAt: 2000-01-23T04:56:07.000+00:00
+                    description: description
+                    errorCode: errorCode
+                id: id
+                state: POLICY_STEP_STATE_UNSPECIFIED
+                notify: "{}"
+              history:
+              - webhook: "{}"
+                approval:
+                  approved:
+                    entitlements:
+                    - appId: appId
+                      appEntitlementId: appEntitlementId
+                    - appId: appId
+                      appEntitlementId: appEntitlementId
+                    approvedAt: 2000-01-23T04:56:07.000+00:00
+                    userId: userId
+                  restarted:
+                    oldPolicyStepId: oldPolicyStepId
+                    userId: userId
+                    restartedAt: 2000-01-23T04:56:07.000+00:00
+                  approval:
+                    requireApprovalReason: true
+                    entitlementOwners:
+                      allowSelfApproval: true
+                      fallback: true
+                      fallbackUserIds:
+                      - fallbackUserIds
+                      - fallbackUserIds
+                    manager:
+                      allowSelfApproval: true
+                      assignedUserIds:
+                      - assignedUserIds
+                      - assignedUserIds
+                      fallback: true
+                      fallbackUserIds:
+                      - fallbackUserIds
+                      - fallbackUserIds
+                    requireReassignmentReason: true
+                    self:
+                      assignedUserIds:
+                      - assignedUserIds
+                      - assignedUserIds
+                      fallback: true
+                      fallbackUserIds:
+                      - fallbackUserIds
+                      - fallbackUserIds
+                    assigned: true
+                    appOwners:
+                      allowSelfApproval: true
+                    allowReassignment: true
+                    users:
+                      allowSelfApproval: true
+                      userIds:
+                      - userIds
+                      - userIds
+                    group:
+                      allowSelfApproval: true
+                      appGroupId: appGroupId
+                      appId: appId
+                      fallback: true
+                      fallbackUserIds:
+                      - fallbackUserIds
+                      - fallbackUserIds
+                  reassigned:
+                    reassignedAt: 2000-01-23T04:56:07.000+00:00
+                    newPolicyStepId: newPolicyStepId
+                    userId: userId
+                  state: APPROVAL_INSTANCE_STATE_UNSPECIFIED
+                  denied:
+                    deniedAt: 2000-01-23T04:56:07.000+00:00
+                    userId: userId
+                  reassignedByError:
+                    erroredAt: 2000-01-23T04:56:07.000+00:00
+                    description: description
+                    errorCode: errorCode
+                    reassignedAt: 2000-01-23T04:56:07.000+00:00
+                    newPolicyStepId: newPolicyStepId
+                    errorUserId: errorUserId
+                provision:
+                  provision:
+                    provisionPolicy:
+                      connector: "{}"
+                      delegated:
+                        appId: appId
+                        entitlementId: entitlementId
+                      manual:
+                        instructions: instructions
+                        userIds:
+                        - userIds
+                        - userIds
+                    assigned: true
+                  cancelled:
+                    cancelledAt: 2000-01-23T04:56:07.000+00:00
+                    cancelledByUserId: cancelledByUserId
+                  notificationId: notificationId
+                  completed:
+                    entitlements:
+                    - appId: appId
+                      appEntitlementId: appEntitlementId
+                    - appId: appId
+                      appEntitlementId: appEntitlementId
+                    completedAt: 2000-01-23T04:56:07.000+00:00
+                    userId: userId
+                  state: PROVISION_INSTANCE_STATE_UNSPECIFIED
+                  reassignedByError:
+                    erroredAt: 2000-01-23T04:56:07.000+00:00
+                    description: description
+                    errorCode: errorCode
+                    reassignedAt: 2000-01-23T04:56:07.000+00:00
+                    newPolicyStepId: newPolicyStepId
+                    errorUserId: errorUserId
+                  errored:
+                    erroredAt: 2000-01-23T04:56:07.000+00:00
+                    description: description
+                    errorCode: errorCode
+                id: id
+                state: POLICY_STEP_STATE_UNSPECIFIED
+                notify: "{}"
+              - webhook: "{}"
+                approval:
+                  approved:
+                    entitlements:
+                    - appId: appId
+                      appEntitlementId: appEntitlementId
+                    - appId: appId
+                      appEntitlementId: appEntitlementId
+                    approvedAt: 2000-01-23T04:56:07.000+00:00
+                    userId: userId
+                  restarted:
+                    oldPolicyStepId: oldPolicyStepId
+                    userId: userId
+                    restartedAt: 2000-01-23T04:56:07.000+00:00
+                  approval:
+                    requireApprovalReason: true
+                    entitlementOwners:
+                      allowSelfApproval: true
+                      fallback: true
+                      fallbackUserIds:
+                      - fallbackUserIds
+                      - fallbackUserIds
+                    manager:
+                      allowSelfApproval: true
+                      assignedUserIds:
+                      - assignedUserIds
+                      - assignedUserIds
+                      fallback: true
+                      fallbackUserIds:
+                      - fallbackUserIds
+                      - fallbackUserIds
+                    requireReassignmentReason: true
+                    self:
+                      assignedUserIds:
+                      - assignedUserIds
+                      - assignedUserIds
+                      fallback: true
+                      fallbackUserIds:
+                      - fallbackUserIds
+                      - fallbackUserIds
+                    assigned: true
+                    appOwners:
+                      allowSelfApproval: true
+                    allowReassignment: true
+                    users:
+                      allowSelfApproval: true
+                      userIds:
+                      - userIds
+                      - userIds
+                    group:
+                      allowSelfApproval: true
+                      appGroupId: appGroupId
+                      appId: appId
+                      fallback: true
+                      fallbackUserIds:
+                      - fallbackUserIds
+                      - fallbackUserIds
+                  reassigned:
+                    reassignedAt: 2000-01-23T04:56:07.000+00:00
+                    newPolicyStepId: newPolicyStepId
+                    userId: userId
+                  state: APPROVAL_INSTANCE_STATE_UNSPECIFIED
+                  denied:
+                    deniedAt: 2000-01-23T04:56:07.000+00:00
+                    userId: userId
+                  reassignedByError:
+                    erroredAt: 2000-01-23T04:56:07.000+00:00
+                    description: description
+                    errorCode: errorCode
+                    reassignedAt: 2000-01-23T04:56:07.000+00:00
+                    newPolicyStepId: newPolicyStepId
+                    errorUserId: errorUserId
+                provision:
+                  provision:
+                    provisionPolicy:
+                      connector: "{}"
+                      delegated:
+                        appId: appId
+                        entitlementId: entitlementId
+                      manual:
+                        instructions: instructions
+                        userIds:
+                        - userIds
+                        - userIds
+                    assigned: true
+                  cancelled:
+                    cancelledAt: 2000-01-23T04:56:07.000+00:00
+                    cancelledByUserId: cancelledByUserId
+                  notificationId: notificationId
+                  completed:
+                    entitlements:
+                    - appId: appId
+                      appEntitlementId: appEntitlementId
+                    - appId: appId
+                      appEntitlementId: appEntitlementId
+                    completedAt: 2000-01-23T04:56:07.000+00:00
+                    userId: userId
+                  state: PROVISION_INSTANCE_STATE_UNSPECIFIED
+                  reassignedByError:
+                    erroredAt: 2000-01-23T04:56:07.000+00:00
+                    description: description
+                    errorCode: errorCode
+                    reassignedAt: 2000-01-23T04:56:07.000+00:00
+                    newPolicyStepId: newPolicyStepId
+                    errorUserId: errorUserId
+                  errored:
+                    erroredAt: 2000-01-23T04:56:07.000+00:00
+                    description: description
+                    errorCode: errorCode
+                id: id
+                state: POLICY_STEP_STATE_UNSPECIFIED
+                notify: "{}"
+              policy:
+                reassignTasksToDelegates: true
+                createdAt: 2000-01-23T04:56:07.000+00:00
+                deletedAt: 2000-01-23T04:56:07.000+00:00
+                displayName: displayName
+                policyType: POLICY_TYPE_UNSPECIFIED
+                systemBuiltin: true
+                postActions:
+                - certifyRemediateImmediately: true
+                - certifyRemediateImmediately: true
+                description: description
+                id: id
+                policySteps:
+                  key:
+                    steps:
+                    - webhook: "{}"
+                      approval:
+                        requireApprovalReason: true
+                        entitlementOwners:
+                          allowSelfApproval: true
+                          fallback: true
+                          fallbackUserIds:
+                          - fallbackUserIds
+                          - fallbackUserIds
+                        manager:
+                          allowSelfApproval: true
+                          assignedUserIds:
+                          - assignedUserIds
+                          - assignedUserIds
+                          fallback: true
+                          fallbackUserIds:
+                          - fallbackUserIds
+                          - fallbackUserIds
+                        requireReassignmentReason: true
+                        self:
+                          assignedUserIds:
+                          - assignedUserIds
+                          - assignedUserIds
+                          fallback: true
+                          fallbackUserIds:
+                          - fallbackUserIds
+                          - fallbackUserIds
+                        assigned: true
+                        appOwners:
+                          allowSelfApproval: true
+                        allowReassignment: true
+                        users:
+                          allowSelfApproval: true
+                          userIds:
+                          - userIds
+                          - userIds
+                        group:
+                          allowSelfApproval: true
+                          appGroupId: appGroupId
+                          appId: appId
+                          fallback: true
+                          fallbackUserIds:
+                          - fallbackUserIds
+                          - fallbackUserIds
+                      provision:
+                        provisionPolicy:
+                          connector: "{}"
+                          delegated:
+                            appId: appId
+                            entitlementId: entitlementId
+                          manual:
+                            instructions: instructions
+                            userIds:
+                            - userIds
+                            - userIds
+                        assigned: true
+                      notify: "{}"
+                    - webhook: "{}"
+                      approval:
+                        requireApprovalReason: true
+                        entitlementOwners:
+                          allowSelfApproval: true
+                          fallback: true
+                          fallbackUserIds:
+                          - fallbackUserIds
+                          - fallbackUserIds
+                        manager:
+                          allowSelfApproval: true
+                          assignedUserIds:
+                          - assignedUserIds
+                          - assignedUserIds
+                          fallback: true
+                          fallbackUserIds:
+                          - fallbackUserIds
+                          - fallbackUserIds
+                        requireReassignmentReason: true
+                        self:
+                          assignedUserIds:
+                          - assignedUserIds
+                          - assignedUserIds
+                          fallback: true
+                          fallbackUserIds:
+                          - fallbackUserIds
+                          - fallbackUserIds
+                        assigned: true
+                        appOwners:
+                          allowSelfApproval: true
+                        allowReassignment: true
+                        users:
+                          allowSelfApproval: true
+                          userIds:
+                          - userIds
+                          - userIds
+                        group:
+                          allowSelfApproval: true
+                          appGroupId: appGroupId
+                          appId: appId
+                          fallback: true
+                          fallbackUserIds:
+                          - fallbackUserIds
+                          - fallbackUserIds
+                      provision:
+                        provisionPolicy:
+                          connector: "{}"
+                          delegated:
+                            appId: appId
+                            entitlementId: entitlementId
+                          manual:
+                            instructions: instructions
+                            userIds:
+                            - userIds
+                            - userIds
+                        assigned: true
+                      notify: "{}"
+                updatedAt: 2000-01-23T04:56:07.000+00:00
+            updatedAt: 2000-01-23T04:56:07.000+00:00
+          createdByUserPath: createdByUserPath
+          identityUserPath: identityUserPath
+          stepApproversPath: stepApproversPath
+          accessReviewPath: accessReviewPath
+          userPath: userPath
+          appPath: appPath
+      properties:
+        expanded:
+          description: The expanded field.
+          items:
+            $ref: '#/components/schemas/c1_api_app_v1_AppResourceServiceGetResponse_expanded_inner'
+          nullable: true
+          type: array
+        taskView:
+          $ref: '#/components/schemas/c1.api.task.v1.TaskView'
       type: object
     c1.api.task.v1.TaskServiceGetResponse:
       description: The TaskServiceGetResponse message.

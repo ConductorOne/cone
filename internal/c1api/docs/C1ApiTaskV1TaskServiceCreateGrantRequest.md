@@ -6,6 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **AppEntitlementId** | Pointer to **string** | The appEntitlementId field. | [optional] 
 **AppId** | Pointer to **string** | The appId field. | [optional] 
+**AppUserId** | Pointer to **string** | The appUserId field. | [optional] 
 **Description** | Pointer to **string** | The description field. | [optional] 
 **ExpandMask** | Pointer to [**C1ApiTaskV1TaskExpandMask**](C1ApiTaskV1TaskExpandMask.md) |  | [optional] 
 **GrantDuration** | Pointer to **string** |  | [optional] 
@@ -79,6 +80,31 @@ SetAppId sets AppId field to given value.
 `func (o *C1ApiTaskV1TaskServiceCreateGrantRequest) HasAppId() bool`
 
 HasAppId returns a boolean if a field has been set.
+
+### GetAppUserId
+
+`func (o *C1ApiTaskV1TaskServiceCreateGrantRequest) GetAppUserId() string`
+
+GetAppUserId returns the AppUserId field if non-nil, zero value otherwise.
+
+### GetAppUserIdOk
+
+`func (o *C1ApiTaskV1TaskServiceCreateGrantRequest) GetAppUserIdOk() (*string, bool)`
+
+GetAppUserIdOk returns a tuple with the AppUserId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAppUserId
+
+`func (o *C1ApiTaskV1TaskServiceCreateGrantRequest) SetAppUserId(v string)`
+
+SetAppUserId sets AppUserId field to given value.
+
+### HasAppUserId
+
+`func (o *C1ApiTaskV1TaskServiceCreateGrantRequest) HasAppUserId() bool`
+
+HasAppUserId returns a boolean if a field has been set.
 
 ### GetDescription
 

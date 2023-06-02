@@ -61,7 +61,11 @@ func runDrop(cmd *cobra.Command, args []string) error {
 	})
 }
 
-func runTask(cmd *cobra.Command, args []string, run func(c client.C1Client, ctx context.Context, appId string, entitlementId string, userId string, justification string, duration string) (*c1api.C1ApiTaskV1Task, error)) error {
+func runTask(
+	cmd *cobra.Command,
+	args []string,
+	run func(c client.C1Client, ctx context.Context, appId string, entitlementId string, userId string, justification string, duration string) (*c1api.C1ApiTaskV1Task, error),
+) error {
 	ctx := cmd.Context()
 
 	alias := ""
@@ -142,7 +146,7 @@ func runTask(cmd *cobra.Command, args []string, run func(c client.C1Client, ctx 
 	if grantDuration != "" {
 		parsedDuration, err := time.ParseDuration(grantDuration)
 		if err != nil {
-			return fmt.Errorf("invalid duration: %s", err)
+			return fmt.Errorf("invalid duration: %w", err)
 		}
 		grantDurationInSeconds = fmt.Sprintf("%ds", int(parsedDuration.Seconds()))
 	}

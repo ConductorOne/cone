@@ -11,7 +11,10 @@ require (
 	google.golang.org/protobuf v1.28.1
 )
 
-require github.com/pterm/pterm v0.12.62
+require (
+	github.com/pterm/pterm v0.12.62
+	golang.org/x/sync v0.2.0
+)
 
 require (
 	atomicgo.dev/cursor v0.1.1 // indirect

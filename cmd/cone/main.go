@@ -20,7 +20,6 @@ func main() {
 	signal.Notify(signalCh, os.Interrupt, syscall.SIGTERM)
 
 	ctx, cancel := context.WithCancel(context.Background())
-	defer cancel()
 
 	go func() {
 		// Block until a signal is received
@@ -28,7 +27,9 @@ func main() {
 		cancel()
 	}()
 
-	os.Exit(runCli(ctx))
+	result := runCli(ctx)
+	cancel()
+	os.Exit(result)
 }
 
 func runCli(ctx context.Context) int {

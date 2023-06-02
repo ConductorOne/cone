@@ -9,8 +9,7 @@ import (
 )
 
 type tableManager struct {
-	waiting bool
-	area    *pterm.AreaPrinter
+	area *pterm.AreaPrinter
 }
 
 func (c *tableManager) Output(ctx context.Context, out interface{}) error {

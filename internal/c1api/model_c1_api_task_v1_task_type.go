@@ -17,9 +17,8 @@ import (
 // checks if the C1ApiTaskV1TaskType type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &C1ApiTaskV1TaskType{}
 
-// C1ApiTaskV1TaskType The TaskType message.  This message contains a oneof named task_type. Only a single field of the following list may be set at a time:   - grant   - revoke   - certify   - accessRequest 
+// C1ApiTaskV1TaskType The TaskType message.  This message contains a oneof named task_type. Only a single field of the following list may be set at a time:   - grant   - revoke   - certify 
 type C1ApiTaskV1TaskType struct {
-	AccessRequest NullableC1ApiTaskV1TaskTypeAccessRequest `json:"accessRequest,omitempty"`
 	Certify NullableC1ApiTaskV1TaskTypeCertify `json:"certify,omitempty"`
 	Grant NullableC1ApiTaskV1TaskTypeGrant `json:"grant,omitempty"`
 	Revoke NullableC1ApiTaskV1TaskTypeRevoke `json:"revoke,omitempty"`
@@ -43,48 +42,6 @@ func NewC1ApiTaskV1TaskType() *C1ApiTaskV1TaskType {
 func NewC1ApiTaskV1TaskTypeWithDefaults() *C1ApiTaskV1TaskType {
 	this := C1ApiTaskV1TaskType{}
 	return &this
-}
-
-// GetAccessRequest returns the AccessRequest field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *C1ApiTaskV1TaskType) GetAccessRequest() C1ApiTaskV1TaskTypeAccessRequest {
-	if o == nil || IsNil(o.AccessRequest.Get()) {
-		var ret C1ApiTaskV1TaskTypeAccessRequest
-		return ret
-	}
-	return *o.AccessRequest.Get()
-}
-
-// GetAccessRequestOk returns a tuple with the AccessRequest field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *C1ApiTaskV1TaskType) GetAccessRequestOk() (*C1ApiTaskV1TaskTypeAccessRequest, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return o.AccessRequest.Get(), o.AccessRequest.IsSet()
-}
-
-// HasAccessRequest returns a boolean if a field has been set.
-func (o *C1ApiTaskV1TaskType) HasAccessRequest() bool {
-	if o != nil && o.AccessRequest.IsSet() {
-		return true
-	}
-
-	return false
-}
-
-// SetAccessRequest gets a reference to the given NullableC1ApiTaskV1TaskTypeAccessRequest and assigns it to the AccessRequest field.
-func (o *C1ApiTaskV1TaskType) SetAccessRequest(v C1ApiTaskV1TaskTypeAccessRequest) {
-	o.AccessRequest.Set(&v)
-}
-// SetAccessRequestNil sets the value for AccessRequest to be an explicit nil
-func (o *C1ApiTaskV1TaskType) SetAccessRequestNil() {
-	o.AccessRequest.Set(nil)
-}
-
-// UnsetAccessRequest ensures that no value is present for AccessRequest, not even an explicit nil
-func (o *C1ApiTaskV1TaskType) UnsetAccessRequest() {
-	o.AccessRequest.Unset()
 }
 
 // GetCertify returns the Certify field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -223,9 +180,6 @@ func (o C1ApiTaskV1TaskType) MarshalJSON() ([]byte, error) {
 
 func (o C1ApiTaskV1TaskType) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if o.AccessRequest.IsSet() {
-		toSerialize["accessRequest"] = o.AccessRequest.Get()
-	}
 	if o.Certify.IsSet() {
 		toSerialize["certify"] = o.Certify.Get()
 	}
@@ -253,7 +207,6 @@ func (o *C1ApiTaskV1TaskType) UnmarshalJSON(bytes []byte) (err error) {
 	additionalProperties := make(map[string]interface{})
 
 	if err = json.Unmarshal(bytes, &additionalProperties); err == nil {
-		delete(additionalProperties, "accessRequest")
 		delete(additionalProperties, "certify")
 		delete(additionalProperties, "grant")
 		delete(additionalProperties, "revoke")

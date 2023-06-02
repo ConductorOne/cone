@@ -71,7 +71,7 @@ func (a *DefaultAPIService) C1ApiAppV1AppResourceServiceGetExecute(r DefaultAPIC
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/api/v1/app_resource/{app_id}/{app_resource_type_id}/{id}"
+	localVarPath := localBasePath + "/api/v1/apps/{app_id}/resource_types/{app_resource_type_id}/resource/{id}"
 	localVarPath = strings.Replace(localVarPath, "{"+"app_id"+"}", url.PathEscape(parameterValueToString(r.appId, "appId")), -1)
 	localVarPath = strings.Replace(localVarPath, "{"+"app_resource_type_id"+"}", url.PathEscape(parameterValueToString(r.appResourceTypeId, "appResourceTypeId")), -1)
 	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
@@ -179,7 +179,7 @@ func (a *DefaultAPIService) C1ApiAppV1AppResourceTypeServiceGetExecute(r Default
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/api/v1/app_resource_type/{app_id}/{id}"
+	localVarPath := localBasePath + "/api/v1/apps/{app_id}/resource_types/{id}"
 	localVarPath = strings.Replace(localVarPath, "{"+"app_id"+"}", url.PathEscape(parameterValueToString(r.appId, "appId")), -1)
 	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
 
@@ -247,7 +247,7 @@ type DefaultAPIC1ApiAppV1AppsGetRequest struct {
 	id string
 }
 
-func (r DefaultAPIC1ApiAppV1AppsGetRequest) Execute() (*C1ApiAppV1App, *http.Response, error) {
+func (r DefaultAPIC1ApiAppV1AppsGetRequest) Execute() (*C1ApiAppV1GetAppResponse, *http.Response, error) {
 	return r.ApiService.C1ApiAppV1AppsGetExecute(r)
 }
 
@@ -269,13 +269,13 @@ func (a *DefaultAPIService) C1ApiAppV1AppsGet(ctx context.Context, id string) De
 }
 
 // Execute executes the request
-//  @return C1ApiAppV1App
-func (a *DefaultAPIService) C1ApiAppV1AppsGetExecute(r DefaultAPIC1ApiAppV1AppsGetRequest) (*C1ApiAppV1App, *http.Response, error) {
+//  @return C1ApiAppV1GetAppResponse
+func (a *DefaultAPIService) C1ApiAppV1AppsGetExecute(r DefaultAPIC1ApiAppV1AppsGetRequest) (*C1ApiAppV1GetAppResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *C1ApiAppV1App
+		localVarReturnValue  *C1ApiAppV1GetAppResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.C1ApiAppV1AppsGet")
@@ -283,7 +283,7 @@ func (a *DefaultAPIService) C1ApiAppV1AppsGetExecute(r DefaultAPIC1ApiAppV1AppsG
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/api/v1/app/{id}"
+	localVarPath := localBasePath + "/api/v1/apps/{id}"
 	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
 
 	localVarHeaderParams := make(map[string]string)
@@ -488,7 +488,7 @@ func (a *DefaultAPIService) C1ApiRequestcatalogV1RequestCatalogSearchServiceSear
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/api/v1/entitlement/search"
+	localVarPath := localBasePath + "/api/v1/search/request_catalog/entitlements"
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -909,7 +909,7 @@ func (a *DefaultAPIService) C1ApiUserV1UserServiceGetExecute(r DefaultAPIC1ApiUs
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/api/v1/user/get/{id}"
+	localVarPath := localBasePath + "/api/v1/users/{id}"
 	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
 
 	localVarHeaderParams := make(map[string]string)

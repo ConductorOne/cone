@@ -20,8 +20,8 @@ var _ MappedNullable = &C1ApiTaskV1TaskTypeRevoke{}
 
 // C1ApiTaskV1TaskTypeRevoke The TaskTypeRevoke message.
 type C1ApiTaskV1TaskTypeRevoke struct {
-	// The appEntitlementIds field.
-	AppEntitlementIds []string `json:"appEntitlementIds,omitempty"`
+	// The appEntitlementId field.
+	AppEntitlementId *string `json:"appEntitlementId,omitempty"`
 	// The appId field.
 	AppId *string `json:"appId,omitempty"`
 	// The appUserId field.
@@ -54,37 +54,36 @@ func NewC1ApiTaskV1TaskTypeRevokeWithDefaults() *C1ApiTaskV1TaskTypeRevoke {
 	return &this
 }
 
-// GetAppEntitlementIds returns the AppEntitlementIds field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *C1ApiTaskV1TaskTypeRevoke) GetAppEntitlementIds() []string {
-	if o == nil {
-		var ret []string
+// GetAppEntitlementId returns the AppEntitlementId field value if set, zero value otherwise.
+func (o *C1ApiTaskV1TaskTypeRevoke) GetAppEntitlementId() string {
+	if o == nil || IsNil(o.AppEntitlementId) {
+		var ret string
 		return ret
 	}
-	return o.AppEntitlementIds
+	return *o.AppEntitlementId
 }
 
-// GetAppEntitlementIdsOk returns a tuple with the AppEntitlementIds field value if set, nil otherwise
+// GetAppEntitlementIdOk returns a tuple with the AppEntitlementId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *C1ApiTaskV1TaskTypeRevoke) GetAppEntitlementIdsOk() ([]string, bool) {
-	if o == nil || IsNil(o.AppEntitlementIds) {
+func (o *C1ApiTaskV1TaskTypeRevoke) GetAppEntitlementIdOk() (*string, bool) {
+	if o == nil || IsNil(o.AppEntitlementId) {
 		return nil, false
 	}
-	return o.AppEntitlementIds, true
+	return o.AppEntitlementId, true
 }
 
-// HasAppEntitlementIds returns a boolean if a field has been set.
-func (o *C1ApiTaskV1TaskTypeRevoke) HasAppEntitlementIds() bool {
-	if o != nil && IsNil(o.AppEntitlementIds) {
+// HasAppEntitlementId returns a boolean if a field has been set.
+func (o *C1ApiTaskV1TaskTypeRevoke) HasAppEntitlementId() bool {
+	if o != nil && !IsNil(o.AppEntitlementId) {
 		return true
 	}
 
 	return false
 }
 
-// SetAppEntitlementIds gets a reference to the given []string and assigns it to the AppEntitlementIds field.
-func (o *C1ApiTaskV1TaskTypeRevoke) SetAppEntitlementIds(v []string) {
-	o.AppEntitlementIds = v
+// SetAppEntitlementId gets a reference to the given string and assigns it to the AppEntitlementId field.
+func (o *C1ApiTaskV1TaskTypeRevoke) SetAppEntitlementId(v string) {
+	o.AppEntitlementId = &v
 }
 
 // GetAppId returns the AppId field value if set, zero value otherwise.
@@ -289,8 +288,8 @@ func (o C1ApiTaskV1TaskTypeRevoke) MarshalJSON() ([]byte, error) {
 
 func (o C1ApiTaskV1TaskTypeRevoke) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if o.AppEntitlementIds != nil {
-		toSerialize["appEntitlementIds"] = o.AppEntitlementIds
+	if !IsNil(o.AppEntitlementId) {
+		toSerialize["appEntitlementId"] = o.AppEntitlementId
 	}
 	if !IsNil(o.AppId) {
 		toSerialize["appId"] = o.AppId
@@ -328,7 +327,7 @@ func (o *C1ApiTaskV1TaskTypeRevoke) UnmarshalJSON(bytes []byte) (err error) {
 	additionalProperties := make(map[string]interface{})
 
 	if err = json.Unmarshal(bytes, &additionalProperties); err == nil {
-		delete(additionalProperties, "appEntitlementIds")
+		delete(additionalProperties, "appEntitlementId")
 		delete(additionalProperties, "appId")
 		delete(additionalProperties, "appUserId")
 		delete(additionalProperties, "identityUserId")

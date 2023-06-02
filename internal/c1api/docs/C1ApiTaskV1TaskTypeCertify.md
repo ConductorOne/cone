@@ -6,7 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **AccessReviewId** | Pointer to **string** | The accessReviewId field. | [optional] 
 **AccessReviewSelection** | Pointer to **string** | The accessReviewSelection field. | [optional] 
-**AppEntitlementIds** | Pointer to **[]string** | The appEntitlementIds field. | [optional] 
+**AppEntitlementId** | Pointer to **string** | The appEntitlementId field. | [optional] 
 **AppId** | Pointer to **string** | The appId field. | [optional] 
 **AppUserId** | Pointer to **string** | The appUserId field. | [optional] 
 **IdentityUserId** | Pointer to **string** | The identityUserId field. | [optional] 
@@ -82,41 +82,31 @@ SetAccessReviewSelection sets AccessReviewSelection field to given value.
 
 HasAccessReviewSelection returns a boolean if a field has been set.
 
-### GetAppEntitlementIds
+### GetAppEntitlementId
 
-`func (o *C1ApiTaskV1TaskTypeCertify) GetAppEntitlementIds() []string`
+`func (o *C1ApiTaskV1TaskTypeCertify) GetAppEntitlementId() string`
 
-GetAppEntitlementIds returns the AppEntitlementIds field if non-nil, zero value otherwise.
+GetAppEntitlementId returns the AppEntitlementId field if non-nil, zero value otherwise.
 
-### GetAppEntitlementIdsOk
+### GetAppEntitlementIdOk
 
-`func (o *C1ApiTaskV1TaskTypeCertify) GetAppEntitlementIdsOk() (*[]string, bool)`
+`func (o *C1ApiTaskV1TaskTypeCertify) GetAppEntitlementIdOk() (*string, bool)`
 
-GetAppEntitlementIdsOk returns a tuple with the AppEntitlementIds field if it's non-nil, zero value otherwise
+GetAppEntitlementIdOk returns a tuple with the AppEntitlementId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetAppEntitlementIds
+### SetAppEntitlementId
 
-`func (o *C1ApiTaskV1TaskTypeCertify) SetAppEntitlementIds(v []string)`
+`func (o *C1ApiTaskV1TaskTypeCertify) SetAppEntitlementId(v string)`
 
-SetAppEntitlementIds sets AppEntitlementIds field to given value.
+SetAppEntitlementId sets AppEntitlementId field to given value.
 
-### HasAppEntitlementIds
+### HasAppEntitlementId
 
-`func (o *C1ApiTaskV1TaskTypeCertify) HasAppEntitlementIds() bool`
+`func (o *C1ApiTaskV1TaskTypeCertify) HasAppEntitlementId() bool`
 
-HasAppEntitlementIds returns a boolean if a field has been set.
+HasAppEntitlementId returns a boolean if a field has been set.
 
-### SetAppEntitlementIdsNil
-
-`func (o *C1ApiTaskV1TaskTypeCertify) SetAppEntitlementIdsNil(b bool)`
-
- SetAppEntitlementIdsNil sets the value for AppEntitlementIds to be an explicit nil
-
-### UnsetAppEntitlementIds
-`func (o *C1ApiTaskV1TaskTypeCertify) UnsetAppEntitlementIds()`
-
-UnsetAppEntitlementIds ensures that no value is present for AppEntitlementIds, not even an explicit nil
 ### GetAppId
 
 `func (o *C1ApiTaskV1TaskTypeCertify) GetAppId() string`

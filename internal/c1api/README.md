@@ -77,15 +77,15 @@ All URIs are relative to *https://invalid-example.logan.dev.ductone.com:2443*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
-*DefaultAPI* | [**C1ApiAppV1AppResourceServiceGet**](docs/DefaultAPI.md#c1apiappv1appresourceserviceget) | **Get** /api/v1/app_resource/{app_id}/{app_resource_type_id}/{id} | 
-*DefaultAPI* | [**C1ApiAppV1AppResourceTypeServiceGet**](docs/DefaultAPI.md#c1apiappv1appresourcetypeserviceget) | **Get** /api/v1/app_resource_type/{app_id}/{id} | 
-*DefaultAPI* | [**C1ApiAppV1AppsGet**](docs/DefaultAPI.md#c1apiappv1appsget) | **Get** /api/v1/app/{id} | 
+*DefaultAPI* | [**C1ApiAppV1AppResourceServiceGet**](docs/DefaultAPI.md#c1apiappv1appresourceserviceget) | **Get** /api/v1/apps/{app_id}/resource_types/{app_resource_type_id}/resource/{id} | 
+*DefaultAPI* | [**C1ApiAppV1AppResourceTypeServiceGet**](docs/DefaultAPI.md#c1apiappv1appresourcetypeserviceget) | **Get** /api/v1/apps/{app_id}/resource_types/{id} | 
+*DefaultAPI* | [**C1ApiAppV1AppsGet**](docs/DefaultAPI.md#c1apiappv1appsget) | **Get** /api/v1/apps/{id} | 
 *DefaultAPI* | [**C1ApiAuthV1AuthIntrospect**](docs/DefaultAPI.md#c1apiauthv1authintrospect) | **Get** /api/v1/auth/introspect | 
-*DefaultAPI* | [**C1ApiRequestcatalogV1RequestCatalogSearchServiceSearchEntitlements**](docs/DefaultAPI.md#c1apirequestcatalogv1requestcatalogsearchservicesearchentitlements) | **Post** /api/v1/entitlement/search | 
+*DefaultAPI* | [**C1ApiRequestcatalogV1RequestCatalogSearchServiceSearchEntitlements**](docs/DefaultAPI.md#c1apirequestcatalogv1requestcatalogsearchservicesearchentitlements) | **Post** /api/v1/search/request_catalog/entitlements | 
 *DefaultAPI* | [**C1ApiTaskV1TaskServiceCreateGrantTask**](docs/DefaultAPI.md#c1apitaskv1taskservicecreategranttask) | **Post** /api/v1/task/grant | 
 *DefaultAPI* | [**C1ApiTaskV1TaskServiceCreateRevokeTask**](docs/DefaultAPI.md#c1apitaskv1taskservicecreaterevoketask) | **Post** /api/v1/task/revoke | 
 *DefaultAPI* | [**C1ApiTaskV1TaskServiceGet**](docs/DefaultAPI.md#c1apitaskv1taskserviceget) | **Get** /api/v1/tasks/{id} | 
-*DefaultAPI* | [**C1ApiUserV1UserServiceGet**](docs/DefaultAPI.md#c1apiuserv1userserviceget) | **Get** /api/v1/user/get/{id} | 
+*DefaultAPI* | [**C1ApiUserV1UserServiceGet**](docs/DefaultAPI.md#c1apiuserv1userserviceget) | **Get** /api/v1/users/{id} | 
 
 
 ## Documentation For Models
@@ -94,7 +94,6 @@ Class | Method | HTTP request | Description
  - [C1ApiAppV1AppEntitlement](docs/C1ApiAppV1AppEntitlement.md)
  - [C1ApiAppV1AppEntitlementExpandMask](docs/C1ApiAppV1AppEntitlementExpandMask.md)
  - [C1ApiAppV1AppEntitlementView](docs/C1ApiAppV1AppEntitlementView.md)
- - [C1ApiAppV1AppProfile](docs/C1ApiAppV1AppProfile.md)
  - [C1ApiAppV1AppResource](docs/C1ApiAppV1AppResource.md)
  - [C1ApiAppV1AppResourceServiceGetResponse](docs/C1ApiAppV1AppResourceServiceGetResponse.md)
  - [C1ApiAppV1AppResourceServiceGetResponseExpandedInner](docs/C1ApiAppV1AppResourceServiceGetResponseExpandedInner.md)
@@ -102,6 +101,7 @@ Class | Method | HTTP request | Description
  - [C1ApiAppV1AppResourceTypeServiceGetResponse](docs/C1ApiAppV1AppResourceTypeServiceGetResponse.md)
  - [C1ApiAppV1AppResourceTypeView](docs/C1ApiAppV1AppResourceTypeView.md)
  - [C1ApiAppV1AppResourceView](docs/C1ApiAppV1AppResourceView.md)
+ - [C1ApiAppV1GetAppResponse](docs/C1ApiAppV1GetAppResponse.md)
  - [C1ApiAuthV1IntrospectResponse](docs/C1ApiAuthV1IntrospectResponse.md)
  - [C1ApiPolicyV1AppEntitlementReference](docs/C1ApiPolicyV1AppEntitlementReference.md)
  - [C1ApiPolicyV1AppGroupApproval](docs/C1ApiPolicyV1AppGroupApproval.md)
@@ -134,7 +134,6 @@ Class | Method | HTTP request | Description
  - [C1ApiRequestcatalogV1RequestCatalogSearchServiceSearchEntitlementsRequest](docs/C1ApiRequestcatalogV1RequestCatalogSearchServiceSearchEntitlementsRequest.md)
  - [C1ApiRequestcatalogV1RequestCatalogSearchServiceSearchEntitlementsResponse](docs/C1ApiRequestcatalogV1RequestCatalogSearchServiceSearchEntitlementsResponse.md)
  - [C1ApiTaskV1ExternalRef](docs/C1ApiTaskV1ExternalRef.md)
- - [C1ApiTaskV1GrantEntitlementInstance](docs/C1ApiTaskV1GrantEntitlementInstance.md)
  - [C1ApiTaskV1Task](docs/C1ApiTaskV1Task.md)
  - [C1ApiTaskV1TaskExpandMask](docs/C1ApiTaskV1TaskExpandMask.md)
  - [C1ApiTaskV1TaskRevokeSource](docs/C1ApiTaskV1TaskRevokeSource.md)
@@ -148,7 +147,6 @@ Class | Method | HTTP request | Description
  - [C1ApiTaskV1TaskServiceCreateRevokeResponse](docs/C1ApiTaskV1TaskServiceCreateRevokeResponse.md)
  - [C1ApiTaskV1TaskServiceGetResponse](docs/C1ApiTaskV1TaskServiceGetResponse.md)
  - [C1ApiTaskV1TaskType](docs/C1ApiTaskV1TaskType.md)
- - [C1ApiTaskV1TaskTypeAccessRequest](docs/C1ApiTaskV1TaskTypeAccessRequest.md)
  - [C1ApiTaskV1TaskTypeCertify](docs/C1ApiTaskV1TaskTypeCertify.md)
  - [C1ApiTaskV1TaskTypeGrant](docs/C1ApiTaskV1TaskTypeGrant.md)
  - [C1ApiTaskV1TaskTypeRevoke](docs/C1ApiTaskV1TaskTypeRevoke.md)

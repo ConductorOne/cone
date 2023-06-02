@@ -17,18 +17,14 @@ import (
 // checks if the C1ApiPolicyV1PolicyStepInstance type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &C1ApiPolicyV1PolicyStepInstance{}
 
-// C1ApiPolicyV1PolicyStepInstance The PolicyStepInstance message.  This message contains a oneof named instance. Only a single field of the following list may be set at a time:   - approval   - webhook   - notify   - provision 
+// C1ApiPolicyV1PolicyStepInstance The PolicyStepInstance message.  This message contains a oneof named instance. Only a single field of the following list may be set at a time:   - approval   - provision 
 type C1ApiPolicyV1PolicyStepInstance struct {
 	Approval NullableC1ApiPolicyV1ApprovalInstance `json:"approval,omitempty"`
 	// The id field.
 	Id *string `json:"id,omitempty"`
-	// The NotificationInstance message.
-	Notify map[string]interface{} `json:"notify,omitempty"`
 	Provision NullableC1ApiPolicyV1ProvisionInstance `json:"provision,omitempty"`
 	// The state field.
 	State *string `json:"state,omitempty"`
-	// The WebhookInstance message.
-	Webhook map[string]interface{} `json:"webhook,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -125,39 +121,6 @@ func (o *C1ApiPolicyV1PolicyStepInstance) SetId(v string) {
 	o.Id = &v
 }
 
-// GetNotify returns the Notify field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *C1ApiPolicyV1PolicyStepInstance) GetNotify() map[string]interface{} {
-	if o == nil {
-		var ret map[string]interface{}
-		return ret
-	}
-	return o.Notify
-}
-
-// GetNotifyOk returns a tuple with the Notify field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *C1ApiPolicyV1PolicyStepInstance) GetNotifyOk() (map[string]interface{}, bool) {
-	if o == nil || IsNil(o.Notify) {
-		return map[string]interface{}{}, false
-	}
-	return o.Notify, true
-}
-
-// HasNotify returns a boolean if a field has been set.
-func (o *C1ApiPolicyV1PolicyStepInstance) HasNotify() bool {
-	if o != nil && IsNil(o.Notify) {
-		return true
-	}
-
-	return false
-}
-
-// SetNotify gets a reference to the given map[string]interface{} and assigns it to the Notify field.
-func (o *C1ApiPolicyV1PolicyStepInstance) SetNotify(v map[string]interface{}) {
-	o.Notify = v
-}
-
 // GetProvision returns the Provision field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *C1ApiPolicyV1PolicyStepInstance) GetProvision() C1ApiPolicyV1ProvisionInstance {
 	if o == nil || IsNil(o.Provision.Get()) {
@@ -232,39 +195,6 @@ func (o *C1ApiPolicyV1PolicyStepInstance) SetState(v string) {
 	o.State = &v
 }
 
-// GetWebhook returns the Webhook field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *C1ApiPolicyV1PolicyStepInstance) GetWebhook() map[string]interface{} {
-	if o == nil {
-		var ret map[string]interface{}
-		return ret
-	}
-	return o.Webhook
-}
-
-// GetWebhookOk returns a tuple with the Webhook field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *C1ApiPolicyV1PolicyStepInstance) GetWebhookOk() (map[string]interface{}, bool) {
-	if o == nil || IsNil(o.Webhook) {
-		return map[string]interface{}{}, false
-	}
-	return o.Webhook, true
-}
-
-// HasWebhook returns a boolean if a field has been set.
-func (o *C1ApiPolicyV1PolicyStepInstance) HasWebhook() bool {
-	if o != nil && IsNil(o.Webhook) {
-		return true
-	}
-
-	return false
-}
-
-// SetWebhook gets a reference to the given map[string]interface{} and assigns it to the Webhook field.
-func (o *C1ApiPolicyV1PolicyStepInstance) SetWebhook(v map[string]interface{}) {
-	o.Webhook = v
-}
-
 func (o C1ApiPolicyV1PolicyStepInstance) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -281,17 +211,11 @@ func (o C1ApiPolicyV1PolicyStepInstance) ToMap() (map[string]interface{}, error)
 	if !IsNil(o.Id) {
 		toSerialize["id"] = o.Id
 	}
-	if o.Notify != nil {
-		toSerialize["notify"] = o.Notify
-	}
 	if o.Provision.IsSet() {
 		toSerialize["provision"] = o.Provision.Get()
 	}
 	if !IsNil(o.State) {
 		toSerialize["state"] = o.State
-	}
-	if o.Webhook != nil {
-		toSerialize["webhook"] = o.Webhook
 	}
 
 	for key, value := range o.AdditionalProperties {
@@ -313,10 +237,8 @@ func (o *C1ApiPolicyV1PolicyStepInstance) UnmarshalJSON(bytes []byte) (err error
 	if err = json.Unmarshal(bytes, &additionalProperties); err == nil {
 		delete(additionalProperties, "approval")
 		delete(additionalProperties, "id")
-		delete(additionalProperties, "notify")
 		delete(additionalProperties, "provision")
 		delete(additionalProperties, "state")
-		delete(additionalProperties, "webhook")
 		o.AdditionalProperties = additionalProperties
 	}
 

@@ -4,7 +4,6 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**AccessRequest** | Pointer to [**NullableC1ApiTaskV1TaskTypeAccessRequest**](C1ApiTaskV1TaskTypeAccessRequest.md) |  | [optional] 
 **Certify** | Pointer to [**NullableC1ApiTaskV1TaskTypeCertify**](C1ApiTaskV1TaskTypeCertify.md) |  | [optional] 
 **Grant** | Pointer to [**NullableC1ApiTaskV1TaskTypeGrant**](C1ApiTaskV1TaskTypeGrant.md) |  | [optional] 
 **Revoke** | Pointer to [**NullableC1ApiTaskV1TaskTypeRevoke**](C1ApiTaskV1TaskTypeRevoke.md) |  | [optional] 
@@ -28,41 +27,6 @@ NewC1ApiTaskV1TaskTypeWithDefaults instantiates a new C1ApiTaskV1TaskType object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
-### GetAccessRequest
-
-`func (o *C1ApiTaskV1TaskType) GetAccessRequest() C1ApiTaskV1TaskTypeAccessRequest`
-
-GetAccessRequest returns the AccessRequest field if non-nil, zero value otherwise.
-
-### GetAccessRequestOk
-
-`func (o *C1ApiTaskV1TaskType) GetAccessRequestOk() (*C1ApiTaskV1TaskTypeAccessRequest, bool)`
-
-GetAccessRequestOk returns a tuple with the AccessRequest field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetAccessRequest
-
-`func (o *C1ApiTaskV1TaskType) SetAccessRequest(v C1ApiTaskV1TaskTypeAccessRequest)`
-
-SetAccessRequest sets AccessRequest field to given value.
-
-### HasAccessRequest
-
-`func (o *C1ApiTaskV1TaskType) HasAccessRequest() bool`
-
-HasAccessRequest returns a boolean if a field has been set.
-
-### SetAccessRequestNil
-
-`func (o *C1ApiTaskV1TaskType) SetAccessRequestNil(b bool)`
-
- SetAccessRequestNil sets the value for AccessRequest to be an explicit nil
-
-### UnsetAccessRequest
-`func (o *C1ApiTaskV1TaskType) UnsetAccessRequest()`
-
-UnsetAccessRequest ensures that no value is present for AccessRequest, not even an explicit nil
 ### GetCertify
 
 `func (o *C1ApiTaskV1TaskType) GetCertify() C1ApiTaskV1TaskTypeCertify`

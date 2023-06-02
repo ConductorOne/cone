@@ -37,7 +37,9 @@ func (c *tableManager) Output(ctx context.Context, out interface{}) error {
 
 		c.area.Update(data)
 	} else {
-		pterm.Println(preTableText)
+		if preTableText != "" {
+			pterm.Println(preTableText)
+		}
 		err := table.Render()
 		if err != nil {
 			return err

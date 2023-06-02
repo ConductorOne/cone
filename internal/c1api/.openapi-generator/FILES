@@ -10,7 +10,6 @@ docs/C1ApiAppV1App.md
 docs/C1ApiAppV1AppEntitlement.md
 docs/C1ApiAppV1AppEntitlementExpandMask.md
 docs/C1ApiAppV1AppEntitlementView.md
-docs/C1ApiAppV1AppProfile.md
 docs/C1ApiAppV1AppResource.md
 docs/C1ApiAppV1AppResourceServiceGetResponse.md
 docs/C1ApiAppV1AppResourceServiceGetResponseExpandedInner.md
@@ -18,6 +17,7 @@ docs/C1ApiAppV1AppResourceType.md
 docs/C1ApiAppV1AppResourceTypeServiceGetResponse.md
 docs/C1ApiAppV1AppResourceTypeView.md
 docs/C1ApiAppV1AppResourceView.md
+docs/C1ApiAppV1GetAppResponse.md
 docs/C1ApiAuthV1IntrospectResponse.md
 docs/C1ApiPolicyV1AppEntitlementReference.md
 docs/C1ApiPolicyV1AppGroupApproval.md
@@ -50,7 +50,6 @@ docs/C1ApiPolicyV1UserApproval.md
 docs/C1ApiRequestcatalogV1RequestCatalogSearchServiceSearchEntitlementsRequest.md
 docs/C1ApiRequestcatalogV1RequestCatalogSearchServiceSearchEntitlementsResponse.md
 docs/C1ApiTaskV1ExternalRef.md
-docs/C1ApiTaskV1GrantEntitlementInstance.md
 docs/C1ApiTaskV1Task.md
 docs/C1ApiTaskV1TaskExpandMask.md
 docs/C1ApiTaskV1TaskRevokeSource.md
@@ -64,7 +63,6 @@ docs/C1ApiTaskV1TaskServiceCreateRevokeRequest.md
 docs/C1ApiTaskV1TaskServiceCreateRevokeResponse.md
 docs/C1ApiTaskV1TaskServiceGetResponse.md
 docs/C1ApiTaskV1TaskType.md
-docs/C1ApiTaskV1TaskTypeAccessRequest.md
 docs/C1ApiTaskV1TaskTypeCertify.md
 docs/C1ApiTaskV1TaskTypeGrant.md
 docs/C1ApiTaskV1TaskTypeRevoke.md
@@ -81,7 +79,6 @@ model_c1_api_app_v1_app.go
 model_c1_api_app_v1_app_entitlement.go
 model_c1_api_app_v1_app_entitlement_expand_mask.go
 model_c1_api_app_v1_app_entitlement_view.go
-model_c1_api_app_v1_app_profile.go
 model_c1_api_app_v1_app_resource.go
 model_c1_api_app_v1_app_resource_service_get_response.go
 model_c1_api_app_v1_app_resource_service_get_response_expanded_inner.go
@@ -89,6 +86,7 @@ model_c1_api_app_v1_app_resource_type.go
 model_c1_api_app_v1_app_resource_type_service_get_response.go
 model_c1_api_app_v1_app_resource_type_view.go
 model_c1_api_app_v1_app_resource_view.go
+model_c1_api_app_v1_get_app_response.go
 model_c1_api_auth_v1_introspect_response.go
 model_c1_api_policy_v1_app_entitlement_reference.go
 model_c1_api_policy_v1_app_group_approval.go
@@ -121,7 +119,6 @@ model_c1_api_policy_v1_user_approval.go
 model_c1_api_requestcatalog_v1_request_catalog_search_service_search_entitlements_request.go
 model_c1_api_requestcatalog_v1_request_catalog_search_service_search_entitlements_response.go
 model_c1_api_task_v1_external_ref.go
-model_c1_api_task_v1_grant_entitlement_instance.go
 model_c1_api_task_v1_task.go
 model_c1_api_task_v1_task_expand_mask.go
 model_c1_api_task_v1_task_revoke_source.go
@@ -135,7 +132,6 @@ model_c1_api_task_v1_task_service_create_revoke_request.go
 model_c1_api_task_v1_task_service_create_revoke_response.go
 model_c1_api_task_v1_task_service_get_response.go
 model_c1_api_task_v1_task_type.go
-model_c1_api_task_v1_task_type_access_request.go
 model_c1_api_task_v1_task_type_certify.go
 model_c1_api_task_v1_task_type_grant.go
 model_c1_api_task_v1_task_type_revoke.go

@@ -13,5 +13,5 @@ func (c *client) GetApp(ctx context.Context, appID string) (*c1api.C1ApiAppV1App
 	}
 	defer httpResp.Body.Close()
 
-	return resp, nil
+	return resp.App, nil
 }

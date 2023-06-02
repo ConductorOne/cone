@@ -53,12 +53,11 @@ func whoAmIRun(cmd *cobra.Command, args []string) error {
 type C1ApiAuthV1IntrospectResponse c1api.C1ApiAuthV1IntrospectResponse
 
 func (r *C1ApiAuthV1IntrospectResponse) Header() []string {
-	return []string{"PrincipleId", "UserId", "AccessTokenId"}
+	return []string{"PrincipleId", "UserId"}
 }
 func (r *C1ApiAuthV1IntrospectResponse) Rows() [][]string {
 	return [][]string{{
 		client.StringFromPtr(r.PrincipleId),
 		client.StringFromPtr(r.UserId),
-		client.StringFromPtr(r.AccessTokenId),
 	}}
 }

@@ -18,6 +18,7 @@ func getCmd() *cobra.Command {
 		Short: "Create an access request for an entitlement by slug",
 		RunE:  runGet,
 	}
+	addGrantDurationFlag(cmd)
 
 	return taskCmd(cmd)
 }
@@ -36,12 +37,13 @@ func taskCmd(cmd *cobra.Command) *cobra.Command {
 	addWaitFlag(cmd)
 	addAppIdFlag(cmd)
 	addEntitlementIdFlag(cmd)
+	addJustificationFlag(cmd)
 	return cmd
 }
 
 func runGet(cmd *cobra.Command, args []string) error {
-	return runTask(cmd, args, func(c client.C1Client, ctx context.Context, appId string, entitlementId string, userId string) (*c1api.C1ApiTaskV1Task, error) {
-		accessRequest, err := c.CreateGrantTask(ctx, appId, entitlementId, userId)
+	return runTask(cmd, args, func(c client.C1Client, ctx context.Context, appId string, entitlementId string, userId string, justification string, duration string) (*c1api.C1ApiTaskV1Task, error) {
+		accessRequest, err := c.CreateGrantTask(ctx, appId, entitlementId, userId, justification, duration)
 		if err != nil {
 			return nil, err
 		}
@@ -50,8 +52,8 @@ func runGet(cmd *cobra.Command, args []string) error {
 }
 
 func runDrop(cmd *cobra.Command, args []string) error {
-	return runTask(cmd, args, func(c client.C1Client, ctx context.Context, appId string, entitlementId string, userId string) (*c1api.C1ApiTaskV1Task, error) {
-		accessRequest, err := c.CreateRevokeTask(ctx, appId, entitlementId, userId)
+	return runTask(cmd, args, func(c client.C1Client, ctx context.Context, appId string, entitlementId string, userId string, justification string, duration string) (*c1api.C1ApiTaskV1Task, error) {
+		accessRequest, err := c.CreateRevokeTask(ctx, appId, entitlementId, userId, justification)
 		if err != nil {
 			return nil, err
 		}
@@ -59,7 +61,11 @@ func runDrop(cmd *cobra.Command, args []string) error {
 	})
 }
 
-func runTask(cmd *cobra.Command, args []string, run func(c client.C1Client, ctx context.Context, appId string, entitlementId string, userId string) (*c1api.C1ApiTaskV1Task, error)) error {
+func runTask(
+	cmd *cobra.Command,
+	args []string,
+	run func(c client.C1Client, ctx context.Context, appId string, entitlementId string, userId string, justification string, duration string) (*c1api.C1ApiTaskV1Task, error),
+) error {
 	ctx := cmd.Context()
 
 	alias := ""
@@ -76,6 +82,8 @@ func runTask(cmd *cobra.Command, args []string, run func(c client.C1Client, ctx 
 
 	entitlementId := v.GetString(entitlementIdFlag)
 	appId := v.GetString(appIdFlag)
+	justification := v.GetString(justificationFlag)
+	grantDuration := v.GetString(durationFlag)
 
 	if len(args) == 1 {
 		alias = args[0]
@@ -134,7 +142,16 @@ func runTask(cmd *cobra.Command, args []string, run func(c client.C1Client, ctx 
 		return err
 	}
 
-	task, err := run(c, ctx, appId, entitlementId, client.StringFromPtr(resp.UserId))
+	grantDurationInSeconds := ""
+	if grantDuration != "" {
+		parsedDuration, err := time.ParseDuration(grantDuration)
+		if err != nil {
+			return fmt.Errorf("invalid duration: %w", err)
+		}
+		grantDurationInSeconds = fmt.Sprintf("%ds", int(parsedDuration.Seconds()))
+	}
+
+	task, err := run(c, ctx, appId, entitlementId, client.StringFromPtr(resp.UserId), justification, grantDurationInSeconds)
 	if err != nil {
 		return err
 	}

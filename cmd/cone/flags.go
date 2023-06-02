@@ -10,6 +10,8 @@ const (
 	appIdFlag            = "app-id"
 	entitlementAliasFlag = "alias"
 	queryFlag            = "query"
+	justificationFlag    = "justification"
+	durationFlag         = "duration"
 )
 
 func addWaitFlag(cmd *cobra.Command) {
@@ -30,4 +32,12 @@ func addQueryFlag(cmd *cobra.Command) {
 
 func addEntitlementAliasFlag(cmd *cobra.Command) {
 	cmd.Flags().StringP(entitlementAliasFlag, "", "", "The entitlement alias to filter by")
+}
+
+func addJustificationFlag(cmd *cobra.Command) {
+	cmd.Flags().StringP(justificationFlag, "j", "", "The justification for the request")
+}
+
+func addGrantDurationFlag(cmd *cobra.Command) {
+	cmd.Flags().StringP(durationFlag, "d", "", "The duration of the grant in seconds")
 }

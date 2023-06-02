@@ -95,37 +95,37 @@ func runTask(cmd *cobra.Command, args []string, run func(c client.C1Client, ctx 
 	}
 
 	if alias != "" {
-		entitlement, err := c.SearchEntitlements(ctx, &client.SearchEntitlementsFilter{EntitlementAlias: alias})
+		entitlements, err := c.SearchEntitlements(ctx, &client.SearchEntitlementsFilter{EntitlementAlias: alias})
 		if err != nil {
 			return err
 		}
 
-		if len(entitlement.List) == 0 {
+		if len(entitlements) == 0 {
 			return fmt.Errorf("no entitlement found with alias %s", alias)
 		}
-		if len(entitlement.List) == 1 {
-			entitlementId = client.StringFromPtr(entitlement.List[0].AppEntitlement.Id)
-			appId = client.StringFromPtr(entitlement.List[0].AppEntitlement.AppId)
+		if len(entitlements) == 1 {
+			entitlementId = client.StringFromPtr(entitlements[0].Id)
+			appId = client.StringFromPtr(entitlements[0].AppId)
 		}
-		if len(entitlement.List) > 1 {
+		if len(entitlements) > 1 {
 			isNonInteractive := v.GetBool("non-interactive")
 			if isNonInteractive {
 				return fmt.Errorf("multiple entitlements found with alias %s, please specify an entitlement id and app id", alias)
 			}
-			optionToEntitlementMap := make(map[string]c1api.C1ApiAppV1AppEntitlementView)
-			entitlementOptions := make([]string, len(entitlement.List))
-			for _, e := range entitlement.List {
+			optionToEntitlementMap := make(map[string]*c1api.C1ApiAppV1AppEntitlement)
+			entitlementOptions := make([]string, len(entitlements))
+			for _, e := range entitlements {
 				entitlementOptionName := fmt.Sprintf("%s:%s:%s",
-					client.StringFromPtr(e.AppEntitlement.DisplayName),
-					client.StringFromPtr(e.AppEntitlement.AppId),
-					client.StringFromPtr(e.AppEntitlement.Id),
+					client.StringFromPtr(e.DisplayName),
+					client.StringFromPtr(e.AppId),
+					client.StringFromPtr(e.Id),
 				)
 				entitlementOptions = append(entitlementOptions, entitlementOptionName)
 				optionToEntitlementMap[entitlementOptionName] = e
 			}
 			selectedOption, _ := pterm.DefaultInteractiveSelect.WithOptions(entitlementOptions).WithDefaultText("Please select an entitlement").Show()
-			entitlementId = client.StringFromPtr(optionToEntitlementMap[selectedOption].AppEntitlement.Id)
-			appId = client.StringFromPtr(optionToEntitlementMap[selectedOption].AppEntitlement.AppId)
+			entitlementId = client.StringFromPtr(optionToEntitlementMap[selectedOption].Id)
+			appId = client.StringFromPtr(optionToEntitlementMap[selectedOption].AppId)
 		}
 	}
 

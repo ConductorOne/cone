@@ -24,8 +24,8 @@ type C1ApiTaskV1TaskTypeCertify struct {
 	AccessReviewId *string `json:"accessReviewId,omitempty"`
 	// The accessReviewSelection field.
 	AccessReviewSelection *string `json:"accessReviewSelection,omitempty"`
-	// The appEntitlementIds field.
-	AppEntitlementIds []string `json:"appEntitlementIds,omitempty"`
+	// The appEntitlementId field.
+	AppEntitlementId *string `json:"appEntitlementId,omitempty"`
 	// The appId field.
 	AppId *string `json:"appId,omitempty"`
 	// The appUserId field.
@@ -121,37 +121,36 @@ func (o *C1ApiTaskV1TaskTypeCertify) SetAccessReviewSelection(v string) {
 	o.AccessReviewSelection = &v
 }
 
-// GetAppEntitlementIds returns the AppEntitlementIds field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *C1ApiTaskV1TaskTypeCertify) GetAppEntitlementIds() []string {
-	if o == nil {
-		var ret []string
+// GetAppEntitlementId returns the AppEntitlementId field value if set, zero value otherwise.
+func (o *C1ApiTaskV1TaskTypeCertify) GetAppEntitlementId() string {
+	if o == nil || IsNil(o.AppEntitlementId) {
+		var ret string
 		return ret
 	}
-	return o.AppEntitlementIds
+	return *o.AppEntitlementId
 }
 
-// GetAppEntitlementIdsOk returns a tuple with the AppEntitlementIds field value if set, nil otherwise
+// GetAppEntitlementIdOk returns a tuple with the AppEntitlementId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *C1ApiTaskV1TaskTypeCertify) GetAppEntitlementIdsOk() ([]string, bool) {
-	if o == nil || IsNil(o.AppEntitlementIds) {
+func (o *C1ApiTaskV1TaskTypeCertify) GetAppEntitlementIdOk() (*string, bool) {
+	if o == nil || IsNil(o.AppEntitlementId) {
 		return nil, false
 	}
-	return o.AppEntitlementIds, true
+	return o.AppEntitlementId, true
 }
 
-// HasAppEntitlementIds returns a boolean if a field has been set.
-func (o *C1ApiTaskV1TaskTypeCertify) HasAppEntitlementIds() bool {
-	if o != nil && IsNil(o.AppEntitlementIds) {
+// HasAppEntitlementId returns a boolean if a field has been set.
+func (o *C1ApiTaskV1TaskTypeCertify) HasAppEntitlementId() bool {
+	if o != nil && !IsNil(o.AppEntitlementId) {
 		return true
 	}
 
 	return false
 }
 
-// SetAppEntitlementIds gets a reference to the given []string and assigns it to the AppEntitlementIds field.
-func (o *C1ApiTaskV1TaskTypeCertify) SetAppEntitlementIds(v []string) {
-	o.AppEntitlementIds = v
+// SetAppEntitlementId gets a reference to the given string and assigns it to the AppEntitlementId field.
+func (o *C1ApiTaskV1TaskTypeCertify) SetAppEntitlementId(v string) {
+	o.AppEntitlementId = &v
 }
 
 // GetAppId returns the AppId field value if set, zero value otherwise.
@@ -330,8 +329,8 @@ func (o C1ApiTaskV1TaskTypeCertify) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.AccessReviewSelection) {
 		toSerialize["accessReviewSelection"] = o.AccessReviewSelection
 	}
-	if o.AppEntitlementIds != nil {
-		toSerialize["appEntitlementIds"] = o.AppEntitlementIds
+	if !IsNil(o.AppEntitlementId) {
+		toSerialize["appEntitlementId"] = o.AppEntitlementId
 	}
 	if !IsNil(o.AppId) {
 		toSerialize["appId"] = o.AppId
@@ -368,7 +367,7 @@ func (o *C1ApiTaskV1TaskTypeCertify) UnmarshalJSON(bytes []byte) (err error) {
 	if err = json.Unmarshal(bytes, &additionalProperties); err == nil {
 		delete(additionalProperties, "accessReviewId")
 		delete(additionalProperties, "accessReviewSelection")
-		delete(additionalProperties, "appEntitlementIds")
+		delete(additionalProperties, "appEntitlementId")
 		delete(additionalProperties, "appId")
 		delete(additionalProperties, "appUserId")
 		delete(additionalProperties, "identityUserId")

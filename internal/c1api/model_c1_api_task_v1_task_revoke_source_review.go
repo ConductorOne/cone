@@ -19,8 +19,6 @@ var _ MappedNullable = &C1ApiTaskV1TaskRevokeSourceReview{}
 
 // C1ApiTaskV1TaskRevokeSourceReview The TaskRevokeSourceReview message.
 type C1ApiTaskV1TaskRevokeSourceReview struct {
-	// The accessReviewDisplayName field.
-	AccessReviewDisplayName *string `json:"accessReviewDisplayName,omitempty"`
 	// The accessReviewId field.
 	AccessReviewId *string `json:"accessReviewId,omitempty"`
 	// The certTicketId field.
@@ -45,38 +43,6 @@ func NewC1ApiTaskV1TaskRevokeSourceReview() *C1ApiTaskV1TaskRevokeSourceReview {
 func NewC1ApiTaskV1TaskRevokeSourceReviewWithDefaults() *C1ApiTaskV1TaskRevokeSourceReview {
 	this := C1ApiTaskV1TaskRevokeSourceReview{}
 	return &this
-}
-
-// GetAccessReviewDisplayName returns the AccessReviewDisplayName field value if set, zero value otherwise.
-func (o *C1ApiTaskV1TaskRevokeSourceReview) GetAccessReviewDisplayName() string {
-	if o == nil || IsNil(o.AccessReviewDisplayName) {
-		var ret string
-		return ret
-	}
-	return *o.AccessReviewDisplayName
-}
-
-// GetAccessReviewDisplayNameOk returns a tuple with the AccessReviewDisplayName field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *C1ApiTaskV1TaskRevokeSourceReview) GetAccessReviewDisplayNameOk() (*string, bool) {
-	if o == nil || IsNil(o.AccessReviewDisplayName) {
-		return nil, false
-	}
-	return o.AccessReviewDisplayName, true
-}
-
-// HasAccessReviewDisplayName returns a boolean if a field has been set.
-func (o *C1ApiTaskV1TaskRevokeSourceReview) HasAccessReviewDisplayName() bool {
-	if o != nil && !IsNil(o.AccessReviewDisplayName) {
-		return true
-	}
-
-	return false
-}
-
-// SetAccessReviewDisplayName gets a reference to the given string and assigns it to the AccessReviewDisplayName field.
-func (o *C1ApiTaskV1TaskRevokeSourceReview) SetAccessReviewDisplayName(v string) {
-	o.AccessReviewDisplayName = &v
 }
 
 // GetAccessReviewId returns the AccessReviewId field value if set, zero value otherwise.
@@ -153,9 +119,6 @@ func (o C1ApiTaskV1TaskRevokeSourceReview) MarshalJSON() ([]byte, error) {
 
 func (o C1ApiTaskV1TaskRevokeSourceReview) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.AccessReviewDisplayName) {
-		toSerialize["accessReviewDisplayName"] = o.AccessReviewDisplayName
-	}
 	if !IsNil(o.AccessReviewId) {
 		toSerialize["accessReviewId"] = o.AccessReviewId
 	}
@@ -180,7 +143,6 @@ func (o *C1ApiTaskV1TaskRevokeSourceReview) UnmarshalJSON(bytes []byte) (err err
 	additionalProperties := make(map[string]interface{})
 
 	if err = json.Unmarshal(bytes, &additionalProperties); err == nil {
-		delete(additionalProperties, "accessReviewDisplayName")
 		delete(additionalProperties, "accessReviewId")
 		delete(additionalProperties, "certTicketId")
 		o.AdditionalProperties = additionalProperties

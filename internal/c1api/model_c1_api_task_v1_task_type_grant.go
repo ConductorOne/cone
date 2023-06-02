@@ -20,14 +20,13 @@ var _ MappedNullable = &C1ApiTaskV1TaskTypeGrant{}
 
 // C1ApiTaskV1TaskTypeGrant The TaskTypeGrant message.
 type C1ApiTaskV1TaskTypeGrant struct {
-	// The appEntitlementIds field.
-	AppEntitlementIds []string `json:"appEntitlementIds,omitempty"`
+	// The appEntitlementId field.
+	AppEntitlementId *string `json:"appEntitlementId,omitempty"`
 	// The appId field.
 	AppId *string `json:"appId,omitempty"`
 	// The appUserId field.
 	AppUserId *string `json:"appUserId,omitempty"`
-	// The entitlementInstances field.
-	EntitlementInstances []C1ApiTaskV1GrantEntitlementInstance `json:"entitlementInstances,omitempty"`
+	GrantDuration *string `json:"grantDuration,omitempty"`
 	// The identityUserId field.
 	IdentityUserId *string `json:"identityUserId,omitempty"`
 	// The outcome field.
@@ -55,37 +54,36 @@ func NewC1ApiTaskV1TaskTypeGrantWithDefaults() *C1ApiTaskV1TaskTypeGrant {
 	return &this
 }
 
-// GetAppEntitlementIds returns the AppEntitlementIds field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *C1ApiTaskV1TaskTypeGrant) GetAppEntitlementIds() []string {
-	if o == nil {
-		var ret []string
+// GetAppEntitlementId returns the AppEntitlementId field value if set, zero value otherwise.
+func (o *C1ApiTaskV1TaskTypeGrant) GetAppEntitlementId() string {
+	if o == nil || IsNil(o.AppEntitlementId) {
+		var ret string
 		return ret
 	}
-	return o.AppEntitlementIds
+	return *o.AppEntitlementId
 }
 
-// GetAppEntitlementIdsOk returns a tuple with the AppEntitlementIds field value if set, nil otherwise
+// GetAppEntitlementIdOk returns a tuple with the AppEntitlementId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *C1ApiTaskV1TaskTypeGrant) GetAppEntitlementIdsOk() ([]string, bool) {
-	if o == nil || IsNil(o.AppEntitlementIds) {
+func (o *C1ApiTaskV1TaskTypeGrant) GetAppEntitlementIdOk() (*string, bool) {
+	if o == nil || IsNil(o.AppEntitlementId) {
 		return nil, false
 	}
-	return o.AppEntitlementIds, true
+	return o.AppEntitlementId, true
 }
 
-// HasAppEntitlementIds returns a boolean if a field has been set.
-func (o *C1ApiTaskV1TaskTypeGrant) HasAppEntitlementIds() bool {
-	if o != nil && IsNil(o.AppEntitlementIds) {
+// HasAppEntitlementId returns a boolean if a field has been set.
+func (o *C1ApiTaskV1TaskTypeGrant) HasAppEntitlementId() bool {
+	if o != nil && !IsNil(o.AppEntitlementId) {
 		return true
 	}
 
 	return false
 }
 
-// SetAppEntitlementIds gets a reference to the given []string and assigns it to the AppEntitlementIds field.
-func (o *C1ApiTaskV1TaskTypeGrant) SetAppEntitlementIds(v []string) {
-	o.AppEntitlementIds = v
+// SetAppEntitlementId gets a reference to the given string and assigns it to the AppEntitlementId field.
+func (o *C1ApiTaskV1TaskTypeGrant) SetAppEntitlementId(v string) {
+	o.AppEntitlementId = &v
 }
 
 // GetAppId returns the AppId field value if set, zero value otherwise.
@@ -152,37 +150,36 @@ func (o *C1ApiTaskV1TaskTypeGrant) SetAppUserId(v string) {
 	o.AppUserId = &v
 }
 
-// GetEntitlementInstances returns the EntitlementInstances field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *C1ApiTaskV1TaskTypeGrant) GetEntitlementInstances() []C1ApiTaskV1GrantEntitlementInstance {
-	if o == nil {
-		var ret []C1ApiTaskV1GrantEntitlementInstance
+// GetGrantDuration returns the GrantDuration field value if set, zero value otherwise.
+func (o *C1ApiTaskV1TaskTypeGrant) GetGrantDuration() string {
+	if o == nil || IsNil(o.GrantDuration) {
+		var ret string
 		return ret
 	}
-	return o.EntitlementInstances
+	return *o.GrantDuration
 }
 
-// GetEntitlementInstancesOk returns a tuple with the EntitlementInstances field value if set, nil otherwise
+// GetGrantDurationOk returns a tuple with the GrantDuration field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *C1ApiTaskV1TaskTypeGrant) GetEntitlementInstancesOk() ([]C1ApiTaskV1GrantEntitlementInstance, bool) {
-	if o == nil || IsNil(o.EntitlementInstances) {
+func (o *C1ApiTaskV1TaskTypeGrant) GetGrantDurationOk() (*string, bool) {
+	if o == nil || IsNil(o.GrantDuration) {
 		return nil, false
 	}
-	return o.EntitlementInstances, true
+	return o.GrantDuration, true
 }
 
-// HasEntitlementInstances returns a boolean if a field has been set.
-func (o *C1ApiTaskV1TaskTypeGrant) HasEntitlementInstances() bool {
-	if o != nil && IsNil(o.EntitlementInstances) {
+// HasGrantDuration returns a boolean if a field has been set.
+func (o *C1ApiTaskV1TaskTypeGrant) HasGrantDuration() bool {
+	if o != nil && !IsNil(o.GrantDuration) {
 		return true
 	}
 
 	return false
 }
 
-// SetEntitlementInstances gets a reference to the given []C1ApiTaskV1GrantEntitlementInstance and assigns it to the EntitlementInstances field.
-func (o *C1ApiTaskV1TaskTypeGrant) SetEntitlementInstances(v []C1ApiTaskV1GrantEntitlementInstance) {
-	o.EntitlementInstances = v
+// SetGrantDuration gets a reference to the given string and assigns it to the GrantDuration field.
+func (o *C1ApiTaskV1TaskTypeGrant) SetGrantDuration(v string) {
+	o.GrantDuration = &v
 }
 
 // GetIdentityUserId returns the IdentityUserId field value if set, zero value otherwise.
@@ -291,8 +288,8 @@ func (o C1ApiTaskV1TaskTypeGrant) MarshalJSON() ([]byte, error) {
 
 func (o C1ApiTaskV1TaskTypeGrant) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if o.AppEntitlementIds != nil {
-		toSerialize["appEntitlementIds"] = o.AppEntitlementIds
+	if !IsNil(o.AppEntitlementId) {
+		toSerialize["appEntitlementId"] = o.AppEntitlementId
 	}
 	if !IsNil(o.AppId) {
 		toSerialize["appId"] = o.AppId
@@ -300,8 +297,8 @@ func (o C1ApiTaskV1TaskTypeGrant) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.AppUserId) {
 		toSerialize["appUserId"] = o.AppUserId
 	}
-	if o.EntitlementInstances != nil {
-		toSerialize["entitlementInstances"] = o.EntitlementInstances
+	if !IsNil(o.GrantDuration) {
+		toSerialize["grantDuration"] = o.GrantDuration
 	}
 	if !IsNil(o.IdentityUserId) {
 		toSerialize["identityUserId"] = o.IdentityUserId
@@ -330,10 +327,10 @@ func (o *C1ApiTaskV1TaskTypeGrant) UnmarshalJSON(bytes []byte) (err error) {
 	additionalProperties := make(map[string]interface{})
 
 	if err = json.Unmarshal(bytes, &additionalProperties); err == nil {
-		delete(additionalProperties, "appEntitlementIds")
+		delete(additionalProperties, "appEntitlementId")
 		delete(additionalProperties, "appId")
 		delete(additionalProperties, "appUserId")
-		delete(additionalProperties, "entitlementInstances")
+		delete(additionalProperties, "grantDuration")
 		delete(additionalProperties, "identityUserId")
 		delete(additionalProperties, "outcome")
 		delete(additionalProperties, "outcomeTime")

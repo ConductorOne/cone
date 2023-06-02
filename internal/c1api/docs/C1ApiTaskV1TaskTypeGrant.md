@@ -4,10 +4,10 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**AppEntitlementIds** | Pointer to **[]string** | The appEntitlementIds field. | [optional] 
+**AppEntitlementId** | Pointer to **string** | The appEntitlementId field. | [optional] 
 **AppId** | Pointer to **string** | The appId field. | [optional] 
 **AppUserId** | Pointer to **string** | The appUserId field. | [optional] 
-**EntitlementInstances** | Pointer to [**[]C1ApiTaskV1GrantEntitlementInstance**](C1ApiTaskV1GrantEntitlementInstance.md) | The entitlementInstances field. | [optional] 
+**GrantDuration** | Pointer to **string** |  | [optional] 
 **IdentityUserId** | Pointer to **string** | The identityUserId field. | [optional] 
 **Outcome** | Pointer to **string** | The outcome field. | [optional] 
 **OutcomeTime** | Pointer to **time.Time** |  | [optional] 
@@ -31,41 +31,31 @@ NewC1ApiTaskV1TaskTypeGrantWithDefaults instantiates a new C1ApiTaskV1TaskTypeGr
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
-### GetAppEntitlementIds
+### GetAppEntitlementId
 
-`func (o *C1ApiTaskV1TaskTypeGrant) GetAppEntitlementIds() []string`
+`func (o *C1ApiTaskV1TaskTypeGrant) GetAppEntitlementId() string`
 
-GetAppEntitlementIds returns the AppEntitlementIds field if non-nil, zero value otherwise.
+GetAppEntitlementId returns the AppEntitlementId field if non-nil, zero value otherwise.
 
-### GetAppEntitlementIdsOk
+### GetAppEntitlementIdOk
 
-`func (o *C1ApiTaskV1TaskTypeGrant) GetAppEntitlementIdsOk() (*[]string, bool)`
+`func (o *C1ApiTaskV1TaskTypeGrant) GetAppEntitlementIdOk() (*string, bool)`
 
-GetAppEntitlementIdsOk returns a tuple with the AppEntitlementIds field if it's non-nil, zero value otherwise
+GetAppEntitlementIdOk returns a tuple with the AppEntitlementId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetAppEntitlementIds
+### SetAppEntitlementId
 
-`func (o *C1ApiTaskV1TaskTypeGrant) SetAppEntitlementIds(v []string)`
+`func (o *C1ApiTaskV1TaskTypeGrant) SetAppEntitlementId(v string)`
 
-SetAppEntitlementIds sets AppEntitlementIds field to given value.
+SetAppEntitlementId sets AppEntitlementId field to given value.
 
-### HasAppEntitlementIds
+### HasAppEntitlementId
 
-`func (o *C1ApiTaskV1TaskTypeGrant) HasAppEntitlementIds() bool`
+`func (o *C1ApiTaskV1TaskTypeGrant) HasAppEntitlementId() bool`
 
-HasAppEntitlementIds returns a boolean if a field has been set.
+HasAppEntitlementId returns a boolean if a field has been set.
 
-### SetAppEntitlementIdsNil
-
-`func (o *C1ApiTaskV1TaskTypeGrant) SetAppEntitlementIdsNil(b bool)`
-
- SetAppEntitlementIdsNil sets the value for AppEntitlementIds to be an explicit nil
-
-### UnsetAppEntitlementIds
-`func (o *C1ApiTaskV1TaskTypeGrant) UnsetAppEntitlementIds()`
-
-UnsetAppEntitlementIds ensures that no value is present for AppEntitlementIds, not even an explicit nil
 ### GetAppId
 
 `func (o *C1ApiTaskV1TaskTypeGrant) GetAppId() string`
@@ -116,41 +106,31 @@ SetAppUserId sets AppUserId field to given value.
 
 HasAppUserId returns a boolean if a field has been set.
 
-### GetEntitlementInstances
+### GetGrantDuration
 
-`func (o *C1ApiTaskV1TaskTypeGrant) GetEntitlementInstances() []C1ApiTaskV1GrantEntitlementInstance`
+`func (o *C1ApiTaskV1TaskTypeGrant) GetGrantDuration() string`
 
-GetEntitlementInstances returns the EntitlementInstances field if non-nil, zero value otherwise.
+GetGrantDuration returns the GrantDuration field if non-nil, zero value otherwise.
 
-### GetEntitlementInstancesOk
+### GetGrantDurationOk
 
-`func (o *C1ApiTaskV1TaskTypeGrant) GetEntitlementInstancesOk() (*[]C1ApiTaskV1GrantEntitlementInstance, bool)`
+`func (o *C1ApiTaskV1TaskTypeGrant) GetGrantDurationOk() (*string, bool)`
 
-GetEntitlementInstancesOk returns a tuple with the EntitlementInstances field if it's non-nil, zero value otherwise
+GetGrantDurationOk returns a tuple with the GrantDuration field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetEntitlementInstances
+### SetGrantDuration
 
-`func (o *C1ApiTaskV1TaskTypeGrant) SetEntitlementInstances(v []C1ApiTaskV1GrantEntitlementInstance)`
+`func (o *C1ApiTaskV1TaskTypeGrant) SetGrantDuration(v string)`
 
-SetEntitlementInstances sets EntitlementInstances field to given value.
+SetGrantDuration sets GrantDuration field to given value.
 
-### HasEntitlementInstances
+### HasGrantDuration
 
-`func (o *C1ApiTaskV1TaskTypeGrant) HasEntitlementInstances() bool`
+`func (o *C1ApiTaskV1TaskTypeGrant) HasGrantDuration() bool`
 
-HasEntitlementInstances returns a boolean if a field has been set.
+HasGrantDuration returns a boolean if a field has been set.
 
-### SetEntitlementInstancesNil
-
-`func (o *C1ApiTaskV1TaskTypeGrant) SetEntitlementInstancesNil(b bool)`
-
- SetEntitlementInstancesNil sets the value for EntitlementInstances to be an explicit nil
-
-### UnsetEntitlementInstances
-`func (o *C1ApiTaskV1TaskTypeGrant) UnsetEntitlementInstances()`
-
-UnsetEntitlementInstances ensures that no value is present for EntitlementInstances, not even an explicit nil
 ### GetIdentityUserId
 
 `func (o *C1ApiTaskV1TaskTypeGrant) GetIdentityUserId() string`

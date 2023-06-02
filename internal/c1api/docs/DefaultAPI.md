@@ -4,15 +4,15 @@ All URIs are relative to *https://invalid-example.logan.dev.ductone.com:2443*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**C1ApiAppV1AppResourceServiceGet**](DefaultAPI.md#C1ApiAppV1AppResourceServiceGet) | **Get** /api/v1/app_resource/{app_id}/{app_resource_type_id}/{id} | 
-[**C1ApiAppV1AppResourceTypeServiceGet**](DefaultAPI.md#C1ApiAppV1AppResourceTypeServiceGet) | **Get** /api/v1/app_resource_type/{app_id}/{id} | 
-[**C1ApiAppV1AppsGet**](DefaultAPI.md#C1ApiAppV1AppsGet) | **Get** /api/v1/app/{id} | 
+[**C1ApiAppV1AppResourceServiceGet**](DefaultAPI.md#C1ApiAppV1AppResourceServiceGet) | **Get** /api/v1/apps/{app_id}/resource_types/{app_resource_type_id}/resource/{id} | 
+[**C1ApiAppV1AppResourceTypeServiceGet**](DefaultAPI.md#C1ApiAppV1AppResourceTypeServiceGet) | **Get** /api/v1/apps/{app_id}/resource_types/{id} | 
+[**C1ApiAppV1AppsGet**](DefaultAPI.md#C1ApiAppV1AppsGet) | **Get** /api/v1/apps/{id} | 
 [**C1ApiAuthV1AuthIntrospect**](DefaultAPI.md#C1ApiAuthV1AuthIntrospect) | **Get** /api/v1/auth/introspect | 
-[**C1ApiRequestcatalogV1RequestCatalogSearchServiceSearchEntitlements**](DefaultAPI.md#C1ApiRequestcatalogV1RequestCatalogSearchServiceSearchEntitlements) | **Post** /api/v1/entitlement/search | 
+[**C1ApiRequestcatalogV1RequestCatalogSearchServiceSearchEntitlements**](DefaultAPI.md#C1ApiRequestcatalogV1RequestCatalogSearchServiceSearchEntitlements) | **Post** /api/v1/search/request_catalog/entitlements | 
 [**C1ApiTaskV1TaskServiceCreateGrantTask**](DefaultAPI.md#C1ApiTaskV1TaskServiceCreateGrantTask) | **Post** /api/v1/task/grant | 
 [**C1ApiTaskV1TaskServiceCreateRevokeTask**](DefaultAPI.md#C1ApiTaskV1TaskServiceCreateRevokeTask) | **Post** /api/v1/task/revoke | 
 [**C1ApiTaskV1TaskServiceGet**](DefaultAPI.md#C1ApiTaskV1TaskServiceGet) | **Get** /api/v1/tasks/{id} | 
-[**C1ApiUserV1UserServiceGet**](DefaultAPI.md#C1ApiUserV1UserServiceGet) | **Get** /api/v1/user/get/{id} | 
+[**C1ApiUserV1UserServiceGet**](DefaultAPI.md#C1ApiUserV1UserServiceGet) | **Get** /api/v1/users/{id} | 
 
 
 
@@ -167,7 +167,7 @@ No authorization required
 
 ## C1ApiAppV1AppsGet
 
-> C1ApiAppV1App C1ApiAppV1AppsGet(ctx, id).Execute()
+> C1ApiAppV1GetAppResponse C1ApiAppV1AppsGet(ctx, id).Execute()
 
 
 
@@ -195,7 +195,7 @@ func main() {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.C1ApiAppV1AppsGet``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
     }
-    // response from `C1ApiAppV1AppsGet`: C1ApiAppV1App
+    // response from `C1ApiAppV1AppsGet`: C1ApiAppV1GetAppResponse
     fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.C1ApiAppV1AppsGet`: %v\n", resp)
 }
 ```
@@ -219,7 +219,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**C1ApiAppV1App**](C1ApiAppV1App.md)
+[**C1ApiAppV1GetAppResponse**](C1ApiAppV1GetAppResponse.md)
 
 ### Authorization
 

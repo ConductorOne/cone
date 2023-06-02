@@ -6,10 +6,8 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Approval** | Pointer to [**NullableC1ApiPolicyV1ApprovalInstance**](C1ApiPolicyV1ApprovalInstance.md) |  | [optional] 
 **Id** | Pointer to **string** | The id field. | [optional] 
-**Notify** | Pointer to **map[string]interface{}** | The NotificationInstance message. | [optional] 
 **Provision** | Pointer to [**NullableC1ApiPolicyV1ProvisionInstance**](C1ApiPolicyV1ProvisionInstance.md) |  | [optional] 
 **State** | Pointer to **string** | The state field. | [optional] 
-**Webhook** | Pointer to **map[string]interface{}** | The WebhookInstance message. | [optional] 
 
 ## Methods
 
@@ -90,41 +88,6 @@ SetId sets Id field to given value.
 
 HasId returns a boolean if a field has been set.
 
-### GetNotify
-
-`func (o *C1ApiPolicyV1PolicyStepInstance) GetNotify() map[string]interface{}`
-
-GetNotify returns the Notify field if non-nil, zero value otherwise.
-
-### GetNotifyOk
-
-`func (o *C1ApiPolicyV1PolicyStepInstance) GetNotifyOk() (*map[string]interface{}, bool)`
-
-GetNotifyOk returns a tuple with the Notify field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetNotify
-
-`func (o *C1ApiPolicyV1PolicyStepInstance) SetNotify(v map[string]interface{})`
-
-SetNotify sets Notify field to given value.
-
-### HasNotify
-
-`func (o *C1ApiPolicyV1PolicyStepInstance) HasNotify() bool`
-
-HasNotify returns a boolean if a field has been set.
-
-### SetNotifyNil
-
-`func (o *C1ApiPolicyV1PolicyStepInstance) SetNotifyNil(b bool)`
-
- SetNotifyNil sets the value for Notify to be an explicit nil
-
-### UnsetNotify
-`func (o *C1ApiPolicyV1PolicyStepInstance) UnsetNotify()`
-
-UnsetNotify ensures that no value is present for Notify, not even an explicit nil
 ### GetProvision
 
 `func (o *C1ApiPolicyV1PolicyStepInstance) GetProvision() C1ApiPolicyV1ProvisionInstance`
@@ -185,41 +148,6 @@ SetState sets State field to given value.
 
 HasState returns a boolean if a field has been set.
 
-### GetWebhook
-
-`func (o *C1ApiPolicyV1PolicyStepInstance) GetWebhook() map[string]interface{}`
-
-GetWebhook returns the Webhook field if non-nil, zero value otherwise.
-
-### GetWebhookOk
-
-`func (o *C1ApiPolicyV1PolicyStepInstance) GetWebhookOk() (*map[string]interface{}, bool)`
-
-GetWebhookOk returns a tuple with the Webhook field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetWebhook
-
-`func (o *C1ApiPolicyV1PolicyStepInstance) SetWebhook(v map[string]interface{})`
-
-SetWebhook sets Webhook field to given value.
-
-### HasWebhook
-
-`func (o *C1ApiPolicyV1PolicyStepInstance) HasWebhook() bool`
-
-HasWebhook returns a boolean if a field has been set.
-
-### SetWebhookNil
-
-`func (o *C1ApiPolicyV1PolicyStepInstance) SetWebhookNil(b bool)`
-
- SetWebhookNil sets the value for Webhook to be an explicit nil
-
-### UnsetWebhook
-`func (o *C1ApiPolicyV1PolicyStepInstance) UnsetWebhook()`
-
-UnsetWebhook ensures that no value is present for Webhook, not even an explicit nil
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

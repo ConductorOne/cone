@@ -157,40 +157,6 @@ components:
                     description: The appResourceTypePath field.
                     type: string
             type: object
-        c1.api.app.v1.AppProfile:
-            description: The AppProfile message.
-            properties:
-                appEntitlementIds:
-                    description: The appEntitlementIds field.
-                    items:
-                        type: string
-                    nullable: true
-                    type: array
-                appId:
-                    description: The appId field.
-                    type: string
-                createdAt:
-                    format: date-time
-                    type: string
-                deletedAt:
-                    format: date-time
-                    type: string
-                description:
-                    description: The description field.
-                    type: string
-                displayName:
-                    description: The displayName field.
-                    type: string
-                id:
-                    description: The id field.
-                    type: string
-                notificationToken:
-                    description: The notificationToken field.
-                    type: string
-                updatedAt:
-                    format: date-time
-                    type: string
-            type: object
         c1.api.app.v1.AppResource:
             description: The AppResource message.
             properties:
@@ -307,12 +273,15 @@ components:
                     description: The resourceTypePath field.
                     type: string
             type: object
+        c1.api.app.v1.GetAppResponse:
+            description: The GetAppResponse message.
+            properties:
+                app:
+                    $ref: '#/components/schemas/c1.api.app.v1.App'
+            type: object
         c1.api.auth.v1.IntrospectResponse:
             description: The IntrospectResponse message.
             properties:
-                accessTokenId:
-                    description: The accessTokenId field.
-                    type: string
                 features:
                     description: The features field.
                     items:
@@ -334,9 +303,6 @@ components:
                         type: string
                     nullable: true
                     type: array
-                tenantId:
-                    description: The tenantId field.
-                    type: string
                 userId:
                     description: The userId field.
                     type: string
@@ -595,14 +561,6 @@ components:
                     nullable: true
                     type: array
             type: object
-        c1.api.policy.v1.Notification:
-            description: The Notification message.
-            nullable: true
-            type: object
-        c1.api.policy.v1.NotificationInstance:
-            description: The NotificationInstance message.
-            nullable: true
-            type: object
         c1.api.policy.v1.Policy:
             description: The Policy message.
             properties:
@@ -696,18 +654,12 @@ components:
 
                 This message contains a oneof named step. Only a single field of the following list may be set at a time:
                   - approval
-                  - webhook
-                  - notify
                   - provision
             properties:
                 approval:
                     $ref: '#/components/schemas/c1.api.policy.v1.Approval'
-                notify:
-                    $ref: '#/components/schemas/c1.api.policy.v1.Notification'
                 provision:
                     $ref: '#/components/schemas/c1.api.policy.v1.Provision'
-                webhook:
-                    $ref: '#/components/schemas/c1.api.policy.v1.Webhook'
             type: object
         c1.api.policy.v1.PolicyStepInstance:
             description: |
@@ -715,8 +667,6 @@ components:
 
                 This message contains a oneof named instance. Only a single field of the following list may be set at a time:
                   - approval
-                  - webhook
-                  - notify
                   - provision
             properties:
                 approval:
@@ -724,8 +674,6 @@ components:
                 id:
                     description: The id field.
                     type: string
-                notify:
-                    $ref: '#/components/schemas/c1.api.policy.v1.NotificationInstance'
                 provision:
                     $ref: '#/components/schemas/c1.api.policy.v1.ProvisionInstance'
                 state:
@@ -735,8 +683,6 @@ components:
                         - POLICY_STEP_STATE_ACTIVE
                         - POLICY_STEP_STATE_DONE
                     type: string
-                webhook:
-                    $ref: '#/components/schemas/c1.api.policy.v1.WebhookInstance'
             type: object
         c1.api.policy.v1.PolicySteps:
             description: The PolicySteps message.
@@ -895,14 +841,6 @@ components:
                     nullable: true
                     type: array
             type: object
-        c1.api.policy.v1.Webhook:
-            description: The Webhook message.
-            nullable: true
-            type: object
-        c1.api.policy.v1.WebhookInstance:
-            description: The WebhookInstance message.
-            nullable: true
-            type: object
         c1.api.requestcatalog.v1.RequestCatalogSearchServiceSearchEntitlementsRequest:
             description: The RequestCatalogSearchServiceSearchEntitlementsRequest message.
             properties:
@@ -954,6 +892,7 @@ components:
                 externalRefSource:
                     description: The externalRefSource field.
                     enum:
+                        - UNSPECIFIED
                         - JIRA
                     type: string
                 name:
@@ -961,23 +900,6 @@ components:
                     type: string
                 url:
                     description: The url field.
-                    type: string
-            type: object
-        c1.api.task.v1.GrantEntitlementInstance:
-            description: The GrantEntitlementInstance message.
-            properties:
-                entitlementId:
-                    description: The entitlementId field.
-                    type: string
-                grantDuration:
-                    format: duration
-                    type: string
-                state:
-                    description: The state field.
-                    enum:
-                        - GRANT_ENTITLEMENT_STATE_UNSPECIFIED
-                        - GRANT_ENTITLEMENT_STATE_APPROVED
-                        - GRANT_ENTITLEMENT_STATE_DENIED
                     type: string
             type: object
         c1.api.task.v1.Task:
@@ -1149,9 +1071,6 @@ components:
             description: The TaskRevokeSourceReview message.
             nullable: true
             properties:
-                accessReviewDisplayName:
-                    description: The accessReviewDisplayName field.
-                    type: string
                 accessReviewId:
                     description: The accessReviewId field.
                     type: string
@@ -1269,41 +1188,13 @@ components:
                   - grant
                   - revoke
                   - certify
-                  - accessRequest
             properties:
-                accessRequest:
-                    $ref: '#/components/schemas/c1.api.task.v1.TaskTypeAccessRequest'
                 certify:
                     $ref: '#/components/schemas/c1.api.task.v1.TaskTypeCertify'
                 grant:
                     $ref: '#/components/schemas/c1.api.task.v1.TaskTypeGrant'
                 revoke:
                     $ref: '#/components/schemas/c1.api.task.v1.TaskTypeRevoke'
-            type: object
-        c1.api.task.v1.TaskTypeAccessRequest:
-            description: The TaskTypeAccessRequest message.
-            nullable: true
-            properties:
-                appProfile:
-                    $ref: '#/components/schemas/c1.api.app.v1.AppProfile'
-                appUserId:
-                    description: The appUserId field.
-                    type: string
-                identityUserId:
-                    description: The identityUserId field.
-                    type: string
-                outcome:
-                    description: The outcome field.
-                    enum:
-                        - ACCESS_REQUEST_OUTCOME_UNSPECIFIED
-                        - ACCESS_REQUEST_OUTCOME_APPROVED
-                        - ACCESS_REQUEST_OUTCOME_DENIED
-                        - ACCESS_REQUEST_OUTCOME_ERROR
-                        - ACCESS_REQUEST_OUTCOME_CANCELLED
-                    type: string
-                outcomeTime:
-                    format: date-time
-                    type: string
             type: object
         c1.api.task.v1.TaskTypeCertify:
             description: The TaskTypeCertify message.
@@ -1315,12 +1206,9 @@ components:
                 accessReviewSelection:
                     description: The accessReviewSelection field.
                     type: string
-                appEntitlementIds:
-                    description: The appEntitlementIds field.
-                    items:
-                        type: string
-                    nullable: true
-                    type: array
+                appEntitlementId:
+                    description: The appEntitlementId field.
+                    type: string
                 appId:
                     description: The appId field.
                     type: string
@@ -1347,24 +1235,18 @@ components:
             description: The TaskTypeGrant message.
             nullable: true
             properties:
-                appEntitlementIds:
-                    description: The appEntitlementIds field.
-                    items:
-                        type: string
-                    nullable: true
-                    type: array
+                appEntitlementId:
+                    description: The appEntitlementId field.
+                    type: string
                 appId:
                     description: The appId field.
                     type: string
                 appUserId:
                     description: The appUserId field.
                     type: string
-                entitlementInstances:
-                    description: The entitlementInstances field.
-                    items:
-                        $ref: '#/components/schemas/c1.api.task.v1.GrantEntitlementInstance'
-                    nullable: true
-                    type: array
+                grantDuration:
+                    format: duration
+                    type: string
                 identityUserId:
                     description: The identityUserId field.
                     type: string
@@ -1385,12 +1267,9 @@ components:
             description: The TaskTypeRevoke message.
             nullable: true
             properties:
-                appEntitlementIds:
-                    description: The appEntitlementIds field.
-                    items:
-                        type: string
-                    nullable: true
-                    type: array
+                appEntitlementId:
+                    description: The appEntitlementId field.
+                    type: string
                 appId:
                     description: The appId field.
                     type: string
@@ -1614,25 +1493,7 @@ info:
     version: 0.1.0-alpha
 openapi: 3.0.3
 paths:
-    /api/v1/app/{id}:
-        get:
-            description: Invokes the c1.api.app.v1.Apps.Get method.
-            operationId: c1.api.app.v1.Apps.Get
-            parameters:
-                - in: path
-                  name: id
-                  required: true
-                  schema:
-                    description: The id field.
-                    type: string
-            responses:
-                "200":
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/c1.api.app.v1.App'
-                    description: Successful response
-    /api/v1/app_resource/{app_id}/{app_resource_type_id}/{id}:
+    /api/v1/apps/{app_id}/resource_types/{app_resource_type_id}/resource/{id}:
         get:
             description: Invokes the c1.api.app.v1.AppResourceService.Get method.
             operationId: c1.api.app.v1.AppResourceService.Get
@@ -1662,7 +1523,7 @@ paths:
                             schema:
                                 $ref: '#/components/schemas/c1.api.app.v1.AppResourceServiceGetResponse'
                     description: Successful response
-    /api/v1/app_resource_type/{app_id}/{id}:
+    /api/v1/apps/{app_id}/resource_types/{id}:
         get:
             description: Invokes the c1.api.app.v1.AppResourceTypeService.Get method.
             operationId: c1.api.app.v1.AppResourceTypeService.Get
@@ -1686,6 +1547,24 @@ paths:
                             schema:
                                 $ref: '#/components/schemas/c1.api.app.v1.AppResourceTypeServiceGetResponse'
                     description: Successful response
+    /api/v1/apps/{id}:
+        get:
+            description: Invokes the c1.api.app.v1.Apps.Get method.
+            operationId: c1.api.app.v1.Apps.Get
+            parameters:
+                - in: path
+                  name: id
+                  required: true
+                  schema:
+                    description: The id field.
+                    type: string
+            responses:
+                "200":
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/c1.api.app.v1.GetAppResponse'
+                    description: Successful response
     /api/v1/auth/introspect:
         get:
             description: Invokes the c1.api.auth.v1.Auth.Introspect method.
@@ -1697,7 +1576,7 @@ paths:
                             schema:
                                 $ref: '#/components/schemas/c1.api.auth.v1.IntrospectResponse'
                     description: Successful response
-    /api/v1/entitlement/search:
+    /api/v1/search/request_catalog/entitlements:
         post:
             description: Invokes the c1.api.requestcatalog.v1.RequestCatalogSearchService.SearchEntitlements method.
             operationId: c1.api.requestcatalog.v1.RequestCatalogSearchService.SearchEntitlements
@@ -1763,7 +1642,7 @@ paths:
                             schema:
                                 $ref: '#/components/schemas/c1.api.task.v1.TaskServiceGetResponse'
                     description: Successful response
-    /api/v1/user/get/{id}:
+    /api/v1/users/{id}:
         get:
             description: Invokes the c1.api.user.v1.UserService.Get method.
             operationId: c1.api.user.v1.UserService.Get

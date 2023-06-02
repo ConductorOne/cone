@@ -19,8 +19,6 @@ var _ MappedNullable = &C1ApiAuthV1IntrospectResponse{}
 
 // C1ApiAuthV1IntrospectResponse The IntrospectResponse message.
 type C1ApiAuthV1IntrospectResponse struct {
-	// The accessTokenId field.
-	AccessTokenId *string `json:"accessTokenId,omitempty"`
 	// The features field.
 	Features []string `json:"features,omitempty"`
 	// The permissions field.
@@ -29,8 +27,6 @@ type C1ApiAuthV1IntrospectResponse struct {
 	PrincipleId *string `json:"principleId,omitempty"`
 	// The roles field.
 	Roles []string `json:"roles,omitempty"`
-	// The tenantId field.
-	TenantId *string `json:"tenantId,omitempty"`
 	// The userId field.
 	UserId *string `json:"userId,omitempty"`
 	AdditionalProperties map[string]interface{}
@@ -53,38 +49,6 @@ func NewC1ApiAuthV1IntrospectResponse() *C1ApiAuthV1IntrospectResponse {
 func NewC1ApiAuthV1IntrospectResponseWithDefaults() *C1ApiAuthV1IntrospectResponse {
 	this := C1ApiAuthV1IntrospectResponse{}
 	return &this
-}
-
-// GetAccessTokenId returns the AccessTokenId field value if set, zero value otherwise.
-func (o *C1ApiAuthV1IntrospectResponse) GetAccessTokenId() string {
-	if o == nil || IsNil(o.AccessTokenId) {
-		var ret string
-		return ret
-	}
-	return *o.AccessTokenId
-}
-
-// GetAccessTokenIdOk returns a tuple with the AccessTokenId field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *C1ApiAuthV1IntrospectResponse) GetAccessTokenIdOk() (*string, bool) {
-	if o == nil || IsNil(o.AccessTokenId) {
-		return nil, false
-	}
-	return o.AccessTokenId, true
-}
-
-// HasAccessTokenId returns a boolean if a field has been set.
-func (o *C1ApiAuthV1IntrospectResponse) HasAccessTokenId() bool {
-	if o != nil && !IsNil(o.AccessTokenId) {
-		return true
-	}
-
-	return false
-}
-
-// SetAccessTokenId gets a reference to the given string and assigns it to the AccessTokenId field.
-func (o *C1ApiAuthV1IntrospectResponse) SetAccessTokenId(v string) {
-	o.AccessTokenId = &v
 }
 
 // GetFeatures returns the Features field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -218,38 +182,6 @@ func (o *C1ApiAuthV1IntrospectResponse) SetRoles(v []string) {
 	o.Roles = v
 }
 
-// GetTenantId returns the TenantId field value if set, zero value otherwise.
-func (o *C1ApiAuthV1IntrospectResponse) GetTenantId() string {
-	if o == nil || IsNil(o.TenantId) {
-		var ret string
-		return ret
-	}
-	return *o.TenantId
-}
-
-// GetTenantIdOk returns a tuple with the TenantId field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *C1ApiAuthV1IntrospectResponse) GetTenantIdOk() (*string, bool) {
-	if o == nil || IsNil(o.TenantId) {
-		return nil, false
-	}
-	return o.TenantId, true
-}
-
-// HasTenantId returns a boolean if a field has been set.
-func (o *C1ApiAuthV1IntrospectResponse) HasTenantId() bool {
-	if o != nil && !IsNil(o.TenantId) {
-		return true
-	}
-
-	return false
-}
-
-// SetTenantId gets a reference to the given string and assigns it to the TenantId field.
-func (o *C1ApiAuthV1IntrospectResponse) SetTenantId(v string) {
-	o.TenantId = &v
-}
-
 // GetUserId returns the UserId field value if set, zero value otherwise.
 func (o *C1ApiAuthV1IntrospectResponse) GetUserId() string {
 	if o == nil || IsNil(o.UserId) {
@@ -292,9 +224,6 @@ func (o C1ApiAuthV1IntrospectResponse) MarshalJSON() ([]byte, error) {
 
 func (o C1ApiAuthV1IntrospectResponse) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.AccessTokenId) {
-		toSerialize["accessTokenId"] = o.AccessTokenId
-	}
 	if o.Features != nil {
 		toSerialize["features"] = o.Features
 	}
@@ -306,9 +235,6 @@ func (o C1ApiAuthV1IntrospectResponse) ToMap() (map[string]interface{}, error) {
 	}
 	if o.Roles != nil {
 		toSerialize["roles"] = o.Roles
-	}
-	if !IsNil(o.TenantId) {
-		toSerialize["tenantId"] = o.TenantId
 	}
 	if !IsNil(o.UserId) {
 		toSerialize["userId"] = o.UserId
@@ -331,12 +257,10 @@ func (o *C1ApiAuthV1IntrospectResponse) UnmarshalJSON(bytes []byte) (err error) 
 	additionalProperties := make(map[string]interface{})
 
 	if err = json.Unmarshal(bytes, &additionalProperties); err == nil {
-		delete(additionalProperties, "accessTokenId")
 		delete(additionalProperties, "features")
 		delete(additionalProperties, "permissions")
 		delete(additionalProperties, "principleId")
 		delete(additionalProperties, "roles")
-		delete(additionalProperties, "tenantId")
 		delete(additionalProperties, "userId")
 		o.AdditionalProperties = additionalProperties
 	}

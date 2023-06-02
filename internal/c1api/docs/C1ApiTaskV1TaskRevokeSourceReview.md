@@ -4,7 +4,6 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**AccessReviewDisplayName** | Pointer to **string** | The accessReviewDisplayName field. | [optional] 
 **AccessReviewId** | Pointer to **string** | The accessReviewId field. | [optional] 
 **CertTicketId** | Pointer to **string** | The certTicketId field. | [optional] 
 
@@ -26,31 +25,6 @@ will change when the set of required properties is changed
 NewC1ApiTaskV1TaskRevokeSourceReviewWithDefaults instantiates a new C1ApiTaskV1TaskRevokeSourceReview object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
-
-### GetAccessReviewDisplayName
-
-`func (o *C1ApiTaskV1TaskRevokeSourceReview) GetAccessReviewDisplayName() string`
-
-GetAccessReviewDisplayName returns the AccessReviewDisplayName field if non-nil, zero value otherwise.
-
-### GetAccessReviewDisplayNameOk
-
-`func (o *C1ApiTaskV1TaskRevokeSourceReview) GetAccessReviewDisplayNameOk() (*string, bool)`
-
-GetAccessReviewDisplayNameOk returns a tuple with the AccessReviewDisplayName field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetAccessReviewDisplayName
-
-`func (o *C1ApiTaskV1TaskRevokeSourceReview) SetAccessReviewDisplayName(v string)`
-
-SetAccessReviewDisplayName sets AccessReviewDisplayName field to given value.
-
-### HasAccessReviewDisplayName
-
-`func (o *C1ApiTaskV1TaskRevokeSourceReview) HasAccessReviewDisplayName() bool`
-
-HasAccessReviewDisplayName returns a boolean if a field has been set.
 
 ### GetAccessReviewId
 

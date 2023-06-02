@@ -4,12 +4,10 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**AccessTokenId** | Pointer to **string** | The accessTokenId field. | [optional] 
 **Features** | Pointer to **[]string** | The features field. | [optional] 
 **Permissions** | Pointer to **[]string** | The permissions field. | [optional] 
 **PrincipleId** | Pointer to **string** | The principleId field. | [optional] 
 **Roles** | Pointer to **[]string** | The roles field. | [optional] 
-**TenantId** | Pointer to **string** | The tenantId field. | [optional] 
 **UserId** | Pointer to **string** | The userId field. | [optional] 
 
 ## Methods
@@ -30,31 +28,6 @@ will change when the set of required properties is changed
 NewC1ApiAuthV1IntrospectResponseWithDefaults instantiates a new C1ApiAuthV1IntrospectResponse object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
-
-### GetAccessTokenId
-
-`func (o *C1ApiAuthV1IntrospectResponse) GetAccessTokenId() string`
-
-GetAccessTokenId returns the AccessTokenId field if non-nil, zero value otherwise.
-
-### GetAccessTokenIdOk
-
-`func (o *C1ApiAuthV1IntrospectResponse) GetAccessTokenIdOk() (*string, bool)`
-
-GetAccessTokenIdOk returns a tuple with the AccessTokenId field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetAccessTokenId
-
-`func (o *C1ApiAuthV1IntrospectResponse) SetAccessTokenId(v string)`
-
-SetAccessTokenId sets AccessTokenId field to given value.
-
-### HasAccessTokenId
-
-`func (o *C1ApiAuthV1IntrospectResponse) HasAccessTokenId() bool`
-
-HasAccessTokenId returns a boolean if a field has been set.
 
 ### GetFeatures
 
@@ -186,31 +159,6 @@ HasRoles returns a boolean if a field has been set.
 `func (o *C1ApiAuthV1IntrospectResponse) UnsetRoles()`
 
 UnsetRoles ensures that no value is present for Roles, not even an explicit nil
-### GetTenantId
-
-`func (o *C1ApiAuthV1IntrospectResponse) GetTenantId() string`
-
-GetTenantId returns the TenantId field if non-nil, zero value otherwise.
-
-### GetTenantIdOk
-
-`func (o *C1ApiAuthV1IntrospectResponse) GetTenantIdOk() (*string, bool)`
-
-GetTenantIdOk returns a tuple with the TenantId field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetTenantId
-
-`func (o *C1ApiAuthV1IntrospectResponse) SetTenantId(v string)`
-
-SetTenantId sets TenantId field to given value.
-
-### HasTenantId
-
-`func (o *C1ApiAuthV1IntrospectResponse) HasTenantId() bool`
-
-HasTenantId returns a boolean if a field has been set.
-
 ### GetUserId
 
 `func (o *C1ApiAuthV1IntrospectResponse) GetUserId() string`

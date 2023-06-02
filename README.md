@@ -56,8 +56,8 @@ To get started with Cone, you need to first create an API key in ConductorOne:
    ```yaml
    profiles:
        default:
-           client-id: lovely-vampire-20397@c1dev.logan.dev.ductone.com/pcc
-           client-secret: secret-token:conductorone.com:v1:eyJrdHkiOiJPS1AiLCJjcnYiOiJFZDI1NTE5IiwieCI6IkVjX3hZWlJ1V3JjQk0wN05lMXY3dEkyRDNoX3dFWmhFWHNvUzluMjh3djQiLCJkIjoiRjZLWGFNSE9idWNqOUJDdjJlRVJyaTJLNkVxbHNmS19Oa2dzdHNxd3FFUSJ9
+           client-id: jealous-gorgon-41528@c1dev.logan.dev.ductone.com/pcc
+           client-secret: secret-token:conductorone.com:v1:eyJrdHkiOiJPS1AiLCJjcnYiOiJFZDI1NTE5IiwieCI6IkJ5ek9xbk5zOTFyQUxJTmc5blRvNV9oNVV3WDZNZXByU09za3VhamVIX28iLCJkIjoiQ0ZCVmR2U0dmMHhqOXNiUDZ4eW1xZ2RoSVRpN2doNldtaW9ZUTAzVEcxOCJ9
    ```
 
    Alternatively, you can set the `CONE_CLIENT_ID` and `CONE_CLIENT_SECRET` environment variables.

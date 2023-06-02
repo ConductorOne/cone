@@ -1,8 +1,6 @@
 package main
 
 import (
-	"context"
-
 	"github.com/conductorone/cone/internal/c1api"
 	"github.com/conductorone/cone/pkg/client"
 	"github.com/conductorone/cone/pkg/output"
@@ -20,7 +18,7 @@ func whoAmICmd() *cobra.Command {
 }
 
 func whoAmIRun(cmd *cobra.Command, args []string) error {
-	ctx := context.Background()
+	ctx := cmd.Context()
 
 	v, err := getSubViperForProfile(cmd)
 	if err != nil {

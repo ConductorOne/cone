@@ -1,7 +1,6 @@
 package main
 
 import (
-	"context"
 	"fmt"
 
 	"github.com/conductorone/cone/internal/c1api"
@@ -21,7 +20,7 @@ func getUserCmd() *cobra.Command {
 }
 
 func getUserRun(cmd *cobra.Command, args []string) error {
-	ctx := context.Background()
+	ctx := cmd.Context()
 
 	v, err := getSubViperForProfile(cmd)
 	if err != nil {

@@ -3,10 +3,12 @@ package main
 import (
 	"context"
 	"fmt"
+	"time"
 
 	"github.com/conductorone/cone/internal/c1api"
 	"github.com/conductorone/cone/pkg/client"
 	"github.com/conductorone/cone/pkg/output"
+	"github.com/pterm/pterm"
 	"github.com/spf13/cobra"
 )
 
@@ -17,11 +19,7 @@ func getCmd() *cobra.Command {
 		RunE:  runGet,
 	}
 
-	addWaitFlag(cmd)
-	addAppIdFlag(cmd)
-	addEntitlementIdFlag(cmd)
-
-	return cmd
+	return taskCmd(cmd)
 }
 
 func dropCmd() *cobra.Command {
@@ -31,10 +29,13 @@ func dropCmd() *cobra.Command {
 		RunE:  runDrop,
 	}
 
+	return taskCmd(cmd)
+}
+
+func taskCmd(cmd *cobra.Command) *cobra.Command {
 	addWaitFlag(cmd)
 	addAppIdFlag(cmd)
 	addEntitlementIdFlag(cmd)
-
 	return cmd
 }
 
@@ -59,7 +60,8 @@ func runDrop(cmd *cobra.Command, args []string) error {
 }
 
 func runTask(cmd *cobra.Command, args []string, run func(c client.C1Client, ctx context.Context, appId string, entitlementId string, userId string) (*c1api.C1ApiTaskV1Task, error)) error {
-	ctx := context.Background()
+	ctx := cmd.Context()
+
 	alias := ""
 
 	v, err := getSubViperForProfile(cmd)
@@ -118,27 +120,71 @@ func runTask(cmd *cobra.Command, args []string, run func(c client.C1Client, ctx 
 		return err
 	}
 
-	taskResp := C1ApiTaskV1Task(*task)
 	outputManager := output.NewManager(ctx, v)
+	taskResp := C1ApiTaskV1Task{task: task, client: c}
 	err = outputManager.Output(ctx, &taskResp)
 	if err != nil {
 		return err
 	}
 
+	if wait, _ := cmd.Flags().GetBool("wait"); wait {
+		spinner, _ := pterm.DefaultSpinner.Start("Waiting for ticket to close.")
+		for {
+			select {
+			case <-ctx.Done():
+				return ctx.Err()
+			case <-time.After(1 * time.Second):
+			}
+			task, err := c.GetTask(ctx, client.StringFromPtr(task.Id))
+			if err != nil {
+				return err
+			}
+
+			taskItem := task.TaskView.Task
+			taskResp = C1ApiTaskV1Task{task: taskItem, client: c}
+			err = outputManager.Output(ctx, &taskResp)
+			if err != nil {
+				return err
+			}
+			if client.StringFromPtr(taskItem.State) == "TASK_STATE_CLOSED" {
+				break
+			}
+		}
+		spinner.Success("Ticket closed.")
+	}
+
 	return nil
 }
 
-type C1ApiTaskV1Task c1api.C1ApiTaskV1Task
+type C1ApiTaskV1Task struct {
+	task   *c1api.C1ApiTaskV1Task
+	client client.C1Client
+}
 
 func (r *C1ApiTaskV1Task) Header() []string {
-	return []string{"Numeric Id", "Id", "Display Name", "State", "Processing"}
+	return []string{"Id", "Display Name", "State", "Processing"}
 }
 func (r *C1ApiTaskV1Task) Rows() [][]string {
 	return [][]string{{
-		client.StringFromPtr(r.NumericId),
-		client.StringFromPtr(r.Id),
-		client.StringFromPtr(r.DisplayName),
-		client.StringFromPtr(r.State),
-		client.StringFromPtr(r.Processing),
+		client.StringFromPtr(r.task.NumericId),
+		client.StringFromPtr(r.task.DisplayName),
+		taskStateToString[client.StringFromPtr(r.task.State)],
+		processStateToString[client.StringFromPtr(r.task.Processing)],
 	}}
+}
+
+var processStateToString = map[string]string{
+	"TASK_PROCESSING_TYPE_UNSPECIFIED": "Unknown Processing",
+	"TASK_PROCESSING_TYPE_PROCESSING":  "Processing",
+	"TASK_PROCESSING_TYPE_WAITING":     "Waiting for Action",
+	"TASK_PROCESSING_TYPE_DONE":        "Done",
+}
+
+var taskStateToString = map[string]string{
+	"TASK_STATE_OPEN":   "Open",
+	"TASK_STATE_CLOSED": "Closed",
+}
+
+func (r *C1ApiTaskV1Task) Pretext() string {
+	return fmt.Sprintf("Ticket URL: %s/task/%s", r.client.BaseURL(), client.StringFromPtr(r.task.NumericId))
 }

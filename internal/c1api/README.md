@@ -73,7 +73,7 @@ ctx = context.WithValue(context.Background(), c1api.ContextOperationServerVariab
 
 ## Documentation for API Endpoints
 
-All URIs are relative to *https://invalid-example.logan.dev.ductone.com:2443*
+All URIs are relative to *https://invalid-example.conductor.one*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
@@ -93,7 +93,9 @@ Class | Method | HTTP request | Description
  - [C1ApiAppV1App](docs/C1ApiAppV1App.md)
  - [C1ApiAppV1AppEntitlement](docs/C1ApiAppV1AppEntitlement.md)
  - [C1ApiAppV1AppEntitlementExpandMask](docs/C1ApiAppV1AppEntitlementExpandMask.md)
+ - [C1ApiAppV1AppEntitlementUserBinding](docs/C1ApiAppV1AppEntitlementUserBinding.md)
  - [C1ApiAppV1AppEntitlementView](docs/C1ApiAppV1AppEntitlementView.md)
+ - [C1ApiAppV1AppEntitlementWithUserBindings](docs/C1ApiAppV1AppEntitlementWithUserBindings.md)
  - [C1ApiAppV1AppResource](docs/C1ApiAppV1AppResource.md)
  - [C1ApiAppV1AppResourceServiceGetResponse](docs/C1ApiAppV1AppResourceServiceGetResponse.md)
  - [C1ApiAppV1AppResourceServiceGetResponseExpandedInner](docs/C1ApiAppV1AppResourceServiceGetResponseExpandedInner.md)

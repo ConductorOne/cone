@@ -1,6 +1,6 @@
 # \DefaultAPI
 
-All URIs are relative to *https://invalid-example.logan.dev.ductone.com:2443*
+All URIs are relative to *https://invalid-example.conductor.one*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------

@@ -90,7 +90,7 @@ func NewConfiguration() *Configuration {
 		Debug:            false,
 		Servers:          ServerConfigurations{
 			{
-				URL: "https://{tenantDomain}.logan.dev.ductone.com:2443",
+				URL: "https://{tenantDomain}.conductor.one",
 				Description: "The ConductorOne API server for the current tenant.",
 				Variables: map[string]ServerVariable{
 					"tenantDomain": ServerVariable{

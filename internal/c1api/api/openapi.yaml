@@ -5,7 +5,7 @@ info:
   version: 0.1.0-alpha
 servers:
 - description: The ConductorOne API server for the current tenant.
-  url: "https://{tenantDomain}.logan.dev.ductone.com:2443"
+  url: "https://{tenantDomain}.conductor.one"
   variables:
     tenantDomain:
       default: invalid-example
@@ -390,6 +390,35 @@ components:
           nullable: true
           type: array
       type: object
+    c1.api.app.v1.AppEntitlementUserBinding:
+      description: The AppEntitlementUserBinding message.
+      example:
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        deletedAt: 2000-01-23T04:56:07.000+00:00
+        deprovisionAt: 2000-01-23T04:56:07.000+00:00
+        appId: appId
+        appEntitlementId: appEntitlementId
+        appUserId: appUserId
+      properties:
+        appEntitlementId:
+          description: The appEntitlementId field.
+          type: string
+        appId:
+          description: The appId field.
+          type: string
+        appUserId:
+          description: The appUserId field.
+          type: string
+        createdAt:
+          format: date-time
+          type: string
+        deletedAt:
+          format: date-time
+          type: string
+        deprovisionAt:
+          format: date-time
+          type: string
+      type: object
     c1.api.app.v1.AppEntitlementView:
       description: The AppEntitlementView message.
       example:
@@ -441,6 +470,69 @@ components:
         appResourceTypePath:
           description: The appResourceTypePath field.
           type: string
+      type: object
+    c1.api.app.v1.AppEntitlementWithUserBindings:
+      description: The AppEntitlementWithUserBindings message.
+      example:
+        entitlement:
+          appEntitlement:
+            appResourceId: appResourceId
+            complianceFrameworkValueIds:
+            - complianceFrameworkValueIds
+            - complianceFrameworkValueIds
+            displayName: displayName
+            durationGrant: durationGrant
+            durationUnset: "{}"
+            systemBuiltin: true
+            grantCount: grantCount
+            description: description
+            certifyPolicyId: certifyPolicyId
+            appResourceTypeId: appResourceTypeId
+            createdAt: 2000-01-23T04:56:07.000+00:00
+            deletedAt: 2000-01-23T04:56:07.000+00:00
+            revokePolicyId: revokePolicyId
+            grantPolicyId: grantPolicyId
+            appId: appId
+            riskLevelValueId: riskLevelValueId
+            alias: alias
+            id: id
+            slug: slug
+            provisionerPolicy:
+              connector: "{}"
+              delegated:
+                appId: appId
+                entitlementId: entitlementId
+              manual:
+                instructions: instructions
+                userIds:
+                - userIds
+                - userIds
+            updatedAt: 2000-01-23T04:56:07.000+00:00
+          appResourcePath: appResourcePath
+          appResourceTypePath: appResourceTypePath
+          appPath: appPath
+        appEntitlementUserBindings:
+        - createdAt: 2000-01-23T04:56:07.000+00:00
+          deletedAt: 2000-01-23T04:56:07.000+00:00
+          deprovisionAt: 2000-01-23T04:56:07.000+00:00
+          appId: appId
+          appEntitlementId: appEntitlementId
+          appUserId: appUserId
+        - createdAt: 2000-01-23T04:56:07.000+00:00
+          deletedAt: 2000-01-23T04:56:07.000+00:00
+          deprovisionAt: 2000-01-23T04:56:07.000+00:00
+          appId: appId
+          appEntitlementId: appEntitlementId
+          appUserId: appUserId
+      properties:
+        appEntitlementUserBindings:
+          description: The appEntitlementUserBindings field.
+          items:
+            $ref: '#/components/schemas/c1.api.app.v1.AppEntitlementUserBinding'
+          nullable: true
+          type: array
+        entitlement:
+          $ref: '#/components/schemas/c1.api.app.v1.AppEntitlementView'
       type: object
     c1.api.app.v1.AppResource:
       description: The AppResource message.
@@ -2484,78 +2576,106 @@ components:
         - '@type': '@type'
         nextPageToken: nextPageToken
         list:
-        - appEntitlement:
-            appResourceId: appResourceId
-            complianceFrameworkValueIds:
-            - complianceFrameworkValueIds
-            - complianceFrameworkValueIds
-            displayName: displayName
-            durationGrant: durationGrant
-            durationUnset: "{}"
-            systemBuiltin: true
-            grantCount: grantCount
-            description: description
-            certifyPolicyId: certifyPolicyId
-            appResourceTypeId: appResourceTypeId
-            createdAt: 2000-01-23T04:56:07.000+00:00
+        - entitlement:
+            appEntitlement:
+              appResourceId: appResourceId
+              complianceFrameworkValueIds:
+              - complianceFrameworkValueIds
+              - complianceFrameworkValueIds
+              displayName: displayName
+              durationGrant: durationGrant
+              durationUnset: "{}"
+              systemBuiltin: true
+              grantCount: grantCount
+              description: description
+              certifyPolicyId: certifyPolicyId
+              appResourceTypeId: appResourceTypeId
+              createdAt: 2000-01-23T04:56:07.000+00:00
+              deletedAt: 2000-01-23T04:56:07.000+00:00
+              revokePolicyId: revokePolicyId
+              grantPolicyId: grantPolicyId
+              appId: appId
+              riskLevelValueId: riskLevelValueId
+              alias: alias
+              id: id
+              slug: slug
+              provisionerPolicy:
+                connector: "{}"
+                delegated:
+                  appId: appId
+                  entitlementId: entitlementId
+                manual:
+                  instructions: instructions
+                  userIds:
+                  - userIds
+                  - userIds
+              updatedAt: 2000-01-23T04:56:07.000+00:00
+            appResourcePath: appResourcePath
+            appResourceTypePath: appResourceTypePath
+            appPath: appPath
+          appEntitlementUserBindings:
+          - createdAt: 2000-01-23T04:56:07.000+00:00
             deletedAt: 2000-01-23T04:56:07.000+00:00
-            revokePolicyId: revokePolicyId
-            grantPolicyId: grantPolicyId
+            deprovisionAt: 2000-01-23T04:56:07.000+00:00
             appId: appId
-            riskLevelValueId: riskLevelValueId
-            alias: alias
-            id: id
-            slug: slug
-            provisionerPolicy:
-              connector: "{}"
-              delegated:
-                appId: appId
-                entitlementId: entitlementId
-              manual:
-                instructions: instructions
-                userIds:
-                - userIds
-                - userIds
-            updatedAt: 2000-01-23T04:56:07.000+00:00
-          appResourcePath: appResourcePath
-          appResourceTypePath: appResourceTypePath
-          appPath: appPath
-        - appEntitlement:
-            appResourceId: appResourceId
-            complianceFrameworkValueIds:
-            - complianceFrameworkValueIds
-            - complianceFrameworkValueIds
-            displayName: displayName
-            durationGrant: durationGrant
-            durationUnset: "{}"
-            systemBuiltin: true
-            grantCount: grantCount
-            description: description
-            certifyPolicyId: certifyPolicyId
-            appResourceTypeId: appResourceTypeId
-            createdAt: 2000-01-23T04:56:07.000+00:00
+            appEntitlementId: appEntitlementId
+            appUserId: appUserId
+          - createdAt: 2000-01-23T04:56:07.000+00:00
             deletedAt: 2000-01-23T04:56:07.000+00:00
-            revokePolicyId: revokePolicyId
-            grantPolicyId: grantPolicyId
+            deprovisionAt: 2000-01-23T04:56:07.000+00:00
             appId: appId
-            riskLevelValueId: riskLevelValueId
-            alias: alias
-            id: id
-            slug: slug
-            provisionerPolicy:
-              connector: "{}"
-              delegated:
-                appId: appId
-                entitlementId: entitlementId
-              manual:
-                instructions: instructions
-                userIds:
-                - userIds
-                - userIds
-            updatedAt: 2000-01-23T04:56:07.000+00:00
-          appResourcePath: appResourcePath
-          appResourceTypePath: appResourceTypePath
-          appPath: appPath
+            appEntitlementId: appEntitlementId
+            appUserId: appUserId
+        - entitlement:
+            appEntitlement:
+              appResourceId: appResourceId
+              complianceFrameworkValueIds:
+              - complianceFrameworkValueIds
+              - complianceFrameworkValueIds
+              displayName: displayName
+              durationGrant: durationGrant
+              durationUnset: "{}"
+              systemBuiltin: true
+              grantCount: grantCount
+              description: description
+              certifyPolicyId: certifyPolicyId
+              appResourceTypeId: appResourceTypeId
+              createdAt: 2000-01-23T04:56:07.000+00:00
+              deletedAt: 2000-01-23T04:56:07.000+00:00
+              revokePolicyId: revokePolicyId
+              grantPolicyId: grantPolicyId
+              appId: appId
+              riskLevelValueId: riskLevelValueId
+              alias: alias
+              id: id
+              slug: slug
+              provisionerPolicy:
+                connector: "{}"
+                delegated:
+                  appId: appId
+                  entitlementId: entitlementId
+                manual:
+                  instructions: instructions
+                  userIds:
+                  - userIds
+                  - userIds
+              updatedAt: 2000-01-23T04:56:07.000+00:00
+            appResourcePath: appResourcePath
+            appResourceTypePath: appResourceTypePath
+            appPath: appPath
+          appEntitlementUserBindings:
+          - createdAt: 2000-01-23T04:56:07.000+00:00
+            deletedAt: 2000-01-23T04:56:07.000+00:00
+            deprovisionAt: 2000-01-23T04:56:07.000+00:00
+            appId: appId
+            appEntitlementId: appEntitlementId
+            appUserId: appUserId
+          - createdAt: 2000-01-23T04:56:07.000+00:00
+            deletedAt: 2000-01-23T04:56:07.000+00:00
+            deprovisionAt: 2000-01-23T04:56:07.000+00:00
+            appId: appId
+            appEntitlementId: appEntitlementId
+            appUserId: appUserId
       properties:
         expanded:
           description: The expanded field.
@@ -2566,7 +2686,7 @@ components:
         list:
           description: The list field.
           items:
-            $ref: '#/components/schemas/c1.api.app.v1.AppEntitlementView'
+            $ref: '#/components/schemas/c1.api.app.v1.AppEntitlementWithUserBindings'
           nullable: true
           type: array
         nextPageToken:

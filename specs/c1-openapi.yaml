@@ -142,6 +142,28 @@ components:
                     nullable: true
                     type: array
             type: object
+        c1.api.app.v1.AppEntitlementUserBinding:
+            description: The AppEntitlementUserBinding message.
+            properties:
+                appEntitlementId:
+                    description: The appEntitlementId field.
+                    type: string
+                appId:
+                    description: The appId field.
+                    type: string
+                appUserId:
+                    description: The appUserId field.
+                    type: string
+                createdAt:
+                    format: date-time
+                    type: string
+                deletedAt:
+                    format: date-time
+                    type: string
+                deprovisionAt:
+                    format: date-time
+                    type: string
+            type: object
         c1.api.app.v1.AppEntitlementView:
             description: The AppEntitlementView message.
             properties:
@@ -156,6 +178,18 @@ components:
                 appResourceTypePath:
                     description: The appResourceTypePath field.
                     type: string
+            type: object
+        c1.api.app.v1.AppEntitlementWithUserBindings:
+            description: The AppEntitlementWithUserBindings message.
+            properties:
+                appEntitlementUserBindings:
+                    description: The appEntitlementUserBindings field.
+                    items:
+                        $ref: '#/components/schemas/c1.api.app.v1.AppEntitlementUserBinding'
+                    nullable: true
+                    type: array
+                entitlement:
+                    $ref: '#/components/schemas/c1.api.app.v1.AppEntitlementView'
             type: object
         c1.api.app.v1.AppResource:
             description: The AppResource message.
@@ -879,7 +913,7 @@ components:
                 list:
                     description: The list field.
                     items:
-                        $ref: '#/components/schemas/c1.api.app.v1.AppEntitlementView'
+                        $ref: '#/components/schemas/c1.api.app.v1.AppEntitlementWithUserBindings'
                     nullable: true
                     type: array
                 nextPageToken:
@@ -1662,7 +1696,7 @@ paths:
                     description: Successful response
 servers:
     - description: The ConductorOne API server for the current tenant.
-      url: https://{tenantDomain}.logan.dev.ductone.com:2443
+      url: https://{tenantDomain}.conductor.one
       variables:
         tenantDomain:
             default: invalid-example

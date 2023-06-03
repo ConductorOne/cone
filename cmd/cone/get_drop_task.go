@@ -191,19 +191,19 @@ func runTask(
 		if taskItem.Type.HasGrant() {
 			taskOutcome := client.StringFromPtr(taskItem.Type.Grant.Get().Outcome)
 			if taskOutcome == "GRANT_OUTCOME_GRANTED" {
-				spinner.Success(fmt.Sprintf("Task succeeded %s", taskOutcome))
+				spinner.Success("Entitlement granted successfully.")
 			} else {
-				spinner.Fail(fmt.Sprintf("Task failed %s", taskOutcome))
-				return fmt.Errorf("task failed %s", taskOutcome)
+				spinner.Fail(fmt.Sprintf("Failed to grant entitlement %s", taskOutcome))
+				return fmt.Errorf("failed to grant entitlement %s", taskOutcome)
 			}
 		}
 		if taskItem.Type.HasRevoke() {
 			taskOutcome := client.StringFromPtr(taskItem.Type.Revoke.Get().Outcome)
 			if taskOutcome == "REVOKE_OUTCOME_REVOKED" {
-				spinner.Success(fmt.Sprintf("Task succeeded %s", taskOutcome))
+				spinner.Success("Entitlement revoked succesfully.")
 			} else {
-				spinner.Fail(fmt.Sprintf("Task failed %s", taskOutcome))
-				return fmt.Errorf("task failed %s", taskOutcome)
+				spinner.Fail(fmt.Sprintf("Failed to revoke entitlement %s", taskOutcome))
+				return fmt.Errorf("failed to revoke entitlement %s", taskOutcome)
 			}
 		}
 	}

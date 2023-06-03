@@ -23,7 +23,9 @@ func (j *jsonManager) Output(ctx context.Context, out interface{}) error {
 }
 
 func (j *jsonManager) printProto(ctx context.Context, m proto.Message) error {
-	opts := protojson.MarshalOptions{}
+	opts := protojson.MarshalOptions{
+		EmitUnpopulated: true,
+	}
 	if j.pretty {
 		opts.Multiline = true
 		opts.Indent = "  "

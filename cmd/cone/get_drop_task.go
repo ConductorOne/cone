@@ -129,7 +129,7 @@ func runTask(
 					client.StringFromPtr(e.Entitlement.Id),
 				)
 				entitlementOptions = append(entitlementOptions, entitlementOptionName)
-				optionToEntitlementMap[entitlementOptionName] = e.Entitlement
+				optionToEntitlementMap[entitlementOptionName] = &e.Entitlement
 			}
 			selectedOption, _ := pterm.DefaultInteractiveSelect.WithOptions(entitlementOptions).WithDefaultText("Please select an entitlement").Show()
 			entitlementId = client.StringFromPtr(optionToEntitlementMap[selectedOption].Id)

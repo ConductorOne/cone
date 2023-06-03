@@ -1,7 +1,6 @@
 package main
 
 import (
-	"github.com/conductorone/cone/internal/c1api"
 	"github.com/conductorone/cone/pkg/client"
 	"github.com/conductorone/cone/pkg/output"
 	"github.com/spf13/cobra"
@@ -35,12 +34,17 @@ func whoAmIRun(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
-	whoamiResp, err := c.WhoAmI(ctx)
+	introspectResp, err := c.AuthIntrospect(ctx)
 	if err != nil {
 		return err
 	}
 
-	resp := C1ApiAuthV1IntrospectResponse(*whoamiResp)
+	userResp, err := c.GetUser(ctx, introspectResp.GetUserId())
+	if err != nil {
+		return err
+	}
+
+	resp := C1ApiUserV1UserServiceGetResponse(*userResp)
 	outputManager := output.NewManager(ctx, v)
 	err = outputManager.Output(ctx, &resp)
 	if err != nil {
@@ -48,16 +52,4 @@ func whoAmIRun(cmd *cobra.Command, args []string) error {
 	}
 
 	return nil
-}
-
-type C1ApiAuthV1IntrospectResponse c1api.C1ApiAuthV1IntrospectResponse
-
-func (r *C1ApiAuthV1IntrospectResponse) Header() []string {
-	return []string{"PrincipleId", "UserId"}
-}
-func (r *C1ApiAuthV1IntrospectResponse) Rows() [][]string {
-	return [][]string{{
-		client.StringFromPtr(r.PrincipleId),
-		client.StringFromPtr(r.UserId),
-	}}
 }

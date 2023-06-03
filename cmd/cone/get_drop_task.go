@@ -137,7 +137,7 @@ func runTask(
 		}
 	}
 
-	resp, err := c.WhoAmI(ctx)
+	resp, err := c.AuthIntrospect(ctx)
 	if err != nil {
 		return err
 	}

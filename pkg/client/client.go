@@ -42,7 +42,7 @@ func float32Ptr(i int) *float32 {
 type C1Client interface {
 	BaseURL() string
 
-	WhoAmI(ctx context.Context) (*c1api.C1ApiAuthV1IntrospectResponse, error)
+	AuthIntrospect(ctx context.Context) (*c1api.C1ApiAuthV1IntrospectResponse, error)
 	GetUser(ctx context.Context, userID string) (*c1api.C1ApiUserV1User, error)
 	SearchEntitlements(ctx context.Context, filter *SearchEntitlementsFilter) ([]*c1api.C1ApiAppV1AppEntitlement, error)
 	ExpandEntitlements(ctx context.Context, in []*c1api.C1ApiAppV1AppEntitlement) (*Expander, error)

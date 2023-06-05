@@ -35,7 +35,7 @@ func main() {
 func runCli(ctx context.Context) int {
 	cliCmd := &cobra.Command{
 		Use:     "cone",
-		Short:   "cone is... a cone", // TODO: Change this
+		Short:   "Cone interacts with the ConductorOne API to manage access to entitlements.",
 		Version: version,
 		PersistentPreRunE: func(cmd *cobra.Command, args []string) error {
 			cmd.SetContext(ctx)

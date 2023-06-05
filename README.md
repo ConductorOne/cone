@@ -13,7 +13,7 @@ Getting `cone` on your system is straightforward. You can choose one of the foll
 - Install via [Homebrew](https://brew.sh/): If you have Homebrew installed on your system, you can use the following command to install `cone`:
 
 ```shell
-	brew install conductorone/cone/cone
+$ brew install conductorone/cone/cone
 ```
 
 ConductorOne provides `cone` binaries for popular operating systems including macOS, Windows, and Linux on the x86 and ARM platforms. If your platform is not listed, please [contact us](mailto:support@conductorone.com) or build from source.
@@ -29,6 +29,9 @@ To allow `cone` to interact with ConductorOne on your behalf, you need to genera
 3. **Create a new API Key**: Click on the "Create credential" button in the API Keys section. Provide a distinctive and easily identifiable name for your new API Key.
 4. **Generate your client-id and client-secret**: After naming your API Key, click "Create". The system will generate your `client-id` and `client-secret`. _The `client-secret` is only visible once. Ensure to copy it and store it securely._
 5. **Copy your client-id and client-secret into the Cone configuration file**: Paste the `client-id` and `client-secret` into the Cone configuration file located at `$HOME/.conductorone/config.yaml`, under the default profile:
+
+![API Key Demo](./docs/images/api-credential.gif)
+
 
 Here's a Cone configuration file template. Replace `<Your-Client-ID-Goes-Here>` and `<Your-Client-Secret-Goes-Here>` with the actual `client-id` and `client-secret` values:
 
@@ -50,18 +53,18 @@ profiles:
 The `search` command displays all entitlements currently available to the user in their Request Catalog:
 
 ```shell
-cone search
+$ cone search
 ```
 
 ## Obtaining an Entitlement
 The get command retrieves a specific entitlement using its alias:
 ```shell
-	cone get ${entitlement_alias}
+$ cone get ${entitlement_alias}
 ```
 
 For example:
 ```shell
-	cone get aws-prod-admin
+$ cone get aws-prod-admin
 ```
 
 This command will find an entitlement in ConductorOne with the alias `aws-prod-admin`. If the user already has access to this entitlement, `cone` will exit successfully (exit status 0). However, if the user doesn't currently have access but the entitlement is available in their Request Catalog, `cone` will create an Access Request task in ConductorOne and notify the necessary approvers.
@@ -73,12 +76,12 @@ Once the request is approved, the user will be able to access the entitlement. T
 The `drop` command revokes a specific entitlement using its alias:
 
 ```shell
-	cone drop ${entitlement_alias}
+$ cone drop ${entitlement_alias}
 ```
 
 For example:
 ```shell
-	cone drop aws-prod-admin
+$ cone drop aws-prod-admin
 ```
 
 If the user currently has this entitlement, `cone` will create a Revoke Task in the ConductorOne platform and de-provision their access. If the user does not have the entitlement, `cone` will exit successfully (exit status 0).

@@ -38,6 +38,8 @@ func taskCmd(cmd *cobra.Command) *cobra.Command {
 	addAppIdFlag(cmd)
 	addEntitlementIdFlag(cmd)
 	addJustificationFlag(cmd)
+	addQueryFlag(cmd)
+	addEntitlementAliasFlag(cmd)
 	return cmd
 }
 
@@ -84,17 +86,19 @@ func runTask(
 	appId := v.GetString(appIdFlag)
 	justification := v.GetString(justificationFlag)
 	grantDuration := v.GetString(durationFlag)
+	query := v.GetString(queryFlag)
+	alias = v.GetString(entitlementAliasFlag)
 
 	if len(args) == 1 {
 		alias = args[0]
 	}
 
-	if alias == "" && (appId == "" || entitlementId == "") {
-		return fmt.Errorf("must provide either an alias or an entitlement id and app id")
+	if alias == "" && (appId == "" || entitlementId == "") && query == "" {
+		return fmt.Errorf("must provide either an alias, query string, or an entitlement id and app id")
 	}
 
-	if alias != "" && (appId != "" || entitlementId != "") {
-		return fmt.Errorf("cannot provide both an alias and an entitlement id and app id")
+	if (alias != "" || query != "") && (appId != "" || entitlementId != "") {
+		return fmt.Errorf("cannot provide an alias or query and an entitlement id and app id")
 	}
 
 	c, err := client.New(ctx, clientId, clientSecret, client.WithDebug(v.GetBool("debug")))
@@ -102,8 +106,8 @@ func runTask(
 		return err
 	}
 
-	if alias != "" {
-		entitlements, err := c.SearchEntitlements(ctx, &client.SearchEntitlementsFilter{EntitlementAlias: alias})
+	if alias != "" || query != "" {
+		entitlements, err := c.SearchEntitlements(ctx, &client.SearchEntitlementsFilter{EntitlementAlias: alias, Query: query})
 		if err != nil {
 			return err
 		}

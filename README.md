@@ -13,7 +13,7 @@ Getting `cone` on your system is straightforward. You can choose one of the foll
 - Install via [Homebrew](https://brew.sh/): If you have Homebrew installed on your system, you can use the following command to install `cone`:
 
 ```shell
-	brew install conductorone/cone/cone
+$ brew install conductorone/cone/cone
 ```
 
 ConductorOne provides `cone` binaries for popular operating systems including macOS, Windows, and Linux on the x86 and ARM platforms. If your platform is not listed, please [contact us](mailto:support@conductorone.com) or build from source.
@@ -50,18 +50,18 @@ profiles:
 The `search` command displays all entitlements currently available to the user in their Request Catalog:
 
 ```shell
-cone search
+$ cone search
 ```
 
 ## Obtaining an Entitlement
 The get command retrieves a specific entitlement using its alias:
 ```shell
-	cone get ${entitlement_alias}
+$ cone get ${entitlement_alias}
 ```
 
 For example:
 ```shell
-	cone get aws-prod-admin
+$ cone get aws-prod-admin
 ```
 
 This command will find an entitlement in ConductorOne with the alias `aws-prod-admin`. If the user already has access to this entitlement, `cone` will exit successfully (exit status 0). However, if the user doesn't currently have access but the entitlement is available in their Request Catalog, `cone` will create an Access Request task in ConductorOne and notify the necessary approvers.
@@ -73,12 +73,12 @@ Once the request is approved, the user will be able to access the entitlement. T
 The `drop` command revokes a specific entitlement using its alias:
 
 ```shell
-	cone drop ${entitlement_alias}
+$ cone drop ${entitlement_alias}
 ```
 
 For example:
 ```shell
-	cone drop aws-prod-admin
+$ cone drop aws-prod-admin
 ```
 
 If the user currently has this entitlement, `cone` will create a Revoke Task in the ConductorOne platform and de-provision their access. If the user does not have the entitlement, `cone` will exit successfully (exit status 0).

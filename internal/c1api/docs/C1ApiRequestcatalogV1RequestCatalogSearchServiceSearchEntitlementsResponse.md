@@ -5,7 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Expanded** | Pointer to [**[]C1ApiAppV1AppResourceServiceGetResponseExpandedInner**](C1ApiAppV1AppResourceServiceGetResponseExpandedInner.md) | The expanded field. | [optional] 
-**List** | Pointer to [**[]C1ApiAppV1AppEntitlementView**](C1ApiAppV1AppEntitlementView.md) | The list field. | [optional] 
+**List** | Pointer to [**[]C1ApiAppV1AppEntitlementWithUserBindings**](C1ApiAppV1AppEntitlementWithUserBindings.md) | The list field. | [optional] 
 **NextPageToken** | Pointer to **string** | The nextPageToken field. | [optional] 
 
 ## Methods
@@ -64,20 +64,20 @@ HasExpanded returns a boolean if a field has been set.
 UnsetExpanded ensures that no value is present for Expanded, not even an explicit nil
 ### GetList
 
-`func (o *C1ApiRequestcatalogV1RequestCatalogSearchServiceSearchEntitlementsResponse) GetList() []C1ApiAppV1AppEntitlementView`
+`func (o *C1ApiRequestcatalogV1RequestCatalogSearchServiceSearchEntitlementsResponse) GetList() []C1ApiAppV1AppEntitlementWithUserBindings`
 
 GetList returns the List field if non-nil, zero value otherwise.
 
 ### GetListOk
 
-`func (o *C1ApiRequestcatalogV1RequestCatalogSearchServiceSearchEntitlementsResponse) GetListOk() (*[]C1ApiAppV1AppEntitlementView, bool)`
+`func (o *C1ApiRequestcatalogV1RequestCatalogSearchServiceSearchEntitlementsResponse) GetListOk() (*[]C1ApiAppV1AppEntitlementWithUserBindings, bool)`
 
 GetListOk returns a tuple with the List field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetList
 
-`func (o *C1ApiRequestcatalogV1RequestCatalogSearchServiceSearchEntitlementsResponse) SetList(v []C1ApiAppV1AppEntitlementView)`
+`func (o *C1ApiRequestcatalogV1RequestCatalogSearchServiceSearchEntitlementsResponse) SetList(v []C1ApiAppV1AppEntitlementWithUserBindings)`
 
 SetList sets List field to given value.
 

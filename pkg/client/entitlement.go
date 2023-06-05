@@ -12,7 +12,12 @@ type SearchEntitlementsFilter struct {
 	EntitlementAlias string
 }
 
-func (c *client) SearchEntitlements(ctx context.Context, filter *SearchEntitlementsFilter) ([]*c1api.C1ApiAppV1AppEntitlement, error) {
+type EntitlementWithBindings struct {
+	Entitlement c1api.C1ApiAppV1AppEntitlement
+	Bindings    []c1api.C1ApiAppV1AppEntitlementUserBinding
+}
+
+func (c *client) SearchEntitlements(ctx context.Context, filter *SearchEntitlementsFilter) ([]*EntitlementWithBindings, error) {
 	// TODO(morgabra) Pagination
 	// TODO(morgabra) Should we abstract the OpenAPI objects from the rest of cone? Kinda... no? But they aren't typed...
 	req := &c1api.C1ApiRequestcatalogV1RequestCatalogSearchServiceSearchEntitlementsRequest{
@@ -33,24 +38,28 @@ func (c *client) SearchEntitlements(ctx context.Context, filter *SearchEntitleme
 		return nil, errors.New("search-entitlements: list is nil")
 	}
 
-	rv := make([]*c1api.C1ApiAppV1AppEntitlement, 0, len(list))
+	rv := make([]*EntitlementWithBindings, 0, len(list))
 	for _, v := range list {
-		e, ok := v.GetAppEntitlementOk()
+		ev, ok := v.GetEntitlementOk()
 		if !ok {
 			return nil, errors.New("search-entitlements: entitlement is nil")
 		}
-		rv = append(rv, e)
+
+		rv = append(rv, &EntitlementWithBindings{
+			Entitlement: ev.GetAppEntitlement(),
+			Bindings:    v.GetAppEntitlementUserBindings(),
+		})
 	}
 
 	return rv, nil
 }
 
-func (c *client) ExpandEntitlements(ctx context.Context, in []*c1api.C1ApiAppV1AppEntitlement) (*Expander, error) {
+func (c *client) ExpandEntitlements(ctx context.Context, in []*EntitlementWithBindings) (*Expander, error) {
 	expander := &Expander{}
 	for _, v := range in {
-		expander.ExpandApp(v)
-		expander.ExpandResourceType(v)
-		expander.ExpandResource(v)
+		expander.ExpandApp(&v.Entitlement)
+		expander.ExpandResourceType(&v.Entitlement)
+		expander.ExpandResource(&v.Entitlement)
 	}
 
 	err := expander.Run(ctx, c)

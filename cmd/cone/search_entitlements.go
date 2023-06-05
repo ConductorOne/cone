@@ -3,7 +3,6 @@ package main
 import (
 	"context"
 
-	"github.com/conductorone/cone/internal/c1api"
 	"github.com/conductorone/cone/pkg/client"
 	"github.com/conductorone/cone/pkg/output"
 	"github.com/spf13/cobra"
@@ -71,36 +70,41 @@ func searchEntitlementsRun(cmd *cobra.Command, args []string) error {
 }
 
 type ExpandedEntitlementsResponse struct {
-	entitlements []*c1api.C1ApiAppV1AppEntitlement
+	entitlements []*client.EntitlementWithBindings
 	expander     *client.Expander
 }
 
 func (r *ExpandedEntitlementsResponse) Header() []string {
-	return []string{"Id", "Display Name", "App", "Resource Type", "Resource", "Slug", "Alias", "Description"}
+	return []string{"Granted", "Id", "Display Name", "App", "Resource Type", "Resource", "Alias", "Description"}
 }
 func (r *ExpandedEntitlementsResponse) Rows() [][]string {
 	rows := [][]string{}
-	for _, entitlement := range r.entitlements {
-		app, _ := r.expander.GetApp(client.StringFromPtr(entitlement.AppId))
+	for _, e := range r.entitlements {
+		app, _ := r.expander.GetApp(client.StringFromPtr(e.Entitlement.AppId))
 		resourceType, _ := r.expander.GetResourceType(
-			client.StringFromPtr(entitlement.AppId),
-			client.StringFromPtr(entitlement.AppResourceTypeId),
+			client.StringFromPtr(e.Entitlement.AppId),
+			client.StringFromPtr(e.Entitlement.AppResourceTypeId),
 		)
 		resource, _ := r.expander.GetResource(
-			client.StringFromPtr(entitlement.AppId),
-			client.StringFromPtr(entitlement.AppResourceTypeId),
-			client.StringFromPtr(entitlement.AppResourceId),
+			client.StringFromPtr(e.Entitlement.AppId),
+			client.StringFromPtr(e.Entitlement.AppResourceTypeId),
+			client.StringFromPtr(e.Entitlement.AppResourceId),
 		)
 
+		granted := "✅"
+		if len(e.Bindings) == 0 {
+			granted = "❌"
+		}
+
 		rows = append(rows, []string{
-			client.StringFromPtr(entitlement.Id),
-			client.StringFromPtr(entitlement.DisplayName),
+			granted,
+			client.StringFromPtr(e.Entitlement.Id),
+			client.StringFromPtr(e.Entitlement.DisplayName),
 			client.StringFromPtr(app.DisplayName),
 			client.StringFromPtr(resourceType.DisplayName),
 			client.StringFromPtr(resource.DisplayName),
-			client.StringFromPtr(entitlement.Slug),
-			client.StringFromPtr(entitlement.Alias),
-			client.StringFromPtr(entitlement.Description),
+			client.StringFromPtr(e.Entitlement.Alias),
+			client.StringFromPtr(e.Entitlement.Description),
 		})
 	}
 	return rows

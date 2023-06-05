@@ -22,7 +22,7 @@ type C1ApiRequestcatalogV1RequestCatalogSearchServiceSearchEntitlementsResponse 
 	// The expanded field.
 	Expanded []C1ApiAppV1AppResourceServiceGetResponseExpandedInner `json:"expanded,omitempty"`
 	// The list field.
-	List []C1ApiAppV1AppEntitlementView `json:"list,omitempty"`
+	List []C1ApiAppV1AppEntitlementWithUserBindings `json:"list,omitempty"`
 	// The nextPageToken field.
 	NextPageToken *string `json:"nextPageToken,omitempty"`
 	AdditionalProperties map[string]interface{}
@@ -81,9 +81,9 @@ func (o *C1ApiRequestcatalogV1RequestCatalogSearchServiceSearchEntitlementsRespo
 }
 
 // GetList returns the List field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *C1ApiRequestcatalogV1RequestCatalogSearchServiceSearchEntitlementsResponse) GetList() []C1ApiAppV1AppEntitlementView {
+func (o *C1ApiRequestcatalogV1RequestCatalogSearchServiceSearchEntitlementsResponse) GetList() []C1ApiAppV1AppEntitlementWithUserBindings {
 	if o == nil {
-		var ret []C1ApiAppV1AppEntitlementView
+		var ret []C1ApiAppV1AppEntitlementWithUserBindings
 		return ret
 	}
 	return o.List
@@ -92,7 +92,7 @@ func (o *C1ApiRequestcatalogV1RequestCatalogSearchServiceSearchEntitlementsRespo
 // GetListOk returns a tuple with the List field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *C1ApiRequestcatalogV1RequestCatalogSearchServiceSearchEntitlementsResponse) GetListOk() ([]C1ApiAppV1AppEntitlementView, bool) {
+func (o *C1ApiRequestcatalogV1RequestCatalogSearchServiceSearchEntitlementsResponse) GetListOk() ([]C1ApiAppV1AppEntitlementWithUserBindings, bool) {
 	if o == nil || IsNil(o.List) {
 		return nil, false
 	}
@@ -108,8 +108,8 @@ func (o *C1ApiRequestcatalogV1RequestCatalogSearchServiceSearchEntitlementsRespo
 	return false
 }
 
-// SetList gets a reference to the given []C1ApiAppV1AppEntitlementView and assigns it to the List field.
-func (o *C1ApiRequestcatalogV1RequestCatalogSearchServiceSearchEntitlementsResponse) SetList(v []C1ApiAppV1AppEntitlementView) {
+// SetList gets a reference to the given []C1ApiAppV1AppEntitlementWithUserBindings and assigns it to the List field.
+func (o *C1ApiRequestcatalogV1RequestCatalogSearchServiceSearchEntitlementsResponse) SetList(v []C1ApiAppV1AppEntitlementWithUserBindings) {
 	o.List = v
 }
 

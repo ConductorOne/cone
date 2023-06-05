@@ -9,7 +9,9 @@ configuration.go
 docs/C1ApiAppV1App.md
 docs/C1ApiAppV1AppEntitlement.md
 docs/C1ApiAppV1AppEntitlementExpandMask.md
+docs/C1ApiAppV1AppEntitlementUserBinding.md
 docs/C1ApiAppV1AppEntitlementView.md
+docs/C1ApiAppV1AppEntitlementWithUserBindings.md
 docs/C1ApiAppV1AppResource.md
 docs/C1ApiAppV1AppResourceServiceGetResponse.md
 docs/C1ApiAppV1AppResourceServiceGetResponseExpandedInner.md
@@ -78,7 +80,9 @@ go.sum
 model_c1_api_app_v1_app.go
 model_c1_api_app_v1_app_entitlement.go
 model_c1_api_app_v1_app_entitlement_expand_mask.go
+model_c1_api_app_v1_app_entitlement_user_binding.go
 model_c1_api_app_v1_app_entitlement_view.go
+model_c1_api_app_v1_app_entitlement_with_user_bindings.go
 model_c1_api_app_v1_app_resource.go
 model_c1_api_app_v1_app_resource_service_get_response.go
 model_c1_api_app_v1_app_resource_service_get_response_expanded_inner.go

@@ -112,8 +112,8 @@ func runTask(
 			return fmt.Errorf("no entitlement found with alias %s", alias)
 		}
 		if len(entitlements) == 1 {
-			entitlementId = client.StringFromPtr(entitlements[0].Id)
-			appId = client.StringFromPtr(entitlements[0].AppId)
+			entitlementId = client.StringFromPtr(entitlements[0].Entitlement.Id)
+			appId = client.StringFromPtr(entitlements[0].Entitlement.AppId)
 		}
 		if len(entitlements) > 1 {
 			isNonInteractive := v.GetBool("non-interactive")
@@ -124,12 +124,12 @@ func runTask(
 			entitlementOptions := make([]string, len(entitlements))
 			for _, e := range entitlements {
 				entitlementOptionName := fmt.Sprintf("%s:%s:%s",
-					client.StringFromPtr(e.DisplayName),
-					client.StringFromPtr(e.AppId),
-					client.StringFromPtr(e.Id),
+					client.StringFromPtr(e.Entitlement.DisplayName),
+					client.StringFromPtr(e.Entitlement.AppId),
+					client.StringFromPtr(e.Entitlement.Id),
 				)
 				entitlementOptions = append(entitlementOptions, entitlementOptionName)
-				optionToEntitlementMap[entitlementOptionName] = e
+				optionToEntitlementMap[entitlementOptionName] = &e.Entitlement
 			}
 			selectedOption, _ := pterm.DefaultInteractiveSelect.WithOptions(entitlementOptions).WithDefaultText("Please select an entitlement").Show()
 			entitlementId = client.StringFromPtr(optionToEntitlementMap[selectedOption].Id)

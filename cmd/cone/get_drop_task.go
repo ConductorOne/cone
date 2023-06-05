@@ -113,7 +113,7 @@ func runTask(
 		}
 
 		if len(entitlements) == 0 {
-			return fmt.Errorf("no entitlement found with alias %s", alias)
+			return noEntitlementFoundError(alias, query)
 		}
 		if len(entitlements) == 1 {
 			entitlementId = client.StringFromPtr(entitlements[0].Entitlement.Id)
@@ -122,7 +122,7 @@ func runTask(
 		if len(entitlements) > 1 {
 			isNonInteractive := v.GetBool("non-interactive")
 			if isNonInteractive {
-				return fmt.Errorf("multiple entitlements found with alias %s, please specify an entitlement id and app id", alias)
+				return multipleEntitlmentsFoundError(alias, query)
 			}
 			optionToEntitlementMap := make(map[string]*c1api.C1ApiAppV1AppEntitlement)
 			entitlementOptions := make([]string, len(entitlements))
@@ -246,4 +246,30 @@ var taskStateToString = map[string]string{
 
 func (r *C1ApiTaskV1Task) Pretext() string {
 	return fmt.Sprintf("Ticket URL: %s/task/%s", r.client.BaseURL(), client.StringFromPtr(r.task.NumericId))
+}
+
+func noEntitlementFoundError(alias string, query string) error {
+	if alias != "" && query != "" {
+		return fmt.Errorf("no entitlement found with alias %s and query %s", alias, query)
+	}
+	if alias != "" {
+		return fmt.Errorf("no entitlement found with alias %s", alias)
+	}
+	if query != "" {
+		return fmt.Errorf("no entitlement found with query %s", query)
+	}
+	return fmt.Errorf("no entitlement found")
+}
+
+func multipleEntitlmentsFoundError(alias string, query string) error {
+	if alias != "" && query != "" {
+		return fmt.Errorf("multiple entitlements found with alias %s and query %s, please specify an entitlement id and app id", alias, query)
+	}
+	if alias != "" {
+		return fmt.Errorf("multiple entitlements found with alias %s, please specify an entitlement id and app id", alias)
+	}
+	if query != "" {
+		return fmt.Errorf("multiple entitlements found with query %s, please specify an entitlement id and app id", query)
+	}
+	return fmt.Errorf("multiple entitlements found, please specify an entitlement id and app id")
 }

@@ -112,8 +112,16 @@ Check out our [CONTRIBUTING.md](https://github.com/ConductorOne/baton/blob/main/
 
 # License
 
-`cone` is licensed under the [Aapche 2.0 license](./LICENSE).
+`cone` is licensed under the [Apache 2.0 license](./LICENSE).
 
 # Contact
 
 For further information or assistance, feel free to contact us at [support@conductorone.com](mailto:support@conductorone.com).
+
+## Reporting Security Issues
+
+At ConductorOne, we prioritize security and take potential issues seriously. If you discover a security issue, please alert us as quickly as possible!
+
+To protect our users, **DO NOT** create a public issue or pull request. Instead, send your report privately to the ConductorOne Security Team at [security@conductorone.com](mailto:security@conductorone.com).
+
+We greatly appreciate security reports, and we will publicly acknowledge your contribution once the issue has been resolved and poses no risk to users. Thank you for helping us ensure the security and integrity of `cone`!

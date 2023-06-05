@@ -3,6 +3,7 @@ package main
 import (
 	"errors"
 	"fmt"
+	"os"
 	"path/filepath"
 	"strings"
 
@@ -25,7 +26,7 @@ func initConfig(cmd *cobra.Command) error {
 	viper.SetEnvKeyReplacer(strings.NewReplacer("-", "_"))
 	viper.AutomaticEnv()
 
-	configPath := viper.GetString("config-path")
+	configPath := os.Getenv("CONE_CONFIG_PATH")
 	if configPath != "" {
 		viper.AddConfigPath(configPath)
 	} else {

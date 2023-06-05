@@ -103,7 +103,6 @@ func (r *ExpandedEntitlementsResponse) Rows() [][]string {
 			client.StringFromPtr(app.DisplayName),
 			client.StringFromPtr(resourceType.DisplayName),
 			client.StringFromPtr(resource.DisplayName),
-			client.StringFromPtr(e.Entitlement.Slug),
 			client.StringFromPtr(e.Entitlement.Alias),
 			client.StringFromPtr(e.Entitlement.Description),
 		})

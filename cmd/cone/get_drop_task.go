@@ -165,6 +165,7 @@ func runTask(
 
 	if wait, _ := cmd.Flags().GetBool("wait"); wait {
 		spinner, _ := pterm.DefaultSpinner.Start("Waiting for ticket to close.")
+		var taskItem *c1api.C1ApiTaskV1Task
 		for {
 			select {
 			case <-ctx.Done():
@@ -176,17 +177,35 @@ func runTask(
 				return err
 			}
 
-			taskItem := task.TaskView.Task
+			taskItem = task.TaskView.Task
 			taskResp = C1ApiTaskV1Task{task: taskItem, client: c}
 			err = outputManager.Output(ctx, &taskResp)
 			if err != nil {
 				return err
 			}
+
 			if client.StringFromPtr(taskItem.State) == "TASK_STATE_CLOSED" {
 				break
 			}
 		}
-		spinner.Success("Ticket closed.")
+		if taskItem.Type.HasGrant() {
+			taskOutcome := client.StringFromPtr(taskItem.Type.Grant.Get().Outcome)
+			if taskOutcome == "GRANT_OUTCOME_GRANTED" {
+				spinner.Success("Entitlement granted successfully.")
+			} else {
+				spinner.Fail(fmt.Sprintf("Failed to grant entitlement %s", taskOutcome))
+				return fmt.Errorf("failed to grant entitlement %s", taskOutcome)
+			}
+		}
+		if taskItem.Type.HasRevoke() {
+			taskOutcome := client.StringFromPtr(taskItem.Type.Revoke.Get().Outcome)
+			if taskOutcome == "REVOKE_OUTCOME_REVOKED" {
+				spinner.Success("Entitlement revoked succesfully.")
+			} else {
+				spinner.Fail(fmt.Sprintf("Failed to revoke entitlement %s", taskOutcome))
+				return fmt.Errorf("failed to revoke entitlement %s", taskOutcome)
+			}
+		}
 	}
 
 	return nil

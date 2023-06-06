@@ -50,7 +50,7 @@ build-c1api:
 
 .PHONY: download-openapi-spec
 download-openapi-spec:
-	echo "Downloading OpenAPI spec from ConductorOne API server..."
+	@echo "Downloading OpenAPI spec from ConductorOne API server..."
 	curl -o specs/c1-openapi.yaml https:/$(shell hostname):2443/api/v1/openapi.yaml
 	sed -i 's/url: https:\/\/{tenantDomain}.$(shell hostname):2443/url: https:\/\/{tenantDomain}.conductor.one/' specs/c1-openapi.yaml
 	sed -i 's/openapi: 3.1.0/openapi: 3.0.3/' specs/c1-openapi.yaml

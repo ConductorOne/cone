@@ -108,14 +108,21 @@ func runTask(
 		if err != nil {
 			return err
 		}
+		grantCount := 0
+		for _, grant := range grants {
+			// We only want to check if user has a grant
+			if client.StringFromPtr(grant.AppEntitlementId) != "" {
+				grantCount++
+			}
+		}
 
 		// If this is get, and they have grants, just exit
-		if cmd.Name() == getCmd().Name() && len(grants) > 0 {
+		if cmd.Name() == getCmd().Name() && grantCount > 0 {
 			pterm.Println("You already have access to this entitlement. Use --force to override this check.")
 			return nil
 		}
 
-		if cmd.Name() == dropCmd().Name() && len(grants) == 0 {
+		if cmd.Name() == dropCmd().Name() && grantCount == 0 {
 			pterm.Println("You do not have existing grants to drop for this entitlement. Use --force to override this check.")
 			return nil
 		}

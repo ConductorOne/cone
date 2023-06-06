@@ -8,6 +8,7 @@ import (
 
 	"github.com/conductorone/cone/internal/c1api"
 	"github.com/conductorone/cone/pkg/uhttp"
+	"github.com/spf13/viper"
 )
 
 type client struct {
@@ -75,6 +76,7 @@ func New(
 	ctx context.Context,
 	clientId string,
 	clientSecret string,
+	v *viper.Viper,
 	optionFuncs ...ClientOptionFunc,
 ) (C1Client, error) {
 	tokenSrc, clientName, tokenHost, err := NewC1TokenSource(ctx, clientId, clientSecret)
@@ -83,7 +85,11 @@ func New(
 	}
 
 	opt := applyOpts(optionFuncs)
-	uclient, err := uhttp.NewClient(ctx, uhttp.WithTokenSource(tokenSrc), uhttp.WithDebug(opt.Debug))
+	uclient, err := uhttp.NewClient(
+		ctx,
+		uhttp.WithTokenSource(tokenSrc),
+		uhttp.WithDebug(opt.Debug || v.GetBool("debug")),
+	)
 	if err != nil {
 		return nil, err
 	}

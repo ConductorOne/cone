@@ -20,14 +20,7 @@ func getUserCmd() *cobra.Command {
 }
 
 func getUserRun(cmd *cobra.Command, args []string) error {
-	ctx := cmd.Context()
-
-	v, err := getSubViperForProfile(cmd)
-	if err != nil {
-		return err
-	}
-
-	clientId, clientSecret, err := getCredentials(v)
+	ctx, c, v, err := cmdContext(cmd)
 	if err != nil {
 		return err
 	}
@@ -35,13 +28,7 @@ func getUserRun(cmd *cobra.Command, args []string) error {
 	if len(args) != 1 {
 		return fmt.Errorf("expected 1 argument, got %d", len(args))
 	}
-
 	userID := args[0]
-
-	c, err := client.New(ctx, clientId, clientSecret, client.WithDebug(v.GetBool("debug")))
-	if err != nil {
-		return err
-	}
 
 	userResp, err := c.GetUser(ctx, userID)
 	if err != nil {

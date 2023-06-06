@@ -46,3 +46,13 @@ build-c1api:
 	find internal/c1api \( -type d -name .git -prune \) -o -type f -print0 | xargs -0 sed -i'' -e 's/GIT_USER_ID\/GIT_REPO_ID/conductorone\/cone\/internal/g'
 	go mod tidy -v
 	go mod vendor
+
+
+.PHONY: download-openapi-spec
+download-openapi-spec:
+	@echo "Downloading OpenAPI spec from ConductorOne API server..."
+	curl -o specs/c1-openapi.yaml https:/$(shell hostname):2443/api/v1/openapi.yaml
+	sed -i 's/url: https:\/\/{tenantDomain}.$(shell hostname):2443/url: https:\/\/{tenantDomain}.conductor.one/' specs/c1-openapi.yaml
+	sed -i 's/openapi: 3.1.0/openapi: 3.0.3/' specs/c1-openapi.yaml
+
+

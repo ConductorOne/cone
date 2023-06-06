@@ -68,19 +68,12 @@ func runTask(
 	args []string,
 	run func(c client.C1Client, ctx context.Context, appId string, entitlementId string, userId string, justification string, duration string) (*c1api.C1ApiTaskV1Task, error),
 ) error {
-	ctx := cmd.Context()
+	ctx, c, v, err := cmdContext(cmd)
+	if err != nil {
+		return err
+	}
 
 	alias := ""
-
-	v, err := getSubViperForProfile(cmd)
-	if err != nil {
-		return err
-	}
-
-	clientId, clientSecret, err := getCredentials(v)
-	if err != nil {
-		return err
-	}
 
 	entitlementId := v.GetString(entitlementIdFlag)
 	appId := v.GetString(appIdFlag)
@@ -99,11 +92,6 @@ func runTask(
 
 	if (alias != "" || query != "") && (appId != "" || entitlementId != "") {
 		return fmt.Errorf("cannot provide an alias or query and an entitlement id and app id")
-	}
-
-	c, err := client.New(ctx, clientId, clientSecret, client.WithDebug(v.GetBool("debug")))
-	if err != nil {
-		return err
 	}
 
 	if alias != "" || query != "" {

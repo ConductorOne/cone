@@ -1,7 +1,6 @@
 package main
 
 import (
-	"github.com/conductorone/cone/pkg/client"
 	"github.com/conductorone/cone/pkg/output"
 	"github.com/spf13/cobra"
 )
@@ -17,19 +16,7 @@ func whoAmICmd() *cobra.Command {
 }
 
 func whoAmIRun(cmd *cobra.Command, args []string) error {
-	ctx := cmd.Context()
-
-	v, err := getSubViperForProfile(cmd)
-	if err != nil {
-		return err
-	}
-
-	clientId, clientSecret, err := getCredentials(v)
-	if err != nil {
-		return err
-	}
-
-	c, err := client.New(ctx, clientId, clientSecret, client.WithDebug(v.GetBool("debug")))
+	ctx, c, v, err := cmdContext(cmd)
 	if err != nil {
 		return err
 	}

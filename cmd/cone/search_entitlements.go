@@ -1,8 +1,6 @@
 package main
 
 import (
-	"context"
-
 	"github.com/conductorone/cone/pkg/client"
 	"github.com/conductorone/cone/pkg/output"
 	"github.com/spf13/cobra"
@@ -20,25 +18,13 @@ func searchEntitlementsCmd() *cobra.Command {
 }
 
 func searchEntitlementsRun(cmd *cobra.Command, args []string) error {
-	ctx := context.Background()
-
-	v, err := getSubViperForProfile(cmd)
-	if err != nil {
-		return err
-	}
-
-	clientId, clientSecret, err := getCredentials(v)
+	ctx, c, v, err := cmdContext(cmd)
 	if err != nil {
 		return err
 	}
 
 	query := v.GetString(queryFlag)
 	alias := v.GetString(entitlementAliasFlag)
-
-	c, err := client.New(ctx, clientId, clientSecret)
-	if err != nil {
-		return err
-	}
 
 	// TODO(morgabra) 2-phase search: Accept a positional arg:
 	// 1. Test if it's a direct alias

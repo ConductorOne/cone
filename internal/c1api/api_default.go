@@ -23,6 +23,117 @@ import (
 // DefaultAPIService DefaultAPI service
 type DefaultAPIService service
 
+type DefaultAPIC1ApiAppV1AppEntitlementUserBindingServiceGetAppEntitlementUserBindingsForIdentityRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	appId string
+	appEntitlementId string
+	identityUserId string
+}
+
+func (r DefaultAPIC1ApiAppV1AppEntitlementUserBindingServiceGetAppEntitlementUserBindingsForIdentityRequest) Execute() (*C1ApiAppV1GetAppEntitlementUserBindingsForIdentityResponse, *http.Response, error) {
+	return r.ApiService.C1ApiAppV1AppEntitlementUserBindingServiceGetAppEntitlementUserBindingsForIdentityExecute(r)
+}
+
+/*
+C1ApiAppV1AppEntitlementUserBindingServiceGetAppEntitlementUserBindingsForIdentity Method for C1ApiAppV1AppEntitlementUserBindingServiceGetAppEntitlementUserBindingsForIdentity
+
+Invokes the c1.api.app.v1.AppEntitlementUserBindingService.GetAppEntitlementUserBindingsForIdentity method.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param appId
+ @param appEntitlementId
+ @param identityUserId
+ @return DefaultAPIC1ApiAppV1AppEntitlementUserBindingServiceGetAppEntitlementUserBindingsForIdentityRequest
+*/
+func (a *DefaultAPIService) C1ApiAppV1AppEntitlementUserBindingServiceGetAppEntitlementUserBindingsForIdentity(ctx context.Context, appId string, appEntitlementId string, identityUserId string) DefaultAPIC1ApiAppV1AppEntitlementUserBindingServiceGetAppEntitlementUserBindingsForIdentityRequest {
+	return DefaultAPIC1ApiAppV1AppEntitlementUserBindingServiceGetAppEntitlementUserBindingsForIdentityRequest{
+		ApiService: a,
+		ctx: ctx,
+		appId: appId,
+		appEntitlementId: appEntitlementId,
+		identityUserId: identityUserId,
+	}
+}
+
+// Execute executes the request
+//  @return C1ApiAppV1GetAppEntitlementUserBindingsForIdentityResponse
+func (a *DefaultAPIService) C1ApiAppV1AppEntitlementUserBindingServiceGetAppEntitlementUserBindingsForIdentityExecute(r DefaultAPIC1ApiAppV1AppEntitlementUserBindingServiceGetAppEntitlementUserBindingsForIdentityRequest) (*C1ApiAppV1GetAppEntitlementUserBindingsForIdentityResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *C1ApiAppV1GetAppEntitlementUserBindingsForIdentityResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.C1ApiAppV1AppEntitlementUserBindingServiceGetAppEntitlementUserBindingsForIdentity")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/api/v1/grant/app/{app_id}/entitlement/{app_entitlement_id}/user/{identity_user_id}"
+	localVarPath = strings.Replace(localVarPath, "{"+"app_id"+"}", url.PathEscape(parameterValueToString(r.appId, "appId")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"app_entitlement_id"+"}", url.PathEscape(parameterValueToString(r.appEntitlementId, "appEntitlementId")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"identity_user_id"+"}", url.PathEscape(parameterValueToString(r.identityUserId, "identityUserId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type DefaultAPIC1ApiAppV1AppResourceServiceGetRequest struct {
 	ctx context.Context
 	ApiService *DefaultAPIService

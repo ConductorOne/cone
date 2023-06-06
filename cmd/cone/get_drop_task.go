@@ -100,6 +100,28 @@ func runTask(
 		return err
 	}
 
+	userId := client.StringFromPtr(resp.UserId)
+
+	forceCreate := v.GetBool(forceFlag)
+	if !forceCreate {
+		grants, err := c.GetGrantsForIdentity(ctx, appId, entitlementId, userId)
+		if err != nil {
+			return err
+		}
+
+		// If this is get, and they have grants, just exit
+		if cmd.Name() == getCmd().Name() && len(grants) > 0 {
+			pterm.Println("You already have access to this entitlement. Use --force to override this check.")
+			return nil
+		}
+
+		if cmd.Name() == dropCmd().Name() && len(grants) == 0 {
+			pterm.Println("You do not have existing grants to drop for this entitlement. Use --force to override this check.")
+			return nil
+		}
+
+	}
+
 	grantDurationInSeconds := ""
 	if grantDuration != "" {
 		parsedDuration, err := time.ParseDuration(grantDuration)

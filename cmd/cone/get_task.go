@@ -20,14 +20,7 @@ func getTaskCmd() *cobra.Command {
 }
 
 func getTaskRun(cmd *cobra.Command, args []string) error {
-	ctx := cmd.Context()
-
-	v, err := getSubViperForProfile(cmd)
-	if err != nil {
-		return err
-	}
-
-	clientId, clientSecret, err := getCredentials(v)
+	ctx, c, v, err := cmdContext(cmd)
 	if err != nil {
 		return err
 	}
@@ -37,11 +30,6 @@ func getTaskRun(cmd *cobra.Command, args []string) error {
 	}
 
 	taskID := args[0]
-
-	c, err := client.New(ctx, clientId, clientSecret, client.WithDebug(v.GetBool("debug")))
-	if err != nil {
-		return err
-	}
 
 	taskResp, err := c.GetTask(ctx, taskID)
 	if err != nil {

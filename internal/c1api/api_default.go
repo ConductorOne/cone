@@ -23,7 +23,7 @@ import (
 // DefaultAPIService DefaultAPI service
 type DefaultAPIService service
 
-type DefaultAPIC1ApiAppV1AppEntitlementUserBindingServiceGetAppEntitlementUserBindingsForIdentityRequest struct {
+type DefaultAPIC1ApiAppV1AppEntitlementUserBindingServiceListAppUsersForIdentityWithGrantRequest struct {
 	ctx context.Context
 	ApiService *DefaultAPIService
 	appId string
@@ -31,23 +31,23 @@ type DefaultAPIC1ApiAppV1AppEntitlementUserBindingServiceGetAppEntitlementUserBi
 	identityUserId string
 }
 
-func (r DefaultAPIC1ApiAppV1AppEntitlementUserBindingServiceGetAppEntitlementUserBindingsForIdentityRequest) Execute() (*C1ApiAppV1GetAppEntitlementUserBindingsForIdentityResponse, *http.Response, error) {
-	return r.ApiService.C1ApiAppV1AppEntitlementUserBindingServiceGetAppEntitlementUserBindingsForIdentityExecute(r)
+func (r DefaultAPIC1ApiAppV1AppEntitlementUserBindingServiceListAppUsersForIdentityWithGrantRequest) Execute() (*C1ApiAppV1ListAppUsersForIdentityWithGrantResponse, *http.Response, error) {
+	return r.ApiService.C1ApiAppV1AppEntitlementUserBindingServiceListAppUsersForIdentityWithGrantExecute(r)
 }
 
 /*
-C1ApiAppV1AppEntitlementUserBindingServiceGetAppEntitlementUserBindingsForIdentity Method for C1ApiAppV1AppEntitlementUserBindingServiceGetAppEntitlementUserBindingsForIdentity
+C1ApiAppV1AppEntitlementUserBindingServiceListAppUsersForIdentityWithGrant Method for C1ApiAppV1AppEntitlementUserBindingServiceListAppUsersForIdentityWithGrant
 
-Invokes the c1.api.app.v1.AppEntitlementUserBindingService.GetAppEntitlementUserBindingsForIdentity method.
+Invokes the c1.api.app.v1.AppEntitlementUserBindingService.ListAppUsersForIdentityWithGrant method.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param appId
  @param appEntitlementId
  @param identityUserId
- @return DefaultAPIC1ApiAppV1AppEntitlementUserBindingServiceGetAppEntitlementUserBindingsForIdentityRequest
+ @return DefaultAPIC1ApiAppV1AppEntitlementUserBindingServiceListAppUsersForIdentityWithGrantRequest
 */
-func (a *DefaultAPIService) C1ApiAppV1AppEntitlementUserBindingServiceGetAppEntitlementUserBindingsForIdentity(ctx context.Context, appId string, appEntitlementId string, identityUserId string) DefaultAPIC1ApiAppV1AppEntitlementUserBindingServiceGetAppEntitlementUserBindingsForIdentityRequest {
-	return DefaultAPIC1ApiAppV1AppEntitlementUserBindingServiceGetAppEntitlementUserBindingsForIdentityRequest{
+func (a *DefaultAPIService) C1ApiAppV1AppEntitlementUserBindingServiceListAppUsersForIdentityWithGrant(ctx context.Context, appId string, appEntitlementId string, identityUserId string) DefaultAPIC1ApiAppV1AppEntitlementUserBindingServiceListAppUsersForIdentityWithGrantRequest {
+	return DefaultAPIC1ApiAppV1AppEntitlementUserBindingServiceListAppUsersForIdentityWithGrantRequest{
 		ApiService: a,
 		ctx: ctx,
 		appId: appId,
@@ -57,16 +57,16 @@ func (a *DefaultAPIService) C1ApiAppV1AppEntitlementUserBindingServiceGetAppEnti
 }
 
 // Execute executes the request
-//  @return C1ApiAppV1GetAppEntitlementUserBindingsForIdentityResponse
-func (a *DefaultAPIService) C1ApiAppV1AppEntitlementUserBindingServiceGetAppEntitlementUserBindingsForIdentityExecute(r DefaultAPIC1ApiAppV1AppEntitlementUserBindingServiceGetAppEntitlementUserBindingsForIdentityRequest) (*C1ApiAppV1GetAppEntitlementUserBindingsForIdentityResponse, *http.Response, error) {
+//  @return C1ApiAppV1ListAppUsersForIdentityWithGrantResponse
+func (a *DefaultAPIService) C1ApiAppV1AppEntitlementUserBindingServiceListAppUsersForIdentityWithGrantExecute(r DefaultAPIC1ApiAppV1AppEntitlementUserBindingServiceListAppUsersForIdentityWithGrantRequest) (*C1ApiAppV1ListAppUsersForIdentityWithGrantResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *C1ApiAppV1GetAppEntitlementUserBindingsForIdentityResponse
+		localVarReturnValue  *C1ApiAppV1ListAppUsersForIdentityWithGrantResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.C1ApiAppV1AppEntitlementUserBindingServiceGetAppEntitlementUserBindingsForIdentity")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.C1ApiAppV1AppEntitlementUserBindingServiceListAppUsersForIdentityWithGrant")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}

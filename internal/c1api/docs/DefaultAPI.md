@@ -4,7 +4,7 @@ All URIs are relative to *https://invalid-example.conductor.one*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**C1ApiAppV1AppEntitlementUserBindingServiceGetAppEntitlementUserBindingsForIdentity**](DefaultAPI.md#C1ApiAppV1AppEntitlementUserBindingServiceGetAppEntitlementUserBindingsForIdentity) | **Get** /api/v1/grant/app/{app_id}/entitlement/{app_entitlement_id}/user/{identity_user_id} | 
+[**C1ApiAppV1AppEntitlementUserBindingServiceListAppUsersForIdentityWithGrant**](DefaultAPI.md#C1ApiAppV1AppEntitlementUserBindingServiceListAppUsersForIdentityWithGrant) | **Get** /api/v1/grant/app/{app_id}/entitlement/{app_entitlement_id}/user/{identity_user_id} | 
 [**C1ApiAppV1AppResourceServiceGet**](DefaultAPI.md#C1ApiAppV1AppResourceServiceGet) | **Get** /api/v1/apps/{app_id}/resource_types/{app_resource_type_id}/resource/{id} | 
 [**C1ApiAppV1AppResourceTypeServiceGet**](DefaultAPI.md#C1ApiAppV1AppResourceTypeServiceGet) | **Get** /api/v1/apps/{app_id}/resource_types/{id} | 
 [**C1ApiAppV1AppsGet**](DefaultAPI.md#C1ApiAppV1AppsGet) | **Get** /api/v1/apps/{id} | 
@@ -18,9 +18,9 @@ Method | HTTP request | Description
 
 
 
-## C1ApiAppV1AppEntitlementUserBindingServiceGetAppEntitlementUserBindingsForIdentity
+## C1ApiAppV1AppEntitlementUserBindingServiceListAppUsersForIdentityWithGrant
 
-> C1ApiAppV1GetAppEntitlementUserBindingsForIdentityResponse C1ApiAppV1AppEntitlementUserBindingServiceGetAppEntitlementUserBindingsForIdentity(ctx, appId, appEntitlementId, identityUserId).Execute()
+> C1ApiAppV1ListAppUsersForIdentityWithGrantResponse C1ApiAppV1AppEntitlementUserBindingServiceListAppUsersForIdentityWithGrant(ctx, appId, appEntitlementId, identityUserId).Execute()
 
 
 
@@ -45,13 +45,13 @@ func main() {
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.DefaultAPI.C1ApiAppV1AppEntitlementUserBindingServiceGetAppEntitlementUserBindingsForIdentity(context.Background(), appId, appEntitlementId, identityUserId).Execute()
+    resp, r, err := apiClient.DefaultAPI.C1ApiAppV1AppEntitlementUserBindingServiceListAppUsersForIdentityWithGrant(context.Background(), appId, appEntitlementId, identityUserId).Execute()
     if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.C1ApiAppV1AppEntitlementUserBindingServiceGetAppEntitlementUserBindingsForIdentity``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.C1ApiAppV1AppEntitlementUserBindingServiceListAppUsersForIdentityWithGrant``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
     }
-    // response from `C1ApiAppV1AppEntitlementUserBindingServiceGetAppEntitlementUserBindingsForIdentity`: C1ApiAppV1GetAppEntitlementUserBindingsForIdentityResponse
-    fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.C1ApiAppV1AppEntitlementUserBindingServiceGetAppEntitlementUserBindingsForIdentity`: %v\n", resp)
+    // response from `C1ApiAppV1AppEntitlementUserBindingServiceListAppUsersForIdentityWithGrant`: C1ApiAppV1ListAppUsersForIdentityWithGrantResponse
+    fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.C1ApiAppV1AppEntitlementUserBindingServiceListAppUsersForIdentityWithGrant`: %v\n", resp)
 }
 ```
 
@@ -67,7 +67,7 @@ Name | Type | Description  | Notes
 
 ### Other Parameters
 
-Other parameters are passed through a pointer to a apiC1ApiAppV1AppEntitlementUserBindingServiceGetAppEntitlementUserBindingsForIdentityRequest struct via the builder pattern
+Other parameters are passed through a pointer to a apiC1ApiAppV1AppEntitlementUserBindingServiceListAppUsersForIdentityWithGrantRequest struct via the builder pattern
 
 
 Name | Type | Description  | Notes
@@ -78,7 +78,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**C1ApiAppV1GetAppEntitlementUserBindingsForIdentityResponse**](C1ApiAppV1GetAppEntitlementUserBindingsForIdentityResponse.md)
+[**C1ApiAppV1ListAppUsersForIdentityWithGrantResponse**](C1ApiAppV1ListAppUsersForIdentityWithGrantResponse.md)
 
 ### Authorization
 

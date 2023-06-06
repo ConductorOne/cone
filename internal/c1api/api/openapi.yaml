@@ -108,9 +108,9 @@ paths:
           description: Successful response
   /api/v1/grant/app/{app_id}/entitlement/{app_entitlement_id}/user/{identity_user_id}:
     get:
-      description: Invokes the c1.api.app.v1.AppEntitlementUserBindingService.GetAppEntitlementUserBindingsForIdentity
+      description: Invokes the c1.api.app.v1.AppEntitlementUserBindingService.ListAppUsersForIdentityWithGrant
         method.
-      operationId: c1.api.app.v1.AppEntitlementUserBindingService.GetAppEntitlementUserBindingsForIdentity
+      operationId: c1.api.app.v1.AppEntitlementUserBindingService.ListAppUsersForIdentityWithGrant
       parameters:
       - explode: false
         in: path
@@ -141,7 +141,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/c1.api.app.v1.GetAppEntitlementUserBindingsForIdentityResponse'
+                $ref: '#/components/schemas/c1.api.app.v1.ListAppUsersForIdentityWithGrantResponse'
           description: Successful response
   /api/v1/search/request_catalog/entitlements:
     post:
@@ -761,30 +761,6 @@ components:
           description: The resourceTypePath field.
           type: string
       type: object
-    c1.api.app.v1.GetAppEntitlementUserBindingsForIdentityResponse:
-      description: The GetAppEntitlementUserBindingsForIdentityResponse message.
-      example:
-        bindings:
-        - createdAt: 2000-01-23T04:56:07.000+00:00
-          deletedAt: 2000-01-23T04:56:07.000+00:00
-          deprovisionAt: 2000-01-23T04:56:07.000+00:00
-          appId: appId
-          appEntitlementId: appEntitlementId
-          appUserId: appUserId
-        - createdAt: 2000-01-23T04:56:07.000+00:00
-          deletedAt: 2000-01-23T04:56:07.000+00:00
-          deprovisionAt: 2000-01-23T04:56:07.000+00:00
-          appId: appId
-          appEntitlementId: appEntitlementId
-          appUserId: appUserId
-      properties:
-        bindings:
-          description: The bindings field.
-          items:
-            $ref: '#/components/schemas/c1.api.app.v1.AppEntitlementUserBinding'
-          nullable: true
-          type: array
-      type: object
     c1.api.app.v1.GetAppResponse:
       description: The GetAppResponse message.
       example:
@@ -809,6 +785,30 @@ components:
       properties:
         app:
           $ref: '#/components/schemas/c1.api.app.v1.App'
+      type: object
+    c1.api.app.v1.ListAppUsersForIdentityWithGrantResponse:
+      description: The ListAppUsersForIdentityWithGrantResponse message.
+      example:
+        bindings:
+        - createdAt: 2000-01-23T04:56:07.000+00:00
+          deletedAt: 2000-01-23T04:56:07.000+00:00
+          deprovisionAt: 2000-01-23T04:56:07.000+00:00
+          appId: appId
+          appEntitlementId: appEntitlementId
+          appUserId: appUserId
+        - createdAt: 2000-01-23T04:56:07.000+00:00
+          deletedAt: 2000-01-23T04:56:07.000+00:00
+          deprovisionAt: 2000-01-23T04:56:07.000+00:00
+          appId: appId
+          appEntitlementId: appEntitlementId
+          appUserId: appUserId
+      properties:
+        bindings:
+          description: The bindings field.
+          items:
+            $ref: '#/components/schemas/c1.api.app.v1.AppEntitlementUserBinding'
+          nullable: true
+          type: array
       type: object
     c1.api.auth.v1.IntrospectResponse:
       description: The IntrospectResponse message.

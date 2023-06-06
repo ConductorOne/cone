@@ -22,7 +22,7 @@ func Test_c1api_DefaultAPIService(t *testing.T) {
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
 
-	t.Run("Test DefaultAPIService C1ApiAppV1AppEntitlementUserBindingServiceGetAppEntitlementUserBindingsForIdentity", func(t *testing.T) {
+	t.Run("Test DefaultAPIService C1ApiAppV1AppEntitlementUserBindingServiceListAppUsersForIdentityWithGrant", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
@@ -30,7 +30,7 @@ func Test_c1api_DefaultAPIService(t *testing.T) {
 		var appEntitlementId string
 		var identityUserId string
 
-		resp, httpRes, err := apiClient.DefaultAPI.C1ApiAppV1AppEntitlementUserBindingServiceGetAppEntitlementUserBindingsForIdentity(context.Background(), appId, appEntitlementId, identityUserId).Execute()
+		resp, httpRes, err := apiClient.DefaultAPI.C1ApiAppV1AppEntitlementUserBindingServiceListAppUsersForIdentityWithGrant(context.Background(), appId, appEntitlementId, identityUserId).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)

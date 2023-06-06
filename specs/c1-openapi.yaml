@@ -307,8 +307,14 @@ components:
                     description: The resourceTypePath field.
                     type: string
             type: object
-        c1.api.app.v1.GetAppEntitlementUserBindingsForIdentityResponse:
-            description: The GetAppEntitlementUserBindingsForIdentityResponse message.
+        c1.api.app.v1.GetAppResponse:
+            description: The GetAppResponse message.
+            properties:
+                app:
+                    $ref: '#/components/schemas/c1.api.app.v1.App'
+            type: object
+        c1.api.app.v1.ListAppUsersForIdentityWithGrantResponse:
+            description: The ListAppUsersForIdentityWithGrantResponse message.
             properties:
                 bindings:
                     description: The bindings field.
@@ -316,12 +322,6 @@ components:
                         $ref: '#/components/schemas/c1.api.app.v1.AppEntitlementUserBinding'
                     nullable: true
                     type: array
-            type: object
-        c1.api.app.v1.GetAppResponse:
-            description: The GetAppResponse message.
-            properties:
-                app:
-                    $ref: '#/components/schemas/c1.api.app.v1.App'
             type: object
         c1.api.auth.v1.IntrospectResponse:
             description: The IntrospectResponse message.
@@ -1812,8 +1812,8 @@ paths:
                     description: Successful response
     /api/v1/grant/app/{app_id}/entitlement/{app_entitlement_id}/user/{identity_user_id}:
         get:
-            description: Invokes the c1.api.app.v1.AppEntitlementUserBindingService.GetAppEntitlementUserBindingsForIdentity method.
-            operationId: c1.api.app.v1.AppEntitlementUserBindingService.GetAppEntitlementUserBindingsForIdentity
+            description: Invokes the c1.api.app.v1.AppEntitlementUserBindingService.ListAppUsersForIdentityWithGrant method.
+            operationId: c1.api.app.v1.AppEntitlementUserBindingService.ListAppUsersForIdentityWithGrant
             parameters:
                 - in: path
                   name: app_id
@@ -1838,7 +1838,7 @@ paths:
                     content:
                         application/json:
                             schema:
-                                $ref: '#/components/schemas/c1.api.app.v1.GetAppEntitlementUserBindingsForIdentityResponse'
+                                $ref: '#/components/schemas/c1.api.app.v1.ListAppUsersForIdentityWithGrantResponse'
                     description: Successful response
     /api/v1/search/request_catalog/entitlements:
         post:

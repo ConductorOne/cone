@@ -22,22 +22,6 @@ func Test_c1api_DefaultAPIService(t *testing.T) {
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
 
-	t.Run("Test DefaultAPIService C1ApiAppV1AppEntitlementUserBindingServiceGet", func(t *testing.T) {
-
-		t.Skip("skip test")  // remove to run test
-
-		var appId string
-		var appEntitlementId string
-		var appUserId string
-
-		resp, httpRes, err := apiClient.DefaultAPI.C1ApiAppV1AppEntitlementUserBindingServiceGet(context.Background(), appId, appEntitlementId, appUserId).Execute()
-
-		require.Nil(t, err)
-		require.NotNil(t, resp)
-		assert.Equal(t, 200, httpRes.StatusCode)
-
-	})
-
 	t.Run("Test DefaultAPIService C1ApiAppV1AppResourceServiceGet", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test

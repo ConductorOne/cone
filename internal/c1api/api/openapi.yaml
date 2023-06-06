@@ -106,6 +106,43 @@ paths:
               schema:
                 $ref: '#/components/schemas/c1.api.auth.v1.IntrospectResponse'
           description: Successful response
+  /api/v1/grants/app/{app_id}/entitlement/{app_entitlement_id}/user/{app_user_id}:
+    get:
+      description: Invokes the c1.api.app.v1.AppEntitlementUserBindingService.Get
+        method.
+      operationId: c1.api.app.v1.AppEntitlementUserBindingService.Get
+      parameters:
+      - explode: false
+        in: path
+        name: app_id
+        required: true
+        schema:
+          description: The appId field.
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: app_entitlement_id
+        required: true
+        schema:
+          description: The appEntitlementId field.
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: app_user_id
+        required: true
+        schema:
+          description: The appUserId field.
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/c1.api.app.v1.GetAppEntitlementUserBindingResponse'
+          description: Successful response
   /api/v1/search/request_catalog/entitlements:
     post:
       description: Invokes the c1.api.requestcatalog.v1.RequestCatalogSearchService.SearchEntitlements
@@ -723,6 +760,20 @@ components:
         resourceTypePath:
           description: The resourceTypePath field.
           type: string
+      type: object
+    c1.api.app.v1.GetAppEntitlementUserBindingResponse:
+      description: The GetAppEntitlementUserBindingResponse message.
+      example:
+        appEntitlementUserBinding:
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          deletedAt: 2000-01-23T04:56:07.000+00:00
+          deprovisionAt: 2000-01-23T04:56:07.000+00:00
+          appId: appId
+          appEntitlementId: appEntitlementId
+          appUserId: appUserId
+      properties:
+        appEntitlementUserBinding:
+          $ref: '#/components/schemas/c1.api.app.v1.AppEntitlementUserBinding'
       type: object
     c1.api.app.v1.GetAppResponse:
       description: The GetAppResponse message.

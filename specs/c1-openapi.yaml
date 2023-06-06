@@ -307,6 +307,12 @@ components:
                     description: The resourceTypePath field.
                     type: string
             type: object
+        c1.api.app.v1.GetAppEntitlementUserBindingResponse:
+            description: The GetAppEntitlementUserBindingResponse message.
+            properties:
+                appEntitlementUserBinding:
+                    $ref: '#/components/schemas/c1.api.app.v1.AppEntitlementUserBinding'
+            type: object
         c1.api.app.v1.GetAppResponse:
             description: The GetAppResponse message.
             properties:
@@ -1799,6 +1805,36 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/c1.api.auth.v1.IntrospectResponse'
+                    description: Successful response
+    /api/v1/grants/app/{app_id}/entitlement/{app_entitlement_id}/user/{app_user_id}:
+        get:
+            description: Invokes the c1.api.app.v1.AppEntitlementUserBindingService.Get method.
+            operationId: c1.api.app.v1.AppEntitlementUserBindingService.Get
+            parameters:
+                - in: path
+                  name: app_id
+                  required: true
+                  schema:
+                    description: The appId field.
+                    type: string
+                - in: path
+                  name: app_entitlement_id
+                  required: true
+                  schema:
+                    description: The appEntitlementId field.
+                    type: string
+                - in: path
+                  name: app_user_id
+                  required: true
+                  schema:
+                    description: The appUserId field.
+                    type: string
+            responses:
+                "200":
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/c1.api.app.v1.GetAppEntitlementUserBindingResponse'
                     description: Successful response
     /api/v1/search/request_catalog/entitlements:
         post:

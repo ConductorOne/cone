@@ -41,3 +41,7 @@ func addJustificationFlag(cmd *cobra.Command) {
 func addGrantDurationFlag(cmd *cobra.Command) {
 	cmd.Flags().StringP(durationFlag, "d", "", "The duration of the grant in seconds")
 }
+
+func addForceTaskCreateFlag(cmd *cobra.Command) {
+	cmd.Flags().Bool("force", false, "Force the creation of a task even if the user already has (or doesn't have) the entitlement.")
+}

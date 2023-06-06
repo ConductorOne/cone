@@ -43,6 +43,7 @@ func taskCmd(cmd *cobra.Command) *cobra.Command {
 	addJustificationFlag(cmd)
 	addQueryFlag(cmd)
 	addEntitlementAliasFlag(cmd)
+	addForceTaskCreateFlag(cmd)
 	return cmd
 }
 

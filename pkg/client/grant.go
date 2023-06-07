@@ -2,6 +2,7 @@ package client
 
 import (
 	"context"
+
 	"github.com/conductorone/cone/internal/c1api"
 )
 

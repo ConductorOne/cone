@@ -5,8 +5,9 @@ import (
 	"fmt"
 	"sync"
 
-	"github.com/conductorone/cone/internal/c1api"
 	"golang.org/x/sync/errgroup"
+
+	"github.com/conductorone/cone/internal/c1api"
 )
 
 const (

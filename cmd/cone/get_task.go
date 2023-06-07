@@ -9,15 +9,30 @@ import (
 	"github.com/spf13/cobra"
 )
 
-func getTaskCmd() *cobra.Command {
+func tasksCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "get-task",
+		Use:   "task",
+		Short: "",
+		RunE:  taskRun,
+	}
+
+	cmd.AddCommand(getTasksCmd())
+
+	return cmd
+}
+
+func taskRun(cmd *cobra.Command, _ []string) error {
+	return cmd.Help()
+}
+
+func getTasksCmd() *cobra.Command {
+	cmd := &cobra.Command{
+		Use:   "get",
 		Short: "",
 		RunE:  getTaskRun,
 	}
 
 	addTaskIdFlag(cmd)
-
 	return cmd
 }
 

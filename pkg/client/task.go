@@ -66,3 +66,5 @@ func (c *client) CreateRevokeTask(
 
 	return cgtResp, nil
 }
+
+//func (c *client) SearchTasks(ctx context.Context, taskFilter)

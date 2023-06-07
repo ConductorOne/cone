@@ -35,7 +35,7 @@ func addEntitlementAliasFlag(cmd *cobra.Command) {
 }
 
 func addJustificationFlag(cmd *cobra.Command) {
-	cmd.Flags().StringP(justificationFlag, "j", "", "The justification for the request")
+	cmd.Flags().StringP(justificationFlag, "j", "Made from cone", "The justification for the request")
 }
 
 func addGrantDurationFlag(cmd *cobra.Command) {

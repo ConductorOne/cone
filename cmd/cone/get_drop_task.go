@@ -2,7 +2,9 @@ package main
 
 import (
 	"context"
+	"errors"
 	"fmt"
+	"strings"
 	"time"
 
 	"github.com/conductorone/cone/internal/c1api"
@@ -12,6 +14,8 @@ import (
 	"github.com/spf13/cobra"
 )
 
+const grantDurationErrorMessage = "grant duration must be less than or equal to max provision time"
+
 func getCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "get",
@@ -19,7 +23,6 @@ func getCmd() *cobra.Command {
 		RunE:  runGet,
 	}
 	addGrantDurationFlag(cmd)
-
 	return taskCmd(cmd)
 }
 
@@ -47,6 +50,14 @@ func runGet(cmd *cobra.Command, args []string) error {
 	return runTask(cmd, args, func(c client.C1Client, ctx context.Context, appId string, entitlementId string, userId string, justification string, duration string) (*c1api.C1ApiTaskV1Task, error) {
 		accessRequest, err := c.CreateGrantTask(ctx, appId, entitlementId, userId, justification, duration)
 		if err != nil {
+			openApiError := &c1api.GenericOpenAPIError{}
+			if !errors.As(err, &openApiError) {
+				return nil, err
+			}
+			errorBody := string(openApiError.Body())
+			if strings.Contains(errorBody, grantDurationErrorMessage) {
+				return nil, fmt.Errorf(grantDurationErrorMessage)
+			}
 			return nil, err
 		}
 		return accessRequest.TaskView.Task, nil

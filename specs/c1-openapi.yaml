@@ -1055,6 +1055,13 @@ components:
                     nullable: true
                     type: array
             type: object
+        c1.api.task.v1.TaskRef:
+            description: The TaskRef message.
+            properties:
+                id:
+                    description: The id field.
+                    type: string
+            type: object
         c1.api.task.v1.TaskRevokeSource:
             description: |
                 The TaskRevokeSource message.
@@ -1110,6 +1117,189 @@ components:
                     type: string
                 certTicketId:
                     description: The certTicketId field.
+                    type: string
+            type: object
+        c1.api.task.v1.TaskSearchRequest:
+            description: The TaskSearchRequest message.
+            properties:
+                accessReviewIds:
+                    description: The accessReviewIds field.
+                    items:
+                        type: string
+                    nullable: true
+                    type: array
+                accountOwnerIds:
+                    description: The accountOwnerIds field.
+                    items:
+                        type: string
+                    nullable: true
+                    type: array
+                actorId:
+                    description: The actorId field.
+                    type: string
+                appEntitlementIds:
+                    description: The appEntitlementIds field.
+                    items:
+                        type: string
+                    nullable: true
+                    type: array
+                appResourceIds:
+                    description: The appResourceIds field.
+                    items:
+                        type: string
+                    nullable: true
+                    type: array
+                appResourceTypeIds:
+                    description: The appResourceTypeIds field.
+                    items:
+                        type: string
+                    nullable: true
+                    type: array
+                appUserSubjectIds:
+                    description: |4
+                         Find Tasks which are referncing a Set of AppUserIDs
+                    items:
+                        type: string
+                    nullable: true
+                    type: array
+                applicationIds:
+                    description: The applicationIds field.
+                    items:
+                        type: string
+                    nullable: true
+                    type: array
+                assigneesInIds:
+                    description: |4
+                         Search tasks by  List of UserIDs which are currently assigned these Tasks
+                    items:
+                        type: string
+                    nullable: true
+                    type: array
+                createdAfter:
+                    format: date-time
+                    type: string
+                createdBefore:
+                    format: date-time
+                    type: string
+                currentStep:
+                    description: The currentStep field.
+                    enum:
+                        - TASK_SEARCH_CURRENT_STEP_UNSPECIFIED
+                        - TASK_SEARCH_CURRENT_STEP_APPROVAL
+                        - TASK_SEARCH_CURRENT_STEP_PROVISION
+                    type: string
+                excludeAppEntitlementIds:
+                    description: The excludeAppEntitlementIds field.
+                    items:
+                        type: string
+                    nullable: true
+                    type: array
+                excludeIds:
+                    description: |4
+                         Exclude Specific TaskIDs from this serach result.
+                    items:
+                        type: string
+                    nullable: true
+                    type: array
+                expandMask:
+                    $ref: '#/components/schemas/c1.api.task.v1.TaskExpandMask'
+                includeDeleted:
+                    description: The includeDeleted field.
+                    type: boolean
+                myWorkUserIds:
+                    description: |4
+                         Search tasks by a List of UserIDs which are currently assigned to OR have previously acted upon this Task
+                    items:
+                        type: string
+                    nullable: true
+                    type: array
+                openerIds:
+                    description: |4
+                         Find a Task which was opened by UserIDs
+                    items:
+                        type: string
+                    nullable: true
+                    type: array
+                pageSize:
+                    description: The pageSize field.
+                    format: int32
+                    type: number
+                pageToken:
+                    description: The pageToken field.
+                    type: string
+                previouslyActedOnIds:
+                    description: |4
+                         Search tasks by a  List of UserIDs which have previously approved or otherwise acted upon this Task
+                    items:
+                        type: string
+                    nullable: true
+                    type: array
+                query:
+                    description: The query field.
+                    type: string
+                refs:
+                    description: The refs field.
+                    items:
+                        $ref: '#/components/schemas/c1.api.task.v1.TaskRef'
+                    nullable: true
+                    type: array
+                sortBy:
+                    description: The sortBy field.
+                    enum:
+                        - TASK_SEARCH_SORT_BY_UNSPECIFIED
+                        - TASK_SEARCH_SORT_BY_ACCOUNT
+                        - TASK_SEARCH_SORT_BY_RESOURCE
+                        - TASK_SEARCH_SORT_BY_ACCOUNT_OWNER
+                    type: string
+                subjectIds:
+                    description: |4
+                         Find Tasks which are referncing this C1 UserID
+                    items:
+                        type: string
+                    nullable: true
+                    type: array
+                taskStates:
+                    description: The taskStates field.
+                    items:
+                        enum:
+                            - TASK_STATE_UNSPECIFIED
+                            - TASK_STATE_OPEN
+                            - TASK_STATE_CLOSED
+                        type: string
+                    nullable: true
+                    type: array
+                taskTypes:
+                    description: |4
+                         TODO(pquerna): why is this a MESSAGE that only CONTAINS AN ENUM?
+                    items:
+                        $ref: '#/components/schemas/c1.api.task.v1.TaskType'
+                    nullable: true
+                    type: array
+            type: object
+        c1.api.task.v1.TaskSearchResponse:
+            description: The TaskSearchResponse message.
+            properties:
+                expanded:
+                    description: The expanded field.
+                    items:
+                        additionalProperties:
+                            oneOf: []
+                        description: Contains an arbitrary serialized message along with a @type that describes the type of the serialized message.
+                        properties:
+                            '@type':
+                                description: The type of the serialized message.
+                                type: string
+                        type: object
+                    nullable: true
+                    type: array
+                list:
+                    description: The list field.
+                    items:
+                        $ref: '#/components/schemas/c1.api.task.v1.TaskView'
+                    nullable: true
+                    type: array
+                nextPageToken:
+                    description: The nextPageToken field.
                     type: string
             type: object
         c1.api.task.v1.TaskServiceCreateGrantRequest:
@@ -1625,6 +1815,22 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/c1.api.requestcatalog.v1.RequestCatalogSearchServiceSearchEntitlementsResponse'
+                    description: Successful response
+    /api/v1/search/tasks:
+        post:
+            description: Invokes the c1.api.task.v1.TaskSearchService.Search method.
+            operationId: c1.api.task.v1.TaskSearchService.Search
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/c1.api.task.v1.TaskSearchRequest'
+            responses:
+                "200":
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/c1.api.task.v1.TaskSearchResponse'
                     description: Successful response
     /api/v1/task/grant:
         post:

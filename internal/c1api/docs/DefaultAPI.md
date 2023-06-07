@@ -5,6 +5,7 @@ All URIs are relative to *https://invalid-example.conductor.one*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**C1ApiAppV1AppEntitlementUserBindingServiceListAppUsersForIdentityWithGrant**](DefaultAPI.md#C1ApiAppV1AppEntitlementUserBindingServiceListAppUsersForIdentityWithGrant) | **Get** /api/v1/apps/{app_id}/entitlements/{app_entitlement_id}/users/{identity_user_id}/grants | 
+[**C1ApiAppV1AppEntitlementsGet**](DefaultAPI.md#C1ApiAppV1AppEntitlementsGet) | **Get** /api/v1/apps/{app_id}/entitlements/{id} | 
 [**C1ApiAppV1AppResourceServiceGet**](DefaultAPI.md#C1ApiAppV1AppResourceServiceGet) | **Get** /api/v1/apps/{app_id}/resource_types/{app_resource_type_id}/resource/{id} | 
 [**C1ApiAppV1AppResourceTypeServiceGet**](DefaultAPI.md#C1ApiAppV1AppResourceTypeServiceGet) | **Get** /api/v1/apps/{app_id}/resource_types/{id} | 
 [**C1ApiAppV1AppsGet**](DefaultAPI.md#C1ApiAppV1AppsGet) | **Get** /api/v1/apps/{id} | 
@@ -82,6 +83,79 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**C1ApiAppV1ListAppUsersForIdentityWithGrantResponse**](C1ApiAppV1ListAppUsersForIdentityWithGrantResponse.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## C1ApiAppV1AppEntitlementsGet
+
+> C1ApiAppV1GetAppEntitlementResponse C1ApiAppV1AppEntitlementsGet(ctx, appId, id).Execute()
+
+
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "github.com/conductorone/cone/internal/c1api"
+)
+
+func main() {
+    appId := "appId_example" // string | 
+    id := "id_example" // string | 
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    resp, r, err := apiClient.DefaultAPI.C1ApiAppV1AppEntitlementsGet(context.Background(), appId, id).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.C1ApiAppV1AppEntitlementsGet``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+    // response from `C1ApiAppV1AppEntitlementsGet`: C1ApiAppV1GetAppEntitlementResponse
+    fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.C1ApiAppV1AppEntitlementsGet`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**appId** | **string** |  | 
+**id** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiC1ApiAppV1AppEntitlementsGetRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+
+### Return type
+
+[**C1ApiAppV1GetAppEntitlementResponse**](C1ApiAppV1GetAppEntitlementResponse.md)
 
 ### Authorization
 

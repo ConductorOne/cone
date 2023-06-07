@@ -307,6 +307,25 @@ components:
                     description: The resourceTypePath field.
                     type: string
             type: object
+        c1.api.app.v1.GetAppEntitlementResponse:
+            description: The GetAppEntitlementResponse message.
+            properties:
+                appEntitlementView:
+                    $ref: '#/components/schemas/c1.api.app.v1.AppEntitlementView'
+                expanded:
+                    description: The expanded field.
+                    items:
+                        additionalProperties:
+                            oneOf: []
+                        description: Contains an arbitrary serialized message along with a @type that describes the type of the serialized message.
+                        properties:
+                            '@type':
+                                description: The type of the serialized message.
+                                type: string
+                        type: object
+                    nullable: true
+                    type: array
+            type: object
         c1.api.app.v1.GetAppResponse:
             description: The GetAppResponse message.
             properties:
@@ -1847,6 +1866,32 @@ paths:
                             schema:
                                 $ref: '#/components/schemas/c1.api.app.v1.ListAppUsersForIdentityWithGrantResponse'
                     description: Successful response
+            x-speakeasy-group: App
+    /api/v1/apps/{app_id}/entitlements/{id}:
+        get:
+            description: Invokes the c1.api.app.v1.AppEntitlements.Get method.
+            operationId: c1.api.app.v1.AppEntitlements.Get
+            parameters:
+                - in: path
+                  name: app_id
+                  required: true
+                  schema:
+                    description: The appId field.
+                    type: string
+                - in: path
+                  name: id
+                  required: true
+                  schema:
+                    description: The id field.
+                    type: string
+            responses:
+                "200":
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/c1.api.app.v1.GetAppEntitlementResponse'
+                    description: Successful response
+            x-speakeasy-group: App
     /api/v1/apps/{app_id}/resource_types/{app_resource_type_id}/resource/{id}:
         get:
             description: Invokes the c1.api.app.v1.AppResourceService.Get method.
@@ -1877,6 +1922,7 @@ paths:
                             schema:
                                 $ref: '#/components/schemas/c1.api.app.v1.AppResourceServiceGetResponse'
                     description: Successful response
+            x-speakeasy-group: App
     /api/v1/apps/{app_id}/resource_types/{id}:
         get:
             description: Invokes the c1.api.app.v1.AppResourceTypeService.Get method.
@@ -1901,6 +1947,7 @@ paths:
                             schema:
                                 $ref: '#/components/schemas/c1.api.app.v1.AppResourceTypeServiceGetResponse'
                     description: Successful response
+            x-speakeasy-group: App
     /api/v1/apps/{id}:
         get:
             description: Invokes the c1.api.app.v1.Apps.Get method.
@@ -1919,6 +1966,7 @@ paths:
                             schema:
                                 $ref: '#/components/schemas/c1.api.app.v1.GetAppResponse'
                     description: Successful response
+            x-speakeasy-group: App
     /api/v1/auth/introspect:
         get:
             description: Invokes the c1.api.auth.v1.Auth.Introspect method.
@@ -1930,6 +1978,7 @@ paths:
                             schema:
                                 $ref: '#/components/schemas/c1.api.auth.v1.IntrospectResponse'
                     description: Successful response
+            x-speakeasy-group: Auth
     /api/v1/search/request_catalog/entitlements:
         post:
             description: Invokes the c1.api.requestcatalog.v1.RequestCatalogSearchService.SearchEntitlements method.
@@ -1946,6 +1995,7 @@ paths:
                             schema:
                                 $ref: '#/components/schemas/c1.api.requestcatalog.v1.RequestCatalogSearchServiceSearchEntitlementsResponse'
                     description: Successful response
+            x-speakeasy-group: Requestcatalog
     /api/v1/search/tasks:
         post:
             description: Invokes the c1.api.task.v1.TaskSearchService.Search method.
@@ -1962,6 +2012,7 @@ paths:
                             schema:
                                 $ref: '#/components/schemas/c1.api.task.v1.TaskSearchResponse'
                     description: Successful response
+            x-speakeasy-group: Task
     /api/v1/task/grant:
         post:
             description: Invokes the c1.api.task.v1.TaskService.CreateGrantTask method.
@@ -1978,6 +2029,7 @@ paths:
                             schema:
                                 $ref: '#/components/schemas/c1.api.task.v1.TaskServiceCreateGrantResponse'
                     description: Successful response
+            x-speakeasy-group: Task
     /api/v1/task/revoke:
         post:
             description: Invokes the c1.api.task.v1.TaskService.CreateRevokeTask method.
@@ -1994,6 +2046,7 @@ paths:
                             schema:
                                 $ref: '#/components/schemas/c1.api.task.v1.TaskServiceCreateRevokeResponse'
                     description: Successful response
+            x-speakeasy-group: Task
     /api/v1/tasks/{id}:
         get:
             description: Invokes the c1.api.task.v1.TaskService.Get method.
@@ -2012,6 +2065,7 @@ paths:
                             schema:
                                 $ref: '#/components/schemas/c1.api.task.v1.TaskServiceGetResponse'
                     description: Successful response
+            x-speakeasy-group: Task
     /api/v1/tasks/{task_id}/action/approve:
         post:
             description: Invokes the c1.api.task.v1.TaskActionsService.Approve method.
@@ -2035,6 +2089,7 @@ paths:
                             schema:
                                 $ref: '#/components/schemas/c1.api.task.v1.TaskActionsServiceApproveResponse'
                     description: Successful response
+            x-speakeasy-group: Task
     /api/v1/tasks/{task_id}/action/comment:
         post:
             description: Invokes the c1.api.task.v1.TaskActionsService.Comment method.
@@ -2058,6 +2113,7 @@ paths:
                             schema:
                                 $ref: '#/components/schemas/c1.api.task.v1.TaskActionsServiceCommentResponse'
                     description: Successful response
+            x-speakeasy-group: Task
     /api/v1/tasks/{task_id}/action/deny:
         post:
             description: Invokes the c1.api.task.v1.TaskActionsService.Deny method.
@@ -2081,6 +2137,7 @@ paths:
                             schema:
                                 $ref: '#/components/schemas/c1.api.task.v1.TaskActionsServiceDenyResponse'
                     description: Successful response
+            x-speakeasy-group: Task
     /api/v1/users/{id}:
         get:
             description: Invokes the c1.api.user.v1.UserService.Get method.
@@ -2099,6 +2156,7 @@ paths:
                             schema:
                                 $ref: '#/components/schemas/c1.api.user.v1.UserServiceGetResponse'
                     description: Successful response
+            x-speakeasy-group: User
 servers:
     - description: The ConductorOne API server for the current tenant.
       url: https://{tenantDomain}.conductor.one

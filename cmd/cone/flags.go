@@ -13,6 +13,7 @@ const (
 	justificationFlag    = "justification"
 	durationFlag         = "duration"
 	forceFlag            = "force"
+	nonInteractiveFlag   = "non-interactive"
 )
 
 func addWaitFlag(cmd *cobra.Command) {

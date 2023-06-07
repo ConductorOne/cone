@@ -69,3 +69,23 @@ func (c *client) ExpandEntitlements(ctx context.Context, in []*EntitlementWithBi
 
 	return expander, nil
 }
+
+func (c *client) GetEntitlement(ctx context.Context, appId string, entitlementId string) (*c1api.C1ApiAppV1AppEntitlement, error) {
+	resp, httpResp, err := c.apiClient.DefaultAPI.C1ApiAppV1AppEntitlementsGet(ctx, appId, entitlementId).Execute()
+	if err != nil {
+		return nil, err
+	}
+	defer httpResp.Body.Close()
+
+	v, ok := resp.GetAppEntitlementViewOk()
+	if !ok {
+		return nil, errors.New("get-entitlement: view is nil")
+	}
+
+	r, ok := v.GetAppEntitlementOk()
+	if !ok {
+		return nil, errors.New("get-entitlement: entitlement is nil")
+	}
+
+	return r, nil
+}

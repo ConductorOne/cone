@@ -13,6 +13,7 @@ require (
 
 require (
 	github.com/pterm/pterm v0.12.62
+	github.com/xhit/go-str2duration/v2 v2.1.0
 	golang.org/x/sync v0.2.0
 )
 

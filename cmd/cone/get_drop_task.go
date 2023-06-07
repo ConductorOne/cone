@@ -7,13 +7,13 @@ import (
 	"strings"
 	"time"
 
-	"github.com/conductorone/cone/internal/c1api"
-	"github.com/conductorone/cone/pkg/client"
-	"github.com/conductorone/cone/pkg/output"
-	
 	"github.com/pterm/pterm"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
+
+	"github.com/conductorone/cone/internal/c1api"
+	"github.com/conductorone/cone/pkg/client"
+	"github.com/conductorone/cone/pkg/output"
 )
 
 const grantDurationErrorMessage = "grant duration must be less than or equal to max provision time"
@@ -126,7 +126,6 @@ func runTask(
 			pterm.Println("You do not have existing grants to drop for this entitlement. Use --force to override this check.")
 			return nil
 		}
-
 	}
 
 	grantDurationInSeconds := ""

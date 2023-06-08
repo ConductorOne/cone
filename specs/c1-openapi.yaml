@@ -1044,6 +1044,96 @@ components:
                          External IDS
                     type: string
             type: object
+        c1.api.task.v1.TaskActionsServiceApproveRequestInput:
+            description: The TaskActionsServiceApproveRequest message.
+            properties:
+                comment:
+                    description: The comment field.
+                    type: string
+                expandMask:
+                    $ref: '#/components/schemas/c1.api.task.v1.TaskExpandMask'
+                policyStepId:
+                    description: The policyStepId field.
+                    type: string
+            type: object
+        c1.api.task.v1.TaskActionsServiceApproveResponse:
+            description: The TaskActionsServiceApproveResponse message.
+            properties:
+                expanded:
+                    description: The expanded field.
+                    items:
+                        additionalProperties:
+                            oneOf: []
+                        description: Contains an arbitrary serialized message along with a @type that describes the type of the serialized message.
+                        properties:
+                            '@type':
+                                description: The type of the serialized message.
+                                type: string
+                        type: object
+                    nullable: true
+                    type: array
+                taskView:
+                    $ref: '#/components/schemas/c1.api.task.v1.TaskView'
+            type: object
+        c1.api.task.v1.TaskActionsServiceCommentRequestInput:
+            description: The TaskActionsServiceCommentRequest message.
+            properties:
+                comment:
+                    description: The comment field.
+                    type: string
+                expandMask:
+                    $ref: '#/components/schemas/c1.api.task.v1.TaskExpandMask'
+            type: object
+        c1.api.task.v1.TaskActionsServiceCommentResponse:
+            description: The TaskActionsServiceCommentResponse message.
+            properties:
+                expanded:
+                    description: The expanded field.
+                    items:
+                        additionalProperties:
+                            oneOf: []
+                        description: Contains an arbitrary serialized message along with a @type that describes the type of the serialized message.
+                        properties:
+                            '@type':
+                                description: The type of the serialized message.
+                                type: string
+                        type: object
+                    nullable: true
+                    type: array
+                taskView:
+                    $ref: '#/components/schemas/c1.api.task.v1.TaskView'
+            type: object
+        c1.api.task.v1.TaskActionsServiceDenyRequestInput:
+            description: The TaskActionsServiceDenyRequest message.
+            properties:
+                comment:
+                    description: The comment field.
+                    type: string
+                expandMask:
+                    $ref: '#/components/schemas/c1.api.task.v1.TaskExpandMask'
+                policyStepId:
+                    description: The policyStepId field.
+                    type: string
+            type: object
+        c1.api.task.v1.TaskActionsServiceDenyResponse:
+            description: The TaskActionsServiceDenyResponse message.
+            properties:
+                expanded:
+                    description: The expanded field.
+                    items:
+                        additionalProperties:
+                            oneOf: []
+                        description: Contains an arbitrary serialized message along with a @type that describes the type of the serialized message.
+                        properties:
+                            '@type':
+                                description: The type of the serialized message.
+                                type: string
+                        type: object
+                    nullable: true
+                    type: array
+                taskView:
+                    $ref: '#/components/schemas/c1.api.task.v1.TaskView'
+            type: object
         c1.api.task.v1.TaskExpandMask:
             description: |4
                  Make sure to update the TicketExpandMask
@@ -1675,6 +1765,75 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/c1.api.task.v1.TaskServiceGetResponse'
+                    description: Successful response
+    /api/v1/tasks/{task_id}/action/approve:
+        post:
+            description: Invokes the c1.api.task.v1.TaskActionsService.Approve method.
+            operationId: c1.api.task.v1.TaskActionsService.Approve
+            parameters:
+                - in: path
+                  name: task_id
+                  required: true
+                  schema:
+                    description: The taskId field.
+                    type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/c1.api.task.v1.TaskActionsServiceApproveRequestInput'
+            responses:
+                "200":
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/c1.api.task.v1.TaskActionsServiceApproveResponse'
+                    description: Successful response
+    /api/v1/tasks/{task_id}/action/comment:
+        post:
+            description: Invokes the c1.api.task.v1.TaskActionsService.Comment method.
+            operationId: c1.api.task.v1.TaskActionsService.Comment
+            parameters:
+                - in: path
+                  name: task_id
+                  required: true
+                  schema:
+                    description: The taskId field.
+                    type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/c1.api.task.v1.TaskActionsServiceCommentRequestInput'
+            responses:
+                "200":
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/c1.api.task.v1.TaskActionsServiceCommentResponse'
+                    description: Successful response
+    /api/v1/tasks/{task_id}/action/deny:
+        post:
+            description: Invokes the c1.api.task.v1.TaskActionsService.Deny method.
+            operationId: c1.api.task.v1.TaskActionsService.Deny
+            parameters:
+                - in: path
+                  name: task_id
+                  required: true
+                  schema:
+                    description: The taskId field.
+                    type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/c1.api.task.v1.TaskActionsServiceDenyRequestInput'
+            responses:
+                "200":
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/c1.api.task.v1.TaskActionsServiceDenyResponse'
                     description: Successful response
     /api/v1/users/{id}:
         get:

@@ -91,6 +91,48 @@ func Test_c1api_DefaultAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test DefaultAPIService C1ApiTaskV1TaskActionsServiceApprove", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var taskId string
+
+		resp, httpRes, err := apiClient.DefaultAPI.C1ApiTaskV1TaskActionsServiceApprove(context.Background(), taskId).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService C1ApiTaskV1TaskActionsServiceComment", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var taskId string
+
+		resp, httpRes, err := apiClient.DefaultAPI.C1ApiTaskV1TaskActionsServiceComment(context.Background(), taskId).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService C1ApiTaskV1TaskActionsServiceDeny", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var taskId string
+
+		resp, httpRes, err := apiClient.DefaultAPI.C1ApiTaskV1TaskActionsServiceDeny(context.Background(), taskId).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test DefaultAPIService C1ApiTaskV1TaskServiceCreateGrantTask", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test

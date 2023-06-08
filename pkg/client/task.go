@@ -66,3 +66,17 @@ func (c *client) CreateRevokeTask(
 
 	return cgtResp, nil
 }
+
+func (c *client) CommentOnTask(ctx context.Context, taskID string, comment string) (*c1api.C1ApiTaskV1TaskActionsServiceCommentResponse, error) {
+	api := c.apiClient.DefaultAPI.C1ApiTaskV1TaskActionsServiceComment(ctx, taskID)
+	req := api.C1ApiTaskV1TaskActionsServiceCommentRequestInput(c1api.C1ApiTaskV1TaskActionsServiceCommentRequestInput{
+		Comment: &comment,
+	})
+	cmntResp, resp, err := req.Execute()
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+
+	return cmntResp, nil
+}

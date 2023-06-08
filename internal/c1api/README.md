@@ -82,6 +82,9 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**C1ApiAppV1AppsGet**](docs/DefaultAPI.md#c1apiappv1appsget) | **Get** /api/v1/apps/{id} | 
 *DefaultAPI* | [**C1ApiAuthV1AuthIntrospect**](docs/DefaultAPI.md#c1apiauthv1authintrospect) | **Get** /api/v1/auth/introspect | 
 *DefaultAPI* | [**C1ApiRequestcatalogV1RequestCatalogSearchServiceSearchEntitlements**](docs/DefaultAPI.md#c1apirequestcatalogv1requestcatalogsearchservicesearchentitlements) | **Post** /api/v1/search/request_catalog/entitlements | 
+*DefaultAPI* | [**C1ApiTaskV1TaskActionsServiceApprove**](docs/DefaultAPI.md#c1apitaskv1taskactionsserviceapprove) | **Post** /api/v1/tasks/{task_id}/action/approve | 
+*DefaultAPI* | [**C1ApiTaskV1TaskActionsServiceComment**](docs/DefaultAPI.md#c1apitaskv1taskactionsservicecomment) | **Post** /api/v1/tasks/{task_id}/action/comment | 
+*DefaultAPI* | [**C1ApiTaskV1TaskActionsServiceDeny**](docs/DefaultAPI.md#c1apitaskv1taskactionsservicedeny) | **Post** /api/v1/tasks/{task_id}/action/deny | 
 *DefaultAPI* | [**C1ApiTaskV1TaskServiceCreateGrantTask**](docs/DefaultAPI.md#c1apitaskv1taskservicecreategranttask) | **Post** /api/v1/task/grant | 
 *DefaultAPI* | [**C1ApiTaskV1TaskServiceCreateRevokeTask**](docs/DefaultAPI.md#c1apitaskv1taskservicecreaterevoketask) | **Post** /api/v1/task/revoke | 
 *DefaultAPI* | [**C1ApiTaskV1TaskServiceGet**](docs/DefaultAPI.md#c1apitaskv1taskserviceget) | **Get** /api/v1/tasks/{id} | 
@@ -137,6 +140,12 @@ Class | Method | HTTP request | Description
  - [C1ApiRequestcatalogV1RequestCatalogSearchServiceSearchEntitlementsResponse](docs/C1ApiRequestcatalogV1RequestCatalogSearchServiceSearchEntitlementsResponse.md)
  - [C1ApiTaskV1ExternalRef](docs/C1ApiTaskV1ExternalRef.md)
  - [C1ApiTaskV1Task](docs/C1ApiTaskV1Task.md)
+ - [C1ApiTaskV1TaskActionsServiceApproveRequestInput](docs/C1ApiTaskV1TaskActionsServiceApproveRequestInput.md)
+ - [C1ApiTaskV1TaskActionsServiceApproveResponse](docs/C1ApiTaskV1TaskActionsServiceApproveResponse.md)
+ - [C1ApiTaskV1TaskActionsServiceCommentRequestInput](docs/C1ApiTaskV1TaskActionsServiceCommentRequestInput.md)
+ - [C1ApiTaskV1TaskActionsServiceCommentResponse](docs/C1ApiTaskV1TaskActionsServiceCommentResponse.md)
+ - [C1ApiTaskV1TaskActionsServiceDenyRequestInput](docs/C1ApiTaskV1TaskActionsServiceDenyRequestInput.md)
+ - [C1ApiTaskV1TaskActionsServiceDenyResponse](docs/C1ApiTaskV1TaskActionsServiceDenyResponse.md)
  - [C1ApiTaskV1TaskExpandMask](docs/C1ApiTaskV1TaskExpandMask.md)
  - [C1ApiTaskV1TaskRevokeSource](docs/C1ApiTaskV1TaskRevokeSource.md)
  - [C1ApiTaskV1TaskRevokeSourceExpired](docs/C1ApiTaskV1TaskRevokeSourceExpired.md)

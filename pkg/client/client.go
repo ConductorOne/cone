@@ -66,6 +66,7 @@ type C1Client interface {
 		identityUserId string,
 		justification string,
 	) (*c1api.C1ApiTaskV1TaskServiceCreateRevokeResponse, error)
+	CommentOnTask(ctx context.Context, taskID string, comment string) (*c1api.C1ApiTaskV1TaskActionsServiceCommentResponse, error)
 }
 
 func (c *client) BaseURL() string {

@@ -1727,6 +1727,36 @@ info:
     version: 0.1.0-alpha
 openapi: 3.0.3
 paths:
+    /api/v1/apps/{app_id}/entitlement/{app_entitlement_id}/user/{identity_user_id}/grant:
+        get:
+            description: Invokes the c1.api.app.v1.AppEntitlementUserBindingService.ListAppUsersForIdentityWithGrant method.
+            operationId: c1.api.app.v1.AppEntitlementUserBindingService.ListAppUsersForIdentityWithGrant
+            parameters:
+                - in: path
+                  name: app_id
+                  required: true
+                  schema:
+                    description: The appId field.
+                    type: string
+                - in: path
+                  name: app_entitlement_id
+                  required: true
+                  schema:
+                    description: The appEntitlementId field.
+                    type: string
+                - in: path
+                  name: identity_user_id
+                  required: true
+                  schema:
+                    description: The identityUserId field.
+                    type: string
+            responses:
+                "200":
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/c1.api.app.v1.ListAppUsersForIdentityWithGrantResponse'
+                    description: Successful response
     /api/v1/apps/{app_id}/resource_types/{app_resource_type_id}/resource/{id}:
         get:
             description: Invokes the c1.api.app.v1.AppResourceService.Get method.
@@ -1809,36 +1839,6 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/c1.api.auth.v1.IntrospectResponse'
-                    description: Successful response
-    /api/v1/grant/app/{app_id}/entitlement/{app_entitlement_id}/user/{identity_user_id}:
-        get:
-            description: Invokes the c1.api.app.v1.AppEntitlementUserBindingService.ListAppUsersForIdentityWithGrant method.
-            operationId: c1.api.app.v1.AppEntitlementUserBindingService.ListAppUsersForIdentityWithGrant
-            parameters:
-                - in: path
-                  name: app_id
-                  required: true
-                  schema:
-                    description: The appId field.
-                    type: string
-                - in: path
-                  name: app_entitlement_id
-                  required: true
-                  schema:
-                    description: The appEntitlementId field.
-                    type: string
-                - in: path
-                  name: identity_user_id
-                  required: true
-                  schema:
-                    description: The identityUserId field.
-                    type: string
-            responses:
-                "200":
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/c1.api.app.v1.ListAppUsersForIdentityWithGrantResponse'
                     description: Successful response
     /api/v1/search/request_catalog/entitlements:
         post:

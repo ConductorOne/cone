@@ -71,7 +71,7 @@ func (a *DefaultAPIService) C1ApiAppV1AppEntitlementUserBindingServiceListAppUse
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/api/v1/grant/app/{app_id}/entitlement/{app_entitlement_id}/user/{identity_user_id}"
+	localVarPath := localBasePath + "/api/v1/apps/{app_id}/entitlement/{app_entitlement_id}/user/{identity_user_id}/grant"
 	localVarPath = strings.Replace(localVarPath, "{"+"app_id"+"}", url.PathEscape(parameterValueToString(r.appId, "appId")), -1)
 	localVarPath = strings.Replace(localVarPath, "{"+"app_entitlement_id"+"}", url.PathEscape(parameterValueToString(r.appEntitlementId, "appEntitlementId")), -1)
 	localVarPath = strings.Replace(localVarPath, "{"+"identity_user_id"+"}", url.PathEscape(parameterValueToString(r.identityUserId, "identityUserId")), -1)

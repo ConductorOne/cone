@@ -77,7 +77,7 @@ All URIs are relative to *https://invalid-example.conductor.one*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
-*DefaultAPI* | [**C1ApiAppV1AppEntitlementUserBindingServiceListAppUsersForIdentityWithGrant**](docs/DefaultAPI.md#c1apiappv1appentitlementuserbindingservicelistappusersforidentitywithgrant) | **Get** /api/v1/grant/app/{app_id}/entitlement/{app_entitlement_id}/user/{identity_user_id} | 
+*DefaultAPI* | [**C1ApiAppV1AppEntitlementUserBindingServiceListAppUsersForIdentityWithGrant**](docs/DefaultAPI.md#c1apiappv1appentitlementuserbindingservicelistappusersforidentitywithgrant) | **Get** /api/v1/apps/{app_id}/entitlement/{app_entitlement_id}/user/{identity_user_id}/grant | 
 *DefaultAPI* | [**C1ApiAppV1AppResourceServiceGet**](docs/DefaultAPI.md#c1apiappv1appresourceserviceget) | **Get** /api/v1/apps/{app_id}/resource_types/{app_resource_type_id}/resource/{id} | 
 *DefaultAPI* | [**C1ApiAppV1AppResourceTypeServiceGet**](docs/DefaultAPI.md#c1apiappv1appresourcetypeserviceget) | **Get** /api/v1/apps/{app_id}/resource_types/{id} | 
 *DefaultAPI* | [**C1ApiAppV1AppsGet**](docs/DefaultAPI.md#c1apiappv1appsget) | **Get** /api/v1/apps/{id} | 

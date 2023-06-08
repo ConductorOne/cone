@@ -4,7 +4,7 @@ All URIs are relative to *https://invalid-example.conductor.one*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**C1ApiAppV1AppEntitlementUserBindingServiceListAppUsersForIdentityWithGrant**](DefaultAPI.md#C1ApiAppV1AppEntitlementUserBindingServiceListAppUsersForIdentityWithGrant) | **Get** /api/v1/grant/app/{app_id}/entitlement/{app_entitlement_id}/user/{identity_user_id} | 
+[**C1ApiAppV1AppEntitlementUserBindingServiceListAppUsersForIdentityWithGrant**](DefaultAPI.md#C1ApiAppV1AppEntitlementUserBindingServiceListAppUsersForIdentityWithGrant) | **Get** /api/v1/apps/{app_id}/entitlement/{app_entitlement_id}/user/{identity_user_id}/grant | 
 [**C1ApiAppV1AppResourceServiceGet**](DefaultAPI.md#C1ApiAppV1AppResourceServiceGet) | **Get** /api/v1/apps/{app_id}/resource_types/{app_resource_type_id}/resource/{id} | 
 [**C1ApiAppV1AppResourceTypeServiceGet**](DefaultAPI.md#C1ApiAppV1AppResourceTypeServiceGet) | **Get** /api/v1/apps/{app_id}/resource_types/{id} | 
 [**C1ApiAppV1AppsGet**](DefaultAPI.md#C1ApiAppV1AppsGet) | **Get** /api/v1/apps/{id} | 

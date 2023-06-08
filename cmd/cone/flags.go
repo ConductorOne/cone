@@ -12,7 +12,6 @@ const (
 	queryFlag            = "query"
 	justificationFlag    = "justification"
 	durationFlag         = "duration"
-	taskIdFlag           = "task-id"
 )
 
 func addWaitFlag(cmd *cobra.Command) {
@@ -41,8 +40,4 @@ func addJustificationFlag(cmd *cobra.Command) {
 
 func addGrantDurationFlag(cmd *cobra.Command) {
 	cmd.Flags().StringP(durationFlag, "d", "", "The duration of the grant in seconds")
-}
-
-func addTaskIdFlag(cmd *cobra.Command) {
-	cmd.Flags().String(taskIdFlag, "", "The task id to get (number or full-id)")
 }

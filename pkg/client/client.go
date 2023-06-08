@@ -66,6 +66,8 @@ type C1Client interface {
 		identityUserId string,
 		justification string,
 	) (*c1api.C1ApiTaskV1TaskServiceCreateRevokeResponse, error)
+
+	SearchTasks(ctx context.Context, taskFilter c1api.C1ApiTaskV1TaskSearchRequest) (*c1api.C1ApiTaskV1TaskSearchResponse, error)
 }
 
 func (c *client) BaseURL() string {

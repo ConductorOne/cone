@@ -1,9 +1,9 @@
 package main
 
 import (
+	"fmt"
 	"github.com/conductorone/cone/internal/c1api"
 	"github.com/conductorone/cone/pkg/client"
-	"github.com/conductorone/cone/pkg/output"
 	"github.com/spf13/cobra"
 )
 
@@ -15,6 +15,7 @@ func tasksCmd() *cobra.Command {
 	}
 
 	cmd.AddCommand(getTasksCmd())
+	cmd.AddCommand(searchTasksCmd())
 
 	return cmd
 }
@@ -23,26 +24,23 @@ func taskRun(cmd *cobra.Command, _ []string) error {
 	return cmd.Help()
 }
 
-type C1ApiTaskV1TaskServiceGetResponse c1api.C1ApiTaskV1TaskServiceGetResponse
-
-func (r *C1ApiTaskV1TaskServiceGetResponse) Header() []string {
-	return []string{
-		"Id",
-		"Name",
-		"State",
-		"Processing",
-		"Created At",
-	}
+func (r *C1ApiTaskV1Task) Pretext() string {
+	return fmt.Sprintf("Ticket URL: %s/task/%s", r.client.BaseURL(), client.StringFromPtr(r.task.NumericId))
 }
 
-func (r *C1ApiTaskV1TaskServiceGetResponse) Rows() [][]string {
-	return [][]string{
-		{
-			client.StringFromPtr(r.TaskView.Task.NumericId),
-			client.StringFromPtr(r.TaskView.Task.DisplayName),
-			client.StringFromPtr(r.TaskView.Task.State),
-			client.StringFromPtr(r.TaskView.Task.Processing),
-			output.FormatTime(r.TaskView.Task.CreatedAt),
-		},
-	}
+type C1ApiTaskV1Task struct {
+	task   *c1api.C1ApiTaskV1Task
+	client client.C1Client
+}
+
+func (r *C1ApiTaskV1Task) Header() []string {
+	return []string{"Id", "Display Name", "State", "Processing"}
+}
+func (r *C1ApiTaskV1Task) Rows() [][]string {
+	return [][]string{{
+		client.StringFromPtr(r.task.NumericId),
+		client.StringFromPtr(r.task.DisplayName),
+		taskStateToString[client.StringFromPtr(r.task.State)],
+		processStateToString[client.StringFromPtr(r.task.Processing)],
+	}}
 }

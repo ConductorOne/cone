@@ -1,13 +1,12 @@
 package main
 
 import (
-	"errors"
 	"strings"
-	"time"
+
+	"github.com/spf13/cobra"
 
 	"github.com/conductorone/cone/internal/c1api"
 	"github.com/conductorone/cone/pkg/output"
-	"github.com/spf13/cobra"
 )
 
 func searchTasksCmd() *cobra.Command {
@@ -25,8 +24,6 @@ func searchTasksCmd() *cobra.Command {
 	addUserSubjectIdsFlag(cmd)
 	addAppApplicationIdsFlag(cmd)
 	addAssigneesIds(cmd)
-	addCreatedBeforeFlag(cmd)
-	addCreatedAfterFlag(cmd)
 	addQueryTaskFlag(cmd)
 	addTaskStatesFlag(cmd)
 	addIncludeDeletedFlag(cmd)
@@ -34,54 +31,10 @@ func searchTasksCmd() *cobra.Command {
 	return cmd
 }
 
-var validTimeFormats = []string{
-	time.RFC3339,
-	time.Layout,
-	time.RFC1123,
-	time.RFC1123Z,
-	time.Stamp,
-	time.DateTime,
-	time.DateOnly,
-	time.TimeOnly,
-	time.Kitchen,
-}
-
-var noValidTimeFound = errors.New("could not parse time, valid formats are go's RFC3339, Layout, RFC1123, RFC1123Z, Stamp, DateTime, DateOnly, TimeOnly, and Kitchen")
-
 func searchTasksRun(cmd *cobra.Command, args []string) error {
 	ctx, c, v, err := cmdContext(cmd)
 	if err != nil {
 		return err
-	}
-
-	var createdAfter *time.Time
-	if v.GetString(createdAfterFlag) != "" {
-		for _, validTimeFormat := range validTimeFormats {
-			createdAfterParsed, err := time.Parse(validTimeFormat, v.GetString(createdAfterFlag))
-			if err != nil {
-				continue
-			}
-			createdAfter = &createdAfterParsed
-			break
-		}
-		if createdAfter == nil {
-			return noValidTimeFound
-		}
-	}
-
-	var createdBefore *time.Time
-	if v.GetString(createdBeforeFlag) != "" {
-		for _, validTimeFormat := range validTimeFormats {
-			createdBeforeParsed, err := time.Parse(validTimeFormat, v.GetString(createdBeforeFlag))
-			if err != nil {
-				continue
-			}
-			createdBefore = &createdBeforeParsed
-			break
-		}
-		if createdAfter == nil {
-			return noValidTimeFound
-		}
 	}
 
 	var includeDeleted *bool
@@ -115,8 +68,6 @@ func searchTasksRun(cmd *cobra.Command, args []string) error {
 		AppUserSubjectIds:  v.GetStringSlice(appUserSubjectIdsFlag),
 		ApplicationIds:     v.GetStringSlice(appIdsFlag),
 		AssigneesInIds:     v.GetStringSlice(assigneeIdsFlag),
-		CreatedAfter:       createdAfter,
-		CreatedBefore:      createdBefore,
 		IncludeDeleted:     includeDeleted,
 		Query:              query,
 		TaskStates:         state,

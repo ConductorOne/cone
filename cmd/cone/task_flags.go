@@ -12,8 +12,6 @@ const (
 	userSubjectIdsFlag     = "user-subject-ids"
 	appIdsFlag             = "app-ids"
 	assigneeIdsFlag        = "assignee-ids"
-	createdBeforeFlag      = "created-before"
-	createdAfterFlag       = "created-after"
 	stateFlag              = "state"
 	includeDeletedFlag     = "include-deleted"
 )
@@ -45,12 +43,7 @@ func addAppApplicationIdsFlag(cmd *cobra.Command) {
 func addAssigneesIds(cmd *cobra.Command) {
 	cmd.Flags().StringSlice(assigneeIdsFlag, nil, "Filter tasks by who is currently assigned to them")
 }
-func addCreatedBeforeFlag(cmd *cobra.Command) {
-	cmd.Flags().String(createdBeforeFlag, "", "Get tasks before a certain time (go time format)")
-}
-func addCreatedAfterFlag(cmd *cobra.Command) {
-	cmd.Flags().String(createdAfterFlag, "", "Get tasks after a certain time (go time format)")
-}
+
 func addQueryTaskFlag(cmd *cobra.Command) {
 	cmd.Flags().String(queryFlag, "", "Query string to filter tasks")
 }

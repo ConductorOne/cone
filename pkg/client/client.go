@@ -6,9 +6,10 @@ import (
 	"net/url"
 	"os"
 
+	"github.com/spf13/viper"
+
 	"github.com/conductorone/cone/internal/c1api"
 	"github.com/conductorone/cone/pkg/uhttp"
-	"github.com/spf13/viper"
 )
 
 type client struct {
@@ -16,7 +17,6 @@ type client struct {
 	clientName string
 	tokenHost  string
 	apiClient  *c1api.APIClient
-	config     clientConfig
 	baseURL    *url.URL
 }
 
@@ -66,6 +66,7 @@ type C1Client interface {
 		identityUserId string,
 		justification string,
 	) (*c1api.C1ApiTaskV1TaskServiceCreateRevokeResponse, error)
+	GetGrantsForIdentity(ctx context.Context, appID string, appEntitlementID string, appUserID string) ([]c1api.C1ApiAppV1AppEntitlementUserBinding, error)
 
 	SearchTasks(ctx context.Context, taskFilter c1api.C1ApiTaskV1TaskSearchRequest) (*c1api.C1ApiTaskV1TaskSearchResponse, error)
 }
@@ -79,18 +80,16 @@ func New(
 	clientId string,
 	clientSecret string,
 	v *viper.Viper,
-	optionFuncs ...ClientOptionFunc,
 ) (C1Client, error) {
 	tokenSrc, clientName, tokenHost, err := NewC1TokenSource(ctx, clientId, clientSecret)
 	if err != nil {
 		return nil, err
 	}
 
-	opt := applyOpts(optionFuncs)
 	uclient, err := uhttp.NewClient(
 		ctx,
 		uhttp.WithTokenSource(tokenSrc),
-		uhttp.WithDebug(opt.Debug || v.GetBool("debug")),
+		uhttp.WithDebug(v.GetBool("debug")),
 	)
 	if err != nil {
 		return nil, err
@@ -99,7 +98,6 @@ func New(
 		tokenHost:  tokenHost,
 		clientName: clientName,
 		httpClient: uclient,
-		config:     opt,
 	}
 
 	apiCfg := c1api.NewConfiguration()

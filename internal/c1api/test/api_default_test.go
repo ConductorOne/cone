@@ -22,6 +22,22 @@ func Test_c1api_DefaultAPIService(t *testing.T) {
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
 
+	t.Run("Test DefaultAPIService C1ApiAppV1AppEntitlementUserBindingServiceListAppUsersForIdentityWithGrant", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var appId string
+		var appEntitlementId string
+		var identityUserId string
+
+		resp, httpRes, err := apiClient.DefaultAPI.C1ApiAppV1AppEntitlementUserBindingServiceListAppUsersForIdentityWithGrant(context.Background(), appId, appEntitlementId, identityUserId).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test DefaultAPIService C1ApiAppV1AppResourceServiceGet", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -84,6 +100,48 @@ func Test_c1api_DefaultAPIService(t *testing.T) {
 		t.Skip("skip test")  // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.C1ApiRequestcatalogV1RequestCatalogSearchServiceSearchEntitlements(context.Background()).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService C1ApiTaskV1TaskActionsServiceApprove", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var taskId string
+
+		resp, httpRes, err := apiClient.DefaultAPI.C1ApiTaskV1TaskActionsServiceApprove(context.Background(), taskId).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService C1ApiTaskV1TaskActionsServiceComment", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var taskId string
+
+		resp, httpRes, err := apiClient.DefaultAPI.C1ApiTaskV1TaskActionsServiceComment(context.Background(), taskId).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService C1ApiTaskV1TaskActionsServiceDeny", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var taskId string
+
+		resp, httpRes, err := apiClient.DefaultAPI.C1ApiTaskV1TaskActionsServiceDeny(context.Background(), taskId).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)

@@ -13,7 +13,6 @@ import (
 	"strings"
 	"time"
 
-	"github.com/conductorone/cone/pkg/uhttp"
 	"github.com/grpc-ecosystem/go-grpc-middleware/logging/zap/ctxzap"
 	"github.com/pquerna/xjwt"
 	"golang.org/x/oauth2"
@@ -22,6 +21,8 @@ import (
 	"gopkg.in/square/go-jose.v2"
 	"gopkg.in/square/go-jose.v2/json"
 	"gopkg.in/square/go-jose.v2/jwt"
+
+	"github.com/conductorone/cone/pkg/uhttp"
 )
 
 const (

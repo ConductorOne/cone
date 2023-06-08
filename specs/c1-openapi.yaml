@@ -313,6 +313,16 @@ components:
                 app:
                     $ref: '#/components/schemas/c1.api.app.v1.App'
             type: object
+        c1.api.app.v1.ListAppUsersForIdentityWithGrantResponse:
+            description: The ListAppUsersForIdentityWithGrantResponse message.
+            properties:
+                bindings:
+                    description: The bindings field.
+                    items:
+                        $ref: '#/components/schemas/c1.api.app.v1.AppEntitlementUserBinding'
+                    nullable: true
+                    type: array
+            type: object
         c1.api.auth.v1.IntrospectResponse:
             description: The IntrospectResponse message.
             properties:
@@ -1044,6 +1054,96 @@ components:
                          External IDS
                     type: string
             type: object
+        c1.api.task.v1.TaskActionsServiceApproveRequestInput:
+            description: The TaskActionsServiceApproveRequest message.
+            properties:
+                comment:
+                    description: The comment field.
+                    type: string
+                expandMask:
+                    $ref: '#/components/schemas/c1.api.task.v1.TaskExpandMask'
+                policyStepId:
+                    description: The policyStepId field.
+                    type: string
+            type: object
+        c1.api.task.v1.TaskActionsServiceApproveResponse:
+            description: The TaskActionsServiceApproveResponse message.
+            properties:
+                expanded:
+                    description: The expanded field.
+                    items:
+                        additionalProperties:
+                            oneOf: []
+                        description: Contains an arbitrary serialized message along with a @type that describes the type of the serialized message.
+                        properties:
+                            '@type':
+                                description: The type of the serialized message.
+                                type: string
+                        type: object
+                    nullable: true
+                    type: array
+                taskView:
+                    $ref: '#/components/schemas/c1.api.task.v1.TaskView'
+            type: object
+        c1.api.task.v1.TaskActionsServiceCommentRequestInput:
+            description: The TaskActionsServiceCommentRequest message.
+            properties:
+                comment:
+                    description: The comment field.
+                    type: string
+                expandMask:
+                    $ref: '#/components/schemas/c1.api.task.v1.TaskExpandMask'
+            type: object
+        c1.api.task.v1.TaskActionsServiceCommentResponse:
+            description: The TaskActionsServiceCommentResponse message.
+            properties:
+                expanded:
+                    description: The expanded field.
+                    items:
+                        additionalProperties:
+                            oneOf: []
+                        description: Contains an arbitrary serialized message along with a @type that describes the type of the serialized message.
+                        properties:
+                            '@type':
+                                description: The type of the serialized message.
+                                type: string
+                        type: object
+                    nullable: true
+                    type: array
+                taskView:
+                    $ref: '#/components/schemas/c1.api.task.v1.TaskView'
+            type: object
+        c1.api.task.v1.TaskActionsServiceDenyRequestInput:
+            description: The TaskActionsServiceDenyRequest message.
+            properties:
+                comment:
+                    description: The comment field.
+                    type: string
+                expandMask:
+                    $ref: '#/components/schemas/c1.api.task.v1.TaskExpandMask'
+                policyStepId:
+                    description: The policyStepId field.
+                    type: string
+            type: object
+        c1.api.task.v1.TaskActionsServiceDenyResponse:
+            description: The TaskActionsServiceDenyResponse message.
+            properties:
+                expanded:
+                    description: The expanded field.
+                    items:
+                        additionalProperties:
+                            oneOf: []
+                        description: Contains an arbitrary serialized message along with a @type that describes the type of the serialized message.
+                        properties:
+                            '@type':
+                                description: The type of the serialized message.
+                                type: string
+                        type: object
+                    nullable: true
+                    type: array
+                taskView:
+                    $ref: '#/components/schemas/c1.api.task.v1.TaskView'
+            type: object
         c1.api.task.v1.TaskExpandMask:
             description: |4
                  Make sure to update the TicketExpandMask
@@ -1717,6 +1817,36 @@ info:
     version: 0.1.0-alpha
 openapi: 3.0.3
 paths:
+    /api/v1/apps/{app_id}/entitlements/{app_entitlement_id}/users/{identity_user_id}/grants:
+        get:
+            description: Invokes the c1.api.app.v1.AppEntitlementUserBindingService.ListAppUsersForIdentityWithGrant method.
+            operationId: c1.api.app.v1.AppEntitlementUserBindingService.ListAppUsersForIdentityWithGrant
+            parameters:
+                - in: path
+                  name: app_id
+                  required: true
+                  schema:
+                    description: The appId field.
+                    type: string
+                - in: path
+                  name: app_entitlement_id
+                  required: true
+                  schema:
+                    description: The appEntitlementId field.
+                    type: string
+                - in: path
+                  name: identity_user_id
+                  required: true
+                  schema:
+                    description: The identityUserId field.
+                    type: string
+            responses:
+                "200":
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/c1.api.app.v1.ListAppUsersForIdentityWithGrantResponse'
+                    description: Successful response
     /api/v1/apps/{app_id}/resource_types/{app_resource_type_id}/resource/{id}:
         get:
             description: Invokes the c1.api.app.v1.AppResourceService.Get method.
@@ -1881,6 +2011,75 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/c1.api.task.v1.TaskServiceGetResponse'
+                    description: Successful response
+    /api/v1/tasks/{task_id}/action/approve:
+        post:
+            description: Invokes the c1.api.task.v1.TaskActionsService.Approve method.
+            operationId: c1.api.task.v1.TaskActionsService.Approve
+            parameters:
+                - in: path
+                  name: task_id
+                  required: true
+                  schema:
+                    description: The taskId field.
+                    type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/c1.api.task.v1.TaskActionsServiceApproveRequestInput'
+            responses:
+                "200":
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/c1.api.task.v1.TaskActionsServiceApproveResponse'
+                    description: Successful response
+    /api/v1/tasks/{task_id}/action/comment:
+        post:
+            description: Invokes the c1.api.task.v1.TaskActionsService.Comment method.
+            operationId: c1.api.task.v1.TaskActionsService.Comment
+            parameters:
+                - in: path
+                  name: task_id
+                  required: true
+                  schema:
+                    description: The taskId field.
+                    type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/c1.api.task.v1.TaskActionsServiceCommentRequestInput'
+            responses:
+                "200":
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/c1.api.task.v1.TaskActionsServiceCommentResponse'
+                    description: Successful response
+    /api/v1/tasks/{task_id}/action/deny:
+        post:
+            description: Invokes the c1.api.task.v1.TaskActionsService.Deny method.
+            operationId: c1.api.task.v1.TaskActionsService.Deny
+            parameters:
+                - in: path
+                  name: task_id
+                  required: true
+                  schema:
+                    description: The taskId field.
+                    type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/c1.api.task.v1.TaskActionsServiceDenyRequestInput'
+            responses:
+                "200":
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/c1.api.task.v1.TaskActionsServiceDenyResponse'
                     description: Successful response
     /api/v1/users/{id}:
         get:

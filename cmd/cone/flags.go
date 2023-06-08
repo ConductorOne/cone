@@ -41,3 +41,7 @@ func addJustificationFlag(cmd *cobra.Command) {
 func addGrantDurationFlag(cmd *cobra.Command) {
 	cmd.Flags().StringP(durationFlag, "d", "", "The duration of the grant in seconds")
 }
+
+func addTaskCommentFlag(cmd *cobra.Command) {
+	cmd.Flags().StringP(durationFlag, "d", "", "The comment to add to the task")
+}

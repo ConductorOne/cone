@@ -11,10 +11,12 @@ import (
 
 func tasksCommentCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "tasks comment",
+		Use:   "task-comment",
 		Short: "",
 		RunE:  tasksCommentRun,
 	}
+
+	addTaskCommentFlag(cmd)
 
 	return cmd
 }

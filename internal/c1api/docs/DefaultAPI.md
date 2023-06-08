@@ -12,6 +12,7 @@ Method | HTTP request | Description
 [**C1ApiTaskV1TaskActionsServiceApprove**](DefaultAPI.md#C1ApiTaskV1TaskActionsServiceApprove) | **Post** /api/v1/tasks/{task_id}/action/approve | 
 [**C1ApiTaskV1TaskActionsServiceComment**](DefaultAPI.md#C1ApiTaskV1TaskActionsServiceComment) | **Post** /api/v1/tasks/{task_id}/action/comment | 
 [**C1ApiTaskV1TaskActionsServiceDeny**](DefaultAPI.md#C1ApiTaskV1TaskActionsServiceDeny) | **Post** /api/v1/tasks/{task_id}/action/deny | 
+[**C1ApiTaskV1TaskSearchServiceSearch**](DefaultAPI.md#C1ApiTaskV1TaskSearchServiceSearch) | **Post** /api/v1/search/tasks | 
 [**C1ApiTaskV1TaskServiceCreateGrantTask**](DefaultAPI.md#C1ApiTaskV1TaskServiceCreateGrantTask) | **Post** /api/v1/task/grant | 
 [**C1ApiTaskV1TaskServiceCreateRevokeTask**](DefaultAPI.md#C1ApiTaskV1TaskServiceCreateRevokeTask) | **Post** /api/v1/task/revoke | 
 [**C1ApiTaskV1TaskServiceGet**](DefaultAPI.md#C1ApiTaskV1TaskServiceGet) | **Get** /api/v1/tasks/{id} | 
@@ -566,6 +567,72 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**C1ApiTaskV1TaskActionsServiceDenyResponse**](C1ApiTaskV1TaskActionsServiceDenyResponse.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## C1ApiTaskV1TaskSearchServiceSearch
+
+> C1ApiTaskV1TaskSearchResponse C1ApiTaskV1TaskSearchServiceSearch(ctx).C1ApiTaskV1TaskSearchRequest(c1ApiTaskV1TaskSearchRequest).Execute()
+
+
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "github.com/conductorone/cone/internal/c1api"
+)
+
+func main() {
+    c1ApiTaskV1TaskSearchRequest := *openapiclient.NewC1ApiTaskV1TaskSearchRequest() // C1ApiTaskV1TaskSearchRequest |  (optional)
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    resp, r, err := apiClient.DefaultAPI.C1ApiTaskV1TaskSearchServiceSearch(context.Background()).C1ApiTaskV1TaskSearchRequest(c1ApiTaskV1TaskSearchRequest).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.C1ApiTaskV1TaskSearchServiceSearch``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+    // response from `C1ApiTaskV1TaskSearchServiceSearch`: C1ApiTaskV1TaskSearchResponse
+    fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.C1ApiTaskV1TaskSearchServiceSearch`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiC1ApiTaskV1TaskSearchServiceSearchRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **c1ApiTaskV1TaskSearchRequest** | [**C1ApiTaskV1TaskSearchRequest**](C1ApiTaskV1TaskSearchRequest.md) |  | 
+
+### Return type
+
+[**C1ApiTaskV1TaskSearchResponse**](C1ApiTaskV1TaskSearchResponse.md)
 
 ### Authorization
 

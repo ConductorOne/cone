@@ -85,6 +85,7 @@ Class | Method | HTTP request | Description
 *DefaultAPI* | [**C1ApiTaskV1TaskActionsServiceApprove**](docs/DefaultAPI.md#c1apitaskv1taskactionsserviceapprove) | **Post** /api/v1/tasks/{task_id}/action/approve | 
 *DefaultAPI* | [**C1ApiTaskV1TaskActionsServiceComment**](docs/DefaultAPI.md#c1apitaskv1taskactionsservicecomment) | **Post** /api/v1/tasks/{task_id}/action/comment | 
 *DefaultAPI* | [**C1ApiTaskV1TaskActionsServiceDeny**](docs/DefaultAPI.md#c1apitaskv1taskactionsservicedeny) | **Post** /api/v1/tasks/{task_id}/action/deny | 
+*DefaultAPI* | [**C1ApiTaskV1TaskSearchServiceSearch**](docs/DefaultAPI.md#c1apitaskv1tasksearchservicesearch) | **Post** /api/v1/search/tasks | 
 *DefaultAPI* | [**C1ApiTaskV1TaskServiceCreateGrantTask**](docs/DefaultAPI.md#c1apitaskv1taskservicecreategranttask) | **Post** /api/v1/task/grant | 
 *DefaultAPI* | [**C1ApiTaskV1TaskServiceCreateRevokeTask**](docs/DefaultAPI.md#c1apitaskv1taskservicecreaterevoketask) | **Post** /api/v1/task/revoke | 
 *DefaultAPI* | [**C1ApiTaskV1TaskServiceGet**](docs/DefaultAPI.md#c1apitaskv1taskserviceget) | **Get** /api/v1/tasks/{id} | 
@@ -147,11 +148,14 @@ Class | Method | HTTP request | Description
  - [C1ApiTaskV1TaskActionsServiceDenyRequestInput](docs/C1ApiTaskV1TaskActionsServiceDenyRequestInput.md)
  - [C1ApiTaskV1TaskActionsServiceDenyResponse](docs/C1ApiTaskV1TaskActionsServiceDenyResponse.md)
  - [C1ApiTaskV1TaskExpandMask](docs/C1ApiTaskV1TaskExpandMask.md)
+ - [C1ApiTaskV1TaskRef](docs/C1ApiTaskV1TaskRef.md)
  - [C1ApiTaskV1TaskRevokeSource](docs/C1ApiTaskV1TaskRevokeSource.md)
  - [C1ApiTaskV1TaskRevokeSourceExpired](docs/C1ApiTaskV1TaskRevokeSourceExpired.md)
  - [C1ApiTaskV1TaskRevokeSourceNonUsage](docs/C1ApiTaskV1TaskRevokeSourceNonUsage.md)
  - [C1ApiTaskV1TaskRevokeSourceRequest](docs/C1ApiTaskV1TaskRevokeSourceRequest.md)
  - [C1ApiTaskV1TaskRevokeSourceReview](docs/C1ApiTaskV1TaskRevokeSourceReview.md)
+ - [C1ApiTaskV1TaskSearchRequest](docs/C1ApiTaskV1TaskSearchRequest.md)
+ - [C1ApiTaskV1TaskSearchResponse](docs/C1ApiTaskV1TaskSearchResponse.md)
  - [C1ApiTaskV1TaskServiceCreateGrantRequest](docs/C1ApiTaskV1TaskServiceCreateGrantRequest.md)
  - [C1ApiTaskV1TaskServiceCreateGrantResponse](docs/C1ApiTaskV1TaskServiceCreateGrantResponse.md)
  - [C1ApiTaskV1TaskServiceCreateRevokeRequest](docs/C1ApiTaskV1TaskServiceCreateRevokeRequest.md)

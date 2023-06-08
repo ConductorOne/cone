@@ -66,3 +66,15 @@ func (c *client) CreateRevokeTask(
 
 	return cgtResp, nil
 }
+
+func (c *client) SearchTasks(ctx context.Context, taskFilter c1api.C1ApiTaskV1TaskSearchRequest) (*c1api.C1ApiTaskV1TaskSearchResponse, error) {
+	api := c.apiClient.DefaultAPI.C1ApiTaskV1TaskSearchServiceSearch(ctx)
+	req := api.C1ApiTaskV1TaskSearchRequest(taskFilter)
+	apiResp, resp, err := req.Execute()
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+
+	return apiResp, nil
+}

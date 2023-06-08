@@ -3,19 +3,21 @@ package main
 import (
 	"fmt"
 
+	"github.com/spf13/cobra"
+
 	"github.com/conductorone/cone/internal/c1api"
 	"github.com/conductorone/cone/pkg/client"
 	"github.com/conductorone/cone/pkg/output"
-	"github.com/spf13/cobra"
 )
 
-func getTaskCmd() *cobra.Command {
+func getTasksCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "get-task",
+		Use:   "get",
 		Short: "",
 		RunE:  getTaskRun,
 	}
 
+	addTaskIdFlag(cmd)
 	return cmd
 }
 
@@ -25,13 +27,18 @@ func getTaskRun(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
-	if len(args) != 1 {
-		return fmt.Errorf("expected 1 argument, got %d", len(args))
+	taskId := v.GetString(taskIdFlag)
+	if len(args) == 0 && taskId == "" {
+		return fmt.Errorf("expected a task id as an argument or --task-id param")
+	}
+	if len(args) > 0 {
+		if taskId != "" {
+			return fmt.Errorf("task id should be passed as an argument or --task-id param, not both")
+		}
+		taskId = args[0]
 	}
 
-	taskID := args[0]
-
-	taskResp, err := c.GetTask(ctx, taskID)
+	taskResp, err := c.GetTask(ctx, taskId)
 	if err != nil {
 		return err
 	}

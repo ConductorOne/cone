@@ -214,23 +214,6 @@ func runTask(
 	return nil
 }
 
-type C1ApiTaskV1Task struct {
-	task   *c1api.C1ApiTaskV1Task
-	client client.C1Client
-}
-
-func (r *C1ApiTaskV1Task) Header() []string {
-	return []string{"Id", "Display Name", "State", "Processing"}
-}
-func (r *C1ApiTaskV1Task) Rows() [][]string {
-	return [][]string{{
-		client.StringFromPtr(r.task.NumericId),
-		client.StringFromPtr(r.task.DisplayName),
-		taskStateToString[client.StringFromPtr(r.task.State)],
-		processStateToString[client.StringFromPtr(r.task.Processing)],
-	}}
-}
-
 var processStateToString = map[string]string{
 	"TASK_PROCESSING_TYPE_UNSPECIFIED": "Unknown Processing",
 	"TASK_PROCESSING_TYPE_PROCESSING":  "Processing",
@@ -241,10 +224,6 @@ var processStateToString = map[string]string{
 var taskStateToString = map[string]string{
 	"TASK_STATE_OPEN":   "Open",
 	"TASK_STATE_CLOSED": "Closed",
-}
-
-func (r *C1ApiTaskV1Task) Pretext() string {
-	return fmt.Sprintf("Ticket URL: %s/task/%s", r.client.BaseURL(), client.StringFromPtr(r.task.NumericId))
 }
 
 func noEntitlementFoundError(alias string, query string) error {

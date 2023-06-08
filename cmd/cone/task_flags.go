@@ -3,7 +3,6 @@ package main
 import "github.com/spf13/cobra"
 
 const (
-	taskIdFlag             = "task-id"
 	accessReviewIdsFlag    = "access-review-ids"
 	appEntitlementIdsFlag  = "app-entitlement-ids"
 	appResourceIdsFlag     = "app-resource-ids"
@@ -16,9 +15,6 @@ const (
 	includeDeletedFlag     = "include-deleted"
 )
 
-func addTaskIdFlag(cmd *cobra.Command) {
-	cmd.Flags().String(taskIdFlag, "", "The task id to get (number or full-id)")
-}
 func addAccessReviewIdsFlag(cmd *cobra.Command) {
 	cmd.Flags().StringSlice(accessReviewIdsFlag, nil, "Filter tasks by access review ids (access review campaign this task belongs to)")
 }

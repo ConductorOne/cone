@@ -18,6 +18,7 @@ func tasksCmd() *cobra.Command {
 
 	cmd.AddCommand(getTasksCmd())
 	cmd.AddCommand(searchTasksCmd())
+	cmd.AddCommand(tasksCommentCmd())
 
 	return cmd
 }

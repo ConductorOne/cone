@@ -71,7 +71,7 @@ func (a *DefaultAPIService) C1ApiAppV1AppEntitlementUserBindingServiceListAppUse
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/api/v1/apps/{app_id}/entitlement/{app_entitlement_id}/user/{identity_user_id}/grant"
+	localVarPath := localBasePath + "/api/v1/apps/{app_id}/entitlements/{app_entitlement_id}/users/{identity_user_id}/grants"
 	localVarPath = strings.Replace(localVarPath, "{"+"app_id"+"}", url.PathEscape(parameterValueToString(r.appId, "appId")), -1)
 	localVarPath = strings.Replace(localVarPath, "{"+"app_entitlement_id"+"}", url.PathEscape(parameterValueToString(r.appEntitlementId, "appEntitlementId")), -1)
 	localVarPath = strings.Replace(localVarPath, "{"+"identity_user_id"+"}", url.PathEscape(parameterValueToString(r.identityUserId, "identityUserId")), -1)
@@ -624,6 +624,339 @@ func (a *DefaultAPIService) C1ApiRequestcatalogV1RequestCatalogSearchServiceSear
 	}
 	// body params
 	localVarPostBody = r.c1ApiRequestcatalogV1RequestCatalogSearchServiceSearchEntitlementsRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type DefaultAPIC1ApiTaskV1TaskActionsServiceApproveRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	taskId string
+	c1ApiTaskV1TaskActionsServiceApproveRequestInput *C1ApiTaskV1TaskActionsServiceApproveRequestInput
+}
+
+func (r DefaultAPIC1ApiTaskV1TaskActionsServiceApproveRequest) C1ApiTaskV1TaskActionsServiceApproveRequestInput(c1ApiTaskV1TaskActionsServiceApproveRequestInput C1ApiTaskV1TaskActionsServiceApproveRequestInput) DefaultAPIC1ApiTaskV1TaskActionsServiceApproveRequest {
+	r.c1ApiTaskV1TaskActionsServiceApproveRequestInput = &c1ApiTaskV1TaskActionsServiceApproveRequestInput
+	return r
+}
+
+func (r DefaultAPIC1ApiTaskV1TaskActionsServiceApproveRequest) Execute() (*C1ApiTaskV1TaskActionsServiceApproveResponse, *http.Response, error) {
+	return r.ApiService.C1ApiTaskV1TaskActionsServiceApproveExecute(r)
+}
+
+/*
+C1ApiTaskV1TaskActionsServiceApprove Method for C1ApiTaskV1TaskActionsServiceApprove
+
+Invokes the c1.api.task.v1.TaskActionsService.Approve method.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param taskId
+ @return DefaultAPIC1ApiTaskV1TaskActionsServiceApproveRequest
+*/
+func (a *DefaultAPIService) C1ApiTaskV1TaskActionsServiceApprove(ctx context.Context, taskId string) DefaultAPIC1ApiTaskV1TaskActionsServiceApproveRequest {
+	return DefaultAPIC1ApiTaskV1TaskActionsServiceApproveRequest{
+		ApiService: a,
+		ctx: ctx,
+		taskId: taskId,
+	}
+}
+
+// Execute executes the request
+//  @return C1ApiTaskV1TaskActionsServiceApproveResponse
+func (a *DefaultAPIService) C1ApiTaskV1TaskActionsServiceApproveExecute(r DefaultAPIC1ApiTaskV1TaskActionsServiceApproveRequest) (*C1ApiTaskV1TaskActionsServiceApproveResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *C1ApiTaskV1TaskActionsServiceApproveResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.C1ApiTaskV1TaskActionsServiceApprove")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/api/v1/tasks/{task_id}/action/approve"
+	localVarPath = strings.Replace(localVarPath, "{"+"task_id"+"}", url.PathEscape(parameterValueToString(r.taskId, "taskId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.c1ApiTaskV1TaskActionsServiceApproveRequestInput
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type DefaultAPIC1ApiTaskV1TaskActionsServiceCommentRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	taskId string
+	c1ApiTaskV1TaskActionsServiceCommentRequestInput *C1ApiTaskV1TaskActionsServiceCommentRequestInput
+}
+
+func (r DefaultAPIC1ApiTaskV1TaskActionsServiceCommentRequest) C1ApiTaskV1TaskActionsServiceCommentRequestInput(c1ApiTaskV1TaskActionsServiceCommentRequestInput C1ApiTaskV1TaskActionsServiceCommentRequestInput) DefaultAPIC1ApiTaskV1TaskActionsServiceCommentRequest {
+	r.c1ApiTaskV1TaskActionsServiceCommentRequestInput = &c1ApiTaskV1TaskActionsServiceCommentRequestInput
+	return r
+}
+
+func (r DefaultAPIC1ApiTaskV1TaskActionsServiceCommentRequest) Execute() (*C1ApiTaskV1TaskActionsServiceCommentResponse, *http.Response, error) {
+	return r.ApiService.C1ApiTaskV1TaskActionsServiceCommentExecute(r)
+}
+
+/*
+C1ApiTaskV1TaskActionsServiceComment Method for C1ApiTaskV1TaskActionsServiceComment
+
+Invokes the c1.api.task.v1.TaskActionsService.Comment method.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param taskId
+ @return DefaultAPIC1ApiTaskV1TaskActionsServiceCommentRequest
+*/
+func (a *DefaultAPIService) C1ApiTaskV1TaskActionsServiceComment(ctx context.Context, taskId string) DefaultAPIC1ApiTaskV1TaskActionsServiceCommentRequest {
+	return DefaultAPIC1ApiTaskV1TaskActionsServiceCommentRequest{
+		ApiService: a,
+		ctx: ctx,
+		taskId: taskId,
+	}
+}
+
+// Execute executes the request
+//  @return C1ApiTaskV1TaskActionsServiceCommentResponse
+func (a *DefaultAPIService) C1ApiTaskV1TaskActionsServiceCommentExecute(r DefaultAPIC1ApiTaskV1TaskActionsServiceCommentRequest) (*C1ApiTaskV1TaskActionsServiceCommentResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *C1ApiTaskV1TaskActionsServiceCommentResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.C1ApiTaskV1TaskActionsServiceComment")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/api/v1/tasks/{task_id}/action/comment"
+	localVarPath = strings.Replace(localVarPath, "{"+"task_id"+"}", url.PathEscape(parameterValueToString(r.taskId, "taskId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.c1ApiTaskV1TaskActionsServiceCommentRequestInput
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type DefaultAPIC1ApiTaskV1TaskActionsServiceDenyRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	taskId string
+	c1ApiTaskV1TaskActionsServiceDenyRequestInput *C1ApiTaskV1TaskActionsServiceDenyRequestInput
+}
+
+func (r DefaultAPIC1ApiTaskV1TaskActionsServiceDenyRequest) C1ApiTaskV1TaskActionsServiceDenyRequestInput(c1ApiTaskV1TaskActionsServiceDenyRequestInput C1ApiTaskV1TaskActionsServiceDenyRequestInput) DefaultAPIC1ApiTaskV1TaskActionsServiceDenyRequest {
+	r.c1ApiTaskV1TaskActionsServiceDenyRequestInput = &c1ApiTaskV1TaskActionsServiceDenyRequestInput
+	return r
+}
+
+func (r DefaultAPIC1ApiTaskV1TaskActionsServiceDenyRequest) Execute() (*C1ApiTaskV1TaskActionsServiceDenyResponse, *http.Response, error) {
+	return r.ApiService.C1ApiTaskV1TaskActionsServiceDenyExecute(r)
+}
+
+/*
+C1ApiTaskV1TaskActionsServiceDeny Method for C1ApiTaskV1TaskActionsServiceDeny
+
+Invokes the c1.api.task.v1.TaskActionsService.Deny method.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param taskId
+ @return DefaultAPIC1ApiTaskV1TaskActionsServiceDenyRequest
+*/
+func (a *DefaultAPIService) C1ApiTaskV1TaskActionsServiceDeny(ctx context.Context, taskId string) DefaultAPIC1ApiTaskV1TaskActionsServiceDenyRequest {
+	return DefaultAPIC1ApiTaskV1TaskActionsServiceDenyRequest{
+		ApiService: a,
+		ctx: ctx,
+		taskId: taskId,
+	}
+}
+
+// Execute executes the request
+//  @return C1ApiTaskV1TaskActionsServiceDenyResponse
+func (a *DefaultAPIService) C1ApiTaskV1TaskActionsServiceDenyExecute(r DefaultAPIC1ApiTaskV1TaskActionsServiceDenyRequest) (*C1ApiTaskV1TaskActionsServiceDenyResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *C1ApiTaskV1TaskActionsServiceDenyResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.C1ApiTaskV1TaskActionsServiceDeny")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/api/v1/tasks/{task_id}/action/deny"
+	localVarPath = strings.Replace(localVarPath, "{"+"task_id"+"}", url.PathEscape(parameterValueToString(r.taskId, "taskId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.c1ApiTaskV1TaskActionsServiceDenyRequestInput
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err

@@ -62,6 +62,7 @@ func searchTasksRun(cmd *cobra.Command, args []string) error {
 				continue
 			}
 			createdAfter = &createdAfterParsed
+			break
 		}
 		if createdAfter == nil {
 			return noValidTimeFound
@@ -76,6 +77,7 @@ func searchTasksRun(cmd *cobra.Command, args []string) error {
 				continue
 			}
 			createdBefore = &createdBeforeParsed
+			break
 		}
 		if createdAfter == nil {
 			return noValidTimeFound

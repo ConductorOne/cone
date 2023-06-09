@@ -45,6 +45,7 @@ type C1Client interface {
 
 	AuthIntrospect(ctx context.Context) (*c1api.C1ApiAuthV1IntrospectResponse, error)
 	GetUser(ctx context.Context, userID string) (*c1api.C1ApiUserV1User, error)
+	GetEntitlement(ctx context.Context, appID string, entitlementID string) (*c1api.C1ApiAppV1AppEntitlement, error)
 	SearchEntitlements(ctx context.Context, filter *SearchEntitlementsFilter) ([]*EntitlementWithBindings, error)
 	ExpandEntitlements(ctx context.Context, in []*EntitlementWithBindings) (*Expander, error)
 	GetResource(ctx context.Context, appID string, resourceID string, resourceTypeID string) (*c1api.C1ApiAppV1AppResource, error)

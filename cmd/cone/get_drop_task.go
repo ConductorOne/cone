@@ -7,13 +7,13 @@ import (
 	"strings"
 	"time"
 
-	"github.com/pterm/pterm"
-	"github.com/spf13/cobra"
-	"github.com/spf13/viper"
-
 	"github.com/conductorone/cone/internal/c1api"
 	"github.com/conductorone/cone/pkg/client"
 	"github.com/conductorone/cone/pkg/output"
+	"github.com/pterm/pterm"
+	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
+	str2duration "github.com/xhit/go-str2duration/v2"
 )
 
 const grantDurationErrorMessage = "grant duration must be less than or equal to max provision time"
@@ -49,9 +49,133 @@ func taskCmd(cmd *cobra.Command) *cobra.Command {
 	return cmd
 }
 
+func strToDur(duration string) (*time.Duration, error) {
+	if duration == "" {
+		return nil, nil
+	}
+
+	formattedDuration, err := str2duration.ParseDuration(duration)
+	if err != nil {
+		return nil, fmt.Errorf("invalid duration input %s", err.Error())
+	}
+
+	if formattedDuration <= time.Duration(0) {
+		return nil, errors.New("duration must be greater than 0")
+	}
+
+	return &formattedDuration, nil
+}
+
+func handleDurationNonInteractive(maxProvisionTime *time.Duration, duration string) (*time.Duration, error) {
+	formattedDuration, err := strToDur(duration)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := validateGrantTaskArguments(maxProvisionTime, formattedDuration); err != nil {
+		return nil, err
+	}
+
+	return formattedDuration, nil
+}
+
+func validateGrantTaskArguments(maxProvisionTime *time.Duration, duration *time.Duration) error {
+	// If maxProvisionTime is set, ensure the duration is not nil (which means infinite)
+	if maxProvisionTime != nil && duration == nil {
+		return fmt.Errorf("%s: %s", grantDurationErrorMessage, maxProvisionTime.String())
+	}
+
+	// If maxProvisionTime is set, ensure the duration is not greater than maxProvisionTime
+	if maxProvisionTime != nil && *duration > *maxProvisionTime {
+		return fmt.Errorf("%s: %s", grantDurationErrorMessage, maxProvisionTime.String())
+	}
+
+	return nil
+}
+
+func getValidDuration(ctx context.Context, v *viper.Viper, maxProvisionTime *time.Duration, duration string) (*time.Duration, error) {
+	// If both are empty that means they are both infinite
+	if maxProvisionTime == nil && duration == "" {
+		return nil, nil
+	}
+
+	if v.GetBool(nonInteractiveFlag) {
+		return handleDurationNonInteractive(maxProvisionTime, duration)
+	}
+	errorPrinter := pterm.PrefixPrinter{
+		MessageStyle: &pterm.ThemeDefault.ErrorMessageStyle,
+		Prefix: pterm.Prefix{
+			Style: &pterm.ThemeDefault.ErrorPrefixStyle,
+			Text:  " ERROR ",
+		},
+	}
+	input := pterm.DefaultInteractiveTextInput.WithMultiLine(false)
+	firstRun := true
+	for {
+		select {
+		case <-ctx.Done():
+			return nil, ctx.Err()
+		default:
+		}
+
+		if !firstRun {
+			var err error
+			duration, err = input.Show()
+			if err != nil {
+				return nil, err
+			}
+		}
+		firstRun = false
+
+		formattedDuration, err := strToDur(duration)
+		if err != nil {
+			errorPrinter.Println(err.Error())
+			continue
+		}
+
+		err = validateGrantTaskArguments(maxProvisionTime, formattedDuration)
+		if err == nil {
+			return formattedDuration, nil
+		}
+		errorPrinter.Println(err.Error())
+	}
+}
+
 func runGet(cmd *cobra.Command, args []string) error {
-	return runTask(cmd, args, func(c client.C1Client, ctx context.Context, appId string, entitlementId string, userId string, justification string, duration string) (*c1api.C1ApiTaskV1Task, error) {
-		accessRequest, err := c.CreateGrantTask(ctx, appId, entitlementId, userId, justification, duration)
+	_, _, v, err := cmdContext(cmd)
+	if err != nil {
+		return err
+	}
+
+	return runTask(cmd, args, func(c client.C1Client, ctx context.Context, appId string, entitlementId string, userId string, justification string) (*c1api.C1ApiTaskV1Task, error) {
+		duration := v.GetString(durationFlag)
+
+		entitlement, err := c.GetEntitlement(ctx, appId, entitlementId)
+		if err != nil {
+			return nil, err
+		}
+
+		// entitlement.DurationGrant is assumed to be nil or a non-zero parsable string
+		durationStr := client.StringFromPtr(entitlement.DurationGrant)
+		var maxProvision *time.Duration
+		maxProvisionTime, err := time.ParseDuration(durationStr)
+		if err == nil {
+			maxProvision = &maxProvisionTime
+		}
+
+		validDuration, err := getValidDuration(ctx, v, maxProvision, duration)
+		if err != nil {
+			return nil, err
+		}
+
+		apiDuration := ""
+		if validDuration != nil {
+			// API expects seconds formated like "1s"
+			seconds := int(validDuration.Seconds())
+			apiDuration = fmt.Sprintf("%ds", seconds)
+		}
+
+		accessRequest, err := c.CreateGrantTask(ctx, appId, entitlementId, userId, justification, apiDuration)
 		if err != nil {
 			openApiError := &c1api.GenericOpenAPIError{}
 			if !errors.As(err, &openApiError) {
@@ -59,7 +183,9 @@ func runGet(cmd *cobra.Command, args []string) error {
 			}
 			errorBody := string(openApiError.Body())
 			if strings.Contains(errorBody, grantDurationErrorMessage) {
-				return nil, fmt.Errorf(grantDurationErrorMessage)
+				startIndex := strings.Index(errorBody, grantDurationErrorMessage)
+				endIndex := strings.LastIndex(errorBody, ")") + 1
+				return nil, errors.New(errorBody[startIndex:endIndex])
 			}
 			return nil, err
 		}
@@ -68,7 +194,7 @@ func runGet(cmd *cobra.Command, args []string) error {
 }
 
 func runDrop(cmd *cobra.Command, args []string) error {
-	return runTask(cmd, args, func(c client.C1Client, ctx context.Context, appId string, entitlementId string, userId string, justification string, duration string) (*c1api.C1ApiTaskV1Task, error) {
+	return runTask(cmd, args, func(c client.C1Client, ctx context.Context, appId string, entitlementId string, userId string, justification string) (*c1api.C1ApiTaskV1Task, error) {
 		accessRequest, err := c.CreateRevokeTask(ctx, appId, entitlementId, userId, justification)
 		if err != nil {
 			return nil, err
@@ -80,7 +206,7 @@ func runDrop(cmd *cobra.Command, args []string) error {
 func runTask(
 	cmd *cobra.Command,
 	args []string,
-	run func(c client.C1Client, ctx context.Context, appId string, entitlementId string, userId string, justification string, duration string) (*c1api.C1ApiTaskV1Task, error),
+	run func(c client.C1Client, ctx context.Context, appId string, entitlementId string, userId string, justification string) (*c1api.C1ApiTaskV1Task, error),
 ) error {
 	ctx, c, v, err := cmdContext(cmd)
 	if err != nil {
@@ -88,7 +214,6 @@ func runTask(
 	}
 
 	justification := v.GetString(justificationFlag)
-	grantDuration := v.GetString(durationFlag)
 
 	entitlementId, appId, err := getEntitlementDetails(ctx, c, v, args)
 	if err != nil {
@@ -128,16 +253,7 @@ func runTask(
 		}
 	}
 
-	grantDurationInSeconds := ""
-	if grantDuration != "" {
-		parsedDuration, err := time.ParseDuration(grantDuration)
-		if err != nil {
-			return fmt.Errorf("invalid duration: %w", err)
-		}
-		grantDurationInSeconds = fmt.Sprintf("%ds", int(parsedDuration.Seconds()))
-	}
-
-	task, err := run(c, ctx, appId, entitlementId, client.StringFromPtr(resp.UserId), justification, grantDurationInSeconds)
+	task, err := run(c, ctx, appId, entitlementId, client.StringFromPtr(resp.UserId), justification)
 	if err != nil {
 		return err
 	}

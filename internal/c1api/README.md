@@ -78,6 +78,7 @@ All URIs are relative to *https://invalid-example.conductor.one*
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
 *DefaultAPI* | [**C1ApiAppV1AppEntitlementUserBindingServiceListAppUsersForIdentityWithGrant**](docs/DefaultAPI.md#c1apiappv1appentitlementuserbindingservicelistappusersforidentitywithgrant) | **Get** /api/v1/apps/{app_id}/entitlements/{app_entitlement_id}/users/{identity_user_id}/grants | 
+*DefaultAPI* | [**C1ApiAppV1AppEntitlementsGet**](docs/DefaultAPI.md#c1apiappv1appentitlementsget) | **Get** /api/v1/apps/{app_id}/entitlements/{id} | 
 *DefaultAPI* | [**C1ApiAppV1AppResourceServiceGet**](docs/DefaultAPI.md#c1apiappv1appresourceserviceget) | **Get** /api/v1/apps/{app_id}/resource_types/{app_resource_type_id}/resource/{id} | 
 *DefaultAPI* | [**C1ApiAppV1AppResourceTypeServiceGet**](docs/DefaultAPI.md#c1apiappv1appresourcetypeserviceget) | **Get** /api/v1/apps/{app_id}/resource_types/{id} | 
 *DefaultAPI* | [**C1ApiAppV1AppsGet**](docs/DefaultAPI.md#c1apiappv1appsget) | **Get** /api/v1/apps/{id} | 
@@ -108,6 +109,7 @@ Class | Method | HTTP request | Description
  - [C1ApiAppV1AppResourceTypeServiceGetResponse](docs/C1ApiAppV1AppResourceTypeServiceGetResponse.md)
  - [C1ApiAppV1AppResourceTypeView](docs/C1ApiAppV1AppResourceTypeView.md)
  - [C1ApiAppV1AppResourceView](docs/C1ApiAppV1AppResourceView.md)
+ - [C1ApiAppV1GetAppEntitlementResponse](docs/C1ApiAppV1GetAppEntitlementResponse.md)
  - [C1ApiAppV1GetAppResponse](docs/C1ApiAppV1GetAppResponse.md)
  - [C1ApiAppV1ListAppUsersForIdentityWithGrantResponse](docs/C1ApiAppV1ListAppUsersForIdentityWithGrantResponse.md)
  - [C1ApiAuthV1IntrospectResponse](docs/C1ApiAuthV1IntrospectResponse.md)

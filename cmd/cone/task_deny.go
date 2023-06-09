@@ -16,7 +16,6 @@ func denyTasksCmd() *cobra.Command {
 		Args:  cobra.ExactArgs(1),
 	}
 
-	addTaskIdFlag(cmd)
 	addWaitFlag(cmd)
 	return cmd
 }

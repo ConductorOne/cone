@@ -16,7 +16,6 @@ func approveTasksCmd() *cobra.Command {
 		Args:  cobra.ExactArgs(1),
 	}
 
-	addTaskIdFlag(cmd)
 	addCommentFlag(cmd)
 	addWaitFlag(cmd)
 	return cmd

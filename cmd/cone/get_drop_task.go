@@ -82,12 +82,12 @@ func handleDurationNonInteractive(maxProvisionTime *time.Duration, duration stri
 func validateGrantTaskArguments(maxProvisionTime *time.Duration, duration *time.Duration) error {
 	// If maxProvisionTime is set, ensure the duration is not nil (which means infinite)
 	if maxProvisionTime != nil && duration == nil {
-		return fmt.Errorf("%s: %s", grantDurationErrorMessage, maxProvisionTime.String())
+		return fmt.Errorf("%s: %s", grantDurationErrorMessage, str2duration.String(*maxProvisionTime))
 	}
 
 	// If maxProvisionTime is set, ensure the duration is not greater than maxProvisionTime
 	if maxProvisionTime != nil && *duration > *maxProvisionTime {
-		return fmt.Errorf("%s: %s", grantDurationErrorMessage, maxProvisionTime.String())
+		return fmt.Errorf("%s: %s", grantDurationErrorMessage, str2duration.String(*maxProvisionTime))
 	}
 
 	return nil

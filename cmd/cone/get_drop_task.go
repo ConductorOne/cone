@@ -266,7 +266,7 @@ func runTask(
 	}
 
 	if wait, _ := cmd.Flags().GetBool("wait"); wait {
-		err = handleWaitBehavior(ctx, c, task, taskResp, outputManager)
+		err = handleWaitBehavior(ctx, c, task, outputManager)
 		if err != nil {
 			return err
 		}
@@ -335,7 +335,7 @@ func getEntitlementDetails(ctx context.Context, c client.C1Client, v *viper.Vipe
 	return entitlementId, appId, nil
 }
 
-func handleWaitBehavior(ctx context.Context, c client.C1Client, task *c1api.C1ApiTaskV1Task, taskResp C1ApiTaskV1Task, outputManager output.Manager) error {
+func handleWaitBehavior(ctx context.Context, c client.C1Client, task *c1api.C1ApiTaskV1Task, outputManager output.Manager) error {
 	spinner, _ := pterm.DefaultSpinner.Start("Waiting for ticket to close.")
 	var taskItem *c1api.C1ApiTaskV1Task
 	for {
@@ -350,7 +350,7 @@ func handleWaitBehavior(ctx context.Context, c client.C1Client, task *c1api.C1Ap
 		}
 
 		taskItem = task.TaskView.Task
-		taskResp = C1ApiTaskV1Task{task: taskItem, client: c}
+		taskResp := C1ApiTaskV1Task{task: taskItem, client: c}
 		err = outputManager.Output(ctx, &taskResp)
 		if err != nil {
 			return err

@@ -1,8 +1,6 @@
 package main
 
 import (
-	"fmt"
-
 	"github.com/spf13/cobra"
 
 	"github.com/conductorone/cone/internal/c1api"
@@ -12,12 +10,12 @@ import (
 
 func getTasksCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "get",
+		Use:   "get <task-id>",
 		Short: "Gets a task by id",
 		RunE:  getTaskRun,
+		Args:  cobra.ExactArgs(1),
 	}
 
-	addTaskIdFlag(cmd)
 	return cmd
 }
 
@@ -27,13 +25,8 @@ func getTaskRun(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
-	if len(args) != 1 {
-		return fmt.Errorf("expected 1 argument, got %d", len(args))
-	}
-
-	taskID := args[0]
-
-	taskResp, err := c.GetTask(ctx, taskID)
+	taskId := args[0]
+	taskResp, err := c.GetTask(ctx, taskId)
 	if err != nil {
 		return err
 	}

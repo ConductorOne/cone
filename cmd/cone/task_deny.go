@@ -17,6 +17,7 @@ func denyTasksCmd() *cobra.Command {
 	}
 
 	addWaitFlag(cmd)
+	addCommentFlag(cmd)
 	return cmd
 }
 

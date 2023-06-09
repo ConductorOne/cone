@@ -21,7 +21,7 @@ const grantDurationErrorMessage = "grant duration must be less than or equal to 
 func getCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "get",
-		Short: "Create an access request for an entitlement by slug",
+		Short: "Create an access request for an entitlement by alias",
 		RunE:  runGet,
 	}
 	addGrantDurationFlag(cmd)
@@ -31,7 +31,7 @@ func getCmd() *cobra.Command {
 func dropCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "drop",
-		Short: "Create a revoke access ticket for an entitlement by slug",
+		Short: "Create a revoke access ticket for an entitlement by alias",
 		RunE:  runDrop,
 	}
 

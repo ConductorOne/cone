@@ -13,7 +13,7 @@ import (
 func getTasksCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "get",
-		Short: "",
+		Short: "Gets a task by id",
 		RunE:  getTaskRun,
 	}
 
@@ -27,18 +27,13 @@ func getTaskRun(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
-	taskId := v.GetString(taskIdFlag)
-	if len(args) == 0 && taskId == "" {
-		return fmt.Errorf("expected a task id as an argument or --task-id param")
-	}
-	if len(args) > 0 {
-		if taskId != "" {
-			return fmt.Errorf("task id should be passed as an argument or --task-id param, not both")
-		}
-		taskId = args[0]
+	if len(args) != 1 {
+		return fmt.Errorf("expected 1 argument, got %d", len(args))
 	}
 
-	taskResp, err := c.GetTask(ctx, taskId)
+	taskID := args[0]
+
+	taskResp, err := c.GetTask(ctx, taskID)
 	if err != nil {
 		return err
 	}

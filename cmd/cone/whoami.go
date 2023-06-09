@@ -8,7 +8,7 @@ import (
 func whoAmICmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "whoami",
-		Short: "",
+		Short: "Information about the current user",
 		RunE:  whoAmIRun,
 	}
 

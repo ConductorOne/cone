@@ -2,8 +2,6 @@ package client
 
 import (
 	"context"
-
-	"github.com/conductorone/cone/internal/c1api"
 )
 
 func (c *client) AuthIntrospect(ctx context.Context) (*c1api.C1ApiAuthV1IntrospectResponse, error) {

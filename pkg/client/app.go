@@ -2,8 +2,6 @@ package client
 
 import (
 	"context"
-
-	"github.com/conductorone/cone/internal/c1api"
 )
 
 func (c *client) GetApp(ctx context.Context, appID string) (*c1api.C1ApiAppV1App, error) {

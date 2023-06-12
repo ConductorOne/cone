@@ -6,8 +6,6 @@ import (
 	"sync"
 
 	"golang.org/x/sync/errgroup"
-
-	"github.com/conductorone/cone/internal/c1api"
 )
 
 const (

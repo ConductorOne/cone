@@ -3,8 +3,6 @@ package client
 import (
 	"context"
 	"errors"
-
-	"github.com/conductorone/cone/internal/c1api"
 )
 
 func (c *client) GetUser(ctx context.Context, userID string) (*c1api.C1ApiUserV1User, error) {

@@ -2,8 +2,6 @@ package client
 
 import (
 	"context"
-
-	"github.com/conductorone/cone/internal/c1api"
 )
 
 func (c *client) GetTask(ctx context.Context, taskId string) (*c1api.C1ApiTaskV1TaskServiceGetResponse, error) {

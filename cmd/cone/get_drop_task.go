@@ -7,7 +7,6 @@ import (
 	"strings"
 	"time"
 
-	"github.com/conductorone/cone/internal/c1api"
 	"github.com/conductorone/cone/pkg/client"
 	"github.com/conductorone/cone/pkg/output"
 	"github.com/pterm/pterm"

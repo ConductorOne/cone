@@ -3,8 +3,6 @@ package client
 import (
 	"context"
 	"errors"
-
-	"github.com/conductorone/cone/internal/c1api"
 )
 
 type SearchEntitlementsFilter struct {

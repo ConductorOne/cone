@@ -3,8 +3,6 @@ package client
 import (
 	"context"
 	"errors"
-
-	"github.com/conductorone/cone/internal/c1api"
 )
 
 func (c *client) GetResourceType(ctx context.Context, appID string, resourceTypeID string) (*c1api.C1ApiAppV1AppResourceType, error) {

@@ -8,7 +8,8 @@ import (
 
 	"github.com/spf13/viper"
 
-	"github.com/conductorone/cone/internal/c1api"
+	c1api "github.com/conductorone/conductorone-sdk-go"
+	"github.com/conductorone/conductorone-sdk-go/pkg/models/operations"
 	"github.com/conductorone/cone/pkg/uhttp"
 )
 
@@ -16,7 +17,7 @@ type client struct {
 	httpClient *http.Client
 	clientName string
 	tokenHost  string
-	apiClient  *c1api.APIClient
+	apiClient  *c1api.ConductoroneAPI
 	baseURL    *url.URL
 }
 
@@ -43,7 +44,7 @@ func float32Ptr(i int) *float32 {
 type C1Client interface {
 	BaseURL() string
 
-	AuthIntrospect(ctx context.Context) (*c1api.C1ApiAuthV1IntrospectResponse, error)
+	AuthIntrospect(ctx context.Context) (*operations.C1APIAuthV1AuthIntrospectResponse, error)
 	GetUser(ctx context.Context, userID string) (*c1api.C1ApiUserV1User, error)
 	GetEntitlement(ctx context.Context, appID string, entitlementID string) (*c1api.C1ApiAppV1AppEntitlement, error)
 	SearchEntitlements(ctx context.Context, filter *SearchEntitlementsFilter) ([]*EntitlementWithBindings, error)

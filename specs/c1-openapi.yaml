@@ -2628,7 +2628,7 @@ paths:
                 - AppReportAction
             x-speakeasy-group: AppReportAction
             x-speakeasy-name-override: GenerateReport
-    /api/v1/apps/{app_id}/resource_types/{app_resource_type_id}/resource:
+    /api/v1/apps/{app_id}/resource_types/{app_resource_type_id}/resources:
         get:
             description: Invokes the c1.api.app.v1.AppResourceService.List method.
             operationId: c1.api.app.v1.AppResourceService.List
@@ -2656,7 +2656,7 @@ paths:
                 - AppResource
             x-speakeasy-group: AppResource
             x-speakeasy-name-override: List
-    /api/v1/apps/{app_id}/resource_types/{app_resource_type_id}/resource/{id}:
+    /api/v1/apps/{app_id}/resource_types/{app_resource_type_id}/resources/{id}:
         get:
             description: Invokes the c1.api.app.v1.AppResourceService.Get method.
             operationId: c1.api.app.v1.AppResourceService.Get

@@ -81,8 +81,8 @@ Class | Method | HTTP request | Description
 *AppEntitlementsAPI* | [**C1ApiAppV1AppEntitlementsGet**](docs/AppEntitlementsAPI.md#c1apiappv1appentitlementsget) | **Get** /api/v1/apps/{app_id}/entitlements/{id} | 
 *AppReportAPI* | [**C1ApiAppV1AppReportServiceList**](docs/AppReportAPI.md#c1apiappv1appreportservicelist) | **Get** /api/v1/apps/{app_id}/report | 
 *AppReportActionAPI* | [**C1ApiAppV1AppReportActionServiceGenerateReport**](docs/AppReportActionAPI.md#c1apiappv1appreportactionservicegeneratereport) | **Post** /api/v1/apps/{app_id}/report | 
-*AppResourceAPI* | [**C1ApiAppV1AppResourceServiceGet**](docs/AppResourceAPI.md#c1apiappv1appresourceserviceget) | **Get** /api/v1/apps/{app_id}/resource_types/{app_resource_type_id}/resource/{id} | 
-*AppResourceAPI* | [**C1ApiAppV1AppResourceServiceList**](docs/AppResourceAPI.md#c1apiappv1appresourceservicelist) | **Get** /api/v1/apps/{app_id}/resource_types/{app_resource_type_id}/resource | 
+*AppResourceAPI* | [**C1ApiAppV1AppResourceServiceGet**](docs/AppResourceAPI.md#c1apiappv1appresourceserviceget) | **Get** /api/v1/apps/{app_id}/resource_types/{app_resource_type_id}/resources/{id} | 
+*AppResourceAPI* | [**C1ApiAppV1AppResourceServiceList**](docs/AppResourceAPI.md#c1apiappv1appresourceservicelist) | **Get** /api/v1/apps/{app_id}/resource_types/{app_resource_type_id}/resources | 
 *AppResourceSearchAPI* | [**C1ApiAppV1AppResourceSearchSearchAppResourceTypes**](docs/AppResourceSearchAPI.md#c1apiappv1appresourcesearchsearchappresourcetypes) | **Post** /api/v1/search/app_resource_types | 
 *AppResourceTypeAPI* | [**C1ApiAppV1AppResourceTypeServiceGet**](docs/AppResourceTypeAPI.md#c1apiappv1appresourcetypeserviceget) | **Get** /api/v1/apps/{app_id}/resource_types/{id} | 
 *AppSearchAPI* | [**C1ApiAppV1AppSearchSearch**](docs/AppSearchAPI.md#c1apiappv1appsearchsearch) | **Post** /api/v1/search/apps | 

@@ -71,7 +71,7 @@ func (a *AppResourceAPIService) C1ApiAppV1AppResourceServiceGetExecute(r AppReso
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/api/v1/apps/{app_id}/resource_types/{app_resource_type_id}/resource/{id}"
+	localVarPath := localBasePath + "/api/v1/apps/{app_id}/resource_types/{app_resource_type_id}/resources/{id}"
 	localVarPath = strings.Replace(localVarPath, "{"+"app_id"+"}", url.PathEscape(parameterValueToString(r.appId, "appId")), -1)
 	localVarPath = strings.Replace(localVarPath, "{"+"app_resource_type_id"+"}", url.PathEscape(parameterValueToString(r.appResourceTypeId, "appResourceTypeId")), -1)
 	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
@@ -179,7 +179,7 @@ func (a *AppResourceAPIService) C1ApiAppV1AppResourceServiceListExecute(r AppRes
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/api/v1/apps/{app_id}/resource_types/{app_resource_type_id}/resource"
+	localVarPath := localBasePath + "/api/v1/apps/{app_id}/resource_types/{app_resource_type_id}/resources"
 	localVarPath = strings.Replace(localVarPath, "{"+"app_id"+"}", url.PathEscape(parameterValueToString(r.appId, "appId")), -1)
 	localVarPath = strings.Replace(localVarPath, "{"+"app_resource_type_id"+"}", url.PathEscape(parameterValueToString(r.appResourceTypeId, "appResourceTypeId")), -1)
 

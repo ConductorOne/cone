@@ -4,8 +4,8 @@ All URIs are relative to *https://invalid-example.conductor.one*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**C1ApiAppV1AppResourceServiceGet**](AppResourceAPI.md#C1ApiAppV1AppResourceServiceGet) | **Get** /api/v1/apps/{app_id}/resource_types/{app_resource_type_id}/resource/{id} | 
-[**C1ApiAppV1AppResourceServiceList**](AppResourceAPI.md#C1ApiAppV1AppResourceServiceList) | **Get** /api/v1/apps/{app_id}/resource_types/{app_resource_type_id}/resource | 
+[**C1ApiAppV1AppResourceServiceGet**](AppResourceAPI.md#C1ApiAppV1AppResourceServiceGet) | **Get** /api/v1/apps/{app_id}/resource_types/{app_resource_type_id}/resources/{id} | 
+[**C1ApiAppV1AppResourceServiceList**](AppResourceAPI.md#C1ApiAppV1AppResourceServiceList) | **Get** /api/v1/apps/{app_id}/resource_types/{app_resource_type_id}/resources | 
 
 
 

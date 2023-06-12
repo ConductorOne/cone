@@ -2,7 +2,7 @@ package main
 
 import (
 	"context"
-
+	"errors"
 	"github.com/spf13/cobra"
 
 	"github.com/conductorone/cone/internal/c1api"
@@ -74,7 +74,10 @@ func runApproveDeny(
 		return err
 	}
 
-	policyId := taskResp.GetTaskView().Task.GetPolicy().Current.Id
+	policyId, ok := taskResp.GetTaskView().Task.GetPolicy().Current.GetIdOk()
+	if !ok {
+		return errors.New("task does not have a current policy step id and cannot be approved or denied")
+	}
 
 	task, err := run(c, ctx, taskId, comment, client.StringFromPtr(policyId))
 	if err != nil {

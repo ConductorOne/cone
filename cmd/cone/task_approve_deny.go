@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"errors"
+
 	"github.com/spf13/cobra"
 
 	"github.com/conductorone/cone/internal/c1api"

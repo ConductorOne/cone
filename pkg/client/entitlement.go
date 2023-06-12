@@ -26,7 +26,7 @@ func (c *client) SearchEntitlements(ctx context.Context, filter *SearchEntitleme
 		PageToken:        nil,
 		Query:            stringPtr(filter.Query),
 	}
-	api := c.apiClient.DefaultAPI.C1ApiRequestcatalogV1RequestCatalogSearchServiceSearchEntitlements(ctx)
+	api := c.apiClient.RequestCatalogSearchAPI.C1ApiRequestcatalogV1RequestCatalogSearchServiceSearchEntitlements(ctx)
 	resp, httpResp, err := api.C1ApiRequestcatalogV1RequestCatalogSearchServiceSearchEntitlementsRequest(*req).Execute()
 	if err != nil {
 		return nil, err
@@ -71,7 +71,7 @@ func (c *client) ExpandEntitlements(ctx context.Context, in []*EntitlementWithBi
 }
 
 func (c *client) GetEntitlement(ctx context.Context, appId string, entitlementId string) (*c1api.C1ApiAppV1AppEntitlement, error) {
-	resp, httpResp, err := c.apiClient.DefaultAPI.C1ApiAppV1AppEntitlementsGet(ctx, appId, entitlementId).Execute()
+	resp, httpResp, err := c.apiClient.AppEntitlementsAPI.C1ApiAppV1AppEntitlementsGet(ctx, appId, entitlementId).Execute()
 	if err != nil {
 		return nil, err
 	}

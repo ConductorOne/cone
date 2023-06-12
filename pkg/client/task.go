@@ -92,3 +92,39 @@ func (c *client) CommentOnTask(ctx context.Context, taskID string, comment strin
 
 	return cmntResp, nil
 }
+
+func (c *client) ApproveTask(ctx context.Context, taskId string, comment string, policyId string) (*c1api.C1ApiTaskV1TaskActionsServiceApproveResponse, error) {
+	api := c.apiClient.DefaultAPI.C1ApiTaskV1TaskActionsServiceApprove(ctx, taskId)
+	approveReq := c1api.C1ApiTaskV1TaskActionsServiceApproveRequestInput{
+		PolicyStepId: &policyId,
+	}
+	if comment != "" {
+		approveReq.Comment = &comment
+	}
+	req := api.C1ApiTaskV1TaskActionsServiceApproveRequestInput(approveReq)
+	approveResp, resp, err := req.Execute()
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+
+	return approveResp, err
+}
+
+func (c *client) DenyTask(ctx context.Context, taskId string, comment string, policyId string) (*c1api.C1ApiTaskV1TaskActionsServiceDenyResponse, error) {
+	api := c.apiClient.DefaultAPI.C1ApiTaskV1TaskActionsServiceDeny(ctx, taskId)
+	denyReq := c1api.C1ApiTaskV1TaskActionsServiceDenyRequestInput{
+		PolicyStepId: &policyId,
+	}
+	if comment != "" {
+		denyReq.Comment = &comment
+	}
+	req := api.C1ApiTaskV1TaskActionsServiceDenyRequestInput(denyReq)
+	denyResp, resp, err := req.Execute()
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+
+	return denyResp, err
+}

@@ -68,9 +68,10 @@ type C1Client interface {
 		justification string,
 	) (*c1api.C1ApiTaskV1TaskServiceCreateRevokeResponse, error)
 	GetGrantsForIdentity(ctx context.Context, appID string, appEntitlementID string, appUserID string) ([]c1api.C1ApiAppV1AppEntitlementUserBinding, error)
-
 	SearchTasks(ctx context.Context, taskFilter c1api.C1ApiTaskV1TaskSearchRequest) (*c1api.C1ApiTaskV1TaskSearchResponse, error)
 	CommentOnTask(ctx context.Context, taskID string, comment string) (*c1api.C1ApiTaskV1TaskActionsServiceCommentResponse, error)
+	ApproveTask(ctx context.Context, taskId string, comment string, policyId string) (*c1api.C1ApiTaskV1TaskActionsServiceApproveResponse, error)
+	DenyTask(ctx context.Context, taskId string, comment string, policyId string) (*c1api.C1ApiTaskV1TaskActionsServiceDenyResponse, error)
 }
 
 func (c *client) BaseURL() string {

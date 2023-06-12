@@ -13,8 +13,12 @@ const (
 	assigneeIdsFlag        = "assignee-ids"
 	stateFlag              = "state"
 	includeDeletedFlag     = "include-deleted"
+	commentFlag            = "comment"
 )
 
+func addCommentFlag(cmd *cobra.Command) {
+	cmd.Flags().String(commentFlag, "", "Comment to add to the task when performing an action")
+}
 func addAccessReviewIdsFlag(cmd *cobra.Command) {
 	cmd.Flags().StringSlice(accessReviewIdsFlag, nil, "Filter tasks by access review ids (access review campaign this task belongs to)")
 }

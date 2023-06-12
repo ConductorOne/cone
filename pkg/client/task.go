@@ -7,7 +7,7 @@ import (
 )
 
 func (c *client) GetTask(ctx context.Context, taskId string) (*c1api.C1ApiTaskV1TaskServiceGetResponse, error) {
-	task, resp, err := c.apiClient.DefaultAPI.C1ApiTaskV1TaskServiceGet(ctx, taskId).Execute()
+	task, resp, err := c.apiClient.TaskAPI.C1ApiTaskV1TaskServiceGet(ctx, taskId).Execute()
 	if err != nil {
 		return nil, err
 	}
@@ -23,7 +23,7 @@ func (c *client) CreateGrantTask(
 	justification string,
 	duration string,
 ) (*c1api.C1ApiTaskV1TaskServiceCreateGrantResponse, error) {
-	api := c.apiClient.DefaultAPI.C1ApiTaskV1TaskServiceCreateGrantTask(ctx)
+	api := c.apiClient.TaskAPI.C1ApiTaskV1TaskServiceCreateGrantTask(ctx)
 	grantReq := c1api.C1ApiTaskV1TaskServiceCreateGrantRequest{
 		AppEntitlementId: &appEntitlementId,
 		IdentityUserId:   &identityUserId,
@@ -51,7 +51,7 @@ func (c *client) CreateRevokeTask(
 	identityUserId string,
 	justification string,
 ) (*c1api.C1ApiTaskV1TaskServiceCreateRevokeResponse, error) {
-	api := c.apiClient.DefaultAPI.C1ApiTaskV1TaskServiceCreateRevokeTask(ctx)
+	api := c.apiClient.TaskAPI.C1ApiTaskV1TaskServiceCreateRevokeTask(ctx)
 	req := api.C1ApiTaskV1TaskServiceCreateRevokeRequest(c1api.C1ApiTaskV1TaskServiceCreateRevokeRequest{
 		AppEntitlementId: &appEntitlementId,
 		IdentityUserId:   &identityUserId,
@@ -68,7 +68,7 @@ func (c *client) CreateRevokeTask(
 }
 
 func (c *client) SearchTasks(ctx context.Context, taskFilter c1api.C1ApiTaskV1TaskSearchRequest) (*c1api.C1ApiTaskV1TaskSearchResponse, error) {
-	api := c.apiClient.DefaultAPI.C1ApiTaskV1TaskSearchServiceSearch(ctx)
+	api := c.apiClient.TaskSearchAPI.C1ApiTaskV1TaskSearchServiceSearch(ctx)
 	req := api.C1ApiTaskV1TaskSearchRequest(taskFilter)
 	apiResp, resp, err := req.Execute()
 	if err != nil {
@@ -80,7 +80,7 @@ func (c *client) SearchTasks(ctx context.Context, taskFilter c1api.C1ApiTaskV1Ta
 }
 
 func (c *client) CommentOnTask(ctx context.Context, taskID string, comment string) (*c1api.C1ApiTaskV1TaskActionsServiceCommentResponse, error) {
-	api := c.apiClient.DefaultAPI.C1ApiTaskV1TaskActionsServiceComment(ctx, taskID)
+	api := c.apiClient.TaskActionsAPI.C1ApiTaskV1TaskActionsServiceComment(ctx, taskID)
 	req := api.C1ApiTaskV1TaskActionsServiceCommentRequestInput(c1api.C1ApiTaskV1TaskActionsServiceCommentRequestInput{
 		Comment: &comment,
 	})
@@ -94,7 +94,7 @@ func (c *client) CommentOnTask(ctx context.Context, taskID string, comment strin
 }
 
 func (c *client) ApproveTask(ctx context.Context, taskId string, comment string, policyId string) (*c1api.C1ApiTaskV1TaskActionsServiceApproveResponse, error) {
-	api := c.apiClient.DefaultAPI.C1ApiTaskV1TaskActionsServiceApprove(ctx, taskId)
+	api := c.apiClient.TaskActionsAPI.C1ApiTaskV1TaskActionsServiceApprove(ctx, taskId)
 	approveReq := c1api.C1ApiTaskV1TaskActionsServiceApproveRequestInput{
 		PolicyStepId: &policyId,
 	}
@@ -112,7 +112,7 @@ func (c *client) ApproveTask(ctx context.Context, taskId string, comment string,
 }
 
 func (c *client) DenyTask(ctx context.Context, taskId string, comment string, policyId string) (*c1api.C1ApiTaskV1TaskActionsServiceDenyResponse, error) {
-	api := c.apiClient.DefaultAPI.C1ApiTaskV1TaskActionsServiceDeny(ctx, taskId)
+	api := c.apiClient.TaskActionsAPI.C1ApiTaskV1TaskActionsServiceDeny(ctx, taskId)
 	denyReq := c1api.C1ApiTaskV1TaskActionsServiceDenyRequestInput{
 		PolicyStepId: &policyId,
 	}

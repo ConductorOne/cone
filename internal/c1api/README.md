@@ -77,21 +77,40 @@ All URIs are relative to *https://invalid-example.conductor.one*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
-*DefaultAPI* | [**C1ApiAppV1AppEntitlementUserBindingServiceListAppUsersForIdentityWithGrant**](docs/DefaultAPI.md#c1apiappv1appentitlementuserbindingservicelistappusersforidentitywithgrant) | **Get** /api/v1/apps/{app_id}/entitlements/{app_entitlement_id}/users/{identity_user_id}/grants | 
-*DefaultAPI* | [**C1ApiAppV1AppEntitlementsGet**](docs/DefaultAPI.md#c1apiappv1appentitlementsget) | **Get** /api/v1/apps/{app_id}/entitlements/{id} | 
-*DefaultAPI* | [**C1ApiAppV1AppResourceServiceGet**](docs/DefaultAPI.md#c1apiappv1appresourceserviceget) | **Get** /api/v1/apps/{app_id}/resource_types/{app_resource_type_id}/resource/{id} | 
-*DefaultAPI* | [**C1ApiAppV1AppResourceTypeServiceGet**](docs/DefaultAPI.md#c1apiappv1appresourcetypeserviceget) | **Get** /api/v1/apps/{app_id}/resource_types/{id} | 
-*DefaultAPI* | [**C1ApiAppV1AppsGet**](docs/DefaultAPI.md#c1apiappv1appsget) | **Get** /api/v1/apps/{id} | 
-*DefaultAPI* | [**C1ApiAuthV1AuthIntrospect**](docs/DefaultAPI.md#c1apiauthv1authintrospect) | **Get** /api/v1/auth/introspect | 
-*DefaultAPI* | [**C1ApiRequestcatalogV1RequestCatalogSearchServiceSearchEntitlements**](docs/DefaultAPI.md#c1apirequestcatalogv1requestcatalogsearchservicesearchentitlements) | **Post** /api/v1/search/request_catalog/entitlements | 
-*DefaultAPI* | [**C1ApiTaskV1TaskActionsServiceApprove**](docs/DefaultAPI.md#c1apitaskv1taskactionsserviceapprove) | **Post** /api/v1/tasks/{task_id}/action/approve | 
-*DefaultAPI* | [**C1ApiTaskV1TaskActionsServiceComment**](docs/DefaultAPI.md#c1apitaskv1taskactionsservicecomment) | **Post** /api/v1/tasks/{task_id}/action/comment | 
-*DefaultAPI* | [**C1ApiTaskV1TaskActionsServiceDeny**](docs/DefaultAPI.md#c1apitaskv1taskactionsservicedeny) | **Post** /api/v1/tasks/{task_id}/action/deny | 
-*DefaultAPI* | [**C1ApiTaskV1TaskSearchServiceSearch**](docs/DefaultAPI.md#c1apitaskv1tasksearchservicesearch) | **Post** /api/v1/search/tasks | 
-*DefaultAPI* | [**C1ApiTaskV1TaskServiceCreateGrantTask**](docs/DefaultAPI.md#c1apitaskv1taskservicecreategranttask) | **Post** /api/v1/task/grant | 
-*DefaultAPI* | [**C1ApiTaskV1TaskServiceCreateRevokeTask**](docs/DefaultAPI.md#c1apitaskv1taskservicecreaterevoketask) | **Post** /api/v1/task/revoke | 
-*DefaultAPI* | [**C1ApiTaskV1TaskServiceGet**](docs/DefaultAPI.md#c1apitaskv1taskserviceget) | **Get** /api/v1/tasks/{id} | 
-*DefaultAPI* | [**C1ApiUserV1UserServiceGet**](docs/DefaultAPI.md#c1apiuserv1userserviceget) | **Get** /api/v1/users/{id} | 
+*AppEntitlementUserBindingAPI* | [**C1ApiAppV1AppEntitlementUserBindingServiceListAppUsersForIdentityWithGrant**](docs/AppEntitlementUserBindingAPI.md#c1apiappv1appentitlementuserbindingservicelistappusersforidentitywithgrant) | **Get** /api/v1/apps/{app_id}/entitlements/{app_entitlement_id}/users/{identity_user_id}/grants | 
+*AppEntitlementsAPI* | [**C1ApiAppV1AppEntitlementsGet**](docs/AppEntitlementsAPI.md#c1apiappv1appentitlementsget) | **Get** /api/v1/apps/{app_id}/entitlements/{id} | 
+*AppReportAPI* | [**C1ApiAppV1AppReportServiceList**](docs/AppReportAPI.md#c1apiappv1appreportservicelist) | **Get** /api/v1/apps/{app_id}/report | 
+*AppReportActionAPI* | [**C1ApiAppV1AppReportActionServiceGenerateReport**](docs/AppReportActionAPI.md#c1apiappv1appreportactionservicegeneratereport) | **Post** /api/v1/apps/{app_id}/report | 
+*AppResourceAPI* | [**C1ApiAppV1AppResourceServiceGet**](docs/AppResourceAPI.md#c1apiappv1appresourceserviceget) | **Get** /api/v1/apps/{app_id}/resource_types/{app_resource_type_id}/resource/{id} | 
+*AppResourceAPI* | [**C1ApiAppV1AppResourceServiceList**](docs/AppResourceAPI.md#c1apiappv1appresourceservicelist) | **Get** /api/v1/apps/{app_id}/resource_types/{app_resource_type_id}/resource | 
+*AppResourceSearchAPI* | [**C1ApiAppV1AppResourceSearchSearchAppResourceTypes**](docs/AppResourceSearchAPI.md#c1apiappv1appresourcesearchsearchappresourcetypes) | **Post** /api/v1/search/app_resource_types | 
+*AppResourceTypeAPI* | [**C1ApiAppV1AppResourceTypeServiceGet**](docs/AppResourceTypeAPI.md#c1apiappv1appresourcetypeserviceget) | **Get** /api/v1/apps/{app_id}/resource_types/{id} | 
+*AppSearchAPI* | [**C1ApiAppV1AppSearchSearch**](docs/AppSearchAPI.md#c1apiappv1appsearchsearch) | **Post** /api/v1/search/apps | 
+*AppUsageControlsAPI* | [**C1ApiAppV1AppUsageControlsServiceGet**](docs/AppUsageControlsAPI.md#c1apiappv1appusagecontrolsserviceget) | **Get** /api/v1/apps/{app_id}/usage_controls | 
+*AppsAPI* | [**C1ApiAppV1AppsGet**](docs/AppsAPI.md#c1apiappv1appsget) | **Get** /api/v1/apps/{id} | 
+*AppsAPI* | [**C1ApiAppV1AppsList**](docs/AppsAPI.md#c1apiappv1appslist) | **Get** /api/v1/apps | 
+*AuthAPI* | [**C1ApiAuthV1AuthIntrospect**](docs/AuthAPI.md#c1apiauthv1authintrospect) | **Get** /api/v1/auth/introspect | 
+*DirectoryAPI* | [**C1ApiDirectoryV1DirectoryServiceCreate**](docs/DirectoryAPI.md#c1apidirectoryv1directoryservicecreate) | **Post** /api/v1/directories | 
+*DirectoryAPI* | [**C1ApiDirectoryV1DirectoryServiceDelete**](docs/DirectoryAPI.md#c1apidirectoryv1directoryservicedelete) | **Delete** /api/v1/directories/{app_id} | 
+*DirectoryAPI* | [**C1ApiDirectoryV1DirectoryServiceGet**](docs/DirectoryAPI.md#c1apidirectoryv1directoryserviceget) | **Get** /api/v1/directories/{app_id} | 
+*DirectoryAPI* | [**C1ApiDirectoryV1DirectoryServiceList**](docs/DirectoryAPI.md#c1apidirectoryv1directoryservicelist) | **Get** /api/v1/directories | 
+*PoliciesAPI* | [**C1ApiPolicyV1PoliciesCreate**](docs/PoliciesAPI.md#c1apipolicyv1policiescreate) | **Post** /api/v1/policies | 
+*PoliciesAPI* | [**C1ApiPolicyV1PoliciesDelete**](docs/PoliciesAPI.md#c1apipolicyv1policiesdelete) | **Delete** /api/v1/policies/{id} | 
+*PoliciesAPI* | [**C1ApiPolicyV1PoliciesGet**](docs/PoliciesAPI.md#c1apipolicyv1policiesget) | **Get** /api/v1/policies/{id} | 
+*PoliciesAPI* | [**C1ApiPolicyV1PoliciesList**](docs/PoliciesAPI.md#c1apipolicyv1policieslist) | **Get** /api/v1/policies | 
+*RequestCatalogSearchAPI* | [**C1ApiRequestcatalogV1RequestCatalogSearchServiceSearchEntitlements**](docs/RequestCatalogSearchAPI.md#c1apirequestcatalogv1requestcatalogsearchservicesearchentitlements) | **Post** /api/v1/search/request_catalog/entitlements | 
+*RolesAPI* | [**C1ApiIamV1RolesGet**](docs/RolesAPI.md#c1apiiamv1rolesget) | **Get** /api/v1/iam/roles/{role_id} | 
+*RolesAPI* | [**C1ApiIamV1RolesList**](docs/RolesAPI.md#c1apiiamv1roleslist) | **Get** /api/v1/iam/roles | 
+*TaskAPI* | [**C1ApiTaskV1TaskServiceCreateGrantTask**](docs/TaskAPI.md#c1apitaskv1taskservicecreategranttask) | **Post** /api/v1/task/grant | 
+*TaskAPI* | [**C1ApiTaskV1TaskServiceCreateRevokeTask**](docs/TaskAPI.md#c1apitaskv1taskservicecreaterevoketask) | **Post** /api/v1/task/revoke | 
+*TaskAPI* | [**C1ApiTaskV1TaskServiceGet**](docs/TaskAPI.md#c1apitaskv1taskserviceget) | **Get** /api/v1/tasks/{id} | 
+*TaskActionsAPI* | [**C1ApiTaskV1TaskActionsServiceApprove**](docs/TaskActionsAPI.md#c1apitaskv1taskactionsserviceapprove) | **Post** /api/v1/tasks/{task_id}/action/approve | 
+*TaskActionsAPI* | [**C1ApiTaskV1TaskActionsServiceComment**](docs/TaskActionsAPI.md#c1apitaskv1taskactionsservicecomment) | **Post** /api/v1/tasks/{task_id}/action/comment | 
+*TaskActionsAPI* | [**C1ApiTaskV1TaskActionsServiceDeny**](docs/TaskActionsAPI.md#c1apitaskv1taskactionsservicedeny) | **Post** /api/v1/tasks/{task_id}/action/deny | 
+*TaskSearchAPI* | [**C1ApiTaskV1TaskSearchServiceSearch**](docs/TaskSearchAPI.md#c1apitaskv1tasksearchservicesearch) | **Post** /api/v1/search/tasks | 
+*UserAPI* | [**C1ApiUserV1UserServiceGet**](docs/UserAPI.md#c1apiuserv1userserviceget) | **Get** /api/v1/users/{id} | 
+*UserAPI* | [**C1ApiUserV1UserServiceList**](docs/UserAPI.md#c1apiuserv1userservicelist) | **Get** /api/v1/users | 
+*UserSearchAPI* | [**C1ApiUserV1UserSearchSearch**](docs/UserSearchAPI.md#c1apiuserv1usersearchsearch) | **Post** /api/v1/search/users | 
 
 
 ## Documentation For Models
@@ -102,17 +121,36 @@ Class | Method | HTTP request | Description
  - [C1ApiAppV1AppEntitlementUserBinding](docs/C1ApiAppV1AppEntitlementUserBinding.md)
  - [C1ApiAppV1AppEntitlementView](docs/C1ApiAppV1AppEntitlementView.md)
  - [C1ApiAppV1AppEntitlementWithUserBindings](docs/C1ApiAppV1AppEntitlementWithUserBindings.md)
+ - [C1ApiAppV1AppPopulationReport](docs/C1ApiAppV1AppPopulationReport.md)
+ - [C1ApiAppV1AppReportServiceListResponse](docs/C1ApiAppV1AppReportServiceListResponse.md)
  - [C1ApiAppV1AppResource](docs/C1ApiAppV1AppResource.md)
  - [C1ApiAppV1AppResourceServiceGetResponse](docs/C1ApiAppV1AppResourceServiceGetResponse.md)
  - [C1ApiAppV1AppResourceServiceGetResponseExpandedInner](docs/C1ApiAppV1AppResourceServiceGetResponseExpandedInner.md)
+ - [C1ApiAppV1AppResourceServiceListResponse](docs/C1ApiAppV1AppResourceServiceListResponse.md)
  - [C1ApiAppV1AppResourceType](docs/C1ApiAppV1AppResourceType.md)
  - [C1ApiAppV1AppResourceTypeServiceGetResponse](docs/C1ApiAppV1AppResourceTypeServiceGetResponse.md)
  - [C1ApiAppV1AppResourceTypeView](docs/C1ApiAppV1AppResourceTypeView.md)
  - [C1ApiAppV1AppResourceView](docs/C1ApiAppV1AppResourceView.md)
+ - [C1ApiAppV1AppUsageControls](docs/C1ApiAppV1AppUsageControls.md)
  - [C1ApiAppV1GetAppEntitlementResponse](docs/C1ApiAppV1GetAppEntitlementResponse.md)
  - [C1ApiAppV1GetAppResponse](docs/C1ApiAppV1GetAppResponse.md)
+ - [C1ApiAppV1GetAppUsageControlsResponse](docs/C1ApiAppV1GetAppUsageControlsResponse.md)
  - [C1ApiAppV1ListAppUsersForIdentityWithGrantResponse](docs/C1ApiAppV1ListAppUsersForIdentityWithGrantResponse.md)
+ - [C1ApiAppV1ListAppsResponse](docs/C1ApiAppV1ListAppsResponse.md)
+ - [C1ApiAppV1SearchAppResourceTypesRequest](docs/C1ApiAppV1SearchAppResourceTypesRequest.md)
+ - [C1ApiAppV1SearchAppResourceTypesResponse](docs/C1ApiAppV1SearchAppResourceTypesResponse.md)
+ - [C1ApiAppV1SearchAppsRequest](docs/C1ApiAppV1SearchAppsRequest.md)
+ - [C1ApiAppV1SearchAppsResponse](docs/C1ApiAppV1SearchAppsResponse.md)
  - [C1ApiAuthV1IntrospectResponse](docs/C1ApiAuthV1IntrospectResponse.md)
+ - [C1ApiDirectoryV1Directory](docs/C1ApiDirectoryV1Directory.md)
+ - [C1ApiDirectoryV1DirectoryExpandMask](docs/C1ApiDirectoryV1DirectoryExpandMask.md)
+ - [C1ApiDirectoryV1DirectoryServiceCreateRequest](docs/C1ApiDirectoryV1DirectoryServiceCreateRequest.md)
+ - [C1ApiDirectoryV1DirectoryServiceCreateResponse](docs/C1ApiDirectoryV1DirectoryServiceCreateResponse.md)
+ - [C1ApiDirectoryV1DirectoryServiceGetResponse](docs/C1ApiDirectoryV1DirectoryServiceGetResponse.md)
+ - [C1ApiDirectoryV1DirectoryServiceListResponse](docs/C1ApiDirectoryV1DirectoryServiceListResponse.md)
+ - [C1ApiDirectoryV1DirectoryView](docs/C1ApiDirectoryV1DirectoryView.md)
+ - [C1ApiIamV1ListRolesResponse](docs/C1ApiIamV1ListRolesResponse.md)
+ - [C1ApiIamV1Role](docs/C1ApiIamV1Role.md)
  - [C1ApiPolicyV1AppEntitlementReference](docs/C1ApiPolicyV1AppEntitlementReference.md)
  - [C1ApiPolicyV1AppGroupApproval](docs/C1ApiPolicyV1AppGroupApproval.md)
  - [C1ApiPolicyV1AppOwnerApproval](docs/C1ApiPolicyV1AppOwnerApproval.md)
@@ -121,10 +159,12 @@ Class | Method | HTTP request | Description
  - [C1ApiPolicyV1ApprovedAction](docs/C1ApiPolicyV1ApprovedAction.md)
  - [C1ApiPolicyV1CancelledAction](docs/C1ApiPolicyV1CancelledAction.md)
  - [C1ApiPolicyV1CompletedAction](docs/C1ApiPolicyV1CompletedAction.md)
+ - [C1ApiPolicyV1CreatePolicyRequest](docs/C1ApiPolicyV1CreatePolicyRequest.md)
  - [C1ApiPolicyV1DelegatedProvision](docs/C1ApiPolicyV1DelegatedProvision.md)
  - [C1ApiPolicyV1DeniedAction](docs/C1ApiPolicyV1DeniedAction.md)
  - [C1ApiPolicyV1EntitlementOwnerApproval](docs/C1ApiPolicyV1EntitlementOwnerApproval.md)
  - [C1ApiPolicyV1ErroredAction](docs/C1ApiPolicyV1ErroredAction.md)
+ - [C1ApiPolicyV1ListPolicyResponse](docs/C1ApiPolicyV1ListPolicyResponse.md)
  - [C1ApiPolicyV1ManagerApproval](docs/C1ApiPolicyV1ManagerApproval.md)
  - [C1ApiPolicyV1ManualProvision](docs/C1ApiPolicyV1ManualProvision.md)
  - [C1ApiPolicyV1Policy](docs/C1ApiPolicyV1Policy.md)
@@ -170,9 +210,14 @@ Class | Method | HTTP request | Description
  - [C1ApiTaskV1TaskTypeGrant](docs/C1ApiTaskV1TaskTypeGrant.md)
  - [C1ApiTaskV1TaskTypeRevoke](docs/C1ApiTaskV1TaskTypeRevoke.md)
  - [C1ApiTaskV1TaskView](docs/C1ApiTaskV1TaskView.md)
+ - [C1ApiUserV1SearchUsersRequest](docs/C1ApiUserV1SearchUsersRequest.md)
+ - [C1ApiUserV1SearchUsersResponse](docs/C1ApiUserV1SearchUsersResponse.md)
  - [C1ApiUserV1User](docs/C1ApiUserV1User.md)
  - [C1ApiUserV1UserAttributeMappingSource](docs/C1ApiUserV1UserAttributeMappingSource.md)
+ - [C1ApiUserV1UserExpandMask](docs/C1ApiUserV1UserExpandMask.md)
+ - [C1ApiUserV1UserRef](docs/C1ApiUserV1UserRef.md)
  - [C1ApiUserV1UserServiceGetResponse](docs/C1ApiUserV1UserServiceGetResponse.md)
+ - [C1ApiUserV1UserServiceListResponse](docs/C1ApiUserV1UserServiceListResponse.md)
  - [C1ApiUserV1UserView](docs/C1ApiUserV1UserView.md)
 
 

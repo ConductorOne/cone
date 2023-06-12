@@ -49,7 +49,45 @@ type APIClient struct {
 
 	// API Services
 
-	DefaultAPI *DefaultAPIService
+	AppEntitlementUserBindingAPI *AppEntitlementUserBindingAPIService
+
+	AppEntitlementsAPI *AppEntitlementsAPIService
+
+	AppReportAPI *AppReportAPIService
+
+	AppReportActionAPI *AppReportActionAPIService
+
+	AppResourceAPI *AppResourceAPIService
+
+	AppResourceSearchAPI *AppResourceSearchAPIService
+
+	AppResourceTypeAPI *AppResourceTypeAPIService
+
+	AppSearchAPI *AppSearchAPIService
+
+	AppUsageControlsAPI *AppUsageControlsAPIService
+
+	AppsAPI *AppsAPIService
+
+	AuthAPI *AuthAPIService
+
+	DirectoryAPI *DirectoryAPIService
+
+	PoliciesAPI *PoliciesAPIService
+
+	RequestCatalogSearchAPI *RequestCatalogSearchAPIService
+
+	RolesAPI *RolesAPIService
+
+	TaskAPI *TaskAPIService
+
+	TaskActionsAPI *TaskActionsAPIService
+
+	TaskSearchAPI *TaskSearchAPIService
+
+	UserAPI *UserAPIService
+
+	UserSearchAPI *UserSearchAPIService
 }
 
 type service struct {
@@ -68,7 +106,26 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.common.client = c
 
 	// API Services
-	c.DefaultAPI = (*DefaultAPIService)(&c.common)
+	c.AppEntitlementUserBindingAPI = (*AppEntitlementUserBindingAPIService)(&c.common)
+	c.AppEntitlementsAPI = (*AppEntitlementsAPIService)(&c.common)
+	c.AppReportAPI = (*AppReportAPIService)(&c.common)
+	c.AppReportActionAPI = (*AppReportActionAPIService)(&c.common)
+	c.AppResourceAPI = (*AppResourceAPIService)(&c.common)
+	c.AppResourceSearchAPI = (*AppResourceSearchAPIService)(&c.common)
+	c.AppResourceTypeAPI = (*AppResourceTypeAPIService)(&c.common)
+	c.AppSearchAPI = (*AppSearchAPIService)(&c.common)
+	c.AppUsageControlsAPI = (*AppUsageControlsAPIService)(&c.common)
+	c.AppsAPI = (*AppsAPIService)(&c.common)
+	c.AuthAPI = (*AuthAPIService)(&c.common)
+	c.DirectoryAPI = (*DirectoryAPIService)(&c.common)
+	c.PoliciesAPI = (*PoliciesAPIService)(&c.common)
+	c.RequestCatalogSearchAPI = (*RequestCatalogSearchAPIService)(&c.common)
+	c.RolesAPI = (*RolesAPIService)(&c.common)
+	c.TaskAPI = (*TaskAPIService)(&c.common)
+	c.TaskActionsAPI = (*TaskActionsAPIService)(&c.common)
+	c.TaskSearchAPI = (*TaskSearchAPIService)(&c.common)
+	c.UserAPI = (*UserAPIService)(&c.common)
+	c.UserSearchAPI = (*UserSearchAPIService)(&c.common)
 
 	return c
 }

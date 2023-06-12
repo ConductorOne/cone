@@ -8,7 +8,7 @@ import (
 )
 
 func (c *client) GetResourceType(ctx context.Context, appID string, resourceTypeID string) (*c1api.C1ApiAppV1AppResourceType, error) {
-	resp, httpResp, err := c.apiClient.DefaultAPI.C1ApiAppV1AppResourceTypeServiceGet(ctx, appID, resourceTypeID).Execute()
+	resp, httpResp, err := c.apiClient.AppResourceTypeAPI.C1ApiAppV1AppResourceTypeServiceGet(ctx, appID, resourceTypeID).Execute()
 	if err != nil {
 		return nil, err
 	}
@@ -28,7 +28,7 @@ func (c *client) GetResourceType(ctx context.Context, appID string, resourceType
 }
 
 func (c *client) GetResource(ctx context.Context, appID string, resourceTypeID string, resourceID string) (*c1api.C1ApiAppV1AppResource, error) {
-	resp, httpResp, err := c.apiClient.DefaultAPI.C1ApiAppV1AppResourceServiceGet(ctx, appID, resourceTypeID, resourceID).Execute()
+	resp, httpResp, err := c.apiClient.AppResourceAPI.C1ApiAppV1AppResourceServiceGet(ctx, appID, resourceTypeID, resourceID).Execute()
 	if err != nil {
 		return nil, err
 	}

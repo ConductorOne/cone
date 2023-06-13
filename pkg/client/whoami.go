@@ -3,15 +3,15 @@ package client
 import (
 	"context"
 
-	"github.com/conductorone/cone/internal/c1api"
+	"github.com/conductorone/conductorone-sdk-go/pkg/models/shared"
 )
 
-func (c *client) AuthIntrospect(ctx context.Context) (*c1api.C1ApiAuthV1IntrospectResponse, error) {
-	introspectResp, resp, err := c.apiClient.AuthAPI.C1ApiAuthV1AuthIntrospect(ctx).Execute()
+func (c *client) AuthIntrospect(ctx context.Context) (*shared.IntrospectResponse, error) {
+	resp, err := c.sdk.Auth.Introspect(ctx)
 	if err != nil {
 		return nil, err
 	}
-	defer resp.Body.Close()
+	defer resp.RawResponse.Body.Close()
 
-	return introspectResp, nil
+	return resp.IntrospectResponse, nil
 }

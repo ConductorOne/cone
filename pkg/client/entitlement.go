@@ -4,7 +4,8 @@ import (
 	"context"
 	"errors"
 
-	"github.com/conductorone/cone/internal/c1api"
+	"github.com/conductorone/conductorone-sdk-go/pkg/models/operations"
+	"github.com/conductorone/conductorone-sdk-go/pkg/models/shared"
 )
 
 type SearchEntitlementsFilter struct {
@@ -12,42 +13,54 @@ type SearchEntitlementsFilter struct {
 	EntitlementAlias string
 }
 
+type AppEntitlement shared.AppEntitlement
+
+func (a AppEntitlement) GetAppResourceId() string {
+	return StringFromPtr(a.AppResourceID)
+}
+
+func (a AppEntitlement) GetAppResourceTypeId() string {
+	return StringFromPtr(a.AppResourceTypeID)
+}
+
+func (a AppEntitlement) GetAppId() string {
+	return StringFromPtr(a.AppID)
+}
+
 type EntitlementWithBindings struct {
-	Entitlement c1api.C1ApiAppV1AppEntitlement
-	Bindings    []c1api.C1ApiAppV1AppEntitlementUserBinding
+	Entitlement AppEntitlement
+	Bindings    []shared.AppEntitlementUserBinding
 }
 
 func (c *client) SearchEntitlements(ctx context.Context, filter *SearchEntitlementsFilter) ([]*EntitlementWithBindings, error) {
 	// TODO(morgabra) Pagination
 	// TODO(morgabra) Should we abstract the OpenAPI objects from the rest of cone? Kinda... no? But they aren't typed...
-	req := &c1api.C1ApiRequestcatalogV1RequestCatalogSearchServiceSearchEntitlementsRequest{
+	resp, err := c.sdk.RequestCatalogSearch.SearchEntitlements(ctx, shared.RequestCatalogSearchServiceSearchEntitlementsRequest{
 		EntitlementAlias: stringPtr(filter.EntitlementAlias),
-		PageSize:         float32Ptr(100),
+		PageSize:         float64Ptr(100),
 		PageToken:        nil,
 		Query:            stringPtr(filter.Query),
-	}
-	api := c.apiClient.RequestCatalogSearchAPI.C1ApiRequestcatalogV1RequestCatalogSearchServiceSearchEntitlements(ctx)
-	resp, httpResp, err := api.C1ApiRequestcatalogV1RequestCatalogSearchServiceSearchEntitlementsRequest(*req).Execute()
+	})
 	if err != nil {
 		return nil, err
 	}
-	defer httpResp.Body.Close()
+	defer resp.RawResponse.Body.Close()
 
-	list, ok := resp.GetListOk()
-	if !ok {
+	list := resp.RequestCatalogSearchServiceSearchEntitlementsResponse.List
+	if list == nil {
 		return nil, errors.New("search-entitlements: list is nil")
 	}
 
 	rv := make([]*EntitlementWithBindings, 0, len(list))
 	for _, v := range list {
-		ev, ok := v.GetEntitlementOk()
-		if !ok {
+		ent := v.Entitlement
+		if ent == nil {
 			return nil, errors.New("search-entitlements: entitlement is nil")
 		}
 
 		rv = append(rv, &EntitlementWithBindings{
-			Entitlement: ev.GetAppEntitlement(),
-			Bindings:    v.GetAppEntitlementUserBindings(),
+			Entitlement: AppEntitlement(*ent.AppEntitlement),
+			Bindings:    v.AppEntitlementUserBindings,
 		})
 	}
 
@@ -70,22 +83,23 @@ func (c *client) ExpandEntitlements(ctx context.Context, in []*EntitlementWithBi
 	return expander, nil
 }
 
-func (c *client) GetEntitlement(ctx context.Context, appId string, entitlementId string) (*c1api.C1ApiAppV1AppEntitlement, error) {
-	resp, httpResp, err := c.apiClient.AppEntitlementsAPI.C1ApiAppV1AppEntitlementsGet(ctx, appId, entitlementId).Execute()
+func (c *client) GetEntitlement(ctx context.Context, appId string, entitlementId string) (*shared.AppEntitlement, error) {
+	resp, err := c.sdk.AppEntitlements.Get(ctx, operations.C1APIAppV1AppEntitlementsGetRequest{
+		AppID: appId,
+		ID:    entitlementId,
+	})
 	if err != nil {
 		return nil, err
 	}
-	defer httpResp.Body.Close()
+	defer resp.RawResponse.Body.Close()
 
-	v, ok := resp.GetAppEntitlementViewOk()
-	if !ok {
+	if resp.GetAppEntitlementResponse.AppEntitlementView == nil {
 		return nil, errors.New("get-entitlement: view is nil")
 	}
 
-	r, ok := v.GetAppEntitlementOk()
-	if !ok {
+	if resp.GetAppEntitlementResponse.AppEntitlementView.AppEntitlement == nil {
 		return nil, errors.New("get-entitlement: entitlement is nil")
 	}
 
-	return r, nil
+	return resp.GetAppEntitlementResponse.AppEntitlementView.AppEntitlement, nil
 }

@@ -3,10 +3,11 @@ package main
 import (
 	"fmt"
 
-	"github.com/conductorone/cone/internal/c1api"
+	"github.com/spf13/cobra"
+
+	"github.com/conductorone/conductorone-sdk-go/pkg/models/shared"
 	"github.com/conductorone/cone/pkg/client"
 	"github.com/conductorone/cone/pkg/output"
-	"github.com/spf13/cobra"
 )
 
 func getUserCmd() *cobra.Command {
@@ -35,7 +36,7 @@ func getUserRun(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
-	resp := C1ApiUserV1UserServiceGetResponse(*userResp)
+	resp := User(*userResp)
 	outputManager := output.NewManager(ctx, v)
 	err = outputManager.Output(ctx, &resp)
 	if err != nil {
@@ -45,9 +46,9 @@ func getUserRun(cmd *cobra.Command, args []string) error {
 	return nil
 }
 
-type C1ApiUserV1UserServiceGetResponse c1api.C1ApiUserV1User
+type User shared.User
 
-func (r *C1ApiUserV1UserServiceGetResponse) Header() []string {
+func (r *User) Header() []string {
 	return []string{
 		"Id",
 		"Email",
@@ -60,12 +61,12 @@ func (r *C1ApiUserV1UserServiceGetResponse) Header() []string {
 	}
 }
 
-func (r *C1ApiUserV1UserServiceGetResponse) Rows() [][]string {
+func (r *User) Rows() [][]string {
 	return [][]string{
 		{
-			client.StringFromPtr(r.Id),
+			client.StringFromPtr(r.ID),
 			client.StringFromPtr(r.Email),
-			client.StringFromPtr(r.Status),
+			userStatusToString[*r.Status],
 			client.StringFromPtr(r.JobTitle),
 			client.StringFromPtr(r.Department),
 			client.StringFromPtr(r.EmploymentStatus),
@@ -73,4 +74,10 @@ func (r *C1ApiUserV1UserServiceGetResponse) Rows() [][]string {
 			output.FormatTime(r.CreatedAt),
 		},
 	}
+}
+
+var userStatusToString = map[shared.UserStatus]string{
+	shared.UserStatusEnabled:  "Enabled",
+	shared.UserStatusDisabled: "Disabled",
+	shared.UserStatusDeleted:  "Deleted",
 }

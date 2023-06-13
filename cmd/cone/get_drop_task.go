@@ -227,7 +227,7 @@ func runTask(
 		return err
 	}
 
-	userId := client.StringFromPtr(resp.UserId)
+	userId := client.StringFromPtr(resp.UserID)
 
 	forceCreate := v.GetBool(forceFlag)
 	if !forceCreate {
@@ -255,7 +255,7 @@ func runTask(
 		}
 	}
 
-	task, err := run(c, ctx, appId, entitlementId, client.StringFromPtr(resp.UserId), justification)
+	task, err := run(c, ctx, appId, entitlementId, client.StringFromPtr(resp.UserID), justification)
 	if err != nil {
 		return err
 	}

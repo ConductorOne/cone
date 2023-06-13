@@ -1,8 +1,9 @@
 package main
 
 import (
-	"github.com/conductorone/cone/pkg/output"
 	"github.com/spf13/cobra"
+
+	"github.com/conductorone/cone/pkg/output"
 )
 
 func whoAmICmd() *cobra.Command {
@@ -31,7 +32,7 @@ func whoAmIRun(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
-	resp := C1ApiUserV1UserServiceGetResponse(*userResp)
+	resp := User(*userResp)
 	outputManager := output.NewManager(ctx, v)
 	err = outputManager.Output(ctx, &resp)
 	if err != nil {

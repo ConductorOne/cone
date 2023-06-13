@@ -8,6 +8,8 @@ import (
 
 	"github.com/spf13/viper"
 
+	sdk "github.com/conductorone/conductorone-sdk-go"
+	"github.com/conductorone/conductorone-sdk-go/pkg/models/shared"
 	"github.com/conductorone/cone/internal/c1api"
 	"github.com/conductorone/cone/pkg/uhttp"
 )
@@ -18,6 +20,7 @@ type client struct {
 	tokenHost  string
 	apiClient  *c1api.APIClient
 	baseURL    *url.URL
+	sdk        *sdk.ConductoroneAPI
 }
 
 func StringFromPtr(s *string) string {
@@ -51,7 +54,7 @@ type C1Client interface {
 	GetResource(ctx context.Context, appID string, resourceID string, resourceTypeID string) (*c1api.C1ApiAppV1AppResource, error)
 	GetResourceType(ctx context.Context, appID string, resourceTypeID string) (*c1api.C1ApiAppV1AppResourceType, error)
 	GetApp(ctx context.Context, appID string) (*c1api.C1ApiAppV1App, error)
-	GetTask(ctx context.Context, taskId string) (*c1api.C1ApiTaskV1TaskServiceGetResponse, error)
+	GetTask(ctx context.Context, taskId string) (*shared.TaskServiceGetResponse, error)
 	CreateGrantTask(
 		ctx context.Context,
 		appId string,
@@ -59,19 +62,19 @@ type C1Client interface {
 		identityUserId string,
 		justification string,
 		duration string,
-	) (*c1api.C1ApiTaskV1TaskServiceCreateGrantResponse, error)
+	) (*shared.TaskServiceCreateGrantResponse, error)
 	CreateRevokeTask(
 		ctx context.Context,
 		appId string,
 		appEntitlementId string,
 		identityUserId string,
 		justification string,
-	) (*c1api.C1ApiTaskV1TaskServiceCreateRevokeResponse, error)
+	) (*shared.TaskServiceCreateRevokeResponse, error)
 	GetGrantsForIdentity(ctx context.Context, appID string, appEntitlementID string, appUserID string) ([]c1api.C1ApiAppV1AppEntitlementUserBinding, error)
-	SearchTasks(ctx context.Context, taskFilter c1api.C1ApiTaskV1TaskSearchRequest) (*c1api.C1ApiTaskV1TaskSearchResponse, error)
-	CommentOnTask(ctx context.Context, taskID string, comment string) (*c1api.C1ApiTaskV1TaskActionsServiceCommentResponse, error)
-	ApproveTask(ctx context.Context, taskId string, comment string, policyId string) (*c1api.C1ApiTaskV1TaskActionsServiceApproveResponse, error)
-	DenyTask(ctx context.Context, taskId string, comment string, policyId string) (*c1api.C1ApiTaskV1TaskActionsServiceDenyResponse, error)
+	SearchTasks(ctx context.Context, taskFilter shared.TaskSearchRequest) (*shared.TaskSearchResponse, error)
+	CommentOnTask(ctx context.Context, taskID string, comment string) (*shared.TaskActionsServiceCommentResponse, error)
+	ApproveTask(ctx context.Context, taskId string, comment string, policyId string) (*shared.TaskActionsServiceApproveResponse, error)
+	DenyTask(ctx context.Context, taskId string, comment string, policyId string) (*shared.TaskActionsServiceDenyResponse, error)
 }
 
 func (c *client) BaseURL() string {
@@ -121,6 +124,11 @@ func New(
 	apiCfg.Servers[0].URL = apiURL.String()
 	c.apiClient = c1api.NewAPIClient(apiCfg)
 	c.baseURL = &apiURL
+
+	c.sdk = sdk.New(
+		sdk.WithClient(uclient),
+		sdk.WithServerURL(apiURL.String()),
+	)
 
 	return c, nil
 }

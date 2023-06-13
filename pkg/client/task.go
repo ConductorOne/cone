@@ -3,16 +3,14 @@ package client
 import (
 	"context"
 
-	"github.com/conductorone/cone/internal/c1api"
+	"github.com/conductorone/conductorone-sdk-go/pkg/models/operations"
+	"github.com/conductorone/conductorone-sdk-go/pkg/models/shared"
 )
 
-func (c *client) GetTask(ctx context.Context, taskId string) (*c1api.C1ApiTaskV1TaskServiceGetResponse, error) {
-	task, resp, err := c.apiClient.TaskAPI.C1ApiTaskV1TaskServiceGet(ctx, taskId).Execute()
-	if err != nil {
-		return nil, err
-	}
-	defer resp.Body.Close()
-	return task, err
+func (c *client) GetTask(ctx context.Context, taskId string) (*shared.TaskServiceGetResponse, error) {
+	resp, err := c.sdk.Task.Get(ctx, operations.C1APITaskV1TaskServiceGetRequest{ID: taskId})
+	defer resp.RawResponse.Body.Close()
+	return resp.TaskServiceGetResponse, err
 }
 
 func (c *client) CreateGrantTask(
@@ -22,26 +20,23 @@ func (c *client) CreateGrantTask(
 	identityUserId string,
 	justification string,
 	duration string,
-) (*c1api.C1ApiTaskV1TaskServiceCreateGrantResponse, error) {
-	api := c.apiClient.TaskAPI.C1ApiTaskV1TaskServiceCreateGrantTask(ctx)
-	grantReq := c1api.C1ApiTaskV1TaskServiceCreateGrantRequest{
-		AppEntitlementId: &appEntitlementId,
-		IdentityUserId:   &identityUserId,
-		AppId:            &appId,
+) (*shared.TaskServiceCreateGrantResponse, error) {
+	req := shared.TaskServiceCreateGrantRequest{
+		AppEntitlementID: &appEntitlementId,
+		IdentityUserID:   &identityUserId,
+		AppID:            &appId,
 		Description:      &justification,
 	}
 	if duration != "" {
-		grantReq.GrantDuration = &duration
+		req.GrantDuration = &duration
 	}
-	req := api.C1ApiTaskV1TaskServiceCreateGrantRequest(grantReq)
-
-	cgtResp, resp, err := req.Execute()
+	resp, err := c.sdk.Task.CreateGrantTask(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	defer resp.Body.Close()
+	defer resp.RawResponse.Body.Close()
 
-	return cgtResp, nil
+	return resp.TaskServiceCreateGrantResponse, nil
 }
 
 func (c *client) CreateRevokeTask(
@@ -50,81 +45,70 @@ func (c *client) CreateRevokeTask(
 	appEntitlementId string,
 	identityUserId string,
 	justification string,
-) (*c1api.C1ApiTaskV1TaskServiceCreateRevokeResponse, error) {
-	api := c.apiClient.TaskAPI.C1ApiTaskV1TaskServiceCreateRevokeTask(ctx)
-	req := api.C1ApiTaskV1TaskServiceCreateRevokeRequest(c1api.C1ApiTaskV1TaskServiceCreateRevokeRequest{
-		AppEntitlementId: &appEntitlementId,
-		IdentityUserId:   &identityUserId,
-		AppId:            &appId,
+) (*shared.TaskServiceCreateRevokeResponse, error) {
+	req := shared.TaskServiceCreateRevokeRequest{
+		AppEntitlementID: &appEntitlementId,
+		IdentityUserID:   &identityUserId,
+		AppID:            &appId,
 		Description:      &justification,
+	}
+	resp, err := c.sdk.Task.CreateRevokeTask(ctx, req)
+	if err != nil {
+		return nil, err
+	}
+	defer resp.RawResponse.Body.Close()
+	return resp.TaskServiceCreateRevokeResponse, nil
+}
+
+func (c *client) SearchTasks(ctx context.Context, taskFilter shared.TaskSearchRequest) (*shared.TaskSearchResponse, error) {
+	resp, err := c.sdk.TaskSearch.Search(ctx, taskFilter)
+	if err != nil {
+		return nil, err
+	}
+	defer resp.RawResponse.Body.Close()
+	return resp.TaskSearchResponse, nil
+}
+
+func (c *client) CommentOnTask(ctx context.Context, taskID string, comment string) (*shared.TaskActionsServiceCommentResponse, error) {
+	resp, err := c.sdk.TaskActions.Comment(ctx, operations.C1APITaskV1TaskActionsServiceCommentRequest{
+		TaskActionsServiceCommentRequest: &shared.TaskActionsServiceCommentRequest{
+			Comment: &comment,
+		},
+		TaskID: taskID,
 	})
-	cgtResp, resp, err := req.Execute()
 	if err != nil {
 		return nil, err
 	}
-	defer resp.Body.Close()
-
-	return cgtResp, nil
+	defer resp.RawResponse.Body.Close()
+	return resp.TaskActionsServiceCommentResponse, nil
 }
 
-func (c *client) SearchTasks(ctx context.Context, taskFilter c1api.C1ApiTaskV1TaskSearchRequest) (*c1api.C1ApiTaskV1TaskSearchResponse, error) {
-	api := c.apiClient.TaskSearchAPI.C1ApiTaskV1TaskSearchServiceSearch(ctx)
-	req := api.C1ApiTaskV1TaskSearchRequest(taskFilter)
-	apiResp, resp, err := req.Execute()
-	if err != nil {
-		return nil, err
-	}
-	defer resp.Body.Close()
-
-	return apiResp, nil
-}
-
-func (c *client) CommentOnTask(ctx context.Context, taskID string, comment string) (*c1api.C1ApiTaskV1TaskActionsServiceCommentResponse, error) {
-	api := c.apiClient.TaskActionsAPI.C1ApiTaskV1TaskActionsServiceComment(ctx, taskID)
-	req := api.C1ApiTaskV1TaskActionsServiceCommentRequestInput(c1api.C1ApiTaskV1TaskActionsServiceCommentRequestInput{
-		Comment: &comment,
+func (c *client) ApproveTask(ctx context.Context, taskId string, comment string, policyId string) (*shared.TaskActionsServiceApproveResponse, error) {
+	resp, err := c.sdk.TaskActions.Approve(ctx, operations.C1APITaskV1TaskActionsServiceApproveRequest{
+		TaskActionsServiceApproveRequest: &shared.TaskActionsServiceApproveRequest{
+			Comment:      &comment,
+			PolicyStepID: &policyId,
+		},
+		TaskID: taskId,
 	})
-	cmntResp, resp, err := req.Execute()
 	if err != nil {
 		return nil, err
 	}
-	defer resp.Body.Close()
-
-	return cmntResp, nil
+	defer resp.RawResponse.Body.Close()
+	return resp.TaskActionsServiceApproveResponse, nil
 }
 
-func (c *client) ApproveTask(ctx context.Context, taskId string, comment string, policyId string) (*c1api.C1ApiTaskV1TaskActionsServiceApproveResponse, error) {
-	api := c.apiClient.TaskActionsAPI.C1ApiTaskV1TaskActionsServiceApprove(ctx, taskId)
-	approveReq := c1api.C1ApiTaskV1TaskActionsServiceApproveRequestInput{
-		PolicyStepId: &policyId,
-	}
-	if comment != "" {
-		approveReq.Comment = &comment
-	}
-	req := api.C1ApiTaskV1TaskActionsServiceApproveRequestInput(approveReq)
-	approveResp, resp, err := req.Execute()
+func (c *client) DenyTask(ctx context.Context, taskId string, comment string, policyId string) (*shared.TaskActionsServiceDenyResponse, error) {
+	resp, err := c.sdk.TaskActions.Deny(ctx, operations.C1APITaskV1TaskActionsServiceDenyRequest{
+		TaskActionsServiceDenyRequest: &shared.TaskActionsServiceDenyRequest{
+			Comment:      &comment,
+			PolicyStepID: &policyId,
+		},
+		TaskID: taskId,
+	})
 	if err != nil {
 		return nil, err
 	}
-	defer resp.Body.Close()
-
-	return approveResp, err
-}
-
-func (c *client) DenyTask(ctx context.Context, taskId string, comment string, policyId string) (*c1api.C1ApiTaskV1TaskActionsServiceDenyResponse, error) {
-	api := c.apiClient.TaskActionsAPI.C1ApiTaskV1TaskActionsServiceDeny(ctx, taskId)
-	denyReq := c1api.C1ApiTaskV1TaskActionsServiceDenyRequestInput{
-		PolicyStepId: &policyId,
-	}
-	if comment != "" {
-		denyReq.Comment = &comment
-	}
-	req := api.C1ApiTaskV1TaskActionsServiceDenyRequestInput(denyReq)
-	denyResp, resp, err := req.Execute()
-	if err != nil {
-		return nil, err
-	}
-	defer resp.Body.Close()
-
-	return denyResp, err
+	defer resp.RawResponse.Body.Close()
+	return resp.TaskActionsServiceDenyResponse, nil
 }

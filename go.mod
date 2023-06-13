@@ -12,6 +12,7 @@ require (
 )
 
 require (
+	github.com/conductorone/conductorone-sdk-go v1.0.3-0.20230612204716-44f7bbedc754
 	github.com/pterm/pterm v0.12.62
 	github.com/xhit/go-str2duration/v2 v2.1.0
 	golang.org/x/sync v0.2.0
@@ -21,6 +22,7 @@ require (
 	atomicgo.dev/cursor v0.1.1 // indirect
 	atomicgo.dev/keyboard v0.2.9 // indirect
 	atomicgo.dev/schedule v0.0.2 // indirect
+	github.com/cenkalti/backoff/v4 v4.2.0 // indirect
 	github.com/containerd/console v1.0.3 // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/gookit/color v1.5.3 // indirect

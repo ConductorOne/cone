@@ -7,13 +7,15 @@ import (
 	"strings"
 	"time"
 
-	"github.com/conductorone/cone/internal/c1api"
-	"github.com/conductorone/cone/pkg/client"
-	"github.com/conductorone/cone/pkg/output"
 	"github.com/pterm/pterm"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
-	str2duration "github.com/xhit/go-str2duration/v2"
+	"github.com/xhit/go-str2duration/v2"
+
+	"github.com/conductorone/conductorone-sdk-go/pkg/models/shared"
+	"github.com/conductorone/cone/internal/c1api"
+	"github.com/conductorone/cone/pkg/client"
+	"github.com/conductorone/cone/pkg/output"
 )
 
 const grantDurationErrorMessage = "grant duration must be less than or equal to max provision time"
@@ -147,7 +149,7 @@ func runGet(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
-	return runTask(cmd, args, func(c client.C1Client, ctx context.Context, appId string, entitlementId string, userId string, justification string) (*c1api.C1ApiTaskV1Task, error) {
+	return runTask(cmd, args, func(c client.C1Client, ctx context.Context, appId string, entitlementId string, userId string, justification string) (*shared.Task, error) {
 		duration := v.GetString(durationFlag)
 
 		entitlement, err := c.GetEntitlement(ctx, appId, entitlementId)
@@ -194,7 +196,7 @@ func runGet(cmd *cobra.Command, args []string) error {
 }
 
 func runDrop(cmd *cobra.Command, args []string) error {
-	return runTask(cmd, args, func(c client.C1Client, ctx context.Context, appId string, entitlementId string, userId string, justification string) (*c1api.C1ApiTaskV1Task, error) {
+	return runTask(cmd, args, func(c client.C1Client, ctx context.Context, appId string, entitlementId string, userId string, justification string) (*shared.Task, error) {
 		accessRequest, err := c.CreateRevokeTask(ctx, appId, entitlementId, userId, justification)
 		if err != nil {
 			return nil, err
@@ -206,7 +208,7 @@ func runDrop(cmd *cobra.Command, args []string) error {
 func runTask(
 	cmd *cobra.Command,
 	args []string,
-	run func(c client.C1Client, ctx context.Context, appId string, entitlementId string, userId string, justification string) (*c1api.C1ApiTaskV1Task, error),
+	run func(c client.C1Client, ctx context.Context, appId string, entitlementId string, userId string, justification string) (*shared.Task, error),
 ) error {
 	ctx, c, v, err := cmdContext(cmd)
 	if err != nil {
@@ -259,7 +261,7 @@ func runTask(
 	}
 
 	outputManager := output.NewManager(ctx, v)
-	taskResp := C1ApiTaskV1Task{task: task, client: c}
+	taskResp := Task{task: task, client: c}
 	err = outputManager.Output(ctx, &taskResp)
 	if err != nil {
 		return err
@@ -335,43 +337,43 @@ func getEntitlementDetails(ctx context.Context, c client.C1Client, v *viper.Vipe
 	return entitlementId, appId, nil
 }
 
-func handleWaitBehavior(ctx context.Context, c client.C1Client, task *c1api.C1ApiTaskV1Task, outputManager output.Manager) error {
+func handleWaitBehavior(ctx context.Context, c client.C1Client, task *shared.Task, outputManager output.Manager) error {
 	spinner, _ := pterm.DefaultSpinner.Start("Waiting for ticket to close.")
-	var taskItem *c1api.C1ApiTaskV1Task
+	var taskItem *shared.Task
 	for {
 		select {
 		case <-ctx.Done():
 			return ctx.Err()
 		case <-time.After(1 * time.Second):
 		}
-		task, err := c.GetTask(ctx, client.StringFromPtr(task.Id))
+		task, err := c.GetTask(ctx, client.StringFromPtr(task.ID))
 		if err != nil {
 			return err
 		}
 
 		taskItem = task.TaskView.Task
-		taskResp := C1ApiTaskV1Task{task: taskItem, client: c}
+		taskResp := Task{task: taskItem, client: c}
 		err = outputManager.Output(ctx, &taskResp)
 		if err != nil {
 			return err
 		}
 
-		if client.StringFromPtr(taskItem.State) == "TASK_STATE_CLOSED" {
+		if *taskItem.State == shared.TaskStateTaskStateClosed {
 			break
 		}
 	}
-	if taskItem.Type.HasGrant() {
-		taskOutcome := client.StringFromPtr(taskItem.Type.Grant.Get().Outcome)
-		if taskOutcome == "GRANT_OUTCOME_GRANTED" {
+	if taskItem.Type.Grant != nil {
+		taskOutcome := taskItem.Type.Grant.Outcome
+		if *taskOutcome == shared.TaskTypeGrantOutcomeGrantOutcomeGranted {
 			spinner.Success("Entitlement granted successfully.")
 		} else {
 			spinner.Fail(fmt.Sprintf("Failed to grant entitlement %s", taskOutcome))
 			return fmt.Errorf("failed to grant entitlement %s", taskOutcome)
 		}
 	}
-	if taskItem.Type.HasRevoke() {
-		taskOutcome := client.StringFromPtr(taskItem.Type.Revoke.Get().Outcome)
-		if taskOutcome == "REVOKE_OUTCOME_REVOKED" {
+	if taskItem.Type.Revoke != nil {
+		taskOutcome := taskItem.Type.Revoke.Outcome
+		if *taskOutcome == shared.TaskTypeRevokeOutcomeRevokeOutcomeRevoked {
 			spinner.Success("Entitlement revoked succesfully.")
 		} else {
 			spinner.Fail(fmt.Sprintf("Failed to revoke entitlement %s", taskOutcome))
@@ -381,14 +383,14 @@ func handleWaitBehavior(ctx context.Context, c client.C1Client, task *c1api.C1Ap
 	return nil
 }
 
-var processStateToString = map[string]string{
+var processStateToString = map[shared.TaskProcessing]string{
 	"TASK_PROCESSING_TYPE_UNSPECIFIED": "Unknown Processing",
 	"TASK_PROCESSING_TYPE_PROCESSING":  "Processing",
 	"TASK_PROCESSING_TYPE_WAITING":     "Waiting for Action",
 	"TASK_PROCESSING_TYPE_DONE":        "Done",
 }
 
-var taskStateToString = map[string]string{
+var taskStateToString = map[shared.TaskState]string{
 	"TASK_STATE_OPEN":   "Open",
 	"TASK_STATE_CLOSED": "Closed",
 }

@@ -9,6 +9,16 @@ atomicgo.dev/keyboard/keys
 # atomicgo.dev/schedule v0.0.2
 ## explicit; go 1.18
 atomicgo.dev/schedule
+# github.com/cenkalti/backoff/v4 v4.2.0
+## explicit; go 1.18
+github.com/cenkalti/backoff/v4
+# github.com/conductorone/conductorone-sdk-go v1.0.3-0.20230612204716-44f7bbedc754
+## explicit; go 1.14
+github.com/conductorone/conductorone-sdk-go
+github.com/conductorone/conductorone-sdk-go/pkg/models/operations
+github.com/conductorone/conductorone-sdk-go/pkg/models/shared
+github.com/conductorone/conductorone-sdk-go/pkg/types
+github.com/conductorone/conductorone-sdk-go/pkg/utils
 # github.com/containerd/console v1.0.3
 ## explicit; go 1.13
 github.com/containerd/console

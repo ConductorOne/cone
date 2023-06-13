@@ -6,7 +6,7 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"github.com/conductorone/cone/internal/c1api"
+	"github.com/conductorone/conductorone-sdk-go/pkg/models/shared"
 	"github.com/conductorone/cone/pkg/client"
 	"github.com/conductorone/cone/pkg/output"
 )
@@ -38,7 +38,7 @@ func denyTasksCmd() *cobra.Command {
 }
 
 func runApproveTasks(cmd *cobra.Command, args []string) error {
-	return runApproveDeny(cmd, args, func(c client.C1Client, ctx context.Context, taskId string, comment string, policyId string) (*c1api.C1ApiTaskV1Task, error) {
+	return runApproveDeny(cmd, args, func(c client.C1Client, ctx context.Context, taskId string, comment string, policyId string) (*shared.Task, error) {
 		approveResp, err := c.ApproveTask(ctx, taskId, comment, policyId)
 		if err != nil {
 			return nil, err
@@ -48,7 +48,7 @@ func runApproveTasks(cmd *cobra.Command, args []string) error {
 }
 
 func runDenyTasks(cmd *cobra.Command, args []string) error {
-	return runApproveDeny(cmd, args, func(c client.C1Client, ctx context.Context, taskId string, comment string, policyId string) (*c1api.C1ApiTaskV1Task, error) {
+	return runApproveDeny(cmd, args, func(c client.C1Client, ctx context.Context, taskId string, comment string, policyId string) (*shared.Task, error) {
 		approveResp, err := c.DenyTask(ctx, taskId, comment, policyId)
 		if err != nil {
 			return nil, err
@@ -60,7 +60,7 @@ func runDenyTasks(cmd *cobra.Command, args []string) error {
 func runApproveDeny(
 	cmd *cobra.Command,
 	args []string,
-	run func(c client.C1Client, ctx context.Context, taskId string, comment string, policyId string) (*c1api.C1ApiTaskV1Task, error),
+	run func(c client.C1Client, ctx context.Context, taskId string, comment string, policyId string) (*shared.Task, error),
 ) error {
 	ctx, c, v, err := cmdContext(cmd)
 	if err != nil {
@@ -75,17 +75,16 @@ func runApproveDeny(
 		return err
 	}
 
-	policyId, ok := taskResp.GetTaskView().Task.GetPolicy().Current.GetIdOk()
-	if !ok {
+	if taskResp.TaskView.Task.Policy.Current == nil {
 		return errors.New("task does not have a current policy step id and cannot be approved or denied")
 	}
 
-	task, err := run(c, ctx, taskId, comment, client.StringFromPtr(policyId))
+	task, err := run(c, ctx, taskId, comment, client.StringFromPtr(taskResp.TaskView.Task.Policy.Current.ID))
 	if err != nil {
 		return err
 	}
 
-	resp := C1ApiTaskV1Task{task: task, client: c}
+	resp := Task{task: task, client: c}
 	outputManager := output.NewManager(ctx, v)
 	err = outputManager.Output(ctx, &resp)
 	if err != nil {

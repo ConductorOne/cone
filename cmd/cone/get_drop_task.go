@@ -19,6 +19,8 @@ import (
 )
 
 const grantDurationErrorMessage = "grant duration must be less than or equal to max provision time"
+const durationInputTip = "We accept a sequence of decimal numbers, each with optional fraction and a unit suffix," +
+	"such as \"12h\", \"1w2d\" or \"2h45m\". Valid units are (m)inutes, (h)ours, (d)ays, (w)eeks."
 
 func getCmd() *cobra.Command {
 	cmd := &cobra.Command{
@@ -71,10 +73,12 @@ func strToDur(duration string) (*time.Duration, error) {
 func handleDurationNonInteractive(maxProvisionTime *time.Duration, duration string) (*time.Duration, error) {
 	formattedDuration, err := strToDur(duration)
 	if err != nil {
+		pterm.Info.Println(durationInputTip)
 		return nil, err
 	}
 
 	if err := validateGrantTaskArguments(maxProvisionTime, formattedDuration); err != nil {
+		pterm.Info.Println(durationInputTip)
 		return nil, err
 	}
 
@@ -104,13 +108,6 @@ func getValidDuration(ctx context.Context, v *viper.Viper, maxProvisionTime *tim
 	if v.GetBool(nonInteractiveFlag) {
 		return handleDurationNonInteractive(maxProvisionTime, duration)
 	}
-	errorPrinter := pterm.PrefixPrinter{
-		MessageStyle: &pterm.ThemeDefault.ErrorMessageStyle,
-		Prefix: pterm.Prefix{
-			Style: &pterm.ThemeDefault.ErrorPrefixStyle,
-			Text:  " ERROR ",
-		},
-	}
 	input := pterm.DefaultInteractiveTextInput.WithMultiLine(false)
 	firstRun := true
 	for {
@@ -131,15 +128,26 @@ func getValidDuration(ctx context.Context, v *viper.Viper, maxProvisionTime *tim
 
 		formattedDuration, err := strToDur(duration)
 		if err != nil {
-			errorPrinter.Println(err.Error())
+			pterm.Error.Println(err.Error())
+			pterm.Info.Println(durationInputTip)
 			continue
 		}
 
 		err = validateGrantTaskArguments(maxProvisionTime, formattedDuration)
-		if err == nil {
-			return formattedDuration, nil
+		if err != nil {
+			pterm.Error.Println(err.Error())
+			pterm.Info.Println(durationInputTip)
+			continue
 		}
-		errorPrinter.Println(err.Error())
+		if *formattedDuration > 28*24*time.Hour || *formattedDuration < 5*time.Minute {
+			result, _ := pterm.DefaultInteractiveConfirm.Show("The time you entered is outside of the range of 5 minutes - 21 days. Are you sure?")
+			if !result {
+				pterm.Info.Println(durationInputTip)
+				continue
+			}
+		}
+
+		return formattedDuration, nil
 	}
 }
 

@@ -41,7 +41,8 @@ func addJustificationFlag(cmd *cobra.Command) {
 }
 
 func addGrantDurationFlag(cmd *cobra.Command) {
-	cmd.Flags().StringP(durationFlag, "d", "", "The duration of the grant using the following format [magnitude][unit] where unit is one of the following: s, m, h, d, w")
+	usageStr := "A sequence of decimal numbers, each with optional fraction and a unit suffix, such as \"12h\", \"1w2d\" or \"2h45m\". Valid units are (m)inutes, (h)ours, (d)ays, (w)eeks."
+	cmd.Flags().StringP(durationFlag, "d", "", usageStr)
 }
 
 func addForceTaskCreateFlag(cmd *cobra.Command) {

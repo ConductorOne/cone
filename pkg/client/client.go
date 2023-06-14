@@ -12,6 +12,7 @@ import (
 
 	sdk "github.com/conductorone/conductorone-sdk-go"
 	"github.com/conductorone/conductorone-sdk-go/pkg/models/shared"
+
 	"github.com/conductorone/cone/pkg/uhttp"
 )
 
@@ -38,10 +39,6 @@ func stringPtr(s string) *string {
 	return &s
 }
 
-func float32Ptr(i int) *float32 {
-	f := float32(i)
-	return &f
-}
 func float64Ptr(i int) *float64 {
 	f := float64(i)
 	return &f
@@ -133,8 +130,8 @@ func New(
 }
 
 func handleBadStatus(resp *http.Response) error {
-	//This is added temporarily to ensure we return an error if we get a non-success status code.
-	//Eventually (ideally), we'll be generating this error handling as part of the SDK
+	// This is added temporarily to ensure we return an error if we get a non-success status code.
+	// Eventually (ideally), we'll be generating this error handling as part of the SDK
 	if resp.StatusCode >= http.StatusBadRequest {
 		body, err := io.ReadAll(resp.Body)
 		if err != nil {

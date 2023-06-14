@@ -3,6 +3,7 @@ package client
 import (
 	"context"
 	"errors"
+
 	"github.com/conductorone/conductorone-sdk-go/pkg/models/operations"
 	"github.com/conductorone/conductorone-sdk-go/pkg/models/shared"
 )
@@ -15,7 +16,6 @@ func (c *client) GetResourceType(ctx context.Context, appID string, resourceType
 	if err != nil {
 		return nil, err
 	}
-	defer resp.RawResponse.Body.Close()
 
 	if err := handleBadStatus(resp.RawResponse); err != nil {
 		return nil, err
@@ -42,7 +42,6 @@ func (c *client) GetResource(ctx context.Context, appID string, resourceTypeID s
 	if err != nil {
 		return nil, err
 	}
-	defer resp.RawResponse.Body.Close()
 
 	if err := handleBadStatus(resp.RawResponse); err != nil {
 		return nil, err

@@ -2,13 +2,16 @@ package client
 
 import (
 	"context"
+
 	"github.com/conductorone/conductorone-sdk-go/pkg/models/operations"
 	"github.com/conductorone/conductorone-sdk-go/pkg/models/shared"
 )
 
 func (c *client) GetTask(ctx context.Context, taskId string) (*shared.TaskServiceGetResponse, error) {
 	resp, err := c.sdk.Task.Get(ctx, operations.C1APITaskV1TaskServiceGetRequest{ID: taskId})
-	defer resp.RawResponse.Body.Close()
+	if err != nil {
+		return nil, err
+	}
 
 	if err := handleBadStatus(resp.RawResponse); err != nil {
 		return nil, err
@@ -38,7 +41,6 @@ func (c *client) CreateGrantTask(
 	if err != nil {
 		return nil, err
 	}
-	defer resp.RawResponse.Body.Close()
 
 	if err := handleBadStatus(resp.RawResponse); err != nil {
 		return nil, err
@@ -64,7 +66,6 @@ func (c *client) CreateRevokeTask(
 	if err != nil {
 		return nil, err
 	}
-	defer resp.RawResponse.Body.Close()
 
 	if err := handleBadStatus(resp.RawResponse); err != nil {
 		return nil, err
@@ -78,7 +79,6 @@ func (c *client) SearchTasks(ctx context.Context, taskFilter shared.TaskSearchRe
 	if err != nil {
 		return nil, err
 	}
-	defer resp.RawResponse.Body.Close()
 
 	if err := handleBadStatus(resp.RawResponse); err != nil {
 		return nil, err
@@ -97,7 +97,6 @@ func (c *client) CommentOnTask(ctx context.Context, taskID string, comment strin
 	if err != nil {
 		return nil, err
 	}
-	defer resp.RawResponse.Body.Close()
 
 	if err := handleBadStatus(resp.RawResponse); err != nil {
 		return nil, err
@@ -116,7 +115,6 @@ func (c *client) ApproveTask(ctx context.Context, taskId string, comment string,
 	if err != nil {
 		return nil, err
 	}
-	defer resp.RawResponse.Body.Close()
 
 	if err := handleBadStatus(resp.RawResponse); err != nil {
 		return nil, err
@@ -135,7 +133,6 @@ func (c *client) DenyTask(ctx context.Context, taskId string, comment string, po
 	if err != nil {
 		return nil, err
 	}
-	defer resp.RawResponse.Body.Close()
 
 	if err := handleBadStatus(resp.RawResponse); err != nil {
 		return nil, err

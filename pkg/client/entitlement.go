@@ -3,6 +3,7 @@ package client
 import (
 	"context"
 	"errors"
+
 	"github.com/conductorone/conductorone-sdk-go/pkg/models/operations"
 	"github.com/conductorone/conductorone-sdk-go/pkg/models/shared"
 )
@@ -43,7 +44,6 @@ func (c *client) SearchEntitlements(ctx context.Context, filter *SearchEntitleme
 	if err != nil {
 		return nil, err
 	}
-	defer resp.RawResponse.Body.Close()
 
 	if err := handleBadStatus(resp.RawResponse); err != nil {
 		return nil, err
@@ -94,7 +94,6 @@ func (c *client) GetEntitlement(ctx context.Context, appId string, entitlementId
 	if err != nil {
 		return nil, err
 	}
-	defer resp.RawResponse.Body.Close()
 
 	if err := handleBadStatus(resp.RawResponse); err != nil {
 		return nil, err

@@ -13,6 +13,7 @@ import (
 	"github.com/xhit/go-str2duration/v2"
 
 	"github.com/conductorone/conductorone-sdk-go/pkg/models/shared"
+
 	"github.com/conductorone/cone/pkg/client"
 	"github.com/conductorone/cone/pkg/output"
 )
@@ -362,8 +363,8 @@ func handleWaitBehavior(ctx context.Context, c client.C1Client, task *shared.Tas
 		if *taskOutcome == shared.TaskTypeGrantOutcomeGrantOutcomeGranted {
 			spinner.Success("Entitlement granted successfully.")
 		} else {
-			spinner.Fail(fmt.Sprintf("Failed to grant entitlement %s", taskOutcome))
-			return fmt.Errorf("failed to grant entitlement %s", taskOutcome)
+			spinner.Fail(fmt.Sprintf("Failed to grant entitlement %s", string(*taskOutcome)))
+			return fmt.Errorf("failed to grant entitlement %s", string(*taskOutcome))
 		}
 	}
 	if taskItem.Type.Revoke != nil {
@@ -371,8 +372,8 @@ func handleWaitBehavior(ctx context.Context, c client.C1Client, task *shared.Tas
 		if *taskOutcome == shared.TaskTypeRevokeOutcomeRevokeOutcomeRevoked {
 			spinner.Success("Entitlement revoked succesfully.")
 		} else {
-			spinner.Fail(fmt.Sprintf("Failed to revoke entitlement %s", taskOutcome))
-			return fmt.Errorf("failed to revoke entitlement %s", taskOutcome)
+			spinner.Fail(fmt.Sprintf("Failed to revoke entitlement %s", string(*taskOutcome)))
+			return fmt.Errorf("failed to revoke entitlement %s", string(*taskOutcome))
 		}
 	}
 	return nil

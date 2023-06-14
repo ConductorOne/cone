@@ -3,6 +3,7 @@ package client
 import (
 	"context"
 	"errors"
+
 	"github.com/conductorone/conductorone-sdk-go/pkg/models/operations"
 	"github.com/conductorone/conductorone-sdk-go/pkg/models/shared"
 )
@@ -12,7 +13,6 @@ func (c *client) GetUser(ctx context.Context, userID string) (*shared.User, erro
 	if err != nil {
 		return nil, err
 	}
-	defer resp.RawResponse.Body.Close()
 
 	if err := handleBadStatus(resp.RawResponse); err != nil {
 		return nil, err

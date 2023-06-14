@@ -4,25 +4,28 @@ import (
 	"context"
 	"errors"
 
-	"github.com/conductorone/cone/internal/c1api"
+	"github.com/conductorone/conductorone-sdk-go/pkg/models/operations"
+	"github.com/conductorone/conductorone-sdk-go/pkg/models/shared"
 )
 
-func (c *client) GetUser(ctx context.Context, userID string) (*c1api.C1ApiUserV1User, error) {
-	userResp, resp, err := c.apiClient.UserAPI.C1ApiUserV1UserServiceGet(ctx, userID).Execute()
+func (c *client) GetUser(ctx context.Context, userID string) (*shared.User, error) {
+	resp, err := c.sdk.User.Get(ctx, operations.C1APIUserV1UserServiceGetRequest{ID: userID})
 	if err != nil {
 		return nil, err
 	}
-	defer resp.Body.Close()
 
-	v, ok := userResp.GetUserViewOk()
-	if !ok {
+	if err := handleBadStatus(resp.RawResponse); err != nil {
+		return nil, err
+	}
+
+	view := resp.UserServiceGetResponse.UserView
+	if resp.UserServiceGetResponse.UserView == nil {
 		return nil, errors.New("get-user: view is nil")
 	}
 
-	u, ok := v.GetUserOk()
-	if !ok {
+	if view.User == nil {
 		return nil, errors.New("get-user: user is nil")
 	}
 
-	return u, nil
+	return view.User, nil
 }

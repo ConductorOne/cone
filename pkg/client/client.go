@@ -2,13 +2,17 @@ package client
 
 import (
 	"context"
+	"fmt"
+	"io"
 	"net/http"
 	"net/url"
 	"os"
 
 	"github.com/spf13/viper"
 
-	"github.com/conductorone/cone/internal/c1api"
+	sdk "github.com/conductorone/conductorone-sdk-go"
+	"github.com/conductorone/conductorone-sdk-go/pkg/models/shared"
+
 	"github.com/conductorone/cone/pkg/uhttp"
 )
 
@@ -16,8 +20,8 @@ type client struct {
 	httpClient *http.Client
 	clientName string
 	tokenHost  string
-	apiClient  *c1api.APIClient
 	baseURL    *url.URL
+	sdk        *sdk.ConductoroneAPI
 }
 
 func StringFromPtr(s *string) string {
@@ -35,23 +39,23 @@ func stringPtr(s string) *string {
 	return &s
 }
 
-func float32Ptr(i int) *float32 {
-	f := float32(i)
+func float64Ptr(i int) *float64 {
+	f := float64(i)
 	return &f
 }
 
 type C1Client interface {
 	BaseURL() string
 
-	AuthIntrospect(ctx context.Context) (*c1api.C1ApiAuthV1IntrospectResponse, error)
-	GetUser(ctx context.Context, userID string) (*c1api.C1ApiUserV1User, error)
-	GetEntitlement(ctx context.Context, appID string, entitlementID string) (*c1api.C1ApiAppV1AppEntitlement, error)
+	AuthIntrospect(ctx context.Context) (*shared.IntrospectResponse, error)
+	GetUser(ctx context.Context, userID string) (*shared.User, error)
+	GetEntitlement(ctx context.Context, appID string, entitlementID string) (*shared.AppEntitlement, error)
 	SearchEntitlements(ctx context.Context, filter *SearchEntitlementsFilter) ([]*EntitlementWithBindings, error)
 	ExpandEntitlements(ctx context.Context, in []*EntitlementWithBindings) (*Expander, error)
-	GetResource(ctx context.Context, appID string, resourceID string, resourceTypeID string) (*c1api.C1ApiAppV1AppResource, error)
-	GetResourceType(ctx context.Context, appID string, resourceTypeID string) (*c1api.C1ApiAppV1AppResourceType, error)
-	GetApp(ctx context.Context, appID string) (*c1api.C1ApiAppV1App, error)
-	GetTask(ctx context.Context, taskId string) (*c1api.C1ApiTaskV1TaskServiceGetResponse, error)
+	GetResource(ctx context.Context, appID string, resourceID string, resourceTypeID string) (*shared.AppResource, error)
+	GetResourceType(ctx context.Context, appID string, resourceTypeID string) (*shared.AppResourceType, error)
+	GetApp(ctx context.Context, appID string) (*shared.App, error)
+	GetTask(ctx context.Context, taskId string) (*shared.TaskServiceGetResponse, error)
 	CreateGrantTask(
 		ctx context.Context,
 		appId string,
@@ -59,19 +63,19 @@ type C1Client interface {
 		identityUserId string,
 		justification string,
 		duration string,
-	) (*c1api.C1ApiTaskV1TaskServiceCreateGrantResponse, error)
+	) (*shared.TaskServiceCreateGrantResponse, error)
 	CreateRevokeTask(
 		ctx context.Context,
 		appId string,
 		appEntitlementId string,
 		identityUserId string,
 		justification string,
-	) (*c1api.C1ApiTaskV1TaskServiceCreateRevokeResponse, error)
-	GetGrantsForIdentity(ctx context.Context, appID string, appEntitlementID string, appUserID string) ([]c1api.C1ApiAppV1AppEntitlementUserBinding, error)
-	SearchTasks(ctx context.Context, taskFilter c1api.C1ApiTaskV1TaskSearchRequest) (*c1api.C1ApiTaskV1TaskSearchResponse, error)
-	CommentOnTask(ctx context.Context, taskID string, comment string) (*c1api.C1ApiTaskV1TaskActionsServiceCommentResponse, error)
-	ApproveTask(ctx context.Context, taskId string, comment string, policyId string) (*c1api.C1ApiTaskV1TaskActionsServiceApproveResponse, error)
-	DenyTask(ctx context.Context, taskId string, comment string, policyId string) (*c1api.C1ApiTaskV1TaskActionsServiceDenyResponse, error)
+	) (*shared.TaskServiceCreateRevokeResponse, error)
+	GetGrantsForIdentity(ctx context.Context, appID string, appEntitlementID string, appUserID string) ([]shared.AppEntitlementUserBinding, error)
+	SearchTasks(ctx context.Context, taskFilter shared.TaskSearchRequest) (*shared.TaskSearchResponse, error)
+	CommentOnTask(ctx context.Context, taskID string, comment string) (*shared.TaskActionsServiceCommentResponse, error)
+	ApproveTask(ctx context.Context, taskId string, comment string, policyId string) (*shared.TaskActionsServiceApproveResponse, error)
+	DenyTask(ctx context.Context, taskId string, comment string, policyId string) (*shared.TaskActionsServiceDenyResponse, error)
 }
 
 func (c *client) BaseURL() string {
@@ -103,9 +107,6 @@ func New(
 		httpClient: uclient,
 	}
 
-	apiCfg := c1api.NewConfiguration()
-	apiCfg.HTTPClient = uclient
-
 	var apiHostname string
 	// If the API host is set in the environment, use that instead of the default
 	// HACK(jirwin): Instead of using the generated client's server address, use the hostname from the token.
@@ -118,24 +119,27 @@ func New(
 		Scheme: "https",
 		Host:   apiHostname,
 	}
-	apiCfg.Servers[0].URL = apiURL.String()
-	c.apiClient = c1api.NewAPIClient(apiCfg)
 	c.baseURL = &apiURL
+
+	c.sdk = sdk.New(
+		sdk.WithClient(uclient),
+		sdk.WithServerURL(apiURL.String()),
+	)
 
 	return c, nil
 }
 
-// The c1api client uses the context to set various configuration options. Do that here.
-func (c *client) GetContext(ctx context.Context) context.Context {
-	// If the API host is set in the environment, we don't need to populate any server variables
-	if _, ok := os.LookupEnv("CONE_API_ENDPOINT"); !ok {
-		return ctx
+func handleBadStatus(resp *http.Response) error {
+	// This is added temporarily to ensure we return an error if we get a non-success status code.
+	// Eventually (ideally), we'll be generating this error handling as part of the SDK
+	if resp.StatusCode >= http.StatusBadRequest {
+		body, err := io.ReadAll(resp.Body)
+		if err != nil {
+			return err
+		}
+
+		return fmt.Errorf("status %d: %s", resp.StatusCode, string(body))
 	}
 
-	// TODO(jirwin): if we choose to use this, we will need to parse the tenant name out of the token, and set it as `tenantHost` here.
-	// serverVars := map[string]string{
-	// 	"tenantHost": c.tokenHost,
-	// }
-	// return context.WithValue(ctx, c1api.ContextServerVariables, c.clientName)
-	return ctx
+	return nil
 }

@@ -3,7 +3,7 @@ package main
 import (
 	"github.com/spf13/cobra"
 
-	"github.com/conductorone/cone/internal/c1api"
+	"github.com/conductorone/conductorone-sdk-go/pkg/models/shared"
 	"github.com/conductorone/cone/pkg/client"
 	"github.com/conductorone/cone/pkg/output"
 )
@@ -31,7 +31,7 @@ func getTaskRun(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
-	resp := C1ApiTaskV1TaskServiceGetResponse(*taskResp)
+	resp := TaskGetResponse(*taskResp.TaskView.Task)
 	outputManager := output.NewManager(ctx, v)
 	err = outputManager.Output(ctx, &resp)
 	if err != nil {
@@ -41,9 +41,9 @@ func getTaskRun(cmd *cobra.Command, args []string) error {
 	return nil
 }
 
-type C1ApiTaskV1TaskServiceGetResponse c1api.C1ApiTaskV1TaskServiceGetResponse
+type TaskGetResponse shared.Task
 
-func (r *C1ApiTaskV1TaskServiceGetResponse) Header() []string {
+func (r *TaskGetResponse) Header() []string {
 	return []string{
 		"Id",
 		"Name",
@@ -53,14 +53,14 @@ func (r *C1ApiTaskV1TaskServiceGetResponse) Header() []string {
 	}
 }
 
-func (r *C1ApiTaskV1TaskServiceGetResponse) Rows() [][]string {
+func (r *TaskGetResponse) Rows() [][]string {
 	return [][]string{
 		{
-			client.StringFromPtr(r.TaskView.Task.NumericId),
-			client.StringFromPtr(r.TaskView.Task.DisplayName),
-			client.StringFromPtr(r.TaskView.Task.State),
-			client.StringFromPtr(r.TaskView.Task.Processing),
-			output.FormatTime(r.TaskView.Task.CreatedAt),
+			client.StringFromPtr(r.NumericID),
+			client.StringFromPtr(r.DisplayName),
+			taskStateToString[*r.State],
+			processStateToString[*r.Processing],
+			output.FormatTime(r.CreatedAt),
 		},
 	}
 }

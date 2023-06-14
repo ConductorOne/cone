@@ -3,15 +3,20 @@ package client
 import (
 	"context"
 
-	"github.com/conductorone/cone/internal/c1api"
+	"github.com/conductorone/conductorone-sdk-go/pkg/models/operations"
+	"github.com/conductorone/conductorone-sdk-go/pkg/models/shared"
 )
 
-func (c *client) GetApp(ctx context.Context, appID string) (*c1api.C1ApiAppV1App, error) {
-	resp, httpResp, err := c.apiClient.AppsAPI.C1ApiAppV1AppsGet(ctx, appID).Execute()
+func (c *client) GetApp(ctx context.Context, appID string) (*shared.App, error) {
+	resp, err := c.sdk.Apps.Get(ctx, operations.C1APIAppV1AppsGetRequest{
+		ID: appID,
+	})
 	if err != nil {
 		return nil, err
 	}
-	defer httpResp.Body.Close()
 
-	return resp.App, nil
+	if err := handleBadStatus(resp.RawResponse); err != nil {
+		return nil, err
+	}
+	return resp.GetAppResponse.App, nil
 }

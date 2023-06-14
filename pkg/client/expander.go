@@ -7,7 +7,7 @@ import (
 
 	"golang.org/x/sync/errgroup"
 
-	"github.com/conductorone/cone/internal/c1api"
+	"github.com/conductorone/conductorone-sdk-go/pkg/models/shared"
 )
 
 const (
@@ -61,25 +61,25 @@ func (ee *Expander) ExpandResource(v hasResourceID) {
 	ee.keys.Store(resourceExpandKey{v.GetAppId(), v.GetAppResourceTypeId(), v.GetAppResourceId()}, true)
 }
 
-func (ee *Expander) GetApp(appID string) (*c1api.C1ApiAppV1App, bool) {
+func (ee *Expander) GetApp(appID string) (*shared.App, bool) {
 	if app, ok := ee.fetched.Load(appExpandKey{appID}); ok {
-		return app.(*c1api.C1ApiAppV1App), true
+		return app.(*shared.App), true
 	}
-	return &c1api.C1ApiAppV1App{}, false
+	return &shared.App{}, false
 }
 
-func (ee *Expander) GetResourceType(appID string, resourceTypeID string) (*c1api.C1ApiAppV1AppResourceType, bool) {
+func (ee *Expander) GetResourceType(appID string, resourceTypeID string) (*shared.AppResourceType, bool) {
 	if rt, ok := ee.fetched.Load(resourceTypeExpandKey{appID, resourceTypeID}); ok {
-		return rt.(*c1api.C1ApiAppV1AppResourceType), true
+		return rt.(*shared.AppResourceType), true
 	}
-	return &c1api.C1ApiAppV1AppResourceType{}, false
+	return &shared.AppResourceType{}, false
 }
 
-func (ee *Expander) GetResource(appID string, resourceTypeID string, resourceID string) (*c1api.C1ApiAppV1AppResource, bool) {
+func (ee *Expander) GetResource(appID string, resourceTypeID string, resourceID string) (*shared.AppResource, bool) {
 	if r, ok := ee.fetched.Load(resourceExpandKey{appID, resourceTypeID, resourceID}); ok {
-		return r.(*c1api.C1ApiAppV1AppResource), true
+		return r.(*shared.AppResource), true
 	}
-	return &c1api.C1ApiAppV1AppResource{}, false
+	return &shared.AppResource{}, false
 }
 
 func (ee *Expander) Run(ctx context.Context, c C1Client) error {

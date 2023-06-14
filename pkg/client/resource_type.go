@@ -4,43 +4,55 @@ import (
 	"context"
 	"errors"
 
-	"github.com/conductorone/cone/internal/c1api"
+	"github.com/conductorone/conductorone-sdk-go/pkg/models/operations"
+	"github.com/conductorone/conductorone-sdk-go/pkg/models/shared"
 )
 
-func (c *client) GetResourceType(ctx context.Context, appID string, resourceTypeID string) (*c1api.C1ApiAppV1AppResourceType, error) {
-	resp, httpResp, err := c.apiClient.AppResourceTypeAPI.C1ApiAppV1AppResourceTypeServiceGet(ctx, appID, resourceTypeID).Execute()
+func (c *client) GetResourceType(ctx context.Context, appID string, resourceTypeID string) (*shared.AppResourceType, error) {
+	resp, err := c.sdk.AppResourceType.Get(ctx, operations.C1APIAppV1AppResourceTypeServiceGetRequest{
+		AppID: appID,
+		ID:    resourceTypeID,
+	})
 	if err != nil {
 		return nil, err
 	}
-	defer httpResp.Body.Close()
 
-	v, ok := resp.GetAppResourceTypeViewOk()
-	if !ok {
+	if err := handleBadStatus(resp.RawResponse); err != nil {
+		return nil, err
+	}
+	v := resp.AppResourceTypeServiceGetResponse.AppResourceTypeView
+	if v == nil {
 		return nil, errors.New("get-resource-type: view is nil")
 	}
 
-	rt, ok := v.GetAppResourceTypeOk()
-	if !ok {
+	r := v.AppResourceType
+	if r == nil {
 		return nil, errors.New("get-resource-type: resource type is nil")
 	}
 
-	return rt, nil
+	return r, nil
 }
 
-func (c *client) GetResource(ctx context.Context, appID string, resourceTypeID string, resourceID string) (*c1api.C1ApiAppV1AppResource, error) {
-	resp, httpResp, err := c.apiClient.AppResourceAPI.C1ApiAppV1AppResourceServiceGet(ctx, appID, resourceTypeID, resourceID).Execute()
+func (c *client) GetResource(ctx context.Context, appID string, resourceTypeID string, resourceID string) (*shared.AppResource, error) {
+	resp, err := c.sdk.AppResource.Get(ctx, operations.C1APIAppV1AppResourceServiceGetRequest{
+		AppID:             appID,
+		AppResourceTypeID: resourceTypeID,
+		ID:                resourceID,
+	})
 	if err != nil {
 		return nil, err
 	}
-	defer httpResp.Body.Close()
 
-	v, ok := resp.GetAppResourceViewOk()
-	if !ok {
+	if err := handleBadStatus(resp.RawResponse); err != nil {
+		return nil, err
+	}
+	v := resp.AppResourceServiceGetResponse.AppResourceView
+	if v == nil {
 		return nil, errors.New("get-resource: view is nil")
 	}
 
-	r, ok := v.GetAppResourceOk()
-	if !ok {
+	r := v.AppResource
+	if r == nil {
 		return nil, errors.New("get-resource: resource type is nil")
 	}
 

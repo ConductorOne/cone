@@ -5,7 +5,7 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"github.com/conductorone/cone/internal/c1api"
+	"github.com/conductorone/conductorone-sdk-go/pkg/models/shared"
 	"github.com/conductorone/cone/pkg/client"
 )
 
@@ -29,23 +29,23 @@ func taskRun(cmd *cobra.Command, _ []string) error {
 	return cmd.Help()
 }
 
-func (r *C1ApiTaskV1Task) Pretext() string {
-	return fmt.Sprintf("Ticket URL: %s/task/%s", r.client.BaseURL(), client.StringFromPtr(r.task.NumericId))
+func (r *Task) Pretext() string {
+	return fmt.Sprintf("Ticket URL: %s/task/%s", r.client.BaseURL(), client.StringFromPtr(r.task.NumericID))
 }
 
-type C1ApiTaskV1Task struct {
-	task   *c1api.C1ApiTaskV1Task
+type Task struct {
+	task   *shared.Task
 	client client.C1Client
 }
 
-func (r *C1ApiTaskV1Task) Header() []string {
+func (r *Task) Header() []string {
 	return []string{"Id", "Display Name", "State", "Processing"}
 }
-func (r *C1ApiTaskV1Task) Rows() [][]string {
+func (r *Task) Rows() [][]string {
 	return [][]string{{
-		client.StringFromPtr(r.task.NumericId),
+		client.StringFromPtr(r.task.NumericID),
 		client.StringFromPtr(r.task.DisplayName),
-		taskStateToString[client.StringFromPtr(r.task.State)],
-		processStateToString[client.StringFromPtr(r.task.Processing)],
+		taskStateToString[*r.task.State],
+		processStateToString[*r.task.Processing],
 	}}
 }

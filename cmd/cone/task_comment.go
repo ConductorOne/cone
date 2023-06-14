@@ -1,10 +1,11 @@
 package main
 
 import (
-	"github.com/conductorone/cone/internal/c1api"
+	"github.com/spf13/cobra"
+
+	"github.com/conductorone/conductorone-sdk-go/pkg/models/shared"
 	"github.com/conductorone/cone/pkg/client"
 	"github.com/conductorone/cone/pkg/output"
-	"github.com/spf13/cobra"
 )
 
 func tasksCommentCmd() *cobra.Command {
@@ -32,7 +33,7 @@ func tasksCommentRun(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
-	resp := C1ApiTaskV1TaskActionsServiceCommentResponse(*userResp)
+	resp := TaskCommentResponse(*userResp)
 	outputManager := output.NewManager(ctx, v)
 	err = outputManager.Output(ctx, &resp)
 	if err != nil {
@@ -42,9 +43,9 @@ func tasksCommentRun(cmd *cobra.Command, args []string) error {
 	return nil
 }
 
-type C1ApiTaskV1TaskActionsServiceCommentResponse c1api.C1ApiTaskV1TaskActionsServiceCommentResponse
+type TaskCommentResponse shared.TaskActionsServiceCommentResponse
 
-func (t *C1ApiTaskV1TaskActionsServiceCommentResponse) Header() []string {
+func (t *TaskCommentResponse) Header() []string {
 	return []string{
 		"Id",
 		"Display Name",
@@ -52,12 +53,12 @@ func (t *C1ApiTaskV1TaskActionsServiceCommentResponse) Header() []string {
 	}
 }
 
-func (t *C1ApiTaskV1TaskActionsServiceCommentResponse) Rows() [][]string {
+func (t *TaskCommentResponse) Rows() [][]string {
 	return [][]string{
 		{
-			client.StringFromPtr(t.TaskView.GetTask().NumericId),
-			client.StringFromPtr(t.TaskView.GetTask().DisplayName),
-			client.StringFromPtr(t.TaskView.GetTask().State),
+			client.StringFromPtr(t.TaskView.Task.NumericID),
+			client.StringFromPtr(t.TaskView.Task.DisplayName),
+			taskStateToString[*t.TaskView.Task.State],
 		},
 	}
 }

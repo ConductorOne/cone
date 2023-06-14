@@ -5,7 +5,7 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"github.com/conductorone/cone/internal/c1api"
+	"github.com/conductorone/conductorone-sdk-go/pkg/models/shared"
 	"github.com/conductorone/cone/pkg/output"
 )
 
@@ -49,18 +49,16 @@ func searchTasksRun(cmd *cobra.Command, args []string) error {
 		query = &queryVal
 	}
 
-	var state []string
+	var state []shared.TaskSearchRequestTaskStates
 	switch strings.ToLower(v.GetString(stateFlag)) {
 	case "open", "task_state_open":
-		tstate := "TASK_STATE_OPEN"
-		state = []string{tstate}
+		state = []shared.TaskSearchRequestTaskStates{shared.TaskSearchRequestTaskStatesTaskStateOpen}
 	case "closed", "task_state_closed":
-		tstate := "TASK_STATE_CLOSED"
-		state = []string{tstate}
+		state = []shared.TaskSearchRequestTaskStates{shared.TaskSearchRequestTaskStatesTaskStateClosed}
 	case "":
 	}
 
-	taskResp, err := c.SearchTasks(ctx, c1api.C1ApiTaskV1TaskSearchRequest{
+	taskResp, err := c.SearchTasks(ctx, shared.TaskSearchRequest{
 		AccessReviewIds:    v.GetStringSlice(accessReviewIdsFlag),
 		AppEntitlementIds:  v.GetStringSlice(appEntitlementIdsFlag),
 		AppResourceIds:     v.GetStringSlice(appResourceIdsFlag),
@@ -77,7 +75,7 @@ func searchTasksRun(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
-	resp := C1ApiTaskV1TaskSearchResponse(*taskResp)
+	resp := TaskSearchResponse(*taskResp)
 	outputManager := output.NewManager(ctx, v)
 	err = outputManager.Output(ctx, &resp)
 	if err != nil {
@@ -87,17 +85,17 @@ func searchTasksRun(cmd *cobra.Command, args []string) error {
 	return nil
 }
 
-type C1ApiTaskV1TaskSearchResponse c1api.C1ApiTaskV1TaskSearchResponse
+type TaskSearchResponse shared.TaskSearchResponse
 
-func (r *C1ApiTaskV1TaskSearchResponse) Header() []string {
-	task := C1ApiTaskV1Task{}
+func (r *TaskSearchResponse) Header() []string {
+	task := Task{}
 	return task.Header()
 }
 
-func (r *C1ApiTaskV1TaskSearchResponse) Rows() [][]string {
+func (r *TaskSearchResponse) Rows() [][]string {
 	rows := [][]string{}
 	for _, task := range r.List {
-		t := C1ApiTaskV1Task{
+		t := Task{
 			task:   task.Task,
 			client: nil,
 		}

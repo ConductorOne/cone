@@ -3,15 +3,23 @@ package client
 import (
 	"context"
 
-	"github.com/conductorone/cone/internal/c1api"
+	"github.com/conductorone/conductorone-sdk-go/pkg/models/operations"
+	"github.com/conductorone/conductorone-sdk-go/pkg/models/shared"
 )
 
-func (c *client) GetGrantsForIdentity(ctx context.Context, appID string, appEntitlementID string, appUserID string) ([]c1api.C1ApiAppV1AppEntitlementUserBinding, error) {
-	resp, httpResp, err := c.apiClient.AppEntitlementUserBindingAPI.C1ApiAppV1AppEntitlementUserBindingServiceListAppUsersForIdentityWithGrant(ctx, appID, appEntitlementID, appUserID).Execute()
+func (c *client) GetGrantsForIdentity(ctx context.Context, appID string, appEntitlementID string, identityID string) ([]shared.AppEntitlementUserBinding, error) {
+	resp, err := c.sdk.AppEntitlementUserBinding.ListAppUsersForIdentityWithGrant(ctx, operations.C1APIAppV1AppEntitlementUserBindingServiceListAppUsersForIdentityWithGrantRequest{
+		AppEntitlementID: appEntitlementID,
+		AppID:            appID,
+		IdentityUserID:   identityID,
+	})
 	if err != nil {
 		return nil, err
 	}
-	defer httpResp.Body.Close()
 
-	return resp.Bindings, nil
+	if err := handleBadStatus(resp.RawResponse); err != nil {
+		return nil, err
+	}
+
+	return resp.ListAppUsersForIdentityWithGrantResponse.Bindings, nil
 }

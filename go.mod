@@ -10,7 +10,7 @@ require (
 )
 
 require (
-	github.com/conductorone/conductorone-sdk-go v1.0.3-0.20230612204716-44f7bbedc754
+	github.com/conductorone/conductorone-sdk-go v1.1.0
 	github.com/pterm/pterm v0.12.62
 	github.com/xhit/go-str2duration/v2 v2.1.0
 	golang.org/x/sync v0.2.0

@@ -26,7 +26,7 @@ func newAppResource(sdkConfig sdkConfiguration) *appResource {
 // Get - Invokes the c1.api.app.v1.AppResourceService.Get method.
 func (s *appResource) Get(ctx context.Context, request operations.C1APIAppV1AppResourceServiceGetRequest) (*operations.C1APIAppV1AppResourceServiceGetResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
-	url, err := utils.GenerateURL(ctx, baseURL, "/api/v1/apps/{app_id}/resource_types/{app_resource_type_id}/resource/{id}", request, nil)
+	url, err := utils.GenerateURL(ctx, baseURL, "/api/v1/apps/{app_id}/resource_types/{app_resource_type_id}/resources/{id}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
@@ -81,7 +81,7 @@ func (s *appResource) Get(ctx context.Context, request operations.C1APIAppV1AppR
 // List - Invokes the c1.api.app.v1.AppResourceService.List method.
 func (s *appResource) List(ctx context.Context, request operations.C1APIAppV1AppResourceServiceListRequest) (*operations.C1APIAppV1AppResourceServiceListResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
-	url, err := utils.GenerateURL(ctx, baseURL, "/api/v1/apps/{app_id}/resource_types/{app_resource_type_id}/resource", request, nil)
+	url, err := utils.GenerateURL(ctx, baseURL, "/api/v1/apps/{app_id}/resource_types/{app_resource_type_id}/resources", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}

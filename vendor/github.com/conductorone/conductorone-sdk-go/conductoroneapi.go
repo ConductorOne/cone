@@ -11,8 +11,8 @@ import (
 
 // ServerList contains the list of servers available to the SDK
 var ServerList = []string{
-	// The server for c1.api.accessbundle.v1.AccessBundleSearchService.
-	"/",
+	// The ConductorOne API server for the current tenant.
+	"https://{tenantDomain}.conductor.one",
 }
 
 // HTTPClient provides an interface for suplying the SDK with a custom HTTP client
@@ -44,6 +44,7 @@ type sdkConfiguration struct {
 
 	ServerURL         string
 	ServerIndex       int
+	ServerDefaults    []map[string]string
 	Language          string
 	OpenAPIDocVersion string
 	SDKVersion        string
@@ -55,10 +56,10 @@ func (c *sdkConfiguration) GetServerDetails() (string, map[string]string) {
 		return c.ServerURL, nil
 	}
 
-	return ServerList[c.ServerIndex], nil
+	return ServerList[c.ServerIndex], c.ServerDefaults[c.ServerIndex]
 }
 
-// ConductoroneAPI - API For c1.api.accessbundle.v1.AccessBundleSearchService: This is an auto-generated API for c1.api.accessbundle.v1.AccessBundleSearchService.
+// ConductoroneAPI - ConductorOne API: The ConductorOne API is a HTTP API for managing ConductorOne resources.
 type ConductoroneAPI struct {
 	AppEntitlementUserBinding *appEntitlementUserBinding
 	AppEntitlements           *appEntitlements
@@ -115,6 +116,19 @@ func WithServerIndex(serverIndex int) SDKOption {
 	}
 }
 
+// WithTenantDomain allows setting the $name variable for url substitution
+func WithTenantDomain(tenantDomain string) SDKOption {
+	return func(sdk *ConductoroneAPI) {
+		for idx := range sdk.sdkConfiguration.ServerDefaults {
+			if _, ok := sdk.sdkConfiguration.ServerDefaults[idx]["tenantDomain"]; !ok {
+				continue
+			}
+
+			sdk.sdkConfiguration.ServerDefaults[idx]["tenantDomain"] = fmt.Sprintf("%v", tenantDomain)
+		}
+	}
+}
+
 // WithClient allows the overriding of the default HTTP client used by the SDK
 func WithClient(client HTTPClient) SDKOption {
 	return func(sdk *ConductoroneAPI) {
@@ -127,9 +141,14 @@ func New(opts ...SDKOption) *ConductoroneAPI {
 	sdk := &ConductoroneAPI{
 		sdkConfiguration: sdkConfiguration{
 			Language:          "go",
-			OpenAPIDocVersion: "0.0.1",
-			SDKVersion:        "1.0.2",
-			GenVersion:        "2.39.2",
+			OpenAPIDocVersion: "0.1.0-alpha",
+			SDKVersion:        "1.1.0",
+			GenVersion:        "2.40.1",
+			ServerDefaults: []map[string]string{
+				{
+					"tenantDomain": "invalid-example",
+				},
+			},
 		},
 	}
 	for _, opt := range opts {

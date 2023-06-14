@@ -13,7 +13,6 @@ import (
 	"github.com/xhit/go-str2duration/v2"
 
 	"github.com/conductorone/conductorone-sdk-go/pkg/models/shared"
-	"github.com/conductorone/cone/internal/c1api"
 	"github.com/conductorone/cone/pkg/client"
 	"github.com/conductorone/cone/pkg/output"
 )
@@ -179,11 +178,7 @@ func runGet(cmd *cobra.Command, args []string) error {
 
 		accessRequest, err := c.CreateGrantTask(ctx, appId, entitlementId, userId, justification, apiDuration)
 		if err != nil {
-			openApiError := &c1api.GenericOpenAPIError{}
-			if !errors.As(err, &openApiError) {
-				return nil, err
-			}
-			errorBody := string(openApiError.Body())
+			errorBody := err.Error()
 			if strings.Contains(errorBody, grantDurationErrorMessage) {
 				startIndex := strings.Index(errorBody, grantDurationErrorMessage)
 				endIndex := strings.LastIndex(errorBody, ")") + 1
@@ -227,18 +222,18 @@ func runTask(
 		return err
 	}
 
-	userId := client.StringFromPtr(resp.UserID)
+	userID := client.StringFromPtr(resp.UserID)
 
 	forceCreate := v.GetBool(forceFlag)
 	if !forceCreate {
-		grants, err := c.GetGrantsForIdentity(ctx, appId, entitlementId, userId)
+		grants, err := c.GetGrantsForIdentity(ctx, appId, entitlementId, userID)
 		if err != nil {
 			return err
 		}
 		grantCount := 0
 		for _, grant := range grants {
 			// We only want to check if user has a grant
-			if client.StringFromPtr(grant.AppEntitlementId) != "" {
+			if client.StringFromPtr(grant.AppEntitlementID) != "" {
 				grantCount++
 			}
 		}
@@ -311,28 +306,28 @@ func getEntitlementDetails(ctx context.Context, c client.C1Client, v *viper.Vipe
 	}
 
 	if len(entitlements) == 1 {
-		entitlementId = client.StringFromPtr(entitlements[0].Entitlement.Id)
-		appId = client.StringFromPtr(entitlements[0].Entitlement.AppId)
+		entitlementId = client.StringFromPtr(entitlements[0].Entitlement.ID)
+		appId = client.StringFromPtr(entitlements[0].Entitlement.AppID)
 	}
 	if len(entitlements) > 1 {
 		isNonInteractive := v.GetBool("non-interactive")
 		if isNonInteractive {
 			return "", "", multipleEntitlmentsFoundError(alias, query)
 		}
-		optionToEntitlementMap := make(map[string]*c1api.C1ApiAppV1AppEntitlement)
+		optionToEntitlementMap := make(map[string]*client.AppEntitlement)
 		entitlementOptions := make([]string, len(entitlements))
 		for _, e := range entitlements {
 			entitlementOptionName := fmt.Sprintf("%s:%s:%s",
 				client.StringFromPtr(e.Entitlement.DisplayName),
-				client.StringFromPtr(e.Entitlement.AppId),
-				client.StringFromPtr(e.Entitlement.Id),
+				client.StringFromPtr(e.Entitlement.AppID),
+				client.StringFromPtr(e.Entitlement.ID),
 			)
 			entitlementOptions = append(entitlementOptions, entitlementOptionName)
 			optionToEntitlementMap[entitlementOptionName] = &e.Entitlement
 		}
 		selectedOption, _ := pterm.DefaultInteractiveSelect.WithOptions(entitlementOptions).WithDefaultText("Please select an entitlement").Show()
-		entitlementId = client.StringFromPtr(optionToEntitlementMap[selectedOption].Id)
-		appId = client.StringFromPtr(optionToEntitlementMap[selectedOption].AppId)
+		entitlementId = client.StringFromPtr(optionToEntitlementMap[selectedOption].ID)
+		appId = client.StringFromPtr(optionToEntitlementMap[selectedOption].AppID)
 	}
 	return entitlementId, appId, nil
 }

@@ -2,7 +2,6 @@ package client
 
 import (
 	"context"
-
 	"github.com/conductorone/conductorone-sdk-go/pkg/models/operations"
 	"github.com/conductorone/conductorone-sdk-go/pkg/models/shared"
 )
@@ -10,6 +9,11 @@ import (
 func (c *client) GetTask(ctx context.Context, taskId string) (*shared.TaskServiceGetResponse, error) {
 	resp, err := c.sdk.Task.Get(ctx, operations.C1APITaskV1TaskServiceGetRequest{ID: taskId})
 	defer resp.RawResponse.Body.Close()
+
+	if err := handleBadStatus(resp.RawResponse); err != nil {
+		return nil, err
+	}
+
 	return resp.TaskServiceGetResponse, err
 }
 
@@ -36,6 +40,10 @@ func (c *client) CreateGrantTask(
 	}
 	defer resp.RawResponse.Body.Close()
 
+	if err := handleBadStatus(resp.RawResponse); err != nil {
+		return nil, err
+	}
+
 	return resp.TaskServiceCreateGrantResponse, nil
 }
 
@@ -57,6 +65,11 @@ func (c *client) CreateRevokeTask(
 		return nil, err
 	}
 	defer resp.RawResponse.Body.Close()
+
+	if err := handleBadStatus(resp.RawResponse); err != nil {
+		return nil, err
+	}
+
 	return resp.TaskServiceCreateRevokeResponse, nil
 }
 
@@ -66,6 +79,11 @@ func (c *client) SearchTasks(ctx context.Context, taskFilter shared.TaskSearchRe
 		return nil, err
 	}
 	defer resp.RawResponse.Body.Close()
+
+	if err := handleBadStatus(resp.RawResponse); err != nil {
+		return nil, err
+	}
+
 	return resp.TaskSearchResponse, nil
 }
 
@@ -80,6 +98,10 @@ func (c *client) CommentOnTask(ctx context.Context, taskID string, comment strin
 		return nil, err
 	}
 	defer resp.RawResponse.Body.Close()
+
+	if err := handleBadStatus(resp.RawResponse); err != nil {
+		return nil, err
+	}
 	return resp.TaskActionsServiceCommentResponse, nil
 }
 
@@ -95,6 +117,10 @@ func (c *client) ApproveTask(ctx context.Context, taskId string, comment string,
 		return nil, err
 	}
 	defer resp.RawResponse.Body.Close()
+
+	if err := handleBadStatus(resp.RawResponse); err != nil {
+		return nil, err
+	}
 	return resp.TaskActionsServiceApproveResponse, nil
 }
 
@@ -110,5 +136,9 @@ func (c *client) DenyTask(ctx context.Context, taskId string, comment string, po
 		return nil, err
 	}
 	defer resp.RawResponse.Body.Close()
+
+	if err := handleBadStatus(resp.RawResponse); err != nil {
+		return nil, err
+	}
 	return resp.TaskActionsServiceDenyResponse, nil
 }

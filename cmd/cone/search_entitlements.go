@@ -66,15 +66,15 @@ func (r *ExpandedEntitlementsResponse) Header() []string {
 func (r *ExpandedEntitlementsResponse) Rows() [][]string {
 	rows := [][]string{}
 	for _, e := range r.entitlements {
-		app, _ := r.expander.GetApp(client.StringFromPtr(e.Entitlement.AppId))
+		app, _ := r.expander.GetApp(client.StringFromPtr(e.Entitlement.AppID))
 		resourceType, _ := r.expander.GetResourceType(
-			client.StringFromPtr(e.Entitlement.AppId),
-			client.StringFromPtr(e.Entitlement.AppResourceTypeId),
+			client.StringFromPtr(e.Entitlement.AppID),
+			client.StringFromPtr(e.Entitlement.AppResourceTypeID),
 		)
 		resource, _ := r.expander.GetResource(
-			client.StringFromPtr(e.Entitlement.AppId),
-			client.StringFromPtr(e.Entitlement.AppResourceTypeId),
-			client.StringFromPtr(e.Entitlement.AppResourceId),
+			client.StringFromPtr(e.Entitlement.AppID),
+			client.StringFromPtr(e.Entitlement.AppResourceTypeID),
+			client.StringFromPtr(e.Entitlement.AppResourceID),
 		)
 
 		granted := "✅"
@@ -84,7 +84,7 @@ func (r *ExpandedEntitlementsResponse) Rows() [][]string {
 
 		rows = append(rows, []string{
 			granted,
-			client.StringFromPtr(e.Entitlement.Id),
+			client.StringFromPtr(e.Entitlement.ID),
 			client.StringFromPtr(e.Entitlement.DisplayName),
 			client.StringFromPtr(app.DisplayName),
 			client.StringFromPtr(resourceType.DisplayName),

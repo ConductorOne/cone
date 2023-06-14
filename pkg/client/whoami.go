@@ -2,7 +2,6 @@ package client
 
 import (
 	"context"
-
 	"github.com/conductorone/conductorone-sdk-go/pkg/models/shared"
 )
 
@@ -12,6 +11,10 @@ func (c *client) AuthIntrospect(ctx context.Context) (*shared.IntrospectResponse
 		return nil, err
 	}
 	defer resp.RawResponse.Body.Close()
+
+	if err := handleBadStatus(resp.RawResponse); err != nil {
+		return nil, err
+	}
 
 	return resp.IntrospectResponse, nil
 }

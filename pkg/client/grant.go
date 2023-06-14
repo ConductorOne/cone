@@ -2,7 +2,6 @@ package client
 
 import (
 	"context"
-
 	"github.com/conductorone/conductorone-sdk-go/pkg/models/operations"
 	"github.com/conductorone/conductorone-sdk-go/pkg/models/shared"
 )
@@ -17,6 +16,10 @@ func (c *client) GetGrantsForIdentity(ctx context.Context, appID string, appEnti
 		return nil, err
 	}
 	defer resp.RawResponse.Body.Close()
+
+	if err := handleBadStatus(resp.RawResponse); err != nil {
+		return nil, err
+	}
 
 	return resp.ListAppUsersForIdentityWithGrantResponse.Bindings, nil
 }

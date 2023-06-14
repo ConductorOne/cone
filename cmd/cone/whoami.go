@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/conductorone/cone/pkg/client"
 	"github.com/spf13/cobra"
 
 	"github.com/conductorone/cone/pkg/output"
@@ -27,7 +28,7 @@ func whoAmIRun(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
-	userResp, err := c.GetUser(ctx, introspectResp.GetUserId())
+	userResp, err := c.GetUser(ctx, client.StringFromPtr(introspectResp.UserID))
 	if err != nil {
 		return err
 	}

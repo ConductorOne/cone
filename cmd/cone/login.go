@@ -1,6 +1,8 @@
 package main
 
 import (
+	"fmt"
+
 	"github.com/spf13/cobra"
 )
 
@@ -16,12 +18,19 @@ func loginCmd() *cobra.Command {
 }
 
 func loginRun(cmd *cobra.Command, args []string) error {
-	ctx, c, v, err := cmdContext(cmd)
+	ctx, c, _, err := cmdContext(cmd)
 	if err != nil {
 		return err
 	}
 
-	tenantName := args[0]
+	tenant := args[0]
+
+	clientID, clientSecret, err := c.Login(ctx, tenant)
+	if err != nil {
+		return err
+	}
+
+	fmt.Printf("Client ID: %s\nClient Secret: %s\n", clientID, clientSecret)
 
 	return nil
 }

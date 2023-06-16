@@ -16,6 +16,8 @@ import (
 	"github.com/conductorone/cone/pkg/uhttp"
 )
 
+const ConeClientID = "2RCzHlak5q7CY14SdBc8HoZEJRf"
+
 type client struct {
 	httpClient *http.Client
 	clientName string
@@ -76,6 +78,7 @@ type C1Client interface {
 	CommentOnTask(ctx context.Context, taskID string, comment string) (*shared.TaskActionsServiceCommentResponse, error)
 	ApproveTask(ctx context.Context, taskId string, comment string, policyId string) (*shared.TaskActionsServiceApproveResponse, error)
 	DenyTask(ctx context.Context, taskId string, comment string, policyId string) (*shared.TaskActionsServiceDenyResponse, error)
+	Login(ctx context.Context, tenantID string) (string, string, error)
 }
 
 func (c *client) BaseURL() string {

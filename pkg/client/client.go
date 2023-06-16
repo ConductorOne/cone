@@ -16,7 +16,7 @@ import (
 	"github.com/conductorone/cone/pkg/uhttp"
 )
 
-const ConeClientID = "2RCzHlak5q7CY14SdBc8HoZEJRf"
+const ConeClientID = "2RGdOS94VDferT9e80mdgntl36K"
 
 type client struct {
 	httpClient *http.Client

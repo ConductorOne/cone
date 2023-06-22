@@ -30,7 +30,11 @@ func getCmd() *cobra.Command {
 	}
 	addGrantDurationFlag(cmd)
 	cmd = taskCmd(cmd)
-	cmd.MarkFlagRequired(justificationFlag)
+	err := cmd.MarkFlagRequired(justificationFlag)
+	if err != nil {
+		panic(err)
+	}
+
 	return cmd
 }
 

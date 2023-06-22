@@ -29,7 +29,9 @@ func getCmd() *cobra.Command {
 		RunE:  runGet,
 	}
 	addGrantDurationFlag(cmd)
-	return taskCmd(cmd)
+	cmd = taskCmd(cmd)
+	cmd.MarkFlagRequired(justificationFlag)
+	return cmd
 }
 
 func dropCmd() *cobra.Command {

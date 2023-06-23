@@ -21,6 +21,8 @@ import (
 const grantDurationErrorMessage = "grant duration must be less than or equal to max provision time"
 const durationInputTip = "We accept a sequence of decimal numbers, each with optional fraction and a unit suffix," +
 	"such as \"12h\", \"1w2d\" or \"2h45m\". Valid units are (m)inutes, (h)ours, (d)ays, (w)eeks."
+const justificationErrorMessage = "justification must be provided when requesting access to an entitlement"
+const justificationInputTip = "You can add a justification using -j or --justification"
 
 func getCmd() *cobra.Command {
 	cmd := &cobra.Command{
@@ -29,13 +31,7 @@ func getCmd() *cobra.Command {
 		RunE:  runGet,
 	}
 	addGrantDurationFlag(cmd)
-	cmd = taskCmd(cmd)
-	err := cmd.MarkFlagRequired(justificationFlag)
-	if err != nil {
-		panic(err)
-	}
-
-	return cmd
+	return taskCmd(cmd)
 }
 
 func dropCmd() *cobra.Command {
@@ -105,6 +101,45 @@ func validateGrantTaskArguments(maxProvisionTime *time.Duration, duration *time.
 	return nil
 }
 
+func getValidJustification(ctx context.Context, v *viper.Viper, justification string) (*string, error) {
+	if strings.TrimSpace(justification) != "" {
+		return &justification, nil
+	}
+
+	if v.GetBool(nonInteractiveFlag) {
+		pterm.Info.Println(justificationInputTip)
+		return nil, errors.New(justificationErrorMessage)
+	}
+
+	input := pterm.DefaultInteractiveTextInput.WithMultiLine(false)
+	firstRun := true
+
+	for {
+		select {
+		case <-ctx.Done():
+			return nil, ctx.Err()
+		default:
+		}
+
+		if !firstRun {
+			var err error
+			justification, err = input.Show()
+			if err != nil {
+				return nil, err
+			}
+		}
+
+		firstRun = false
+		if strings.TrimSpace(justification) == "" {
+			pterm.Error.Println(justificationErrorMessage)
+			pterm.Info.Println(justificationInputTip)
+			continue
+		}
+
+		return &justification, nil
+	}
+}
+
 func getValidDuration(ctx context.Context, v *viper.Viper, maxProvisionTime *time.Duration, duration string) (*time.Duration, error) {
 	// If both are empty that means they are both infinite
 	if maxProvisionTime == nil && duration == "" {
@@ -170,6 +205,12 @@ func runGet(cmd *cobra.Command, args []string) error {
 		if err != nil {
 			return nil, err
 		}
+
+		justificationRef, err := getValidJustification(ctx, v, justification)
+		if err != nil {
+			return nil, err
+		}
+		justification = *justificationRef
 
 		// entitlement.DurationGrant is assumed to be nil or a non-zero parsable string
 		durationStr := client.StringFromPtr(entitlement.DurationGrant)

@@ -18,7 +18,7 @@ import (
 	"github.com/conductorone/cone/pkg/output"
 )
 
-const grantDurationErrorMessage = "grant duration must be less than or equal to max provision time"
+const durationErrorMessage = "grant duration must be less than or equal to max provision time"
 const durationInputTip = "We accept a sequence of decimal numbers, each with optional fraction and a unit suffix," +
 	"such as \"12h\", \"1w2d\" or \"2h45m\". Valid units are (m)inutes, (h)ours, (d)ays, (w)eeks."
 const justificationErrorMessage = "justification must be provided when requesting access to an entitlement"
@@ -90,15 +90,28 @@ func handleDurationNonInteractive(maxProvisionTime *time.Duration, duration stri
 func validateGrantTaskArguments(maxProvisionTime *time.Duration, duration *time.Duration) error {
 	// If maxProvisionTime is set, ensure the duration is not nil (which means infinite)
 	if maxProvisionTime != nil && duration == nil {
-		return fmt.Errorf("%s: %s", grantDurationErrorMessage, str2duration.String(*maxProvisionTime))
+		return fmt.Errorf("%s: %s", durationErrorMessage, str2duration.String(*maxProvisionTime))
 	}
 
 	// If maxProvisionTime is set, ensure the duration is not greater than maxProvisionTime
 	if maxProvisionTime != nil && *duration > *maxProvisionTime {
-		return fmt.Errorf("%s: %s", grantDurationErrorMessage, str2duration.String(*maxProvisionTime))
+		return fmt.Errorf("%s: %s", durationErrorMessage, str2duration.String(*maxProvisionTime))
 	}
 
 	return nil
+}
+
+type JustificationValidator struct{}
+
+func (j JustificationValidator) IsValid(txt string) (string, bool) {
+	return txt, strings.TrimSpace(string(txt)) != ""
+}
+
+func (j JustificationValidator) Prompt(isFirstRun bool) {
+	if isFirstRun {
+		pterm.Info.Println(justificationInputTip)
+	}
+	pterm.Error.Println(justificationErrorMessage)
 }
 
 func getValidJustification(ctx context.Context, v *viper.Viper, justification string) (*string, error) {
@@ -110,34 +123,44 @@ func getValidJustification(ctx context.Context, v *viper.Viper, justification st
 		pterm.Info.Println(justificationInputTip)
 		return nil, errors.New(justificationErrorMessage)
 	}
-
-	input := pterm.DefaultInteractiveTextInput.WithMultiLine(false)
-	firstRun := true
-
-	for {
-		select {
-		case <-ctx.Done():
-			return nil, ctx.Err()
-		default:
-		}
-
-		if !firstRun {
-			var err error
-			justification, err = input.Show()
-			if err != nil {
-				return nil, err
-			}
-		}
-
-		firstRun = false
-		if strings.TrimSpace(justification) == "" {
-			pterm.Error.Println(justificationErrorMessage)
-			pterm.Info.Println(justificationInputTip)
-			continue
-		}
-
-		return &justification, nil
+	justificationInput, err := output.GetValidInput[string](ctx, justification, JustificationValidator{})
+	if err != nil {
+		return nil, err
 	}
+	input := string(justificationInput)
+	return &input, nil
+}
+
+type DurationValidator struct {
+	maxProvisionTime *time.Duration
+}
+
+func (d DurationValidator) IsValid(txt string) (time.Duration, bool) {
+	var t time.Duration
+	formattedDuration, err := strToDur(txt)
+	if err != nil {
+		return t, false
+	}
+
+	err = validateGrantTaskArguments(d.maxProvisionTime, formattedDuration)
+	if err != nil {
+		return t, false
+	}
+
+	if *formattedDuration > 28*24*time.Hour || *formattedDuration < 5*time.Minute {
+		result, _ := pterm.DefaultInteractiveConfirm.Show("The time you entered is outside of the range of 5 minutes - 21 days. Are you sure?")
+		if !result {
+			return t, false
+		}
+	}
+	return *formattedDuration, true
+}
+
+func (d DurationValidator) Prompt(isFirstRun bool) {
+	if isFirstRun {
+		pterm.Info.Println(durationInputTip)
+	}
+	pterm.Error.Println(durationErrorMessage)
 }
 
 func getValidDuration(ctx context.Context, v *viper.Viper, maxProvisionTime *time.Duration, duration string) (*time.Duration, error) {
@@ -149,47 +172,12 @@ func getValidDuration(ctx context.Context, v *viper.Viper, maxProvisionTime *tim
 	if v.GetBool(nonInteractiveFlag) {
 		return handleDurationNonInteractive(maxProvisionTime, duration)
 	}
-	input := pterm.DefaultInteractiveTextInput.WithMultiLine(false)
-	firstRun := true
-	for {
-		select {
-		case <-ctx.Done():
-			return nil, ctx.Err()
-		default:
-		}
 
-		if !firstRun {
-			var err error
-			duration, err = input.Show()
-			if err != nil {
-				return nil, err
-			}
-		}
-		firstRun = false
-
-		formattedDuration, err := strToDur(duration)
-		if err != nil {
-			pterm.Error.Println(err.Error())
-			pterm.Info.Println(durationInputTip)
-			continue
-		}
-
-		err = validateGrantTaskArguments(maxProvisionTime, formattedDuration)
-		if err != nil {
-			pterm.Error.Println(err.Error())
-			pterm.Info.Println(durationInputTip)
-			continue
-		}
-		if *formattedDuration > 28*24*time.Hour || *formattedDuration < 5*time.Minute {
-			result, _ := pterm.DefaultInteractiveConfirm.Show("The time you entered is outside of the range of 5 minutes - 21 days. Are you sure?")
-			if !result {
-				pterm.Info.Println(durationInputTip)
-				continue
-			}
-		}
-
-		return formattedDuration, nil
+	durationInput, err := output.GetValidInput[time.Duration](ctx, duration, DurationValidator{maxProvisionTime})
+	if err != nil {
+		return nil, err
 	}
+	return &durationInput, nil
 }
 
 func runGet(cmd *cobra.Command, args []string) error {
@@ -235,8 +223,8 @@ func runGet(cmd *cobra.Command, args []string) error {
 		accessRequest, err := c.CreateGrantTask(ctx, appId, entitlementId, userId, justification, apiDuration)
 		if err != nil {
 			errorBody := err.Error()
-			if strings.Contains(errorBody, grantDurationErrorMessage) {
-				startIndex := strings.Index(errorBody, grantDurationErrorMessage)
+			if strings.Contains(errorBody, durationErrorMessage) {
+				startIndex := strings.Index(errorBody, durationErrorMessage)
 				endIndex := strings.LastIndex(errorBody, ")") + 1
 				return nil, errors.New(errorBody[startIndex:endIndex])
 			}

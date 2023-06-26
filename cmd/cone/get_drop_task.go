@@ -102,7 +102,7 @@ func validateGrantTaskArguments(maxProvisionTime *time.Duration, duration *time.
 }
 
 func getValidJustification(ctx context.Context, v *viper.Viper, justification string) (*string, error) {
-	if strings.TrimSpace(justification) != "" {
+	if len(strings.TrimSpace(justification)) != 0 {
 		return &justification, nil
 	}
 
@@ -130,7 +130,7 @@ func getValidJustification(ctx context.Context, v *viper.Viper, justification st
 		}
 
 		firstRun = false
-		if strings.TrimSpace(justification) == "" {
+		if len(strings.TrimSpace(justification)) == 0 {
 			pterm.Error.Println(justificationErrorMessage)
 			pterm.Info.Println(justificationInputTip)
 			continue

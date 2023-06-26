@@ -104,7 +104,7 @@ func validateGrantTaskArguments(maxProvisionTime *time.Duration, duration *time.
 type JustificationValidator struct{}
 
 func (j JustificationValidator) IsValid(txt string) (string, bool) {
-	return txt, strings.TrimSpace(txt)) != ""
+	return txt, strings.TrimSpace(txt) != ""
 }
 
 func (j JustificationValidator) Prompt(isFirstRun bool) {

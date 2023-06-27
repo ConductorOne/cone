@@ -15,15 +15,13 @@ const (
 	envPrefix = "cone"
 )
 
-var defaultConfigPath string
-
-func init() {
+func defaultConfigPath() string {
 	homeDir, err := os.UserHomeDir()
 	if err != nil {
 		homeDir = "$HOME"
 	}
 
-	defaultConfigPath = filepath.Join(homeDir, ".conductorone")
+	return filepath.Join(homeDir, ".conductorone")
 }
 
 var (
@@ -41,7 +39,7 @@ func initConfig(cmd *cobra.Command) error {
 	if configPath != "" {
 		viper.AddConfigPath(configPath)
 	} else {
-		viper.AddConfigPath(defaultConfigPath)
+		viper.AddConfigPath(defaultConfigPath())
 	}
 
 	err := viper.ReadInConfig()

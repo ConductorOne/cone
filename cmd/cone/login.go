@@ -10,6 +10,7 @@ import (
 	"github.com/toqueteos/webbrowser"
 
 	conductoroneapi "github.com/conductorone/conductorone-sdk-go"
+
 	"github.com/conductorone/cone/pkg/client"
 )
 
@@ -41,7 +42,7 @@ func loginRun(cmd *cobra.Command, args []string) error {
 	}
 
 	profile := "default"
-	configFileUsed := filepath.Join(defaultConfigPath, "config.yaml")
+	configFileUsed := filepath.Join(defaultConfigPath(), "config.yaml")
 	if v.GetString("profile") != "" {
 		profile = v.GetString("profile")
 	}

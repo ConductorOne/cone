@@ -16,14 +16,13 @@ import (
 
 func loginCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "login <tenant-name>",
+		Use:   "login <tenant-name or tenant-url>",
 		Short: fmt.Sprintf("Authenticate to ConductorOne, creating config.yaml in %s if it doesn't exist.", defaultConfigPath()),
 		RunE:  loginRun,
 		Args:  cobra.ExactArgs(1),
 	}
 
 	cmd.Flags().String("profile", "default", "Config profile to create or update.")
-
 	return cmd
 }
 

@@ -19,12 +19,14 @@ func NewManager(ctx context.Context, v *viper.Viper) Manager {
 
 	switch v.GetString("output") {
 	case "table":
-		return &tableManager{area: area}
+		return &tableManager{area: area, isWide: false}
 	case "json":
 		return &jsonManager{}
 	case "json-pretty":
 		return &jsonManager{pretty: true}
+	case "wide":
+		return &tableManager{area: area, isWide: true}
 	default:
-		return &tableManager{area: area}
+		return &tableManager{area: area, isWide: false}
 	}
 }

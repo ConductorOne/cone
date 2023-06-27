@@ -6,7 +6,12 @@ import (
 	"time"
 )
 
-type AppEntitlementDurationUnset struct {
+type AppEntitlementMaxGrantDurationDurationUnset struct {
+}
+
+type AppEntitlementMaxGrantDuration struct {
+	DurationGrant *string                                      `json:"durationGrant,omitempty"`
+	DurationUnset *AppEntitlementMaxGrantDurationDurationUnset `json:"durationUnset,omitempty"`
 }
 
 // AppEntitlement - The AppEntitlement message.
@@ -32,15 +37,18 @@ type AppEntitlement struct {
 	// The description field.
 	Description *string `json:"description,omitempty"`
 	// The displayName field.
-	DisplayName   *string                      `json:"displayName,omitempty"`
-	DurationGrant *string                      `json:"durationGrant,omitempty"`
-	DurationUnset *AppEntitlementDurationUnset `json:"durationUnset,omitempty"`
+	DisplayName *string `json:"displayName,omitempty"`
+	// The emergencyGrantEnabled field.
+	EmergencyGrantEnabled *bool `json:"emergencyGrantEnabled,omitempty"`
+	// The emergencyGrantPolicyId field.
+	EmergencyGrantPolicyID *string `json:"emergencyGrantPolicyId,omitempty"`
 	// The grantCount field.
 	GrantCount *string `json:"grantCount,omitempty"`
 	// The grantPolicyId field.
 	GrantPolicyID *string `json:"grantPolicyId,omitempty"`
 	// The id field.
-	ID *string `json:"id,omitempty"`
+	ID               *string                         `json:"id,omitempty"`
+	MaxGrantDuration *AppEntitlementMaxGrantDuration `json:"max_grant_duration,omitempty"`
 	// The ProvisionPolicy message.
 	//
 	// This message contains a oneof named typ. Only a single field of the following list may be set at a time:

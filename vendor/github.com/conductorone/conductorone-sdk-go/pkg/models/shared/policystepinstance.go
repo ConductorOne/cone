@@ -7,6 +7,28 @@ import (
 	"fmt"
 )
 
+type PolicyStepInstanceInstance struct {
+	// The ApprovalInstance message.
+	//
+	// This message contains a oneof named outcome. Only a single field of the following list may be set at a time:
+	//   - approved
+	//   - denied
+	//   - reassigned
+	//   - restarted
+	//   - reassignedByError
+	//
+	Approval *ApprovalInstance `json:"approval,omitempty"`
+	// The ProvisionInstance message.
+	//
+	// This message contains a oneof named outcome. Only a single field of the following list may be set at a time:
+	//   - completed
+	//   - cancelled
+	//   - errored
+	//   - reassignedByError
+	//
+	Provision *ProvisionInstance `json:"provision,omitempty"`
+}
+
 // PolicyStepInstanceState - The state field.
 type PolicyStepInstanceState string
 
@@ -44,27 +66,9 @@ func (e *PolicyStepInstanceState) UnmarshalJSON(data []byte) error {
 //   - approval
 //   - provision
 type PolicyStepInstance struct {
-	// The ApprovalInstance message.
-	//
-	// This message contains a oneof named outcome. Only a single field of the following list may be set at a time:
-	//   - approved
-	//   - denied
-	//   - reassigned
-	//   - restarted
-	//   - reassignedByError
-	//
-	Approval *ApprovalInstance `json:"approval,omitempty"`
 	// The id field.
-	ID *string `json:"id,omitempty"`
-	// The ProvisionInstance message.
-	//
-	// This message contains a oneof named outcome. Only a single field of the following list may be set at a time:
-	//   - completed
-	//   - cancelled
-	//   - errored
-	//   - reassignedByError
-	//
-	Provision *ProvisionInstance `json:"provision,omitempty"`
+	ID       *string                     `json:"id,omitempty"`
+	Instance *PolicyStepInstanceInstance `json:"instance,omitempty"`
 	// The state field.
 	State *PolicyStepInstanceState `json:"state,omitempty"`
 }

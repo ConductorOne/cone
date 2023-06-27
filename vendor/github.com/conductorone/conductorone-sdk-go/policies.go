@@ -71,12 +71,12 @@ func (s *policies) Create(ctx context.Context, request shared.CreatePolicyReques
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.Policy
+			var out *shared.CreatePolicyResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return nil, err
 			}
 
-			res.Policy = out
+			res.CreatePolicyResponse = out
 		}
 	}
 
@@ -188,12 +188,12 @@ func (s *policies) Get(ctx context.Context, request operations.C1APIPolicyV1Poli
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.Policy
+			var out *shared.GetPolicyResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return nil, err
 			}
 
-			res.Policy = out
+			res.GetPolicyResponse = out
 		}
 	}
 

@@ -15,8 +15,17 @@ const (
 	envPrefix = "cone"
 )
 
+func defaultConfigPath() string {
+	homeDir, err := os.UserHomeDir()
+	if err != nil {
+		homeDir = "."
+	}
+
+	return filepath.Join(homeDir, ".conductorone")
+}
+
 var (
-	defaultConfigPath = filepath.Join("$HOME", ".conductorone")
+	ErrNoCredentials = errors.New("client-id and client-secret must be set")
 )
 
 func initConfig(cmd *cobra.Command) error {
@@ -30,7 +39,7 @@ func initConfig(cmd *cobra.Command) error {
 	if configPath != "" {
 		viper.AddConfigPath(configPath)
 	} else {
-		viper.AddConfigPath(defaultConfigPath)
+		viper.AddConfigPath(defaultConfigPath())
 	}
 
 	err := viper.ReadInConfig()
@@ -84,7 +93,7 @@ func getCredentials(v *viper.Viper) (string, string, error) {
 	clientSecret := v.GetString("client-secret")
 
 	if clientId == "" || clientSecret == "" {
-		return "", "", fmt.Errorf("client-id and client-secret must be set")
+		return "", "", ErrNoCredentials
 	}
 	return clientId, clientSecret, nil
 }

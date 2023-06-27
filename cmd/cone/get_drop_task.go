@@ -146,12 +146,11 @@ func (d DurationValidator) IsValid(txt string) (time.Duration, bool) {
 		return t, false
 	}
 
-	const hoursInADay = 24
 	const daysInAMonth = 28
-	const upperBound = hoursInADay * daysInAMonth * time.Hour
+	const upperBound = 24 * time.Hour * daysInAMonth
 	const lowerBound = 5 * time.Minute
 	if *formattedDuration < lowerBound || *formattedDuration > upperBound {
-		warningMessage := fmt.Sprintf("The time you entered is outside of the range of %d minutes - %d days. Are you sure?", lowerBound/time.Minute, daysInAMonth)
+		warningMessage := fmt.Sprintf("The time you entered is outside of the range of %d minutes - %d days. Are you sure?", int(lowerBound.Minutes()), daysInAMonth)
 		result, _ := pterm.DefaultInteractiveConfirm.Show(warningMessage)
 		if !result {
 			return t, false

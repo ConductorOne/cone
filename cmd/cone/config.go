@@ -18,7 +18,7 @@ const (
 func defaultConfigPath() string {
 	homeDir, err := os.UserHomeDir()
 	if err != nil {
-		homeDir = "$HOME"
+		homeDir = "."
 	}
 
 	return filepath.Join(homeDir, ".conductorone")

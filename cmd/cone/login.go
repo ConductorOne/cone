@@ -17,7 +17,7 @@ import (
 func loginCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "login <tenant-name>",
-		Short: fmt.Sprintf("Authenticate to ConductorOne, creating config.yaml in %s if it doesn't exist.", defaultConfigPath),
+		Short: fmt.Sprintf("Authenticate to ConductorOne, creating config.yaml in %s if it doesn't exist.", defaultConfigPath()),
 		RunE:  loginRun,
 		Args:  cobra.ExactArgs(1),
 	}

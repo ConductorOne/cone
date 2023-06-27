@@ -22,12 +22,12 @@ func (c *tableManager) Output(ctx context.Context, out interface{}) error {
 	if !okTable && !okWide {
 		return errors.New("unexpected output model")
 	}
-	// If we want the wide output, and the model supports it, use it. Or if the model doesn't support the table output, use the wide output.
 	if c.isWide && okWide || !okTable {
+		// If we want the wide output, and the model supports it, use it. Or if the model doesn't support the table output, use the wide output.
 		header = widePrinter.WideHeader
 		rows = widePrinter.WideRows
-		// Otherwise, use the table output.
 	} else {
+		// Otherwise, use the table output
 		header = m.Header
 		rows = m.Rows
 	}

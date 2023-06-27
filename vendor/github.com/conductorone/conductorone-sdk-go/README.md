@@ -4,7 +4,7 @@
 ## SDK Installation
 
 ```bash
-go get github.com/ConductorOne/conductorone-sdk-go
+go get github.com/conductorone/conductorone-sdk-go
 ```
 <!-- End SDK Installation -->
 
@@ -52,6 +52,12 @@ func main() {
 
 * [Get](docs/sdks/appentitlements/README.md#get) - Invokes the c1.api.app.v1.AppEntitlements.Get method.
 
+### [AppOwners](docs/sdks/appowners/README.md)
+
+* [Add](docs/sdks/appowners/README.md#add) - Invokes the c1.api.app.v1.AppOwners.Add method.
+* [List](docs/sdks/appowners/README.md#list) - Invokes the c1.api.app.v1.AppOwners.List method.
+* [Remove](docs/sdks/appowners/README.md#remove) - Invokes the c1.api.app.v1.AppOwners.Remove method.
+
 ### [AppReport](docs/sdks/appreport/README.md)
 
 * [List](docs/sdks/appreport/README.md#list) - Invokes the c1.api.app.v1.AppReportService.List method.
@@ -65,6 +71,10 @@ func main() {
 * [Get](docs/sdks/appresource/README.md#get) - Invokes the c1.api.app.v1.AppResourceService.Get method.
 * [List](docs/sdks/appresource/README.md#list) - Invokes the c1.api.app.v1.AppResourceService.List method.
 
+### [AppResourceOwners](docs/sdks/appresourceowners/README.md)
+
+* [List](docs/sdks/appresourceowners/README.md#list) - Invokes the c1.api.app.v1.AppResourceOwners.List method.
+
 ### [AppResourceSearch](docs/sdks/appresourcesearch/README.md)
 
 * [SearchAppResourceTypes](docs/sdks/appresourcesearch/README.md#searchappresourcetypes) - Invokes the c1.api.app.v1.AppResourceSearch.SearchAppResourceTypes method.
@@ -72,6 +82,7 @@ func main() {
 ### [AppResourceType](docs/sdks/appresourcetype/README.md)
 
 * [Get](docs/sdks/appresourcetype/README.md#get) - Invokes the c1.api.app.v1.AppResourceTypeService.Get method.
+* [List](docs/sdks/appresourcetype/README.md#list) - Invokes the c1.api.app.v1.AppResourceTypeService.List method.
 
 ### [AppSearch](docs/sdks/appsearch/README.md)
 
@@ -96,6 +107,10 @@ func main() {
 * [Delete](docs/sdks/directory/README.md#delete) - Invokes the c1.api.directory.v1.DirectoryService.Delete method.
 * [Get](docs/sdks/directory/README.md#get) - Invokes the c1.api.directory.v1.DirectoryService.Get method.
 * [List](docs/sdks/directory/README.md#list) - Invokes the c1.api.directory.v1.DirectoryService.List method.
+
+### [PersonalClient](docs/sdks/personalclient/README.md)
+
+* [Create](docs/sdks/personalclient/README.md#create) - Invokes the c1.api.iam.v1.PersonalClientService.Create method.
 
 ### [Policies](docs/sdks/policies/README.md)
 

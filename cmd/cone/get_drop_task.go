@@ -166,7 +166,7 @@ func runGet(cmd *cobra.Command, args []string) error {
 		}
 
 		// entitlement.DurationGrant is assumed to be nil or a non-zero parsable string
-		durationStr := client.StringFromPtr(entitlement.DurationGrant)
+		durationStr := client.StringFromPtr(entitlement.MaxGrantDuration.DurationGrant)
 		var maxProvision *time.Duration
 		maxProvisionTime, err := time.ParseDuration(durationStr)
 		if err == nil {
@@ -366,8 +366,8 @@ func handleWaitBehavior(ctx context.Context, c client.C1Client, task *shared.Tas
 			break
 		}
 	}
-	if taskItem.Type.Grant != nil {
-		taskOutcome := taskItem.Type.Grant.Outcome
+	if taskItem.Type.TaskType.Grant != nil {
+		taskOutcome := taskItem.Type.TaskType.Grant.Outcome
 		if *taskOutcome == shared.TaskTypeGrantOutcomeGrantOutcomeGranted {
 			spinner.Success("Entitlement granted successfully.")
 		} else {
@@ -375,8 +375,8 @@ func handleWaitBehavior(ctx context.Context, c client.C1Client, task *shared.Tas
 			return fmt.Errorf("failed to grant entitlement %s", string(*taskOutcome))
 		}
 	}
-	if taskItem.Type.Revoke != nil {
-		taskOutcome := taskItem.Type.Revoke.Outcome
+	if taskItem.Type.TaskType.Revoke != nil {
+		taskOutcome := taskItem.Type.TaskType.Revoke.Outcome
 		if *taskOutcome == shared.TaskTypeRevokeOutcomeRevokeOutcomeRevoked {
 			spinner.Success("Entitlement revoked succesfully.")
 		} else {

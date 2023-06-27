@@ -63,9 +63,11 @@ func (c *sdkConfiguration) GetServerDetails() (string, map[string]string) {
 type ConductoroneAPI struct {
 	AppEntitlementUserBinding *appEntitlementUserBinding
 	AppEntitlements           *appEntitlements
+	AppOwners                 *appOwners
 	AppReport                 *appReport
 	AppReportAction           *appReportAction
 	AppResource               *appResource
+	AppResourceOwners         *appResourceOwners
 	AppResourceSearch         *appResourceSearch
 	AppResourceType           *appResourceType
 	AppSearch                 *appSearch
@@ -73,6 +75,7 @@ type ConductoroneAPI struct {
 	Apps                      *apps
 	Auth                      *auth
 	Directory                 *directory
+	PersonalClient            *personalClient
 	Policies                  *policies
 	RequestCatalogSearch      *requestCatalogSearch
 	Roles                     *roles
@@ -142,8 +145,8 @@ func New(opts ...SDKOption) *ConductoroneAPI {
 		sdkConfiguration: sdkConfiguration{
 			Language:          "go",
 			OpenAPIDocVersion: "0.1.0-alpha",
-			SDKVersion:        "1.1.0",
-			GenVersion:        "2.40.1",
+			SDKVersion:        "1.1.1",
+			GenVersion:        "2.50.2",
 			ServerDefaults: []map[string]string{
 				{
 					"tenantDomain": "invalid-example",
@@ -167,11 +170,15 @@ func New(opts ...SDKOption) *ConductoroneAPI {
 
 	sdk.AppEntitlements = newAppEntitlements(sdk.sdkConfiguration)
 
+	sdk.AppOwners = newAppOwners(sdk.sdkConfiguration)
+
 	sdk.AppReport = newAppReport(sdk.sdkConfiguration)
 
 	sdk.AppReportAction = newAppReportAction(sdk.sdkConfiguration)
 
 	sdk.AppResource = newAppResource(sdk.sdkConfiguration)
+
+	sdk.AppResourceOwners = newAppResourceOwners(sdk.sdkConfiguration)
 
 	sdk.AppResourceSearch = newAppResourceSearch(sdk.sdkConfiguration)
 
@@ -186,6 +193,8 @@ func New(opts ...SDKOption) *ConductoroneAPI {
 	sdk.Auth = newAuth(sdk.sdkConfiguration)
 
 	sdk.Directory = newDirectory(sdk.sdkConfiguration)
+
+	sdk.PersonalClient = newPersonalClient(sdk.sdkConfiguration)
 
 	sdk.Policies = newPolicies(sdk.sdkConfiguration)
 

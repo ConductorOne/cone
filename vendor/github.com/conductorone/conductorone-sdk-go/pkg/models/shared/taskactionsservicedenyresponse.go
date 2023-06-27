@@ -8,4 +8,6 @@ type TaskActionsServiceDenyResponse struct {
 	Expanded []map[string]interface{} `json:"expanded,omitempty"`
 	// The TaskView message.
 	TaskView *TaskView `json:"taskView,omitempty"`
+	// The ticketActionId field.
+	TicketActionID *string `json:"ticketActionId,omitempty"`
 }

@@ -11,25 +11,27 @@ import (
 	"github.com/conductorone/conductorone-sdk-go/pkg/utils"
 	"io"
 	"net/http"
-	"strings"
 )
 
-type policies struct {
+type appOwners struct {
 	sdkConfiguration sdkConfiguration
 }
 
-func newPolicies(sdkConfig sdkConfiguration) *policies {
-	return &policies{
+func newAppOwners(sdkConfig sdkConfiguration) *appOwners {
+	return &appOwners{
 		sdkConfiguration: sdkConfig,
 	}
 }
 
-// Create - Invokes the c1.api.policy.v1.Policies.Create method.
-func (s *policies) Create(ctx context.Context, request shared.CreatePolicyRequest) (*operations.C1APIPolicyV1PoliciesCreateResponse, error) {
+// Add - Invokes the c1.api.app.v1.AppOwners.Add method.
+func (s *appOwners) Add(ctx context.Context, request operations.C1APIAppV1AppOwnersAddRequest) (*operations.C1APIAppV1AppOwnersAddResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
-	url := strings.TrimSuffix(baseURL, "/") + "/api/v1/policies"
+	url, err := utils.GenerateURL(ctx, baseURL, "/api/v1/apps/{app_id}/owners/{user_id}", request, nil)
+	if err != nil {
+		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
 
-	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, "Request", "json")
+	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, "AddAppOwnerRequest", "json")
 	if err != nil {
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
@@ -62,7 +64,7 @@ func (s *policies) Create(ctx context.Context, request shared.CreatePolicyReques
 
 	contentType := httpRes.Header.Get("Content-Type")
 
-	res := &operations.C1APIPolicyV1PoliciesCreateResponse{
+	res := &operations.C1APIAppV1AppOwnersAddResponse{
 		StatusCode:  httpRes.StatusCode,
 		ContentType: contentType,
 		RawResponse: httpRes,
@@ -71,27 +73,82 @@ func (s *policies) Create(ctx context.Context, request shared.CreatePolicyReques
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.CreatePolicyResponse
+			var out *shared.AddAppOwnerResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return nil, err
 			}
 
-			res.CreatePolicyResponse = out
+			res.AddAppOwnerResponse = out
 		}
 	}
 
 	return res, nil
 }
 
-// Delete - Invokes the c1.api.policy.v1.Policies.Delete method.
-func (s *policies) Delete(ctx context.Context, request operations.C1APIPolicyV1PoliciesDeleteRequest) (*operations.C1APIPolicyV1PoliciesDeleteResponse, error) {
+// List - Invokes the c1.api.app.v1.AppOwners.List method.
+func (s *appOwners) List(ctx context.Context, request operations.C1APIAppV1AppOwnersListRequest) (*operations.C1APIAppV1AppOwnersListResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
-	url, err := utils.GenerateURL(ctx, baseURL, "/api/v1/policies/{id}", request, nil)
+	url, err := utils.GenerateURL(ctx, baseURL, "/api/v1/apps/{app_id}/owners", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
-	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, "DeletePolicyRequest", "json")
+	req, err := http.NewRequestWithContext(ctx, "GET", url, nil)
+	if err != nil {
+		return nil, fmt.Errorf("error creating request: %w", err)
+	}
+	req.Header.Set("Accept", "application/json")
+	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s %s", s.sdkConfiguration.Language, s.sdkConfiguration.SDKVersion, s.sdkConfiguration.GenVersion, s.sdkConfiguration.OpenAPIDocVersion))
+
+	client := s.sdkConfiguration.DefaultClient
+
+	httpRes, err := client.Do(req)
+	if err != nil {
+		return nil, fmt.Errorf("error sending request: %w", err)
+	}
+	if httpRes == nil {
+		return nil, fmt.Errorf("error sending request: no response")
+	}
+
+	rawBody, err := io.ReadAll(httpRes.Body)
+	if err != nil {
+		return nil, fmt.Errorf("error reading response body: %w", err)
+	}
+	httpRes.Body.Close()
+	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
+
+	contentType := httpRes.Header.Get("Content-Type")
+
+	res := &operations.C1APIAppV1AppOwnersListResponse{
+		StatusCode:  httpRes.StatusCode,
+		ContentType: contentType,
+		RawResponse: httpRes,
+	}
+	switch {
+	case httpRes.StatusCode == 200:
+		switch {
+		case utils.MatchContentType(contentType, `application/json`):
+			var out *shared.ListAppOwnersResponse
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
+				return nil, err
+			}
+
+			res.ListAppOwnersResponse = out
+		}
+	}
+
+	return res, nil
+}
+
+// Remove - Invokes the c1.api.app.v1.AppOwners.Remove method.
+func (s *appOwners) Remove(ctx context.Context, request operations.C1APIAppV1AppOwnersRemoveRequest) (*operations.C1APIAppV1AppOwnersRemoveResponse, error) {
+	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
+	url, err := utils.GenerateURL(ctx, baseURL, "/api/v1/apps/{app_id}/owners/{user_id}", request, nil)
+	if err != nil {
+		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, "RemoveAppOwnerRequest", "json")
 	if err != nil {
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
@@ -124,7 +181,7 @@ func (s *policies) Delete(ctx context.Context, request operations.C1APIPolicyV1P
 
 	contentType := httpRes.Header.Get("Content-Type")
 
-	res := &operations.C1APIPolicyV1PoliciesDeleteResponse{
+	res := &operations.C1APIAppV1AppOwnersRemoveResponse{
 		StatusCode:  httpRes.StatusCode,
 		ContentType: contentType,
 		RawResponse: httpRes,
@@ -133,119 +190,12 @@ func (s *policies) Delete(ctx context.Context, request operations.C1APIPolicyV1P
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.DeletePolicyResponse
+			var out *shared.RemoveAppOwnerResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return nil, err
 			}
 
-			res.DeletePolicyResponse = out
-		}
-	}
-
-	return res, nil
-}
-
-// Get - Invokes the c1.api.policy.v1.Policies.Get method.
-func (s *policies) Get(ctx context.Context, request operations.C1APIPolicyV1PoliciesGetRequest) (*operations.C1APIPolicyV1PoliciesGetResponse, error) {
-	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
-	url, err := utils.GenerateURL(ctx, baseURL, "/api/v1/policies/{id}", request, nil)
-	if err != nil {
-		return nil, fmt.Errorf("error generating URL: %w", err)
-	}
-
-	req, err := http.NewRequestWithContext(ctx, "GET", url, nil)
-	if err != nil {
-		return nil, fmt.Errorf("error creating request: %w", err)
-	}
-	req.Header.Set("Accept", "application/json")
-	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s %s", s.sdkConfiguration.Language, s.sdkConfiguration.SDKVersion, s.sdkConfiguration.GenVersion, s.sdkConfiguration.OpenAPIDocVersion))
-
-	client := s.sdkConfiguration.DefaultClient
-
-	httpRes, err := client.Do(req)
-	if err != nil {
-		return nil, fmt.Errorf("error sending request: %w", err)
-	}
-	if httpRes == nil {
-		return nil, fmt.Errorf("error sending request: no response")
-	}
-
-	rawBody, err := io.ReadAll(httpRes.Body)
-	if err != nil {
-		return nil, fmt.Errorf("error reading response body: %w", err)
-	}
-	httpRes.Body.Close()
-	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
-
-	contentType := httpRes.Header.Get("Content-Type")
-
-	res := &operations.C1APIPolicyV1PoliciesGetResponse{
-		StatusCode:  httpRes.StatusCode,
-		ContentType: contentType,
-		RawResponse: httpRes,
-	}
-	switch {
-	case httpRes.StatusCode == 200:
-		switch {
-		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.GetPolicyResponse
-			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
-			}
-
-			res.GetPolicyResponse = out
-		}
-	}
-
-	return res, nil
-}
-
-// List - Invokes the c1.api.policy.v1.Policies.List method.
-func (s *policies) List(ctx context.Context) (*operations.C1APIPolicyV1PoliciesListResponse, error) {
-	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
-	url := strings.TrimSuffix(baseURL, "/") + "/api/v1/policies"
-
-	req, err := http.NewRequestWithContext(ctx, "GET", url, nil)
-	if err != nil {
-		return nil, fmt.Errorf("error creating request: %w", err)
-	}
-	req.Header.Set("Accept", "application/json")
-	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s %s", s.sdkConfiguration.Language, s.sdkConfiguration.SDKVersion, s.sdkConfiguration.GenVersion, s.sdkConfiguration.OpenAPIDocVersion))
-
-	client := s.sdkConfiguration.DefaultClient
-
-	httpRes, err := client.Do(req)
-	if err != nil {
-		return nil, fmt.Errorf("error sending request: %w", err)
-	}
-	if httpRes == nil {
-		return nil, fmt.Errorf("error sending request: no response")
-	}
-
-	rawBody, err := io.ReadAll(httpRes.Body)
-	if err != nil {
-		return nil, fmt.Errorf("error reading response body: %w", err)
-	}
-	httpRes.Body.Close()
-	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
-
-	contentType := httpRes.Header.Get("Content-Type")
-
-	res := &operations.C1APIPolicyV1PoliciesListResponse{
-		StatusCode:  httpRes.StatusCode,
-		ContentType: contentType,
-		RawResponse: httpRes,
-	}
-	switch {
-	case httpRes.StatusCode == 200:
-		switch {
-		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.ListPolicyResponse
-			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
-			}
-
-			res.ListPolicyResponse = out
+			res.RemoveAppOwnerResponse = out
 		}
 	}
 

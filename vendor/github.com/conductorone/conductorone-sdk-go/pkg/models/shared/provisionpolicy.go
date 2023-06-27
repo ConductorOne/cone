@@ -2,6 +2,15 @@
 
 package shared
 
+type ProvisionPolicyTyp struct {
+	// The ConnectorProvision message.
+	Connector *ConnectorProvision `json:"connector,omitempty"`
+	// The DelegatedProvision message.
+	Delegated *DelegatedProvision `json:"delegated,omitempty"`
+	// The ManualProvision message.
+	Manual *ManualProvision `json:"manual,omitempty"`
+}
+
 // ProvisionPolicy - The ProvisionPolicy message.
 //
 // This message contains a oneof named typ. Only a single field of the following list may be set at a time:
@@ -9,10 +18,5 @@ package shared
 //   - manual
 //   - delegated
 type ProvisionPolicy struct {
-	// The ConnectorProvision message.
-	Connector *ConnectorProvision `json:"connector,omitempty"`
-	// The DelegatedProvision message.
-	Delegated *DelegatedProvision `json:"delegated,omitempty"`
-	// The ManualProvision message.
-	Manual *ManualProvision `json:"manual,omitempty"`
+	Typ *ProvisionPolicyTyp `json:"typ,omitempty"`
 }

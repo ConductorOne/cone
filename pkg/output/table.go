@@ -17,22 +17,22 @@ func (c *tableManager) Output(ctx context.Context, out interface{}) error {
 	var header func() []string
 	var rows func() [][]string
 
-	m, okTable := out.(TablePrint)
-	widePrinter, okWide := out.(WideTablePrint)
-	if !okTable && !okWide {
+	tablePrinter, okTable := out.(TablePrint)
+	wideTablePrinter, okWideTable := out.(WideTablePrint)
+	if !okTable && !okWideTable {
 		return errors.New("unexpected output model")
 	}
-	if c.isWide && okWide || !okTable {
+	if c.isWide && okWideTable || !okTable {
 		// If we want the wide output, and the model supports it, use it. Or if the model doesn't support the table output, use the wide output.
-		header = widePrinter.WideHeader
-		rows = widePrinter.WideRows
+		header = wideTablePrinter.WideHeader
+		rows = wideTablePrinter.WideRows
 	} else {
 		// Otherwise, use the table output
-		header = m.Header
-		rows = m.Rows
+		header = tablePrinter.Header
+		rows = tablePrinter.Rows
 	}
 	var preTableText string
-	if p, ok := m.(PreText); ok {
+	if p, ok := out.(PreText); ok {
 		preTableText = p.Pretext()
 	}
 

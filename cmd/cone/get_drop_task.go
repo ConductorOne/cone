@@ -114,20 +114,20 @@ func (j JustificationValidator) Prompt(isFirstRun bool) {
 	pterm.Error.Println(justificationErrorMessage)
 }
 
-func getValidJustification(ctx context.Context, v *viper.Viper, justification string) (*string, error) {
+func getValidJustification(ctx context.Context, v *viper.Viper, justification string) (string, error) {
 	if strings.TrimSpace(justification) != "" {
-		return &justification, nil
+		return justification, nil
 	}
 
 	if v.GetBool(nonInteractiveFlag) {
 		pterm.Info.Println(justificationInputTip)
-		return nil, errors.New(justificationErrorMessage)
+		return "", errors.New(justificationErrorMessage)
 	}
 	justificationInput, err := output.GetValidInput[string](ctx, justification, JustificationValidator{})
 	if err != nil {
-		return nil, err
+		return "", err
 	}
-	return &justificationInput, nil
+	return justificationInput, nil
 }
 
 type DurationValidator struct {
@@ -193,11 +193,10 @@ func runGet(cmd *cobra.Command, args []string) error {
 			return nil, err
 		}
 
-		justificationRef, err := getValidJustification(ctx, v, justification)
+		justification, err = getValidJustification(ctx, v, justification)
 		if err != nil {
 			return nil, err
 		}
-		justification = *justificationRef
 
 		// entitlement.DurationGrant is assumed to be nil or a non-zero parsable string
 		durationStr := client.StringFromPtr(entitlement.DurationGrant)

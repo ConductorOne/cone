@@ -26,6 +26,7 @@ func searchTasksCmd() *cobra.Command {
 	addAssigneesIds(cmd)
 	addQueryTaskFlag(cmd)
 	addTaskStatesFlag(cmd)
+	addTaskTypesFlag(cmd)
 	addIncludeDeletedFlag(cmd)
 
 	return cmd
@@ -58,6 +59,20 @@ func searchTasksRun(cmd *cobra.Command, args []string) error {
 	case "":
 	}
 
+	var taskTypes []shared.TaskType
+	var taskType shared.TaskType
+	switch strings.ToLower(v.GetString(taskTypeFlag)) {
+	case "grant":
+		taskType.Grant = &shared.TaskTypeGrant{}
+	case "revoke":
+		taskType.Revoke = &shared.TaskTypeRevoke{}
+	case "certify":
+		taskType.Certify = &shared.TaskTypeCertify{}
+	}
+	if len(taskTypes) != 0 {
+		taskTypes = []shared.TaskType{taskType}
+	}
+
 	taskResp, err := c.SearchTasks(ctx, shared.TaskSearchRequest{
 		AccessReviewIds:    v.GetStringSlice(accessReviewIdsFlag),
 		AppEntitlementIds:  v.GetStringSlice(appEntitlementIdsFlag),
@@ -69,6 +84,7 @@ func searchTasksRun(cmd *cobra.Command, args []string) error {
 		IncludeDeleted:     includeDeleted,
 		Query:              query,
 		TaskStates:         state,
+		TaskTypes:          taskTypes,
 		SubjectIds:         v.GetStringSlice(userSubjectIdsFlag),
 	})
 	if err != nil {

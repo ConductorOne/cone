@@ -40,6 +40,10 @@ func LoginFlow(ctx context.Context, tenantName string, clientID string, personal
 		return nil, fmt.Errorf("error getting device code: %w", err)
 	}
 
+	if responseUrl == "" {
+		return nil, errors.New("invalid verification url")
+	}
+
 	if err := cb(responseUrl); err != nil {
 		return nil, err
 	}
@@ -97,6 +101,10 @@ func getDeviceCode(ctx context.Context, client *ConductoroneAPI, clientID string
 		return nil, "", err
 	}
 
+	if resp.StatusCode != http.StatusOK {
+		return nil, "", fmt.Errorf("error getting device code: %s", string(data))
+	}
+
 	codeResp := &DeviceCodeResponse{}
 	err = json.Unmarshal(data, codeResp)
 	if err != nil {
@@ -119,10 +127,11 @@ func doTokenRequest(ctx context.Context, client *ConductoroneAPI, clientID strin
 	vals.Add("device_code", deviceCodeResp.DeviceCode)
 	vals.Add("grant_type", "urn:ietf:params:oauth:grant-type:device_code")
 
+	intervalSeconds := deviceCodeResp.Interval
 	startLoop := time.Now()
 	for {
 		select {
-		case <-time.After(time.Duration(deviceCodeResp.Interval) * time.Second):
+		case <-time.After(time.Duration(intervalSeconds) * time.Second):
 			if time.Now().After(startLoop.Add(time.Duration(deviceCodeResp.ExpiresIn) * time.Second)) {
 				return nil, errors.New("timeout")
 			}
@@ -144,7 +153,7 @@ func doTokenRequest(ctx context.Context, client *ConductoroneAPI, clientID strin
 			return nil, err
 		}
 
-		if resp.StatusCode >= 300 {
+		if resp.StatusCode != http.StatusOK {
 			errResp := &oauth2Error{}
 			err = json.Unmarshal(body, errResp)
 			if err != nil {
@@ -153,6 +162,12 @@ func doTokenRequest(ctx context.Context, client *ConductoroneAPI, clientID strin
 
 			if errResp.ErrorType == "authorization_pending" {
 				continue
+			}
+
+			if errResp.ErrorType == "slow_down" {
+				// Interval should be increased by 5 seconds when slow_down is received
+				// https://datatracker.ietf.org/doc/html/rfc8628#section-3.5
+				intervalSeconds += 5
 			}
 
 			return nil, errors.New(errResp.ErrorDescription)
@@ -200,6 +215,10 @@ func doClientCredentialRequest(ctx context.Context, client *ConductoroneAPI, tok
 	body, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return nil, err
+	}
+
+	if resp.StatusCode != http.StatusOK {
+		return nil, fmt.Errorf("error getting client credential code: %s", string(body))
 	}
 
 	clientRespJSON := &clientResp{}

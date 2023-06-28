@@ -292,10 +292,8 @@ docs/models/shared/listappusersforidentitywithgrantresponse.md
 docs/models/shared/appentitlementuserbinding.md
 docs/models/shared/getappentitlementresponse.md
 docs/models/shared/appentitlementview.md
-docs/models/shared/appentitlementmaxgrantdurationdurationunset.md
-docs/models/shared/appentitlementmaxgrantduration.md
+docs/models/shared/appentitlementdurationunset.md
 docs/models/shared/appentitlement.md
-docs/models/shared/provisionpolicytyp.md
 docs/models/shared/provisionpolicy.md
 docs/models/shared/manualprovision.md
 docs/models/shared/delegatedprovision.md
@@ -348,13 +346,10 @@ docs/models/shared/personalclientservicecreaterequest.md
 docs/models/shared/createpolicyresponse.md
 docs/models/shared/policypolicytype.md
 docs/models/shared/policy.md
-docs/models/shared/policypostactionsaction.md
 docs/models/shared/policypostactions.md
 docs/models/shared/policysteps.md
-docs/models/shared/policystepstep.md
 docs/models/shared/policystep.md
 docs/models/shared/provision.md
-docs/models/shared/approvaltyp.md
 docs/models/shared/approval.md
 docs/models/shared/userapproval.md
 docs/models/shared/selfapproval.md
@@ -381,11 +376,9 @@ docs/models/shared/taskactions.md
 docs/models/shared/taskprocessing.md
 docs/models/shared/taskstate.md
 docs/models/shared/task.md
-docs/models/shared/tasktypetasktype.md
 docs/models/shared/tasktype.md
 docs/models/shared/tasktyperevokeoutcome.md
 docs/models/shared/tasktyperevoke.md
-docs/models/shared/taskrevokesourceorigin.md
 docs/models/shared/taskrevokesource.md
 docs/models/shared/taskrevokesourcereview.md
 docs/models/shared/taskrevokesourcerequest.md
@@ -396,10 +389,8 @@ docs/models/shared/tasktypegrant.md
 docs/models/shared/tasktypecertifyoutcome.md
 docs/models/shared/tasktypecertify.md
 docs/models/shared/policyinstance.md
-docs/models/shared/policystepinstanceinstance.md
 docs/models/shared/policystepinstancestate.md
 docs/models/shared/policystepinstance.md
-docs/models/shared/provisioninstanceoutcome.md
 docs/models/shared/provisioninstancestate.md
 docs/models/shared/provisioninstance.md
 docs/models/shared/reassignedbyerroraction.md
@@ -407,7 +398,6 @@ docs/models/shared/erroredaction.md
 docs/models/shared/completedaction.md
 docs/models/shared/appentitlementreference.md
 docs/models/shared/cancelledaction.md
-docs/models/shared/approvalinstanceoutcome.md
 docs/models/shared/approvalinstancestate.md
 docs/models/shared/approvalinstance.md
 docs/models/shared/restartaction.md

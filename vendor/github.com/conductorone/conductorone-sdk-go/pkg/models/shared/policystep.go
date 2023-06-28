@@ -2,7 +2,12 @@
 
 package shared
 
-type PolicyStepStep struct {
+// PolicyStep - The PolicyStep message.
+//
+// This message contains a oneof named step. Only a single field of the following list may be set at a time:
+//   - approval
+//   - provision
+type PolicyStep struct {
 	// The Approval message.
 	//
 	// This message contains a oneof named typ. Only a single field of the following list may be set at a time:
@@ -16,13 +21,4 @@ type PolicyStepStep struct {
 	Approval *Approval `json:"approval,omitempty"`
 	// The Provision message.
 	Provision *Provision `json:"provision,omitempty"`
-}
-
-// PolicyStep - The PolicyStep message.
-//
-// This message contains a oneof named step. Only a single field of the following list may be set at a time:
-//   - approval
-//   - provision
-type PolicyStep struct {
-	Step *PolicyStepStep `json:"step,omitempty"`
 }

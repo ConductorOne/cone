@@ -61,8 +61,13 @@ type ExpandedEntitlementsResponse struct {
 }
 
 func (r *ExpandedEntitlementsResponse) Header() []string {
-	return []string{"Granted", "Id", "Display Name", "App", "Resource Type", "Resource", "Alias", "Description"}
+	return []string{"", "Alias", "Display Name", "App", "Resource Type", "Resource"}
 }
+
+func (r *ExpandedEntitlementsResponse) WideHeader() []string {
+	return append(r.Header(), []string{"Description"}...)
+}
+
 func (r *ExpandedEntitlementsResponse) Rows() [][]string {
 	rows := [][]string{}
 	for _, e := range r.entitlements {
@@ -77,21 +82,27 @@ func (r *ExpandedEntitlementsResponse) Rows() [][]string {
 			client.StringFromPtr(e.Entitlement.AppResourceID),
 		)
 
-		granted := "✅"
+		granted := "✓"
 		if len(e.Bindings) == 0 {
-			granted = "❌"
+			granted = ""
 		}
 
 		rows = append(rows, []string{
 			granted,
-			client.StringFromPtr(e.Entitlement.ID),
+			client.StringFromPtr(e.Entitlement.Alias),
 			client.StringFromPtr(e.Entitlement.DisplayName),
 			client.StringFromPtr(app.DisplayName),
 			client.StringFromPtr(resourceType.DisplayName),
 			client.StringFromPtr(resource.DisplayName),
-			client.StringFromPtr(e.Entitlement.Alias),
-			client.StringFromPtr(e.Entitlement.Description),
 		})
+	}
+	return rows
+}
+
+func (r *ExpandedEntitlementsResponse) WideRows() [][]string {
+	rows := r.Rows()
+	for i, e := range r.entitlements {
+		rows[i] = append(rows[i], client.StringFromPtr(e.Entitlement.Description))
 	}
 	return rows
 }

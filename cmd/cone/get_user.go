@@ -50,7 +50,6 @@ type User shared.User
 
 func (r *User) Header() []string {
 	return []string{
-		"Id",
 		"Email",
 		"Status",
 		"Job Title",
@@ -61,19 +60,28 @@ func (r *User) Header() []string {
 	}
 }
 
-func (r *User) Rows() [][]string {
-	return [][]string{
-		{
-			client.StringFromPtr(r.ID),
-			client.StringFromPtr(r.Email),
-			userStatusToString[*r.Status],
-			client.StringFromPtr(r.JobTitle),
-			client.StringFromPtr(r.Department),
-			client.StringFromPtr(r.EmploymentStatus),
-			client.StringFromPtr(r.EmploymentType),
-			output.FormatTime(r.CreatedAt),
-		},
+func (r *User) WideHeader() []string {
+	return append([]string{"Id"}, r.Header()...)
+}
+
+func (r *User) rows() []string {
+	return []string{
+		client.StringFromPtr(r.Email),
+		userStatusToString[*r.Status],
+		client.StringFromPtr(r.JobTitle),
+		client.StringFromPtr(r.Department),
+		client.StringFromPtr(r.EmploymentStatus),
+		client.StringFromPtr(r.EmploymentType),
+		output.FormatTime(r.CreatedAt),
 	}
+}
+
+func (r *User) WideRows() [][]string {
+	return [][]string{append([]string{client.StringFromPtr(r.ID)}, r.rows()...)}
+}
+
+func (r *User) Rows() [][]string {
+	return [][]string{r.rows()}
 }
 
 var userStatusToString = map[shared.UserStatus]string{

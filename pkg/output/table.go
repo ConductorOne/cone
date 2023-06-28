@@ -2,29 +2,42 @@ package output
 
 import (
 	"context"
-	"fmt"
+	"errors"
 	"time"
 
 	"github.com/pterm/pterm"
 )
 
 type tableManager struct {
-	area *pterm.AreaPrinter
+	area   *pterm.AreaPrinter
+	isWide bool
 }
 
 func (c *tableManager) Output(ctx context.Context, out interface{}) error {
-	m, ok := out.(TablePrint)
-	if !ok {
-		return fmt.Errorf("unexpected output model")
-	}
+	var header func() []string
+	var rows func() [][]string
 
+	tablePrinter, okTable := out.(TablePrint)
+	wideTablePrinter, okWideTable := out.(WideTablePrint)
+	if !okTable && !okWideTable {
+		return errors.New("unexpected output model")
+	}
+	if c.isWide && okWideTable || !okTable {
+		// If we want the wide output, and the model supports it, use it. Or if the model doesn't support the table output, use the wide output.
+		header = wideTablePrinter.WideHeader
+		rows = wideTablePrinter.WideRows
+	} else {
+		// Otherwise, use the table output
+		header = tablePrinter.Header
+		rows = tablePrinter.Rows
+	}
 	var preTableText string
-	if p, ok := m.(PreText); ok {
+	if p, ok := out.(PreText); ok {
 		preTableText = p.Pretext()
 	}
 
-	tableData := pterm.TableData{m.Header()}
-	tableData = append(tableData, m.Rows()...)
+	tableData := pterm.TableData{header()}
+	tableData = append(tableData, rows()...)
 	table := pterm.DefaultTable.WithHasHeader().WithData(tableData)
 	if c.area != nil {
 		data, err := table.Srender()
@@ -60,6 +73,11 @@ func FormatTime(ts *time.Time) string {
 type TablePrint interface {
 	Header() []string
 	Rows() [][]string
+}
+
+type WideTablePrint interface {
+	WideHeader() []string
+	WideRows() [][]string
 }
 
 type PreText interface {

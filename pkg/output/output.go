@@ -24,7 +24,7 @@ func NewManager(ctx context.Context, v *viper.Viper) Manager {
 		return &jsonManager{}
 	case "json-pretty":
 		return &jsonManager{pretty: true}
-	case "wide-table":
+	case "wide":
 		return &tableManager{area: area, isWide: true}
 	default:
 		return &tableManager{area: area, isWide: false}

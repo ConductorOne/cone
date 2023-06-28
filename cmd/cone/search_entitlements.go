@@ -65,7 +65,7 @@ func (r *ExpandedEntitlementsResponse) Header() []string {
 }
 
 func (r *ExpandedEntitlementsResponse) WideHeader() []string {
-	return append(r.Header(), []string{"Description"}...)
+	return append(r.Header(), "Description")
 }
 
 func (r *ExpandedEntitlementsResponse) Rows() [][]string {

@@ -2,15 +2,6 @@
 
 package shared
 
-type TaskTypeTaskType struct {
-	// The TaskTypeCertify message.
-	Certify *TaskTypeCertify `json:"certify,omitempty"`
-	// The TaskTypeGrant message.
-	Grant *TaskTypeGrant `json:"grant,omitempty"`
-	// The TaskTypeRevoke message.
-	Revoke *TaskTypeRevoke `json:"revoke,omitempty"`
-}
-
 // TaskType - The TaskType message.
 //
 // This message contains a oneof named task_type. Only a single field of the following list may be set at a time:
@@ -18,5 +9,10 @@ type TaskTypeTaskType struct {
 //   - revoke
 //   - certify
 type TaskType struct {
-	TaskType *TaskTypeTaskType `json:"task_type,omitempty"`
+	// The TaskTypeCertify message.
+	Certify *TaskTypeCertify `json:"certify,omitempty"`
+	// The TaskTypeGrant message.
+	Grant *TaskTypeGrant `json:"grant,omitempty"`
+	// The TaskTypeRevoke message.
+	Revoke *TaskTypeRevoke `json:"revoke,omitempty"`
 }

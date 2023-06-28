@@ -2,17 +2,6 @@
 
 package shared
 
-type TaskRevokeSourceOrigin struct {
-	// The TaskRevokeSourceExpired message.
-	Expired *TaskRevokeSourceExpired `json:"expired,omitempty"`
-	// The TaskRevokeSourceNonUsage message.
-	NonUsage *TaskRevokeSourceNonUsage `json:"nonUsage,omitempty"`
-	// The TaskRevokeSourceRequest message.
-	Request *TaskRevokeSourceRequest `json:"request,omitempty"`
-	// The TaskRevokeSourceReview message.
-	Review *TaskRevokeSourceReview `json:"review,omitempty"`
-}
-
 // TaskRevokeSource - The TaskRevokeSource message.
 //
 // This message contains a oneof named origin. Only a single field of the following list may be set at a time:
@@ -21,5 +10,12 @@ type TaskRevokeSourceOrigin struct {
 //   - expired
 //   - nonUsage
 type TaskRevokeSource struct {
-	Origin *TaskRevokeSourceOrigin `json:"origin,omitempty"`
+	// The TaskRevokeSourceExpired message.
+	Expired *TaskRevokeSourceExpired `json:"expired,omitempty"`
+	// The TaskRevokeSourceNonUsage message.
+	NonUsage *TaskRevokeSourceNonUsage `json:"nonUsage,omitempty"`
+	// The TaskRevokeSourceRequest message.
+	Request *TaskRevokeSourceRequest `json:"request,omitempty"`
+	// The TaskRevokeSourceReview message.
+	Review *TaskRevokeSourceReview `json:"review,omitempty"`
 }

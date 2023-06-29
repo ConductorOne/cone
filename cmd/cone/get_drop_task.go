@@ -322,18 +322,18 @@ func runTask(
 			pterm.Println("You do not have existing grants to drop for this entitlement. Use --force to override this check.")
 			return nil
 		}
+
+		if v.GetBool(extraDetailsFlag) {
+			err = printExtraTaskDetails(ctx, v, c, appId, entitlementId)
+			if err != nil {
+				return err
+			}
+		}
 	}
 
 	task, err := run(c, ctx, appId, entitlementId, client.StringFromPtr(resp.UserID), justification)
 	if err != nil {
 		return err
-	}
-
-	if v.GetBool(entitlementDetailsFlag) {
-		err = printExtraTaskDetails(ctx, v, c, appId, entitlementId)
-		if err != nil {
-			return err
-		}
 	}
 
 	outputManager := output.NewManager(ctx, v)

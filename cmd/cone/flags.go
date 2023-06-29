@@ -5,17 +5,17 @@ import (
 )
 
 const (
-	waitFlag               = "wait"
-	entitlementIdFlag      = "entitlement-id"
-	appIdFlag              = "app-id"
-	entitlementAliasFlag   = "alias"
-	queryFlag              = "query"
-	justificationFlag      = "justification"
-	durationFlag           = "duration"
-	forceFlag              = "force"
-	nonInteractiveFlag     = "non-interactive"
-	emergencyAccessFlag    = "emergency-access"
-	entitlementDetailsFlag = "detailed"
+	waitFlag             = "wait"
+	entitlementIdFlag    = "entitlement-id"
+	appIdFlag            = "app-id"
+	entitlementAliasFlag = "alias"
+	queryFlag            = "query"
+	justificationFlag    = "justification"
+	durationFlag         = "duration"
+	forceFlag            = "force"
+	nonInteractiveFlag   = "non-interactive"
+	emergencyAccessFlag  = "emergency-access"
+	extraDetailsFlag     = "detailed"
 )
 
 func addWaitFlag(cmd *cobra.Command) {
@@ -56,5 +56,5 @@ func addForceTaskCreateFlag(cmd *cobra.Command) {
 }
 
 func addEntitlementDetailsFlag(cmd *cobra.Command) {
-	cmd.Flags().Bool(entitlementDetailsFlag, false, "Show entitlement details")
+	cmd.Flags().Bool(extraDetailsFlag, false, "Show extra details")
 }

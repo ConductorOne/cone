@@ -27,12 +27,14 @@ func (c *client) CreateGrantTask(
 	identityUserId string,
 	justification string,
 	duration string,
+	emergencyAccess bool,
 ) (*shared.TaskServiceCreateGrantResponse, error) {
 	req := shared.TaskServiceCreateGrantRequest{
 		AppEntitlementID: &appEntitlementId,
 		IdentityUserID:   &identityUserId,
 		AppID:            &appId,
 		Description:      &justification,
+		EmergencyAccess:  &emergencyAccess,
 	}
 	if duration != "" {
 		req.GrantDuration = &duration

@@ -15,7 +15,7 @@ const (
 	forceFlag              = "force"
 	nonInteractiveFlag     = "non-interactive"
 	emergencyAccessFlag    = "emergency-access"
-	entitlementDetailsFlag = "entitlement-details"
+	entitlementDetailsFlag = "detailed"
 )
 
 func addWaitFlag(cmd *cobra.Command) {

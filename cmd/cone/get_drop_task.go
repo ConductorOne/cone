@@ -204,6 +204,11 @@ func runGet(cmd *cobra.Command, args []string) error {
 			return nil, err
 		}
 
+		if v.GetBool(entitlementDetailsFlag) {
+			printAppDetails(v, ctx, c, appId)
+			printEntitlementDetails(v, ctx, c, appId, entitlementId)
+		}
+
 		// entitlement.DurationGrant is assumed to be nil or a non-zero parsable string
 		durationStr := client.StringFromPtr(entitlement.DurationGrant)
 		var maxProvision *time.Duration
@@ -248,8 +253,38 @@ func runDrop(cmd *cobra.Command, args []string) error {
 	})
 }
 
-func printEntitlementDetails(ctx context.Context, c client.C1Client, entitlementId string, appId string) error {
+func printAppDetails(v *viper.Viper, ctx context.Context, c client.C1Client, appId string) error {
 
+	appVal, err := c.GetApp(ctx, appId)
+	if err != nil {
+		return err
+	}
+
+	outputManager := output.NewManager(ctx, v)
+	app := App(*appVal)
+	err = outputManager.Output(ctx, &app)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func printEntitlementDetails(v *viper.Viper, ctx context.Context, c client.C1Client, appId string, entitlementId string) error {
+
+	entitlementVal, err := c.GetEntitlement(ctx, appId, entitlementId)
+	if err != nil {
+		return err
+	}
+
+	outputManager := output.NewManager(ctx, v)
+	entitlement := Entitlement(*entitlementVal)
+	err = outputManager.Output(ctx, &entitlement)
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
 
 func runTask(
@@ -300,10 +335,6 @@ func runTask(
 			pterm.Println("You do not have existing grants to drop for this entitlement. Use --force to override this check.")
 			return nil
 		}
-	}
-
-	if v.GetBool(entitlementDetailsFlag) {
-		printEntitlementDetails(ctx, c, appId, entitlementId)
 	}
 
 	task, err := run(c, ctx, appId, entitlementId, client.StringFromPtr(resp.UserID), justification)

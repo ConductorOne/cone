@@ -60,17 +60,18 @@ func searchTasksRun(cmd *cobra.Command, args []string) error {
 	}
 
 	var taskTypes []shared.TaskType
-	var taskType shared.TaskType
+	var taskType *shared.TaskType
 	switch strings.ToLower(v.GetString(taskTypeFlag)) {
 	case "grant":
-		taskType.Grant = &shared.TaskTypeGrant{}
+		taskType = &shared.TaskType{Grant: &shared.TaskTypeGrant{}}
 	case "revoke":
-		taskType.Revoke = &shared.TaskTypeRevoke{}
+		taskType = &shared.TaskType{Revoke: &shared.TaskTypeRevoke{}}
 	case "certify":
-		taskType.Certify = &shared.TaskTypeCertify{}
+		taskType = &shared.TaskType{Certify: &shared.TaskTypeCertify{}}
 	}
-	if taskType != (shared.TaskType{}) {
-		taskTypes = []shared.TaskType{taskType}
+
+	if taskType != nil {
+		taskTypes = []shared.TaskType{*taskType}
 	}
 
 	taskResp, err := c.SearchTasks(ctx, shared.TaskSearchRequest{

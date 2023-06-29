@@ -249,6 +249,16 @@ func runDrop(cmd *cobra.Command, args []string) error {
 		if err != nil {
 			return nil, err
 		}
+		_, _, v, err := cmdContext(cmd)
+		if err != nil {
+			return nil, err
+		}
+
+		if v.GetBool(entitlementDetailsFlag) {
+			printAppDetails(v, ctx, c, appId)
+			printEntitlementDetails(v, ctx, c, appId, entitlementId)
+		}
+
 		return accessRequest.TaskView.Task, nil
 	})
 }

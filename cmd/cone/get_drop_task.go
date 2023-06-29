@@ -204,13 +204,6 @@ func runGet(cmd *cobra.Command, args []string) error {
 			return nil, err
 		}
 
-		if v.GetBool(entitlementDetailsFlag) {
-			err = printExtraTaskDetails(v, ctx, c, appId, entitlementId)
-			if err != nil {
-				return nil, err
-			}
-		}
-
 		// entitlement.DurationGrant is assumed to be nil or a non-zero parsable string
 		durationStr := client.StringFromPtr(entitlement.DurationGrant)
 		var maxProvision *time.Duration
@@ -251,22 +244,11 @@ func runDrop(cmd *cobra.Command, args []string) error {
 		if err != nil {
 			return nil, err
 		}
-		_, _, v, err := cmdContext(cmd)
-		if err != nil {
-			return nil, err
-		}
-
-		if v.GetBool(entitlementDetailsFlag) {
-			err = printExtraTaskDetails(v, ctx, c, appId, entitlementId)
-			if err != nil {
-				return nil, err
-			}
-		}
 		return accessRequest.TaskView.Task, nil
 	})
 }
 
-func printExtraTaskDetails(v *viper.Viper, ctx context.Context, c client.C1Client, appId string, entitlementId string) error {
+func printExtraTaskDetails(ctx context.Context, v *viper.Viper, c client.C1Client, appId string, entitlementId string) error {
 	entitlementVal, err := c.GetEntitlement(ctx, appId, entitlementId)
 	if err != nil {
 		return err
@@ -345,6 +327,13 @@ func runTask(
 	task, err := run(c, ctx, appId, entitlementId, client.StringFromPtr(resp.UserID), justification)
 	if err != nil {
 		return err
+	}
+
+	if v.GetBool(entitlementDetailsFlag) {
+		err = printExtraTaskDetails(ctx, v, c, appId, entitlementId)
+		if err != nil {
+			return err
+		}
 	}
 
 	outputManager := output.NewManager(ctx, v)

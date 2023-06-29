@@ -57,7 +57,7 @@ func loginRun(cmd *cobra.Command, args []string) error {
 	urlHandler := webbrowser.Open
 	if v.GetBool("no-browser") {
 		urlHandler = func(url string) error {
-			spinner.InfoPrinter.Println("Log in at " + url)
+			spinner.InfoPrinter.Println("Click to authorize Cone: " + url)
 			return nil
 		}
 	}

@@ -205,8 +205,7 @@ func runGet(cmd *cobra.Command, args []string) error {
 		}
 
 		if v.GetBool(entitlementDetailsFlag) {
-			printAppDetails(v, ctx, c, appId)
-			printEntitlementDetails(v, ctx, c, appId, entitlementId)
+			printExtraTaskDetails(v, ctx, c, appId, entitlementId)
 		}
 
 		// entitlement.DurationGrant is assumed to be nil or a non-zero parsable string
@@ -255,32 +254,17 @@ func runDrop(cmd *cobra.Command, args []string) error {
 		}
 
 		if v.GetBool(entitlementDetailsFlag) {
-			printAppDetails(v, ctx, c, appId)
-			printEntitlementDetails(v, ctx, c, appId, entitlementId)
+			err = printExtraTaskDetails(v, ctx, c, appId, entitlementId)
+			if err != nil {
+				return nil, err
+			}
 		}
 
 		return accessRequest.TaskView.Task, nil
 	})
 }
 
-func printAppDetails(v *viper.Viper, ctx context.Context, c client.C1Client, appId string) error {
-
-	appVal, err := c.GetApp(ctx, appId)
-	if err != nil {
-		return err
-	}
-
-	outputManager := output.NewManager(ctx, v)
-	app := App(*appVal)
-	err = outputManager.Output(ctx, &app)
-	if err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func printEntitlementDetails(v *viper.Viper, ctx context.Context, c client.C1Client, appId string, entitlementId string) error {
+func printExtraTaskDetails(v *viper.Viper, ctx context.Context, c client.C1Client, appId string, entitlementId string) error {
 
 	entitlementVal, err := c.GetEntitlement(ctx, appId, entitlementId)
 	if err != nil {
@@ -294,7 +278,19 @@ func printEntitlementDetails(v *viper.Viper, ctx context.Context, c client.C1Cli
 		return err
 	}
 
+	appVal, err := c.GetApp(ctx, appId)
+	if err != nil {
+		return err
+	}
+
+	app := App(*appVal)
+	err = outputManager.Output(ctx, &app)
+	if err != nil {
+		return err
+	}
+
 	return nil
+
 }
 
 func runTask(

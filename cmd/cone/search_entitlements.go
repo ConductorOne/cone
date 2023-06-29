@@ -98,6 +98,18 @@ func (r *ExpandedEntitlementsResponse) Rows() [][]string {
 	}
 	return rows
 }
+func (r *ExpandedEntitlementsResponse) sortByColumn() string {
+	return "Display Name"
+}
+
+func (r *ExpandedEntitlementsResponse) SortByColumn() int {
+	for i, h := range r.Header() {
+		if h == r.sortByColumn() {
+			return i
+		}
+	}
+	return -1
+}
 
 func (r *ExpandedEntitlementsResponse) WideRows() [][]string {
 	rows := r.Rows()

@@ -261,13 +261,13 @@ func printExtraTaskDetails(ctx context.Context, v *viper.Viper, c client.C1Clien
 		return err
 	}
 
-	app := App(*appVal)
+	app := App{app: appVal, client: c}
 	err = outputManager.Output(ctx, &app)
 	if err != nil {
 		return err
 	}
 
-	entitlement := Entitlement(*entitlementVal)
+	entitlement := Entitlement{entitlement: entitlementVal, client: c}
 	err = outputManager.Output(ctx, &entitlement)
 	if err != nil {
 		return err

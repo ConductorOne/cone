@@ -205,7 +205,10 @@ func runGet(cmd *cobra.Command, args []string) error {
 		}
 
 		if v.GetBool(entitlementDetailsFlag) {
-			printExtraTaskDetails(v, ctx, c, appId, entitlementId)
+			err = printExtraTaskDetails(v, ctx, c, appId, entitlementId)
+			if err != nil {
+				return nil, err
+			}
 		}
 
 		// entitlement.DurationGrant is assumed to be nil or a non-zero parsable string
@@ -290,7 +293,6 @@ func printExtraTaskDetails(v *viper.Viper, ctx context.Context, c client.C1Clien
 	}
 
 	return nil
-
 }
 
 func runTask(

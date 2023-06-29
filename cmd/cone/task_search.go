@@ -69,7 +69,7 @@ func searchTasksRun(cmd *cobra.Command, args []string) error {
 	case "certify":
 		taskType.Certify = &shared.TaskTypeCertify{}
 	}
-	if len(taskTypes) != 0 {
+	if taskType != (shared.TaskType{}) {
 		taskTypes = []shared.TaskType{taskType}
 	}
 

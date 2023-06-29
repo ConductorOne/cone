@@ -41,7 +41,6 @@ func dropCmd() *cobra.Command {
 		Short: "Create a revoke access ticket for an entitlement by alias",
 		RunE:  runDrop,
 	}
-
 	return taskCmd(cmd)
 }
 
@@ -53,6 +52,7 @@ func taskCmd(cmd *cobra.Command) *cobra.Command {
 	addQueryFlag(cmd)
 	addEntitlementAliasFlag(cmd)
 	addForceTaskCreateFlag(cmd)
+	addEntitlementDetailsFlag(cmd)
 	return cmd
 }
 
@@ -248,6 +248,10 @@ func runDrop(cmd *cobra.Command, args []string) error {
 	})
 }
 
+func printEntitlementDetails(ctx context.Context, c client.C1Client, entitlementId string, appId string) error {
+
+}
+
 func runTask(
 	cmd *cobra.Command,
 	args []string,
@@ -296,6 +300,10 @@ func runTask(
 			pterm.Println("You do not have existing grants to drop for this entitlement. Use --force to override this check.")
 			return nil
 		}
+	}
+
+	if v.GetBool(entitlementDetailsFlag) {
+		printEntitlementDetails(ctx, c, appId, entitlementId)
 	}
 
 	task, err := run(c, ctx, appId, entitlementId, client.StringFromPtr(resp.UserID), justification)

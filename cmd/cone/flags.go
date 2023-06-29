@@ -5,16 +5,17 @@ import (
 )
 
 const (
-	waitFlag             = "wait"
-	entitlementIdFlag    = "entitlement-id"
-	appIdFlag            = "app-id"
-	entitlementAliasFlag = "alias"
-	queryFlag            = "query"
-	justificationFlag    = "justification"
-	durationFlag         = "duration"
-	forceFlag            = "force"
-	nonInteractiveFlag   = "non-interactive"
-	emergencyAccessFlag  = "emergency-access"
+	waitFlag               = "wait"
+	entitlementIdFlag      = "entitlement-id"
+	appIdFlag              = "app-id"
+	entitlementAliasFlag   = "alias"
+	queryFlag              = "query"
+	justificationFlag      = "justification"
+	durationFlag           = "duration"
+	forceFlag              = "force"
+	nonInteractiveFlag     = "non-interactive"
+	emergencyAccessFlag    = "emergency-access"
+	entitlementDetailsFlag = "entitlement-details"
 )
 
 func addWaitFlag(cmd *cobra.Command) {
@@ -52,4 +53,8 @@ func addEmergencyAccessFlag(cmd *cobra.Command) {
 
 func addForceTaskCreateFlag(cmd *cobra.Command) {
 	cmd.Flags().Bool(forceFlag, false, "Force the creation of a task even if the user already has (or doesn't have) the entitlement.")
+}
+
+func addEntitlementDetailsFlag(cmd *cobra.Command) {
+	cmd.Flags().Bool(entitlementDetailsFlag, false, "Show entitlement details")
 }

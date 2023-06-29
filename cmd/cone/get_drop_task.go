@@ -267,7 +267,6 @@ func runDrop(cmd *cobra.Command, args []string) error {
 }
 
 func printExtraTaskDetails(v *viper.Viper, ctx context.Context, c client.C1Client, appId string, entitlementId string) error {
-
 	entitlementVal, err := c.GetEntitlement(ctx, appId, entitlementId)
 	if err != nil {
 		return err

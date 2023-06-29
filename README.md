@@ -22,18 +22,13 @@ ConductorOne provides `cone` binaries for popular operating systems including ma
 
 > **Note:** API Key access to ConductorOne is currently in Early Access. To use `Cone`, a feature flag must be enabled for your tenant. Please contact your ConductorOne representative for more information.
 
-To allow `cone` to interact with ConductorOne on your behalf, you need to generate your `client-id` and `client-secret` via the ConductorOne web application. The following steps guide you:
+```shell
+$ cone login <tenant-name-or-url>
+```
 
-1. **Log in to the ConductorOne Web Application**: Open your web browser and navigate to the ConductorOne Web Application.
-2. **Access the API Keys section**: Once logged in, click on your user profile arrow. Select "API Keys" from the dropdown menu.
-3. **Create a new API Key**: Click on the "Create credential" button in the API Keys section. Provide a distinctive and easily identifiable name for your new API Key.
-4. **Generate your client-id and client-secret**: After naming your API Key, click "Create". The system will generate your `client-id` and `client-secret`. _The `client-secret` is only visible once. Ensure to copy it and store it securely._
-5. **Copy your client-id and client-secret into the Cone configuration file**: Paste the `client-id` and `client-secret` into the Cone configuration file located at `$HOME/.conductorone/config.yaml`, under the default profile:
+![Login Demo](./docs/images/login.gif)
 
-![API Key Demo](./docs/images/api-credential.gif)
-
-
-Here's a Cone configuration file template. Replace `<Your-Client-ID-Goes-Here>` and `<Your-Client-Secret-Goes-Here>` with the actual `client-id` and `client-secret` values:
+Here's a Cone configuration file that will be created by `login`. This file is located at `$HOME/.conductorone/config.yaml`.
 
 ```yaml
 profiles:
@@ -41,8 +36,6 @@ profiles:
     client-id: <Your-Client-ID-Goes-Here>
     client-secret: <Your-Client-Secret-Goes-Here>
 ```
-
-> **Note:** We plan to implement a `cone login` command in future `cone` versions to further simplify this process.
 
 # Leveraging `cone`
 

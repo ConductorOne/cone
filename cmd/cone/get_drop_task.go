@@ -262,7 +262,6 @@ func runDrop(cmd *cobra.Command, args []string) error {
 				return nil, err
 			}
 		}
-
 		return accessRequest.TaskView.Task, nil
 	})
 }
@@ -291,7 +290,6 @@ func printExtraTaskDetails(v *viper.Viper, ctx context.Context, c client.C1Clien
 	if err != nil {
 		return err
 	}
-
 	return nil
 }
 

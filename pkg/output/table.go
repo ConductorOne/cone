@@ -26,7 +26,7 @@ func (c *tableManager) isInt(v string) bool {
 
 func (c *tableManager) isIntColumn(tableData [][]string, col int) bool {
 	for _, row := range tableData {
-		if row[col] != "" || !c.isInt(row[col]) {
+		if row[col] != "" && !c.isInt(row[col]) {
 			return false
 		}
 	}

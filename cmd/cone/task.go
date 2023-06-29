@@ -7,6 +7,7 @@ import (
 
 	"github.com/conductorone/conductorone-sdk-go/pkg/models/shared"
 	"github.com/conductorone/cone/pkg/client"
+	"github.com/conductorone/cone/pkg/output"
 )
 
 func tasksCmd() *cobra.Command {
@@ -43,7 +44,7 @@ func (r *Task) Header() []string {
 }
 
 func (r *Task) WideHeader() []string {
-	return append(r.Header(), "Emergency Access Requested")
+	return append(r.Header(), "Emergency Access")
 }
 
 func (r *Task) rows() []string {
@@ -60,9 +61,9 @@ func (r *Task) Rows() [][]string {
 func (r *Task) WideRows() [][]string {
 	var emergencyAccess string
 	if r.task.EmergencyAccess != nil && *r.task.EmergencyAccess {
-		emergencyAccess = "✓"
+		emergencyAccess = output.Checkmark
 	} else {
-		emergencyAccess = " "
+		emergencyAccess = output.Unchecked
 	}
 	return [][]string{append(r.rows(), emergencyAccess)}
 }

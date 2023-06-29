@@ -54,7 +54,7 @@ func (r *TaskGetResponse) Header() []string {
 }
 
 func (r *TaskGetResponse) WideHeader() []string {
-	return append(r.Header(), "Emergency Access Requested")
+	return append(r.Header(), "Emergency Access")
 }
 func (r *TaskGetResponse) rows() []string {
 	return []string{
@@ -71,9 +71,9 @@ func (r *TaskGetResponse) Rows() [][]string {
 func (r *TaskGetResponse) WideRows() [][]string {
 	var emergencyAccess string
 	if r.EmergencyAccess != nil && *r.EmergencyAccess {
-		emergencyAccess = "✓"
+		emergencyAccess = output.Checkmark
 	} else {
-		emergencyAccess = " "
+		emergencyAccess = output.Unchecked
 	}
 	return [][]string{append(r.rows(), emergencyAccess)}
 }

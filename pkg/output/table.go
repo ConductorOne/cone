@@ -13,6 +13,9 @@ type tableManager struct {
 	isWide bool
 }
 
+var Checkmark = pterm.Green("✓")
+var Unchecked = ""
+
 func (c *tableManager) Output(ctx context.Context, out interface{}) error {
 	var header func() []string
 	var rows func() [][]string

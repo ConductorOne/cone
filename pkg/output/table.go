@@ -14,7 +14,8 @@ type tableManager struct {
 }
 
 var Checkmark = pterm.Green("✓")
-var Unchecked = ""
+
+const Unchecked = ""
 
 func (c *tableManager) Output(ctx context.Context, out interface{}) error {
 	var header func() []string

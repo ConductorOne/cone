@@ -10,6 +10,7 @@ type App shared.App
 func (r *App) Header() []string {
 	return []string{
 		"App Name",
+		"App ID",
 		"Description",
 	}
 }
@@ -17,6 +18,7 @@ func (r *App) Header() []string {
 func (r *App) Rows() [][]string {
 	return [][]string{{
 		client.StringFromPtr(r.DisplayName),
+		client.StringFromPtr(r.ID),
 		client.StringFromPtr(r.Description),
 	}}
 }

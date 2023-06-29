@@ -11,6 +11,7 @@ func (r *Entitlement) Header() []string {
 	return []string{
 		"Entitlement",
 		"Description",
+		"Slug",
 	}
 }
 
@@ -18,5 +19,6 @@ func (r *Entitlement) Rows() [][]string {
 	return [][]string{{
 		client.StringFromPtr(r.DisplayName),
 		client.StringFromPtr(r.Description),
+		client.StringFromPtr(r.Slug),
 	}}
 }

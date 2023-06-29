@@ -249,19 +249,14 @@ func runDrop(cmd *cobra.Command, args []string) error {
 }
 
 func printExtraTaskDetails(ctx context.Context, v *viper.Viper, c client.C1Client, appId string, entitlementId string) error {
-	entitlementVal, err := c.GetEntitlement(ctx, appId, entitlementId)
-	if err != nil {
-		return err
-	}
-
 	outputManager := output.NewManager(ctx, v)
-	entitlement := Entitlement(*entitlementVal)
-	err = outputManager.Output(ctx, &entitlement)
-	if err != nil {
-		return err
-	}
 
 	appVal, err := c.GetApp(ctx, appId)
+	if err != nil {
+		return err
+	}
+
+	entitlementVal, err := c.GetEntitlement(ctx, appId, entitlementId)
 	if err != nil {
 		return err
 	}
@@ -271,6 +266,13 @@ func printExtraTaskDetails(ctx context.Context, v *viper.Viper, c client.C1Clien
 	if err != nil {
 		return err
 	}
+
+	entitlement := Entitlement(*entitlementVal)
+	err = outputManager.Output(ctx, &entitlement)
+	if err != nil {
+		return err
+	}
+
 	return nil
 }
 

@@ -3,7 +3,11 @@ package output
 import (
 	"context"
 	"errors"
+	"sort"
+	"strconv"
 	"time"
+
+	"golang.org/x/exp/slices"
 
 	"github.com/pterm/pterm"
 )
@@ -17,31 +21,85 @@ var Checkmark = pterm.Green("✓")
 
 const Unchecked = ""
 
-func (c *tableManager) Output(ctx context.Context, out interface{}) error {
-	var header func() []string
-	var rows func() [][]string
+func (c *tableManager) isInt(v string) bool {
+	_, err := strconv.Atoi(v)
+	return err == nil
+}
+
+func (c *tableManager) isIntColumn(tableData [][]string, col int) bool {
+	for _, row := range tableData {
+		if row[col] != "" && !c.isInt(row[col]) {
+			return false
+		}
+	}
+	return true
+}
+
+func (c *tableManager) sortData(header []string, tableData [][]string, out interface{}) {
+	sortCol := -1
+	sorter, sorterOk := out.(TableSort)
+	if sorterOk {
+		sortCol = slices.Index(header, sorter.SortByColumnName())
+	}
+	if sortCol == -1 {
+		for i, col := range tableData[0] {
+			if col != "" {
+				sortCol = i
+				break
+			}
+		}
+	}
+	if c.isIntColumn(tableData, sortCol) {
+		sort.SliceStable(tableData, func(i, j int) bool {
+			ii, _ := strconv.Atoi(tableData[i][sortCol])
+			jj, _ := strconv.Atoi(tableData[j][sortCol])
+			return ii < jj
+		})
+	} else {
+		sort.SliceStable(tableData, func(i, j int) bool {
+			return tableData[i][sortCol] < tableData[j][sortCol]
+		})
+	}
+}
+
+func (c *tableManager) getTableData(out interface{}) (pterm.TableData, error) {
+	var getHeader func() []string
+	var getRows func() [][]string
 
 	tablePrinter, okTable := out.(TablePrint)
 	wideTablePrinter, okWideTable := out.(WideTablePrint)
 	if !okTable && !okWideTable {
-		return errors.New("unexpected output model")
+		return nil, errors.New("unexpected output model")
 	}
 	if c.isWide && okWideTable || !okTable {
 		// If we want the wide output, and the model supports it, use it. Or if the model doesn't support the table output, use the wide output.
-		header = wideTablePrinter.WideHeader
-		rows = wideTablePrinter.WideRows
+		getHeader = wideTablePrinter.WideHeader
+		getRows = wideTablePrinter.WideRows
 	} else {
 		// Otherwise, use the table output
-		header = tablePrinter.Header
-		rows = tablePrinter.Rows
+		getHeader = tablePrinter.Header
+		getRows = tablePrinter.Rows
 	}
+	header := getHeader()
+	rows := getRows()
+	c.sortData(header, rows, out)
+
+	tableData := pterm.TableData{header}
+	tableData = append(tableData, rows...)
+	return tableData, nil
+}
+
+func (c *tableManager) Output(ctx context.Context, out interface{}) error {
 	var preTableText string
 	if p, ok := out.(PreText); ok {
 		preTableText = p.Pretext()
 	}
 
-	tableData := pterm.TableData{header()}
-	tableData = append(tableData, rows()...)
+	tableData, err := c.getTableData(out)
+	if err != nil {
+		return err
+	}
+
 	table := pterm.DefaultTable.WithHasHeader().WithData(tableData)
 	if c.area != nil {
 		data, err := table.Srender()
@@ -86,4 +144,8 @@ type WideTablePrint interface {
 
 type PreText interface {
 	Pretext() string
+}
+
+type TableSort interface {
+	SortByColumnName() string
 }

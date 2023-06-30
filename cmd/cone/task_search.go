@@ -121,3 +121,21 @@ func (r *TaskSearchResponse) Rows() [][]string {
 
 	return rows
 }
+
+func (r *TaskSearchResponse) WideHeader() []string {
+	task := Task{}
+	return task.WideHeader()
+}
+
+func (r *TaskSearchResponse) WideRows() [][]string {
+	rows := [][]string{}
+	for _, task := range r.List {
+		t := Task{
+			task:   task.Task,
+			client: nil,
+		}
+		rows = append(rows, t.WideRows()[0])
+	}
+
+	return rows
+}

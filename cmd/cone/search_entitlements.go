@@ -82,9 +82,9 @@ func (r *ExpandedEntitlementsResponse) Rows() [][]string {
 			client.StringFromPtr(e.Entitlement.AppResourceID),
 		)
 
-		granted := "✓"
+		granted := output.Checkmark
 		if len(e.Bindings) == 0 {
-			granted = ""
+			granted = output.Unchecked
 		}
 
 		rows = append(rows, []string{

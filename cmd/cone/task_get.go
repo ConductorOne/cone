@@ -53,14 +53,27 @@ func (r *TaskGetResponse) Header() []string {
 	}
 }
 
-func (r *TaskGetResponse) Rows() [][]string {
-	return [][]string{
-		{
-			client.StringFromPtr(r.NumericID),
-			client.StringFromPtr(r.DisplayName),
-			taskStateToString[*r.State],
-			processStateToString[*r.Processing],
-			output.FormatTime(r.CreatedAt),
-		},
+func (r *TaskGetResponse) WideHeader() []string {
+	return append(r.Header(), "Emergency Access")
+}
+func (r *TaskGetResponse) rows() []string {
+	return []string{
+		client.StringFromPtr(r.NumericID),
+		client.StringFromPtr(r.DisplayName),
+		taskStateToString[*r.State],
+		processStateToString[*r.Processing],
+		output.FormatTime(r.CreatedAt),
 	}
+}
+func (r *TaskGetResponse) Rows() [][]string {
+	return [][]string{r.rows()}
+}
+func (r *TaskGetResponse) WideRows() [][]string {
+	var emergencyAccess string
+	if r.EmergencyAccess != nil && *r.EmergencyAccess {
+		emergencyAccess = output.Checkmark
+	} else {
+		emergencyAccess = output.Unchecked
+	}
+	return [][]string{append(r.rows(), emergencyAccess)}
 }

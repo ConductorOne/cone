@@ -14,6 +14,7 @@ const (
 	durationFlag         = "duration"
 	forceFlag            = "force"
 	nonInteractiveFlag   = "non-interactive"
+	emergencyAccessFlag  = "emergency-access"
 )
 
 func addWaitFlag(cmd *cobra.Command) {
@@ -43,6 +44,10 @@ func addJustificationFlag(cmd *cobra.Command) {
 func addGrantDurationFlag(cmd *cobra.Command) {
 	usageStr := "A sequence of decimal numbers, each with optional fraction and a unit suffix, such as \"12h\", \"1w2d\" or \"2h45m\". Valid units are (m)inutes, (h)ours, (d)ays, (w)eeks."
 	cmd.Flags().StringP(durationFlag, "d", "", usageStr)
+}
+
+func addEmergencyAccessFlag(cmd *cobra.Command) {
+	cmd.Flags().Bool(emergencyAccessFlag, false, "Request emergency access to the entitlement")
 }
 
 func addForceTaskCreateFlag(cmd *cobra.Command) {

@@ -31,6 +31,7 @@ func getCmd() *cobra.Command {
 		RunE:  runGet,
 	}
 	addGrantDurationFlag(cmd)
+	addEmergencyAccessFlag(cmd)
 	return taskCmd(cmd)
 }
 
@@ -191,6 +192,7 @@ func runGet(cmd *cobra.Command, args []string) error {
 
 	return runTask(cmd, args, func(c client.C1Client, ctx context.Context, appId string, entitlementId string, userId string, justification string) (*shared.Task, error) {
 		duration := v.GetString(durationFlag)
+		emergencyAccess := v.GetBool(emergencyAccessFlag)
 
 		entitlement, err := c.GetEntitlement(ctx, appId, entitlementId)
 		if err != nil {
@@ -222,7 +224,7 @@ func runGet(cmd *cobra.Command, args []string) error {
 			apiDuration = fmt.Sprintf("%ds", seconds)
 		}
 
-		accessRequest, err := c.CreateGrantTask(ctx, appId, entitlementId, userId, justification, apiDuration)
+		accessRequest, err := c.CreateGrantTask(ctx, appId, entitlementId, userId, justification, apiDuration, emergencyAccess)
 		if err != nil {
 			errorBody := err.Error()
 			if strings.Contains(errorBody, durationErrorMessage) {

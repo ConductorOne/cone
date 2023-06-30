@@ -26,7 +26,6 @@ func (r *App) Header() []string {
 func (r *App) Rows() [][]string {
 	return [][]string{{
 		client.StringFromPtr(r.app.DisplayName),
-
 		client.StringFromPtr(r.app.Description),
 	}}
 }

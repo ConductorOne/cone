@@ -56,5 +56,5 @@ func addForceTaskCreateFlag(cmd *cobra.Command) {
 }
 
 func addEntitlementDetailsFlag(cmd *cobra.Command) {
-	cmd.Flags().Bool(extraDetailsFlag, false, "Show extra details")
+	cmd.Flags().Bool(extraDetailsFlag, false, "Show more details about the app and entitlement for this request")
 }

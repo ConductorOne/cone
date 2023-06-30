@@ -60,8 +60,10 @@ type ExpandedEntitlementsResponse struct {
 	expander     *client.Expander
 }
 
+const sortByColumnName = "Display Name"
+
 func (r *ExpandedEntitlementsResponse) Header() []string {
-	return []string{"", "Alias", "Display Name", "App", "Resource Type", "Resource"}
+	return []string{"", "Alias", sortByColumnName, "App", "Resource Type", "Resource"}
 }
 
 func (r *ExpandedEntitlementsResponse) WideHeader() []string {
@@ -98,17 +100,8 @@ func (r *ExpandedEntitlementsResponse) Rows() [][]string {
 	}
 	return rows
 }
-func (r *ExpandedEntitlementsResponse) sortByColumn() string {
-	return "Display Name"
-}
-
-func (r *ExpandedEntitlementsResponse) SortByColumn() int {
-	for i, h := range r.Header() {
-		if h == r.sortByColumn() {
-			return i
-		}
-	}
-	return -1
+func (r *ExpandedEntitlementsResponse) SortByColumnName() string {
+	return sortByColumnName
 }
 
 func (r *ExpandedEntitlementsResponse) WideRows() [][]string {

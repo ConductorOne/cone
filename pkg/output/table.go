@@ -7,6 +7,8 @@ import (
 	"strconv"
 	"time"
 
+	"golang.org/x/exp/slices"
+
 	"github.com/pterm/pterm"
 )
 
@@ -37,7 +39,7 @@ func (c *tableManager) sortData(header []string, tableData [][]string, out inter
 	sortCol := -1
 	sorter, sorterOk := out.(TableSort)
 	if sorterOk {
-		sortCol = sorter.SortByColumn()
+		sortCol = slices.Index(header, sorter.SortByColumnName())
 	}
 	if sortCol == -1 {
 		for i, col := range tableData[0] {
@@ -145,5 +147,5 @@ type PreText interface {
 }
 
 type TableSort interface {
-	SortByColumn() int
+	SortByColumnName() string
 }

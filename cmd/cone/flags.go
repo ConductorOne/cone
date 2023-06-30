@@ -15,6 +15,7 @@ const (
 	forceFlag            = "force"
 	nonInteractiveFlag   = "non-interactive"
 	emergencyAccessFlag  = "emergency-access"
+	extraDetailsFlag     = "detailed"
 )
 
 func addWaitFlag(cmd *cobra.Command) {
@@ -52,4 +53,8 @@ func addEmergencyAccessFlag(cmd *cobra.Command) {
 
 func addForceTaskCreateFlag(cmd *cobra.Command) {
 	cmd.Flags().Bool(forceFlag, false, "Force the creation of a task even if the user already has (or doesn't have) the entitlement.")
+}
+
+func addEntitlementDetailsFlag(cmd *cobra.Command) {
+	cmd.Flags().Bool(extraDetailsFlag, false, "Show more details about the app and entitlement for this request")
 }

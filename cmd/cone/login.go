@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"os"
 	"path/filepath"
 
 	"github.com/pterm/pterm"
@@ -23,6 +24,7 @@ func loginCmd() *cobra.Command {
 	}
 
 	cmd.Flags().String("profile", "default", "Config profile to create or update.")
+	cmd.Flags().Bool("no-browser", false, "Print log-in URL instead of opening a browser window.")
 	return cmd
 }
 
@@ -46,12 +48,26 @@ func loginRun(cmd *cobra.Command, args []string) error {
 		profile = v.GetString("profile")
 	}
 
+	if _, err := os.Stat(defaultConfigPath()); os.IsNotExist(err) {
+		if err := os.MkdirAll(defaultConfigPath(), 0700); err != nil {
+			return err
+		}
+	}
+
+	urlHandler := webbrowser.Open
+	if v.GetBool("no-browser") {
+		urlHandler = func(url string) error {
+			spinner.InfoPrinter.Println("Click to authorize Cone: " + url)
+			return nil
+		}
+	}
+
 	creds, err := conductoroneapi.LoginFlow(
 		ctx,
 		tenant,
 		client.ConeClientID,
 		"Created by Cone",
-		webbrowser.Open,
+		urlHandler,
 	)
 	if err != nil {
 		spinner.Fail(err)

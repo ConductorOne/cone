@@ -41,7 +41,6 @@ func dropCmd() *cobra.Command {
 		Short: "Create a revoke access ticket for an entitlement by alias",
 		RunE:  runDrop,
 	}
-
 	return taskCmd(cmd)
 }
 
@@ -53,6 +52,7 @@ func taskCmd(cmd *cobra.Command) *cobra.Command {
 	addQueryFlag(cmd)
 	addEntitlementAliasFlag(cmd)
 	addForceTaskCreateFlag(cmd)
+	addEntitlementDetailsFlag(cmd)
 	return cmd
 }
 
@@ -248,6 +248,34 @@ func runDrop(cmd *cobra.Command, args []string) error {
 	})
 }
 
+func printExtraTaskDetails(ctx context.Context, v *viper.Viper, c client.C1Client, appId string, entitlementId string) error {
+	outputManager := output.NewManager(ctx, v)
+
+	appVal, err := c.GetApp(ctx, appId)
+	if err != nil {
+		return err
+	}
+
+	entitlementVal, err := c.GetEntitlement(ctx, appId, entitlementId)
+	if err != nil {
+		return err
+	}
+
+	app := App{app: appVal, client: c}
+	err = outputManager.Output(ctx, &app)
+	if err != nil {
+		return err
+	}
+
+	entitlement := Entitlement{entitlement: entitlementVal, client: c}
+	err = outputManager.Output(ctx, &entitlement)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
 func runTask(
 	cmd *cobra.Command,
 	args []string,
@@ -301,6 +329,13 @@ func runTask(
 	task, err := run(c, ctx, appId, entitlementId, client.StringFromPtr(resp.UserID), justification)
 	if err != nil {
 		return err
+	}
+
+	if v.GetBool(extraDetailsFlag) {
+		err = printExtraTaskDetails(ctx, v, c, appId, entitlementId)
+		if err != nil {
+			return err
+		}
 	}
 
 	outputManager := output.NewManager(ctx, v)

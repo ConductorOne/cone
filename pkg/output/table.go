@@ -89,7 +89,7 @@ func (c *tableManager) getTableData(out interface{}) (pterm.TableData, error) {
 	return tableData, nil
 }
 
-// Transpose Table is for single object outputs, instead of a single row table
+// Transpose Table is for single object outputs, instead of a single row table.
 func transposeTable(table [][]string) [][]string {
 	rows := len(table)
 	var lengthVar int

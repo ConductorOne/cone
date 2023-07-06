@@ -86,7 +86,26 @@ func (c *tableManager) getTableData(out interface{}) (pterm.TableData, error) {
 
 	tableData := pterm.TableData{header}
 	tableData = append(tableData, rows...)
+	tableData = transposeTable(tableData)
 	return tableData, nil
+}
+
+func transposeTable(table [][]string) [][]string {
+	rows := len(table)
+	cols := len(table[0])
+
+	transposed := make([][]string, cols)
+	for i := 0; i < cols; i++ {
+		transposed[i] = make([]string, rows)
+	}
+
+	for i := 0; i < rows; i++ {
+		for j := 0; j < cols; j++ {
+			transposed[j][i] = table[i][j]
+		}
+	}
+
+	return transposed
 }
 
 func (c *tableManager) Output(ctx context.Context, out interface{}) error {
@@ -101,6 +120,7 @@ func (c *tableManager) Output(ctx context.Context, out interface{}) error {
 	}
 
 	table := pterm.DefaultTable.WithHasHeader().WithData(tableData)
+
 	if c.area != nil {
 		data, err := table.Srender()
 		if err != nil {
@@ -115,9 +135,16 @@ func (c *tableManager) Output(ctx context.Context, out interface{}) error {
 		if preTableText != "" {
 			pterm.Println(preTableText)
 		}
-		err := table.Render()
-		if err != nil {
-			return err
+		if len(tableData) > 2 {
+			err := table.Render()
+			if err != nil {
+				return err
+			}
+		} else {
+			err := table.Render()
+			if err != nil {
+				return err
+			}
 		}
 	}
 

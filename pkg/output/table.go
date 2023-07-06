@@ -92,7 +92,13 @@ func (c *tableManager) getTableData(out interface{}) (pterm.TableData, error) {
 // Transpose Table is for single object outputs, instead of a single row table
 func transposeTable(table [][]string) [][]string {
 	rows := len(table)
-	cols := len(table[0]) - 1 // Exclude the first column, since its empty
+	var lengthVar int
+	if table[0][0] == "" {
+		lengthVar = len(table[0]) - 1 // Exclude the first column, if it is empty
+	} else {
+		lengthVar = len(table[0])
+	}
+	cols := lengthVar
 
 	transposed := make([][]string, cols)
 	for i := 0; i < cols; i++ {
@@ -101,7 +107,11 @@ func transposeTable(table [][]string) [][]string {
 
 	for i := 0; i < rows; i++ {
 		for j := 0; j < cols; j++ {
-			transposed[j][i] = table[i][j+1] // Skip the first column
+			if table[0][0] == "" {
+				transposed[j][i] = table[i][j+1] // Skip the first column
+			} else {
+				transposed[j][i] = table[i][j]
+			}
 		}
 	}
 	for i := 0; i < cols; i++ {

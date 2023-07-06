@@ -86,13 +86,13 @@ func (c *tableManager) getTableData(out interface{}) (pterm.TableData, error) {
 
 	tableData := pterm.TableData{header}
 	tableData = append(tableData, rows...)
-	tableData = transposeTable(tableData)
 	return tableData, nil
 }
 
+// Transpose Table is for single object outputs, instead of a single row table
 func transposeTable(table [][]string) [][]string {
 	rows := len(table)
-	cols := len(table[0])
+	cols := len(table[0]) - 1 // Exclude the first column, since its empty
 
 	transposed := make([][]string, cols)
 	for i := 0; i < cols; i++ {
@@ -101,9 +101,13 @@ func transposeTable(table [][]string) [][]string {
 
 	for i := 0; i < rows; i++ {
 		for j := 0; j < cols; j++ {
-			transposed[j][i] = table[i][j]
+			transposed[j][i] = table[i][j+1] // Skip the first column
 		}
 	}
+	for i := 0; i < cols; i++ {
+		transposed[i][0] = "\x1b[0;36m" + transposed[i][0] + "\x1b[0m"
+	}
+	transposed[0][1] = "\x1b[0;0m" + transposed[0][1] + "\x1b[0m"
 
 	return transposed
 }
@@ -141,6 +145,8 @@ func (c *tableManager) Output(ctx context.Context, out interface{}) error {
 				return err
 			}
 		} else {
+			tableData = transposeTable(tableData)
+			table := pterm.DefaultTable.WithHasHeader().WithData(tableData)
 			err := table.Render()
 			if err != nil {
 				return err

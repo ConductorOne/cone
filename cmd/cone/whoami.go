@@ -35,7 +35,7 @@ func whoAmIRun(cmd *cobra.Command, args []string) error {
 
 	resp := User(*userResp)
 	outputManager := output.NewManager(ctx, v)
-	err = outputManager.Output(ctx, &resp)
+	err = outputManager.Output(ctx, &resp, output.WithTransposeTable())
 	if err != nil {
 		return err
 	}

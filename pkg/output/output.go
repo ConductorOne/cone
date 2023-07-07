@@ -8,7 +8,7 @@ import (
 )
 
 type Manager interface {
-	Output(ctx context.Context, out interface{}) error
+	Output(ctx context.Context, out interface{}, opts ...outputOption) error
 }
 
 func NewManager(ctx context.Context, v *viper.Viper) Manager {
@@ -28,5 +28,17 @@ func NewManager(ctx context.Context, v *viper.Viper) Manager {
 		return &tableManager{area: area, isWide: true}
 	default:
 		return &tableManager{area: area, isWide: false}
+	}
+}
+
+type outputConfig struct {
+	isTransposed bool
+}
+
+type outputOption func(*outputConfig)
+
+func WithTransposeTable() outputOption {
+	return func(o *outputConfig) {
+		o.isTransposed = true
 	}
 }

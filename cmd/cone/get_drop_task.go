@@ -262,13 +262,13 @@ func printExtraTaskDetails(ctx context.Context, v *viper.Viper, c client.C1Clien
 	}
 
 	app := App{app: appVal, client: c}
-	err = outputManager.Output(ctx, &app)
+	err = outputManager.Output(ctx, &app, output.WithTransposeTable())
 	if err != nil {
 		return err
 	}
 
 	entitlement := Entitlement{entitlement: entitlementVal, client: c}
-	err = outputManager.Output(ctx, &entitlement)
+	err = outputManager.Output(ctx, &entitlement, output.WithTransposeTable())
 	if err != nil {
 		return err
 	}
@@ -340,7 +340,7 @@ func runTask(
 
 	outputManager := output.NewManager(ctx, v)
 	taskResp := Task{task: task, client: c}
-	err = outputManager.Output(ctx, &taskResp)
+	err = outputManager.Output(ctx, &taskResp, output.WithTransposeTable())
 	if err != nil {
 		return err
 	}
@@ -431,7 +431,7 @@ func handleWaitBehavior(ctx context.Context, c client.C1Client, task *shared.Tas
 
 		taskItem = task.TaskView.Task
 		taskResp := Task{task: taskItem, client: c}
-		err = outputManager.Output(ctx, &taskResp)
+		err = outputManager.Output(ctx, &taskResp, output.WithTransposeTable())
 		if err != nil {
 			return err
 		}

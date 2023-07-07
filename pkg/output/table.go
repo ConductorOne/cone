@@ -89,10 +89,37 @@ func (c *tableManager) getTableData(out interface{}) (pterm.TableData, error) {
 	return tableData, nil
 }
 
-func (c *tableManager) Output(ctx context.Context, out interface{}) error {
+// Transpose Table is for single object outputs, instead of a single row table.
+func transposeTable(table [][]string) [][]string {
+	rows := len(table)
+	cols := len(table[0])
+
+	transposed := make([][]string, cols)
+	for i := 0; i < cols; i++ {
+		transposed[i] = make([]string, rows)
+	}
+
+	for i := 0; i < rows; i++ {
+		for j := 0; j < cols; j++ {
+			transposed[j][i] = table[i][j]
+		}
+	}
+	for i := 0; i < cols; i++ {
+		transposed[i][0] = "\x1b[0;36m" + transposed[i][0] + "\x1b[0m"
+	}
+
+	return transposed
+}
+
+func (c *tableManager) Output(ctx context.Context, out interface{}, opts ...outputOption) error {
 	var preTableText string
 	if p, ok := out.(PreText); ok {
 		preTableText = p.Pretext()
+	}
+
+	outputConfig := &outputConfig{}
+	for _, opt := range opts {
+		opt(outputConfig)
 	}
 
 	tableData, err := c.getTableData(out)
@@ -100,7 +127,14 @@ func (c *tableManager) Output(ctx context.Context, out interface{}) error {
 		return err
 	}
 
-	table := pterm.DefaultTable.WithHasHeader().WithData(tableData)
+	table := &pterm.DefaultTable
+	if outputConfig.isTransposed {
+		tableData = transposeTable(tableData)
+	} else {
+		table = table.WithHasHeader()
+	}
+	table = table.WithData(tableData)
+
 	if c.area != nil {
 		data, err := table.Srender()
 		if err != nil {
@@ -115,6 +149,7 @@ func (c *tableManager) Output(ctx context.Context, out interface{}) error {
 		if preTableText != "" {
 			pterm.Println(preTableText)
 		}
+
 		err := table.Render()
 		if err != nil {
 			return err

@@ -14,7 +14,7 @@ type jsonManager struct {
 	pretty bool
 }
 
-func (j *jsonManager) Output(ctx context.Context, out interface{}) error {
+func (j *jsonManager) Output(ctx context.Context, out interface{}, opts ...outputOption) error {
 	if m, ok := out.(proto.Message); ok {
 		return j.printProto(ctx, m)
 	}

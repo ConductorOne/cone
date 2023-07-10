@@ -74,7 +74,7 @@ type C1Client interface {
 		identityUserId string,
 		justification string,
 	) (*shared.TaskServiceCreateRevokeResponse, error)
-	GetGrantsForIdentity(ctx context.Context, appID string, appEntitlementID string, appUserID string) ([]shared.AppEntitlementUserBinding, error)
+	GetGrantsForIdentity(ctx context.Context, appID string, appEntitlementID string, identityID string) ([]shared.AppEntitlementUserBinding, error)
 	SearchTasks(ctx context.Context, taskFilter shared.TaskSearchRequest) (*shared.TaskSearchResponse, error)
 	CommentOnTask(ctx context.Context, taskID string, comment string) (*shared.TaskActionsServiceCommentResponse, error)
 	ApproveTask(ctx context.Context, taskId string, comment string, policyId string) (*shared.TaskActionsServiceApproveResponse, error)

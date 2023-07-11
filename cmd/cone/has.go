@@ -28,21 +28,10 @@ func hasCmd() *cobra.Command {
 	return cmd
 }
 
-func exitCodeHandler(exitCode int, err error) error {
-	if exitCode == 2 {
-		return err
-	} else if exitCode == 1 {
-		os.Exit(1)
-	}
-	return nil
-}
-
 func hasRun(cmd *cobra.Command, args []string) error {
 	ctx, c, v, err := cmdContext(cmd)
-	exitCodeValue := 1
 	if err != nil {
-		exitCodeValue = 2
-		return exitCodeHandler(exitCodeValue, err)
+		return err
 	}
 
 	if len(args) != 2 {
@@ -55,23 +44,19 @@ func hasRun(cmd *cobra.Command, args []string) error {
 
 	userIntro, err := c.AuthIntrospect(ctx)
 	if err != nil {
-		exitCodeValue = 2
-		return exitCodeHandler(exitCodeValue, err)
+		return err
 	}
 	grants, err := c.GetGrantsForIdentity(ctx, appID, entitlementID, client.StringFromPtr(userIntro.UserID))
 	if err != nil {
-		exitCodeValue = 2
-		return exitCodeHandler(exitCodeValue, err)
+		return err
 	}
 	app, err := c.GetApp(ctx, appID)
 	if err != nil {
-		exitCodeValue = 2
-		return exitCodeHandler(2, err)
+		return err
 	}
 	entitlement, err := c.GetEntitlement(ctx, appID, entitlementID)
 	if err != nil {
-		exitCodeValue = 2
-		return exitCodeHandler(exitCodeValue, err)
+		return err
 	}
 
 	hasObj := HasAppEntitlement{
@@ -85,7 +70,6 @@ func hasRun(cmd *cobra.Command, args []string) error {
 
 	for _, grant := range grants {
 		if grant.CreatedAt != nil && grant.DeletedAt == nil {
-			exitCodeValue = 0
 			hasObj.Has = output.Checkmark
 		}
 	}
@@ -93,11 +77,14 @@ func hasRun(cmd *cobra.Command, args []string) error {
 	outputManager := output.NewManager(ctx, v)
 	err = outputManager.Output(ctx, &hasObj, output.WithTransposeTable())
 	if err != nil {
-		exitCodeValue = 2
-		return exitCodeHandler(exitCodeValue, err)
+		return err
 	}
 
-	return exitCodeHandler(exitCodeValue, err)
+	if hasObj.Has == output.Unchecked {
+		os.Exit(2)
+	}
+
+	return nil
 }
 
 func (r *HasAppEntitlement) Header() []string {

@@ -91,6 +91,7 @@ func main() {
 ### [AppUsageControls](docs/sdks/appusagecontrols/README.md)
 
 * [Get](docs/sdks/appusagecontrols/README.md#get) - Invokes the c1.api.app.v1.AppUsageControlsService.Get method.
+* [Update](docs/sdks/appusagecontrols/README.md#update) - Invokes the c1.api.app.v1.AppUsageControlsService.Update method.
 
 ### [Apps](docs/sdks/apps/README.md)
 
@@ -118,6 +119,7 @@ func main() {
 * [Delete](docs/sdks/policies/README.md#delete) - Invokes the c1.api.policy.v1.Policies.Delete method.
 * [Get](docs/sdks/policies/README.md#get) - Invokes the c1.api.policy.v1.Policies.Get method.
 * [List](docs/sdks/policies/README.md#list) - Invokes the c1.api.policy.v1.Policies.List method.
+* [Update](docs/sdks/policies/README.md#update) - Invokes the c1.api.policy.v1.Policies.Update method.
 
 ### [RequestCatalogSearch](docs/sdks/requestcatalogsearch/README.md)
 
@@ -127,6 +129,7 @@ func main() {
 
 * [Get](docs/sdks/roles/README.md#get) - Invokes the c1.api.iam.v1.Roles.Get method.
 * [List](docs/sdks/roles/README.md#list) - Invokes the c1.api.iam.v1.Roles.List method.
+* [Update](docs/sdks/roles/README.md#update) - Invokes the c1.api.iam.v1.Roles.Update method.
 
 ### [Task](docs/sdks/task/README.md)
 

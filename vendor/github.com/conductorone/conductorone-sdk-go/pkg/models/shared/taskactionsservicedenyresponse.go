@@ -4,10 +4,10 @@ package shared
 
 // TaskActionsServiceDenyResponse - The TaskActionsServiceDenyResponse message.
 type TaskActionsServiceDenyResponse struct {
-	// The expanded field.
-	Expanded []map[string]interface{} `json:"expanded,omitempty"`
 	// The TaskView message.
 	TaskView *TaskView `json:"taskView,omitempty"`
+	// The expanded field.
+	Expanded []map[string]interface{} `json:"expanded,omitempty"`
 	// The ticketActionId field.
 	TicketActionID *string `json:"ticketActionId,omitempty"`
 }

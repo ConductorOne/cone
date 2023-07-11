@@ -73,6 +73,8 @@ github.com/conductorone/conductorone-sdk-go v1.1.3 h1:EvMBP/li8N2MPpw0X7Cg5wDea4
 github.com/conductorone/conductorone-sdk-go v1.1.3/go.mod h1:xSPBBJPo56eaF6N+ERoV8U07kwGkhZqbIJ4JbpLdDKg=
 github.com/conductorone/conductorone-sdk-go v1.2.0 h1:sc95XWW+lvOD1bDEsLWNQLyo+bHp4SYkku2zrkvM2T0=
 github.com/conductorone/conductorone-sdk-go v1.2.0/go.mod h1:xSPBBJPo56eaF6N+ERoV8U07kwGkhZqbIJ4JbpLdDKg=
+github.com/conductorone/conductorone-sdk-go v1.5.0 h1:S35qravEUmmzSWD9upCKHCg4sOaPMZHMFeAWYCD4C4s=
+github.com/conductorone/conductorone-sdk-go v1.5.0/go.mod h1:xSPBBJPo56eaF6N+ERoV8U07kwGkhZqbIJ4JbpLdDKg=
 github.com/containerd/console v1.0.3 h1:lIr7SlA5PxZyMV30bDW0MGbiOPXwc63yRuCP0ARubLw=
 github.com/containerd/console v1.0.3/go.mod h1:7LqA/THxQ86k76b8c/EMSiaJ3h1eZkMkXar0TQ1gf3U=
 github.com/cpuguy83/go-md2man/v2 v2.0.2/go.mod h1:tgQtvFlXSQOSOSIRvRPT7W67SCa46tRHOmNcaadrF8o=

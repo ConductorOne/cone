@@ -4,8 +4,8 @@ package shared
 
 // TaskServiceCreateGrantResponse - The TaskServiceCreateGrantResponse message.
 type TaskServiceCreateGrantResponse struct {
-	// The expanded field.
-	Expanded []map[string]interface{} `json:"expanded,omitempty"`
 	// The TaskView message.
 	TaskView *TaskView `json:"taskView,omitempty"`
+	// The expanded field.
+	Expanded []map[string]interface{} `json:"expanded,omitempty"`
 }

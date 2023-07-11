@@ -37,7 +37,6 @@ func hasRun(cmd *cobra.Command, args []string) error {
 	if len(args) != 2 {
 		usageString := "\nUsage:  cone has <app-id> <app-entitlement-id>"
 		return fmt.Errorf("expected 2 arguments, got %d"+usageString, len(args))
-
 	}
 
 	userIntro, err := c.AuthIntrospect(ctx)

@@ -5,7 +5,6 @@ import (
 
 	"github.com/conductorone/cone/pkg/client"
 	"github.com/conductorone/cone/pkg/output"
-	"github.com/pterm/pterm"
 	"github.com/spf13/cobra"
 )
 
@@ -60,7 +59,7 @@ func hasRun(cmd *cobra.Command, args []string) error {
 	}
 
 	hasObj := HasAppEntitlement{
-		Has:              "",
+		Has:              output.Unchecked,
 		AppEntitlementId: entitlementID,
 		AppId:            appID,
 		AppName:          client.StringFromPtr(app.DisplayName),
@@ -70,7 +69,7 @@ func hasRun(cmd *cobra.Command, args []string) error {
 
 	for _, grant := range grants {
 		if grant.CreatedAt != nil && grant.DeletedAt == nil {
-			hasObj.Has = pterm.Green("✓")
+			hasObj.Has = output.Checkmark
 		}
 	}
 

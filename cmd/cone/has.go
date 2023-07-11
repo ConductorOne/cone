@@ -39,19 +39,17 @@ func hasRun(cmd *cobra.Command, args []string) error {
 		return fmt.Errorf("expected 2 arguments, got %d"+usageString, len(args))
 	}
 
+	appID := args[0]
+	entitlementID := args[1]
+
 	userIntro, err := c.AuthIntrospect(ctx)
 	if err != nil {
 		return err
 	}
-
-	appID := args[0]
-	entitlementID := args[1]
-
 	grants, err := c.GetGrantsForIdentity(ctx, appID, entitlementID, client.StringFromPtr(userIntro.UserID))
 	if err != nil {
 		return err
 	}
-
 	app, err := c.GetApp(ctx, appID)
 	if err != nil {
 		return err

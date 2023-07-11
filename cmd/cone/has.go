@@ -21,7 +21,7 @@ type HasAppEntitlement struct {
 func hasCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "has <app-id> <app-entitlement-id>",
-		Short: "Check if the current user ",
+		Short: "Check if the current user has a specific entitlement for an app",
 		RunE:  hasRun,
 	}
 
@@ -35,7 +35,9 @@ func hasRun(cmd *cobra.Command, args []string) error {
 	}
 
 	if len(args) != 2 {
-		return fmt.Errorf("expected 2 arguments, got %d", len(args))
+		usageString := "\nUsage:  cone has <app-id> <app-entitlement-id>"
+		return fmt.Errorf("expected 2 arguments, got %d"+usageString, len(args))
+
 	}
 
 	userIntro, err := c.AuthIntrospect(ctx)

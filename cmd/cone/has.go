@@ -60,7 +60,7 @@ func hasRun(cmd *cobra.Command, args []string) error {
 	}
 
 	hasObj := HasAppEntitlement{
-		Has:              pterm.Red("x"),
+		Has:              "",
 		AppEntitlementId: entitlementID,
 		AppId:            appID,
 		AppName:          client.StringFromPtr(app.DisplayName),

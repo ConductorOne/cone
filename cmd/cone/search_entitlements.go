@@ -14,6 +14,9 @@ func searchEntitlementsCmd() *cobra.Command {
 	}
 	addEntitlementAliasFlag(cmd)
 	addQueryFlag(cmd)
+	addGrantedFlag(cmd)
+	addNotGrantedFlag(cmd)
+	cmd.MarkFlagsMutuallyExclusive(grantedFlag, notGrantedFlag)
 	return cmd
 }
 
@@ -25,6 +28,12 @@ func searchEntitlementsRun(cmd *cobra.Command, args []string) error {
 
 	query := v.GetString(queryFlag)
 	alias := v.GetString(entitlementAliasFlag)
+	grantedStatus := client.GRANTED_STATUS_ALL
+	if v.GetBool(grantedFlag) {
+		grantedStatus = client.GRANTED_STATUS_GRANTED
+	} else if v.GetBool(notGrantedFlag) {
+		grantedStatus = client.GRANTED_STATUS_NOT_GRANTED
+	}
 
 	// TODO(morgabra) 2-phase search: Accept a positional arg:
 	// 1. Test if it's a direct alias
@@ -32,6 +41,7 @@ func searchEntitlementsRun(cmd *cobra.Command, args []string) error {
 	entitlements, err := c.SearchEntitlements(ctx, &client.SearchEntitlementsFilter{
 		Query:            query,
 		EntitlementAlias: alias,
+		GrantedStatus:    grantedStatus,
 	})
 	if err != nil {
 		return err

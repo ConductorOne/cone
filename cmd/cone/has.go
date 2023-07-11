@@ -82,7 +82,6 @@ func hasRun(cmd *cobra.Command, args []string) error {
 	}
 
 	return nil
-
 }
 
 func (r *HasAppEntitlement) Header() []string {

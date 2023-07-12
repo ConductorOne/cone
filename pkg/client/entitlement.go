@@ -9,10 +9,10 @@ import (
 )
 
 const (
-	GRANTED_STATUS_GRANTED     = shared.RequestCatalogSearchServiceSearchEntitlementsRequestGrantedStatusGranted
-	GRANTED_STATUS_UNSPECIFIED = shared.RequestCatalogSearchServiceSearchEntitlementsRequestGrantedStatusUnspecified
-	GRANTED_STATUS_NOT_GRANTED = shared.RequestCatalogSearchServiceSearchEntitlementsRequestGrantedStatusNotGranted
-	GRANTED_STATUS_ALL         = shared.RequestCatalogSearchServiceSearchEntitlementsRequestGrantedStatusAll
+	GrantedStatusGranted     = shared.RequestCatalogSearchServiceSearchEntitlementsRequestGrantedStatusGranted
+	GrantedStatusUnspecified = shared.RequestCatalogSearchServiceSearchEntitlementsRequestGrantedStatusUnspecified
+	GrantedStatusNotGranted  = shared.RequestCatalogSearchServiceSearchEntitlementsRequestGrantedStatusNotGranted
+	GrantedStatusAll         = shared.RequestCatalogSearchServiceSearchEntitlementsRequestGrantedStatusAll
 )
 
 type SearchEntitlementsFilter struct {

@@ -28,11 +28,11 @@ func searchEntitlementsRun(cmd *cobra.Command, args []string) error {
 
 	query := v.GetString(queryFlag)
 	alias := v.GetString(entitlementAliasFlag)
-	grantedStatus := client.GRANTED_STATUS_ALL
+	grantedStatus := client.GrantedStatusAll
 	if v.GetBool(grantedFlag) {
-		grantedStatus = client.GRANTED_STATUS_GRANTED
+		grantedStatus = client.GrantedStatusGranted
 	} else if v.GetBool(notGrantedFlag) {
-		grantedStatus = client.GRANTED_STATUS_NOT_GRANTED
+		grantedStatus = client.GrantedStatusNotGranted
 	}
 
 	// TODO(morgabra) 2-phase search: Accept a positional arg:

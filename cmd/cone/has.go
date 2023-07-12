@@ -35,18 +35,14 @@ func hasRun(cmd *cobra.Command, args []string) error {
 	}
 
 	if len(args) != 2 {
-		usageString := "\nUsage:  cone has <app-id> <app-entitlement-id>"
-		return fmt.Errorf("expected 2 arguments, got %d"+usageString, len(args))
+		usageErrorString := cmd.UsageString()
+		return fmt.Errorf("expected 2 arguments, got %d\n"+usageErrorString, len(args))
 	}
 
 	appID := args[0]
 	entitlementID := args[1]
 
 	userIntro, err := c.AuthIntrospect(ctx)
-	if err != nil {
-		return err
-	}
-	grants, err := c.GetGrantsForIdentity(ctx, appID, entitlementID, client.StringFromPtr(userIntro.UserID))
 	if err != nil {
 		return err
 	}
@@ -58,6 +54,12 @@ func hasRun(cmd *cobra.Command, args []string) error {
 	if err != nil {
 		return err
 	}
+	grants, err := c.GetGrantsForIdentity(ctx, appID, entitlementID, client.StringFromPtr(userIntro.UserID))
+	if err != nil {
+		return err
+	}
+
+	hasAppEnitlement := false
 
 	hasObj := HasAppEntitlement{
 		Has:              output.Unchecked,
@@ -71,6 +73,7 @@ func hasRun(cmd *cobra.Command, args []string) error {
 	for _, grant := range grants {
 		if grant.CreatedAt != nil && grant.DeletedAt == nil {
 			hasObj.Has = output.Checkmark
+			hasAppEnitlement = true
 			break
 		}
 	}
@@ -81,7 +84,7 @@ func hasRun(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
-	if hasObj.Has == output.Unchecked {
+	if !hasAppEnitlement {
 		os.Exit(2)
 	}
 

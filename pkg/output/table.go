@@ -36,6 +36,9 @@ func (c *tableManager) isIntColumn(tableData [][]string, col int) bool {
 }
 
 func (c *tableManager) sortData(header []string, tableData [][]string, out interface{}) {
+	if len(tableData) == 0 {
+		return
+	}
 	sortCol := -1
 	sorter, sorterOk := out.(TableSort)
 	if sorterOk {

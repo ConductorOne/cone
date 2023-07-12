@@ -75,11 +75,11 @@ func runApproveDeny(
 		return err
 	}
 
-	if taskResp.TaskView.Task.Policy.Current == nil {
+	if taskResp.TaskView.Task.PolicyInstance.PolicyStepInstance == nil {
 		return errors.New("task does not have a current policy step id and cannot be approved or denied")
 	}
 
-	task, err := run(c, ctx, taskId, comment, client.StringFromPtr(taskResp.TaskView.Task.Policy.Current.ID))
+	task, err := run(c, ctx, taskId, comment, client.StringFromPtr(taskResp.TaskView.Task.PolicyInstance.PolicyStepInstance.ID))
 	if err != nil {
 		return err
 	}

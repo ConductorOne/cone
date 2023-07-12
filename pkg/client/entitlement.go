@@ -56,7 +56,7 @@ func (c *client) SearchEntitlements(ctx context.Context, filter *SearchEntitleme
 
 	rv := make([]*EntitlementWithBindings, 0, len(list))
 	for _, v := range list {
-		ent := v.Entitlement
+		ent := v.AppEntitlementView
 		if ent == nil {
 			return nil, errors.New("search-entitlements: entitlement is nil")
 		}

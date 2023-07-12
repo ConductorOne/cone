@@ -440,8 +440,8 @@ func handleWaitBehavior(ctx context.Context, c client.C1Client, task *shared.Tas
 			break
 		}
 	}
-	if taskItem.Type.Grant != nil {
-		taskOutcome := taskItem.Type.Grant.Outcome
+	if taskItem.TaskType.TaskTypeGrant != nil {
+		taskOutcome := taskItem.TaskType.TaskTypeGrant.Outcome
 		if *taskOutcome == shared.TaskTypeGrantOutcomeGrantOutcomeGranted {
 			spinner.Success("Entitlement granted successfully.")
 		} else {
@@ -449,8 +449,8 @@ func handleWaitBehavior(ctx context.Context, c client.C1Client, task *shared.Tas
 			return fmt.Errorf("failed to grant entitlement %s", string(*taskOutcome))
 		}
 	}
-	if taskItem.Type.Revoke != nil {
-		taskOutcome := taskItem.Type.Revoke.Outcome
+	if taskItem.TaskType.TaskTypeRevoke != nil {
+		taskOutcome := taskItem.TaskType.TaskTypeRevoke.Outcome
 		if *taskOutcome == shared.TaskTypeRevokeOutcomeRevokeOutcomeRevoked {
 			spinner.Success("Entitlement revoked succesfully.")
 		} else {

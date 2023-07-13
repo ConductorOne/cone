@@ -8,9 +8,17 @@ import (
 	"github.com/conductorone/conductorone-sdk-go/pkg/models/shared"
 )
 
+const (
+	GrantedStatusGranted     = shared.RequestCatalogSearchServiceSearchEntitlementsRequestGrantedStatusGranted
+	GrantedStatusUnspecified = shared.RequestCatalogSearchServiceSearchEntitlementsRequestGrantedStatusUnspecified
+	GrantedStatusNotGranted  = shared.RequestCatalogSearchServiceSearchEntitlementsRequestGrantedStatusNotGranted
+	GrantedStatusAll         = shared.RequestCatalogSearchServiceSearchEntitlementsRequestGrantedStatusAll
+)
+
 type SearchEntitlementsFilter struct {
 	Query            string
 	EntitlementAlias string
+	GrantedStatus    shared.RequestCatalogSearchServiceSearchEntitlementsRequestGrantedStatus
 }
 
 type AppEntitlement shared.AppEntitlement
@@ -37,6 +45,7 @@ func (c *client) SearchEntitlements(ctx context.Context, filter *SearchEntitleme
 	// TODO(morgabra) Should we abstract the OpenAPI objects from the rest of cone? Kinda... no? But they aren't typed...
 	resp, err := c.sdk.RequestCatalogSearch.SearchEntitlements(ctx, shared.RequestCatalogSearchServiceSearchEntitlementsRequest{
 		EntitlementAlias: stringPtr(filter.EntitlementAlias),
+		GrantedStatus:    filter.GrantedStatus.ToPointer(),
 		PageSize:         float64Ptr(100),
 		PageToken:        nil,
 		Query:            stringPtr(filter.Query),

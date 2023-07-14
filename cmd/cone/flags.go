@@ -16,6 +16,8 @@ const (
 	nonInteractiveFlag   = "non-interactive"
 	emergencyAccessFlag  = "emergency-access"
 	extraDetailsFlag     = "detailed"
+	grantedFlag          = "granted"
+	notGrantedFlag       = "not-granted"
 )
 
 func addWaitFlag(cmd *cobra.Command) {
@@ -49,6 +51,14 @@ func addGrantDurationFlag(cmd *cobra.Command) {
 
 func addEmergencyAccessFlag(cmd *cobra.Command) {
 	cmd.Flags().Bool(emergencyAccessFlag, false, "Request emergency access to the entitlement")
+}
+
+func addGrantedFlag(cmd *cobra.Command) {
+	cmd.Flags().Bool(grantedFlag, false, "Only return granted tasks")
+}
+
+func addNotGrantedFlag(cmd *cobra.Command) {
+	cmd.Flags().Bool(notGrantedFlag, false, "Only return ungranted tickets")
 }
 
 func addForceTaskCreateFlag(cmd *cobra.Command) {

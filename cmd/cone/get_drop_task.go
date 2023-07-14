@@ -379,7 +379,11 @@ func getEntitlementDetails(ctx context.Context, c client.C1Client, v *viper.Vipe
 	}
 
 	// If we have an alias or query, search
-	entitlements, err := c.SearchEntitlements(ctx, &client.SearchEntitlementsFilter{EntitlementAlias: alias, Query: query})
+	entitlements, err := c.SearchEntitlements(ctx, &client.SearchEntitlementsFilter{
+		EntitlementAlias: alias,
+		Query:            query,
+		GrantedStatus:    shared.RequestCatalogSearchServiceSearchEntitlementsRequestGrantedStatusAll,
+	})
 	if err != nil {
 		return "", "", err
 	}

@@ -66,6 +66,7 @@ func runCli(ctx context.Context) int {
 	cliCmd.AddCommand(tasksCmd())
 	cliCmd.AddCommand(loginCmd())
 	cliCmd.AddCommand(hasCmd())
+	cliCmd.AddCommand(tokenCmd())
 
 	err = cliCmd.ExecuteContext(ctx)
 	if err != nil {

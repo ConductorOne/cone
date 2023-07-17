@@ -67,7 +67,10 @@ func loginRun(cmd *cobra.Command, args []string) error {
 		tenant,
 		client.ConeClientID,
 		"Created by Cone",
-		urlHandler,
+		func(validateDetails *conductoroneapi.DeviceCodeResponse) error {
+			spinner.InfoPrinter.Println("Verify the user code matches your browser: " + validateDetails.UserCode)
+			return urlHandler(validateDetails.VerificationURI)
+		},
 	)
 	if err != nil {
 		spinner.Fail(err)

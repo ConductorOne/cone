@@ -13,7 +13,7 @@ import (
 func tasksCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "task",
-		Short: "",
+		Short: "A group of commands related to interacting with tasks directly.",
 		RunE:  taskRun,
 	}
 

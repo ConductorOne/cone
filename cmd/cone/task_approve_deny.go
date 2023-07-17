@@ -14,7 +14,7 @@ import (
 func approveTasksCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "approve <task-id>",
-		Short: "",
+		Short: "Mark a task as approved",
 		RunE:  runApproveTasks,
 		Args:  cobra.ExactArgs(1),
 	}
@@ -27,7 +27,7 @@ func approveTasksCmd() *cobra.Command {
 func denyTasksCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "deny <task-id>",
-		Short: "",
+		Short: "Mark a task as denied",
 		RunE:  runDenyTasks,
 		Args:  cobra.ExactArgs(1),
 	}

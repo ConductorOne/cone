@@ -24,7 +24,6 @@ func loginCmd() *cobra.Command {
 	}
 
 	cmd.Flags().String("profile", "default", "Config profile to create or update.")
-	cmd.Flags().Bool("no-browser", false, "Print log-in URL instead of opening a browser window.")
 	return cmd
 }
 
@@ -54,22 +53,18 @@ func loginRun(cmd *cobra.Command, args []string) error {
 		}
 	}
 
-	urlHandler := webbrowser.Open
-	if v.GetBool("no-browser") {
-		urlHandler = func(url string) error {
-			spinner.InfoPrinter.Println("Click to authorize Cone: " + url)
-			return nil
-		}
-	}
-
 	creds, err := conductoroneapi.LoginFlow(
 		ctx,
 		tenant,
 		client.ConeClientID,
 		"Created by Cone",
 		func(validateDetails *conductoroneapi.DeviceCodeResponse) error {
-			spinner.InfoPrinter.Println("Verify the user code matches your browser: " + validateDetails.UserCode)
-			return urlHandler(validateDetails.VerificationURI)
+			pterm.Printf("Attempting to open the device authorization page in your browser.\n"+
+				"If your browser does not open or you wish to use a different device to authorize this request, visit the following:"+
+				"\n\n    %s\n\nAnd verify the code in the browser matches the code below:\n\n    %s\n\n", validateDetails.VerificationURI, validateDetails.UserCode)
+			// Ignore errors here, as we'll print the URL anyway
+			_ = webbrowser.Open(validateDetails.VerificationURI)
+			return nil
 		},
 	)
 	if err != nil {

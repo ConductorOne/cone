@@ -53,7 +53,7 @@ func searchEntitlementsRun(cmd *cobra.Command, args []string) error {
 	}
 
 	resp := &ExpandedEntitlementsResponse{
-		entitlements: entitlements,
+		Entitlements: entitlements,
 		expander:     expander,
 	}
 	outputManager := output.NewManager(ctx, v)
@@ -66,7 +66,7 @@ func searchEntitlementsRun(cmd *cobra.Command, args []string) error {
 }
 
 type ExpandedEntitlementsResponse struct {
-	entitlements []*client.EntitlementWithBindings
+	Entitlements []*client.EntitlementWithBindings `json:"entitlements"`
 	expander     *client.Expander
 }
 
@@ -82,7 +82,7 @@ func (r *ExpandedEntitlementsResponse) WideHeader() []string {
 
 func (r *ExpandedEntitlementsResponse) Rows() [][]string {
 	rows := [][]string{}
-	for _, e := range r.entitlements {
+	for _, e := range r.Entitlements {
 		app, _ := r.expander.GetApp(client.StringFromPtr(e.Entitlement.AppID))
 		resourceType, _ := r.expander.GetResourceType(
 			client.StringFromPtr(e.Entitlement.AppID),
@@ -116,7 +116,7 @@ func (r *ExpandedEntitlementsResponse) SortByColumnName() string {
 
 func (r *ExpandedEntitlementsResponse) WideRows() [][]string {
 	rows := r.Rows()
-	for i, e := range r.entitlements {
+	for i, e := range r.Entitlements {
 		rows[i] = append(rows[i],
 			client.StringFromPtr(e.Entitlement.Description), client.StringFromPtr(e.Entitlement.ID),
 		)

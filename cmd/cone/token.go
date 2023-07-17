@@ -36,10 +36,7 @@ func tokenRun(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
-	if len(args) != 0 {
-		usageErrorString := cmd.UsageString()
-		return fmt.Errorf("expected 0 arguments, got %d\n"+usageErrorString, len(args))
-	}
+	validateArgLenth(0, args, cmd)
 
 	tokenSrc, _, _, err := client.NewC1TokenSource(ctx, clientId, clientSecret)
 	if err != nil {

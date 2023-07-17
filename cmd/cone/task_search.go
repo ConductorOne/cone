@@ -12,7 +12,7 @@ import (
 func searchTasksCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "search",
-		Short: "",
+		Short: "Search for tasks using various filters",
 		RunE:  searchTasksRun,
 	}
 

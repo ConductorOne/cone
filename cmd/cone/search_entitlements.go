@@ -77,7 +77,7 @@ func (r *ExpandedEntitlementsResponse) Header() []string {
 }
 
 func (r *ExpandedEntitlementsResponse) WideHeader() []string {
-	return append(r.Header(), "Description")
+	return append(r.Header(), "Description", "ID")
 }
 
 func (r *ExpandedEntitlementsResponse) Rows() [][]string {
@@ -117,7 +117,9 @@ func (r *ExpandedEntitlementsResponse) SortByColumnName() string {
 func (r *ExpandedEntitlementsResponse) WideRows() [][]string {
 	rows := r.Rows()
 	for i, e := range r.entitlements {
-		rows[i] = append(rows[i], client.StringFromPtr(e.Entitlement.Description))
+		rows[i] = append(rows[i],
+			client.StringFromPtr(e.Entitlement.Description), client.StringFromPtr(e.Entitlement.ID),
+		)
 	}
 	return rows
 }

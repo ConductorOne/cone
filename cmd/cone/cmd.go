@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/conductorone/cone/pkg/client"
 	"github.com/spf13/cobra"
@@ -27,4 +28,12 @@ func cmdContext(cmd *cobra.Command) (context.Context, client.C1Client, *viper.Vi
 	}
 
 	return ctx, c, v, nil
+}
+
+func validateArgLenth(expectedCount int, args []string, cmd *cobra.Command) error {
+	if len(args) == expectedCount {
+		return nil
+	}
+
+	return fmt.Errorf("expected %d arguments, got %d\n%s", expectedCount, len(args), cmd.UsageString())
 }

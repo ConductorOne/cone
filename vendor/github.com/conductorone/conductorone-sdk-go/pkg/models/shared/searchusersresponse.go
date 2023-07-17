@@ -13,3 +13,31 @@ type SearchUsersResponse struct {
 	// The notificationToken field.
 	NotificationToken *string `json:"notificationToken,omitempty"`
 }
+
+func (o *SearchUsersResponse) GetExpanded() []map[string]interface{} {
+	if o == nil {
+		return nil
+	}
+	return o.Expanded
+}
+
+func (o *SearchUsersResponse) GetList() []UserView {
+	if o == nil {
+		return nil
+	}
+	return o.List
+}
+
+func (o *SearchUsersResponse) GetNextPageToken() *string {
+	if o == nil {
+		return nil
+	}
+	return o.NextPageToken
+}
+
+func (o *SearchUsersResponse) GetNotificationToken() *string {
+	if o == nil {
+		return nil
+	}
+	return o.NotificationToken
+}

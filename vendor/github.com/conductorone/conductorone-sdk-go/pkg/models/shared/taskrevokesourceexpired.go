@@ -10,3 +10,10 @@ import (
 type TaskRevokeSourceExpired struct {
 	ExpiredAt *time.Time `json:"expiredAt,omitempty"`
 }
+
+func (o *TaskRevokeSourceExpired) GetExpiredAt() *time.Time {
+	if o == nil {
+		return nil
+	}
+	return o.ExpiredAt
+}

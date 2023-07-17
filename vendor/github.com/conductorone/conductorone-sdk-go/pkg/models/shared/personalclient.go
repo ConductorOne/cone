@@ -30,3 +30,80 @@ type PersonalClient struct {
 	// The userId field.
 	UserID *string `json:"userId,omitempty"`
 }
+
+func (o *PersonalClient) GetAllowSourceCidr() []string {
+	if o == nil {
+		return nil
+	}
+	return o.AllowSourceCidr
+}
+
+func (o *PersonalClient) GetClientID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ClientID
+}
+
+func (o *PersonalClient) GetCreatedAt() *time.Time {
+	if o == nil {
+		return nil
+	}
+	return o.CreatedAt
+}
+
+func (o *PersonalClient) GetDeletedAt() *time.Time {
+	if o == nil {
+		return nil
+	}
+	return o.DeletedAt
+}
+
+func (o *PersonalClient) GetDisplayName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.DisplayName
+}
+
+func (o *PersonalClient) GetExpiresTime() *time.Time {
+	if o == nil {
+		return nil
+	}
+	return o.ExpiresTime
+}
+
+func (o *PersonalClient) GetID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ID
+}
+
+func (o *PersonalClient) GetLastUsedAt() *time.Time {
+	if o == nil {
+		return nil
+	}
+	return o.LastUsedAt
+}
+
+func (o *PersonalClient) GetScopedRoles() []string {
+	if o == nil {
+		return nil
+	}
+	return o.ScopedRoles
+}
+
+func (o *PersonalClient) GetUpdatedAt() *time.Time {
+	if o == nil {
+		return nil
+	}
+	return o.UpdatedAt
+}
+
+func (o *PersonalClient) GetUserID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.UserID
+}

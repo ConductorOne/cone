@@ -15,3 +15,17 @@ type Provision struct {
 	// The assigned field.
 	Assigned *bool `json:"assigned,omitempty"`
 }
+
+func (o *Provision) GetProvisionPolicy() *ProvisionPolicy {
+	if o == nil {
+		return nil
+	}
+	return o.ProvisionPolicy
+}
+
+func (o *Provision) GetAssigned() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.Assigned
+}

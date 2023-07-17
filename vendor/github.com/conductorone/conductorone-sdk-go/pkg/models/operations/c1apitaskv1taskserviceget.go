@@ -11,10 +11,45 @@ type C1APITaskV1TaskServiceGetRequest struct {
 	ID string `pathParam:"style=simple,explode=false,name=id"`
 }
 
+func (o *C1APITaskV1TaskServiceGetRequest) GetID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ID
+}
+
 type C1APITaskV1TaskServiceGetResponse struct {
 	ContentType string
 	StatusCode  int
 	RawResponse *http.Response
 	// Successful response
 	TaskServiceGetResponse *shared.TaskServiceGetResponse
+}
+
+func (o *C1APITaskV1TaskServiceGetResponse) GetContentType() string {
+	if o == nil {
+		return ""
+	}
+	return o.ContentType
+}
+
+func (o *C1APITaskV1TaskServiceGetResponse) GetStatusCode() int {
+	if o == nil {
+		return 0
+	}
+	return o.StatusCode
+}
+
+func (o *C1APITaskV1TaskServiceGetResponse) GetRawResponse() *http.Response {
+	if o == nil {
+		return nil
+	}
+	return o.RawResponse
+}
+
+func (o *C1APITaskV1TaskServiceGetResponse) GetTaskServiceGetResponse() *shared.TaskServiceGetResponse {
+	if o == nil {
+		return nil
+	}
+	return o.TaskServiceGetResponse
 }

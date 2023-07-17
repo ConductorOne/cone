@@ -9,3 +9,17 @@ type DirectoryServiceGetResponse struct {
 	// The expanded field.
 	Expanded []map[string]interface{} `json:"expanded,omitempty"`
 }
+
+func (o *DirectoryServiceGetResponse) GetDirectoryView() *DirectoryView {
+	if o == nil {
+		return nil
+	}
+	return o.DirectoryView
+}
+
+func (o *DirectoryServiceGetResponse) GetExpanded() []map[string]interface{} {
+	if o == nil {
+		return nil
+	}
+	return o.Expanded
+}

@@ -7,3 +7,10 @@ type GetRolesResponse struct {
 	// The Role message.
 	Role *Role `json:"role,omitempty"`
 }
+
+func (o *GetRolesResponse) GetRole() *Role {
+	if o == nil {
+		return nil
+	}
+	return o.Role
+}

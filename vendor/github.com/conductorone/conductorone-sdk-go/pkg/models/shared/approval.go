@@ -33,3 +33,73 @@ type Approval struct {
 	// The requireReassignmentReason field.
 	RequireReassignmentReason *bool `json:"requireReassignmentReason,omitempty"`
 }
+
+func (o *Approval) GetAppGroupApproval() *AppGroupApproval {
+	if o == nil {
+		return nil
+	}
+	return o.AppGroupApproval
+}
+
+func (o *Approval) GetAppOwnerApproval() *AppOwnerApproval {
+	if o == nil {
+		return nil
+	}
+	return o.AppOwnerApproval
+}
+
+func (o *Approval) GetEntitlementOwnerApproval() *EntitlementOwnerApproval {
+	if o == nil {
+		return nil
+	}
+	return o.EntitlementOwnerApproval
+}
+
+func (o *Approval) GetManagerApproval() *ManagerApproval {
+	if o == nil {
+		return nil
+	}
+	return o.ManagerApproval
+}
+
+func (o *Approval) GetSelfApproval() *SelfApproval {
+	if o == nil {
+		return nil
+	}
+	return o.SelfApproval
+}
+
+func (o *Approval) GetUserApproval() *UserApproval {
+	if o == nil {
+		return nil
+	}
+	return o.UserApproval
+}
+
+func (o *Approval) GetAllowReassignment() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.AllowReassignment
+}
+
+func (o *Approval) GetAssigned() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.Assigned
+}
+
+func (o *Approval) GetRequireApprovalReason() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.RequireApprovalReason
+}
+
+func (o *Approval) GetRequireReassignmentReason() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.RequireReassignmentReason
+}

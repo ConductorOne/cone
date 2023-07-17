@@ -11,3 +11,24 @@ type ListRolesResponse struct {
 	// The notificationToken field.
 	NotificationToken *string `json:"notificationToken,omitempty"`
 }
+
+func (o *ListRolesResponse) GetList() []Role {
+	if o == nil {
+		return nil
+	}
+	return o.List
+}
+
+func (o *ListRolesResponse) GetNextPageToken() *string {
+	if o == nil {
+		return nil
+	}
+	return o.NextPageToken
+}
+
+func (o *ListRolesResponse) GetNotificationToken() *string {
+	if o == nil {
+		return nil
+	}
+	return o.NotificationToken
+}

@@ -22,3 +22,17 @@ type PolicyStep struct {
 	// The Provision message.
 	Provision *Provision `json:"provision,omitempty"`
 }
+
+func (o *PolicyStep) GetApproval() *Approval {
+	if o == nil {
+		return nil
+	}
+	return o.Approval
+}
+
+func (o *PolicyStep) GetProvision() *Provision {
+	if o == nil {
+		return nil
+	}
+	return o.Provision
+}

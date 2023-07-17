@@ -63,3 +63,59 @@ type TaskTypeCertify struct {
 	Outcome     *TaskTypeCertifyOutcome `json:"outcome,omitempty"`
 	OutcomeTime *time.Time              `json:"outcomeTime,omitempty"`
 }
+
+func (o *TaskTypeCertify) GetAccessReviewID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AccessReviewID
+}
+
+func (o *TaskTypeCertify) GetAccessReviewSelection() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AccessReviewSelection
+}
+
+func (o *TaskTypeCertify) GetAppEntitlementID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AppEntitlementID
+}
+
+func (o *TaskTypeCertify) GetAppID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AppID
+}
+
+func (o *TaskTypeCertify) GetAppUserID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AppUserID
+}
+
+func (o *TaskTypeCertify) GetIdentityUserID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.IdentityUserID
+}
+
+func (o *TaskTypeCertify) GetOutcome() *TaskTypeCertifyOutcome {
+	if o == nil {
+		return nil
+	}
+	return o.Outcome
+}
+
+func (o *TaskTypeCertify) GetOutcomeTime() *time.Time {
+	if o == nil {
+		return nil
+	}
+	return o.OutcomeTime
+}

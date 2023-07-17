@@ -62,3 +62,45 @@ type CreatePolicyRequest struct {
 	// The reassignTasksToDelegates field.
 	ReassignTasksToDelegates *bool `json:"reassignTasksToDelegates,omitempty"`
 }
+
+func (o *CreatePolicyRequest) GetDescription() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Description
+}
+
+func (o *CreatePolicyRequest) GetDisplayName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.DisplayName
+}
+
+func (o *CreatePolicyRequest) GetPolicySteps() map[string]PolicySteps {
+	if o == nil {
+		return nil
+	}
+	return o.PolicySteps
+}
+
+func (o *CreatePolicyRequest) GetPolicyType() *CreatePolicyRequestPolicyType {
+	if o == nil {
+		return nil
+	}
+	return o.PolicyType
+}
+
+func (o *CreatePolicyRequest) GetPostActions() []PolicyPostActions {
+	if o == nil {
+		return nil
+	}
+	return o.PostActions
+}
+
+func (o *CreatePolicyRequest) GetReassignTasksToDelegates() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.ReassignTasksToDelegates
+}

@@ -13,3 +13,31 @@ type ManagerApproval struct {
 	// The fallbackUserIds field.
 	FallbackUserIds []string `json:"fallbackUserIds,omitempty"`
 }
+
+func (o *ManagerApproval) GetAllowSelfApproval() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.AllowSelfApproval
+}
+
+func (o *ManagerApproval) GetAssignedUserIds() []string {
+	if o == nil {
+		return nil
+	}
+	return o.AssignedUserIds
+}
+
+func (o *ManagerApproval) GetFallback() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.Fallback
+}
+
+func (o *ManagerApproval) GetFallbackUserIds() []string {
+	if o == nil {
+		return nil
+	}
+	return o.FallbackUserIds
+}

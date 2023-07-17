@@ -7,3 +7,10 @@ type UserExpandMask struct {
 	// The paths field.
 	Paths []string `json:"paths,omitempty"`
 }
+
+func (o *UserExpandMask) GetPaths() []string {
+	if o == nil {
+		return nil
+	}
+	return o.Paths
+}

@@ -21,3 +21,59 @@ type SearchAppResourceTypesRequest struct {
 	// The resourceTypeTraitIds field.
 	ResourceTypeTraitIds []string `json:"resourceTypeTraitIds,omitempty"`
 }
+
+func (o *SearchAppResourceTypesRequest) GetAppIds() []string {
+	if o == nil {
+		return nil
+	}
+	return o.AppIds
+}
+
+func (o *SearchAppResourceTypesRequest) GetExcludeResourceTypeIds() []string {
+	if o == nil {
+		return nil
+	}
+	return o.ExcludeResourceTypeIds
+}
+
+func (o *SearchAppResourceTypesRequest) GetExcludeResourceTypeTraitIds() []string {
+	if o == nil {
+		return nil
+	}
+	return o.ExcludeResourceTypeTraitIds
+}
+
+func (o *SearchAppResourceTypesRequest) GetPageSize() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.PageSize
+}
+
+func (o *SearchAppResourceTypesRequest) GetPageToken() *string {
+	if o == nil {
+		return nil
+	}
+	return o.PageToken
+}
+
+func (o *SearchAppResourceTypesRequest) GetQuery() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Query
+}
+
+func (o *SearchAppResourceTypesRequest) GetResourceTypeIds() []string {
+	if o == nil {
+		return nil
+	}
+	return o.ResourceTypeIds
+}
+
+func (o *SearchAppResourceTypesRequest) GetResourceTypeTraitIds() []string {
+	if o == nil {
+		return nil
+	}
+	return o.ResourceTypeTraitIds
+}

@@ -7,6 +7,7 @@ import (
 	"context"
 	"fmt"
 	"github.com/conductorone/conductorone-sdk-go/pkg/models/operations"
+	"github.com/conductorone/conductorone-sdk-go/pkg/models/sdkerrors"
 	"github.com/conductorone/conductorone-sdk-go/pkg/models/shared"
 	"github.com/conductorone/conductorone-sdk-go/pkg/utils"
 	"io"
@@ -77,6 +78,8 @@ func (s *task) CreateGrantTask(ctx context.Context, request shared.TaskServiceCr
 			}
 
 			res.TaskServiceCreateGrantResponse = out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
 	}
 
@@ -136,6 +139,8 @@ func (s *task) CreateRevokeTask(ctx context.Context, request shared.TaskServiceC
 			}
 
 			res.TaskServiceCreateRevokeResponse = out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
 	}
 
@@ -191,6 +196,8 @@ func (s *task) Get(ctx context.Context, request operations.C1APITaskV1TaskServic
 			}
 
 			res.TaskServiceGetResponse = out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
 	}
 

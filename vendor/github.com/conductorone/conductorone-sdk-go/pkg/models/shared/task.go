@@ -188,3 +188,143 @@ type Task struct {
 	//
 	UserID *string `json:"userId,omitempty"`
 }
+
+func (o *Task) GetPolicyInstance() *PolicyInstance {
+	if o == nil {
+		return nil
+	}
+	return o.PolicyInstance
+}
+
+func (o *Task) GetTaskType() *TaskType {
+	if o == nil {
+		return nil
+	}
+	return o.TaskType
+}
+
+func (o *Task) GetActions() []TaskActions {
+	if o == nil {
+		return nil
+	}
+	return o.Actions
+}
+
+func (o *Task) GetAnalysisID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AnalysisID
+}
+
+func (o *Task) GetAnnotations() []map[string]interface{} {
+	if o == nil {
+		return nil
+	}
+	return o.Annotations
+}
+
+func (o *Task) GetCommentCount() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.CommentCount
+}
+
+func (o *Task) GetCreatedAt() *time.Time {
+	if o == nil {
+		return nil
+	}
+	return o.CreatedAt
+}
+
+func (o *Task) GetCreatedByUserID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.CreatedByUserID
+}
+
+func (o *Task) GetDeletedAt() *time.Time {
+	if o == nil {
+		return nil
+	}
+	return o.DeletedAt
+}
+
+func (o *Task) GetDescription() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Description
+}
+
+func (o *Task) GetDisplayName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.DisplayName
+}
+
+func (o *Task) GetEmergencyAccess() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.EmergencyAccess
+}
+
+func (o *Task) GetExternalRefs() []ExternalRef {
+	if o == nil {
+		return nil
+	}
+	return o.ExternalRefs
+}
+
+func (o *Task) GetID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ID
+}
+
+func (o *Task) GetNumericID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.NumericID
+}
+
+func (o *Task) GetProcessing() *TaskProcessing {
+	if o == nil {
+		return nil
+	}
+	return o.Processing
+}
+
+func (o *Task) GetState() *TaskState {
+	if o == nil {
+		return nil
+	}
+	return o.State
+}
+
+func (o *Task) GetStepApproverIds() []string {
+	if o == nil {
+		return nil
+	}
+	return o.StepApproverIds
+}
+
+func (o *Task) GetUpdatedAt() *time.Time {
+	if o == nil {
+		return nil
+	}
+	return o.UpdatedAt
+}
+
+func (o *Task) GetUserID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.UserID
+}

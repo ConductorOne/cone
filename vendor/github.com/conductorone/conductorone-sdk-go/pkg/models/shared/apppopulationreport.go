@@ -56,3 +56,45 @@ type AppPopulationReport struct {
 	// The state field.
 	State *AppPopulationReportState `json:"state,omitempty"`
 }
+
+func (o *AppPopulationReport) GetAppID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AppID
+}
+
+func (o *AppPopulationReport) GetCreatedAt() *time.Time {
+	if o == nil {
+		return nil
+	}
+	return o.CreatedAt
+}
+
+func (o *AppPopulationReport) GetDownloadURL() *string {
+	if o == nil {
+		return nil
+	}
+	return o.DownloadURL
+}
+
+func (o *AppPopulationReport) GetHashes() map[string]string {
+	if o == nil {
+		return nil
+	}
+	return o.Hashes
+}
+
+func (o *AppPopulationReport) GetID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ID
+}
+
+func (o *AppPopulationReport) GetState() *AppPopulationReportState {
+	if o == nil {
+		return nil
+	}
+	return o.State
+}

@@ -7,6 +7,7 @@ import (
 	"context"
 	"fmt"
 	"github.com/conductorone/conductorone-sdk-go/pkg/models/operations"
+	"github.com/conductorone/conductorone-sdk-go/pkg/models/sdkerrors"
 	"github.com/conductorone/conductorone-sdk-go/pkg/models/shared"
 	"github.com/conductorone/conductorone-sdk-go/pkg/utils"
 	"io"
@@ -77,6 +78,8 @@ func (s *policies) Create(ctx context.Context, request shared.CreatePolicyReques
 			}
 
 			res.CreatePolicyResponse = out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
 	}
 
@@ -139,6 +142,8 @@ func (s *policies) Delete(ctx context.Context, request operations.C1APIPolicyV1P
 			}
 
 			res.DeletePolicyResponse = out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
 	}
 
@@ -194,6 +199,8 @@ func (s *policies) Get(ctx context.Context, request operations.C1APIPolicyV1Poli
 			}
 
 			res.GetPolicyResponse = out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
 	}
 
@@ -246,6 +253,8 @@ func (s *policies) List(ctx context.Context) (*operations.C1APIPolicyV1PoliciesL
 			}
 
 			res.ListPolicyResponse = out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
 	}
 
@@ -308,6 +317,8 @@ func (s *policies) Update(ctx context.Context, request operations.C1APIPolicyV1P
 			}
 
 			res.UpdatePolicyResponse = out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
 	}
 

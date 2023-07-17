@@ -14,3 +14,24 @@ type ErroredAction struct {
 	ErrorCode *string    `json:"errorCode,omitempty"`
 	ErroredAt *time.Time `json:"erroredAt,omitempty"`
 }
+
+func (o *ErroredAction) GetDescription() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Description
+}
+
+func (o *ErroredAction) GetErrorCode() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ErrorCode
+}
+
+func (o *ErroredAction) GetErroredAt() *time.Time {
+	if o == nil {
+		return nil
+	}
+	return o.ErroredAt
+}

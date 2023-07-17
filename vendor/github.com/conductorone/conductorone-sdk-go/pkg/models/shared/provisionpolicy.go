@@ -16,3 +16,24 @@ type ProvisionPolicy struct {
 	// The ManualProvision message.
 	ManualProvision *ManualProvision `json:"manual,omitempty"`
 }
+
+func (o *ProvisionPolicy) GetConnectorProvision() *ConnectorProvision {
+	if o == nil {
+		return nil
+	}
+	return o.ConnectorProvision
+}
+
+func (o *ProvisionPolicy) GetDelegatedProvision() *DelegatedProvision {
+	if o == nil {
+		return nil
+	}
+	return o.DelegatedProvision
+}
+
+func (o *ProvisionPolicy) GetManualProvision() *ManualProvision {
+	if o == nil {
+		return nil
+	}
+	return o.ManualProvision
+}

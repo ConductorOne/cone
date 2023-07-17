@@ -70,3 +70,52 @@ type ProvisionInstance struct {
 	// The state field.
 	State *ProvisionInstanceState `json:"state,omitempty"`
 }
+
+func (o *ProvisionInstance) GetCancelledAction() *CancelledAction {
+	if o == nil {
+		return nil
+	}
+	return o.CancelledAction
+}
+
+func (o *ProvisionInstance) GetCompletedAction() *CompletedAction {
+	if o == nil {
+		return nil
+	}
+	return o.CompletedAction
+}
+
+func (o *ProvisionInstance) GetErroredAction() *ErroredAction {
+	if o == nil {
+		return nil
+	}
+	return o.ErroredAction
+}
+
+func (o *ProvisionInstance) GetProvision() *Provision {
+	if o == nil {
+		return nil
+	}
+	return o.Provision
+}
+
+func (o *ProvisionInstance) GetReassignedByErrorAction() *ReassignedByErrorAction {
+	if o == nil {
+		return nil
+	}
+	return o.ReassignedByErrorAction
+}
+
+func (o *ProvisionInstance) GetNotificationID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.NotificationID
+}
+
+func (o *ProvisionInstance) GetState() *ProvisionInstanceState {
+	if o == nil {
+		return nil
+	}
+	return o.State
+}

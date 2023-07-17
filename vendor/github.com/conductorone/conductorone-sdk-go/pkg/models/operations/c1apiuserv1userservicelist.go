@@ -14,3 +14,31 @@ type C1APIUserV1UserServiceListResponse struct {
 	// Successful response
 	UserServiceListResponse *shared.UserServiceListResponse
 }
+
+func (o *C1APIUserV1UserServiceListResponse) GetContentType() string {
+	if o == nil {
+		return ""
+	}
+	return o.ContentType
+}
+
+func (o *C1APIUserV1UserServiceListResponse) GetStatusCode() int {
+	if o == nil {
+		return 0
+	}
+	return o.StatusCode
+}
+
+func (o *C1APIUserV1UserServiceListResponse) GetRawResponse() *http.Response {
+	if o == nil {
+		return nil
+	}
+	return o.RawResponse
+}
+
+func (o *C1APIUserV1UserServiceListResponse) GetUserServiceListResponse() *shared.UserServiceListResponse {
+	if o == nil {
+		return nil
+	}
+	return o.UserServiceListResponse
+}

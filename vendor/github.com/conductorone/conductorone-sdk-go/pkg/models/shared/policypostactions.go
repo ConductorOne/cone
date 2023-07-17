@@ -14,3 +14,10 @@ type PolicyPostActions struct {
 	// See the documentation for `c1.api.policy.v1.PolicyPostActions` for more details.
 	CertifyRemediateImmediately *bool `json:"certifyRemediateImmediately,omitempty"`
 }
+
+func (o *PolicyPostActions) GetCertifyRemediateImmediately() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.CertifyRemediateImmediately
+}

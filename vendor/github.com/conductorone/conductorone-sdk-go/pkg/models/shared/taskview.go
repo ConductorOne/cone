@@ -23,3 +23,66 @@ type TaskView struct {
 	// The userPath field.
 	UserPath *string `json:"userPath,omitempty"`
 }
+
+func (o *TaskView) GetTask() *Task {
+	if o == nil {
+		return nil
+	}
+	return o.Task
+}
+
+func (o *TaskView) GetAccessReviewPath() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AccessReviewPath
+}
+
+func (o *TaskView) GetAppPath() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AppPath
+}
+
+func (o *TaskView) GetAppUserPath() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AppUserPath
+}
+
+func (o *TaskView) GetCreatedByUserPath() *string {
+	if o == nil {
+		return nil
+	}
+	return o.CreatedByUserPath
+}
+
+func (o *TaskView) GetEntitlementsPath() *string {
+	if o == nil {
+		return nil
+	}
+	return o.EntitlementsPath
+}
+
+func (o *TaskView) GetIdentityUserPath() *string {
+	if o == nil {
+		return nil
+	}
+	return o.IdentityUserPath
+}
+
+func (o *TaskView) GetStepApproversPath() *string {
+	if o == nil {
+		return nil
+	}
+	return o.StepApproversPath
+}
+
+func (o *TaskView) GetUserPath() *string {
+	if o == nil {
+		return nil
+	}
+	return o.UserPath
+}

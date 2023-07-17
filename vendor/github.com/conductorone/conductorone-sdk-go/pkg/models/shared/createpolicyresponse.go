@@ -7,3 +7,10 @@ type CreatePolicyResponse struct {
 	// The Policy message.
 	Policy *Policy `json:"policy,omitempty"`
 }
+
+func (o *CreatePolicyResponse) GetPolicy() *Policy {
+	if o == nil {
+		return nil
+	}
+	return o.Policy
+}

@@ -8,3 +8,17 @@ type UpdateAppUsageControlsRequest struct {
 	AppUsageControls *AppUsageControls `json:"appUsageControls,omitempty"`
 	UpdateMask       *string           `json:"updateMask,omitempty"`
 }
+
+func (o *UpdateAppUsageControlsRequest) GetAppUsageControls() *AppUsageControls {
+	if o == nil {
+		return nil
+	}
+	return o.AppUsageControls
+}
+
+func (o *UpdateAppUsageControlsRequest) GetUpdateMask() *string {
+	if o == nil {
+		return nil
+	}
+	return o.UpdateMask
+}

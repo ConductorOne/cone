@@ -9,3 +9,17 @@ type ManualProvision struct {
 	// The userIds field.
 	UserIds []string `json:"userIds,omitempty"`
 }
+
+func (o *ManualProvision) GetInstructions() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Instructions
+}
+
+func (o *ManualProvision) GetUserIds() []string {
+	if o == nil {
+		return nil
+	}
+	return o.UserIds
+}

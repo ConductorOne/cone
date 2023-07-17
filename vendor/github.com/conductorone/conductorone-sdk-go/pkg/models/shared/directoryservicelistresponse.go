@@ -11,3 +11,24 @@ type DirectoryServiceListResponse struct {
 	// The nextPageToken field.
 	NextPageToken *string `json:"nextPageToken,omitempty"`
 }
+
+func (o *DirectoryServiceListResponse) GetExpanded() []map[string]interface{} {
+	if o == nil {
+		return nil
+	}
+	return o.Expanded
+}
+
+func (o *DirectoryServiceListResponse) GetList() []DirectoryView {
+	if o == nil {
+		return nil
+	}
+	return o.List
+}
+
+func (o *DirectoryServiceListResponse) GetNextPageToken() *string {
+	if o == nil {
+		return nil
+	}
+	return o.NextPageToken
+}

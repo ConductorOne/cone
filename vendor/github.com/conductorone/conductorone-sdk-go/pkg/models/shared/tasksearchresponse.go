@@ -11,3 +11,24 @@ type TaskSearchResponse struct {
 	// The nextPageToken field.
 	NextPageToken *string `json:"nextPageToken,omitempty"`
 }
+
+func (o *TaskSearchResponse) GetExpanded() []map[string]interface{} {
+	if o == nil {
+		return nil
+	}
+	return o.Expanded
+}
+
+func (o *TaskSearchResponse) GetList() []TaskView {
+	if o == nil {
+		return nil
+	}
+	return o.List
+}
+
+func (o *TaskSearchResponse) GetNextPageToken() *string {
+	if o == nil {
+		return nil
+	}
+	return o.NextPageToken
+}

@@ -14,3 +14,31 @@ type C1APIAppV1AppResourceSearchSearchAppResourceTypesResponse struct {
 	StatusCode                     int
 	RawResponse                    *http.Response
 }
+
+func (o *C1APIAppV1AppResourceSearchSearchAppResourceTypesResponse) GetContentType() string {
+	if o == nil {
+		return ""
+	}
+	return o.ContentType
+}
+
+func (o *C1APIAppV1AppResourceSearchSearchAppResourceTypesResponse) GetSearchAppResourceTypesResponse() *shared.SearchAppResourceTypesResponse {
+	if o == nil {
+		return nil
+	}
+	return o.SearchAppResourceTypesResponse
+}
+
+func (o *C1APIAppV1AppResourceSearchSearchAppResourceTypesResponse) GetStatusCode() int {
+	if o == nil {
+		return 0
+	}
+	return o.StatusCode
+}
+
+func (o *C1APIAppV1AppResourceSearchSearchAppResourceTypesResponse) GetRawResponse() *http.Response {
+	if o == nil {
+		return nil
+	}
+	return o.RawResponse
+}

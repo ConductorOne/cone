@@ -13,3 +13,31 @@ type AppResourceTypeServiceListResponse struct {
 	// The notificationToken field.
 	NotificationToken *string `json:"notificationToken,omitempty"`
 }
+
+func (o *AppResourceTypeServiceListResponse) GetExpanded() []map[string]interface{} {
+	if o == nil {
+		return nil
+	}
+	return o.Expanded
+}
+
+func (o *AppResourceTypeServiceListResponse) GetList() []AppResourceTypeView {
+	if o == nil {
+		return nil
+	}
+	return o.List
+}
+
+func (o *AppResourceTypeServiceListResponse) GetNextPageToken() *string {
+	if o == nil {
+		return nil
+	}
+	return o.NextPageToken
+}
+
+func (o *AppResourceTypeServiceListResponse) GetNotificationToken() *string {
+	if o == nil {
+		return nil
+	}
+	return o.NotificationToken
+}

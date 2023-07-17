@@ -14,3 +14,31 @@ type C1APITaskV1TaskSearchServiceSearchResponse struct {
 	// Successful response
 	TaskSearchResponse *shared.TaskSearchResponse
 }
+
+func (o *C1APITaskV1TaskSearchServiceSearchResponse) GetContentType() string {
+	if o == nil {
+		return ""
+	}
+	return o.ContentType
+}
+
+func (o *C1APITaskV1TaskSearchServiceSearchResponse) GetStatusCode() int {
+	if o == nil {
+		return 0
+	}
+	return o.StatusCode
+}
+
+func (o *C1APITaskV1TaskSearchServiceSearchResponse) GetRawResponse() *http.Response {
+	if o == nil {
+		return nil
+	}
+	return o.RawResponse
+}
+
+func (o *C1APITaskV1TaskSearchServiceSearchResponse) GetTaskSearchResponse() *shared.TaskSearchResponse {
+	if o == nil {
+		return nil
+	}
+	return o.TaskSearchResponse
+}

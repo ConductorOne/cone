@@ -14,3 +14,24 @@ type RestartAction struct {
 	// The userId field.
 	UserID *string `json:"userId,omitempty"`
 }
+
+func (o *RestartAction) GetOldPolicyStepID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.OldPolicyStepID
+}
+
+func (o *RestartAction) GetRestartedAt() *time.Time {
+	if o == nil {
+		return nil
+	}
+	return o.RestartedAt
+}
+
+func (o *RestartAction) GetUserID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.UserID
+}

@@ -44,3 +44,24 @@ type ExternalRef struct {
 	// The url field.
 	URL *string `json:"url,omitempty"`
 }
+
+func (o *ExternalRef) GetExternalRefSource() *ExternalRefExternalRefSource {
+	if o == nil {
+		return nil
+	}
+	return o.ExternalRefSource
+}
+
+func (o *ExternalRef) GetName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Name
+}
+
+func (o *ExternalRef) GetURL() *string {
+	if o == nil {
+		return nil
+	}
+	return o.URL
+}

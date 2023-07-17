@@ -16,3 +16,24 @@ type TaskType struct {
 	// The TaskTypeRevoke message.
 	TaskTypeRevoke *TaskTypeRevoke `json:"revoke,omitempty"`
 }
+
+func (o *TaskType) GetTaskTypeCertify() *TaskTypeCertify {
+	if o == nil {
+		return nil
+	}
+	return o.TaskTypeCertify
+}
+
+func (o *TaskType) GetTaskTypeGrant() *TaskTypeGrant {
+	if o == nil {
+		return nil
+	}
+	return o.TaskTypeGrant
+}
+
+func (o *TaskType) GetTaskTypeRevoke() *TaskTypeRevoke {
+	if o == nil {
+		return nil
+	}
+	return o.TaskTypeRevoke
+}

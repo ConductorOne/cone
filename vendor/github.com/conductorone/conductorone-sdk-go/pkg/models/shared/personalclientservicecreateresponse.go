@@ -9,3 +9,17 @@ type PersonalClientServiceCreateResponse struct {
 	// The clientSecret field.
 	ClientSecret *string `json:"clientSecret,omitempty"`
 }
+
+func (o *PersonalClientServiceCreateResponse) GetPersonalClient() *PersonalClient {
+	if o == nil {
+		return nil
+	}
+	return o.PersonalClient
+}
+
+func (o *PersonalClientServiceCreateResponse) GetClientSecret() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ClientSecret
+}

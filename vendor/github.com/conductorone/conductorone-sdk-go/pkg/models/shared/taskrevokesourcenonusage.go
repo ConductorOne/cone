@@ -11,3 +11,17 @@ type TaskRevokeSourceNonUsage struct {
 	ExpiresAt *time.Time `json:"expiresAt,omitempty"`
 	LastLogin *time.Time `json:"lastLogin,omitempty"`
 }
+
+func (o *TaskRevokeSourceNonUsage) GetExpiresAt() *time.Time {
+	if o == nil {
+		return nil
+	}
+	return o.ExpiresAt
+}
+
+func (o *TaskRevokeSourceNonUsage) GetLastLogin() *time.Time {
+	if o == nil {
+		return nil
+	}
+	return o.LastLogin
+}

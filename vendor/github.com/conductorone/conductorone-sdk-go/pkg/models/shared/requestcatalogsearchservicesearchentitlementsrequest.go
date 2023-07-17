@@ -56,3 +56,45 @@ type RequestCatalogSearchServiceSearchEntitlementsRequest struct {
 	// The query field.
 	Query *string `json:"query,omitempty"`
 }
+
+func (o *RequestCatalogSearchServiceSearchEntitlementsRequest) GetAppEntitlementExpandMask() *AppEntitlementExpandMask {
+	if o == nil {
+		return nil
+	}
+	return o.AppEntitlementExpandMask
+}
+
+func (o *RequestCatalogSearchServiceSearchEntitlementsRequest) GetEntitlementAlias() *string {
+	if o == nil {
+		return nil
+	}
+	return o.EntitlementAlias
+}
+
+func (o *RequestCatalogSearchServiceSearchEntitlementsRequest) GetGrantedStatus() *RequestCatalogSearchServiceSearchEntitlementsRequestGrantedStatus {
+	if o == nil {
+		return nil
+	}
+	return o.GrantedStatus
+}
+
+func (o *RequestCatalogSearchServiceSearchEntitlementsRequest) GetPageSize() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.PageSize
+}
+
+func (o *RequestCatalogSearchServiceSearchEntitlementsRequest) GetPageToken() *string {
+	if o == nil {
+		return nil
+	}
+	return o.PageToken
+}
+
+func (o *RequestCatalogSearchServiceSearchEntitlementsRequest) GetQuery() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Query
+}

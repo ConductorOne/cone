@@ -11,3 +11,24 @@ type ListAppOwnersResponse struct {
 	// The notificationToken field.
 	NotificationToken *string `json:"notificationToken,omitempty"`
 }
+
+func (o *ListAppOwnersResponse) GetList() []User {
+	if o == nil {
+		return nil
+	}
+	return o.List
+}
+
+func (o *ListAppOwnersResponse) GetNextPageToken() *string {
+	if o == nil {
+		return nil
+	}
+	return o.NextPageToken
+}
+
+func (o *ListAppOwnersResponse) GetNotificationToken() *string {
+	if o == nil {
+		return nil
+	}
+	return o.NotificationToken
+}

@@ -11,3 +11,24 @@ type AppResourceServiceListResponse struct {
 	// The nextPageToken field.
 	NextPageToken *string `json:"nextPageToken,omitempty"`
 }
+
+func (o *AppResourceServiceListResponse) GetExpanded() []map[string]interface{} {
+	if o == nil {
+		return nil
+	}
+	return o.Expanded
+}
+
+func (o *AppResourceServiceListResponse) GetList() []AppResourceView {
+	if o == nil {
+		return nil
+	}
+	return o.List
+}
+
+func (o *AppResourceServiceListResponse) GetNextPageToken() *string {
+	if o == nil {
+		return nil
+	}
+	return o.NextPageToken
+}

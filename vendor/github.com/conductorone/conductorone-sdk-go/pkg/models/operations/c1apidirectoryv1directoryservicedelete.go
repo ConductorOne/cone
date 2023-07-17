@@ -12,10 +12,52 @@ type C1APIDirectoryV1DirectoryServiceDeleteRequest struct {
 	AppID                         string                                `pathParam:"style=simple,explode=false,name=app_id"`
 }
 
+func (o *C1APIDirectoryV1DirectoryServiceDeleteRequest) GetDirectoryServiceDeleteRequest() *shared.DirectoryServiceDeleteRequest {
+	if o == nil {
+		return nil
+	}
+	return o.DirectoryServiceDeleteRequest
+}
+
+func (o *C1APIDirectoryV1DirectoryServiceDeleteRequest) GetAppID() string {
+	if o == nil {
+		return ""
+	}
+	return o.AppID
+}
+
 type C1APIDirectoryV1DirectoryServiceDeleteResponse struct {
 	ContentType string
 	// Successful response
 	DirectoryServiceDeleteResponse *shared.DirectoryServiceDeleteResponse
 	StatusCode                     int
 	RawResponse                    *http.Response
+}
+
+func (o *C1APIDirectoryV1DirectoryServiceDeleteResponse) GetContentType() string {
+	if o == nil {
+		return ""
+	}
+	return o.ContentType
+}
+
+func (o *C1APIDirectoryV1DirectoryServiceDeleteResponse) GetDirectoryServiceDeleteResponse() *shared.DirectoryServiceDeleteResponse {
+	if o == nil {
+		return nil
+	}
+	return o.DirectoryServiceDeleteResponse
+}
+
+func (o *C1APIDirectoryV1DirectoryServiceDeleteResponse) GetStatusCode() int {
+	if o == nil {
+		return 0
+	}
+	return o.StatusCode
+}
+
+func (o *C1APIDirectoryV1DirectoryServiceDeleteResponse) GetRawResponse() *http.Response {
+	if o == nil {
+		return nil
+	}
+	return o.RawResponse
 }

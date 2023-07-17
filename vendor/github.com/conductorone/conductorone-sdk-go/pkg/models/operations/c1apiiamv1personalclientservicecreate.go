@@ -14,3 +14,31 @@ type C1APIIamV1PersonalClientServiceCreateResponse struct {
 	StatusCode                          int
 	RawResponse                         *http.Response
 }
+
+func (o *C1APIIamV1PersonalClientServiceCreateResponse) GetContentType() string {
+	if o == nil {
+		return ""
+	}
+	return o.ContentType
+}
+
+func (o *C1APIIamV1PersonalClientServiceCreateResponse) GetPersonalClientServiceCreateResponse() *shared.PersonalClientServiceCreateResponse {
+	if o == nil {
+		return nil
+	}
+	return o.PersonalClientServiceCreateResponse
+}
+
+func (o *C1APIIamV1PersonalClientServiceCreateResponse) GetStatusCode() int {
+	if o == nil {
+		return 0
+	}
+	return o.StatusCode
+}
+
+func (o *C1APIIamV1PersonalClientServiceCreateResponse) GetRawResponse() *http.Response {
+	if o == nil {
+		return nil
+	}
+	return o.RawResponse
+}

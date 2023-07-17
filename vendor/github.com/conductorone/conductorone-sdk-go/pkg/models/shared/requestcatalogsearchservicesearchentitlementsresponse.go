@@ -11,3 +11,24 @@ type RequestCatalogSearchServiceSearchEntitlementsResponse struct {
 	// The nextPageToken field.
 	NextPageToken *string `json:"nextPageToken,omitempty"`
 }
+
+func (o *RequestCatalogSearchServiceSearchEntitlementsResponse) GetExpanded() []map[string]interface{} {
+	if o == nil {
+		return nil
+	}
+	return o.Expanded
+}
+
+func (o *RequestCatalogSearchServiceSearchEntitlementsResponse) GetList() []AppEntitlementWithUserBindings {
+	if o == nil {
+		return nil
+	}
+	return o.List
+}
+
+func (o *RequestCatalogSearchServiceSearchEntitlementsResponse) GetNextPageToken() *string {
+	if o == nil {
+		return nil
+	}
+	return o.NextPageToken
+}

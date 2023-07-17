@@ -8,3 +8,17 @@ type UpdatePolicyRequest struct {
 	Policy     *Policy `json:"policy,omitempty"`
 	UpdateMask *string `json:"updateMask,omitempty"`
 }
+
+func (o *UpdatePolicyRequest) GetPolicy() *Policy {
+	if o == nil {
+		return nil
+	}
+	return o.Policy
+}
+
+func (o *UpdatePolicyRequest) GetUpdateMask() *string {
+	if o == nil {
+		return nil
+	}
+	return o.UpdateMask
+}

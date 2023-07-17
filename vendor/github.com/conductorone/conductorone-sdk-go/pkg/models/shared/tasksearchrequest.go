@@ -39,6 +39,40 @@ func (e *TaskSearchRequestCurrentStep) UnmarshalJSON(data []byte) error {
 	}
 }
 
+// TaskSearchRequestEmergencyStatus - The emergencyStatus field.
+type TaskSearchRequestEmergencyStatus string
+
+const (
+	TaskSearchRequestEmergencyStatusUnspecified  TaskSearchRequestEmergencyStatus = "UNSPECIFIED"
+	TaskSearchRequestEmergencyStatusAll          TaskSearchRequestEmergencyStatus = "ALL"
+	TaskSearchRequestEmergencyStatusNonEmergency TaskSearchRequestEmergencyStatus = "NON_EMERGENCY"
+	TaskSearchRequestEmergencyStatusEmergency    TaskSearchRequestEmergencyStatus = "EMERGENCY"
+)
+
+func (e TaskSearchRequestEmergencyStatus) ToPointer() *TaskSearchRequestEmergencyStatus {
+	return &e
+}
+
+func (e *TaskSearchRequestEmergencyStatus) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "UNSPECIFIED":
+		fallthrough
+	case "ALL":
+		fallthrough
+	case "NON_EMERGENCY":
+		fallthrough
+	case "EMERGENCY":
+		*e = TaskSearchRequestEmergencyStatus(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for TaskSearchRequestEmergencyStatus: %v", v)
+	}
+}
+
 // TaskSearchRequestSortBy - The sortBy field.
 type TaskSearchRequestSortBy string
 
@@ -132,6 +166,8 @@ type TaskSearchRequest struct {
 	CreatedBefore  *time.Time `json:"createdBefore,omitempty"`
 	// The currentStep field.
 	CurrentStep *TaskSearchRequestCurrentStep `json:"currentStep,omitempty"`
+	// The emergencyStatus field.
+	EmergencyStatus *TaskSearchRequestEmergencyStatus `json:"emergencyStatus,omitempty"`
 	// The excludeAppEntitlementIds field.
 	ExcludeAppEntitlementIds []string `json:"excludeAppEntitlementIds,omitempty"`
 	//  Exclude Specific TaskIDs from this serach result.
@@ -166,4 +202,200 @@ type TaskSearchRequest struct {
 	//  TODO(pquerna): why is this a MESSAGE that only CONTAINS AN ENUM?
 	//
 	TaskTypes []TaskType `json:"taskTypes,omitempty"`
+}
+
+func (o *TaskSearchRequest) GetTaskExpandMask() *TaskExpandMask {
+	if o == nil {
+		return nil
+	}
+	return o.TaskExpandMask
+}
+
+func (o *TaskSearchRequest) GetAccessReviewIds() []string {
+	if o == nil {
+		return nil
+	}
+	return o.AccessReviewIds
+}
+
+func (o *TaskSearchRequest) GetAccountOwnerIds() []string {
+	if o == nil {
+		return nil
+	}
+	return o.AccountOwnerIds
+}
+
+func (o *TaskSearchRequest) GetActorID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ActorID
+}
+
+func (o *TaskSearchRequest) GetAppEntitlementIds() []string {
+	if o == nil {
+		return nil
+	}
+	return o.AppEntitlementIds
+}
+
+func (o *TaskSearchRequest) GetAppResourceIds() []string {
+	if o == nil {
+		return nil
+	}
+	return o.AppResourceIds
+}
+
+func (o *TaskSearchRequest) GetAppResourceTypeIds() []string {
+	if o == nil {
+		return nil
+	}
+	return o.AppResourceTypeIds
+}
+
+func (o *TaskSearchRequest) GetAppUserSubjectIds() []string {
+	if o == nil {
+		return nil
+	}
+	return o.AppUserSubjectIds
+}
+
+func (o *TaskSearchRequest) GetApplicationIds() []string {
+	if o == nil {
+		return nil
+	}
+	return o.ApplicationIds
+}
+
+func (o *TaskSearchRequest) GetAssigneesInIds() []string {
+	if o == nil {
+		return nil
+	}
+	return o.AssigneesInIds
+}
+
+func (o *TaskSearchRequest) GetCreatedAfter() *time.Time {
+	if o == nil {
+		return nil
+	}
+	return o.CreatedAfter
+}
+
+func (o *TaskSearchRequest) GetCreatedBefore() *time.Time {
+	if o == nil {
+		return nil
+	}
+	return o.CreatedBefore
+}
+
+func (o *TaskSearchRequest) GetCurrentStep() *TaskSearchRequestCurrentStep {
+	if o == nil {
+		return nil
+	}
+	return o.CurrentStep
+}
+
+func (o *TaskSearchRequest) GetEmergencyStatus() *TaskSearchRequestEmergencyStatus {
+	if o == nil {
+		return nil
+	}
+	return o.EmergencyStatus
+}
+
+func (o *TaskSearchRequest) GetExcludeAppEntitlementIds() []string {
+	if o == nil {
+		return nil
+	}
+	return o.ExcludeAppEntitlementIds
+}
+
+func (o *TaskSearchRequest) GetExcludeIds() []string {
+	if o == nil {
+		return nil
+	}
+	return o.ExcludeIds
+}
+
+func (o *TaskSearchRequest) GetIncludeDeleted() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.IncludeDeleted
+}
+
+func (o *TaskSearchRequest) GetMyWorkUserIds() []string {
+	if o == nil {
+		return nil
+	}
+	return o.MyWorkUserIds
+}
+
+func (o *TaskSearchRequest) GetOpenerIds() []string {
+	if o == nil {
+		return nil
+	}
+	return o.OpenerIds
+}
+
+func (o *TaskSearchRequest) GetPageSize() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.PageSize
+}
+
+func (o *TaskSearchRequest) GetPageToken() *string {
+	if o == nil {
+		return nil
+	}
+	return o.PageToken
+}
+
+func (o *TaskSearchRequest) GetPreviouslyActedOnIds() []string {
+	if o == nil {
+		return nil
+	}
+	return o.PreviouslyActedOnIds
+}
+
+func (o *TaskSearchRequest) GetQuery() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Query
+}
+
+func (o *TaskSearchRequest) GetRefs() []TaskRef {
+	if o == nil {
+		return nil
+	}
+	return o.Refs
+}
+
+func (o *TaskSearchRequest) GetSortBy() *TaskSearchRequestSortBy {
+	if o == nil {
+		return nil
+	}
+	return o.SortBy
+}
+
+func (o *TaskSearchRequest) GetSubjectIds() []string {
+	if o == nil {
+		return nil
+	}
+	return o.SubjectIds
+}
+
+func (o *TaskSearchRequest) GetTaskStates() []TaskSearchRequestTaskStates {
+	if o == nil {
+		return nil
+	}
+	return o.TaskStates
+}
+
+func (o *TaskSearchRequest) GetTaskTypes() []TaskType {
+	if o == nil {
+		return nil
+	}
+	return o.TaskTypes
 }

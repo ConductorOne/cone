@@ -12,10 +12,52 @@ type C1APIPolicyV1PoliciesUpdateRequest struct {
 	ID                  string                      `pathParam:"style=simple,explode=false,name=id"`
 }
 
+func (o *C1APIPolicyV1PoliciesUpdateRequest) GetUpdatePolicyRequest() *shared.UpdatePolicyRequest {
+	if o == nil {
+		return nil
+	}
+	return o.UpdatePolicyRequest
+}
+
+func (o *C1APIPolicyV1PoliciesUpdateRequest) GetID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ID
+}
+
 type C1APIPolicyV1PoliciesUpdateResponse struct {
 	ContentType string
 	StatusCode  int
 	RawResponse *http.Response
 	// Successful response
 	UpdatePolicyResponse *shared.UpdatePolicyResponse
+}
+
+func (o *C1APIPolicyV1PoliciesUpdateResponse) GetContentType() string {
+	if o == nil {
+		return ""
+	}
+	return o.ContentType
+}
+
+func (o *C1APIPolicyV1PoliciesUpdateResponse) GetStatusCode() int {
+	if o == nil {
+		return 0
+	}
+	return o.StatusCode
+}
+
+func (o *C1APIPolicyV1PoliciesUpdateResponse) GetRawResponse() *http.Response {
+	if o == nil {
+		return nil
+	}
+	return o.RawResponse
+}
+
+func (o *C1APIPolicyV1PoliciesUpdateResponse) GetUpdatePolicyResponse() *shared.UpdatePolicyResponse {
+	if o == nil {
+		return nil
+	}
+	return o.UpdatePolicyResponse
 }

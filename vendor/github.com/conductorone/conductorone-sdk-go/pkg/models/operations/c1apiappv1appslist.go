@@ -14,3 +14,31 @@ type C1APIAppV1AppsListResponse struct {
 	StatusCode       int
 	RawResponse      *http.Response
 }
+
+func (o *C1APIAppV1AppsListResponse) GetContentType() string {
+	if o == nil {
+		return ""
+	}
+	return o.ContentType
+}
+
+func (o *C1APIAppV1AppsListResponse) GetListAppsResponse() *shared.ListAppsResponse {
+	if o == nil {
+		return nil
+	}
+	return o.ListAppsResponse
+}
+
+func (o *C1APIAppV1AppsListResponse) GetStatusCode() int {
+	if o == nil {
+		return 0
+	}
+	return o.StatusCode
+}
+
+func (o *C1APIAppV1AppsListResponse) GetRawResponse() *http.Response {
+	if o == nil {
+		return nil
+	}
+	return o.RawResponse
+}

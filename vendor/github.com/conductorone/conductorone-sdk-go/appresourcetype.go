@@ -7,6 +7,7 @@ import (
 	"context"
 	"fmt"
 	"github.com/conductorone/conductorone-sdk-go/pkg/models/operations"
+	"github.com/conductorone/conductorone-sdk-go/pkg/models/sdkerrors"
 	"github.com/conductorone/conductorone-sdk-go/pkg/models/shared"
 	"github.com/conductorone/conductorone-sdk-go/pkg/utils"
 	"io"
@@ -72,6 +73,8 @@ func (s *appResourceType) Get(ctx context.Context, request operations.C1APIAppV1
 			}
 
 			res.AppResourceTypeServiceGetResponse = out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
 	}
 
@@ -127,6 +130,8 @@ func (s *appResourceType) List(ctx context.Context, request operations.C1APIAppV
 			}
 
 			res.AppResourceTypeServiceListResponse = out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
 	}
 

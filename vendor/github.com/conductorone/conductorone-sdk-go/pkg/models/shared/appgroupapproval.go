@@ -15,3 +15,38 @@ type AppGroupApproval struct {
 	// The fallbackUserIds field.
 	FallbackUserIds []string `json:"fallbackUserIds,omitempty"`
 }
+
+func (o *AppGroupApproval) GetAllowSelfApproval() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.AllowSelfApproval
+}
+
+func (o *AppGroupApproval) GetAppGroupID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AppGroupID
+}
+
+func (o *AppGroupApproval) GetAppID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AppID
+}
+
+func (o *AppGroupApproval) GetFallback() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.Fallback
+}
+
+func (o *AppGroupApproval) GetFallbackUserIds() []string {
+	if o == nil {
+		return nil
+	}
+	return o.FallbackUserIds
+}

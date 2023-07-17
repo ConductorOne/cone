@@ -9,3 +9,17 @@ type TaskRevokeSourceReview struct {
 	// The certTicketId field.
 	CertTicketID *string `json:"certTicketId,omitempty"`
 }
+
+func (o *TaskRevokeSourceReview) GetAccessReviewID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AccessReviewID
+}
+
+func (o *TaskRevokeSourceReview) GetCertTicketID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.CertTicketID
+}

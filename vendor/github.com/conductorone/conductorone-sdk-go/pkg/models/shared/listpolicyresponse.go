@@ -11,3 +11,24 @@ type ListPolicyResponse struct {
 	// The notificationToken field.
 	NotificationToken *string `json:"notificationToken,omitempty"`
 }
+
+func (o *ListPolicyResponse) GetList() []Policy {
+	if o == nil {
+		return nil
+	}
+	return o.List
+}
+
+func (o *ListPolicyResponse) GetNextPageToken() *string {
+	if o == nil {
+		return nil
+	}
+	return o.NextPageToken
+}
+
+func (o *ListPolicyResponse) GetNotificationToken() *string {
+	if o == nil {
+		return nil
+	}
+	return o.NotificationToken
+}

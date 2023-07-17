@@ -7,3 +7,10 @@ type AppEntitlementExpandMask struct {
 	// The paths field.
 	Paths []string `json:"paths,omitempty"`
 }
+
+func (o *AppEntitlementExpandMask) GetPaths() []string {
+	if o == nil {
+		return nil
+	}
+	return o.Paths
+}

@@ -7,6 +7,7 @@ import (
 	"context"
 	"fmt"
 	"github.com/conductorone/conductorone-sdk-go/pkg/models/operations"
+	"github.com/conductorone/conductorone-sdk-go/pkg/models/sdkerrors"
 	"github.com/conductorone/conductorone-sdk-go/pkg/models/shared"
 	"github.com/conductorone/conductorone-sdk-go/pkg/utils"
 	"io"
@@ -77,6 +78,8 @@ func (s *personalClient) Create(ctx context.Context, request shared.PersonalClie
 			}
 
 			res.PersonalClientServiceCreateResponse = out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
 	}
 

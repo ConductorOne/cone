@@ -15,3 +15,38 @@ type AppUsageControls struct {
 	// The revokeAfterDays field.
 	RevokeAfterDays *float64 `json:"revokeAfterDays,omitempty"`
 }
+
+func (o *AppUsageControls) GetAppID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AppID
+}
+
+func (o *AppUsageControls) GetNotify() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.Notify
+}
+
+func (o *AppUsageControls) GetNotifyAfterDays() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.NotifyAfterDays
+}
+
+func (o *AppUsageControls) GetRevoke() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.Revoke
+}
+
+func (o *AppUsageControls) GetRevokeAfterDays() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.RevokeAfterDays
+}

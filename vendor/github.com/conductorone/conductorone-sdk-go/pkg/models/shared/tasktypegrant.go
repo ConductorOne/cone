@@ -60,3 +60,52 @@ type TaskTypeGrant struct {
 	Outcome     *TaskTypeGrantOutcome `json:"outcome,omitempty"`
 	OutcomeTime *time.Time            `json:"outcomeTime,omitempty"`
 }
+
+func (o *TaskTypeGrant) GetAppEntitlementID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AppEntitlementID
+}
+
+func (o *TaskTypeGrant) GetAppID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AppID
+}
+
+func (o *TaskTypeGrant) GetAppUserID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AppUserID
+}
+
+func (o *TaskTypeGrant) GetGrantDuration() *string {
+	if o == nil {
+		return nil
+	}
+	return o.GrantDuration
+}
+
+func (o *TaskTypeGrant) GetIdentityUserID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.IdentityUserID
+}
+
+func (o *TaskTypeGrant) GetOutcome() *TaskTypeGrantOutcome {
+	if o == nil {
+		return nil
+	}
+	return o.Outcome
+}
+
+func (o *TaskTypeGrant) GetOutcomeTime() *time.Time {
+	if o == nil {
+		return nil
+	}
+	return o.OutcomeTime
+}

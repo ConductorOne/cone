@@ -11,3 +11,24 @@ type SearchAppResourceTypesResponse struct {
 	// The notificationToken field.
 	NotificationToken *string `json:"notificationToken,omitempty"`
 }
+
+func (o *SearchAppResourceTypesResponse) GetList() []AppResourceType {
+	if o == nil {
+		return nil
+	}
+	return o.List
+}
+
+func (o *SearchAppResourceTypesResponse) GetNextPageToken() *string {
+	if o == nil {
+		return nil
+	}
+	return o.NextPageToken
+}
+
+func (o *SearchAppResourceTypesResponse) GetNotificationToken() *string {
+	if o == nil {
+		return nil
+	}
+	return o.NotificationToken
+}

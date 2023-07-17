@@ -9,3 +9,17 @@ type DirectoryView struct {
 	// The appPath field.
 	AppPath *string `json:"appPath,omitempty"`
 }
+
+func (o *DirectoryView) GetDirectory() *Directory {
+	if o == nil {
+		return nil
+	}
+	return o.Directory
+}
+
+func (o *DirectoryView) GetAppPath() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AppPath
+}

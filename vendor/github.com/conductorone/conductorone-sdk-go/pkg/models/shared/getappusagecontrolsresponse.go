@@ -9,3 +9,17 @@ type GetAppUsageControlsResponse struct {
 	// The hasUsageData field.
 	HasUsageData *bool `json:"hasUsageData,omitempty"`
 }
+
+func (o *GetAppUsageControlsResponse) GetAppUsageControls() *AppUsageControls {
+	if o == nil {
+		return nil
+	}
+	return o.AppUsageControls
+}
+
+func (o *GetAppUsageControlsResponse) GetHasUsageData() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.HasUsageData
+}

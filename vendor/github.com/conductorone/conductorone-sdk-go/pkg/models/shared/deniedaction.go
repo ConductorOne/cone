@@ -12,3 +12,17 @@ type DeniedAction struct {
 	// The userId field.
 	UserID *string `json:"userId,omitempty"`
 }
+
+func (o *DeniedAction) GetDeniedAt() *time.Time {
+	if o == nil {
+		return nil
+	}
+	return o.DeniedAt
+}
+
+func (o *DeniedAction) GetUserID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.UserID
+}

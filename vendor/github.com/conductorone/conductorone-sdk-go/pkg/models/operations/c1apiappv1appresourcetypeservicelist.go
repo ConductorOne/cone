@@ -11,10 +11,45 @@ type C1APIAppV1AppResourceTypeServiceListRequest struct {
 	AppID string `pathParam:"style=simple,explode=false,name=app_id"`
 }
 
+func (o *C1APIAppV1AppResourceTypeServiceListRequest) GetAppID() string {
+	if o == nil {
+		return ""
+	}
+	return o.AppID
+}
+
 type C1APIAppV1AppResourceTypeServiceListResponse struct {
 	// Successful response
 	AppResourceTypeServiceListResponse *shared.AppResourceTypeServiceListResponse
 	ContentType                        string
 	StatusCode                         int
 	RawResponse                        *http.Response
+}
+
+func (o *C1APIAppV1AppResourceTypeServiceListResponse) GetAppResourceTypeServiceListResponse() *shared.AppResourceTypeServiceListResponse {
+	if o == nil {
+		return nil
+	}
+	return o.AppResourceTypeServiceListResponse
+}
+
+func (o *C1APIAppV1AppResourceTypeServiceListResponse) GetContentType() string {
+	if o == nil {
+		return ""
+	}
+	return o.ContentType
+}
+
+func (o *C1APIAppV1AppResourceTypeServiceListResponse) GetStatusCode() int {
+	if o == nil {
+		return 0
+	}
+	return o.StatusCode
+}
+
+func (o *C1APIAppV1AppResourceTypeServiceListResponse) GetRawResponse() *http.Response {
+	if o == nil {
+		return nil
+	}
+	return o.RawResponse
 }

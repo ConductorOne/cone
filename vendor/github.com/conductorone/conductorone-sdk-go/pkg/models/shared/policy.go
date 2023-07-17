@@ -70,3 +70,80 @@ type Policy struct {
 	SystemBuiltin *bool      `json:"systemBuiltin,omitempty"`
 	UpdatedAt     *time.Time `json:"updatedAt,omitempty"`
 }
+
+func (o *Policy) GetCreatedAt() *time.Time {
+	if o == nil {
+		return nil
+	}
+	return o.CreatedAt
+}
+
+func (o *Policy) GetDeletedAt() *time.Time {
+	if o == nil {
+		return nil
+	}
+	return o.DeletedAt
+}
+
+func (o *Policy) GetDescription() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Description
+}
+
+func (o *Policy) GetDisplayName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.DisplayName
+}
+
+func (o *Policy) GetID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ID
+}
+
+func (o *Policy) GetPolicySteps() map[string]PolicySteps {
+	if o == nil {
+		return nil
+	}
+	return o.PolicySteps
+}
+
+func (o *Policy) GetPolicyType() *PolicyPolicyType {
+	if o == nil {
+		return nil
+	}
+	return o.PolicyType
+}
+
+func (o *Policy) GetPostActions() []PolicyPostActions {
+	if o == nil {
+		return nil
+	}
+	return o.PostActions
+}
+
+func (o *Policy) GetReassignTasksToDelegates() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.ReassignTasksToDelegates
+}
+
+func (o *Policy) GetSystemBuiltin() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.SystemBuiltin
+}
+
+func (o *Policy) GetUpdatedAt() *time.Time {
+	if o == nil {
+		return nil
+	}
+	return o.UpdatedAt
+}

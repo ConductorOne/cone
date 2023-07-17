@@ -14,3 +14,31 @@ type C1APIPolicyV1PoliciesListResponse struct {
 	StatusCode         int
 	RawResponse        *http.Response
 }
+
+func (o *C1APIPolicyV1PoliciesListResponse) GetContentType() string {
+	if o == nil {
+		return ""
+	}
+	return o.ContentType
+}
+
+func (o *C1APIPolicyV1PoliciesListResponse) GetListPolicyResponse() *shared.ListPolicyResponse {
+	if o == nil {
+		return nil
+	}
+	return o.ListPolicyResponse
+}
+
+func (o *C1APIPolicyV1PoliciesListResponse) GetStatusCode() int {
+	if o == nil {
+		return 0
+	}
+	return o.StatusCode
+}
+
+func (o *C1APIPolicyV1PoliciesListResponse) GetRawResponse() *http.Response {
+	if o == nil {
+		return nil
+	}
+	return o.RawResponse
+}

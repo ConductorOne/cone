@@ -7,6 +7,7 @@ import (
 	"context"
 	"fmt"
 	"github.com/conductorone/conductorone-sdk-go/pkg/models/operations"
+	"github.com/conductorone/conductorone-sdk-go/pkg/models/sdkerrors"
 	"github.com/conductorone/conductorone-sdk-go/pkg/models/shared"
 	"github.com/conductorone/conductorone-sdk-go/pkg/utils"
 	"io"
@@ -79,6 +80,8 @@ func (s *appOwners) Add(ctx context.Context, request operations.C1APIAppV1AppOwn
 			}
 
 			res.AddAppOwnerResponse = out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
 	}
 
@@ -134,6 +137,8 @@ func (s *appOwners) List(ctx context.Context, request operations.C1APIAppV1AppOw
 			}
 
 			res.ListAppOwnersResponse = out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
 	}
 
@@ -196,6 +201,8 @@ func (s *appOwners) Remove(ctx context.Context, request operations.C1APIAppV1App
 			}
 
 			res.RemoveAppOwnerResponse = out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
 	}
 

@@ -8,3 +8,17 @@ type UpdateRoleRequest struct {
 	Role       *Role   `json:"role,omitempty"`
 	UpdateMask *string `json:"updateMask,omitempty"`
 }
+
+func (o *UpdateRoleRequest) GetRole() *Role {
+	if o == nil {
+		return nil
+	}
+	return o.Role
+}
+
+func (o *UpdateRoleRequest) GetUpdateMask() *string {
+	if o == nil {
+		return nil
+	}
+	return o.UpdateMask
+}

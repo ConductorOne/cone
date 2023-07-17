@@ -9,3 +9,17 @@ type DelegatedProvision struct {
 	// The entitlementId field.
 	EntitlementID *string `json:"entitlementId,omitempty"`
 }
+
+func (o *DelegatedProvision) GetAppID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AppID
+}
+
+func (o *DelegatedProvision) GetEntitlementID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.EntitlementID
+}

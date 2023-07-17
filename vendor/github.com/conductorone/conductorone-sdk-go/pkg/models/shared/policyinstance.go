@@ -18,3 +18,31 @@ type PolicyInstance struct {
 	// The next field.
 	Next []PolicyStep `json:"next,omitempty"`
 }
+
+func (o *PolicyInstance) GetPolicy() *Policy {
+	if o == nil {
+		return nil
+	}
+	return o.Policy
+}
+
+func (o *PolicyInstance) GetPolicyStepInstance() *PolicyStepInstance {
+	if o == nil {
+		return nil
+	}
+	return o.PolicyStepInstance
+}
+
+func (o *PolicyInstance) GetHistory() []PolicyStepInstance {
+	if o == nil {
+		return nil
+	}
+	return o.History
+}
+
+func (o *PolicyInstance) GetNext() []PolicyStep {
+	if o == nil {
+		return nil
+	}
+	return o.Next
+}

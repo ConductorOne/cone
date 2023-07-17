@@ -19,3 +19,45 @@ type ReassignedByErrorAction struct {
 	NewPolicyStepID *string    `json:"newPolicyStepId,omitempty"`
 	ReassignedAt    *time.Time `json:"reassignedAt,omitempty"`
 }
+
+func (o *ReassignedByErrorAction) GetDescription() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Description
+}
+
+func (o *ReassignedByErrorAction) GetErrorCode() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ErrorCode
+}
+
+func (o *ReassignedByErrorAction) GetErrorUserID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ErrorUserID
+}
+
+func (o *ReassignedByErrorAction) GetErroredAt() *time.Time {
+	if o == nil {
+		return nil
+	}
+	return o.ErroredAt
+}
+
+func (o *ReassignedByErrorAction) GetNewPolicyStepID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.NewPolicyStepID
+}
+
+func (o *ReassignedByErrorAction) GetReassignedAt() *time.Time {
+	if o == nil {
+		return nil
+	}
+	return o.ReassignedAt
+}

@@ -14,3 +14,31 @@ type Directory struct {
 	DeletedAt *time.Time `json:"deletedAt,omitempty"`
 	UpdatedAt *time.Time `json:"updatedAt,omitempty"`
 }
+
+func (o *Directory) GetAppID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AppID
+}
+
+func (o *Directory) GetCreatedAt() *time.Time {
+	if o == nil {
+		return nil
+	}
+	return o.CreatedAt
+}
+
+func (o *Directory) GetDeletedAt() *time.Time {
+	if o == nil {
+		return nil
+	}
+	return o.DeletedAt
+}
+
+func (o *Directory) GetUpdatedAt() *time.Time {
+	if o == nil {
+		return nil
+	}
+	return o.UpdatedAt
+}

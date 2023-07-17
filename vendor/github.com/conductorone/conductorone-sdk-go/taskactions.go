@@ -7,6 +7,7 @@ import (
 	"context"
 	"fmt"
 	"github.com/conductorone/conductorone-sdk-go/pkg/models/operations"
+	"github.com/conductorone/conductorone-sdk-go/pkg/models/sdkerrors"
 	"github.com/conductorone/conductorone-sdk-go/pkg/models/shared"
 	"github.com/conductorone/conductorone-sdk-go/pkg/utils"
 	"io"
@@ -79,6 +80,8 @@ func (s *taskActions) Approve(ctx context.Context, request operations.C1APITaskV
 			}
 
 			res.TaskActionsServiceApproveResponse = out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
 	}
 
@@ -141,6 +144,8 @@ func (s *taskActions) Comment(ctx context.Context, request operations.C1APITaskV
 			}
 
 			res.TaskActionsServiceCommentResponse = out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
 	}
 
@@ -203,6 +208,8 @@ func (s *taskActions) Deny(ctx context.Context, request operations.C1APITaskV1Ta
 			}
 
 			res.TaskActionsServiceDenyResponse = out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
 	}
 

@@ -63,3 +63,164 @@ type AppEntitlement struct {
 	SystemBuiltin *bool      `json:"systemBuiltin,omitempty"`
 	UpdatedAt     *time.Time `json:"updatedAt,omitempty"`
 }
+
+func (o *AppEntitlement) GetProvisionPolicy() *ProvisionPolicy {
+	if o == nil {
+		return nil
+	}
+	return o.ProvisionPolicy
+}
+
+func (o *AppEntitlement) GetAlias() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Alias
+}
+
+func (o *AppEntitlement) GetAppID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AppID
+}
+
+func (o *AppEntitlement) GetAppResourceID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AppResourceID
+}
+
+func (o *AppEntitlement) GetAppResourceTypeID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AppResourceTypeID
+}
+
+func (o *AppEntitlement) GetCertifyPolicyID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.CertifyPolicyID
+}
+
+func (o *AppEntitlement) GetComplianceFrameworkValueIds() []string {
+	if o == nil {
+		return nil
+	}
+	return o.ComplianceFrameworkValueIds
+}
+
+func (o *AppEntitlement) GetCreatedAt() *time.Time {
+	if o == nil {
+		return nil
+	}
+	return o.CreatedAt
+}
+
+func (o *AppEntitlement) GetDeletedAt() *time.Time {
+	if o == nil {
+		return nil
+	}
+	return o.DeletedAt
+}
+
+func (o *AppEntitlement) GetDescription() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Description
+}
+
+func (o *AppEntitlement) GetDisplayName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.DisplayName
+}
+
+func (o *AppEntitlement) GetDurationGrant() *string {
+	if o == nil {
+		return nil
+	}
+	return o.DurationGrant
+}
+
+func (o *AppEntitlement) GetDurationUnset() *AppEntitlementDurationUnset {
+	if o == nil {
+		return nil
+	}
+	return o.DurationUnset
+}
+
+func (o *AppEntitlement) GetEmergencyGrantEnabled() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.EmergencyGrantEnabled
+}
+
+func (o *AppEntitlement) GetEmergencyGrantPolicyID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.EmergencyGrantPolicyID
+}
+
+func (o *AppEntitlement) GetGrantCount() *string {
+	if o == nil {
+		return nil
+	}
+	return o.GrantCount
+}
+
+func (o *AppEntitlement) GetGrantPolicyID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.GrantPolicyID
+}
+
+func (o *AppEntitlement) GetID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ID
+}
+
+func (o *AppEntitlement) GetRevokePolicyID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.RevokePolicyID
+}
+
+func (o *AppEntitlement) GetRiskLevelValueID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.RiskLevelValueID
+}
+
+func (o *AppEntitlement) GetSlug() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Slug
+}
+
+func (o *AppEntitlement) GetSystemBuiltin() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.SystemBuiltin
+}
+
+func (o *AppEntitlement) GetUpdatedAt() *time.Time {
+	if o == nil {
+		return nil
+	}
+	return o.UpdatedAt
+}

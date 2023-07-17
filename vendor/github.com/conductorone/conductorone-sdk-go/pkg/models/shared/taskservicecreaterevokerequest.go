@@ -18,3 +18,45 @@ type TaskServiceCreateRevokeRequest struct {
 	// The identityUserId field.
 	IdentityUserID *string `json:"identityUserId,omitempty"`
 }
+
+func (o *TaskServiceCreateRevokeRequest) GetTaskExpandMask() *TaskExpandMask {
+	if o == nil {
+		return nil
+	}
+	return o.TaskExpandMask
+}
+
+func (o *TaskServiceCreateRevokeRequest) GetAppEntitlementID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AppEntitlementID
+}
+
+func (o *TaskServiceCreateRevokeRequest) GetAppID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AppID
+}
+
+func (o *TaskServiceCreateRevokeRequest) GetAppUserID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AppUserID
+}
+
+func (o *TaskServiceCreateRevokeRequest) GetDescription() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Description
+}
+
+func (o *TaskServiceCreateRevokeRequest) GetIdentityUserID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.IdentityUserID
+}

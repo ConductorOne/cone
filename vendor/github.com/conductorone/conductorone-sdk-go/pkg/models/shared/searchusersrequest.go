@@ -61,3 +61,66 @@ type SearchUsersRequest struct {
 	// The userStatuses field.
 	UserStatuses []SearchUsersRequestUserStatuses `json:"userStatuses,omitempty"`
 }
+
+func (o *SearchUsersRequest) GetUserExpandMask() *UserExpandMask {
+	if o == nil {
+		return nil
+	}
+	return o.UserExpandMask
+}
+
+func (o *SearchUsersRequest) GetExcludeIds() []string {
+	if o == nil {
+		return nil
+	}
+	return o.ExcludeIds
+}
+
+func (o *SearchUsersRequest) GetIds() []string {
+	if o == nil {
+		return nil
+	}
+	return o.Ids
+}
+
+func (o *SearchUsersRequest) GetPageSize() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.PageSize
+}
+
+func (o *SearchUsersRequest) GetPageToken() *string {
+	if o == nil {
+		return nil
+	}
+	return o.PageToken
+}
+
+func (o *SearchUsersRequest) GetQuery() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Query
+}
+
+func (o *SearchUsersRequest) GetRefs() []UserRef {
+	if o == nil {
+		return nil
+	}
+	return o.Refs
+}
+
+func (o *SearchUsersRequest) GetRoleIds() []string {
+	if o == nil {
+		return nil
+	}
+	return o.RoleIds
+}
+
+func (o *SearchUsersRequest) GetUserStatuses() []SearchUsersRequestUserStatuses {
+	if o == nil {
+		return nil
+	}
+	return o.UserStatuses
+}

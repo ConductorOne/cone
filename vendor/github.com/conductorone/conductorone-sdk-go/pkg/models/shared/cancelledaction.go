@@ -12,3 +12,17 @@ type CancelledAction struct {
 	// The cancelledByUserId field.
 	CancelledByUserID *string `json:"cancelledByUserId,omitempty"`
 }
+
+func (o *CancelledAction) GetCancelledAt() *time.Time {
+	if o == nil {
+		return nil
+	}
+	return o.CancelledAt
+}
+
+func (o *CancelledAction) GetCancelledByUserID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.CancelledByUserID
+}

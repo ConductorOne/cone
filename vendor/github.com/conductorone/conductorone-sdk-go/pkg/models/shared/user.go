@@ -120,3 +120,157 @@ type User struct {
 	Status    *UserStatus `json:"status,omitempty"`
 	UpdatedAt *time.Time  `json:"updatedAt,omitempty"`
 }
+
+func (o *User) GetCreatedAt() *time.Time {
+	if o == nil {
+		return nil
+	}
+	return o.CreatedAt
+}
+
+func (o *User) GetDelegatedUserID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.DelegatedUserID
+}
+
+func (o *User) GetDeletedAt() *time.Time {
+	if o == nil {
+		return nil
+	}
+	return o.DeletedAt
+}
+
+func (o *User) GetDepartment() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Department
+}
+
+func (o *User) GetDepartmentSources() []UserAttributeMappingSource {
+	if o == nil {
+		return nil
+	}
+	return o.DepartmentSources
+}
+
+func (o *User) GetDirectoryIds() []string {
+	if o == nil {
+		return nil
+	}
+	return o.DirectoryIds
+}
+
+func (o *User) GetDirectoryStatus() *UserDirectoryStatus {
+	if o == nil {
+		return nil
+	}
+	return o.DirectoryStatus
+}
+
+func (o *User) GetDirectoryStatusSources() []UserAttributeMappingSource {
+	if o == nil {
+		return nil
+	}
+	return o.DirectoryStatusSources
+}
+
+func (o *User) GetDisplayName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.DisplayName
+}
+
+func (o *User) GetEmail() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Email
+}
+
+func (o *User) GetEmploymentStatus() *string {
+	if o == nil {
+		return nil
+	}
+	return o.EmploymentStatus
+}
+
+func (o *User) GetEmploymentStatusSources() []UserAttributeMappingSource {
+	if o == nil {
+		return nil
+	}
+	return o.EmploymentStatusSources
+}
+
+func (o *User) GetEmploymentType() *string {
+	if o == nil {
+		return nil
+	}
+	return o.EmploymentType
+}
+
+func (o *User) GetEmploymentTypeSources() []UserAttributeMappingSource {
+	if o == nil {
+		return nil
+	}
+	return o.EmploymentTypeSources
+}
+
+func (o *User) GetID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ID
+}
+
+func (o *User) GetJobTitle() *string {
+	if o == nil {
+		return nil
+	}
+	return o.JobTitle
+}
+
+func (o *User) GetJobTitleSources() []UserAttributeMappingSource {
+	if o == nil {
+		return nil
+	}
+	return o.JobTitleSources
+}
+
+func (o *User) GetManagerIds() []string {
+	if o == nil {
+		return nil
+	}
+	return o.ManagerIds
+}
+
+func (o *User) GetManagerSources() []UserAttributeMappingSource {
+	if o == nil {
+		return nil
+	}
+	return o.ManagerSources
+}
+
+func (o *User) GetRoleIds() []string {
+	if o == nil {
+		return nil
+	}
+	return o.RoleIds
+}
+
+func (o *User) GetStatus() *UserStatus {
+	if o == nil {
+		return nil
+	}
+	return o.Status
+}
+
+func (o *User) GetUpdatedAt() *time.Time {
+	if o == nil {
+		return nil
+	}
+	return o.UpdatedAt
+}

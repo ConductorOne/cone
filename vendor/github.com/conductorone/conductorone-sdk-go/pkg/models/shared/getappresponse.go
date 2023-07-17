@@ -7,3 +7,10 @@ type GetAppResponse struct {
 	// The App message.
 	App *App `json:"app,omitempty"`
 }
+
+func (o *GetAppResponse) GetApp() *App {
+	if o == nil {
+		return nil
+	}
+	return o.App
+}

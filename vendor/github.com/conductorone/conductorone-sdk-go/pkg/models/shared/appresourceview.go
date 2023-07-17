@@ -11,3 +11,24 @@ type AppResourceView struct {
 	// The resourceTypePath field.
 	ResourceTypePath *string `json:"resourceTypePath,omitempty"`
 }
+
+func (o *AppResourceView) GetAppResource() *AppResource {
+	if o == nil {
+		return nil
+	}
+	return o.AppResource
+}
+
+func (o *AppResourceView) GetAppPath() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AppPath
+}
+
+func (o *AppResourceView) GetResourceTypePath() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ResourceTypePath
+}

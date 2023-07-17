@@ -7,3 +7,10 @@ type UserRef struct {
 	// The id field.
 	ID *string `json:"id,omitempty"`
 }
+
+func (o *UserRef) GetID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ID
+}

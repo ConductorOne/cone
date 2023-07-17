@@ -9,3 +9,17 @@ type TaskActionsServiceCommentResponse struct {
 	// The expanded field.
 	Expanded []map[string]interface{} `json:"expanded,omitempty"`
 }
+
+func (o *TaskActionsServiceCommentResponse) GetTaskView() *TaskView {
+	if o == nil {
+		return nil
+	}
+	return o.TaskView
+}
+
+func (o *TaskActionsServiceCommentResponse) GetExpanded() []map[string]interface{} {
+	if o == nil {
+		return nil
+	}
+	return o.Expanded
+}

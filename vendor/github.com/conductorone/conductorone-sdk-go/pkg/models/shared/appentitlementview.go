@@ -18,3 +18,31 @@ type AppEntitlementView struct {
 	// The appResourceTypePath field.
 	AppResourceTypePath *string `json:"appResourceTypePath,omitempty"`
 }
+
+func (o *AppEntitlementView) GetAppEntitlement() *AppEntitlement {
+	if o == nil {
+		return nil
+	}
+	return o.AppEntitlement
+}
+
+func (o *AppEntitlementView) GetAppPath() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AppPath
+}
+
+func (o *AppEntitlementView) GetAppResourcePath() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AppResourcePath
+}
+
+func (o *AppEntitlementView) GetAppResourceTypePath() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AppResourceTypePath
+}

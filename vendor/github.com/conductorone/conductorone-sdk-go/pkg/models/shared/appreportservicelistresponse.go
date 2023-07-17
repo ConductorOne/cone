@@ -9,3 +9,17 @@ type AppReportServiceListResponse struct {
 	// The nextPageToken field.
 	NextPageToken *string `json:"nextPageToken,omitempty"`
 }
+
+func (o *AppReportServiceListResponse) GetList() []AppPopulationReport {
+	if o == nil {
+		return nil
+	}
+	return o.List
+}
+
+func (o *AppReportServiceListResponse) GetNextPageToken() *string {
+	if o == nil {
+		return nil
+	}
+	return o.NextPageToken
+}

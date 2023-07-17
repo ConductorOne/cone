@@ -7,3 +7,10 @@ type TaskRevokeSourceRequest struct {
 	// The requestUserId field.
 	RequestUserID *string `json:"requestUserId,omitempty"`
 }
+
+func (o *TaskRevokeSourceRequest) GetRequestUserID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.RequestUserID
+}

@@ -4,12 +4,14 @@
 ## SDK Installation
 
 ```bash
-go get github.com/ConductorOne/conductorone-sdk-go
+go get github.com/conductorone/conductorone-sdk-go
 ```
 <!-- End SDK Installation -->
 
 ## SDK Example Usage
 <!-- Start SDK Example Usage -->
+
+
 ```go
 package main
 
@@ -120,6 +122,19 @@ func main() {
 * [Get](docs/sdks/policies/README.md#get) - Invokes the c1.api.policy.v1.Policies.Get method.
 * [List](docs/sdks/policies/README.md#list) - Invokes the c1.api.policy.v1.Policies.List method.
 * [Update](docs/sdks/policies/README.md#update) - Invokes the c1.api.policy.v1.Policies.Update method.
+
+### [RequestCatalogManagement](docs/sdks/requestcatalogmanagement/README.md)
+
+* [AddAccessEntitlements](docs/sdks/requestcatalogmanagement/README.md#addaccessentitlements) - Invokes the c1.api.requestcatalog.v1.RequestCatalogManagementService.AddAccessEntitlements method.
+* [AddAppEntitlements](docs/sdks/requestcatalogmanagement/README.md#addappentitlements) - Invokes the c1.api.requestcatalog.v1.RequestCatalogManagementService.AddAppEntitlements method.
+* [Create](docs/sdks/requestcatalogmanagement/README.md#create) - Invokes the c1.api.requestcatalog.v1.RequestCatalogManagementService.Create method.
+* [Delete](docs/sdks/requestcatalogmanagement/README.md#delete) - Invokes the c1.api.requestcatalog.v1.RequestCatalogManagementService.Delete method.
+* [Get](docs/sdks/requestcatalogmanagement/README.md#get) - Invokes the c1.api.requestcatalog.v1.RequestCatalogManagementService.Get method.
+* [ListEntitlementsForAccess](docs/sdks/requestcatalogmanagement/README.md#listentitlementsforaccess) - Invokes the c1.api.requestcatalog.v1.RequestCatalogManagementService.ListEntitlementsForAccess method.
+* [ListEntitlementsPerCatalog](docs/sdks/requestcatalogmanagement/README.md#listentitlementspercatalog) - Invokes the c1.api.requestcatalog.v1.RequestCatalogManagementService.ListEntitlementsPerCatalog method.
+* [RemoveAccessEntitlements](docs/sdks/requestcatalogmanagement/README.md#removeaccessentitlements) - Invokes the c1.api.requestcatalog.v1.RequestCatalogManagementService.RemoveAccessEntitlements method.
+* [RemoveAppEntitlements](docs/sdks/requestcatalogmanagement/README.md#removeappentitlements) - Invokes the c1.api.requestcatalog.v1.RequestCatalogManagementService.RemoveAppEntitlements method.
+* [Update](docs/sdks/requestcatalogmanagement/README.md#update) - Invokes the c1.api.requestcatalog.v1.RequestCatalogManagementService.Update method.
 
 ### [RequestCatalogSearch](docs/sdks/requestcatalogsearch/README.md)
 

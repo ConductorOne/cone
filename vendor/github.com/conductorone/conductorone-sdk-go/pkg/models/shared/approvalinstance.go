@@ -77,3 +77,52 @@ type ApprovalInstance struct {
 	// The state field.
 	State *ApprovalInstanceState `json:"state,omitempty"`
 }
+
+func (o *ApprovalInstance) GetApproval() *Approval {
+	if o == nil {
+		return nil
+	}
+	return o.Approval
+}
+
+func (o *ApprovalInstance) GetApprovedAction() *ApprovedAction {
+	if o == nil {
+		return nil
+	}
+	return o.ApprovedAction
+}
+
+func (o *ApprovalInstance) GetDeniedAction() *DeniedAction {
+	if o == nil {
+		return nil
+	}
+	return o.DeniedAction
+}
+
+func (o *ApprovalInstance) GetReassignedAction() *ReassignedAction {
+	if o == nil {
+		return nil
+	}
+	return o.ReassignedAction
+}
+
+func (o *ApprovalInstance) GetReassignedByErrorAction() *ReassignedByErrorAction {
+	if o == nil {
+		return nil
+	}
+	return o.ReassignedByErrorAction
+}
+
+func (o *ApprovalInstance) GetRestartAction() *RestartAction {
+	if o == nil {
+		return nil
+	}
+	return o.RestartAction
+}
+
+func (o *ApprovalInstance) GetState() *ApprovalInstanceState {
+	if o == nil {
+		return nil
+	}
+	return o.State
+}

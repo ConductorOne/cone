@@ -9,3 +9,17 @@ type UserApproval struct {
 	// The userIds field.
 	UserIds []string `json:"userIds,omitempty"`
 }
+
+func (o *UserApproval) GetAllowSelfApproval() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.AllowSelfApproval
+}
+
+func (o *UserApproval) GetUserIds() []string {
+	if o == nil {
+		return nil
+	}
+	return o.UserIds
+}

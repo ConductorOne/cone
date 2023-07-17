@@ -7,6 +7,7 @@ import (
 	"context"
 	"fmt"
 	"github.com/conductorone/conductorone-sdk-go/pkg/models/operations"
+	"github.com/conductorone/conductorone-sdk-go/pkg/models/sdkerrors"
 	"github.com/conductorone/conductorone-sdk-go/pkg/models/shared"
 	"github.com/conductorone/conductorone-sdk-go/pkg/utils"
 	"io"
@@ -77,6 +78,8 @@ func (s *directory) Create(ctx context.Context, request shared.DirectoryServiceC
 			}
 
 			res.DirectoryServiceCreateResponse = out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
 	}
 
@@ -139,6 +142,8 @@ func (s *directory) Delete(ctx context.Context, request operations.C1APIDirector
 			}
 
 			res.DirectoryServiceDeleteResponse = out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
 	}
 
@@ -194,6 +199,8 @@ func (s *directory) Get(ctx context.Context, request operations.C1APIDirectoryV1
 			}
 
 			res.DirectoryServiceGetResponse = out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
 	}
 
@@ -246,6 +253,8 @@ func (s *directory) List(ctx context.Context) (*operations.C1APIDirectoryV1Direc
 			}
 
 			res.DirectoryServiceListResponse = out
+		default:
+			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
 	}
 

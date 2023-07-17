@@ -9,3 +9,17 @@ type UserServiceGetResponse struct {
 	// The expanded field.
 	Expanded []map[string]interface{} `json:"expanded,omitempty"`
 }
+
+func (o *UserServiceGetResponse) GetUserView() *UserView {
+	if o == nil {
+		return nil
+	}
+	return o.UserView
+}
+
+func (o *UserServiceGetResponse) GetExpanded() []map[string]interface{} {
+	if o == nil {
+		return nil
+	}
+	return o.Expanded
+}

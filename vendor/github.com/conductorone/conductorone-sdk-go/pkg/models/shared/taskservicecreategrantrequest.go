@@ -21,3 +21,59 @@ type TaskServiceCreateGrantRequest struct {
 	// The identityUserId field.
 	IdentityUserID *string `json:"identityUserId,omitempty"`
 }
+
+func (o *TaskServiceCreateGrantRequest) GetTaskExpandMask() *TaskExpandMask {
+	if o == nil {
+		return nil
+	}
+	return o.TaskExpandMask
+}
+
+func (o *TaskServiceCreateGrantRequest) GetAppEntitlementID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AppEntitlementID
+}
+
+func (o *TaskServiceCreateGrantRequest) GetAppID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AppID
+}
+
+func (o *TaskServiceCreateGrantRequest) GetAppUserID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AppUserID
+}
+
+func (o *TaskServiceCreateGrantRequest) GetDescription() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Description
+}
+
+func (o *TaskServiceCreateGrantRequest) GetEmergencyAccess() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.EmergencyAccess
+}
+
+func (o *TaskServiceCreateGrantRequest) GetGrantDuration() *string {
+	if o == nil {
+		return nil
+	}
+	return o.GrantDuration
+}
+
+func (o *TaskServiceCreateGrantRequest) GetIdentityUserID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.IdentityUserID
+}

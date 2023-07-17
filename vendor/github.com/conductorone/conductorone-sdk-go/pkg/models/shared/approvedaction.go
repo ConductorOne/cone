@@ -14,3 +14,24 @@ type ApprovedAction struct {
 	// The userId field.
 	UserID *string `json:"userId,omitempty"`
 }
+
+func (o *ApprovedAction) GetApprovedAt() *time.Time {
+	if o == nil {
+		return nil
+	}
+	return o.ApprovedAt
+}
+
+func (o *ApprovedAction) GetEntitlements() []AppEntitlementReference {
+	if o == nil {
+		return nil
+	}
+	return o.Entitlements
+}
+
+func (o *ApprovedAction) GetUserID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.UserID
+}

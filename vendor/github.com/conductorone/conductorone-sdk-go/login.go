@@ -28,23 +28,29 @@ type DeviceCodeResponse struct {
 	Interval        int64  `json:"interval"`
 }
 
-func LoginFlow(ctx context.Context, tenantName string, clientID string, personalClientCredentialDisplayName string, cb func(validateUrl string) error) (*ClientCredentials, error) {
+func LoginFlow(
+	ctx context.Context,
+	tenantName string,
+	clientID string,
+	personalClientCredentialDisplayName string,
+	cb func(validateDetails *DeviceCodeResponse) error,
+) (*ClientCredentials, error) {
 	tenantURLOption, err := WithTenant(tenantName)
 	if err != nil {
 		return nil, err
 	}
 	client := New(tenantURLOption)
 
-	codeResp, responseUrl, err := getDeviceCode(ctx, client, clientID)
+	codeResp, err := getDeviceCode(ctx, client, clientID)
 	if err != nil {
 		return nil, fmt.Errorf("error getting device code: %w", err)
 	}
 
-	if responseUrl == "" {
+	if codeResp.VerificationURI == "" {
 		return nil, errors.New("invalid verification url")
 	}
 
-	if err := cb(responseUrl); err != nil {
+	if err := cb(codeResp); err != nil {
 		return nil, err
 	}
 
@@ -73,45 +79,45 @@ func newReq(ctx context.Context, method, url string, reader io.Reader) (*http.Re
 	return req, nil
 }
 
-func getDeviceCode(ctx context.Context, client *ConductoroneAPI, clientID string) (*DeviceCodeResponse, string, error) {
+func getDeviceCode(ctx context.Context, client *ConductoroneAPI, clientID string) (*DeviceCodeResponse, error) {
 	httpClient := client.sdkConfiguration.DefaultClient
 	baseURL := utils.ReplaceParameters(client.sdkConfiguration.GetServerDetails())
 
 	deviceCodeURL, err := url.JoinPath(baseURL, "/auth/v1/device_authorization")
 	if err != nil {
-		return nil, "", err
+		return nil, err
 	}
 	vals := url.Values{}
 	vals.Add("client_id", clientID)
 
 	req, err := newReq(ctx, "POST", deviceCodeURL, strings.NewReader(vals.Encode()))
 	if err != nil {
-		return nil, "", err
+		return nil, err
 	}
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 
 	resp, err := httpClient.Do(req)
 	if err != nil {
-		return nil, "", err
+		return nil, err
 	}
 	defer resp.Body.Close()
 
 	data, err := io.ReadAll(resp.Body)
 	if err != nil {
-		return nil, "", err
+		return nil, err
 	}
 
 	if resp.StatusCode != http.StatusOK {
-		return nil, "", fmt.Errorf("error getting device code: %s", string(data))
+		return nil, fmt.Errorf("error getting device code: %s", string(data))
 	}
 
 	codeResp := &DeviceCodeResponse{}
 	err = json.Unmarshal(data, codeResp)
 	if err != nil {
-		return nil, "", err
+		return nil, fmt.Errorf("error unmarshalling response data: %w - %s", err, data)
 	}
 
-	return codeResp, codeResp.VerificationURI, nil
+	return codeResp, nil
 }
 
 func doTokenRequest(ctx context.Context, client *ConductoroneAPI, clientID string, deviceCodeResp *DeviceCodeResponse) (*tokenResponse, error) {

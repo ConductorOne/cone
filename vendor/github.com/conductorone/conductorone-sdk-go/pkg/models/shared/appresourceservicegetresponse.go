@@ -9,3 +9,17 @@ type AppResourceServiceGetResponse struct {
 	// The expanded field.
 	Expanded []map[string]interface{} `json:"expanded,omitempty"`
 }
+
+func (o *AppResourceServiceGetResponse) GetAppResourceView() *AppResourceView {
+	if o == nil {
+		return nil
+	}
+	return o.AppResourceView
+}
+
+func (o *AppResourceServiceGetResponse) GetExpanded() []map[string]interface{} {
+	if o == nil {
+		return nil
+	}
+	return o.Expanded
+}

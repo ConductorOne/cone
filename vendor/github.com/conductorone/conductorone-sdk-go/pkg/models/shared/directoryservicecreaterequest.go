@@ -9,3 +9,17 @@ type DirectoryServiceCreateRequest struct {
 	// The appId field.
 	AppID *string `json:"appId,omitempty"`
 }
+
+func (o *DirectoryServiceCreateRequest) GetDirectoryExpandMask() *DirectoryExpandMask {
+	if o == nil {
+		return nil
+	}
+	return o.DirectoryExpandMask
+}
+
+func (o *DirectoryServiceCreateRequest) GetAppID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AppID
+}

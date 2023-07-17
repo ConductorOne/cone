@@ -7,3 +7,10 @@ type ListAppUsersForIdentityWithGrantResponse struct {
 	// The bindings field.
 	Bindings []AppEntitlementUserBinding `json:"bindings,omitempty"`
 }
+
+func (o *ListAppUsersForIdentityWithGrantResponse) GetBindings() []AppEntitlementUserBinding {
+	if o == nil {
+		return nil
+	}
+	return o.Bindings
+}

@@ -68,3 +68,52 @@ type TaskTypeRevoke struct {
 	Outcome     *TaskTypeRevokeOutcome `json:"outcome,omitempty"`
 	OutcomeTime *time.Time             `json:"outcomeTime,omitempty"`
 }
+
+func (o *TaskTypeRevoke) GetTaskRevokeSource() *TaskRevokeSource {
+	if o == nil {
+		return nil
+	}
+	return o.TaskRevokeSource
+}
+
+func (o *TaskTypeRevoke) GetAppEntitlementID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AppEntitlementID
+}
+
+func (o *TaskTypeRevoke) GetAppID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AppID
+}
+
+func (o *TaskTypeRevoke) GetAppUserID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AppUserID
+}
+
+func (o *TaskTypeRevoke) GetIdentityUserID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.IdentityUserID
+}
+
+func (o *TaskTypeRevoke) GetOutcome() *TaskTypeRevokeOutcome {
+	if o == nil {
+		return nil
+	}
+	return o.Outcome
+}
+
+func (o *TaskTypeRevoke) GetOutcomeTime() *time.Time {
+	if o == nil {
+		return nil
+	}
+	return o.OutcomeTime
+}

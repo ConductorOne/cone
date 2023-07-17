@@ -9,3 +9,17 @@ type GetAppEntitlementResponse struct {
 	// The expanded field.
 	Expanded []map[string]interface{} `json:"expanded,omitempty"`
 }
+
+func (o *GetAppEntitlementResponse) GetAppEntitlementView() *AppEntitlementView {
+	if o == nil {
+		return nil
+	}
+	return o.AppEntitlementView
+}
+
+func (o *GetAppEntitlementResponse) GetExpanded() []map[string]interface{} {
+	if o == nil {
+		return nil
+	}
+	return o.Expanded
+}

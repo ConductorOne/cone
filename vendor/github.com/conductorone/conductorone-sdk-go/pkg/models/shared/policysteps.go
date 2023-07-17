@@ -7,3 +7,10 @@ type PolicySteps struct {
 	// The steps field.
 	Steps []PolicyStep `json:"steps,omitempty"`
 }
+
+func (o *PolicySteps) GetSteps() []PolicyStep {
+	if o == nil {
+		return nil
+	}
+	return o.Steps
+}

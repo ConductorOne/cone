@@ -11,3 +11,24 @@ type TaskActionsServiceApproveResponse struct {
 	// The ticketActionId field.
 	TicketActionID *string `json:"ticketActionId,omitempty"`
 }
+
+func (o *TaskActionsServiceApproveResponse) GetTaskView() *TaskView {
+	if o == nil {
+		return nil
+	}
+	return o.TaskView
+}
+
+func (o *TaskActionsServiceApproveResponse) GetExpanded() []map[string]interface{} {
+	if o == nil {
+		return nil
+	}
+	return o.Expanded
+}
+
+func (o *TaskActionsServiceApproveResponse) GetTicketActionID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.TicketActionID
+}

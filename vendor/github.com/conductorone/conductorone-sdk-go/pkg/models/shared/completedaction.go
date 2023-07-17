@@ -14,3 +14,24 @@ type CompletedAction struct {
 	// The userId field.
 	UserID *string `json:"userId,omitempty"`
 }
+
+func (o *CompletedAction) GetCompletedAt() *time.Time {
+	if o == nil {
+		return nil
+	}
+	return o.CompletedAt
+}
+
+func (o *CompletedAction) GetEntitlements() []AppEntitlementReference {
+	if o == nil {
+		return nil
+	}
+	return o.Entitlements
+}
+
+func (o *CompletedAction) GetUserID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.UserID
+}

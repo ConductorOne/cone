@@ -15,3 +15,38 @@ type UserView struct {
 	// The rolesPath field.
 	RolesPath *string `json:"rolesPath,omitempty"`
 }
+
+func (o *UserView) GetUser() *User {
+	if o == nil {
+		return nil
+	}
+	return o.User
+}
+
+func (o *UserView) GetDelegatedUserPath() *string {
+	if o == nil {
+		return nil
+	}
+	return o.DelegatedUserPath
+}
+
+func (o *UserView) GetDirectoriesPath() *string {
+	if o == nil {
+		return nil
+	}
+	return o.DirectoriesPath
+}
+
+func (o *UserView) GetManagersPath() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ManagersPath
+}
+
+func (o *UserView) GetRolesPath() *string {
+	if o == nil {
+		return nil
+	}
+	return o.RolesPath
+}

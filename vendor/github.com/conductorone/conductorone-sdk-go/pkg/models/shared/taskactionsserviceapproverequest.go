@@ -12,3 +12,24 @@ type TaskActionsServiceApproveRequest struct {
 	// The policyStepId field.
 	PolicyStepID *string `json:"policyStepId,omitempty"`
 }
+
+func (o *TaskActionsServiceApproveRequest) GetTaskExpandMask() *TaskExpandMask {
+	if o == nil {
+		return nil
+	}
+	return o.TaskExpandMask
+}
+
+func (o *TaskActionsServiceApproveRequest) GetComment() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Comment
+}
+
+func (o *TaskActionsServiceApproveRequest) GetPolicyStepID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.PolicyStepID
+}

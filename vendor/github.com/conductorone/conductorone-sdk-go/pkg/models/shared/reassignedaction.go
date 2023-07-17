@@ -14,3 +14,24 @@ type ReassignedAction struct {
 	// The userId field.
 	UserID *string `json:"userId,omitempty"`
 }
+
+func (o *ReassignedAction) GetNewPolicyStepID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.NewPolicyStepID
+}
+
+func (o *ReassignedAction) GetReassignedAt() *time.Time {
+	if o == nil {
+		return nil
+	}
+	return o.ReassignedAt
+}
+
+func (o *ReassignedAction) GetUserID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.UserID
+}

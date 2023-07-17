@@ -9,3 +9,17 @@ type AppEntitlementWithUserBindings struct {
 	// The appEntitlementUserBindings field.
 	AppEntitlementUserBindings []AppEntitlementUserBinding `json:"appEntitlementUserBindings,omitempty"`
 }
+
+func (o *AppEntitlementWithUserBindings) GetAppEntitlementView() *AppEntitlementView {
+	if o == nil {
+		return nil
+	}
+	return o.AppEntitlementView
+}
+
+func (o *AppEntitlementWithUserBindings) GetAppEntitlementUserBindings() []AppEntitlementUserBinding {
+	if o == nil {
+		return nil
+	}
+	return o.AppEntitlementUserBindings
+}

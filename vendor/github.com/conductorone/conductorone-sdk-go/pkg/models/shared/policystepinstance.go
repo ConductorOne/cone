@@ -68,3 +68,31 @@ type PolicyStepInstance struct {
 	// The state field.
 	State *PolicyStepInstanceState `json:"state,omitempty"`
 }
+
+func (o *PolicyStepInstance) GetApprovalInstance() *ApprovalInstance {
+	if o == nil {
+		return nil
+	}
+	return o.ApprovalInstance
+}
+
+func (o *PolicyStepInstance) GetProvisionInstance() *ProvisionInstance {
+	if o == nil {
+		return nil
+	}
+	return o.ProvisionInstance
+}
+
+func (o *PolicyStepInstance) GetID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ID
+}
+
+func (o *PolicyStepInstance) GetState() *PolicyStepInstanceState {
+	if o == nil {
+		return nil
+	}
+	return o.State
+}

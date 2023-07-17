@@ -10,7 +10,7 @@ import (
 
 func getUserCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "get-user",
+		Use:   "get-user <user-id>",
 		Short: "Get a user by id",
 		RunE:  getUserRun,
 	}

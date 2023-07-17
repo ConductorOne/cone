@@ -24,7 +24,9 @@ func getUserRun(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
-	validateArgLenth(1, args, cmd)
+	if err := validateArgLenth(1, args, cmd); err != nil {
+		return err
+	}
 	userID := args[0]
 
 	userResp, err := c.GetUser(ctx, userID)

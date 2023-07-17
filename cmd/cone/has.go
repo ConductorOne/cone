@@ -33,7 +33,9 @@ func hasRun(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
-	validateArgLenth(2, args, cmd)
+	if err := validateArgLenth(2, args, cmd); err != nil {
+		return err
+	}
 
 	appID := args[0]
 	entitlementID := args[1]

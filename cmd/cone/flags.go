@@ -71,5 +71,5 @@ func addEntitlementDetailsFlag(cmd *cobra.Command) {
 }
 
 func addRawTokenFlag(cmd *cobra.Command) {
-	cmd.Flags().Bool(rawTokenFlag, false, "Prints only the access token")
+	cmd.Flags().Bool(rawTokenFlag, false, "Prints only the access token directly to stdout with out style")
 }

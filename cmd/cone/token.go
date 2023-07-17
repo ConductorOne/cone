@@ -10,9 +10,9 @@ import (
 )
 
 type Token struct {
-	AccessToken string `header:"access_token"`
-	TokenType   string `header:"token_type"`
-	Expiry      string `header:"expiry"`
+	AccessToken string `json:"access_token"`
+	TokenType   string `json:"token_type"`
+	Expiry      string `json:"expiry"`
 }
 
 func tokenCmd() *cobra.Command {
@@ -59,7 +59,7 @@ func tokenRun(cmd *cobra.Command, args []string) error {
 
 	if v.GetBool(rawTokenFlag) {
 		//nolint:forbidigo // We want to raw-print the bearer if this flag is included
-		fmt.Println(tokenObj.AccessToken)
+		fmt.Println(token.AccessToken)
 		return nil
 	}
 

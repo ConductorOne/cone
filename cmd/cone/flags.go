@@ -18,6 +18,7 @@ const (
 	extraDetailsFlag     = "detailed"
 	grantedFlag          = "granted"
 	notGrantedFlag       = "not-granted"
+	rawTokenFlag         = "raw"
 )
 
 func addWaitFlag(cmd *cobra.Command) {
@@ -67,4 +68,8 @@ func addForceTaskCreateFlag(cmd *cobra.Command) {
 
 func addEntitlementDetailsFlag(cmd *cobra.Command) {
 	cmd.Flags().Bool(extraDetailsFlag, false, "Show more details about the app and entitlement for this request")
+}
+
+func addRawTokenFlag(cmd *cobra.Command) {
+	cmd.Flags().Bool(rawTokenFlag, false, "Prints only the access token directly to stdout with out style")
 }

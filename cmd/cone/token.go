@@ -3,6 +3,8 @@ package main
 import (
 	"fmt"
 
+	"github.com/conductorone/cone/pkg/client"
+
 	"github.com/spf13/cobra"
 )
 
@@ -17,7 +19,12 @@ func tokenCmd() *cobra.Command {
 }
 
 func tokenRun(cmd *cobra.Command, args []string) error {
-	ctx, c, v, err := cmdContext(cmd)
+	ctx, _, v, err := cmdContext(cmd)
+	if err != nil {
+		return err
+	}
+
+	clientId, clientSecret, err := getCredentials(v)
 	if err != nil {
 		return err
 	}
@@ -26,6 +33,18 @@ func tokenRun(cmd *cobra.Command, args []string) error {
 		usageErrorString := cmd.UsageString()
 		return fmt.Errorf("expected 0 arguments, got %d\n"+usageErrorString, len(args))
 	}
+
+	tokenSrc, _, _, err := client.NewC1TokenSource(ctx, clientId, clientSecret)
+	if err != nil {
+		return err
+	}
+
+	token, err := tokenSrc.Token()
+	if err != nil {
+		return err
+	}
+
+	print(token)
 
 	return nil
 }

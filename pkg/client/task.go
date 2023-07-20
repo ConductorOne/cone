@@ -141,3 +141,18 @@ func (c *client) DenyTask(ctx context.Context, taskId string, comment string, po
 	}
 	return resp.TaskActionsServiceDenyResponse, nil
 }
+
+func (c *client) EscalateTask(ctx context.Context, taskID string) (*shared.TaskServiceActionResponse, error) {
+	resp, err := c.sdk.TaskActions.EscalateToEmergencyAccess(ctx, operations.C1APITaskV1TaskActionsServiceEscalateToEmergencyAccessRequest{
+		TaskActionsServiceEscalateToEmergencyAccessRequest: &shared.TaskActionsServiceEscalateToEmergencyAccessRequest{},
+		TaskID: taskID,
+	})
+	if err != nil {
+		return nil, err
+	}
+
+	if err := handleBadStatus(resp.RawResponse); err != nil {
+		return nil, err
+	}
+	return resp.TaskServiceActionResponse, nil
+}

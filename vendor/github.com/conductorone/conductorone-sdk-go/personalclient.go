@@ -44,7 +44,7 @@ func (s *personalClient) Create(ctx context.Context, request shared.PersonalClie
 
 	req.Header.Set("Content-Type", reqContentType)
 
-	client := s.sdkConfiguration.DefaultClient
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {

@@ -8,15 +8,15 @@ import (
 )
 
 type C1APIRequestcatalogV1RequestCatalogManagementServiceUpdateRequest struct {
-	RequestCatalogManagementServiceUpdateRequest *shared.RequestCatalogManagementServiceUpdateRequest `request:"mediaType=application/json"`
-	ID                                           string                                               `pathParam:"style=simple,explode=false,name=id"`
+	RequestCatalogManagementServiceUpdateRequestInput *shared.RequestCatalogManagementServiceUpdateRequestInput `request:"mediaType=application/json"`
+	ID                                                string                                                    `pathParam:"style=simple,explode=false,name=id"`
 }
 
-func (o *C1APIRequestcatalogV1RequestCatalogManagementServiceUpdateRequest) GetRequestCatalogManagementServiceUpdateRequest() *shared.RequestCatalogManagementServiceUpdateRequest {
+func (o *C1APIRequestcatalogV1RequestCatalogManagementServiceUpdateRequest) GetRequestCatalogManagementServiceUpdateRequestInput() *shared.RequestCatalogManagementServiceUpdateRequestInput {
 	if o == nil {
 		return nil
 	}
-	return o.RequestCatalogManagementServiceUpdateRequest
+	return o.RequestCatalogManagementServiceUpdateRequestInput
 }
 
 func (o *C1APIRequestcatalogV1RequestCatalogManagementServiceUpdateRequest) GetID() string {

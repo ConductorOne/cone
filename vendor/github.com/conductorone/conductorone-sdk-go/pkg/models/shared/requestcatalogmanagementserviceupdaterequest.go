@@ -2,30 +2,30 @@
 
 package shared
 
-// RequestCatalogManagementServiceUpdateRequest - The RequestCatalogManagementServiceUpdateRequest message.
-type RequestCatalogManagementServiceUpdateRequest struct {
+// RequestCatalogManagementServiceUpdateRequestInput - The RequestCatalogManagementServiceUpdateRequest message.
+type RequestCatalogManagementServiceUpdateRequestInput struct {
 	// The RequestCatalog message.
-	RequestCatalog *RequestCatalog `json:"catalog,omitempty"`
+	RequestCatalog *RequestCatalogInput `json:"catalog,omitempty"`
 	// The RequestCatalogExpandMask message.
 	RequestCatalogExpandMask *RequestCatalogExpandMask `json:"expandMask,omitempty"`
 	UpdateMask               *string                   `json:"updateMask,omitempty"`
 }
 
-func (o *RequestCatalogManagementServiceUpdateRequest) GetRequestCatalog() *RequestCatalog {
+func (o *RequestCatalogManagementServiceUpdateRequestInput) GetRequestCatalog() *RequestCatalogInput {
 	if o == nil {
 		return nil
 	}
 	return o.RequestCatalog
 }
 
-func (o *RequestCatalogManagementServiceUpdateRequest) GetRequestCatalogExpandMask() *RequestCatalogExpandMask {
+func (o *RequestCatalogManagementServiceUpdateRequestInput) GetRequestCatalogExpandMask() *RequestCatalogExpandMask {
 	if o == nil {
 		return nil
 	}
 	return o.RequestCatalogExpandMask
 }
 
-func (o *RequestCatalogManagementServiceUpdateRequest) GetUpdateMask() *string {
+func (o *RequestCatalogManagementServiceUpdateRequestInput) GetUpdateMask() *string {
 	if o == nil {
 		return nil
 	}

@@ -97,3 +97,79 @@ func (o *RequestCatalog) GetVisibleToEveryone() *bool {
 	}
 	return o.VisibleToEveryone
 }
+
+// RequestCatalogInput - The RequestCatalog message.
+type RequestCatalogInput struct {
+	// The accessEntitlements field.
+	AccessEntitlements []AppEntitlementInput `json:"accessEntitlements,omitempty"`
+	// The appIds field.
+	AppIds []string `json:"appIds,omitempty"`
+	// The createdByUserId field.
+	CreatedByUserID *string `json:"createdByUserId,omitempty"`
+	// The description field.
+	Description *string `json:"description,omitempty"`
+	// The displayName field.
+	DisplayName *string `json:"displayName,omitempty"`
+	// The id field.
+	ID *string `json:"id,omitempty"`
+	// The published field.
+	Published *bool `json:"published,omitempty"`
+	// The visibleToEveryone field.
+	VisibleToEveryone *bool `json:"visibleToEveryone,omitempty"`
+}
+
+func (o *RequestCatalogInput) GetAccessEntitlements() []AppEntitlementInput {
+	if o == nil {
+		return nil
+	}
+	return o.AccessEntitlements
+}
+
+func (o *RequestCatalogInput) GetAppIds() []string {
+	if o == nil {
+		return nil
+	}
+	return o.AppIds
+}
+
+func (o *RequestCatalogInput) GetCreatedByUserID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.CreatedByUserID
+}
+
+func (o *RequestCatalogInput) GetDescription() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Description
+}
+
+func (o *RequestCatalogInput) GetDisplayName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.DisplayName
+}
+
+func (o *RequestCatalogInput) GetID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ID
+}
+
+func (o *RequestCatalogInput) GetPublished() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.Published
+}
+
+func (o *RequestCatalogInput) GetVisibleToEveryone() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.VisibleToEveryone
+}

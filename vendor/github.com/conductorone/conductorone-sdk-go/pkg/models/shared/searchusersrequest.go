@@ -44,6 +44,8 @@ func (e *SearchUsersRequestUserStatuses) UnmarshalJSON(data []byte) error {
 type SearchUsersRequest struct {
 	// The UserExpandMask message.
 	UserExpandMask *UserExpandMask `json:"expandMask,omitempty"`
+	// The email field.
+	Email *string `json:"email,omitempty"`
 	// The excludeIds field.
 	ExcludeIds []string `json:"excludeIds,omitempty"`
 	// The ids field.
@@ -67,6 +69,13 @@ func (o *SearchUsersRequest) GetUserExpandMask() *UserExpandMask {
 		return nil
 	}
 	return o.UserExpandMask
+}
+
+func (o *SearchUsersRequest) GetEmail() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Email
 }
 
 func (o *SearchUsersRequest) GetExcludeIds() []string {

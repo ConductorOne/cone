@@ -6,6 +6,8 @@ package shared
 type SearchAppsRequest struct {
 	// The appIds field.
 	AppIds []string `json:"appIds,omitempty"`
+	// The displayName field.
+	DisplayName *string `json:"displayName,omitempty"`
 	// The excludeAppIds field.
 	ExcludeAppIds []string `json:"excludeAppIds,omitempty"`
 	// The pageSize field.
@@ -21,6 +23,13 @@ func (o *SearchAppsRequest) GetAppIds() []string {
 		return nil
 	}
 	return o.AppIds
+}
+
+func (o *SearchAppsRequest) GetDisplayName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.DisplayName
 }
 
 func (o *SearchAppsRequest) GetExcludeAppIds() []string {

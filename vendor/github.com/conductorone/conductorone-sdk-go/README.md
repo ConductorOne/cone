@@ -19,23 +19,69 @@ import(
 	"context"
 	"log"
 	"github.com/conductorone/conductorone-sdk-go"
-	"github.com/conductorone/conductorone-sdk-go/pkg/models/operations"
+	"github.com/conductorone/conductorone-sdk-go/pkg/models/shared"
 )
 
 func main() {
-    s := conductoroneapi.New()
+    s := conductoroneapi.New(
+        conductoroneapi.WithSecurity(shared.Security{
+            Oauth: "",
+        }),
+    )
 
     ctx := context.Background()
-    res, err := s.AppEntitlementUserBinding.ListAppUsersForIdentityWithGrant(ctx, operations.C1APIAppV1AppEntitlementUserBindingServiceListAppUsersForIdentityWithGrantRequest{
-        AppEntitlementID: "corrupti",
-        AppID: "provident",
-        IdentityUserID: "distinctio",
+    res, err := s.AppEntitlementSearch.Search(ctx, shared.AppEntitlementSearchServiceSearchRequest{
+        AppEntitlementExpandMask: &shared.AppEntitlementExpandMask{
+            Paths: []string{
+                "provident",
+                "distinctio",
+                "quibusdam",
+            },
+        },
+        AccessReviewID: conductoroneapi.String("unde"),
+        Alias: conductoroneapi.String("nulla"),
+        AppIds: []string{
+            "illum",
+            "vel",
+            "error",
+        },
+        AppUserIds: []string{
+            "suscipit",
+            "iure",
+            "magnam",
+        },
+        ComplianceFrameworkIds: []string{
+            "ipsa",
+            "delectus",
+            "tempora",
+            "suscipit",
+        },
+        ExcludeAppIds: []string{
+            "minus",
+            "placeat",
+        },
+        ExcludeAppUserIds: []string{
+            "iusto",
+            "excepturi",
+            "nisi",
+        },
+        OnlyGetExpiring: conductoroneapi.Bool(false),
+        PageSize: conductoroneapi.Float64(9255.97),
+        PageToken: conductoroneapi.String("temporibus"),
+        Query: conductoroneapi.String("ab"),
+        ResourceTypeIds: []string{
+            "veritatis",
+            "deserunt",
+        },
+        RiskLevelIds: []string{
+            "ipsam",
+        },
     })
     if err != nil {
         log.Fatal(err)
     }
 
-    if res.ListAppUsersForIdentityWithGrantResponse != nil {
+    if res.AppEntitlementSearchServiceSearchResponse != nil {
         // handle response
     }
 }
@@ -46,6 +92,10 @@ func main() {
 ## Available Resources and Operations
 
 
+### [AppEntitlementSearch](docs/sdks/appentitlementsearch/README.md)
+
+* [Search](docs/sdks/appentitlementsearch/README.md#search) - Invokes the c1.api.app.v1.AppEntitlementSearchService.Search method.
+
 ### [AppEntitlementUserBinding](docs/sdks/appentitlementuserbinding/README.md)
 
 * [ListAppUsersForIdentityWithGrant](docs/sdks/appentitlementuserbinding/README.md#listappusersforidentitywithgrant) - Invokes the c1.api.app.v1.AppEntitlementUserBindingService.ListAppUsersForIdentityWithGrant method.
@@ -53,6 +103,12 @@ func main() {
 ### [AppEntitlements](docs/sdks/appentitlements/README.md)
 
 * [Get](docs/sdks/appentitlements/README.md#get) - Invokes the c1.api.app.v1.AppEntitlements.Get method.
+* [List](docs/sdks/appentitlements/README.md#list) - Invokes the c1.api.app.v1.AppEntitlements.List method.
+* [ListForAppResource](docs/sdks/appentitlements/README.md#listforappresource) - Invokes the c1.api.app.v1.AppEntitlements.ListForAppResource method.
+* [ListForAppUser](docs/sdks/appentitlements/README.md#listforappuser) - Invokes the c1.api.app.v1.AppEntitlements.ListForAppUser method.
+* [ListGroups](docs/sdks/appentitlements/README.md#listgroups) - Invokes the c1.api.app.v1.AppEntitlements.ListGroups method.
+* [ListUsers](docs/sdks/appentitlements/README.md#listusers) - Invokes the c1.api.app.v1.AppEntitlements.ListUsers method.
+* [Update](docs/sdks/appentitlements/README.md#update) - Invokes the c1.api.app.v1.AppEntitlements.Update method.
 
 ### [AppOwners](docs/sdks/appowners/README.md)
 
@@ -97,12 +153,27 @@ func main() {
 
 ### [Apps](docs/sdks/apps/README.md)
 
+* [Create](docs/sdks/apps/README.md#create) - Invokes the c1.api.app.v1.Apps.Create method.
+* [Delete](docs/sdks/apps/README.md#delete) - Invokes the c1.api.app.v1.Apps.Delete method.
 * [Get](docs/sdks/apps/README.md#get) - Invokes the c1.api.app.v1.Apps.Get method.
 * [List](docs/sdks/apps/README.md#list) - Invokes the c1.api.app.v1.Apps.List method.
+* [Update](docs/sdks/apps/README.md#update) - Invokes the c1.api.app.v1.Apps.Update method.
 
 ### [Auth](docs/sdks/auth/README.md)
 
 * [Introspect](docs/sdks/auth/README.md#introspect) - Invokes the c1.api.auth.v1.Auth.Introspect method.
+
+### [Connector](docs/sdks/connector/README.md)
+
+* [CreateDelegated](docs/sdks/connector/README.md#createdelegated) - Invokes the c1.api.app.v1.ConnectorService.CreateDelegated method.
+* [Delete](docs/sdks/connector/README.md#delete) - Invokes the c1.api.app.v1.ConnectorService.Delete method.
+* [Get](docs/sdks/connector/README.md#get) - Invokes the c1.api.app.v1.ConnectorService.Get method.
+* [GetCredentials](docs/sdks/connector/README.md#getcredentials) - Invokes the c1.api.app.v1.ConnectorService.GetCredentials method.
+* [List](docs/sdks/connector/README.md#list) - Invokes the c1.api.app.v1.ConnectorService.List method.
+* [RevokeCredential](docs/sdks/connector/README.md#revokecredential) - Invokes the c1.api.app.v1.ConnectorService.RevokeCredential method.
+* [RotateCredential](docs/sdks/connector/README.md#rotatecredential) - Invokes the c1.api.app.v1.ConnectorService.RotateCredential method.
+* [Update](docs/sdks/connector/README.md#update) - Invokes the c1.api.app.v1.ConnectorService.Update method.
+* [UpdateDelegated](docs/sdks/connector/README.md#updatedelegated) - Invokes the c1.api.app.v1.ConnectorService.UpdateDelegated method.
 
 ### [Directory](docs/sdks/directory/README.md)
 
@@ -122,6 +193,10 @@ func main() {
 * [Get](docs/sdks/policies/README.md#get) - Invokes the c1.api.policy.v1.Policies.Get method.
 * [List](docs/sdks/policies/README.md#list) - Invokes the c1.api.policy.v1.Policies.List method.
 * [Update](docs/sdks/policies/README.md#update) - Invokes the c1.api.policy.v1.Policies.Update method.
+
+### [PolicySearch](docs/sdks/policysearch/README.md)
+
+* [Search](docs/sdks/policysearch/README.md#search) - Invokes the c1.api.policy.v1.PolicySearch.Search method.
 
 ### [RequestCatalogManagement](docs/sdks/requestcatalogmanagement/README.md)
 
@@ -157,6 +232,7 @@ func main() {
 * [Approve](docs/sdks/taskactions/README.md#approve) - Invokes the c1.api.task.v1.TaskActionsService.Approve method.
 * [Comment](docs/sdks/taskactions/README.md#comment) - Invokes the c1.api.task.v1.TaskActionsService.Comment method.
 * [Deny](docs/sdks/taskactions/README.md#deny) - Invokes the c1.api.task.v1.TaskActionsService.Deny method.
+* [EscalateToEmergencyAccess](docs/sdks/taskactions/README.md#escalatetoemergencyaccess) - Invokes the c1.api.task.v1.TaskActionsService.EscalateToEmergencyAccess method.
 
 ### [TaskSearch](docs/sdks/tasksearch/README.md)
 

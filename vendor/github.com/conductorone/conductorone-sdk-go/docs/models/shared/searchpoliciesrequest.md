@@ -1,0 +1,14 @@
+# SearchPoliciesRequest
+
+The SearchPoliciesRequest message.
+
+
+## Fields
+
+| Field                                                                                         | Type                                                                                          | Required                                                                                      | Description                                                                                   |
+| --------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
+| `DisplayName`                                                                                 | **string*                                                                                     | :heavy_minus_sign:                                                                            | The displayName field.                                                                        |
+| `PageSize`                                                                                    | **float64*                                                                                    | :heavy_minus_sign:                                                                            | The pageSize field.                                                                           |
+| `PageToken`                                                                                   | **string*                                                                                     | :heavy_minus_sign:                                                                            | The pageToken field.                                                                          |
+| `PolicyTypes`                                                                                 | [][SearchPoliciesRequestPolicyTypes](../../models/shared/searchpoliciesrequestpolicytypes.md) | :heavy_minus_sign:                                                                            | The policyTypes field.                                                                        |
+| `Query`                                                                                       | **string*                                                                                     | :heavy_minus_sign:                                                                            | The query field.                                                                              |

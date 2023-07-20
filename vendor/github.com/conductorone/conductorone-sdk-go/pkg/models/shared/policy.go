@@ -147,3 +147,79 @@ func (o *Policy) GetUpdatedAt() *time.Time {
 	}
 	return o.UpdatedAt
 }
+
+// PolicyInput - The Policy message.
+type PolicyInput struct {
+	// The description field.
+	Description *string `json:"description,omitempty"`
+	// The displayName field.
+	DisplayName *string `json:"displayName,omitempty"`
+	// The id field.
+	ID *string `json:"id,omitempty"`
+	// The policySteps field.
+	PolicySteps map[string]PolicySteps `json:"policySteps,omitempty"`
+	// The policyType field.
+	PolicyType *PolicyPolicyType `json:"policyType,omitempty"`
+	// The postActions field.
+	PostActions []PolicyPostActions `json:"postActions,omitempty"`
+	// The reassignTasksToDelegates field.
+	ReassignTasksToDelegates *bool `json:"reassignTasksToDelegates,omitempty"`
+	// The systemBuiltin field.
+	SystemBuiltin *bool `json:"systemBuiltin,omitempty"`
+}
+
+func (o *PolicyInput) GetDescription() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Description
+}
+
+func (o *PolicyInput) GetDisplayName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.DisplayName
+}
+
+func (o *PolicyInput) GetID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ID
+}
+
+func (o *PolicyInput) GetPolicySteps() map[string]PolicySteps {
+	if o == nil {
+		return nil
+	}
+	return o.PolicySteps
+}
+
+func (o *PolicyInput) GetPolicyType() *PolicyPolicyType {
+	if o == nil {
+		return nil
+	}
+	return o.PolicyType
+}
+
+func (o *PolicyInput) GetPostActions() []PolicyPostActions {
+	if o == nil {
+		return nil
+	}
+	return o.PostActions
+}
+
+func (o *PolicyInput) GetReassignTasksToDelegates() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.ReassignTasksToDelegates
+}
+
+func (o *PolicyInput) GetSystemBuiltin() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.SystemBuiltin
+}

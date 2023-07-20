@@ -2,21 +2,21 @@
 
 package shared
 
-// UpdatePolicyRequest - The UpdatePolicyRequest message.
-type UpdatePolicyRequest struct {
+// UpdatePolicyRequestInput - The UpdatePolicyRequest message.
+type UpdatePolicyRequestInput struct {
 	// The Policy message.
-	Policy     *Policy `json:"policy,omitempty"`
-	UpdateMask *string `json:"updateMask,omitempty"`
+	Policy     *PolicyInput `json:"policy,omitempty"`
+	UpdateMask *string      `json:"updateMask,omitempty"`
 }
 
-func (o *UpdatePolicyRequest) GetPolicy() *Policy {
+func (o *UpdatePolicyRequestInput) GetPolicy() *PolicyInput {
 	if o == nil {
 		return nil
 	}
 	return o.Policy
 }
 
-func (o *UpdatePolicyRequest) GetUpdateMask() *string {
+func (o *UpdatePolicyRequestInput) GetUpdateMask() *string {
 	if o == nil {
 		return nil
 	}

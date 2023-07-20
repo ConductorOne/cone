@@ -26,6 +26,7 @@ const (
 	TaskActionsTaskActionTypeProvisionAppUserTargetCreated TaskActions = "TASK_ACTION_TYPE_PROVISION_APP_USER_TARGET_CREATED"
 	TaskActionsTaskActionTypeRollbackSkipped               TaskActions = "TASK_ACTION_TYPE_ROLLBACK_SKIPPED"
 	TaskActionsTaskActionTypeHardReset                     TaskActions = "TASK_ACTION_TYPE_HARD_RESET"
+	TaskActionsTaskActionTypeEscalateToEmergencyAccess     TaskActions = "TASK_ACTION_TYPE_ESCALATE_TO_EMERGENCY_ACCESS"
 )
 
 func (e TaskActions) ToPointer() *TaskActions {
@@ -67,6 +68,8 @@ func (e *TaskActions) UnmarshalJSON(data []byte) error {
 	case "TASK_ACTION_TYPE_ROLLBACK_SKIPPED":
 		fallthrough
 	case "TASK_ACTION_TYPE_HARD_RESET":
+		fallthrough
+	case "TASK_ACTION_TYPE_ESCALATE_TO_EMERGENCY_ACCESS":
 		*e = TaskActions(v)
 		return nil
 	default:

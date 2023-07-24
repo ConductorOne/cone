@@ -4,7 +4,8 @@ package shared
 
 // UserView - The UserView message.
 type UserView struct {
-	// The User message.
+	//  The User object provides all of the details for an user, as well as some configuration.
+	//
 	User *User `json:"user,omitempty"`
 	// The delegatedUserPath field.
 	DelegatedUserPath *string `json:"delegatedUserPath,omitempty"`

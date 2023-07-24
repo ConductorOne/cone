@@ -22,6 +22,7 @@ func tasksCmd() *cobra.Command {
 	cmd.AddCommand(tasksCommentCmd())
 	cmd.AddCommand(approveTasksCmd())
 	cmd.AddCommand(denyTasksCmd())
+	cmd.AddCommand(escalateTasksCmd())
 
 	return cmd
 }

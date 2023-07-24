@@ -7,6 +7,104 @@ import (
 	"fmt"
 )
 
+// C1APIPolicyV1CreatePolicyRequestPolicyType - The policyType field.
+type C1APIPolicyV1CreatePolicyRequestPolicyType string
+
+const (
+	C1APIPolicyV1CreatePolicyRequestPolicyTypePolicyTypeUnspecified   C1APIPolicyV1CreatePolicyRequestPolicyType = "POLICY_TYPE_UNSPECIFIED"
+	C1APIPolicyV1CreatePolicyRequestPolicyTypePolicyTypeGrant         C1APIPolicyV1CreatePolicyRequestPolicyType = "POLICY_TYPE_GRANT"
+	C1APIPolicyV1CreatePolicyRequestPolicyTypePolicyTypeRevoke        C1APIPolicyV1CreatePolicyRequestPolicyType = "POLICY_TYPE_REVOKE"
+	C1APIPolicyV1CreatePolicyRequestPolicyTypePolicyTypeCertify       C1APIPolicyV1CreatePolicyRequestPolicyType = "POLICY_TYPE_CERTIFY"
+	C1APIPolicyV1CreatePolicyRequestPolicyTypePolicyTypeAccessRequest C1APIPolicyV1CreatePolicyRequestPolicyType = "POLICY_TYPE_ACCESS_REQUEST"
+	C1APIPolicyV1CreatePolicyRequestPolicyTypePolicyTypeProvision     C1APIPolicyV1CreatePolicyRequestPolicyType = "POLICY_TYPE_PROVISION"
+)
+
+func (e C1APIPolicyV1CreatePolicyRequestPolicyType) ToPointer() *C1APIPolicyV1CreatePolicyRequestPolicyType {
+	return &e
+}
+
+func (e *C1APIPolicyV1CreatePolicyRequestPolicyType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "POLICY_TYPE_UNSPECIFIED":
+		fallthrough
+	case "POLICY_TYPE_GRANT":
+		fallthrough
+	case "POLICY_TYPE_REVOKE":
+		fallthrough
+	case "POLICY_TYPE_CERTIFY":
+		fallthrough
+	case "POLICY_TYPE_ACCESS_REQUEST":
+		fallthrough
+	case "POLICY_TYPE_PROVISION":
+		*e = C1APIPolicyV1CreatePolicyRequestPolicyType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for C1APIPolicyV1CreatePolicyRequestPolicyType: %v", v)
+	}
+}
+
+// CreatePolicyRequest - The CreatePolicyRequest message.
+type CreatePolicyRequest struct {
+	// The description field.
+	Description *string `json:"description,omitempty"`
+	// The displayName field.
+	DisplayName *string `json:"displayName,omitempty"`
+	// The policySteps field.
+	PolicySteps map[string]PolicySteps `json:"policySteps,omitempty"`
+	// The policyType field.
+	PolicyType *C1APIPolicyV1CreatePolicyRequestPolicyType `json:"policyType,omitempty"`
+	// The postActions field.
+	PostActions []PolicyPostActions `json:"postActions,omitempty"`
+	// The reassignTasksToDelegates field.
+	ReassignTasksToDelegates *bool `json:"reassignTasksToDelegates,omitempty"`
+}
+
+func (o *CreatePolicyRequest) GetDescription() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Description
+}
+
+func (o *CreatePolicyRequest) GetDisplayName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.DisplayName
+}
+
+func (o *CreatePolicyRequest) GetPolicySteps() map[string]PolicySteps {
+	if o == nil {
+		return nil
+	}
+	return o.PolicySteps
+}
+
+func (o *CreatePolicyRequest) GetPolicyType() *C1APIPolicyV1CreatePolicyRequestPolicyType {
+	if o == nil {
+		return nil
+	}
+	return o.PolicyType
+}
+
+func (o *CreatePolicyRequest) GetPostActions() []PolicyPostActions {
+	if o == nil {
+		return nil
+	}
+	return o.PostActions
+}
+
+func (o *CreatePolicyRequest) GetReassignTasksToDelegates() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.ReassignTasksToDelegates
+}
+
 // CreatePolicyRequestPolicyType - The policyType field.
 type CreatePolicyRequestPolicyType string
 
@@ -47,14 +145,14 @@ func (e *CreatePolicyRequestPolicyType) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// CreatePolicyRequest - The CreatePolicyRequest message.
-type CreatePolicyRequest struct {
+// CreatePolicyRequestInput - The CreatePolicyRequest message.
+type CreatePolicyRequestInput struct {
 	// The description field.
 	Description *string `json:"description,omitempty"`
 	// The displayName field.
 	DisplayName *string `json:"displayName,omitempty"`
 	// The policySteps field.
-	PolicySteps map[string]PolicySteps `json:"policySteps,omitempty"`
+	PolicySteps map[string]PolicyStepsInput `json:"policySteps,omitempty"`
 	// The policyType field.
 	PolicyType *CreatePolicyRequestPolicyType `json:"policyType,omitempty"`
 	// The postActions field.
@@ -63,42 +161,42 @@ type CreatePolicyRequest struct {
 	ReassignTasksToDelegates *bool `json:"reassignTasksToDelegates,omitempty"`
 }
 
-func (o *CreatePolicyRequest) GetDescription() *string {
+func (o *CreatePolicyRequestInput) GetDescription() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Description
 }
 
-func (o *CreatePolicyRequest) GetDisplayName() *string {
+func (o *CreatePolicyRequestInput) GetDisplayName() *string {
 	if o == nil {
 		return nil
 	}
 	return o.DisplayName
 }
 
-func (o *CreatePolicyRequest) GetPolicySteps() map[string]PolicySteps {
+func (o *CreatePolicyRequestInput) GetPolicySteps() map[string]PolicyStepsInput {
 	if o == nil {
 		return nil
 	}
 	return o.PolicySteps
 }
 
-func (o *CreatePolicyRequest) GetPolicyType() *CreatePolicyRequestPolicyType {
+func (o *CreatePolicyRequestInput) GetPolicyType() *CreatePolicyRequestPolicyType {
 	if o == nil {
 		return nil
 	}
 	return o.PolicyType
 }
 
-func (o *CreatePolicyRequest) GetPostActions() []PolicyPostActions {
+func (o *CreatePolicyRequestInput) GetPostActions() []PolicyPostActions {
 	if o == nil {
 		return nil
 	}
 	return o.PostActions
 }
 
-func (o *CreatePolicyRequest) GetReassignTasksToDelegates() *bool {
+func (o *CreatePolicyRequestInput) GetReassignTasksToDelegates() *bool {
 	if o == nil {
 		return nil
 	}

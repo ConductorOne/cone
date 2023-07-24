@@ -224,3 +224,195 @@ func (o *AppEntitlement) GetUpdatedAt() *time.Time {
 	}
 	return o.UpdatedAt
 }
+
+// AppEntitlementInput - The AppEntitlement message.
+//
+// This message contains a oneof named max_grant_duration. Only a single field of the following list may be set at a time:
+//   - durationUnset
+//   - durationGrant
+type AppEntitlementInput struct {
+	// The ProvisionPolicy message.
+	//
+	// This message contains a oneof named typ. Only a single field of the following list may be set at a time:
+	//   - connector
+	//   - manual
+	//   - delegated
+	//
+	ProvisionPolicy *ProvisionPolicy `json:"provisionerPolicy,omitempty"`
+	// The alias field.
+	Alias *string `json:"alias,omitempty"`
+	// The appId field.
+	AppID *string `json:"appId,omitempty"`
+	// The appResourceId field.
+	AppResourceID *string `json:"appResourceId,omitempty"`
+	// The appResourceTypeId field.
+	AppResourceTypeID *string `json:"appResourceTypeId,omitempty"`
+	// The certifyPolicyId field.
+	CertifyPolicyID *string `json:"certifyPolicyId,omitempty"`
+	// The complianceFrameworkValueIds field.
+	ComplianceFrameworkValueIds []string `json:"complianceFrameworkValueIds,omitempty"`
+	// The description field.
+	Description *string `json:"description,omitempty"`
+	// The displayName field.
+	DisplayName   *string                      `json:"displayName,omitempty"`
+	DurationGrant *string                      `json:"durationGrant,omitempty"`
+	DurationUnset *AppEntitlementDurationUnset `json:"durationUnset,omitempty"`
+	// The emergencyGrantEnabled field.
+	EmergencyGrantEnabled *bool `json:"emergencyGrantEnabled,omitempty"`
+	// The emergencyGrantPolicyId field.
+	EmergencyGrantPolicyID *string `json:"emergencyGrantPolicyId,omitempty"`
+	// The grantCount field.
+	GrantCount *string `json:"grantCount,omitempty"`
+	// The grantPolicyId field.
+	GrantPolicyID *string `json:"grantPolicyId,omitempty"`
+	// The id field.
+	ID *string `json:"id,omitempty"`
+	// The revokePolicyId field.
+	RevokePolicyID *string `json:"revokePolicyId,omitempty"`
+	// The riskLevelValueId field.
+	RiskLevelValueID *string `json:"riskLevelValueId,omitempty"`
+	// The slug field.
+	Slug *string `json:"slug,omitempty"`
+	// The systemBuiltin field.
+	SystemBuiltin *bool `json:"systemBuiltin,omitempty"`
+}
+
+func (o *AppEntitlementInput) GetProvisionPolicy() *ProvisionPolicy {
+	if o == nil {
+		return nil
+	}
+	return o.ProvisionPolicy
+}
+
+func (o *AppEntitlementInput) GetAlias() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Alias
+}
+
+func (o *AppEntitlementInput) GetAppID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AppID
+}
+
+func (o *AppEntitlementInput) GetAppResourceID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AppResourceID
+}
+
+func (o *AppEntitlementInput) GetAppResourceTypeID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AppResourceTypeID
+}
+
+func (o *AppEntitlementInput) GetCertifyPolicyID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.CertifyPolicyID
+}
+
+func (o *AppEntitlementInput) GetComplianceFrameworkValueIds() []string {
+	if o == nil {
+		return nil
+	}
+	return o.ComplianceFrameworkValueIds
+}
+
+func (o *AppEntitlementInput) GetDescription() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Description
+}
+
+func (o *AppEntitlementInput) GetDisplayName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.DisplayName
+}
+
+func (o *AppEntitlementInput) GetDurationGrant() *string {
+	if o == nil {
+		return nil
+	}
+	return o.DurationGrant
+}
+
+func (o *AppEntitlementInput) GetDurationUnset() *AppEntitlementDurationUnset {
+	if o == nil {
+		return nil
+	}
+	return o.DurationUnset
+}
+
+func (o *AppEntitlementInput) GetEmergencyGrantEnabled() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.EmergencyGrantEnabled
+}
+
+func (o *AppEntitlementInput) GetEmergencyGrantPolicyID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.EmergencyGrantPolicyID
+}
+
+func (o *AppEntitlementInput) GetGrantCount() *string {
+	if o == nil {
+		return nil
+	}
+	return o.GrantCount
+}
+
+func (o *AppEntitlementInput) GetGrantPolicyID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.GrantPolicyID
+}
+
+func (o *AppEntitlementInput) GetID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ID
+}
+
+func (o *AppEntitlementInput) GetRevokePolicyID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.RevokePolicyID
+}
+
+func (o *AppEntitlementInput) GetRiskLevelValueID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.RiskLevelValueID
+}
+
+func (o *AppEntitlementInput) GetSlug() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Slug
+}
+
+func (o *AppEntitlementInput) GetSystemBuiltin() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.SystemBuiltin
+}

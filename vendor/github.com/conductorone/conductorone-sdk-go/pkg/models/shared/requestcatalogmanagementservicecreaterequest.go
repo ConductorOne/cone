@@ -10,8 +10,6 @@ type RequestCatalogManagementServiceCreateRequest struct {
 	Description *string `json:"description,omitempty"`
 	// The displayName field.
 	DisplayName *string `json:"displayName,omitempty"`
-	// The ownerIds field.
-	OwnerIds []string `json:"ownerIds,omitempty"`
 	// The published field.
 	Published *bool `json:"published,omitempty"`
 	// The visibleToEveryone field.
@@ -37,13 +35,6 @@ func (o *RequestCatalogManagementServiceCreateRequest) GetDisplayName() *string 
 		return nil
 	}
 	return o.DisplayName
-}
-
-func (o *RequestCatalogManagementServiceCreateRequest) GetOwnerIds() []string {
-	if o == nil {
-		return nil
-	}
-	return o.OwnerIds
 }
 
 func (o *RequestCatalogManagementServiceCreateRequest) GetPublished() *bool {

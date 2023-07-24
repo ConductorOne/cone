@@ -25,7 +25,8 @@ func newTask(sdkConfig sdkConfiguration) *task {
 	}
 }
 
-// CreateGrantTask - Invokes the c1.api.task.v1.TaskService.CreateGrantTask method.
+// CreateGrantTask - Create Grant Task
+// Invokes the c1.api.task.v1.TaskService.CreateGrantTask method.
 func (s *task) CreateGrantTask(ctx context.Context, request shared.TaskServiceCreateGrantRequest) (*operations.C1APITaskV1TaskServiceCreateGrantTaskResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/api/v1/task/grant"
@@ -44,7 +45,7 @@ func (s *task) CreateGrantTask(ctx context.Context, request shared.TaskServiceCr
 
 	req.Header.Set("Content-Type", reqContentType)
 
-	client := s.sdkConfiguration.DefaultClient
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -86,7 +87,8 @@ func (s *task) CreateGrantTask(ctx context.Context, request shared.TaskServiceCr
 	return res, nil
 }
 
-// CreateRevokeTask - Invokes the c1.api.task.v1.TaskService.CreateRevokeTask method.
+// CreateRevokeTask - Create Revoke Task
+// Invokes the c1.api.task.v1.TaskService.CreateRevokeTask method.
 func (s *task) CreateRevokeTask(ctx context.Context, request shared.TaskServiceCreateRevokeRequest) (*operations.C1APITaskV1TaskServiceCreateRevokeTaskResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/api/v1/task/revoke"
@@ -105,7 +107,7 @@ func (s *task) CreateRevokeTask(ctx context.Context, request shared.TaskServiceC
 
 	req.Header.Set("Content-Type", reqContentType)
 
-	client := s.sdkConfiguration.DefaultClient
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -147,7 +149,8 @@ func (s *task) CreateRevokeTask(ctx context.Context, request shared.TaskServiceC
 	return res, nil
 }
 
-// Get - Invokes the c1.api.task.v1.TaskService.Get method.
+// Get - Get
+// Invokes the c1.api.task.v1.TaskService.Get method.
 func (s *task) Get(ctx context.Context, request operations.C1APITaskV1TaskServiceGetRequest) (*operations.C1APITaskV1TaskServiceGetResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/api/v1/tasks/{id}", request, nil)
@@ -162,7 +165,7 @@ func (s *task) Get(ctx context.Context, request operations.C1APITaskV1TaskServic
 	req.Header.Set("Accept", "application/json")
 	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s %s", s.sdkConfiguration.Language, s.sdkConfiguration.SDKVersion, s.sdkConfiguration.GenVersion, s.sdkConfiguration.OpenAPIDocVersion))
 
-	client := s.sdkConfiguration.DefaultClient
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {

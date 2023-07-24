@@ -2,21 +2,22 @@
 
 package shared
 
-// UpdatePolicyRequest - The UpdatePolicyRequest message.
-type UpdatePolicyRequest struct {
-	// The Policy message.
-	Policy     *Policy `json:"policy,omitempty"`
-	UpdateMask *string `json:"updateMask,omitempty"`
+// UpdatePolicyRequestInput - The UpdatePolicyRequest message.
+type UpdatePolicyRequestInput struct {
+	//  A policy describes the behavior of the ConductorOne system when processing a task. You can describe the type, approvers, fallback behavior, and escalation processes.
+	//
+	Policy     *PolicyInput `json:"policy,omitempty"`
+	UpdateMask *string      `json:"updateMask,omitempty"`
 }
 
-func (o *UpdatePolicyRequest) GetPolicy() *Policy {
+func (o *UpdatePolicyRequestInput) GetPolicy() *PolicyInput {
 	if o == nil {
 		return nil
 	}
 	return o.Policy
 }
 
-func (o *UpdatePolicyRequest) GetUpdateMask() *string {
+func (o *UpdatePolicyRequestInput) GetUpdateMask() *string {
 	if o == nil {
 		return nil
 	}

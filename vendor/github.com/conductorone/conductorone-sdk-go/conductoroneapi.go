@@ -4,6 +4,7 @@ package conductoroneapi
 
 import (
 	"fmt"
+	"github.com/conductorone/conductorone-sdk-go/pkg/models/shared"
 	"github.com/conductorone/conductorone-sdk-go/pkg/utils"
 	"net/http"
 	"time"
@@ -39,9 +40,9 @@ func Float32(f float32) *float32 { return &f }
 func Float64(f float64) *float64 { return &f }
 
 type sdkConfiguration struct {
-	DefaultClient  HTTPClient
-	SecurityClient HTTPClient
-
+	DefaultClient     HTTPClient
+	SecurityClient    HTTPClient
+	Security          *shared.Security
 	ServerURL         string
 	ServerIndex       int
 	ServerDefaults    []map[string]string
@@ -61,6 +62,7 @@ func (c *sdkConfiguration) GetServerDetails() (string, map[string]string) {
 
 // ConductoroneAPI - ConductorOne API: The ConductorOne API is a HTTP API for managing ConductorOne resources.
 type ConductoroneAPI struct {
+	AppEntitlementSearch      *appEntitlementSearch
 	AppEntitlementUserBinding *appEntitlementUserBinding
 	AppEntitlements           *appEntitlements
 	AppOwners                 *appOwners
@@ -74,9 +76,11 @@ type ConductoroneAPI struct {
 	AppUsageControls          *appUsageControls
 	Apps                      *apps
 	Auth                      *auth
+	Connector                 *connector
 	Directory                 *directory
 	PersonalClient            *personalClient
 	Policies                  *policies
+	PolicySearch              *policySearch
 	RequestCatalogManagement  *requestCatalogManagement
 	RequestCatalogSearch      *requestCatalogSearch
 	Roles                     *roles
@@ -140,17 +144,24 @@ func WithClient(client HTTPClient) SDKOption {
 	}
 }
 
+// WithSecurity configures the SDK to use the provided security details
+func WithSecurity(security shared.Security) SDKOption {
+	return func(sdk *ConductoroneAPI) {
+		sdk.sdkConfiguration.Security = &security
+	}
+}
+
 // New creates a new instance of the SDK with the provided options
 func New(opts ...SDKOption) *ConductoroneAPI {
 	sdk := &ConductoroneAPI{
 		sdkConfiguration: sdkConfiguration{
 			Language:          "go",
 			OpenAPIDocVersion: "0.1.0-alpha",
-			SDKVersion:        "1.6.1",
-			GenVersion:        "2.70.0",
+			SDKVersion:        "1.6.0",
+			GenVersion:        "2.71.0",
 			ServerDefaults: []map[string]string{
 				{
-					"tenantDomain": "invalid-example",
+					"tenantDomain": "example",
 				},
 			},
 		},
@@ -164,8 +175,14 @@ func New(opts ...SDKOption) *ConductoroneAPI {
 		sdk.sdkConfiguration.DefaultClient = &http.Client{Timeout: 60 * time.Second}
 	}
 	if sdk.sdkConfiguration.SecurityClient == nil {
-		sdk.sdkConfiguration.SecurityClient = sdk.sdkConfiguration.DefaultClient
+		if sdk.sdkConfiguration.Security != nil {
+			sdk.sdkConfiguration.SecurityClient = utils.ConfigureSecurityClient(sdk.sdkConfiguration.DefaultClient, sdk.sdkConfiguration.Security)
+		} else {
+			sdk.sdkConfiguration.SecurityClient = sdk.sdkConfiguration.DefaultClient
+		}
 	}
+
+	sdk.AppEntitlementSearch = newAppEntitlementSearch(sdk.sdkConfiguration)
 
 	sdk.AppEntitlementUserBinding = newAppEntitlementUserBinding(sdk.sdkConfiguration)
 
@@ -193,11 +210,15 @@ func New(opts ...SDKOption) *ConductoroneAPI {
 
 	sdk.Auth = newAuth(sdk.sdkConfiguration)
 
+	sdk.Connector = newConnector(sdk.sdkConfiguration)
+
 	sdk.Directory = newDirectory(sdk.sdkConfiguration)
 
 	sdk.PersonalClient = newPersonalClient(sdk.sdkConfiguration)
 
 	sdk.Policies = newPolicies(sdk.sdkConfiguration)
+
+	sdk.PolicySearch = newPolicySearch(sdk.sdkConfiguration)
 
 	sdk.RequestCatalogManagement = newRequestCatalogManagement(sdk.sdkConfiguration)
 

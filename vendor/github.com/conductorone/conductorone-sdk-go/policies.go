@@ -25,8 +25,9 @@ func newPolicies(sdkConfig sdkConfiguration) *policies {
 	}
 }
 
-// Create - Invokes the c1.api.policy.v1.Policies.Create method.
-func (s *policies) Create(ctx context.Context, request shared.CreatePolicyRequest) (*operations.C1APIPolicyV1PoliciesCreateResponse, error) {
+// Create - Create
+// Invokes the c1.api.policy.v1.Policies.Create method.
+func (s *policies) Create(ctx context.Context, request shared.CreatePolicyRequestInput) (*operations.C1APIPolicyV1PoliciesCreateResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/api/v1/policies"
 
@@ -44,7 +45,7 @@ func (s *policies) Create(ctx context.Context, request shared.CreatePolicyReques
 
 	req.Header.Set("Content-Type", reqContentType)
 
-	client := s.sdkConfiguration.DefaultClient
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -86,7 +87,8 @@ func (s *policies) Create(ctx context.Context, request shared.CreatePolicyReques
 	return res, nil
 }
 
-// Delete - Invokes the c1.api.policy.v1.Policies.Delete method.
+// Delete - Delete
+// Invokes the c1.api.policy.v1.Policies.Delete method.
 func (s *policies) Delete(ctx context.Context, request operations.C1APIPolicyV1PoliciesDeleteRequest) (*operations.C1APIPolicyV1PoliciesDeleteResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/api/v1/policies/{id}", request, nil)
@@ -108,7 +110,7 @@ func (s *policies) Delete(ctx context.Context, request operations.C1APIPolicyV1P
 
 	req.Header.Set("Content-Type", reqContentType)
 
-	client := s.sdkConfiguration.DefaultClient
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -150,7 +152,8 @@ func (s *policies) Delete(ctx context.Context, request operations.C1APIPolicyV1P
 	return res, nil
 }
 
-// Get - Invokes the c1.api.policy.v1.Policies.Get method.
+// Get - Get
+// Invokes the c1.api.policy.v1.Policies.Get method.
 func (s *policies) Get(ctx context.Context, request operations.C1APIPolicyV1PoliciesGetRequest) (*operations.C1APIPolicyV1PoliciesGetResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/api/v1/policies/{id}", request, nil)
@@ -165,7 +168,7 @@ func (s *policies) Get(ctx context.Context, request operations.C1APIPolicyV1Poli
 	req.Header.Set("Accept", "application/json")
 	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s %s", s.sdkConfiguration.Language, s.sdkConfiguration.SDKVersion, s.sdkConfiguration.GenVersion, s.sdkConfiguration.OpenAPIDocVersion))
 
-	client := s.sdkConfiguration.DefaultClient
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -207,7 +210,8 @@ func (s *policies) Get(ctx context.Context, request operations.C1APIPolicyV1Poli
 	return res, nil
 }
 
-// List - Invokes the c1.api.policy.v1.Policies.List method.
+// List - List
+// Invokes the c1.api.policy.v1.Policies.List method.
 func (s *policies) List(ctx context.Context) (*operations.C1APIPolicyV1PoliciesListResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/api/v1/policies"
@@ -219,7 +223,7 @@ func (s *policies) List(ctx context.Context) (*operations.C1APIPolicyV1PoliciesL
 	req.Header.Set("Accept", "application/json")
 	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s %s", s.sdkConfiguration.Language, s.sdkConfiguration.SDKVersion, s.sdkConfiguration.GenVersion, s.sdkConfiguration.OpenAPIDocVersion))
 
-	client := s.sdkConfiguration.DefaultClient
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -261,7 +265,8 @@ func (s *policies) List(ctx context.Context) (*operations.C1APIPolicyV1PoliciesL
 	return res, nil
 }
 
-// Update - Invokes the c1.api.policy.v1.Policies.Update method.
+// Update - Update
+// Invokes the c1.api.policy.v1.Policies.Update method.
 func (s *policies) Update(ctx context.Context, request operations.C1APIPolicyV1PoliciesUpdateRequest) (*operations.C1APIPolicyV1PoliciesUpdateResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/api/v1/policies/{id}", request, nil)
@@ -269,7 +274,7 @@ func (s *policies) Update(ctx context.Context, request operations.C1APIPolicyV1P
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
-	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, "UpdatePolicyRequest", "json")
+	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, "UpdatePolicyRequestInput", "json")
 	if err != nil {
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
@@ -283,7 +288,7 @@ func (s *policies) Update(ctx context.Context, request operations.C1APIPolicyV1P
 
 	req.Header.Set("Content-Type", reqContentType)
 
-	client := s.sdkConfiguration.DefaultClient
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {

@@ -79,6 +79,7 @@ type C1Client interface {
 	CommentOnTask(ctx context.Context, taskID string, comment string) (*shared.TaskActionsServiceCommentResponse, error)
 	ApproveTask(ctx context.Context, taskId string, comment string, policyId string) (*shared.TaskActionsServiceApproveResponse, error)
 	DenyTask(ctx context.Context, taskId string, comment string, policyId string) (*shared.TaskActionsServiceDenyResponse, error)
+	EscalateTask(ctx context.Context, taskId string) (*shared.TaskServiceActionResponse, error)
 }
 
 func (c *client) BaseURL() string {

@@ -6,12 +6,14 @@ import (
 	"time"
 )
 
-// ReassignedAction - The ReassignedAction message.
+// ReassignedAction -  The ReassignedAction object describes the outcome of a policy step that has been reassigned.
 type ReassignedAction struct {
-	// The newPolicyStepId field.
+	//  The ID of the policy step that was created as a result of this reassignment.
+	//
 	NewPolicyStepID *string    `json:"newPolicyStepId,omitempty"`
 	ReassignedAt    *time.Time `json:"reassignedAt,omitempty"`
-	// The userId field.
+	//  The UserID of the person who reassigned this step.
+	//
 	UserID *string `json:"userId,omitempty"`
 }
 

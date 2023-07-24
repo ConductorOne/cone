@@ -24,7 +24,8 @@ func newAppResourceType(sdkConfig sdkConfiguration) *appResourceType {
 	}
 }
 
-// Get - Invokes the c1.api.app.v1.AppResourceTypeService.Get method.
+// Get - Get
+// Invokes the c1.api.app.v1.AppResourceTypeService.Get method.
 func (s *appResourceType) Get(ctx context.Context, request operations.C1APIAppV1AppResourceTypeServiceGetRequest) (*operations.C1APIAppV1AppResourceTypeServiceGetResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/api/v1/apps/{app_id}/resource_types/{id}", request, nil)
@@ -39,7 +40,7 @@ func (s *appResourceType) Get(ctx context.Context, request operations.C1APIAppV1
 	req.Header.Set("Accept", "application/json")
 	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s %s", s.sdkConfiguration.Language, s.sdkConfiguration.SDKVersion, s.sdkConfiguration.GenVersion, s.sdkConfiguration.OpenAPIDocVersion))
 
-	client := s.sdkConfiguration.DefaultClient
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -81,7 +82,8 @@ func (s *appResourceType) Get(ctx context.Context, request operations.C1APIAppV1
 	return res, nil
 }
 
-// List - Invokes the c1.api.app.v1.AppResourceTypeService.List method.
+// List - List
+// Invokes the c1.api.app.v1.AppResourceTypeService.List method.
 func (s *appResourceType) List(ctx context.Context, request operations.C1APIAppV1AppResourceTypeServiceListRequest) (*operations.C1APIAppV1AppResourceTypeServiceListResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/api/v1/apps/{app_id}/resource_types", request, nil)
@@ -96,7 +98,7 @@ func (s *appResourceType) List(ctx context.Context, request operations.C1APIAppV
 	req.Header.Set("Accept", "application/json")
 	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s %s", s.sdkConfiguration.Language, s.sdkConfiguration.SDKVersion, s.sdkConfiguration.GenVersion, s.sdkConfiguration.OpenAPIDocVersion))
 
-	client := s.sdkConfiguration.DefaultClient
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {

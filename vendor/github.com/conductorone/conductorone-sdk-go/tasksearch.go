@@ -25,7 +25,8 @@ func newTaskSearch(sdkConfig sdkConfiguration) *taskSearch {
 	}
 }
 
-// Search - Invokes the c1.api.task.v1.TaskSearchService.Search method.
+// Search - Search
+// Invokes the c1.api.task.v1.TaskSearchService.Search method.
 func (s *taskSearch) Search(ctx context.Context, request shared.TaskSearchRequest) (*operations.C1APITaskV1TaskSearchServiceSearchResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/api/v1/search/tasks"
@@ -44,7 +45,7 @@ func (s *taskSearch) Search(ctx context.Context, request shared.TaskSearchReques
 
 	req.Header.Set("Content-Type", reqContentType)
 
-	client := s.sdkConfiguration.DefaultClient
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {

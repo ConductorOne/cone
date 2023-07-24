@@ -9,11 +9,14 @@ package shared
 //   - manual
 //   - delegated
 type ProvisionPolicy struct {
-	// The ConnectorProvision message.
+	//  Indicates that a connector should perform the provisioning. This object has no fields.
+	//
 	ConnectorProvision *ConnectorProvision `json:"connector,omitempty"`
-	// The DelegatedProvision message.
+	//  This provision step indicates that we should delegate provisioning to the configuration of another app entitlement. This app entitlement does not have to be one from the same app, but MUST be configured as a proxy binding leading into this entitlement.
+	//
 	DelegatedProvision *DelegatedProvision `json:"delegated,omitempty"`
-	// The ManualProvision message.
+	//  Manual provisioning indicates that a human must intervene for the provisioning of this step.
+	//
 	ManualProvision *ManualProvision `json:"manual,omitempty"`
 }
 

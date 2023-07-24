@@ -2,21 +2,21 @@
 
 package shared
 
-// UpdateRoleRequest - The UpdateRoleRequest message.
-type UpdateRoleRequest struct {
+// UpdateRoleRequestInput - The UpdateRoleRequest message.
+type UpdateRoleRequestInput struct {
 	// The Role message.
-	Role       *Role   `json:"role,omitempty"`
-	UpdateMask *string `json:"updateMask,omitempty"`
+	Role       *RoleInput `json:"role,omitempty"`
+	UpdateMask *string    `json:"updateMask,omitempty"`
 }
 
-func (o *UpdateRoleRequest) GetRole() *Role {
+func (o *UpdateRoleRequestInput) GetRole() *RoleInput {
 	if o == nil {
 		return nil
 	}
 	return o.Role
 }
 
-func (o *UpdateRoleRequest) GetUpdateMask() *string {
+func (o *UpdateRoleRequestInput) GetUpdateMask() *string {
 	if o == nil {
 		return nil
 	}

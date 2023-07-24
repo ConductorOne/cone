@@ -24,7 +24,8 @@ func newAppOwners(sdkConfig sdkConfiguration) *appOwners {
 	}
 }
 
-// Add - Invokes the c1.api.app.v1.AppOwners.Add method.
+// Add - Add
+// Invokes the c1.api.app.v1.AppOwners.Add method.
 func (s *appOwners) Add(ctx context.Context, request operations.C1APIAppV1AppOwnersAddRequest) (*operations.C1APIAppV1AppOwnersAddResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/api/v1/apps/{app_id}/owners/{user_id}", request, nil)
@@ -46,7 +47,7 @@ func (s *appOwners) Add(ctx context.Context, request operations.C1APIAppV1AppOwn
 
 	req.Header.Set("Content-Type", reqContentType)
 
-	client := s.sdkConfiguration.DefaultClient
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -88,7 +89,8 @@ func (s *appOwners) Add(ctx context.Context, request operations.C1APIAppV1AppOwn
 	return res, nil
 }
 
-// List - Invokes the c1.api.app.v1.AppOwners.List method.
+// List - List
+// Invokes the c1.api.app.v1.AppOwners.List method.
 func (s *appOwners) List(ctx context.Context, request operations.C1APIAppV1AppOwnersListRequest) (*operations.C1APIAppV1AppOwnersListResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/api/v1/apps/{app_id}/owners", request, nil)
@@ -103,7 +105,7 @@ func (s *appOwners) List(ctx context.Context, request operations.C1APIAppV1AppOw
 	req.Header.Set("Accept", "application/json")
 	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s %s", s.sdkConfiguration.Language, s.sdkConfiguration.SDKVersion, s.sdkConfiguration.GenVersion, s.sdkConfiguration.OpenAPIDocVersion))
 
-	client := s.sdkConfiguration.DefaultClient
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {
@@ -145,7 +147,8 @@ func (s *appOwners) List(ctx context.Context, request operations.C1APIAppV1AppOw
 	return res, nil
 }
 
-// Remove - Invokes the c1.api.app.v1.AppOwners.Remove method.
+// Remove - Remove
+// Invokes the c1.api.app.v1.AppOwners.Remove method.
 func (s *appOwners) Remove(ctx context.Context, request operations.C1APIAppV1AppOwnersRemoveRequest) (*operations.C1APIAppV1AppOwnersRemoveResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/api/v1/apps/{app_id}/owners/{user_id}", request, nil)
@@ -167,7 +170,7 @@ func (s *appOwners) Remove(ctx context.Context, request operations.C1APIAppV1App
 
 	req.Header.Set("Content-Type", reqContentType)
 
-	client := s.sdkConfiguration.DefaultClient
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {

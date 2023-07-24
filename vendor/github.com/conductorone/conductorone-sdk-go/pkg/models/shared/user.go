@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-// UserDirectoryStatus - The directoryStatus field.
+// UserDirectoryStatus -  The status of the user in the directory.
 type UserDirectoryStatus string
 
 const (
@@ -42,7 +42,7 @@ func (e *UserDirectoryStatus) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// UserStatus - The status field.
+// UserStatus -  The status of the user in the system.
 type UserStatus string
 
 const (
@@ -76,47 +76,66 @@ func (e *UserStatus) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// User - The User message.
+// User -  The User object provides all of the details for an user, as well as some configuration.
 type User struct {
 	CreatedAt *time.Time `json:"createdAt,omitempty"`
-	// The delegatedUserId field.
+	//  The id of the user to whom tasks will be automatically reassigned to.
+	//
 	DelegatedUserID *string    `json:"delegatedUserId,omitempty"`
 	DeletedAt       *time.Time `json:"deletedAt,omitempty"`
-	// The department field.
+	//  The department which the user belongs to in the organization.
+	//
 	Department *string `json:"department,omitempty"`
-	// The departmentSources field.
+	//  A list of objects mapped based on department attribute mappings configured in the system.
+	//
 	DepartmentSources []UserAttributeMappingSource `json:"departmentSources,omitempty"`
-	// The directoryIds field.
+	//  A list of unique ids that represent different directories.
+	//
 	DirectoryIds []string `json:"directoryIds,omitempty"`
-	// The directoryStatus field.
+	//  The status of the user in the directory.
+	//
 	DirectoryStatus *UserDirectoryStatus `json:"directoryStatus,omitempty"`
-	// The directoryStatusSources field.
+	//  A list of objects mapped based on directoryStatus attribute mappings configured in the system.
+	//
 	DirectoryStatusSources []UserAttributeMappingSource `json:"directoryStatusSources,omitempty"`
-	// The displayName field.
+	//  The display name of the user.
+	//
 	DisplayName *string `json:"displayName,omitempty"`
-	// The email field.
+	//  This is the user's email.
+	//
 	Email *string `json:"email,omitempty"`
-	// The employmentStatus field.
+	//  The users employment status.
+	//
 	EmploymentStatus *string `json:"employmentStatus,omitempty"`
-	// The employmentStatusSources field.
+	//  A list of objects mapped based on employmentStatus attribute mappings configured in the system.
+	//
 	EmploymentStatusSources []UserAttributeMappingSource `json:"employmentStatusSources,omitempty"`
-	// The employmentType field.
+	//  The employment type of the user.
+	//
 	EmploymentType *string `json:"employmentType,omitempty"`
-	// The employmentTypeSources field.
+	//  A list of objects mapped based on employmentType attribute mappings configured in the system.
+	//
 	EmploymentTypeSources []UserAttributeMappingSource `json:"employmentTypeSources,omitempty"`
-	// The id field.
+	//  A unique identifier of the user.
+	//
 	ID *string `json:"id,omitempty"`
-	// The jobTitle field.
+	//  The job title of the user.
+	//
 	JobTitle *string `json:"jobTitle,omitempty"`
-	// The jobTitleSources field.
+	//  A list of objects mapped based on jobTitle attribute mappings configured in the system.
+	//
 	JobTitleSources []UserAttributeMappingSource `json:"jobTitleSources,omitempty"`
-	// The managerIds field.
+	//  A list of ids of the user's managers.
+	//
 	ManagerIds []string `json:"managerIds,omitempty"`
-	// The managerSources field.
+	//  A list of objects mapped based on managerId attribute mappings configured in the system.
+	//
 	ManagerSources []UserAttributeMappingSource `json:"managerSources,omitempty"`
-	// The roleIds field.
+	//  A list of unique identifiers that maps to ConductorOne’s user roles let you assign users permissions tailored to the work they do in the software.
+	//
 	RoleIds []string `json:"roleIds,omitempty"`
-	// The status field.
+	//  The status of the user in the system.
+	//
 	Status    *UserStatus `json:"status,omitempty"`
 	UpdatedAt *time.Time  `json:"updatedAt,omitempty"`
 }

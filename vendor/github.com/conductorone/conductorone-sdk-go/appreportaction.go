@@ -24,7 +24,8 @@ func newAppReportAction(sdkConfig sdkConfiguration) *appReportAction {
 	}
 }
 
-// GenerateReport - Invokes the c1.api.app.v1.AppReportActionService.GenerateReport method.
+// GenerateReport - Generate Report
+// Invokes the c1.api.app.v1.AppReportActionService.GenerateReport method.
 func (s *appReportAction) GenerateReport(ctx context.Context, request operations.C1APIAppV1AppReportActionServiceGenerateReportRequest) (*operations.C1APIAppV1AppReportActionServiceGenerateReportResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/api/v1/apps/{app_id}/report", request, nil)
@@ -46,7 +47,7 @@ func (s *appReportAction) GenerateReport(ctx context.Context, request operations
 
 	req.Header.Set("Content-Type", reqContentType)
 
-	client := s.sdkConfiguration.DefaultClient
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {

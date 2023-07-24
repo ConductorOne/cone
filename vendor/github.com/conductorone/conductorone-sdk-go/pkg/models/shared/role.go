@@ -6,6 +6,64 @@ import (
 	"time"
 )
 
+// RoleInput - The Role message.
+type RoleInput struct {
+	// The displayName field.
+	DisplayName *string `json:"displayName,omitempty"`
+	// The id field.
+	ID *string `json:"id,omitempty"`
+	// The name field.
+	Name *string `json:"name,omitempty"`
+	// The permissions field.
+	Permissions []string `json:"permissions,omitempty"`
+	// The serviceRoles field.
+	ServiceRoles []string `json:"serviceRoles,omitempty"`
+	// The systemBuiltin field.
+	SystemBuiltin *bool `json:"systemBuiltin,omitempty"`
+}
+
+func (o *RoleInput) GetDisplayName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.DisplayName
+}
+
+func (o *RoleInput) GetID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ID
+}
+
+func (o *RoleInput) GetName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Name
+}
+
+func (o *RoleInput) GetPermissions() []string {
+	if o == nil {
+		return nil
+	}
+	return o.Permissions
+}
+
+func (o *RoleInput) GetServiceRoles() []string {
+	if o == nil {
+		return nil
+	}
+	return o.ServiceRoles
+}
+
+func (o *RoleInput) GetSystemBuiltin() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.SystemBuiltin
+}
+
 // Role - The Role message.
 type Role struct {
 	CreatedAt *time.Time `json:"createdAt,omitempty"`

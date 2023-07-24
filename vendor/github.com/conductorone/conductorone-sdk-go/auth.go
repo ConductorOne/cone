@@ -25,7 +25,8 @@ func newAuth(sdkConfig sdkConfiguration) *auth {
 	}
 }
 
-// Introspect - Invokes the c1.api.auth.v1.Auth.Introspect method.
+// Introspect - Introspect
+// Invokes the c1.api.auth.v1.Auth.Introspect method.
 func (s *auth) Introspect(ctx context.Context) (*operations.C1APIAuthV1AuthIntrospectResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/api/v1/auth/introspect"
@@ -37,7 +38,7 @@ func (s *auth) Introspect(ctx context.Context) (*operations.C1APIAuthV1AuthIntro
 	req.Header.Set("Accept", "application/json")
 	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s %s", s.sdkConfiguration.Language, s.sdkConfiguration.SDKVersion, s.sdkConfiguration.GenVersion, s.sdkConfiguration.OpenAPIDocVersion))
 
-	client := s.sdkConfiguration.DefaultClient
+	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)
 	if err != nil {

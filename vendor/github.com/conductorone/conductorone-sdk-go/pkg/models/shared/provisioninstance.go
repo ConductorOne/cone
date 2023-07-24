@@ -7,7 +7,7 @@ import (
 	"fmt"
 )
 
-// ProvisionInstanceState - The state field.
+// ProvisionInstanceState -  This property indicates the current state of this step.
 type ProvisionInstanceState string
 
 const (
@@ -47,7 +47,7 @@ func (e *ProvisionInstanceState) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// ProvisionInstance - The ProvisionInstance message.
+// ProvisionInstance -  A provision instance describes the specific configuration of an executing provision policy step including actions taken and notification id.
 //
 // This message contains a oneof named outcome. Only a single field of the following list may be set at a time:
 //   - completed
@@ -61,13 +61,17 @@ type ProvisionInstance struct {
 	CompletedAction *CompletedAction `json:"completed,omitempty"`
 	// The ErroredAction message.
 	ErroredAction *ErroredAction `json:"errored,omitempty"`
-	// The Provision message.
+	//  The provision step references a provision policy for this step.
+	//
 	Provision *Provision `json:"provision,omitempty"`
-	// The ReassignedByErrorAction message.
+	//  The ReassignedByErrorAction object describes the outcome of a policy step that has been reassigned because it had an error provisioning.
+	//
 	ReassignedByErrorAction *ReassignedByErrorAction `json:"reassignedByError,omitempty"`
-	// The notificationId field.
+	//  This indicates the notification id for this step.
+	//
 	NotificationID *string `json:"notificationId,omitempty"`
-	// The state field.
+	//  This property indicates the current state of this step.
+	//
 	State *ProvisionInstanceState `json:"state,omitempty"`
 }
 

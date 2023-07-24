@@ -19,7 +19,8 @@ type PolicyStep struct {
 	//   - entitlementOwners
 	//
 	Approval *Approval `json:"approval,omitempty"`
-	// The Provision message.
+	//  The provision step references a provision policy for this step.
+	//
 	Provision *Provision `json:"provision,omitempty"`
 }
 
@@ -31,6 +32,42 @@ func (o *PolicyStep) GetApproval() *Approval {
 }
 
 func (o *PolicyStep) GetProvision() *Provision {
+	if o == nil {
+		return nil
+	}
+	return o.Provision
+}
+
+// PolicyStepInput - The PolicyStep message.
+//
+// This message contains a oneof named step. Only a single field of the following list may be set at a time:
+//   - approval
+//   - provision
+type PolicyStepInput struct {
+	// The Approval message.
+	//
+	// This message contains a oneof named typ. Only a single field of the following list may be set at a time:
+	//   - users
+	//   - manager
+	//   - appOwners
+	//   - group
+	//   - self
+	//   - entitlementOwners
+	//
+	Approval *ApprovalInput `json:"approval,omitempty"`
+	//  The provision step references a provision policy for this step.
+	//
+	Provision *Provision `json:"provision,omitempty"`
+}
+
+func (o *PolicyStepInput) GetApproval() *ApprovalInput {
+	if o == nil {
+		return nil
+	}
+	return o.Approval
+}
+
+func (o *PolicyStepInput) GetProvision() *Provision {
 	if o == nil {
 		return nil
 	}

@@ -6,10 +6,11 @@ import (
 	"time"
 )
 
-// DeniedAction - The DeniedAction message.
+// DeniedAction -  The denied action indicates that the c1.api.policy.v1.ApprovalInstance had an outcome of denied.
 type DeniedAction struct {
 	DeniedAt *time.Time `json:"deniedAt,omitempty"`
-	// The userId field.
+	//  The UserID that denied this step.
+	//
 	UserID *string `json:"userId,omitempty"`
 }
 

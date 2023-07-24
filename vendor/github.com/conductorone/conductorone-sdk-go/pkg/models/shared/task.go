@@ -77,7 +77,7 @@ func (e *TaskActions) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// TaskProcessing - The processing field.
+// TaskProcessing -  The processing state of a task as defined by the `processing_enum`
 type TaskProcessing string
 
 const (
@@ -111,7 +111,7 @@ func (e *TaskProcessing) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// TaskState -  State
+// TaskState -  The current state of the task as defined by the `state_enum`
 type TaskState string
 
 const (
@@ -142,9 +142,10 @@ func (e *TaskState) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// Task - The Task message.
+// Task -  A fully-fleged task object. Includes its policy, references to external apps, its type, its processing history, and more.
 type Task struct {
-	// The PolicyInstance message.
+	//  A policy instance is an object that contains a reference to the policy it was created from, the currently executing step, the next steps, and the history of previously completed steps.
+	//
 	PolicyInstance *PolicyInstance `json:"policy,omitempty"`
 	// The TaskType message.
 	//
@@ -154,40 +155,52 @@ type Task struct {
 	//   - certify
 	//
 	TaskType *TaskType `json:"type,omitempty"`
-	// The actions field.
+	//  The actions that can be performed on the task by the current user.
+	//
 	Actions []TaskActions `json:"actions,omitempty"`
-	// The analysisId field.
+	//  The ID of the analysis object associated with this task created by an analysis workflow if the analysis feature is enabled for your tenant.
+	//
 	AnalysisID *string `json:"analysisId,omitempty"`
-	// The annotations field.
+	//  An array of `google.protobuf.Any` annotations with various base64-encoded data.
+	//
 	Annotations []map[string]interface{} `json:"annotations,omitempty"`
-	// The commentCount field.
+	//  The count of comments.
+	//
 	CommentCount *float64   `json:"commentCount,omitempty"`
 	CreatedAt    *time.Time `json:"createdAt,omitempty"`
-	// The createdByUserId field.
+	//  The ID of the user that is the creator of this task. This may not always match the userId field.
+	//
 	CreatedByUserID *string    `json:"createdByUserId,omitempty"`
 	DeletedAt       *time.Time `json:"deletedAt,omitempty"`
-	// The description field.
+	//  The description of the task. This is also known as justification.
+	//
 	Description *string `json:"description,omitempty"`
-	// The displayName field.
+	//  The display name of the task.
+	//
 	DisplayName *string `json:"displayName,omitempty"`
-	// The emergencyAccess field.
+	//  A field indicating whether this task was created using an emergency access flow, or escalated to emergency access. On task creation, it will also use the app entitlement's emergency policy when possible.
+	//
 	EmergencyAccess *bool `json:"emergencyAccess,omitempty"`
-	// The externalRefs field.
+	//  An array of external references to the task. Historically that has been items like Jira task IDs. This is currently unused, but may come back in the future for integrations.
+	//
 	ExternalRefs []ExternalRef `json:"externalRefs,omitempty"`
-	//  General Metadata
+	//  The ID of the task.
 	//
 	ID *string `json:"id,omitempty"`
-	// The numericId field.
+	//  A human-usable numeric ID of a task which can be included in place of the fully qualified task id in path parmeters (but not search queries).
+	//
 	NumericID *string `json:"numericId,omitempty"`
-	// The processing field.
+	//  The processing state of a task as defined by the `processing_enum`
+	//
 	Processing *TaskProcessing `json:"processing,omitempty"`
-	//  State
+	//  The current state of the task as defined by the `state_enum`
 	//
 	State *TaskState `json:"state,omitempty"`
-	// The stepApproverIds field.
+	//  An array of IDs belonging to Identity Users that are allowed to review this step in a task.
+	//
 	StepApproverIds []string   `json:"stepApproverIds,omitempty"`
 	UpdatedAt       *time.Time `json:"updatedAt,omitempty"`
-	//  External IDS
+	//  The ID of the user that is the target of this task. This may be empty if we're targeting a specific app user that has no known identity user.
 	//
 	UserID *string `json:"userId,omitempty"`
 }

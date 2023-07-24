@@ -25,7 +25,8 @@ func newRequestCatalogManagement(sdkConfig sdkConfiguration) *requestCatalogMana
 	}
 }
 
-// AddAccessEntitlements - Invokes the c1.api.requestcatalog.v1.RequestCatalogManagementService.AddAccessEntitlements method.
+// AddAccessEntitlements - Add Access Entitlements
+// Invokes the c1.api.requestcatalog.v1.RequestCatalogManagementService.AddAccessEntitlements method.
 func (s *requestCatalogManagement) AddAccessEntitlements(ctx context.Context, request operations.C1APIRequestcatalogV1RequestCatalogManagementServiceAddAccessEntitlementsRequest) (*operations.C1APIRequestcatalogV1RequestCatalogManagementServiceAddAccessEntitlementsResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/api/v1/catalogs/{catalog_id}/visibility_bindings", request, nil)
@@ -89,7 +90,8 @@ func (s *requestCatalogManagement) AddAccessEntitlements(ctx context.Context, re
 	return res, nil
 }
 
-// AddAppEntitlements - Invokes the c1.api.requestcatalog.v1.RequestCatalogManagementService.AddAppEntitlements method.
+// AddAppEntitlements - Add App Entitlements
+// Invokes the c1.api.requestcatalog.v1.RequestCatalogManagementService.AddAppEntitlements method.
 func (s *requestCatalogManagement) AddAppEntitlements(ctx context.Context, request operations.C1APIRequestcatalogV1RequestCatalogManagementServiceAddAppEntitlementsRequest) (*operations.C1APIRequestcatalogV1RequestCatalogManagementServiceAddAppEntitlementsResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/api/v1/catalogs/{catalog_id}/requestable_entries", request, nil)
@@ -153,7 +155,8 @@ func (s *requestCatalogManagement) AddAppEntitlements(ctx context.Context, reque
 	return res, nil
 }
 
-// Create - Invokes the c1.api.requestcatalog.v1.RequestCatalogManagementService.Create method.
+// Create - Create
+// Invokes the c1.api.requestcatalog.v1.RequestCatalogManagementService.Create method.
 func (s *requestCatalogManagement) Create(ctx context.Context, request shared.RequestCatalogManagementServiceCreateRequest) (*operations.C1APIRequestcatalogV1RequestCatalogManagementServiceCreateResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/api/v1/catalogs"
@@ -214,7 +217,8 @@ func (s *requestCatalogManagement) Create(ctx context.Context, request shared.Re
 	return res, nil
 }
 
-// Delete - Invokes the c1.api.requestcatalog.v1.RequestCatalogManagementService.Delete method.
+// Delete - Delete
+// Invokes the c1.api.requestcatalog.v1.RequestCatalogManagementService.Delete method.
 func (s *requestCatalogManagement) Delete(ctx context.Context, request operations.C1APIRequestcatalogV1RequestCatalogManagementServiceDeleteRequest) (*operations.C1APIRequestcatalogV1RequestCatalogManagementServiceDeleteResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/api/v1/catalogs/{id}", request, nil)
@@ -278,7 +282,8 @@ func (s *requestCatalogManagement) Delete(ctx context.Context, request operation
 	return res, nil
 }
 
-// Get - Invokes the c1.api.requestcatalog.v1.RequestCatalogManagementService.Get method.
+// Get - Get
+// Invokes the c1.api.requestcatalog.v1.RequestCatalogManagementService.Get method.
 func (s *requestCatalogManagement) Get(ctx context.Context, request operations.C1APIRequestcatalogV1RequestCatalogManagementServiceGetRequest) (*operations.C1APIRequestcatalogV1RequestCatalogManagementServiceGetResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/api/v1/catalogs/{id}", request, nil)
@@ -335,7 +340,8 @@ func (s *requestCatalogManagement) Get(ctx context.Context, request operations.C
 	return res, nil
 }
 
-// ListEntitlementsForAccess - Invokes the c1.api.requestcatalog.v1.RequestCatalogManagementService.ListEntitlementsForAccess method.
+// ListEntitlementsForAccess - List Entitlements For Access
+// Invokes the c1.api.requestcatalog.v1.RequestCatalogManagementService.ListEntitlementsForAccess method.
 func (s *requestCatalogManagement) ListEntitlementsForAccess(ctx context.Context, request operations.C1APIRequestcatalogV1RequestCatalogManagementServiceListEntitlementsForAccessRequest) (*operations.C1APIRequestcatalogV1RequestCatalogManagementServiceListEntitlementsForAccessResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/api/v1/catalogs/{catalog_id}/visibility_entitlements", request, nil)
@@ -392,7 +398,8 @@ func (s *requestCatalogManagement) ListEntitlementsForAccess(ctx context.Context
 	return res, nil
 }
 
-// ListEntitlementsPerCatalog - Invokes the c1.api.requestcatalog.v1.RequestCatalogManagementService.ListEntitlementsPerCatalog method.
+// ListEntitlementsPerCatalog - List Entitlements Per Catalog
+// Invokes the c1.api.requestcatalog.v1.RequestCatalogManagementService.ListEntitlementsPerCatalog method.
 func (s *requestCatalogManagement) ListEntitlementsPerCatalog(ctx context.Context, request operations.C1APIRequestcatalogV1RequestCatalogManagementServiceListEntitlementsPerCatalogRequest) (*operations.C1APIRequestcatalogV1RequestCatalogManagementServiceListEntitlementsPerCatalogResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/api/v1/catalogs/{catalog_id}/requestable_entitlements", request, nil)
@@ -449,7 +456,8 @@ func (s *requestCatalogManagement) ListEntitlementsPerCatalog(ctx context.Contex
 	return res, nil
 }
 
-// RemoveAccessEntitlements - Invokes the c1.api.requestcatalog.v1.RequestCatalogManagementService.RemoveAccessEntitlements method.
+// RemoveAccessEntitlements - Remove Access Entitlements
+// Invokes the c1.api.requestcatalog.v1.RequestCatalogManagementService.RemoveAccessEntitlements method.
 func (s *requestCatalogManagement) RemoveAccessEntitlements(ctx context.Context, request operations.C1APIRequestcatalogV1RequestCatalogManagementServiceRemoveAccessEntitlementsRequest) (*operations.C1APIRequestcatalogV1RequestCatalogManagementServiceRemoveAccessEntitlementsResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/api/v1/catalogs/{catalog_id}/visibility_bindings", request, nil)
@@ -513,7 +521,8 @@ func (s *requestCatalogManagement) RemoveAccessEntitlements(ctx context.Context,
 	return res, nil
 }
 
-// RemoveAppEntitlements - Invokes the c1.api.requestcatalog.v1.RequestCatalogManagementService.RemoveAppEntitlements method.
+// RemoveAppEntitlements - Remove App Entitlements
+// Invokes the c1.api.requestcatalog.v1.RequestCatalogManagementService.RemoveAppEntitlements method.
 func (s *requestCatalogManagement) RemoveAppEntitlements(ctx context.Context, request operations.C1APIRequestcatalogV1RequestCatalogManagementServiceRemoveAppEntitlementsRequest) (*operations.C1APIRequestcatalogV1RequestCatalogManagementServiceRemoveAppEntitlementsResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/api/v1/catalogs/{catalog_id}/requestable_entries", request, nil)
@@ -577,7 +586,8 @@ func (s *requestCatalogManagement) RemoveAppEntitlements(ctx context.Context, re
 	return res, nil
 }
 
-// Update - Invokes the c1.api.requestcatalog.v1.RequestCatalogManagementService.Update method.
+// Update - Update
+// Invokes the c1.api.requestcatalog.v1.RequestCatalogManagementService.Update method.
 func (s *requestCatalogManagement) Update(ctx context.Context, request operations.C1APIRequestcatalogV1RequestCatalogManagementServiceUpdateRequest) (*operations.C1APIRequestcatalogV1RequestCatalogManagementServiceUpdateResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/api/v1/catalogs/{id}", request, nil)

@@ -2,14 +2,16 @@
 
 package shared
 
-// EntitlementOwnerApproval - The EntitlementOwnerApproval message.
+// EntitlementOwnerApproval -  The entitlement owner approval allows configuration of the approval step when the target approvers are the entitlement owners.
 type EntitlementOwnerApproval struct {
-	//  Entitlement owner is based on the current entitlement's id and doesn't need to have self-contained data
+	//  Configuration to allow self approval if the target user is an entitlement owner during this step.
 	//
 	AllowSelfApproval *bool `json:"allowSelfApproval,omitempty"`
-	// The fallback field.
+	//  Configuration to allow a fallback if the entitlement owner cannot be identified.
+	//
 	Fallback *bool `json:"fallback,omitempty"`
-	// The fallbackUserIds field.
+	//  Configuration to specific which users to fallback to if fallback is enabled and the entitlement owner cannot be identified.
+	//
 	FallbackUserIds []string `json:"fallbackUserIds,omitempty"`
 }
 

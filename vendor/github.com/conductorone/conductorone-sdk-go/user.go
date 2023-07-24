@@ -25,7 +25,8 @@ func newUser(sdkConfig sdkConfiguration) *user {
 	}
 }
 
-// Get - Invokes the c1.api.user.v1.UserService.Get method.
+// Get - Get
+// Invokes the c1.api.user.v1.UserService.Get method.
 func (s *user) Get(ctx context.Context, request operations.C1APIUserV1UserServiceGetRequest) (*operations.C1APIUserV1UserServiceGetResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/api/v1/users/{id}", request, nil)
@@ -82,7 +83,8 @@ func (s *user) Get(ctx context.Context, request operations.C1APIUserV1UserServic
 	return res, nil
 }
 
-// List - Invokes the c1.api.user.v1.UserService.List method.
+// List - List
+// Invokes the c1.api.user.v1.UserService.List method.
 func (s *user) List(ctx context.Context) (*operations.C1APIUserV1UserServiceListResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/api/v1/users"

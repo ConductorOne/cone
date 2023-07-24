@@ -94,158 +94,158 @@ func main() {
 
 ### [AppEntitlementSearch](docs/sdks/appentitlementsearch/README.md)
 
-* [Search](docs/sdks/appentitlementsearch/README.md#search) - Invokes the c1.api.app.v1.AppEntitlementSearchService.Search method.
+* [Search](docs/sdks/appentitlementsearch/README.md#search) - Search
 
 ### [AppEntitlementUserBinding](docs/sdks/appentitlementuserbinding/README.md)
 
-* [ListAppUsersForIdentityWithGrant](docs/sdks/appentitlementuserbinding/README.md#listappusersforidentitywithgrant) - Invokes the c1.api.app.v1.AppEntitlementUserBindingService.ListAppUsersForIdentityWithGrant method.
+* [ListAppUsersForIdentityWithGrant](docs/sdks/appentitlementuserbinding/README.md#listappusersforidentitywithgrant) - List App Users For Identity With Grant
 
 ### [AppEntitlements](docs/sdks/appentitlements/README.md)
 
-* [Get](docs/sdks/appentitlements/README.md#get) - Invokes the c1.api.app.v1.AppEntitlements.Get method.
-* [List](docs/sdks/appentitlements/README.md#list) - Invokes the c1.api.app.v1.AppEntitlements.List method.
-* [ListForAppResource](docs/sdks/appentitlements/README.md#listforappresource) - Invokes the c1.api.app.v1.AppEntitlements.ListForAppResource method.
-* [ListForAppUser](docs/sdks/appentitlements/README.md#listforappuser) - Invokes the c1.api.app.v1.AppEntitlements.ListForAppUser method.
-* [ListGroups](docs/sdks/appentitlements/README.md#listgroups) - Invokes the c1.api.app.v1.AppEntitlements.ListGroups method.
-* [ListUsers](docs/sdks/appentitlements/README.md#listusers) - Invokes the c1.api.app.v1.AppEntitlements.ListUsers method.
-* [Update](docs/sdks/appentitlements/README.md#update) - Invokes the c1.api.app.v1.AppEntitlements.Update method.
+* [Get](docs/sdks/appentitlements/README.md#get) - Get
+* [List](docs/sdks/appentitlements/README.md#list) - List
+* [ListForAppResource](docs/sdks/appentitlements/README.md#listforappresource) - List For App Resource
+* [ListForAppUser](docs/sdks/appentitlements/README.md#listforappuser) - List For App User
+* [ListGroups](docs/sdks/appentitlements/README.md#listgroups) - List Groups
+* [ListUsers](docs/sdks/appentitlements/README.md#listusers) - List Users
+* [Update](docs/sdks/appentitlements/README.md#update) - Update
 
 ### [AppOwners](docs/sdks/appowners/README.md)
 
-* [Add](docs/sdks/appowners/README.md#add) - Invokes the c1.api.app.v1.AppOwners.Add method.
-* [List](docs/sdks/appowners/README.md#list) - Invokes the c1.api.app.v1.AppOwners.List method.
-* [Remove](docs/sdks/appowners/README.md#remove) - Invokes the c1.api.app.v1.AppOwners.Remove method.
+* [Add](docs/sdks/appowners/README.md#add) - Add
+* [List](docs/sdks/appowners/README.md#list) - List
+* [Remove](docs/sdks/appowners/README.md#remove) - Remove
 
 ### [AppReport](docs/sdks/appreport/README.md)
 
-* [List](docs/sdks/appreport/README.md#list) - Invokes the c1.api.app.v1.AppReportService.List method.
+* [List](docs/sdks/appreport/README.md#list) - List
 
 ### [AppReportAction](docs/sdks/appreportaction/README.md)
 
-* [GenerateReport](docs/sdks/appreportaction/README.md#generatereport) - Invokes the c1.api.app.v1.AppReportActionService.GenerateReport method.
+* [GenerateReport](docs/sdks/appreportaction/README.md#generatereport) - Generate Report
 
 ### [AppResource](docs/sdks/appresource/README.md)
 
-* [Get](docs/sdks/appresource/README.md#get) - Invokes the c1.api.app.v1.AppResourceService.Get method.
-* [List](docs/sdks/appresource/README.md#list) - Invokes the c1.api.app.v1.AppResourceService.List method.
+* [Get](docs/sdks/appresource/README.md#get) - Get
+* [List](docs/sdks/appresource/README.md#list) - List
 
 ### [AppResourceOwners](docs/sdks/appresourceowners/README.md)
 
-* [List](docs/sdks/appresourceowners/README.md#list) - Invokes the c1.api.app.v1.AppResourceOwners.List method.
+* [List](docs/sdks/appresourceowners/README.md#list) - List
 
 ### [AppResourceSearch](docs/sdks/appresourcesearch/README.md)
 
-* [SearchAppResourceTypes](docs/sdks/appresourcesearch/README.md#searchappresourcetypes) - Invokes the c1.api.app.v1.AppResourceSearch.SearchAppResourceTypes method.
+* [SearchAppResourceTypes](docs/sdks/appresourcesearch/README.md#searchappresourcetypes) - Search App Resource Types
 
 ### [AppResourceType](docs/sdks/appresourcetype/README.md)
 
-* [Get](docs/sdks/appresourcetype/README.md#get) - Invokes the c1.api.app.v1.AppResourceTypeService.Get method.
-* [List](docs/sdks/appresourcetype/README.md#list) - Invokes the c1.api.app.v1.AppResourceTypeService.List method.
+* [Get](docs/sdks/appresourcetype/README.md#get) - Get
+* [List](docs/sdks/appresourcetype/README.md#list) - List
 
 ### [AppSearch](docs/sdks/appsearch/README.md)
 
-* [Search](docs/sdks/appsearch/README.md#search) - Invokes the c1.api.app.v1.AppSearch.Search method.
+* [Search](docs/sdks/appsearch/README.md#search) - Search
 
 ### [AppUsageControls](docs/sdks/appusagecontrols/README.md)
 
-* [Get](docs/sdks/appusagecontrols/README.md#get) - Invokes the c1.api.app.v1.AppUsageControlsService.Get method.
-* [Update](docs/sdks/appusagecontrols/README.md#update) - Invokes the c1.api.app.v1.AppUsageControlsService.Update method.
+* [Get](docs/sdks/appusagecontrols/README.md#get) - Get
+* [Update](docs/sdks/appusagecontrols/README.md#update) - Update
 
 ### [Apps](docs/sdks/apps/README.md)
 
-* [Create](docs/sdks/apps/README.md#create) - Invokes the c1.api.app.v1.Apps.Create method.
-* [Delete](docs/sdks/apps/README.md#delete) - Invokes the c1.api.app.v1.Apps.Delete method.
-* [Get](docs/sdks/apps/README.md#get) - Invokes the c1.api.app.v1.Apps.Get method.
-* [List](docs/sdks/apps/README.md#list) - Invokes the c1.api.app.v1.Apps.List method.
-* [Update](docs/sdks/apps/README.md#update) - Invokes the c1.api.app.v1.Apps.Update method.
+* [Create](docs/sdks/apps/README.md#create) - Create
+* [Delete](docs/sdks/apps/README.md#delete) - Delete
+* [Get](docs/sdks/apps/README.md#get) - Get
+* [List](docs/sdks/apps/README.md#list) - List
+* [Update](docs/sdks/apps/README.md#update) - Update
 
 ### [Auth](docs/sdks/auth/README.md)
 
-* [Introspect](docs/sdks/auth/README.md#introspect) - Invokes the c1.api.auth.v1.Auth.Introspect method.
+* [Introspect](docs/sdks/auth/README.md#introspect) - Introspect
 
 ### [Connector](docs/sdks/connector/README.md)
 
-* [CreateDelegated](docs/sdks/connector/README.md#createdelegated) - Invokes the c1.api.app.v1.ConnectorService.CreateDelegated method.
-* [Delete](docs/sdks/connector/README.md#delete) - Invokes the c1.api.app.v1.ConnectorService.Delete method.
-* [Get](docs/sdks/connector/README.md#get) - Invokes the c1.api.app.v1.ConnectorService.Get method.
-* [GetCredentials](docs/sdks/connector/README.md#getcredentials) - Invokes the c1.api.app.v1.ConnectorService.GetCredentials method.
-* [List](docs/sdks/connector/README.md#list) - Invokes the c1.api.app.v1.ConnectorService.List method.
-* [RevokeCredential](docs/sdks/connector/README.md#revokecredential) - Invokes the c1.api.app.v1.ConnectorService.RevokeCredential method.
-* [RotateCredential](docs/sdks/connector/README.md#rotatecredential) - Invokes the c1.api.app.v1.ConnectorService.RotateCredential method.
-* [Update](docs/sdks/connector/README.md#update) - Invokes the c1.api.app.v1.ConnectorService.Update method.
-* [UpdateDelegated](docs/sdks/connector/README.md#updatedelegated) - Invokes the c1.api.app.v1.ConnectorService.UpdateDelegated method.
+* [CreateDelegated](docs/sdks/connector/README.md#createdelegated) - Create Delegated
+* [Delete](docs/sdks/connector/README.md#delete) - Delete
+* [Get](docs/sdks/connector/README.md#get) - Get
+* [GetCredentials](docs/sdks/connector/README.md#getcredentials) - Get Credentials
+* [List](docs/sdks/connector/README.md#list) - List
+* [RevokeCredential](docs/sdks/connector/README.md#revokecredential) - Revoke Credential
+* [RotateCredential](docs/sdks/connector/README.md#rotatecredential) - Rotate Credential
+* [Update](docs/sdks/connector/README.md#update) - Update
+* [UpdateDelegated](docs/sdks/connector/README.md#updatedelegated) - Update Delegated
 
 ### [Directory](docs/sdks/directory/README.md)
 
-* [Create](docs/sdks/directory/README.md#create) - Invokes the c1.api.directory.v1.DirectoryService.Create method.
-* [Delete](docs/sdks/directory/README.md#delete) - Invokes the c1.api.directory.v1.DirectoryService.Delete method.
-* [Get](docs/sdks/directory/README.md#get) - Invokes the c1.api.directory.v1.DirectoryService.Get method.
-* [List](docs/sdks/directory/README.md#list) - Invokes the c1.api.directory.v1.DirectoryService.List method.
+* [Create](docs/sdks/directory/README.md#create) - Create
+* [Delete](docs/sdks/directory/README.md#delete) - Delete
+* [Get](docs/sdks/directory/README.md#get) - Get
+* [List](docs/sdks/directory/README.md#list) - List
 
 ### [PersonalClient](docs/sdks/personalclient/README.md)
 
-* [Create](docs/sdks/personalclient/README.md#create) - Invokes the c1.api.iam.v1.PersonalClientService.Create method.
+* [Create](docs/sdks/personalclient/README.md#create) - Create
 
 ### [Policies](docs/sdks/policies/README.md)
 
-* [Create](docs/sdks/policies/README.md#create) - Invokes the c1.api.policy.v1.Policies.Create method.
-* [Delete](docs/sdks/policies/README.md#delete) - Invokes the c1.api.policy.v1.Policies.Delete method.
-* [Get](docs/sdks/policies/README.md#get) - Invokes the c1.api.policy.v1.Policies.Get method.
-* [List](docs/sdks/policies/README.md#list) - Invokes the c1.api.policy.v1.Policies.List method.
-* [Update](docs/sdks/policies/README.md#update) - Invokes the c1.api.policy.v1.Policies.Update method.
+* [Create](docs/sdks/policies/README.md#create) - Create
+* [Delete](docs/sdks/policies/README.md#delete) - Delete
+* [Get](docs/sdks/policies/README.md#get) - Get
+* [List](docs/sdks/policies/README.md#list) - List
+* [Update](docs/sdks/policies/README.md#update) - Update
 
 ### [PolicySearch](docs/sdks/policysearch/README.md)
 
-* [Search](docs/sdks/policysearch/README.md#search) - Invokes the c1.api.policy.v1.PolicySearch.Search method.
+* [Search](docs/sdks/policysearch/README.md#search) - Search
 
 ### [RequestCatalogManagement](docs/sdks/requestcatalogmanagement/README.md)
 
-* [AddAccessEntitlements](docs/sdks/requestcatalogmanagement/README.md#addaccessentitlements) - Invokes the c1.api.requestcatalog.v1.RequestCatalogManagementService.AddAccessEntitlements method.
-* [AddAppEntitlements](docs/sdks/requestcatalogmanagement/README.md#addappentitlements) - Invokes the c1.api.requestcatalog.v1.RequestCatalogManagementService.AddAppEntitlements method.
-* [Create](docs/sdks/requestcatalogmanagement/README.md#create) - Invokes the c1.api.requestcatalog.v1.RequestCatalogManagementService.Create method.
-* [Delete](docs/sdks/requestcatalogmanagement/README.md#delete) - Invokes the c1.api.requestcatalog.v1.RequestCatalogManagementService.Delete method.
-* [Get](docs/sdks/requestcatalogmanagement/README.md#get) - Invokes the c1.api.requestcatalog.v1.RequestCatalogManagementService.Get method.
-* [ListEntitlementsForAccess](docs/sdks/requestcatalogmanagement/README.md#listentitlementsforaccess) - Invokes the c1.api.requestcatalog.v1.RequestCatalogManagementService.ListEntitlementsForAccess method.
-* [ListEntitlementsPerCatalog](docs/sdks/requestcatalogmanagement/README.md#listentitlementspercatalog) - Invokes the c1.api.requestcatalog.v1.RequestCatalogManagementService.ListEntitlementsPerCatalog method.
-* [RemoveAccessEntitlements](docs/sdks/requestcatalogmanagement/README.md#removeaccessentitlements) - Invokes the c1.api.requestcatalog.v1.RequestCatalogManagementService.RemoveAccessEntitlements method.
-* [RemoveAppEntitlements](docs/sdks/requestcatalogmanagement/README.md#removeappentitlements) - Invokes the c1.api.requestcatalog.v1.RequestCatalogManagementService.RemoveAppEntitlements method.
-* [Update](docs/sdks/requestcatalogmanagement/README.md#update) - Invokes the c1.api.requestcatalog.v1.RequestCatalogManagementService.Update method.
+* [AddAccessEntitlements](docs/sdks/requestcatalogmanagement/README.md#addaccessentitlements) - Add Access Entitlements
+* [AddAppEntitlements](docs/sdks/requestcatalogmanagement/README.md#addappentitlements) - Add App Entitlements
+* [Create](docs/sdks/requestcatalogmanagement/README.md#create) - Create
+* [Delete](docs/sdks/requestcatalogmanagement/README.md#delete) - Delete
+* [Get](docs/sdks/requestcatalogmanagement/README.md#get) - Get
+* [ListEntitlementsForAccess](docs/sdks/requestcatalogmanagement/README.md#listentitlementsforaccess) - List Entitlements For Access
+* [ListEntitlementsPerCatalog](docs/sdks/requestcatalogmanagement/README.md#listentitlementspercatalog) - List Entitlements Per Catalog
+* [RemoveAccessEntitlements](docs/sdks/requestcatalogmanagement/README.md#removeaccessentitlements) - Remove Access Entitlements
+* [RemoveAppEntitlements](docs/sdks/requestcatalogmanagement/README.md#removeappentitlements) - Remove App Entitlements
+* [Update](docs/sdks/requestcatalogmanagement/README.md#update) - Update
 
 ### [RequestCatalogSearch](docs/sdks/requestcatalogsearch/README.md)
 
-* [SearchEntitlements](docs/sdks/requestcatalogsearch/README.md#searchentitlements) - Invokes the c1.api.requestcatalog.v1.RequestCatalogSearchService.SearchEntitlements method.
+* [SearchEntitlements](docs/sdks/requestcatalogsearch/README.md#searchentitlements) - Search Entitlements
 
 ### [Roles](docs/sdks/roles/README.md)
 
-* [Get](docs/sdks/roles/README.md#get) - Invokes the c1.api.iam.v1.Roles.Get method.
-* [List](docs/sdks/roles/README.md#list) - Invokes the c1.api.iam.v1.Roles.List method.
-* [Update](docs/sdks/roles/README.md#update) - Invokes the c1.api.iam.v1.Roles.Update method.
+* [Get](docs/sdks/roles/README.md#get) - Get
+* [List](docs/sdks/roles/README.md#list) - List
+* [Update](docs/sdks/roles/README.md#update) - Update
 
 ### [Task](docs/sdks/task/README.md)
 
-* [CreateGrantTask](docs/sdks/task/README.md#creategranttask) - Invokes the c1.api.task.v1.TaskService.CreateGrantTask method.
-* [CreateRevokeTask](docs/sdks/task/README.md#createrevoketask) - Invokes the c1.api.task.v1.TaskService.CreateRevokeTask method.
-* [Get](docs/sdks/task/README.md#get) - Invokes the c1.api.task.v1.TaskService.Get method.
+* [CreateGrantTask](docs/sdks/task/README.md#creategranttask) - Create Grant Task
+* [CreateRevokeTask](docs/sdks/task/README.md#createrevoketask) - Create Revoke Task
+* [Get](docs/sdks/task/README.md#get) - Get
 
 ### [TaskActions](docs/sdks/taskactions/README.md)
 
-* [Approve](docs/sdks/taskactions/README.md#approve) - Invokes the c1.api.task.v1.TaskActionsService.Approve method.
-* [Comment](docs/sdks/taskactions/README.md#comment) - Invokes the c1.api.task.v1.TaskActionsService.Comment method.
-* [Deny](docs/sdks/taskactions/README.md#deny) - Invokes the c1.api.task.v1.TaskActionsService.Deny method.
-* [EscalateToEmergencyAccess](docs/sdks/taskactions/README.md#escalatetoemergencyaccess) - Invokes the c1.api.task.v1.TaskActionsService.EscalateToEmergencyAccess method.
+* [Approve](docs/sdks/taskactions/README.md#approve) - Approve
+* [Comment](docs/sdks/taskactions/README.md#comment) - Comment
+* [Deny](docs/sdks/taskactions/README.md#deny) - Deny
+* [EscalateToEmergencyAccess](docs/sdks/taskactions/README.md#escalatetoemergencyaccess) - Escalate To Emergency Access
 
 ### [TaskSearch](docs/sdks/tasksearch/README.md)
 
-* [Search](docs/sdks/tasksearch/README.md#search) - Invokes the c1.api.task.v1.TaskSearchService.Search method.
+* [Search](docs/sdks/tasksearch/README.md#search) - Search
 
 ### [User](docs/sdks/user/README.md)
 
-* [Get](docs/sdks/user/README.md#get) - Invokes the c1.api.user.v1.UserService.Get method.
-* [List](docs/sdks/user/README.md#list) - Invokes the c1.api.user.v1.UserService.List method.
+* [Get](docs/sdks/user/README.md#get) - Get
+* [List](docs/sdks/user/README.md#list) - List
 
 ### [UserSearch](docs/sdks/usersearch/README.md)
 
-* [Search](docs/sdks/usersearch/README.md#search) - Invokes the c1.api.user.v1.UserSearch.Search method.
+* [Search](docs/sdks/usersearch/README.md#search) - Search
 <!-- End SDK Available Operations -->
 
 ### Maturity

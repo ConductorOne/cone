@@ -25,7 +25,8 @@ func newAuth(sdkConfig sdkConfiguration) *auth {
 	}
 }
 
-// Introspect - Invokes the c1.api.auth.v1.Auth.Introspect method.
+// Introspect - Introspect
+// Invokes the c1.api.auth.v1.Auth.Introspect method.
 func (s *auth) Introspect(ctx context.Context) (*operations.C1APIAuthV1AuthIntrospectResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/api/v1/auth/introspect"

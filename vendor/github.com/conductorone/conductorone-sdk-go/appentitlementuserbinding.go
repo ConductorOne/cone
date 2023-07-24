@@ -24,7 +24,8 @@ func newAppEntitlementUserBinding(sdkConfig sdkConfiguration) *appEntitlementUse
 	}
 }
 
-// ListAppUsersForIdentityWithGrant - Invokes the c1.api.app.v1.AppEntitlementUserBindingService.ListAppUsersForIdentityWithGrant method.
+// ListAppUsersForIdentityWithGrant - List App Users For Identity With Grant
+// Invokes the c1.api.app.v1.AppEntitlementUserBindingService.ListAppUsersForIdentityWithGrant method.
 func (s *appEntitlementUserBinding) ListAppUsersForIdentityWithGrant(ctx context.Context, request operations.C1APIAppV1AppEntitlementUserBindingServiceListAppUsersForIdentityWithGrantRequest) (*operations.C1APIAppV1AppEntitlementUserBindingServiceListAppUsersForIdentityWithGrantResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/api/v1/apps/{app_id}/entitlements/{app_entitlement_id}/users/{identity_user_id}/grants", request, nil)

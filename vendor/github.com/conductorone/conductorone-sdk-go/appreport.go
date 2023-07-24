@@ -24,7 +24,8 @@ func newAppReport(sdkConfig sdkConfiguration) *appReport {
 	}
 }
 
-// List - Invokes the c1.api.app.v1.AppReportService.List method.
+// List - List
+// Invokes the c1.api.app.v1.AppReportService.List method.
 func (s *appReport) List(ctx context.Context, request operations.C1APIAppV1AppReportServiceListRequest) (*operations.C1APIAppV1AppReportServiceListResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/api/v1/apps/{app_id}/report", request, nil)

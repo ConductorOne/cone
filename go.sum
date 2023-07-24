@@ -658,8 +658,8 @@ github.com/cncf/xds/go v0.0.0-20220314180256-7f1daf1720fc/go.mod h1:eXthEFrGJvWH
 github.com/cncf/xds/go v0.0.0-20230105202645-06c439db220b/go.mod h1:eXthEFrGJvWHgFFCl3hGmgk+/aYT6PnTQLykKQRLhEs=
 github.com/cncf/xds/go v0.0.0-20230310173818-32f1caf87195/go.mod h1:eXthEFrGJvWHgFFCl3hGmgk+/aYT6PnTQLykKQRLhEs=
 github.com/cncf/xds/go v0.0.0-20230607035331-e9ce68804cb4/go.mod h1:eXthEFrGJvWHgFFCl3hGmgk+/aYT6PnTQLykKQRLhEs=
-github.com/conductorone/conductorone-sdk-go v1.6.1 h1:9BtoXre7R9HbYqUJW5wwkjqdPRDB9HFO24aHuVUDpEA=
-github.com/conductorone/conductorone-sdk-go v1.6.1/go.mod h1:05AYG5G0hNOrevAoUeJxoBcaD25q70Y25K9PJnUZIEk=
+github.com/conductorone/conductorone-sdk-go v1.7.0 h1:O2OUc716kmi6lP/er1iSDaNkai7XCgW4Qxh5k0HjOyo=
+github.com/conductorone/conductorone-sdk-go v1.7.0/go.mod h1:05AYG5G0hNOrevAoUeJxoBcaD25q70Y25K9PJnUZIEk=
 github.com/containerd/console v1.0.3 h1:lIr7SlA5PxZyMV30bDW0MGbiOPXwc63yRuCP0ARubLw=
 github.com/containerd/console v1.0.3/go.mod h1:7LqA/THxQ86k76b8c/EMSiaJ3h1eZkMkXar0TQ1gf3U=
 github.com/cpuguy83/go-md2man/v2 v2.0.2/go.mod h1:tgQtvFlXSQOSOSIRvRPT7W67SCa46tRHOmNcaadrF8o=

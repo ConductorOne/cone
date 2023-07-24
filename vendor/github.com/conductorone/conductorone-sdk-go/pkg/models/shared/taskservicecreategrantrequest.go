@@ -4,7 +4,7 @@ package shared
 
 // TaskServiceCreateGrantRequest - The TaskServiceCreateGrantRequest message.
 type TaskServiceCreateGrantRequest struct {
-	//  Make sure to update the TicketExpandMask
+	//  The task expand mask is an array of strings that specifes the related objects the requester wishes to have returned when making a request where the expand mask is part of the input. Use '*' to view all possible responses.
 	//
 	TaskExpandMask *TaskExpandMask `json:"expandMask,omitempty"`
 	// The appEntitlementId field.

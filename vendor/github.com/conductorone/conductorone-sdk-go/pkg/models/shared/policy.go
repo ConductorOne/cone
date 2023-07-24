@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-// PolicyPolicyType - The policyType field.
+// PolicyPolicyType -  Indicates the type of this policy. Can also be used to get the value from policySteps.
 type PolicyPolicyType string
 
 const (
@@ -48,25 +48,33 @@ func (e *PolicyPolicyType) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// Policy - The Policy message.
+// Policy -  A policy describes the behavior of the ConductorOne system when processing a task. You can describe the type, approvers, fallback behavior, and escalation processes.
 type Policy struct {
 	CreatedAt *time.Time `json:"createdAt,omitempty"`
 	DeletedAt *time.Time `json:"deletedAt,omitempty"`
-	// The description field.
+	//  The description of the Policy.
+	//
 	Description *string `json:"description,omitempty"`
-	// The displayName field.
+	//  The display name of the Policy.
+	//
 	DisplayName *string `json:"displayName,omitempty"`
-	// The id field.
+	//  The ID of the Policy.
+	//
 	ID *string `json:"id,omitempty"`
-	// The policySteps field.
+	//  A map of string(policy type) to steps in a policy. This structure is leftover from a previous design, and should only ever have one key->value set.
+	//
 	PolicySteps map[string]PolicySteps `json:"policySteps,omitempty"`
-	// The policyType field.
+	//  Indicates the type of this policy. Can also be used to get the value from policySteps.
+	//
 	PolicyType *PolicyPolicyType `json:"policyType,omitempty"`
-	// The postActions field.
+	//  An array of actions (ordered) to take place after a policy completes processing.
+	//
 	PostActions []PolicyPostActions `json:"postActions,omitempty"`
-	// The reassignTasksToDelegates field.
+	//  A policy configuration option that allows for reassinging tasks to delgated users. This level of delegation referrs to the individual delegates users set on their account.
+	//
 	ReassignTasksToDelegates *bool `json:"reassignTasksToDelegates,omitempty"`
-	// The systemBuiltin field.
+	//  Whether this policy is a builtin system policy. Builtin system policies cannot be edited.
+	//
 	SystemBuiltin *bool      `json:"systemBuiltin,omitempty"`
 	UpdatedAt     *time.Time `json:"updatedAt,omitempty"`
 }
@@ -148,24 +156,26 @@ func (o *Policy) GetUpdatedAt() *time.Time {
 	return o.UpdatedAt
 }
 
-// PolicyInput - The Policy message.
+// PolicyInput -  A policy describes the behavior of the ConductorOne system when processing a task. You can describe the type, approvers, fallback behavior, and escalation processes.
 type PolicyInput struct {
-	// The description field.
+	//  The description of the Policy.
+	//
 	Description *string `json:"description,omitempty"`
-	// The displayName field.
+	//  The display name of the Policy.
+	//
 	DisplayName *string `json:"displayName,omitempty"`
-	// The id field.
-	ID *string `json:"id,omitempty"`
-	// The policySteps field.
-	PolicySteps map[string]PolicySteps `json:"policySteps,omitempty"`
-	// The policyType field.
+	//  A map of string(policy type) to steps in a policy. This structure is leftover from a previous design, and should only ever have one key->value set.
+	//
+	PolicySteps map[string]PolicyStepsInput `json:"policySteps,omitempty"`
+	//  Indicates the type of this policy. Can also be used to get the value from policySteps.
+	//
 	PolicyType *PolicyPolicyType `json:"policyType,omitempty"`
-	// The postActions field.
+	//  An array of actions (ordered) to take place after a policy completes processing.
+	//
 	PostActions []PolicyPostActions `json:"postActions,omitempty"`
-	// The reassignTasksToDelegates field.
+	//  A policy configuration option that allows for reassinging tasks to delgated users. This level of delegation referrs to the individual delegates users set on their account.
+	//
 	ReassignTasksToDelegates *bool `json:"reassignTasksToDelegates,omitempty"`
-	// The systemBuiltin field.
-	SystemBuiltin *bool `json:"systemBuiltin,omitempty"`
 }
 
 func (o *PolicyInput) GetDescription() *string {
@@ -182,14 +192,7 @@ func (o *PolicyInput) GetDisplayName() *string {
 	return o.DisplayName
 }
 
-func (o *PolicyInput) GetID() *string {
-	if o == nil {
-		return nil
-	}
-	return o.ID
-}
-
-func (o *PolicyInput) GetPolicySteps() map[string]PolicySteps {
+func (o *PolicyInput) GetPolicySteps() map[string]PolicyStepsInput {
 	if o == nil {
 		return nil
 	}
@@ -215,11 +218,4 @@ func (o *PolicyInput) GetReassignTasksToDelegates() *bool {
 		return nil
 	}
 	return o.ReassignTasksToDelegates
-}
-
-func (o *PolicyInput) GetSystemBuiltin() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.SystemBuiltin
 }

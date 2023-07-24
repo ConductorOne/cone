@@ -25,7 +25,8 @@ func newPolicySearch(sdkConfig sdkConfiguration) *policySearch {
 	}
 }
 
-// Search - Invokes the c1.api.policy.v1.PolicySearch.Search method.
+// Search - Search
+// Invokes the c1.api.policy.v1.PolicySearch.Search method.
 func (s *policySearch) Search(ctx context.Context, request shared.SearchPoliciesRequest) (*operations.C1APIPolicyV1PolicySearchSearchResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/api/v1/search/policies"

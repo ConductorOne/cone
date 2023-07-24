@@ -4,7 +4,8 @@ package shared
 
 // UpdatePolicyRequestInput - The UpdatePolicyRequest message.
 type UpdatePolicyRequestInput struct {
-	// The Policy message.
+	//  A policy describes the behavior of the ConductorOne system when processing a task. You can describe the type, approvers, fallback behavior, and escalation processes.
+	//
 	Policy     *PolicyInput `json:"policy,omitempty"`
 	UpdateMask *string      `json:"updateMask,omitempty"`
 }

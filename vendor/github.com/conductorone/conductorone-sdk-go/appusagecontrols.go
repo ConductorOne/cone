@@ -24,7 +24,8 @@ func newAppUsageControls(sdkConfig sdkConfiguration) *appUsageControls {
 	}
 }
 
-// Get - Invokes the c1.api.app.v1.AppUsageControlsService.Get method.
+// Get - Get
+// Invokes the c1.api.app.v1.AppUsageControlsService.Get method.
 func (s *appUsageControls) Get(ctx context.Context, request operations.C1APIAppV1AppUsageControlsServiceGetRequest) (*operations.C1APIAppV1AppUsageControlsServiceGetResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/api/v1/apps/{app_id}/usage_controls", request, nil)
@@ -81,7 +82,8 @@ func (s *appUsageControls) Get(ctx context.Context, request operations.C1APIAppV
 	return res, nil
 }
 
-// Update - Invokes the c1.api.app.v1.AppUsageControlsService.Update method.
+// Update - Update
+// Invokes the c1.api.app.v1.AppUsageControlsService.Update method.
 func (s *appUsageControls) Update(ctx context.Context, request operations.C1APIAppV1AppUsageControlsServiceUpdateRequest) (*operations.C1APIAppV1AppUsageControlsServiceUpdateResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/api/v1/apps/{app_id}/usage_controls", request, nil)

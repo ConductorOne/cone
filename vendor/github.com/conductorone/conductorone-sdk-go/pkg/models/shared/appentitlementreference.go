@@ -2,11 +2,13 @@
 
 package shared
 
-// AppEntitlementReference - The AppEntitlementReference message.
+// AppEntitlementReference -  This object references an app entitlement's ID and AppID.
 type AppEntitlementReference struct {
-	// The appEntitlementId field.
+	//  The ID of the Entitlement.
+	//
 	AppEntitlementID *string `json:"appEntitlementId,omitempty"`
-	// The appId field.
+	//  The ID of the App this entitlement belongs to.
+	//
 	AppID *string `json:"appId,omitempty"`
 }
 

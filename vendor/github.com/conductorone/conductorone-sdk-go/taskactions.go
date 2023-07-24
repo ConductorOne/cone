@@ -24,7 +24,8 @@ func newTaskActions(sdkConfig sdkConfiguration) *taskActions {
 	}
 }
 
-// Approve - Invokes the c1.api.task.v1.TaskActionsService.Approve method.
+// Approve - Approve
+// Invokes the c1.api.task.v1.TaskActionsService.Approve method.
 func (s *taskActions) Approve(ctx context.Context, request operations.C1APITaskV1TaskActionsServiceApproveRequest) (*operations.C1APITaskV1TaskActionsServiceApproveResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/api/v1/tasks/{task_id}/action/approve", request, nil)
@@ -88,7 +89,8 @@ func (s *taskActions) Approve(ctx context.Context, request operations.C1APITaskV
 	return res, nil
 }
 
-// Comment - Invokes the c1.api.task.v1.TaskActionsService.Comment method.
+// Comment - Comment
+// Invokes the c1.api.task.v1.TaskActionsService.Comment method.
 func (s *taskActions) Comment(ctx context.Context, request operations.C1APITaskV1TaskActionsServiceCommentRequest) (*operations.C1APITaskV1TaskActionsServiceCommentResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/api/v1/tasks/{task_id}/action/comment", request, nil)
@@ -152,7 +154,8 @@ func (s *taskActions) Comment(ctx context.Context, request operations.C1APITaskV
 	return res, nil
 }
 
-// Deny - Invokes the c1.api.task.v1.TaskActionsService.Deny method.
+// Deny - Deny
+// Invokes the c1.api.task.v1.TaskActionsService.Deny method.
 func (s *taskActions) Deny(ctx context.Context, request operations.C1APITaskV1TaskActionsServiceDenyRequest) (*operations.C1APITaskV1TaskActionsServiceDenyResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/api/v1/tasks/{task_id}/action/deny", request, nil)
@@ -216,7 +219,8 @@ func (s *taskActions) Deny(ctx context.Context, request operations.C1APITaskV1Ta
 	return res, nil
 }
 
-// EscalateToEmergencyAccess - Invokes the c1.api.task.v1.TaskActionsService.EscalateToEmergencyAccess method.
+// EscalateToEmergencyAccess - Escalate To Emergency Access
+// Invokes the c1.api.task.v1.TaskActionsService.EscalateToEmergencyAccess method.
 func (s *taskActions) EscalateToEmergencyAccess(ctx context.Context, request operations.C1APITaskV1TaskActionsServiceEscalateToEmergencyAccessRequest) (*operations.C1APITaskV1TaskActionsServiceEscalateToEmergencyAccessResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/api/v1/tasks/{task_id}/action/escalate", request, nil)

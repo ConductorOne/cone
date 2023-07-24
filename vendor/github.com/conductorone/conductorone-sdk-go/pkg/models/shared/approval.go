@@ -12,25 +12,35 @@ package shared
 //   - self
 //   - entitlementOwners
 type Approval struct {
-	// The AppGroupApproval message.
+	//  The AppGroupApproval object provides the configuration for setting a group as the approvers of an approval policy step.
+	//
 	AppGroupApproval *AppGroupApproval `json:"group,omitempty"`
-	// The AppOwnerApproval message.
+	//  App owner approval provides the configuration for an approval step when the app owner is the target.
+	//
 	AppOwnerApproval *AppOwnerApproval `json:"appOwners,omitempty"`
-	// The EntitlementOwnerApproval message.
+	//  The entitlement owner approval allows configuration of the approval step when the target approvers are the entitlement owners.
+	//
 	EntitlementOwnerApproval *EntitlementOwnerApproval `json:"entitlementOwners,omitempty"`
-	// The ManagerApproval message.
+	//  The manager approval object provides configuration options for approval when the target of the approval is the manager of the user in the task.
+	//
 	ManagerApproval *ManagerApproval `json:"manager,omitempty"`
-	// The SelfApproval message.
+	//  The self approval object describes the configuration of a policy step that needs to be approved by the target of the request.
+	//
 	SelfApproval *SelfApproval `json:"self,omitempty"`
-	// The UserApproval message.
+	//  The user approval object describes the approval configuration of a policy step that needs to be approved by a specific list of users.
+	//
 	UserApproval *UserApproval `json:"users,omitempty"`
-	// The allowReassignment field.
+	//  Configuration to allow reassignment by reviewers during this step.
+	//
 	AllowReassignment *bool `json:"allowReassignment,omitempty"`
-	// The assigned field.
+	//  A field indicating whether this step is assigned.
+	//
 	Assigned *bool `json:"assigned,omitempty"`
-	// The requireApprovalReason field.
+	//  Configuration to require a reason when approving this step.
+	//
 	RequireApprovalReason *bool `json:"requireApprovalReason,omitempty"`
-	// The requireReassignmentReason field.
+	//  Configuration to require a reason when reassigning this step.
+	//
 	RequireReassignmentReason *bool `json:"requireReassignmentReason,omitempty"`
 }
 
@@ -102,4 +112,76 @@ func (o *Approval) GetRequireReassignmentReason() *bool {
 		return nil
 	}
 	return o.RequireReassignmentReason
+}
+
+// ApprovalInput - The Approval message.
+//
+// This message contains a oneof named typ. Only a single field of the following list may be set at a time:
+//   - users
+//   - manager
+//   - appOwners
+//   - group
+//   - self
+//   - entitlementOwners
+type ApprovalInput struct {
+	//  The AppGroupApproval object provides the configuration for setting a group as the approvers of an approval policy step.
+	//
+	AppGroupApproval *AppGroupApproval1 `json:"group,omitempty"`
+	//  App owner approval provides the configuration for an approval step when the app owner is the target.
+	//
+	AppOwnerApproval *AppOwnerApproval1 `json:"appOwners,omitempty"`
+	//  The entitlement owner approval allows configuration of the approval step when the target approvers are the entitlement owners.
+	//
+	EntitlementOwnerApproval *EntitlementOwnerApproval1 `json:"entitlementOwners,omitempty"`
+	//  The manager approval object provides configuration options for approval when the target of the approval is the manager of the user in the task.
+	//
+	ManagerApproval *ManagerApproval1 `json:"manager,omitempty"`
+	//  The self approval object describes the configuration of a policy step that needs to be approved by the target of the request.
+	//
+	SelfApproval *SelfApproval1 `json:"self,omitempty"`
+	//  The user approval object describes the approval configuration of a policy step that needs to be approved by a specific list of users.
+	//
+	UserApproval *UserApproval1 `json:"users,omitempty"`
+}
+
+func (o *ApprovalInput) GetAppGroupApproval() *AppGroupApproval1 {
+	if o == nil {
+		return nil
+	}
+	return o.AppGroupApproval
+}
+
+func (o *ApprovalInput) GetAppOwnerApproval() *AppOwnerApproval1 {
+	if o == nil {
+		return nil
+	}
+	return o.AppOwnerApproval
+}
+
+func (o *ApprovalInput) GetEntitlementOwnerApproval() *EntitlementOwnerApproval1 {
+	if o == nil {
+		return nil
+	}
+	return o.EntitlementOwnerApproval
+}
+
+func (o *ApprovalInput) GetManagerApproval() *ManagerApproval1 {
+	if o == nil {
+		return nil
+	}
+	return o.ManagerApproval
+}
+
+func (o *ApprovalInput) GetSelfApproval() *SelfApproval1 {
+	if o == nil {
+		return nil
+	}
+	return o.SelfApproval
+}
+
+func (o *ApprovalInput) GetUserApproval() *UserApproval1 {
+	if o == nil {
+		return nil
+	}
+	return o.UserApproval
 }

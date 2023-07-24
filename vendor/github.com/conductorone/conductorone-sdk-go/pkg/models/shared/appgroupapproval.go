@@ -2,17 +2,22 @@
 
 package shared
 
-// AppGroupApproval - The AppGroupApproval message.
+// AppGroupApproval -  The AppGroupApproval object provides the configuration for setting a group as the approvers of an approval policy step.
 type AppGroupApproval struct {
-	// The allowSelfApproval field.
+	//  Configuration to allow self approval if the target user is a member of the group during this step.
+	//
 	AllowSelfApproval *bool `json:"allowSelfApproval,omitempty"`
-	// The appGroupId field.
+	//  The ID of the group specified for approval.
+	//
 	AppGroupID *string `json:"appGroupId,omitempty"`
-	// The appId field.
+	//  The ID of the app that conatins the group specified for approval.
+	//
 	AppID *string `json:"appId,omitempty"`
-	// The fallback field.
+	//  Configuration to allow a fallback if the group is empty.
+	//
 	Fallback *bool `json:"fallback,omitempty"`
-	// The fallbackUserIds field.
+	//  Configuration to specific which users to fallback to if fallback is enabled and the group is empty.
+	//
 	FallbackUserIds []string `json:"fallbackUserIds,omitempty"`
 }
 

@@ -2,7 +2,7 @@
 
 package shared
 
-// Provision - The Provision message.
+// Provision -  The provision step references a provision policy for this step.
 type Provision struct {
 	// The ProvisionPolicy message.
 	//
@@ -12,7 +12,8 @@ type Provision struct {
 	//   - delegated
 	//
 	ProvisionPolicy *ProvisionPolicy `json:"provisionPolicy,omitempty"`
-	// The assigned field.
+	//  A field indicating whether this step is assigned.
+	//
 	Assigned *bool `json:"assigned,omitempty"`
 }
 

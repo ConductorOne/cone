@@ -2,7 +2,7 @@
 
 package shared
 
-// PolicyPostActions - The PolicyPostActions message.
+// PolicyPostActions -  These are actions to happen after a policy is complete.
 //
 // This message contains a oneof named action. Only a single field of the following list may be set at a time:
 //   - certifyRemediateImmediately

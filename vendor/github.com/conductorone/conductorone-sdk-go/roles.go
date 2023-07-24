@@ -25,7 +25,8 @@ func newRoles(sdkConfig sdkConfiguration) *roles {
 	}
 }
 
-// Get - Invokes the c1.api.iam.v1.Roles.Get method.
+// Get - Get
+// Invokes the c1.api.iam.v1.Roles.Get method.
 func (s *roles) Get(ctx context.Context, request operations.C1APIIamV1RolesGetRequest) (*operations.C1APIIamV1RolesGetResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/api/v1/iam/roles/{role_id}", request, nil)
@@ -82,7 +83,8 @@ func (s *roles) Get(ctx context.Context, request operations.C1APIIamV1RolesGetRe
 	return res, nil
 }
 
-// List - Invokes the c1.api.iam.v1.Roles.List method.
+// List - List
+// Invokes the c1.api.iam.v1.Roles.List method.
 func (s *roles) List(ctx context.Context) (*operations.C1APIIamV1RolesListResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/api/v1/iam/roles"
@@ -136,7 +138,8 @@ func (s *roles) List(ctx context.Context) (*operations.C1APIIamV1RolesListRespon
 	return res, nil
 }
 
-// Update - Invokes the c1.api.iam.v1.Roles.Update method.
+// Update - Update
+// Invokes the c1.api.iam.v1.Roles.Update method.
 func (s *roles) Update(ctx context.Context, request operations.C1APIIamV1RolesUpdateRequest) (*operations.C1APIIamV1RolesUpdateResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/api/v1/iam/roles/{role_id}", request, nil)

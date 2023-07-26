@@ -26,7 +26,7 @@ const justificationInputTip = "You can add a justification using -j or --justifi
 
 func getCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "get",
+		Use:   "get <alias> \n  cone get --query <query> \n  cone get --app-id <app-id> --entitlement-id <entitlement-id>",
 		Short: "Create an access request for an entitlement by alias",
 		RunE:  runGet,
 	}

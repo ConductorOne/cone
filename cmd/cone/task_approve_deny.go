@@ -16,7 +16,6 @@ func approveTasksCmd() *cobra.Command {
 		Use:   "approve <task-id>",
 		Short: "Mark a task as approved",
 		RunE:  runApproveTasks,
-		Args:  cobra.ExactArgs(1),
 	}
 
 	addCommentFlag(cmd)
@@ -29,7 +28,6 @@ func denyTasksCmd() *cobra.Command {
 		Use:   "deny <task-id>",
 		Short: "Mark a task as denied",
 		RunE:  runDenyTasks,
-		Args:  cobra.ExactArgs(1),
 	}
 
 	addCommentFlag(cmd)
@@ -64,6 +62,10 @@ func runApproveDeny(
 ) error {
 	ctx, c, v, err := cmdContext(cmd)
 	if err != nil {
+		return err
+	}
+
+	if err := validateArgLenth(1, args, cmd); err != nil {
 		return err
 	}
 

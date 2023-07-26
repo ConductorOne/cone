@@ -13,7 +13,6 @@ func getTasksCmd() *cobra.Command {
 		Use:   "get <task-id>",
 		Short: "Gets a task by id",
 		RunE:  getTaskRun,
-		Args:  cobra.ExactArgs(1),
 	}
 
 	return cmd
@@ -22,6 +21,10 @@ func getTasksCmd() *cobra.Command {
 func getTaskRun(cmd *cobra.Command, args []string) error {
 	ctx, c, v, err := cmdContext(cmd)
 	if err != nil {
+		return err
+	}
+
+	if err := validateArgLenth(1, args, cmd); err != nil {
 		return err
 	}
 

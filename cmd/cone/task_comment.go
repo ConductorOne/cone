@@ -13,7 +13,6 @@ func tasksCommentCmd() *cobra.Command {
 		Use:   "comment <task-id> <comment>",
 		Short: "Adds the specified comment to a task",
 		RunE:  tasksCommentRun,
-		Args:  cobra.ExactArgs(2),
 	}
 
 	return cmd
@@ -22,6 +21,10 @@ func tasksCommentCmd() *cobra.Command {
 func tasksCommentRun(cmd *cobra.Command, args []string) error {
 	ctx, c, v, err := cmdContext(cmd)
 	if err != nil {
+		return err
+	}
+
+	if err := validateArgLenth(2, args, cmd); err != nil {
 		return err
 	}
 

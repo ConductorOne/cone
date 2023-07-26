@@ -23,6 +23,10 @@ func whoAmIRun(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
+	if err := validateArgLenth(0, args, cmd); err != nil {
+		return err
+	}
+
 	introspectResp, err := c.AuthIntrospect(ctx)
 	if err != nil {
 		return err

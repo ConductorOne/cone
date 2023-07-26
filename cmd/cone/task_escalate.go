@@ -13,7 +13,6 @@ func escalateTasksCmd() *cobra.Command {
 		Use:   "escalate <task-id>",
 		Short: "Escalate an access request task to emergency access",
 		RunE:  runEscalateTasks,
-		Args:  cobra.ExactArgs(1),
 	}
 	return cmd
 }
@@ -21,6 +20,10 @@ func escalateTasksCmd() *cobra.Command {
 func runEscalateTasks(cmd *cobra.Command, args []string) error {
 	ctx, c, v, err := cmdContext(cmd)
 	if err != nil {
+		return err
+	}
+
+	if err := validateArgLenth(1, args, cmd); err != nil {
 		return err
 	}
 

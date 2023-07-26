@@ -27,6 +27,9 @@ func searchEntitlementsRun(cmd *cobra.Command, args []string) error {
 	if err != nil {
 		return err
 	}
+	if err := validateArgLenth(0, args, cmd); err != nil {
+		return err
+	}
 
 	query := v.GetString(queryFlag)
 	alias := v.GetString(entitlementAliasFlag)

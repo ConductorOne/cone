@@ -30,9 +30,9 @@ func (c *client) CreateGrantTask(
 	emergencyAccess bool,
 ) (*shared.TaskServiceCreateGrantResponse, error) {
 	req := shared.TaskServiceCreateGrantRequest{
-		AppEntitlementID: &appEntitlementId,
+		AppEntitlementID: appEntitlementId,
 		IdentityUserID:   &identityUserId,
-		AppID:            &appId,
+		AppID:            appId,
 		Description:      &justification,
 		EmergencyAccess:  &emergencyAccess,
 	}
@@ -59,9 +59,9 @@ func (c *client) CreateRevokeTask(
 	justification string,
 ) (*shared.TaskServiceCreateRevokeResponse, error) {
 	req := shared.TaskServiceCreateRevokeRequest{
-		AppEntitlementID: &appEntitlementId,
+		AppEntitlementID: appEntitlementId,
 		IdentityUserID:   &identityUserId,
-		AppID:            &appId,
+		AppID:            appId,
 		Description:      &justification,
 	}
 	resp, err := c.sdk.Task.CreateRevokeTask(ctx, req)
@@ -76,7 +76,7 @@ func (c *client) CreateRevokeTask(
 	return resp.TaskServiceCreateRevokeResponse, nil
 }
 
-func (c *client) SearchTasks(ctx context.Context, taskFilter shared.TaskSearchRequest) (*shared.TaskSearchResponse, error) {
+func (c *client) SearchTasks(ctx context.Context, taskFilter shared.TaskSearchRequestInput) (*shared.TaskSearchResponse, error) {
 	resp, err := c.sdk.TaskSearch.Search(ctx, taskFilter)
 	if err != nil {
 		return nil, err
@@ -110,7 +110,7 @@ func (c *client) ApproveTask(ctx context.Context, taskId string, comment string,
 	resp, err := c.sdk.TaskActions.Approve(ctx, operations.C1APITaskV1TaskActionsServiceApproveRequest{
 		TaskActionsServiceApproveRequest: &shared.TaskActionsServiceApproveRequest{
 			Comment:      &comment,
-			PolicyStepID: &policyId,
+			PolicyStepID: policyId,
 		},
 		TaskID: taskId,
 	})

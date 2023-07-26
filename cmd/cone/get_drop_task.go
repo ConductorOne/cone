@@ -288,7 +288,7 @@ func runTask(
 
 	justification := v.GetString(justificationFlag)
 
-	entitlementId, appId, err := getEntitlementDetails(ctx, c, v, args)
+	entitlementId, appId, err := getEntitlementDetails(ctx, c, v, args, cmd)
 	if err != nil {
 		return err
 	}
@@ -355,7 +355,7 @@ func runTask(
 	return nil
 }
 
-func getEntitlementDetails(ctx context.Context, c client.C1Client, v *viper.Viper, args []string) (string, string, error) {
+func getEntitlementDetails(ctx context.Context, c client.C1Client, v *viper.Viper, args []string, cmd *cobra.Command) (string, string, error) {
 	entitlementId := v.GetString(entitlementIdFlag)
 	appId := v.GetString(appIdFlag)
 	query := v.GetString(queryFlag)
@@ -366,11 +366,11 @@ func getEntitlementDetails(ctx context.Context, c client.C1Client, v *viper.Vipe
 	}
 
 	if alias == "" && query == "" && (appId == "" || entitlementId == "") {
-		return "", "", fmt.Errorf("must provide either an alias, query string, or an entitlement id and app id")
+		return "", "", fmt.Errorf("must provide either an alias, query string, or an entitlement id and app id\n%s", cmd.UsageString())
 	}
 
 	if (alias != "" || query != "") && (appId != "" || entitlementId != "") {
-		return "", "", fmt.Errorf("cannot provide an alias or query and an entitlement id and app id")
+		return "", "", fmt.Errorf("cannot provide an alias or query and an entitlement id and app id\n%s", cmd.UsageString())
 	}
 
 	// If we have an appId and appEntitlementId, just return those

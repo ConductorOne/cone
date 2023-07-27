@@ -19,6 +19,7 @@ const (
 	grantedFlag          = "granted"
 	notGrantedFlag       = "not-granted"
 	rawTokenFlag         = "raw"
+	appDisplayNameFlag   = "app"
 )
 
 func addWaitFlag(cmd *cobra.Command) {
@@ -26,23 +27,23 @@ func addWaitFlag(cmd *cobra.Command) {
 }
 
 func addEntitlementIdFlag(cmd *cobra.Command) {
-	cmd.Flags().StringP(entitlementIdFlag, "e", "", "The entitlement id to filter by")
+	cmd.Flags().StringP(entitlementIdFlag, "e", "", "The entitlement id to filter by.")
 }
 
 func addAppIdFlag(cmd *cobra.Command) {
-	cmd.Flags().StringP(appIdFlag, "a", "", "The app id to filter by")
+	cmd.Flags().StringP(appIdFlag, "a", "", "The app id to filter by.")
 }
 
 func addQueryFlag(cmd *cobra.Command) {
-	cmd.Flags().StringP(queryFlag, "q", "", "The query to filter by")
+	cmd.Flags().StringP(queryFlag, "q", "", "The query to filter by.")
 }
 
 func addEntitlementAliasFlag(cmd *cobra.Command) {
-	cmd.Flags().StringP(entitlementAliasFlag, "", "", "The entitlement alias to filter by")
+	cmd.Flags().StringP(entitlementAliasFlag, "", "", "The entitlement alias to filter by.")
 }
 
 func addJustificationFlag(cmd *cobra.Command) {
-	cmd.Flags().StringP(justificationFlag, "j", "", "The justification for the request")
+	cmd.Flags().StringP(justificationFlag, "j", "", "The justification for the request.")
 }
 
 func addGrantDurationFlag(cmd *cobra.Command) {
@@ -51,15 +52,15 @@ func addGrantDurationFlag(cmd *cobra.Command) {
 }
 
 func addEmergencyAccessFlag(cmd *cobra.Command) {
-	cmd.Flags().Bool(emergencyAccessFlag, false, "Request emergency access to the entitlement")
+	cmd.Flags().Bool(emergencyAccessFlag, false, "Request emergency access to the entitlement.")
 }
 
 func addGrantedFlag(cmd *cobra.Command) {
-	cmd.Flags().Bool(grantedFlag, false, "Only return granted tasks")
+	cmd.Flags().Bool(grantedFlag, false, "Only return granted tasks.")
 }
 
 func addNotGrantedFlag(cmd *cobra.Command) {
-	cmd.Flags().Bool(notGrantedFlag, false, "Only return ungranted tickets")
+	cmd.Flags().Bool(notGrantedFlag, false, "Only return ungranted tickets.")
 }
 
 func addForceTaskCreateFlag(cmd *cobra.Command) {
@@ -67,9 +68,13 @@ func addForceTaskCreateFlag(cmd *cobra.Command) {
 }
 
 func addEntitlementDetailsFlag(cmd *cobra.Command) {
-	cmd.Flags().Bool(extraDetailsFlag, false, "Show more details about the app and entitlement for this request")
+	cmd.Flags().Bool(extraDetailsFlag, false, "Show more details about the app and entitlement for this request.")
 }
 
 func addRawTokenFlag(cmd *cobra.Command) {
-	cmd.Flags().Bool(rawTokenFlag, false, "Prints only the access token directly to stdout with out style")
+	cmd.Flags().Bool(rawTokenFlag, false, "Prints only the access token directly to stdout with out style.")
+}
+
+func addAppDisplayNameFlag(cmd *cobra.Command) {
+	cmd.Flags().String(appDisplayNameFlag, "", "The display name of the app to filter by.")
 }

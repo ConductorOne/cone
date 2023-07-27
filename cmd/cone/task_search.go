@@ -6,6 +6,7 @@ import (
 	"github.com/spf13/cobra"
 
 	"github.com/conductorone/conductorone-sdk-go/pkg/models/shared"
+
 	"github.com/conductorone/cone/pkg/output"
 )
 

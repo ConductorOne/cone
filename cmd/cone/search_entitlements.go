@@ -1,9 +1,10 @@
 package main
 
 import (
+	"github.com/spf13/cobra"
+
 	"github.com/conductorone/cone/pkg/client"
 	"github.com/conductorone/cone/pkg/output"
-	"github.com/spf13/cobra"
 )
 
 func searchEntitlementsCmd() *cobra.Command {
@@ -16,6 +17,7 @@ func searchEntitlementsCmd() *cobra.Command {
 	addQueryFlag(cmd)
 	addGrantedFlag(cmd)
 	addNotGrantedFlag(cmd)
+	addAppDisplayNameFlag(cmd)
 	cmd.MarkFlagsMutuallyExclusive(grantedFlag, notGrantedFlag)
 	return cmd
 }
@@ -42,6 +44,7 @@ func searchEntitlementsRun(cmd *cobra.Command, args []string) error {
 		Query:            query,
 		EntitlementAlias: alias,
 		GrantedStatus:    grantedStatus,
+		AppDisplayName:   v.GetString(appDisplayNameFlag),
 	})
 	if err != nil {
 		return err

@@ -18,6 +18,7 @@ const (
 type SearchEntitlementsFilter struct {
 	Query            string
 	EntitlementAlias string
+	AppDisplayName   string
 	GrantedStatus    shared.RequestCatalogSearchServiceSearchEntitlementsRequestGrantedStatus
 }
 
@@ -49,6 +50,7 @@ func (c *client) SearchEntitlements(ctx context.Context, filter *SearchEntitleme
 		PageSize:         float64Ptr(100),
 		PageToken:        nil,
 		Query:            stringPtr(filter.Query),
+		AppDisplayName:   stringPtr(filter.AppDisplayName),
 	})
 	if err != nil {
 		return nil, err

@@ -5,7 +5,7 @@ go 1.20
 require (
 	go.uber.org/zap v1.24.0
 	golang.org/x/net v0.12.0
-	google.golang.org/grpc v1.56.2
+	google.golang.org/grpc v1.57.0
 	google.golang.org/protobuf v1.31.0
 )
 
@@ -35,7 +35,7 @@ require (
 	golang.org/x/crypto v0.11.0 // indirect
 	golang.org/x/term v0.10.0 // indirect
 	google.golang.org/appengine v1.6.7 // indirect
-	google.golang.org/genproto/googleapis/rpc v0.0.0-20230711160842-782d3b101e98 // indirect
+	google.golang.org/genproto/googleapis/rpc v0.0.0-20230726155614-23370e0ffb3e // indirect
 )
 
 require (

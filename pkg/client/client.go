@@ -115,7 +115,9 @@ func New(
 	// If the API host is set in the environment, use that instead of the default
 	// HACK(jirwin): Instead of using the generated client's server address, use the hostname from the token.
 	if apiHost, ok := os.LookupEnv("CONE_API_ENDPOINT"); ok {
-		apiHostname = apiHost
+		if apiHost == "" {
+			apiHostname = apiHost
+		}
 	} else {
 		apiHostname = c.tokenHost
 	}

@@ -151,7 +151,9 @@ func (c *c1TokenSource) Token() (*oauth2.Token, error) {
 
 	tokenHost := c.tokenHost
 	if envHost, ok := os.LookupEnv("CONE_API_ENDPOINT"); ok {
-		tokenHost = envHost
+		if envHost == "" {
+			tokenHost = envHost
+		}
 	}
 	tokenUrl := url.URL{
 		Scheme: "https",

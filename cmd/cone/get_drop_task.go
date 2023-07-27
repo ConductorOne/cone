@@ -26,7 +26,7 @@ const justificationInputTip = "You can add a justification using -j or --justifi
 
 func getCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "get",
+		Use:   "get <alias> [flags]\n  cone get --query <query> [flags]\n  cone get --app-id <app-id> --entitlement-id <entitlement-id> [flags]",
 		Short: "Create an access request for an entitlement by alias",
 		RunE:  runGet,
 	}
@@ -37,7 +37,7 @@ func getCmd() *cobra.Command {
 
 func dropCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "drop",
+		Use:   "drop <alias> [flags]\n  cone drop --query <query> [flags]\n  cone drop --app-id <app-id> --entitlement-id <entitlement-id> [flags]",
 		Short: "Create a revoke access ticket for an entitlement by alias",
 		RunE:  runDrop,
 	}
@@ -288,7 +288,7 @@ func runTask(
 
 	justification := v.GetString(justificationFlag)
 
-	entitlementId, appId, err := getEntitlementDetails(ctx, c, v, args)
+	entitlementId, appId, err := getEntitlementDetails(ctx, c, v, args, cmd)
 	if err != nil {
 		return err
 	}
@@ -355,7 +355,7 @@ func runTask(
 	return nil
 }
 
-func getEntitlementDetails(ctx context.Context, c client.C1Client, v *viper.Viper, args []string) (string, string, error) {
+func getEntitlementDetails(ctx context.Context, c client.C1Client, v *viper.Viper, args []string, cmd *cobra.Command) (string, string, error) {
 	entitlementId := v.GetString(entitlementIdFlag)
 	appId := v.GetString(appIdFlag)
 	query := v.GetString(queryFlag)
@@ -366,11 +366,11 @@ func getEntitlementDetails(ctx context.Context, c client.C1Client, v *viper.Vipe
 	}
 
 	if alias == "" && query == "" && (appId == "" || entitlementId == "") {
-		return "", "", fmt.Errorf("must provide either an alias, query string, or an entitlement id and app id")
+		return "", "", fmt.Errorf("must provide either an alias, query string, or an entitlement id and app id\n%s", cmd.UsageString())
 	}
 
 	if (alias != "" || query != "") && (appId != "" || entitlementId != "") {
-		return "", "", fmt.Errorf("cannot provide an alias or query and an entitlement id and app id")
+		return "", "", fmt.Errorf("cannot provide an alias or query and an entitlement id and app id\n%s", cmd.UsageString())
 	}
 
 	// If we have an appId and appEntitlementId, just return those

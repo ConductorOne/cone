@@ -39,6 +39,10 @@ func searchTasksRun(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
+	if err := validateArgLenth(0, args, cmd); err != nil {
+		return err
+	}
+
 	var includeDeleted *bool
 	if v.Get(includeDeletedFlag) != nil {
 		includeDeletedVal := v.GetBool(includeDeletedFlag)

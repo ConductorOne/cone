@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"os"
 
 	"github.com/conductorone/cone/pkg/client"
@@ -34,9 +33,8 @@ func hasRun(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
-	if len(args) != 2 {
-		usageErrorString := cmd.UsageString()
-		return fmt.Errorf("expected 2 arguments, got %d\n"+usageErrorString, len(args))
+	if err := validateArgLenth(2, args, cmd); err != nil {
+		return err
 	}
 
 	appID := args[0]

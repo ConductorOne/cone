@@ -1,8 +1,6 @@
 package main
 
 import (
-	"fmt"
-
 	"github.com/spf13/cobra"
 
 	"github.com/conductorone/conductorone-sdk-go/pkg/models/shared"
@@ -12,7 +10,7 @@ import (
 
 func getUserCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "get-user",
+		Use:   "get-user <user-id>",
 		Short: "Get a user by id",
 		RunE:  getUserRun,
 	}
@@ -26,8 +24,8 @@ func getUserRun(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
-	if len(args) != 1 {
-		return fmt.Errorf("expected 1 argument, got %d", len(args))
+	if err := validateArgLenth(1, args, cmd); err != nil {
+		return err
 	}
 	userID := args[0]
 

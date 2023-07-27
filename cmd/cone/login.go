@@ -20,7 +20,6 @@ func loginCmd() *cobra.Command {
 		Use:   "login <tenant-name or tenant-url>",
 		Short: fmt.Sprintf("Authenticate to ConductorOne, creating config.yaml in %s if it doesn't exist.", defaultConfigPath()),
 		RunE:  loginRun,
-		Args:  cobra.ExactArgs(1),
 	}
 
 	cmd.Flags().String("profile", "default", "Config profile to create or update.")
@@ -29,6 +28,11 @@ func loginCmd() *cobra.Command {
 
 func loginRun(cmd *cobra.Command, args []string) error {
 	ctx := cmd.Context()
+
+	if err := validateArgLenth(1, args, cmd); err != nil {
+		return err
+	}
+
 	tenant := args[0]
 
 	spinner, err := pterm.DefaultSpinner.Start("Logging in...")

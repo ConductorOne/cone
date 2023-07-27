@@ -52,14 +52,14 @@ func tokenRun(cmd *cobra.Command, args []string) error {
 	}
 
 	tokenObj := Token{
-		AccessToken: token.AccessToken,
+		AccessToken: "Bearer " + token.AccessToken,
 		TokenType:   token.TokenType,
 		Expiry:      token.Expiry.String(),
 	}
 
 	if v.GetBool(rawTokenFlag) {
 		//nolint:forbidigo // We want to raw-print the bearer if this flag is included
-		fmt.Println(token.AccessToken)
+		fmt.Println(tokenObj.AccessToken)
 		return nil
 	}
 

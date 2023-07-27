@@ -2,34 +2,25 @@
 
 package shared
 
-// TaskView -  Contains a task and JSONPATH expressions that describe where in the expanded array related objects are located. This view can be used to display a fully-detailed dashboard of task information.
+// TaskView - Contains a task and JSONPATH expressions that describe where in the expanded array related objects are located. This view can be used to display a fully-detailed dashboard of task information.
 type TaskView struct {
-	//  A fully-fleged task object. Includes its policy, references to external apps, its type, its processing history, and more.
-	//
+	// A fully-fleged task object. Includes its policy, references to external apps, its type, its processing history, and more.
 	Task *Task `json:"task,omitempty"`
-	//  JSONPATH expression indicating the location of the AccessReview object in the expanded array
-	//
+	// JSONPATH expression indicating the location of the AccessReview object in the expanded array
 	AccessReviewPath *string `json:"accessReviewPath,omitempty"`
-	//  JSONPATH expression indicating the location of the App object in the expanded array
-	//
+	// JSONPATH expression indicating the location of the App object in the expanded array
 	AppPath *string `json:"appPath,omitempty"`
-	//  JSONPATH expression indicating the location of the AppUser object in the expanded array
-	//
+	// JSONPATH expression indicating the location of the AppUser object in the expanded array
 	AppUserPath *string `json:"appUserPath,omitempty"`
-	//  JSONPATH expression indicating the location of the object of the User that created the ticket in the expanded array
-	//
+	// JSONPATH expression indicating the location of the object of the User that created the ticket in the expanded array
 	CreatedByUserPath *string `json:"createdByUserPath,omitempty"`
-	//  JSONPATH expression indicating the location of the Entitlements objects in the expanded array
-	//
+	// JSONPATH expression indicating the location of the Entitlements objects in the expanded array
 	EntitlementsPath *string `json:"entitlementsPath,omitempty"`
-	//  JSONPATH expression indicating the location of the User object of the User that this task is targeting in the expanded array. This is the user that is the identity when the target of a task is an app user.
-	//
+	// JSONPATH expression indicating the location of the User object of the User that this task is targeting in the expanded array. This is the user that is the identity when the target of a task is an app user.
 	IdentityUserPath *string `json:"identityUserPath,omitempty"`
-	//  JSONPATH expression indicating the location of the StepApproverUsers objects in the expanded array
-	//
+	// JSONPATH expression indicating the location of the StepApproverUsers objects in the expanded array
 	StepApproversPath *string `json:"stepApproversPath,omitempty"`
-	//  JSONPATH expression indicating the location of the User object in the expanded array. This is the user that is a direct target of the ticket without a specific relationship to a potentially non-existent app user.
-	//
+	// JSONPATH expression indicating the location of the User object in the expanded array. This is the user that is a direct target of the ticket without a specific relationship to a potentially non-existent app user.
 	UserPath *string `json:"userPath,omitempty"`
 }
 

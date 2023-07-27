@@ -98,6 +98,10 @@ func (s *appResource) List(ctx context.Context, request operations.C1APIAppV1App
 	req.Header.Set("Accept", "application/json")
 	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s %s", s.sdkConfiguration.Language, s.sdkConfiguration.SDKVersion, s.sdkConfiguration.GenVersion, s.sdkConfiguration.OpenAPIDocVersion))
 
+	if err := utils.PopulateQueryParams(ctx, req, request, nil); err != nil {
+		return nil, fmt.Errorf("error populating query params: %w", err)
+	}
+
 	client := s.sdkConfiguration.SecurityClient
 
 	httpRes, err := client.Do(req)

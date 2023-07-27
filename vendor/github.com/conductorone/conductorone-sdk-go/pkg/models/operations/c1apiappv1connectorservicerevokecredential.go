@@ -43,7 +43,7 @@ func (o *C1APIAppV1ConnectorServiceRevokeCredentialRequest) GetID() string {
 }
 
 type C1APIAppV1ConnectorServiceRevokeCredentialResponse struct {
-	// Successful response
+	// Empty response body. Status code indicates success.
 	ConnectorServiceRevokeCredentialResponse *shared.ConnectorServiceRevokeCredentialResponse
 	ContentType                              string
 	StatusCode                               int

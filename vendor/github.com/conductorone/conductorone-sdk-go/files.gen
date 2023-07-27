@@ -70,6 +70,7 @@ pkg/models/operations/c1apiappv1appsget.go
 pkg/models/operations/c1apiappv1appslist.go
 pkg/models/operations/c1apiappv1appsupdate.go
 pkg/models/operations/c1apiauthv1authintrospect.go
+pkg/models/operations/c1apiappv1connectorservicecreate.go
 pkg/models/operations/c1apiappv1connectorservicecreatedelegated.go
 pkg/models/operations/c1apiappv1connectorservicedelete.go
 pkg/models/operations/c1apiappv1connectorserviceget.go
@@ -186,8 +187,9 @@ pkg/models/shared/connectorview.go
 pkg/models/shared/connector.go
 pkg/models/shared/oauth2authorizedas.go
 pkg/models/shared/connectorstatus.go
-pkg/models/shared/connectorservicecreatedelegatedrequest.go
+pkg/models/shared/connectorservicecreaterequest.go
 pkg/models/shared/connectorexpandmask.go
+pkg/models/shared/connectorservicecreatedelegatedrequest.go
 pkg/models/shared/connectorservicedeleteresponse.go
 pkg/models/shared/connectorservicedeleterequest.go
 pkg/models/shared/connectorservicegetresponse.go
@@ -200,6 +202,7 @@ pkg/models/shared/connectorservicerotatecredentialresponse.go
 pkg/models/shared/connectorservicerotatecredentialrequest.go
 pkg/models/shared/connectorserviceupdateresponse.go
 pkg/models/shared/connectorserviceupdaterequest.go
+pkg/models/shared/oauth2authorizedas1.go
 pkg/models/shared/connectorserviceupdatedelegatedrequest.go
 pkg/models/shared/directoryservicecreateresponse.go
 pkg/models/shared/directoryview.go
@@ -278,8 +281,8 @@ pkg/models/shared/taskrevokesourcereview.go
 pkg/models/shared/taskrevokesourcerequest.go
 pkg/models/shared/taskrevokesourcenonusage.go
 pkg/models/shared/taskrevokesourceexpired.go
-pkg/models/shared/tasktypegrant.go
-pkg/models/shared/tasktypecertify.go
+pkg/models/shared/tasktypegrant1.go
+pkg/models/shared/tasktypecertify1.go
 pkg/models/shared/policyinstance.go
 pkg/models/shared/policystepinstance.go
 pkg/models/shared/provisioninstance.go
@@ -308,6 +311,8 @@ pkg/models/shared/taskserviceactionresponse.go
 pkg/models/shared/taskactionsserviceescalatetoemergencyaccessrequest.go
 pkg/models/shared/tasksearchresponse.go
 pkg/models/shared/tasksearchrequest.go
+pkg/models/shared/tasktypegrant.go
+pkg/models/shared/tasktypecertify.go
 pkg/models/shared/taskref.go
 pkg/models/shared/userservicegetresponse.go
 pkg/models/shared/userview.go
@@ -394,10 +399,13 @@ docs/models/operations/c1apiappv1appsdeleterequest.md
 docs/models/operations/c1apiappv1appsdeleteresponse.md
 docs/models/operations/c1apiappv1appsgetrequest.md
 docs/models/operations/c1apiappv1appsgetresponse.md
+docs/models/operations/c1apiappv1appslistrequest.md
 docs/models/operations/c1apiappv1appslistresponse.md
 docs/models/operations/c1apiappv1appsupdaterequest.md
 docs/models/operations/c1apiappv1appsupdateresponse.md
 docs/models/operations/c1apiauthv1authintrospectresponse.md
+docs/models/operations/c1apiappv1connectorservicecreaterequest.md
+docs/models/operations/c1apiappv1connectorservicecreateresponse.md
 docs/models/operations/c1apiappv1connectorservicecreatedelegatedrequest.md
 docs/models/operations/c1apiappv1connectorservicecreatedelegatedresponse.md
 docs/models/operations/c1apiappv1connectorservicedeleterequest.md
@@ -421,6 +429,7 @@ docs/models/operations/c1apidirectoryv1directoryservicedeleterequest.md
 docs/models/operations/c1apidirectoryv1directoryservicedeleteresponse.md
 docs/models/operations/c1apidirectoryv1directoryservicegetrequest.md
 docs/models/operations/c1apidirectoryv1directoryservicegetresponse.md
+docs/models/operations/c1apidirectoryv1directoryservicelistrequest.md
 docs/models/operations/c1apidirectoryv1directoryservicelistresponse.md
 docs/models/operations/c1apiiamv1personalclientservicecreateresponse.md
 docs/models/operations/c1apipolicyv1policiescreateresponse.md
@@ -428,6 +437,7 @@ docs/models/operations/c1apipolicyv1policiesdeleterequest.md
 docs/models/operations/c1apipolicyv1policiesdeleteresponse.md
 docs/models/operations/c1apipolicyv1policiesgetrequest.md
 docs/models/operations/c1apipolicyv1policiesgetresponse.md
+docs/models/operations/c1apipolicyv1policieslistrequest.md
 docs/models/operations/c1apipolicyv1policieslistresponse.md
 docs/models/operations/c1apipolicyv1policiesupdaterequest.md
 docs/models/operations/c1apipolicyv1policiesupdateresponse.md
@@ -454,6 +464,7 @@ docs/models/operations/c1apirequestcatalogv1requestcatalogmanagementserviceupdat
 docs/models/operations/c1apirequestcatalogv1requestcatalogsearchservicesearchentitlementsresponse.md
 docs/models/operations/c1apiiamv1rolesgetrequest.md
 docs/models/operations/c1apiiamv1rolesgetresponse.md
+docs/models/operations/c1apiiamv1roleslistrequest.md
 docs/models/operations/c1apiiamv1roleslistresponse.md
 docs/models/operations/c1apiiamv1rolesupdaterequest.md
 docs/models/operations/c1apiiamv1rolesupdateresponse.md
@@ -472,6 +483,7 @@ docs/models/operations/c1apitaskv1taskactionsserviceescalatetoemergencyaccessres
 docs/models/operations/c1apitaskv1tasksearchservicesearchresponse.md
 docs/models/operations/c1apiuserv1userservicegetrequest.md
 docs/models/operations/c1apiuserv1userservicegetresponse.md
+docs/models/operations/c1apiuserv1userservicelistrequest.md
 docs/models/operations/c1apiuserv1userservicelistresponse.md
 docs/models/operations/c1apiuserv1usersearchsearchresponse.md
 docs/models/shared/appentitlementsearchservicesearchresponse.md
@@ -555,8 +567,9 @@ docs/models/shared/connector.md
 docs/models/shared/oauth2authorizedas.md
 docs/models/shared/connectorstatusstatus.md
 docs/models/shared/connectorstatus.md
-docs/models/shared/connectorservicecreatedelegatedrequest.md
+docs/models/shared/connectorservicecreaterequest.md
 docs/models/shared/connectorexpandmask.md
+docs/models/shared/connectorservicecreatedelegatedrequest.md
 docs/models/shared/connectorservicedeleteresponse.md
 docs/models/shared/connectorservicedeleterequest.md
 docs/models/shared/connectorservicegetresponse.md
@@ -569,6 +582,7 @@ docs/models/shared/connectorservicerotatecredentialresponse.md
 docs/models/shared/connectorservicerotatecredentialrequest.md
 docs/models/shared/connectorserviceupdateresponse.md
 docs/models/shared/connectorserviceupdaterequestinput.md
+docs/models/shared/oauth2authorizedas1.md
 docs/models/shared/connectorserviceupdatedelegatedrequestinput.md
 docs/models/shared/directoryservicecreateresponse.md
 docs/models/shared/directoryview.md
@@ -656,7 +670,9 @@ docs/models/shared/taskstate.md
 docs/models/shared/task.md
 docs/models/shared/externalrefexternalrefsource.md
 docs/models/shared/externalref.md
+docs/models/shared/tasktypeinput.md
 docs/models/shared/tasktype.md
+docs/models/shared/tasktyperevokeinput.md
 docs/models/shared/tasktyperevokeoutcome.md
 docs/models/shared/tasktyperevoke.md
 docs/models/shared/taskrevokesource.md
@@ -665,9 +681,9 @@ docs/models/shared/taskrevokesourcerequest.md
 docs/models/shared/taskrevokesourcenonusage.md
 docs/models/shared/taskrevokesourceexpired.md
 docs/models/shared/tasktypegrantoutcome.md
-docs/models/shared/tasktypegrant.md
+docs/models/shared/tasktypegrant1.md
 docs/models/shared/tasktypecertifyoutcome.md
-docs/models/shared/tasktypecertify.md
+docs/models/shared/tasktypecertify1.md
 docs/models/shared/policyinstance.md
 docs/models/shared/policystepinstancestate.md
 docs/models/shared/policystepinstance.md
@@ -702,7 +718,9 @@ docs/models/shared/tasksearchrequestcurrentstep.md
 docs/models/shared/tasksearchrequestemergencystatus.md
 docs/models/shared/tasksearchrequestsortby.md
 docs/models/shared/tasksearchrequesttaskstates.md
-docs/models/shared/tasksearchrequest.md
+docs/models/shared/tasksearchrequestinput.md
+docs/models/shared/tasktypegrant.md
+docs/models/shared/tasktypecertify.md
 docs/models/shared/taskref.md
 docs/models/shared/userservicegetresponse.md
 docs/models/shared/userview.md

@@ -2,6 +2,6 @@
 
 package shared
 
-// ManagerApproval1 -  The manager approval object provides configuration options for approval when the target of the approval is the manager of the user in the task.
+// ManagerApproval1 - The manager approval object provides configuration options for approval when the target of the approval is the manager of the user in the task.
 type ManagerApproval1 struct {
 }

@@ -4,9 +4,9 @@ package shared
 
 // AppResourceTypeView - The AppResourceTypeView message.
 type AppResourceTypeView struct {
-	// The AppResourceType message.
+	// The AppResourceType is referenced by an app entitlement defining its resource types. Commonly things like Group or Role.
 	AppResourceType *AppResourceType `json:"appResourceType,omitempty"`
-	// The appPath field.
+	// JSONPATH expression indicating the location of the App object in the  array
 	AppPath *string `json:"appPath,omitempty"`
 }
 

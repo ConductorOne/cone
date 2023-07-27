@@ -2,21 +2,21 @@
 
 package shared
 
-// CreateAppRequest - The CreateAppRequest message.
+// CreateAppRequest - The CreateAppRequest message is used to create a new app.
 type CreateAppRequest struct {
-	// The certifyPolicyId field.
+	// Creates the app with this certify policy.
 	CertifyPolicyID *string `json:"certifyPolicyId,omitempty"`
-	// The description field.
+	// Creates the app with this description.
 	Description *string `json:"description,omitempty"`
-	// The displayName field.
+	// Creates the app with this display name.
 	DisplayName *string `json:"displayName,omitempty"`
-	// The grantPolicyId field.
+	// Creates the app with this grant policy.
 	GrantPolicyID *string `json:"grantPolicyId,omitempty"`
-	// The monthlyCostUsd field.
+	// Creates the app with this monthly cost per seat.
 	MonthlyCostUsd *float64 `json:"monthlyCostUsd,omitempty"`
-	// The owners field.
+	// Creates the app with this array of owners.
 	Owners []string `json:"owners,omitempty"`
-	// The revokePolicyId field.
+	// Creates the app with this revoke policy.
 	RevokePolicyID *string `json:"revokePolicyId,omitempty"`
 }
 

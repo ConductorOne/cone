@@ -26,7 +26,7 @@ func newRequestCatalogManagement(sdkConfig sdkConfiguration) *requestCatalogMana
 }
 
 // AddAccessEntitlements - Add Access Entitlements
-// Invokes the c1.api.requestcatalog.v1.RequestCatalogManagementService.AddAccessEntitlements method.
+// Add visibility bindings (access entitlements) to a catalog.
 func (s *requestCatalogManagement) AddAccessEntitlements(ctx context.Context, request operations.C1APIRequestcatalogV1RequestCatalogManagementServiceAddAccessEntitlementsRequest) (*operations.C1APIRequestcatalogV1RequestCatalogManagementServiceAddAccessEntitlementsResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/api/v1/catalogs/{catalog_id}/visibility_bindings", request, nil)
@@ -91,7 +91,7 @@ func (s *requestCatalogManagement) AddAccessEntitlements(ctx context.Context, re
 }
 
 // AddAppEntitlements - Add App Entitlements
-// Invokes the c1.api.requestcatalog.v1.RequestCatalogManagementService.AddAppEntitlements method.
+// Add requestable entitlements to a catalog.
 func (s *requestCatalogManagement) AddAppEntitlements(ctx context.Context, request operations.C1APIRequestcatalogV1RequestCatalogManagementServiceAddAppEntitlementsRequest) (*operations.C1APIRequestcatalogV1RequestCatalogManagementServiceAddAppEntitlementsResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/api/v1/catalogs/{catalog_id}/requestable_entries", request, nil)
@@ -156,7 +156,7 @@ func (s *requestCatalogManagement) AddAppEntitlements(ctx context.Context, reque
 }
 
 // Create - Create
-// Invokes the c1.api.requestcatalog.v1.RequestCatalogManagementService.Create method.
+// Creates a new request catalog.
 func (s *requestCatalogManagement) Create(ctx context.Context, request shared.RequestCatalogManagementServiceCreateRequest) (*operations.C1APIRequestcatalogV1RequestCatalogManagementServiceCreateResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/api/v1/catalogs"
@@ -218,7 +218,7 @@ func (s *requestCatalogManagement) Create(ctx context.Context, request shared.Re
 }
 
 // Delete - Delete
-// Invokes the c1.api.requestcatalog.v1.RequestCatalogManagementService.Delete method.
+// Delete a catalog.
 func (s *requestCatalogManagement) Delete(ctx context.Context, request operations.C1APIRequestcatalogV1RequestCatalogManagementServiceDeleteRequest) (*operations.C1APIRequestcatalogV1RequestCatalogManagementServiceDeleteResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/api/v1/catalogs/{id}", request, nil)
@@ -283,7 +283,7 @@ func (s *requestCatalogManagement) Delete(ctx context.Context, request operation
 }
 
 // Get - Get
-// Invokes the c1.api.requestcatalog.v1.RequestCatalogManagementService.Get method.
+// Get a catalog.
 func (s *requestCatalogManagement) Get(ctx context.Context, request operations.C1APIRequestcatalogV1RequestCatalogManagementServiceGetRequest) (*operations.C1APIRequestcatalogV1RequestCatalogManagementServiceGetResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/api/v1/catalogs/{id}", request, nil)
@@ -341,7 +341,7 @@ func (s *requestCatalogManagement) Get(ctx context.Context, request operations.C
 }
 
 // ListEntitlementsForAccess - List Entitlements For Access
-// Invokes the c1.api.requestcatalog.v1.RequestCatalogManagementService.ListEntitlementsForAccess method.
+// List visibility bindings (access entitlements) for a catalog.
 func (s *requestCatalogManagement) ListEntitlementsForAccess(ctx context.Context, request operations.C1APIRequestcatalogV1RequestCatalogManagementServiceListEntitlementsForAccessRequest) (*operations.C1APIRequestcatalogV1RequestCatalogManagementServiceListEntitlementsForAccessResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/api/v1/catalogs/{catalog_id}/visibility_entitlements", request, nil)
@@ -355,6 +355,10 @@ func (s *requestCatalogManagement) ListEntitlementsForAccess(ctx context.Context
 	}
 	req.Header.Set("Accept", "application/json")
 	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s %s", s.sdkConfiguration.Language, s.sdkConfiguration.SDKVersion, s.sdkConfiguration.GenVersion, s.sdkConfiguration.OpenAPIDocVersion))
+
+	if err := utils.PopulateQueryParams(ctx, req, request, nil); err != nil {
+		return nil, fmt.Errorf("error populating query params: %w", err)
+	}
 
 	client := s.sdkConfiguration.SecurityClient
 
@@ -399,7 +403,7 @@ func (s *requestCatalogManagement) ListEntitlementsForAccess(ctx context.Context
 }
 
 // ListEntitlementsPerCatalog - List Entitlements Per Catalog
-// Invokes the c1.api.requestcatalog.v1.RequestCatalogManagementService.ListEntitlementsPerCatalog method.
+// List entitlements in a catalog that are requestable.
 func (s *requestCatalogManagement) ListEntitlementsPerCatalog(ctx context.Context, request operations.C1APIRequestcatalogV1RequestCatalogManagementServiceListEntitlementsPerCatalogRequest) (*operations.C1APIRequestcatalogV1RequestCatalogManagementServiceListEntitlementsPerCatalogResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/api/v1/catalogs/{catalog_id}/requestable_entitlements", request, nil)
@@ -413,6 +417,10 @@ func (s *requestCatalogManagement) ListEntitlementsPerCatalog(ctx context.Contex
 	}
 	req.Header.Set("Accept", "application/json")
 	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s %s", s.sdkConfiguration.Language, s.sdkConfiguration.SDKVersion, s.sdkConfiguration.GenVersion, s.sdkConfiguration.OpenAPIDocVersion))
+
+	if err := utils.PopulateQueryParams(ctx, req, request, nil); err != nil {
+		return nil, fmt.Errorf("error populating query params: %w", err)
+	}
 
 	client := s.sdkConfiguration.SecurityClient
 
@@ -457,7 +465,7 @@ func (s *requestCatalogManagement) ListEntitlementsPerCatalog(ctx context.Contex
 }
 
 // RemoveAccessEntitlements - Remove Access Entitlements
-// Invokes the c1.api.requestcatalog.v1.RequestCatalogManagementService.RemoveAccessEntitlements method.
+// Remove visibility bindings (access entitlements) to a catalog.
 func (s *requestCatalogManagement) RemoveAccessEntitlements(ctx context.Context, request operations.C1APIRequestcatalogV1RequestCatalogManagementServiceRemoveAccessEntitlementsRequest) (*operations.C1APIRequestcatalogV1RequestCatalogManagementServiceRemoveAccessEntitlementsResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/api/v1/catalogs/{catalog_id}/visibility_bindings", request, nil)
@@ -522,7 +530,7 @@ func (s *requestCatalogManagement) RemoveAccessEntitlements(ctx context.Context,
 }
 
 // RemoveAppEntitlements - Remove App Entitlements
-// Invokes the c1.api.requestcatalog.v1.RequestCatalogManagementService.RemoveAppEntitlements method.
+// Remove requestable entitlements from a catalog.
 func (s *requestCatalogManagement) RemoveAppEntitlements(ctx context.Context, request operations.C1APIRequestcatalogV1RequestCatalogManagementServiceRemoveAppEntitlementsRequest) (*operations.C1APIRequestcatalogV1RequestCatalogManagementServiceRemoveAppEntitlementsResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/api/v1/catalogs/{catalog_id}/requestable_entries", request, nil)
@@ -587,7 +595,7 @@ func (s *requestCatalogManagement) RemoveAppEntitlements(ctx context.Context, re
 }
 
 // Update - Update
-// Invokes the c1.api.requestcatalog.v1.RequestCatalogManagementService.Update method.
+// Update a catalog.
 func (s *requestCatalogManagement) Update(ctx context.Context, request operations.C1APIRequestcatalogV1RequestCatalogManagementServiceUpdateRequest) (*operations.C1APIRequestcatalogV1RequestCatalogManagementServiceUpdateResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/api/v1/catalogs/{id}", request, nil)

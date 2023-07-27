@@ -26,7 +26,7 @@ func newPersonalClient(sdkConfig sdkConfiguration) *personalClient {
 }
 
 // Create - Create
-// Invokes the c1.api.iam.v1.PersonalClientService.Create method.
+// Create creates a new PersonalClient object for the current User.
 func (s *personalClient) Create(ctx context.Context, request shared.PersonalClientServiceCreateRequest) (*operations.C1APIIamV1PersonalClientServiceCreateResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/api/v1/iam/personal_clients"

@@ -2,13 +2,13 @@
 
 package shared
 
-// AppResourceView - The AppResourceView message.
+// AppResourceView - The app resource view returns an app resource with paths for items in the expand mask filled in when this response is returned and a request expand mask has "*" or "app_id" or "resource_type_id".
 type AppResourceView struct {
-	// The AppResource message.
+	// The app resource message is a single resource that can have entitlements.
 	AppResource *AppResource `json:"appResource,omitempty"`
-	// The appPath field.
+	// JSONPATH expression indicating the location of the App object in the array
 	AppPath *string `json:"appPath,omitempty"`
-	// The resourceTypePath field.
+	// JSONPATH expression indicating the location of the Resource Type object in the array
 	ResourceTypePath *string `json:"resourceTypePath,omitempty"`
 }
 

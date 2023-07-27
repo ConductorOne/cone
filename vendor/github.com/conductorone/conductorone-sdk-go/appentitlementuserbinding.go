@@ -25,7 +25,7 @@ func newAppEntitlementUserBinding(sdkConfig sdkConfiguration) *appEntitlementUse
 }
 
 // ListAppUsersForIdentityWithGrant - List App Users For Identity With Grant
-// Invokes the c1.api.app.v1.AppEntitlementUserBindingService.ListAppUsersForIdentityWithGrant method.
+// Returns a list of app users for the identity in the app. If that app user also has a grant to the entitlement from the request, data about the grant is also returned. It will always return ALL app users for this identity, but only SOME may have grant data.
 func (s *appEntitlementUserBinding) ListAppUsersForIdentityWithGrant(ctx context.Context, request operations.C1APIAppV1AppEntitlementUserBindingServiceListAppUsersForIdentityWithGrantRequest) (*operations.C1APIAppV1AppEntitlementUserBindingServiceListAppUsersForIdentityWithGrantResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/api/v1/apps/{app_id}/entitlements/{app_entitlement_id}/users/{identity_user_id}/grants", request, nil)

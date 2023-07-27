@@ -4,9 +4,9 @@ package shared
 
 // DirectoryServiceCreateResponse - The DirectoryServiceCreateResponse message.
 type DirectoryServiceCreateResponse struct {
-	// The DirectoryView message.
+	// The directory view contains a directory and an app_path which is a JSONPATH set to the location in the expand mask that the expanded app will live if requested by the expander.
 	DirectoryView *DirectoryView `json:"directoryView,omitempty"`
-	// The expanded field.
+	// List of serialized related objects.
 	Expanded []map[string]interface{} `json:"expanded,omitempty"`
 }
 

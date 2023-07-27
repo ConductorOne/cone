@@ -2,11 +2,13 @@
 
 package shared
 
-// DirectoryServiceGetResponse - The DirectoryServiceGetResponse message.
+// DirectoryServiceGetResponse - The Directory Service Get Response returns a directory view with a directory and JSONPATHs indicating the
+//
+//	location in the expanded array that items are expanded as indicated by the expand mask in the request.
 type DirectoryServiceGetResponse struct {
-	// The DirectoryView message.
+	// The directory view contains a directory and an app_path which is a JSONPATH set to the location in the expand mask that the expanded app will live if requested by the expander.
 	DirectoryView *DirectoryView `json:"directoryView,omitempty"`
-	// The expanded field.
+	// List of serialized related objects.
 	Expanded []map[string]interface{} `json:"expanded,omitempty"`
 }
 

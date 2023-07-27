@@ -26,7 +26,7 @@ func newApps(sdkConfig sdkConfiguration) *apps {
 }
 
 // Create - Create
-// Invokes the c1.api.app.v1.Apps.Create method.
+// Create a new app.
 func (s *apps) Create(ctx context.Context, request shared.CreateAppRequest) (*operations.C1APIAppV1AppsCreateResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/api/v1/apps"
@@ -88,7 +88,7 @@ func (s *apps) Create(ctx context.Context, request shared.CreateAppRequest) (*op
 }
 
 // Delete - Delete
-// Invokes the c1.api.app.v1.Apps.Delete method.
+// Delete an app.
 func (s *apps) Delete(ctx context.Context, request operations.C1APIAppV1AppsDeleteRequest) (*operations.C1APIAppV1AppsDeleteResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/api/v1/apps/{id}", request, nil)
@@ -153,7 +153,7 @@ func (s *apps) Delete(ctx context.Context, request operations.C1APIAppV1AppsDele
 }
 
 // Get - Get
-// Invokes the c1.api.app.v1.Apps.Get method.
+// Get an app by ID.
 func (s *apps) Get(ctx context.Context, request operations.C1APIAppV1AppsGetRequest) (*operations.C1APIAppV1AppsGetResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/api/v1/apps/{id}", request, nil)
@@ -211,8 +211,8 @@ func (s *apps) Get(ctx context.Context, request operations.C1APIAppV1AppsGetRequ
 }
 
 // List - List
-// Invokes the c1.api.app.v1.Apps.List method.
-func (s *apps) List(ctx context.Context) (*operations.C1APIAppV1AppsListResponse, error) {
+// List all apps.
+func (s *apps) List(ctx context.Context, request operations.C1APIAppV1AppsListRequest) (*operations.C1APIAppV1AppsListResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/api/v1/apps"
 
@@ -222,6 +222,10 @@ func (s *apps) List(ctx context.Context) (*operations.C1APIAppV1AppsListResponse
 	}
 	req.Header.Set("Accept", "application/json")
 	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s %s", s.sdkConfiguration.Language, s.sdkConfiguration.SDKVersion, s.sdkConfiguration.GenVersion, s.sdkConfiguration.OpenAPIDocVersion))
+
+	if err := utils.PopulateQueryParams(ctx, req, request, nil); err != nil {
+		return nil, fmt.Errorf("error populating query params: %w", err)
+	}
 
 	client := s.sdkConfiguration.SecurityClient
 
@@ -266,7 +270,7 @@ func (s *apps) List(ctx context.Context) (*operations.C1APIAppV1AppsListResponse
 }
 
 // Update - Update
-// Invokes the c1.api.app.v1.Apps.Update method.
+// Update an existing app.
 func (s *apps) Update(ctx context.Context, request operations.C1APIAppV1AppsUpdateRequest) (*operations.C1APIAppV1AppsUpdateResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/api/v1/apps/{id}", request, nil)

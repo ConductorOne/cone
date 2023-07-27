@@ -6,14 +6,12 @@ import (
 	"time"
 )
 
-// RestartAction -  The restart action describes the outcome of policy steps for when the task was restarted. This can be applied to multiple steps since restart skips all pending next steps.
+// RestartAction - The restart action describes the outcome of policy steps for when the task was restarted. This can be applied to multiple steps since restart skips all pending next steps.
 type RestartAction struct {
-	//  The step ID that was restarted. Potentially multiple "history" steps will reference this ID to indicate by what step they were restarted.
-	//
+	// The step ID that was restarted. Potentially multiple "history" steps will reference this ID to indicate by what step they were restarted.
 	OldPolicyStepID *string    `json:"oldPolicyStepId,omitempty"`
 	RestartedAt     *time.Time `json:"restartedAt,omitempty"`
-	//  The user that submitted the restart action.
-	//
+	// The user that submitted the restart action.
 	UserID *string `json:"userId,omitempty"`
 }
 

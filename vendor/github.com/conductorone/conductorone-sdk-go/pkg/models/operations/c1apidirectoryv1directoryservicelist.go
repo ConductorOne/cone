@@ -7,9 +7,28 @@ import (
 	"net/http"
 )
 
+type C1APIDirectoryV1DirectoryServiceListRequest struct {
+	PageSize  *float64 `queryParam:"style=form,explode=true,name=page_size"`
+	PageToken *string  `queryParam:"style=form,explode=true,name=page_token"`
+}
+
+func (o *C1APIDirectoryV1DirectoryServiceListRequest) GetPageSize() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.PageSize
+}
+
+func (o *C1APIDirectoryV1DirectoryServiceListRequest) GetPageToken() *string {
+	if o == nil {
+		return nil
+	}
+	return o.PageToken
+}
+
 type C1APIDirectoryV1DirectoryServiceListResponse struct {
 	ContentType string
-	// Successful response
+	// The DirectoryServiceListResponse message contains a list of results and a nextPageToken if applicable.
 	DirectoryServiceListResponse *shared.DirectoryServiceListResponse
 	StatusCode                   int
 	RawResponse                  *http.Response

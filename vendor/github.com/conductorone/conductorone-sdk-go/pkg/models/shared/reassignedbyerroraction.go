@@ -6,20 +6,16 @@ import (
 	"time"
 )
 
-// ReassignedByErrorAction -  The ReassignedByErrorAction object describes the outcome of a policy step that has been reassigned because it had an error provisioning.
+// ReassignedByErrorAction - The ReassignedByErrorAction object describes the outcome of a policy step that has been reassigned because it had an error provisioning.
 type ReassignedByErrorAction struct {
-	//  The description of the error with more details on why this was reassigned.
-	//
+	// The description of the error with more details on why this was reassigned.
 	Description *string `json:"description,omitempty"`
-	//  Additional information about the error, like http status codes or error messages from SDKs.
-	//
+	// Additional information about the error, like http status codes or error messages from SDKs.
 	ErrorCode *string `json:"errorCode,omitempty"`
-	//  The UserID of the user who reassigned this due to an error. This will exclusively be the System's UserID.
-	//
+	// The UserID of the user who reassigned this due to an error. This will exclusively be the System's UserID.
 	ErrorUserID *string    `json:"errorUserId,omitempty"`
 	ErroredAt   *time.Time `json:"erroredAt,omitempty"`
-	//  The ID of the policy step that was created by this reassignment.
-	//
+	// The ID of the policy step that was created by this reassignment.
 	NewPolicyStepID *string    `json:"newPolicyStepId,omitempty"`
 	ReassignedAt    *time.Time `json:"reassignedAt,omitempty"`
 }

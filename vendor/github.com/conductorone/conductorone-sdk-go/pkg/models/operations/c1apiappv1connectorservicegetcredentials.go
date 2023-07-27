@@ -35,7 +35,7 @@ func (o *C1APIAppV1ConnectorServiceGetCredentialsRequest) GetID() string {
 }
 
 type C1APIAppV1ConnectorServiceGetCredentialsResponse struct {
-	// Successful response
+	// ConnectorServiceGetCredentialsResponse is the response returned by the get method.
 	ConnectorServiceGetCredentialsResponse *shared.ConnectorServiceGetCredentialsResponse
 	ContentType                            string
 	StatusCode                             int

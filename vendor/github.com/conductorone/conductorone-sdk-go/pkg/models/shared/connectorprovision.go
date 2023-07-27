@@ -2,6 +2,6 @@
 
 package shared
 
-// ConnectorProvision -  Indicates that a connector should perform the provisioning. This object has no fields.
+// ConnectorProvision - Indicates that a connector should perform the provisioning. This object has no fields.
 type ConnectorProvision struct {
 }

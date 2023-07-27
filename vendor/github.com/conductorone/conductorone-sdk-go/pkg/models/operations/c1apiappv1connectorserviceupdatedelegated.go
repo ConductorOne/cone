@@ -35,7 +35,7 @@ func (o *C1APIAppV1ConnectorServiceUpdateDelegatedRequest) GetConnectorID() stri
 }
 
 type C1APIAppV1ConnectorServiceUpdateDelegatedResponse struct {
-	// Successful response
+	// ConnectorServiceUpdateResponse is the response returned by the update method.
 	ConnectorServiceUpdateResponse *shared.ConnectorServiceUpdateResponse
 	ContentType                    string
 	StatusCode                     int

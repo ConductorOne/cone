@@ -4,15 +4,15 @@ package shared
 
 // FacetRange - The FacetRange message.
 type FacetRange struct {
-	// The count field.
+	// The count of items in the range.
 	Count *string `json:"count,omitempty"`
-	// The displayName field.
+	// The display name of the range.
 	DisplayName *string `json:"displayName,omitempty"`
-	// The from field.
+	// The starting value of the range.
 	From *string `json:"from,omitempty"`
-	// The iconUrl field.
+	// The icon of the range.
 	IconURL *string `json:"iconUrl,omitempty"`
-	// The to field.
+	// The ending value of the range.
 	To *string `json:"to,omitempty"`
 }
 

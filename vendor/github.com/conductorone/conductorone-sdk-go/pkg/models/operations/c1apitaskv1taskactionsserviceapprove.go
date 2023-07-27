@@ -30,7 +30,7 @@ type C1APITaskV1TaskActionsServiceApproveResponse struct {
 	ContentType string
 	StatusCode  int
 	RawResponse *http.Response
-	// Successful response
+	// The TaskActionsServiceApproveResponse returns a task view with paths indicating the location of expanded items in the array.
 	TaskActionsServiceApproveResponse *shared.TaskActionsServiceApproveResponse
 }
 

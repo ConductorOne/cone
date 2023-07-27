@@ -2,11 +2,11 @@
 
 package shared
 
-// TaskRevokeSourceReview - The TaskRevokeSourceReview message.
+// TaskRevokeSourceReview - The TaskRevokeSourceReview message tracks which access review was the source of the specificed revoke ticket.
 type TaskRevokeSourceReview struct {
-	// The accessReviewId field.
+	// The ID of the access review associated with the revoke task.
 	AccessReviewID *string `json:"accessReviewId,omitempty"`
-	// The certTicketId field.
+	// The ID of the certify ticket that was denied and created this revoke task.
 	CertTicketID *string `json:"certTicketId,omitempty"`
 }
 

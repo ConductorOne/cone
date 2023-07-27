@@ -28,7 +28,7 @@ func (o *C1APIAppV1AppsDeleteRequest) GetID() string {
 
 type C1APIAppV1AppsDeleteResponse struct {
 	ContentType string
-	// Successful response
+	// Empty response body. Status code indicates success.
 	DeleteAppResponse *shared.DeleteAppResponse
 	StatusCode        int
 	RawResponse       *http.Response

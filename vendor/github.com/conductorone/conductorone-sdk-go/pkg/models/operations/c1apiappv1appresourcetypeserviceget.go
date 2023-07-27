@@ -27,7 +27,8 @@ func (o *C1APIAppV1AppResourceTypeServiceGetRequest) GetID() string {
 }
 
 type C1APIAppV1AppResourceTypeServiceGetResponse struct {
-	// Successful response
+	// The AppResourceTypeServiceGetResponse contains an expanded array containing the expanded values indicated by the expand mask
+	//  in the request and an app resource type view containing the resource type and JSONPATHs indicating which objects are where in the expand mask.
 	AppResourceTypeServiceGetResponse *shared.AppResourceTypeServiceGetResponse
 	ContentType                       string
 	StatusCode                        int

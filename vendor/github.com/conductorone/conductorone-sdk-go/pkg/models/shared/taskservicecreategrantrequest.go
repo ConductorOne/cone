@@ -2,23 +2,22 @@
 
 package shared
 
-// TaskServiceCreateGrantRequest - The TaskServiceCreateGrantRequest message.
+// TaskServiceCreateGrantRequest - Create a grant task.
 type TaskServiceCreateGrantRequest struct {
-	//  The task expand mask is an array of strings that specifes the related objects the requester wishes to have returned when making a request where the expand mask is part of the input. Use '*' to view all possible responses.
-	//
+	// The task expand mask is an array of strings that specifes the related objects the requester wishes to have returned when making a request where the expand mask is part of the input. Use '*' to view all possible responses.
 	TaskExpandMask *TaskExpandMask `json:"expandMask,omitempty"`
-	// The appEntitlementId field.
-	AppEntitlementID *string `json:"appEntitlementId,omitempty"`
-	// The appId field.
-	AppID *string `json:"appId,omitempty"`
-	// The appUserId field.
+	// The ID of the app entitlement to grant access to.
+	AppEntitlementID string `json:"appEntitlementId"`
+	// The ID of the app that is associated with the entitlement.
+	AppID string `json:"appId"`
+	// The ID of the app user to grant access for. This field and identityUserId cannot both be set for a given request.
 	AppUserID *string `json:"appUserId,omitempty"`
-	// The description field.
+	// The description of the request.
 	Description *string `json:"description,omitempty"`
-	// The emergencyAccess field.
+	// Boolean stating whether or not the task is marked as emergency access.
 	EmergencyAccess *bool   `json:"emergencyAccess,omitempty"`
 	GrantDuration   *string `json:"grantDuration,omitempty"`
-	// The identityUserId field.
+	// The ID of the user associated with the app user we are granting access for. This field cannot be set if appUserID is also set.
 	IdentityUserID *string `json:"identityUserId,omitempty"`
 }
 
@@ -29,16 +28,16 @@ func (o *TaskServiceCreateGrantRequest) GetTaskExpandMask() *TaskExpandMask {
 	return o.TaskExpandMask
 }
 
-func (o *TaskServiceCreateGrantRequest) GetAppEntitlementID() *string {
+func (o *TaskServiceCreateGrantRequest) GetAppEntitlementID() string {
 	if o == nil {
-		return nil
+		return ""
 	}
 	return o.AppEntitlementID
 }
 
-func (o *TaskServiceCreateGrantRequest) GetAppID() *string {
+func (o *TaskServiceCreateGrantRequest) GetAppID() string {
 	if o == nil {
-		return nil
+		return ""
 	}
 	return o.AppID
 }

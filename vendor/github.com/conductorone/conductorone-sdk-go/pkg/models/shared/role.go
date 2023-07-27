@@ -6,20 +6,14 @@ import (
 	"time"
 )
 
-// RoleInput - The Role message.
+// RoleInput - Role is a role that can be assigned to a user in ConductorOne.
 type RoleInput struct {
-	// The displayName field.
+	// The display name of the role.
 	DisplayName *string `json:"displayName,omitempty"`
-	// The id field.
-	ID *string `json:"id,omitempty"`
-	// The name field.
-	Name *string `json:"name,omitempty"`
-	// The permissions field.
+	// The list of permissions this role has.
 	Permissions []string `json:"permissions,omitempty"`
-	// The serviceRoles field.
+	// The list of serviceRoles that this role has.
 	ServiceRoles []string `json:"serviceRoles,omitempty"`
-	// The systemBuiltin field.
-	SystemBuiltin *bool `json:"systemBuiltin,omitempty"`
 }
 
 func (o *RoleInput) GetDisplayName() *string {
@@ -27,20 +21,6 @@ func (o *RoleInput) GetDisplayName() *string {
 		return nil
 	}
 	return o.DisplayName
-}
-
-func (o *RoleInput) GetID() *string {
-	if o == nil {
-		return nil
-	}
-	return o.ID
-}
-
-func (o *RoleInput) GetName() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Name
 }
 
 func (o *RoleInput) GetPermissions() []string {
@@ -57,28 +37,21 @@ func (o *RoleInput) GetServiceRoles() []string {
 	return o.ServiceRoles
 }
 
-func (o *RoleInput) GetSystemBuiltin() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.SystemBuiltin
-}
-
-// Role - The Role message.
+// Role - Role is a role that can be assigned to a user in ConductorOne.
 type Role struct {
 	CreatedAt *time.Time `json:"createdAt,omitempty"`
 	DeletedAt *time.Time `json:"deletedAt,omitempty"`
-	// The displayName field.
+	// The display name of the role.
 	DisplayName *string `json:"displayName,omitempty"`
-	// The id field.
+	// The id of the role.
 	ID *string `json:"id,omitempty"`
-	// The name field.
+	// The internal name of the role.
 	Name *string `json:"name,omitempty"`
-	// The permissions field.
+	// The list of permissions this role has.
 	Permissions []string `json:"permissions,omitempty"`
-	// The serviceRoles field.
+	// The list of serviceRoles that this role has.
 	ServiceRoles []string `json:"serviceRoles,omitempty"`
-	// The systemBuiltin field.
+	// The system builtin field. If this field is set, the role is not editable.
 	SystemBuiltin *bool      `json:"systemBuiltin,omitempty"`
 	UpdatedAt     *time.Time `json:"updatedAt,omitempty"`
 }

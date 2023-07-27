@@ -2,17 +2,17 @@
 
 package shared
 
-// AppUsageControls - The AppUsageControls message.
+// AppUsageControls - The AppUsageControls object describes some peripheral configuration for an app.
 type AppUsageControls struct {
-	// The appId field.
+	// The app that this object belongs to.
 	AppID *string `json:"appId,omitempty"`
-	// The notify field.
+	// Whether or not to notify some if they have access to the app, but has not used it within a configurable amount of time.
 	Notify *bool `json:"notify,omitempty"`
-	// The notifyAfterDays field.
+	// The duration in days after which we notify users of nonusage.
 	NotifyAfterDays *float64 `json:"notifyAfterDays,omitempty"`
-	// The revoke field.
+	// Whether or not to revoke a grant if they have access to the app, but has not used it within a configurable amount of time.
 	Revoke *bool `json:"revoke,omitempty"`
-	// The revokeAfterDays field.
+	// The duration in days after which we revoke users that have not used that grant.
 	RevokeAfterDays *float64 `json:"revokeAfterDays,omitempty"`
 }
 

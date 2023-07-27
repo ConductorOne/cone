@@ -20,7 +20,7 @@ func (o *C1APIIamV1RolesGetRequest) GetRoleID() string {
 
 type C1APIIamV1RolesGetResponse struct {
 	ContentType string
-	// Successful response
+	// The GetRolesResponse message contains the retrieved role.
 	GetRolesResponse *shared.GetRolesResponse
 	StatusCode       int
 	RawResponse      *http.Response

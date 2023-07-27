@@ -6,37 +6,37 @@ import (
 	"time"
 )
 
-// App - The App message.
+// App - The App object provides all of the details for an app, as well as some configuration.
 type App struct {
-	// The appAccountId field.
+	// The ID of the Account named by AccountName.
 	AppAccountID *string `json:"appAccountId,omitempty"`
-	// The appAccountName field.
+	// The AccountName of the app. For example, AWS is AccountID, Github is Org Name, and Okta is Okta Subdomain.
 	AppAccountName *string `json:"appAccountName,omitempty"`
-	// The certifyPolicyId field.
+	// The ID of the Certify Policy associated with this App.
 	CertifyPolicyID *string    `json:"certifyPolicyId,omitempty"`
 	CreatedAt       *time.Time `json:"createdAt,omitempty"`
 	DeletedAt       *time.Time `json:"deletedAt,omitempty"`
-	// The description field.
+	// The app's description.
 	Description *string `json:"description,omitempty"`
-	// The displayName field.
+	// The app's display name.
 	DisplayName *string `json:"displayName,omitempty"`
 	FieldMask   *string `json:"fieldMask,omitempty"`
-	// The grantPolicyId field.
+	// The ID of the Grant Policy associated with this App.
 	GrantPolicyID *string `json:"grantPolicyId,omitempty"`
-	// The iconUrl field.
+	// The URL of an icon to display for the app.
 	IconURL *string `json:"iconUrl,omitempty"`
-	// The id field.
+	// The ID of the app.
 	ID *string `json:"id,omitempty"`
-	// The logoUri field.
+	// The URL of a logo to display for the app.
 	LogoURI *string `json:"logoUri,omitempty"`
-	// The monthlyCostUsd field.
+	// The cost of an app per-seat, so that total cost can be calculated by the grant count.
 	MonthlyCostUsd *float64 `json:"monthlyCostUsd,omitempty"`
-	// The parentAppId field.
+	// The ID of the app that created this app, if any.
 	ParentAppID *string `json:"parentAppId,omitempty"`
-	// The revokePolicyId field.
+	// The ID of the Revoke Policy associated with this App.
 	RevokePolicyID *string    `json:"revokePolicyId,omitempty"`
 	UpdatedAt      *time.Time `json:"updatedAt,omitempty"`
-	// The userCount field.
+	// The number of users with grants to this app.
 	UserCount *string `json:"userCount,omitempty"`
 }
 
@@ -159,49 +159,22 @@ func (o *App) GetUserCount() *string {
 	return o.UserCount
 }
 
-// AppInput - The App message.
+// AppInput - The App object provides all of the details for an app, as well as some configuration.
 type AppInput struct {
-	// The appAccountId field.
-	AppAccountID *string `json:"appAccountId,omitempty"`
-	// The appAccountName field.
-	AppAccountName *string `json:"appAccountName,omitempty"`
-	// The certifyPolicyId field.
+	// The ID of the Certify Policy associated with this App.
 	CertifyPolicyID *string `json:"certifyPolicyId,omitempty"`
-	// The description field.
+	// The app's description.
 	Description *string `json:"description,omitempty"`
-	// The displayName field.
+	// The app's display name.
 	DisplayName *string `json:"displayName,omitempty"`
-	FieldMask   *string `json:"fieldMask,omitempty"`
-	// The grantPolicyId field.
+	// The ID of the Grant Policy associated with this App.
 	GrantPolicyID *string `json:"grantPolicyId,omitempty"`
-	// The iconUrl field.
+	// The URL of an icon to display for the app.
 	IconURL *string `json:"iconUrl,omitempty"`
-	// The id field.
-	ID *string `json:"id,omitempty"`
-	// The logoUri field.
-	LogoURI *string `json:"logoUri,omitempty"`
-	// The monthlyCostUsd field.
+	// The cost of an app per-seat, so that total cost can be calculated by the grant count.
 	MonthlyCostUsd *float64 `json:"monthlyCostUsd,omitempty"`
-	// The parentAppId field.
-	ParentAppID *string `json:"parentAppId,omitempty"`
-	// The revokePolicyId field.
+	// The ID of the Revoke Policy associated with this App.
 	RevokePolicyID *string `json:"revokePolicyId,omitempty"`
-	// The userCount field.
-	UserCount *string `json:"userCount,omitempty"`
-}
-
-func (o *AppInput) GetAppAccountID() *string {
-	if o == nil {
-		return nil
-	}
-	return o.AppAccountID
-}
-
-func (o *AppInput) GetAppAccountName() *string {
-	if o == nil {
-		return nil
-	}
-	return o.AppAccountName
 }
 
 func (o *AppInput) GetCertifyPolicyID() *string {
@@ -225,13 +198,6 @@ func (o *AppInput) GetDisplayName() *string {
 	return o.DisplayName
 }
 
-func (o *AppInput) GetFieldMask() *string {
-	if o == nil {
-		return nil
-	}
-	return o.FieldMask
-}
-
 func (o *AppInput) GetGrantPolicyID() *string {
 	if o == nil {
 		return nil
@@ -246,20 +212,6 @@ func (o *AppInput) GetIconURL() *string {
 	return o.IconURL
 }
 
-func (o *AppInput) GetID() *string {
-	if o == nil {
-		return nil
-	}
-	return o.ID
-}
-
-func (o *AppInput) GetLogoURI() *string {
-	if o == nil {
-		return nil
-	}
-	return o.LogoURI
-}
-
 func (o *AppInput) GetMonthlyCostUsd() *float64 {
 	if o == nil {
 		return nil
@@ -267,23 +219,9 @@ func (o *AppInput) GetMonthlyCostUsd() *float64 {
 	return o.MonthlyCostUsd
 }
 
-func (o *AppInput) GetParentAppID() *string {
-	if o == nil {
-		return nil
-	}
-	return o.ParentAppID
-}
-
 func (o *AppInput) GetRevokePolicyID() *string {
 	if o == nil {
 		return nil
 	}
 	return o.RevokePolicyID
-}
-
-func (o *AppInput) GetUserCount() *string {
-	if o == nil {
-		return nil
-	}
-	return o.UserCount
 }

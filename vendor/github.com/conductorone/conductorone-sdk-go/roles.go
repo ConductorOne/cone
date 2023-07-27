@@ -26,7 +26,7 @@ func newRoles(sdkConfig sdkConfiguration) *roles {
 }
 
 // Get - Get
-// Invokes the c1.api.iam.v1.Roles.Get method.
+// Get a role by id.
 func (s *roles) Get(ctx context.Context, request operations.C1APIIamV1RolesGetRequest) (*operations.C1APIIamV1RolesGetResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/api/v1/iam/roles/{role_id}", request, nil)
@@ -84,8 +84,8 @@ func (s *roles) Get(ctx context.Context, request operations.C1APIIamV1RolesGetRe
 }
 
 // List - List
-// Invokes the c1.api.iam.v1.Roles.List method.
-func (s *roles) List(ctx context.Context) (*operations.C1APIIamV1RolesListResponse, error) {
+// List all roles for the current user.
+func (s *roles) List(ctx context.Context, request operations.C1APIIamV1RolesListRequest) (*operations.C1APIIamV1RolesListResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/api/v1/iam/roles"
 
@@ -95,6 +95,10 @@ func (s *roles) List(ctx context.Context) (*operations.C1APIIamV1RolesListRespon
 	}
 	req.Header.Set("Accept", "application/json")
 	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s %s", s.sdkConfiguration.Language, s.sdkConfiguration.SDKVersion, s.sdkConfiguration.GenVersion, s.sdkConfiguration.OpenAPIDocVersion))
+
+	if err := utils.PopulateQueryParams(ctx, req, request, nil); err != nil {
+		return nil, fmt.Errorf("error populating query params: %w", err)
+	}
 
 	client := s.sdkConfiguration.SecurityClient
 
@@ -139,7 +143,7 @@ func (s *roles) List(ctx context.Context) (*operations.C1APIIamV1RolesListRespon
 }
 
 // Update - Update
-// Invokes the c1.api.iam.v1.Roles.Update method.
+// Update a role by passing a Role object.
 func (s *roles) Update(ctx context.Context, request operations.C1APIIamV1RolesUpdateRequest) (*operations.C1APIIamV1RolesUpdateResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/api/v1/iam/roles/{role_id}", request, nil)

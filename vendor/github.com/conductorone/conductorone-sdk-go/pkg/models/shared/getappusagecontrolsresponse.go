@@ -2,11 +2,11 @@
 
 package shared
 
-// GetAppUsageControlsResponse - The GetAppUsageControlsResponse message.
+// GetAppUsageControlsResponse - The GetAppUsageControlsResponse message contains the retrieved AppUsageControls object.
 type GetAppUsageControlsResponse struct {
-	// The AppUsageControls message.
+	// The AppUsageControls object describes some peripheral configuration for an app.
 	AppUsageControls *AppUsageControls `json:"appUsageControls,omitempty"`
-	// The hasUsageData field.
+	// HasUsageData is false if the access entitlement for this app has no usage data.
 	HasUsageData *bool `json:"hasUsageData,omitempty"`
 }
 

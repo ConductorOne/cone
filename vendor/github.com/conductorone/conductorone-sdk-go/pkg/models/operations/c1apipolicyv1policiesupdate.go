@@ -30,7 +30,7 @@ type C1APIPolicyV1PoliciesUpdateResponse struct {
 	ContentType string
 	StatusCode  int
 	RawResponse *http.Response
-	// Successful response
+	// The UpdatePolicyResponse message contains the updated policy object.
 	UpdatePolicyResponse *shared.UpdatePolicyResponse
 }
 

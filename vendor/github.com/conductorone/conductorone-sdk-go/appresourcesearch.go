@@ -26,7 +26,7 @@ func newAppResourceSearch(sdkConfig sdkConfiguration) *appResourceSearch {
 }
 
 // SearchAppResourceTypes - Search App Resource Types
-// Invokes the c1.api.app.v1.AppResourceSearch.SearchAppResourceTypes method.
+// Search app resources based on filters specified in the request body.
 func (s *appResourceSearch) SearchAppResourceTypes(ctx context.Context, request shared.SearchAppResourceTypesRequest) (*operations.C1APIAppV1AppResourceSearchSearchAppResourceTypesResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/api/v1/search/app_resource_types"

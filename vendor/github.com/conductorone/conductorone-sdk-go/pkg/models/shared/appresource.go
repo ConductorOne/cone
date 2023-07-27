@@ -6,23 +6,23 @@ import (
 	"time"
 )
 
-// AppResource - The AppResource message.
+// AppResource - The app resource message is a single resource that can have entitlements.
 type AppResource struct {
-	// The appId field.
+	// The app that this resource belongs to.
 	AppID *string `json:"appId,omitempty"`
-	// The appResourceTypeId field.
+	// The resource type that this resource is.
 	AppResourceTypeID *string    `json:"appResourceTypeId,omitempty"`
 	CreatedAt         *time.Time `json:"createdAt,omitempty"`
-	// The customDescription field.
+	// A custom description that can be set for a resource.
 	CustomDescription *string    `json:"customDescription,omitempty"`
 	DeletedAt         *time.Time `json:"deletedAt,omitempty"`
-	// The description field.
+	// The description set for the resource.
 	Description *string `json:"description,omitempty"`
-	// The displayName field.
+	// The display name for this resource.
 	DisplayName *string `json:"displayName,omitempty"`
-	// The grantCount field.
+	// The number of grants to this resource.
 	GrantCount *string `json:"grantCount,omitempty"`
-	// The id field.
+	// The id of the resource.
 	ID        *string    `json:"id,omitempty"`
 	UpdatedAt *time.Time `json:"updatedAt,omitempty"`
 }

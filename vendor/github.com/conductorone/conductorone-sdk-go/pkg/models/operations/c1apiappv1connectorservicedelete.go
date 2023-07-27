@@ -35,7 +35,7 @@ func (o *C1APIAppV1ConnectorServiceDeleteRequest) GetID() string {
 }
 
 type C1APIAppV1ConnectorServiceDeleteResponse struct {
-	// Successful response
+	// Empty response body. Status code indicates success.
 	ConnectorServiceDeleteResponse *shared.ConnectorServiceDeleteResponse
 	ContentType                    string
 	StatusCode                     int

@@ -7,6 +7,25 @@ import (
 	"net/http"
 )
 
+type C1APIPolicyV1PoliciesListRequest struct {
+	PageSize  *float64 `queryParam:"style=form,explode=true,name=page_size"`
+	PageToken *string  `queryParam:"style=form,explode=true,name=page_token"`
+}
+
+func (o *C1APIPolicyV1PoliciesListRequest) GetPageSize() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.PageSize
+}
+
+func (o *C1APIPolicyV1PoliciesListRequest) GetPageToken() *string {
+	if o == nil {
+		return nil
+	}
+	return o.PageToken
+}
+
 type C1APIPolicyV1PoliciesListResponse struct {
 	ContentType string
 	// Successful response

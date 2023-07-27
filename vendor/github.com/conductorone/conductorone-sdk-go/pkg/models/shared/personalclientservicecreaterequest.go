@@ -2,14 +2,14 @@
 
 package shared
 
-// PersonalClientServiceCreateRequest - The PersonalClientServiceCreateRequest message.
+// PersonalClientServiceCreateRequest - The PersonalClientServiceCreateRequest message contains the fields for creating a new personal client.
 type PersonalClientServiceCreateRequest struct {
-	// The allowSourceCidr field.
+	// A list of CIDRs to restrict this credential to.
 	AllowSourceCidr []string `json:"allowSourceCidr,omitempty"`
-	// The displayName field.
+	// The display name for the new personal client.
 	DisplayName *string `json:"displayName,omitempty"`
 	Expires     *string `json:"expires,omitempty"`
-	// The scopedRoles field.
+	// The list of roles to restrict the credential to.
 	ScopedRoles []string `json:"scopedRoles,omitempty"`
 }
 

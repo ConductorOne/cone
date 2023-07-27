@@ -11,7 +11,7 @@ import (
 func escalateTasksCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "escalate <task-id>",
-		Short: "Escalate a task  blah blah blah emergency access",
+		Short: "Escalate an access request task to emergency access",
 		RunE:  runEscalateTasks,
 		Args:  cobra.ExactArgs(1),
 	}

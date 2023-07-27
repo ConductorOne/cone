@@ -2,14 +2,13 @@
 
 package shared
 
-// TaskActionsServiceApproveResponse - The TaskActionsServiceApproveResponse message.
+// TaskActionsServiceApproveResponse - The TaskActionsServiceApproveResponse returns a task view with paths indicating the location of expanded items in the array.
 type TaskActionsServiceApproveResponse struct {
-	//  Contains a task and JSONPATH expressions that describe where in the expanded array related objects are located. This view can be used to display a fully-detailed dashboard of task information.
-	//
+	// Contains a task and JSONPATH expressions that describe where in the expanded array related objects are located. This view can be used to display a fully-detailed dashboard of task information.
 	TaskView *TaskView `json:"taskView,omitempty"`
-	// The expanded field.
+	// List of serialized related objects.
 	Expanded []map[string]interface{} `json:"expanded,omitempty"`
-	// The ticketActionId field.
+	// The ID of the ticket (task) approve action created by this request.
 	TicketActionID *string `json:"ticketActionId,omitempty"`
 }
 

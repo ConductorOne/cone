@@ -2,13 +2,11 @@
 
 package shared
 
-// DelegatedProvision -  This provision step indicates that we should delegate provisioning to the configuration of another app entitlement. This app entitlement does not have to be one from the same app, but MUST be configured as a proxy binding leading into this entitlement.
+// DelegatedProvision - This provision step indicates that we should delegate provisioning to the configuration of another app entitlement. This app entitlement does not have to be one from the same app, but MUST be configured as a proxy binding leading into this entitlement.
 type DelegatedProvision struct {
-	//  The AppID of the entitlement to delegate provisioning to.
-	//
+	// The AppID of the entitlement to delegate provisioning to.
 	AppID *string `json:"appId,omitempty"`
-	//  The ID of the entitlement we are delegating provisioning to.
-	//
+	// The ID of the entitlement we are delegating provisioning to.
 	EntitlementID *string `json:"entitlementId,omitempty"`
 }
 

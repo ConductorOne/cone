@@ -22,7 +22,7 @@ type C1APITaskV1TaskServiceGetResponse struct {
 	ContentType string
 	StatusCode  int
 	RawResponse *http.Response
-	// Successful response
+	// The TaskServiceGetResponse returns a task view which has a task including JSONPATHs to the expanded items in the expanded array.
 	TaskServiceGetResponse *shared.TaskServiceGetResponse
 }
 

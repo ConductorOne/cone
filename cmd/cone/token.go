@@ -59,7 +59,7 @@ func tokenRun(cmd *cobra.Command, args []string) error {
 
 	if v.GetBool(rawTokenFlag) {
 		//nolint:forbidigo // We want to raw-print the bearer if this flag is included
-		fmt.Println("Bearer " + token.AccessToken)
+		fmt.Println(tokenObj.AccessToken)
 		return nil
 	}
 

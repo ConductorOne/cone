@@ -26,7 +26,7 @@ const justificationInputTip = "You can add a justification using -j or --justifi
 
 func getCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "get <alias> \n  cone get --query <query> \n  cone get --app-id <app-id> --entitlement-id <entitlement-id>",
+		Use:   "get <alias> [flags]\n  cone get --query <query> [flags]\n  cone get --app-id <app-id> --entitlement-id <entitlement-id> [flags]",
 		Short: "Create an access request for an entitlement by alias",
 		RunE:  runGet,
 	}
@@ -37,7 +37,7 @@ func getCmd() *cobra.Command {
 
 func dropCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "drop",
+		Use:   "drop <alias> [flags]\n  cone drop --query <query> [flags]\n  cone drop --app-id <app-id> --entitlement-id <entitlement-id> [flags]",
 		Short: "Create a revoke access ticket for an entitlement by alias",
 		RunE:  runDrop,
 	}

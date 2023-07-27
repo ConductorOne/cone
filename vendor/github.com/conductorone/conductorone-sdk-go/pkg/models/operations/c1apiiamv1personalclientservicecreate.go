@@ -9,7 +9,7 @@ import (
 
 type C1APIIamV1PersonalClientServiceCreateResponse struct {
 	ContentType string
-	// Successful response
+	// The PersonalClientServiceCreateResponse message contains the created personal client and client secret.
 	PersonalClientServiceCreateResponse *shared.PersonalClientServiceCreateResponse
 	StatusCode                          int
 	RawResponse                         *http.Response

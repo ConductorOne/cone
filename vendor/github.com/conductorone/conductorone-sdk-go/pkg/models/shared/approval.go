@@ -12,35 +12,25 @@ package shared
 //   - self
 //   - entitlementOwners
 type Approval struct {
-	//  The AppGroupApproval object provides the configuration for setting a group as the approvers of an approval policy step.
-	//
+	// The AppGroupApproval object provides the configuration for setting a group as the approvers of an approval policy step.
 	AppGroupApproval *AppGroupApproval `json:"group,omitempty"`
-	//  App owner approval provides the configuration for an approval step when the app owner is the target.
-	//
+	// App owner approval provides the configuration for an approval step when the app owner is the target.
 	AppOwnerApproval *AppOwnerApproval `json:"appOwners,omitempty"`
-	//  The entitlement owner approval allows configuration of the approval step when the target approvers are the entitlement owners.
-	//
+	// The entitlement owner approval allows configuration of the approval step when the target approvers are the entitlement owners.
 	EntitlementOwnerApproval *EntitlementOwnerApproval `json:"entitlementOwners,omitempty"`
-	//  The manager approval object provides configuration options for approval when the target of the approval is the manager of the user in the task.
-	//
+	// The manager approval object provides configuration options for approval when the target of the approval is the manager of the user in the task.
 	ManagerApproval *ManagerApproval `json:"manager,omitempty"`
-	//  The self approval object describes the configuration of a policy step that needs to be approved by the target of the request.
-	//
+	// The self approval object describes the configuration of a policy step that needs to be approved by the target of the request.
 	SelfApproval *SelfApproval `json:"self,omitempty"`
-	//  The user approval object describes the approval configuration of a policy step that needs to be approved by a specific list of users.
-	//
+	// The user approval object describes the approval configuration of a policy step that needs to be approved by a specific list of users.
 	UserApproval *UserApproval `json:"users,omitempty"`
-	//  Configuration to allow reassignment by reviewers during this step.
-	//
+	// Configuration to allow reassignment by reviewers during this step.
 	AllowReassignment *bool `json:"allowReassignment,omitempty"`
-	//  A field indicating whether this step is assigned.
-	//
+	// A field indicating whether this step is assigned.
 	Assigned *bool `json:"assigned,omitempty"`
-	//  Configuration to require a reason when approving this step.
-	//
+	// Configuration to require a reason when approving this step.
 	RequireApprovalReason *bool `json:"requireApprovalReason,omitempty"`
-	//  Configuration to require a reason when reassigning this step.
-	//
+	// Configuration to require a reason when reassigning this step.
 	RequireReassignmentReason *bool `json:"requireReassignmentReason,omitempty"`
 }
 
@@ -124,23 +114,17 @@ func (o *Approval) GetRequireReassignmentReason() *bool {
 //   - self
 //   - entitlementOwners
 type ApprovalInput struct {
-	//  The AppGroupApproval object provides the configuration for setting a group as the approvers of an approval policy step.
-	//
+	// The AppGroupApproval object provides the configuration for setting a group as the approvers of an approval policy step.
 	AppGroupApproval *AppGroupApproval1 `json:"group,omitempty"`
-	//  App owner approval provides the configuration for an approval step when the app owner is the target.
-	//
+	// App owner approval provides the configuration for an approval step when the app owner is the target.
 	AppOwnerApproval *AppOwnerApproval1 `json:"appOwners,omitempty"`
-	//  The entitlement owner approval allows configuration of the approval step when the target approvers are the entitlement owners.
-	//
+	// The entitlement owner approval allows configuration of the approval step when the target approvers are the entitlement owners.
 	EntitlementOwnerApproval *EntitlementOwnerApproval1 `json:"entitlementOwners,omitempty"`
-	//  The manager approval object provides configuration options for approval when the target of the approval is the manager of the user in the task.
-	//
+	// The manager approval object provides configuration options for approval when the target of the approval is the manager of the user in the task.
 	ManagerApproval *ManagerApproval1 `json:"manager,omitempty"`
-	//  The self approval object describes the configuration of a policy step that needs to be approved by the target of the request.
-	//
+	// The self approval object describes the configuration of a policy step that needs to be approved by the target of the request.
 	SelfApproval *SelfApproval1 `json:"self,omitempty"`
-	//  The user approval object describes the approval configuration of a policy step that needs to be approved by a specific list of users.
-	//
+	// The user approval object describes the approval configuration of a policy step that needs to be approved by a specific list of users.
 	UserApproval *UserApproval1 `json:"users,omitempty"`
 }
 

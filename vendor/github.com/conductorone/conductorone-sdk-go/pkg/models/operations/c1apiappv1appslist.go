@@ -7,9 +7,28 @@ import (
 	"net/http"
 )
 
+type C1APIAppV1AppsListRequest struct {
+	PageSize  *float64 `queryParam:"style=form,explode=true,name=page_size"`
+	PageToken *string  `queryParam:"style=form,explode=true,name=page_token"`
+}
+
+func (o *C1APIAppV1AppsListRequest) GetPageSize() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.PageSize
+}
+
+func (o *C1APIAppV1AppsListRequest) GetPageToken() *string {
+	if o == nil {
+		return nil
+	}
+	return o.PageToken
+}
+
 type C1APIAppV1AppsListResponse struct {
 	ContentType string
-	// Successful response
+	// The ListAppsResponse message contains a list of results and a nextPageToken if applicable.
 	ListAppsResponse *shared.ListAppsResponse
 	StatusCode       int
 	RawResponse      *http.Response

@@ -2,17 +2,17 @@
 
 package shared
 
-// RequestCatalogManagementServiceCreateRequest - The RequestCatalogManagementServiceCreateRequest message.
+// RequestCatalogManagementServiceCreateRequest - Create a request catalog.
 type RequestCatalogManagementServiceCreateRequest struct {
-	// The RequestCatalogExpandMask message.
+	// The RequestCatalogExpandMask includes the paths in the catalog view to expand in the return value of this call.
 	RequestCatalogExpandMask *RequestCatalogExpandMask `json:"expandMask,omitempty"`
-	// The description field.
+	// The description of the new request catalog.
 	Description *string `json:"description,omitempty"`
-	// The displayName field.
+	// The display name of the new request catalog.
 	DisplayName *string `json:"displayName,omitempty"`
-	// The published field.
+	// Whether or not the new catalog should be created as published.
 	Published *bool `json:"published,omitempty"`
-	// The visibleToEveryone field.
+	// Whether or not the new catalog is visible to everyone by default.
 	VisibleToEveryone *bool `json:"visibleToEveryone,omitempty"`
 }
 

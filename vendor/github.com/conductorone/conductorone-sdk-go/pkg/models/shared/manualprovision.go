@@ -2,13 +2,11 @@
 
 package shared
 
-// ManualProvision -  Manual provisioning indicates that a human must intervene for the provisioning of this step.
+// ManualProvision - Manual provisioning indicates that a human must intervene for the provisioning of this step.
 type ManualProvision struct {
-	//  This field indicates a text body of instructions for the provisioner to indicate.
-	//
+	// This field indicates a text body of instructions for the provisioner to indicate.
 	Instructions *string `json:"instructions,omitempty"`
-	//  An array of users that are required to provision during this step.
-	//
+	// An array of users that are required to provision during this step.
 	UserIds []string `json:"userIds,omitempty"`
 }
 

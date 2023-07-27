@@ -8,7 +8,27 @@ import (
 	"time"
 )
 
-// TaskTypeRevokeOutcome - The outcome field.
+// TaskTypeRevokeInput - The TaskTypeRevoke message indicates that a task is a revoke task and all related details.
+type TaskTypeRevokeInput struct {
+	// The TaskRevokeSource message indicates the source of the revoke task is one of expired, nonUsage, request, or review.
+	//
+	// This message contains a oneof named origin. Only a single field of the following list may be set at a time:
+	//   - review
+	//   - request
+	//   - expired
+	//   - nonUsage
+	//
+	TaskRevokeSource *TaskRevokeSource `json:"source,omitempty"`
+}
+
+func (o *TaskTypeRevokeInput) GetTaskRevokeSource() *TaskRevokeSource {
+	if o == nil {
+		return nil
+	}
+	return o.TaskRevokeSource
+}
+
+// TaskTypeRevokeOutcome - The outcome of the revoke.
 type TaskTypeRevokeOutcome string
 
 const (
@@ -45,9 +65,9 @@ func (e *TaskTypeRevokeOutcome) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// TaskTypeRevoke - The TaskTypeRevoke message.
+// TaskTypeRevoke - The TaskTypeRevoke message indicates that a task is a revoke task and all related details.
 type TaskTypeRevoke struct {
-	// The TaskRevokeSource message.
+	// The TaskRevokeSource message indicates the source of the revoke task is one of expired, nonUsage, request, or review.
 	//
 	// This message contains a oneof named origin. Only a single field of the following list may be set at a time:
 	//   - review
@@ -56,15 +76,15 @@ type TaskTypeRevoke struct {
 	//   - nonUsage
 	//
 	TaskRevokeSource *TaskRevokeSource `json:"source,omitempty"`
-	// The appEntitlementId field.
+	// The ID of the app entitlement.
 	AppEntitlementID *string `json:"appEntitlementId,omitempty"`
-	// The appId field.
+	// The ID of the app.
 	AppID *string `json:"appId,omitempty"`
-	// The appUserId field.
+	// The ID of the app user.
 	AppUserID *string `json:"appUserId,omitempty"`
-	// The identityUserId field.
+	// The ID of the user.
 	IdentityUserID *string `json:"identityUserId,omitempty"`
-	// The outcome field.
+	// The outcome of the revoke.
 	Outcome     *TaskTypeRevokeOutcome `json:"outcome,omitempty"`
 	OutcomeTime *time.Time             `json:"outcomeTime,omitempty"`
 }

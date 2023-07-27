@@ -28,7 +28,7 @@ func (o *C1APIRequestcatalogV1RequestCatalogManagementServiceDeleteRequest) GetI
 
 type C1APIRequestcatalogV1RequestCatalogManagementServiceDeleteResponse struct {
 	ContentType string
-	// Successful response
+	// Empty response with a status code indicating success.
 	RequestCatalogManagementServiceDeleteResponse *shared.RequestCatalogManagementServiceDeleteResponse
 	StatusCode                                    int
 	RawResponse                                   *http.Response

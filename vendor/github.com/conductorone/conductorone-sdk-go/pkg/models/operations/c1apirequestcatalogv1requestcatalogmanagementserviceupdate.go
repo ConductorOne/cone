@@ -28,7 +28,7 @@ func (o *C1APIRequestcatalogV1RequestCatalogManagementServiceUpdateRequest) GetI
 
 type C1APIRequestcatalogV1RequestCatalogManagementServiceUpdateResponse struct {
 	ContentType string
-	// Successful response
+	// The request catalog management service get response returns a request catalog view with the expanded items in the expanded array indicated by the expand mask in the request.
 	RequestCatalogManagementServiceGetResponse *shared.RequestCatalogManagementServiceGetResponse
 	StatusCode                                 int
 	RawResponse                                *http.Response

@@ -19,8 +19,7 @@ type PolicyStep struct {
 	//   - entitlementOwners
 	//
 	Approval *Approval `json:"approval,omitempty"`
-	//  The provision step references a provision policy for this step.
-	//
+	// The provision step references a provision policy for this step.
 	Provision *Provision `json:"provision,omitempty"`
 }
 
@@ -55,8 +54,7 @@ type PolicyStepInput struct {
 	//   - entitlementOwners
 	//
 	Approval *ApprovalInput `json:"approval,omitempty"`
-	//  The provision step references a provision policy for this step.
-	//
+	// The provision step references a provision policy for this step.
 	Provision *Provision `json:"provision,omitempty"`
 }
 

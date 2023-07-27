@@ -26,7 +26,7 @@ func newRequestCatalogSearch(sdkConfig sdkConfiguration) *requestCatalogSearch {
 }
 
 // SearchEntitlements - Search Entitlements
-// Invokes the c1.api.requestcatalog.v1.RequestCatalogSearchService.SearchEntitlements method.
+// Search request catalogs based on filters specified in the request body.
 func (s *requestCatalogSearch) SearchEntitlements(ctx context.Context, request shared.RequestCatalogSearchServiceSearchEntitlementsRequest) (*operations.C1APIRequestcatalogV1RequestCatalogSearchServiceSearchEntitlementsResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/api/v1/search/request_catalog/entitlements"

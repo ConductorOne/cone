@@ -2,6 +2,6 @@
 
 package shared
 
-// AppOwnerApproval1 -  App owner approval provides the configuration for an approval step when the app owner is the target.
+// AppOwnerApproval1 - App owner approval provides the configuration for an approval step when the app owner is the target.
 type AppOwnerApproval1 struct {
 }

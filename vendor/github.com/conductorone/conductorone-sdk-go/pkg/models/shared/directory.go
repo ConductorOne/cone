@@ -6,9 +6,9 @@ import (
 	"time"
 )
 
-// Directory - The Directory message.
+// Directory - This object indicates that an app is also a directory.
 type Directory struct {
-	// The appId field.
+	// The ID of the app associated with the directory.
 	AppID     *string    `json:"appId,omitempty"`
 	CreatedAt *time.Time `json:"createdAt,omitempty"`
 	DeletedAt *time.Time `json:"deletedAt,omitempty"`

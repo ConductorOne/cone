@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-// PolicyPolicyType -  Indicates the type of this policy. Can also be used to get the value from policySteps.
+// PolicyPolicyType - Indicates the type of this policy. Can also be used to get the value from policySteps.
 type PolicyPolicyType string
 
 const (
@@ -48,33 +48,25 @@ func (e *PolicyPolicyType) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// Policy -  A policy describes the behavior of the ConductorOne system when processing a task. You can describe the type, approvers, fallback behavior, and escalation processes.
+// Policy - A policy describes the behavior of the ConductorOne system when processing a task. You can describe the type, approvers, fallback behavior, and escalation processes.
 type Policy struct {
 	CreatedAt *time.Time `json:"createdAt,omitempty"`
 	DeletedAt *time.Time `json:"deletedAt,omitempty"`
-	//  The description of the Policy.
-	//
+	// The description of the Policy.
 	Description *string `json:"description,omitempty"`
-	//  The display name of the Policy.
-	//
+	// The display name of the Policy.
 	DisplayName *string `json:"displayName,omitempty"`
-	//  The ID of the Policy.
-	//
+	// The ID of the Policy.
 	ID *string `json:"id,omitempty"`
-	//  A map of string(policy type) to steps in a policy. This structure is leftover from a previous design, and should only ever have one key->value set.
-	//
+	// A map of string(policy type) to steps in a policy. This structure is leftover from a previous design, and should only ever have one key->value set.
 	PolicySteps map[string]PolicySteps `json:"policySteps,omitempty"`
-	//  Indicates the type of this policy. Can also be used to get the value from policySteps.
-	//
+	// Indicates the type of this policy. Can also be used to get the value from policySteps.
 	PolicyType *PolicyPolicyType `json:"policyType,omitempty"`
-	//  An array of actions (ordered) to take place after a policy completes processing.
-	//
+	// An array of actions (ordered) to take place after a policy completes processing.
 	PostActions []PolicyPostActions `json:"postActions,omitempty"`
-	//  A policy configuration option that allows for reassinging tasks to delgated users. This level of delegation referrs to the individual delegates users set on their account.
-	//
+	// A policy configuration option that allows for reassinging tasks to delgated users. This level of delegation referrs to the individual delegates users set on their account.
 	ReassignTasksToDelegates *bool `json:"reassignTasksToDelegates,omitempty"`
-	//  Whether this policy is a builtin system policy. Builtin system policies cannot be edited.
-	//
+	// Whether this policy is a builtin system policy. Builtin system policies cannot be edited.
 	SystemBuiltin *bool      `json:"systemBuiltin,omitempty"`
 	UpdatedAt     *time.Time `json:"updatedAt,omitempty"`
 }
@@ -156,25 +148,19 @@ func (o *Policy) GetUpdatedAt() *time.Time {
 	return o.UpdatedAt
 }
 
-// PolicyInput -  A policy describes the behavior of the ConductorOne system when processing a task. You can describe the type, approvers, fallback behavior, and escalation processes.
+// PolicyInput - A policy describes the behavior of the ConductorOne system when processing a task. You can describe the type, approvers, fallback behavior, and escalation processes.
 type PolicyInput struct {
-	//  The description of the Policy.
-	//
+	// The description of the Policy.
 	Description *string `json:"description,omitempty"`
-	//  The display name of the Policy.
-	//
+	// The display name of the Policy.
 	DisplayName *string `json:"displayName,omitempty"`
-	//  A map of string(policy type) to steps in a policy. This structure is leftover from a previous design, and should only ever have one key->value set.
-	//
+	// A map of string(policy type) to steps in a policy. This structure is leftover from a previous design, and should only ever have one key->value set.
 	PolicySteps map[string]PolicyStepsInput `json:"policySteps,omitempty"`
-	//  Indicates the type of this policy. Can also be used to get the value from policySteps.
-	//
+	// Indicates the type of this policy. Can also be used to get the value from policySteps.
 	PolicyType *PolicyPolicyType `json:"policyType,omitempty"`
-	//  An array of actions (ordered) to take place after a policy completes processing.
-	//
+	// An array of actions (ordered) to take place after a policy completes processing.
 	PostActions []PolicyPostActions `json:"postActions,omitempty"`
-	//  A policy configuration option that allows for reassinging tasks to delgated users. This level of delegation referrs to the individual delegates users set on their account.
-	//
+	// A policy configuration option that allows for reassinging tasks to delgated users. This level of delegation referrs to the individual delegates users set on their account.
 	ReassignTasksToDelegates *bool `json:"reassignTasksToDelegates,omitempty"`
 }
 

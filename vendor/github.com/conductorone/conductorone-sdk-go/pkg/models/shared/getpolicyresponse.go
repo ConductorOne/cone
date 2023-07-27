@@ -2,10 +2,9 @@
 
 package shared
 
-// GetPolicyResponse - The GetPolicyResponse message.
+// GetPolicyResponse - The GetPolicyResponse message contains the policy object.
 type GetPolicyResponse struct {
-	//  A policy describes the behavior of the ConductorOne system when processing a task. You can describe the type, approvers, fallback behavior, and escalation processes.
-	//
+	// A policy describes the behavior of the ConductorOne system when processing a task. You can describe the type, approvers, fallback behavior, and escalation processes.
 	Policy *Policy `json:"policy,omitempty"`
 }
 

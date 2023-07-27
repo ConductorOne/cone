@@ -28,7 +28,7 @@ func (o *C1APIAppV1AppEntitlementsGetRequest) GetID() string {
 
 type C1APIAppV1AppEntitlementsGetResponse struct {
 	ContentType string
-	// Successful response
+	// The get app entitlement response returns an entitlement view containing paths in the expanded array for the objects expanded as indicated by the expand mask in the request.
 	GetAppEntitlementResponse *shared.GetAppEntitlementResponse
 	StatusCode                int
 	RawResponse               *http.Response

@@ -2,23 +2,23 @@
 
 package shared
 
-// SearchAppResourceTypesRequest - The SearchAppResourceTypesRequest message.
+// SearchAppResourceTypesRequest - Search for app resources based on some filters.
 type SearchAppResourceTypesRequest struct {
-	// The appIds field.
+	// A list of app IDs to restrict the search by.
 	AppIds []string `json:"appIds,omitempty"`
-	// The excludeResourceTypeIds field.
+	// A list of resource type IDs to exclude from the search.
 	ExcludeResourceTypeIds []string `json:"excludeResourceTypeIds,omitempty"`
-	// The excludeResourceTypeTraitIds field.
+	// A list of resource type trait IDs to exclude from the search.
 	ExcludeResourceTypeTraitIds []string `json:"excludeResourceTypeTraitIds,omitempty"`
-	// The pageSize field.
+	// The pageSize where 10 <= pageSize <= 100, default 25.
 	PageSize *float64 `json:"pageSize,omitempty"`
 	// The pageToken field.
 	PageToken *string `json:"pageToken,omitempty"`
-	// The query field.
+	// Fuzzy search the display name of resource types.
 	Query *string `json:"query,omitempty"`
-	// The resourceTypeIds field.
+	// A list of resource type IDs to restrict the search by.
 	ResourceTypeIds []string `json:"resourceTypeIds,omitempty"`
-	// The resourceTypeTraitIds field.
+	// A list of resource type trait IDs to restrict the search by.
 	ResourceTypeTraitIds []string `json:"resourceTypeTraitIds,omitempty"`
 }
 

@@ -2,9 +2,9 @@
 
 package shared
 
-// UserRef - The UserRef message.
+// UserRef - A reference to a user.
 type UserRef struct {
-	// The id field.
+	// The id of the user.
 	ID *string `json:"id,omitempty"`
 }
 

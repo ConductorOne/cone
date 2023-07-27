@@ -8,7 +8,9 @@ import (
 )
 
 type C1APIAppV1AppResourceTypeServiceListRequest struct {
-	AppID string `pathParam:"style=simple,explode=false,name=app_id"`
+	AppID     string   `pathParam:"style=simple,explode=false,name=app_id"`
+	PageSize  *float64 `queryParam:"style=form,explode=true,name=page_size"`
+	PageToken *string  `queryParam:"style=form,explode=true,name=page_token"`
 }
 
 func (o *C1APIAppV1AppResourceTypeServiceListRequest) GetAppID() string {
@@ -18,8 +20,22 @@ func (o *C1APIAppV1AppResourceTypeServiceListRequest) GetAppID() string {
 	return o.AppID
 }
 
+func (o *C1APIAppV1AppResourceTypeServiceListRequest) GetPageSize() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.PageSize
+}
+
+func (o *C1APIAppV1AppResourceTypeServiceListRequest) GetPageToken() *string {
+	if o == nil {
+		return nil
+	}
+	return o.PageToken
+}
+
 type C1APIAppV1AppResourceTypeServiceListResponse struct {
-	// Successful response
+	// The AppResourceTypeServiceListResponse message contains a list of results and a nextPageToken if applicable.
 	AppResourceTypeServiceListResponse *shared.AppResourceTypeServiceListResponse
 	ContentType                        string
 	StatusCode                         int

@@ -2,11 +2,11 @@
 
 package shared
 
-// ConnectorServiceGetResponse - The ConnectorServiceGetResponse message.
+// ConnectorServiceGetResponse - The ConnectorServiceGetResponse message contains the connectorView, and an expand mask.
 type ConnectorServiceGetResponse struct {
-	// The ConnectorView message.
+	// The ConnectorView object provides a connector response object, as well as JSONPATHs to related objects provided by expanders.
 	ConnectorView *ConnectorView `json:"connectorView,omitempty"`
-	// The expanded field.
+	// The array of expanded items indicated by the request.
 	Expanded []map[string]interface{} `json:"expanded,omitempty"`
 }
 

@@ -2,35 +2,35 @@
 
 package shared
 
-// AppEntitlementSearchServiceSearchRequest - The AppEntitlementSearchServiceSearchRequest message.
+// AppEntitlementSearchServiceSearchRequest - Search app entitlements by a variety of filters.
 type AppEntitlementSearchServiceSearchRequest struct {
-	// The AppEntitlementExpandMask message.
+	// The app entitlement expand mask allows the user to get additional information when getting responses containing app entitlement views.
 	AppEntitlementExpandMask *AppEntitlementExpandMask `json:"expandMask,omitempty"`
-	// The accessReviewId field.
+	// Search for app entitlements that are being reviewed as part of this access review campaign.
 	AccessReviewID *string `json:"accessReviewId,omitempty"`
-	// The alias field.
+	// Search for app entitlements that have this alias (exact match).
 	Alias *string `json:"alias,omitempty"`
-	// The appIds field.
+	// Search for app entitlements contained in any of these apps.
 	AppIds []string `json:"appIds,omitempty"`
-	// The appUserIds field.
+	// Search for app entitlements that are granted to any of these app user ids.
 	AppUserIds []string `json:"appUserIds,omitempty"`
-	// The complianceFrameworkIds field.
+	// Search for app entitlements that are part of these compliace frameworks.
 	ComplianceFrameworkIds []string `json:"complianceFrameworkIds,omitempty"`
-	// The excludeAppIds field.
+	// Exclude app entitlements from the results that are in these app IDs.
 	ExcludeAppIds []string `json:"excludeAppIds,omitempty"`
-	// The excludeAppUserIds field.
+	// Exclude app entitlements from the results that these app users have granted.
 	ExcludeAppUserIds []string `json:"excludeAppUserIds,omitempty"`
-	// The onlyGetExpiring field.
+	// Restrict results to only those who have expiring app entitlement user bindings.
 	OnlyGetExpiring *bool `json:"onlyGetExpiring,omitempty"`
-	// The pageSize field.
+	// The pageSize where 0 <= pageSize <= 100. Values < 10 will be set to 10. A value of 0 returns the default page size (currently 25)
 	PageSize *float64 `json:"pageSize,omitempty"`
 	// The pageToken field.
 	PageToken *string `json:"pageToken,omitempty"`
-	// The query field.
+	// Query the app entitlements with a fuzzy search on display name and description.
 	Query *string `json:"query,omitempty"`
-	// The resourceTypeIds field.
+	// Search for app entitlements that are for items on these resource types.
 	ResourceTypeIds []string `json:"resourceTypeIds,omitempty"`
-	// The riskLevelIds field.
+	// Search for app entitlements with these risk levels.
 	RiskLevelIds []string `json:"riskLevelIds,omitempty"`
 }
 

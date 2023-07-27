@@ -7,7 +7,7 @@ import (
 	"fmt"
 )
 
-// AppUserStatusStatus - The status field.
+// AppUserStatusStatus - The application user status field.
 type AppUserStatusStatus string
 
 const (
@@ -41,11 +41,11 @@ func (e *AppUserStatusStatus) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// AppUserStatus - The AppUserStatus message.
+// AppUserStatus - The satus of the applicaiton user.
 type AppUserStatus struct {
-	// The details field.
+	// The details of applicaiton user status.
 	Details *string `json:"details,omitempty"`
-	// The status field.
+	// The application user status field.
 	Status *AppUserStatusStatus `json:"status,omitempty"`
 }
 

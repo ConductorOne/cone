@@ -8,9 +8,11 @@ import (
 )
 
 type C1APIAppV1AppResourceOwnersListRequest struct {
-	AppID          string `pathParam:"style=simple,explode=false,name=app_id"`
-	ResourceID     string `pathParam:"style=simple,explode=false,name=resource_id"`
-	ResourceTypeID string `pathParam:"style=simple,explode=false,name=resource_type_id"`
+	AppID          string   `pathParam:"style=simple,explode=false,name=app_id"`
+	PageSize       *float64 `queryParam:"style=form,explode=true,name=page_size"`
+	PageToken      *string  `queryParam:"style=form,explode=true,name=page_token"`
+	ResourceID     string   `pathParam:"style=simple,explode=false,name=resource_id"`
+	ResourceTypeID string   `pathParam:"style=simple,explode=false,name=resource_type_id"`
 }
 
 func (o *C1APIAppV1AppResourceOwnersListRequest) GetAppID() string {
@@ -18,6 +20,20 @@ func (o *C1APIAppV1AppResourceOwnersListRequest) GetAppID() string {
 		return ""
 	}
 	return o.AppID
+}
+
+func (o *C1APIAppV1AppResourceOwnersListRequest) GetPageSize() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.PageSize
+}
+
+func (o *C1APIAppV1AppResourceOwnersListRequest) GetPageToken() *string {
+	if o == nil {
+		return nil
+	}
+	return o.PageToken
 }
 
 func (o *C1APIAppV1AppResourceOwnersListRequest) GetResourceID() string {
@@ -36,7 +52,7 @@ func (o *C1APIAppV1AppResourceOwnersListRequest) GetResourceTypeID() string {
 
 type C1APIAppV1AppResourceOwnersListResponse struct {
 	ContentType string
-	// Successful response
+	// The ListAppResourceOwnersResponse message contains a list of results and a nextPageToken if applicable
 	ListAppResourceOwnersResponse *shared.ListAppResourceOwnersResponse
 	StatusCode                    int
 	RawResponse                   *http.Response

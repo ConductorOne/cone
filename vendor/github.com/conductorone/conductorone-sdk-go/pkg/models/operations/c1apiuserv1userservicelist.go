@@ -7,11 +7,30 @@ import (
 	"net/http"
 )
 
+type C1APIUserV1UserServiceListRequest struct {
+	PageSize  *float64 `queryParam:"style=form,explode=true,name=page_size"`
+	PageToken *string  `queryParam:"style=form,explode=true,name=page_token"`
+}
+
+func (o *C1APIUserV1UserServiceListRequest) GetPageSize() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.PageSize
+}
+
+func (o *C1APIUserV1UserServiceListRequest) GetPageToken() *string {
+	if o == nil {
+		return nil
+	}
+	return o.PageToken
+}
+
 type C1APIUserV1UserServiceListResponse struct {
 	ContentType string
 	StatusCode  int
 	RawResponse *http.Response
-	// Successful response
+	// The UserServiceListResponse message contains a list of results and a nextPageToken if applicable.
 	UserServiceListResponse *shared.UserServiceListResponse
 }
 

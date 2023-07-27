@@ -8,7 +8,9 @@ import (
 )
 
 type C1APIRequestcatalogV1RequestCatalogManagementServiceListEntitlementsPerCatalogRequest struct {
-	CatalogID string `pathParam:"style=simple,explode=false,name=catalog_id"`
+	CatalogID string   `pathParam:"style=simple,explode=false,name=catalog_id"`
+	PageSize  *float64 `queryParam:"style=form,explode=true,name=page_size"`
+	PageToken *string  `queryParam:"style=form,explode=true,name=page_token"`
 }
 
 func (o *C1APIRequestcatalogV1RequestCatalogManagementServiceListEntitlementsPerCatalogRequest) GetCatalogID() string {
@@ -18,9 +20,23 @@ func (o *C1APIRequestcatalogV1RequestCatalogManagementServiceListEntitlementsPer
 	return o.CatalogID
 }
 
+func (o *C1APIRequestcatalogV1RequestCatalogManagementServiceListEntitlementsPerCatalogRequest) GetPageSize() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.PageSize
+}
+
+func (o *C1APIRequestcatalogV1RequestCatalogManagementServiceListEntitlementsPerCatalogRequest) GetPageToken() *string {
+	if o == nil {
+		return nil
+	}
+	return o.PageToken
+}
+
 type C1APIRequestcatalogV1RequestCatalogManagementServiceListEntitlementsPerCatalogResponse struct {
 	ContentType string
-	// Successful response
+	// The RequestCatalogManagementServiceListEntitlementsPerCatalogResponse message contains a list of results and a nextPageToken if applicable.
 	RequestCatalogManagementServiceListEntitlementsPerCatalogResponse *shared.RequestCatalogManagementServiceListEntitlementsPerCatalogResponse
 	StatusCode                                                        int
 	RawResponse                                                       *http.Response

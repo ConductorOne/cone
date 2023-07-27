@@ -2,10 +2,9 @@
 
 package shared
 
-// AppOwnerApproval -  App owner approval provides the configuration for an approval step when the app owner is the target.
+// AppOwnerApproval - App owner approval provides the configuration for an approval step when the app owner is the target.
 type AppOwnerApproval struct {
-	//  Configuration that allows a user to self approve if they are an app owner during this approval step.
-	//
+	// Configuration that allows a user to self approve if they are an app owner during this approval step.
 	AllowSelfApproval *bool `json:"allowSelfApproval,omitempty"`
 }
 

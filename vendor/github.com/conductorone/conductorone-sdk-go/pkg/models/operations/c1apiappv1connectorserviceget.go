@@ -27,7 +27,7 @@ func (o *C1APIAppV1ConnectorServiceGetRequest) GetID() string {
 }
 
 type C1APIAppV1ConnectorServiceGetResponse struct {
-	// Successful response
+	// The ConnectorServiceGetResponse message contains the connectorView, and an expand mask.
 	ConnectorServiceGetResponse *shared.ConnectorServiceGetResponse
 	ContentType                 string
 	StatusCode                  int

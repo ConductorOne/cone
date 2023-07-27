@@ -7,7 +7,7 @@ import (
 	"fmt"
 )
 
-// PolicyStepInstanceState -  The state of the step, which is either active or done.
+// PolicyStepInstanceState - The state of the step, which is either active or done.
 type PolicyStepInstanceState string
 
 const (
@@ -38,14 +38,13 @@ func (e *PolicyStepInstanceState) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// PolicyStepInstance -  The policy step instance includes a reference to an instance of a policy step that tracks state and has a unique ID.
+// PolicyStepInstance - The policy step instance includes a reference to an instance of a policy step that tracks state and has a unique ID.
 //
 // This message contains a oneof named instance. Only a single field of the following list may be set at a time:
 //   - approval
 //   - provision
 type PolicyStepInstance struct {
-	//  The approval instance object describes the way a policy step should be approved as well as its outcomes and state.
-	//
+	// The approval instance object describes the way a policy step should be approved as well as its outcomes and state.
 	//
 	// This message contains a oneof named outcome. Only a single field of the following list may be set at a time:
 	//   - approved
@@ -55,8 +54,7 @@ type PolicyStepInstance struct {
 	//   - reassignedByError
 	//
 	ApprovalInstance *ApprovalInstance `json:"approval,omitempty"`
-	//  A provision instance describes the specific configuration of an executing provision policy step including actions taken and notification id.
-	//
+	// A provision instance describes the specific configuration of an executing provision policy step including actions taken and notification id.
 	//
 	// This message contains a oneof named outcome. Only a single field of the following list may be set at a time:
 	//   - completed
@@ -65,11 +63,9 @@ type PolicyStepInstance struct {
 	//   - reassignedByError
 	//
 	ProvisionInstance *ProvisionInstance `json:"provision,omitempty"`
-	//  The ID of the PolicyStepInstance. This is required by many action submission endpoints to indicate what step you're approving.
-	//
+	// The ID of the PolicyStepInstance. This is required by many action submission endpoints to indicate what step you're approving.
 	ID *string `json:"id,omitempty"`
-	//  The state of the step, which is either active or done.
-	//
+	// The state of the step, which is either active or done.
 	State *PolicyStepInstanceState `json:"state,omitempty"`
 }
 

@@ -26,7 +26,7 @@ func newUserSearch(sdkConfig sdkConfiguration) *userSearch {
 }
 
 // Search - Search
-// Invokes the c1.api.user.v1.UserSearch.Search method.
+// Search users based on filters specified in the request body.
 func (s *userSearch) Search(ctx context.Context, request shared.SearchUsersRequest) (*operations.C1APIUserV1UserSearchSearchResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/api/v1/search/users"

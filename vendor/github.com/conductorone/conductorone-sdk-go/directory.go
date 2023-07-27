@@ -26,7 +26,7 @@ func newDirectory(sdkConfig sdkConfiguration) *directory {
 }
 
 // Create - Create
-// Invokes the c1.api.directory.v1.DirectoryService.Create method.
+// Create a directory.
 func (s *directory) Create(ctx context.Context, request shared.DirectoryServiceCreateRequest) (*operations.C1APIDirectoryV1DirectoryServiceCreateResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/api/v1/directories"
@@ -88,7 +88,7 @@ func (s *directory) Create(ctx context.Context, request shared.DirectoryServiceC
 }
 
 // Delete - Delete
-// Invokes the c1.api.directory.v1.DirectoryService.Delete method.
+// Delete a directory by app_id.
 func (s *directory) Delete(ctx context.Context, request operations.C1APIDirectoryV1DirectoryServiceDeleteRequest) (*operations.C1APIDirectoryV1DirectoryServiceDeleteResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/api/v1/directories/{app_id}", request, nil)
@@ -153,7 +153,7 @@ func (s *directory) Delete(ctx context.Context, request operations.C1APIDirector
 }
 
 // Get - Get
-// Invokes the c1.api.directory.v1.DirectoryService.Get method.
+// Get a directory by app_id.
 func (s *directory) Get(ctx context.Context, request operations.C1APIDirectoryV1DirectoryServiceGetRequest) (*operations.C1APIDirectoryV1DirectoryServiceGetResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/api/v1/directories/{app_id}", request, nil)
@@ -211,8 +211,8 @@ func (s *directory) Get(ctx context.Context, request operations.C1APIDirectoryV1
 }
 
 // List - List
-// Invokes the c1.api.directory.v1.DirectoryService.List method.
-func (s *directory) List(ctx context.Context) (*operations.C1APIDirectoryV1DirectoryServiceListResponse, error) {
+// List directories.
+func (s *directory) List(ctx context.Context, request operations.C1APIDirectoryV1DirectoryServiceListRequest) (*operations.C1APIDirectoryV1DirectoryServiceListResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/api/v1/directories"
 
@@ -222,6 +222,10 @@ func (s *directory) List(ctx context.Context) (*operations.C1APIDirectoryV1Direc
 	}
 	req.Header.Set("Accept", "application/json")
 	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s %s", s.sdkConfiguration.Language, s.sdkConfiguration.SDKVersion, s.sdkConfiguration.GenVersion, s.sdkConfiguration.OpenAPIDocVersion))
+
+	if err := utils.PopulateQueryParams(ctx, req, request, nil); err != nil {
+		return nil, fmt.Errorf("error populating query params: %w", err)
+	}
 
 	client := s.sdkConfiguration.SecurityClient
 

@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-// AppUserAppUserType - The appUserType field.
+// AppUserAppUserType - The appplication user type. Type can be user, system or service.
 type AppUserAppUserType string
 
 const (
@@ -42,23 +42,23 @@ func (e *AppUserAppUserType) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// AppUser - The AppUser message.
+// AppUser - Application User that represents an account in the application.
 type AppUser struct {
-	// The AppUserStatus message.
+	// The satus of the applicaiton user.
 	AppUserStatus *AppUserStatus `json:"status,omitempty"`
-	// The appId field.
+	// The ID of the application.
 	AppID *string `json:"appId,omitempty"`
-	// The appUserType field.
+	// The appplication user type. Type can be user, system or service.
 	AppUserType *AppUserAppUserType `json:"appUserType,omitempty"`
 	CreatedAt   *time.Time          `json:"createdAt,omitempty"`
 	DeletedAt   *time.Time          `json:"deletedAt,omitempty"`
-	// The displayName field.
+	// The display name of the application user.
 	DisplayName *string `json:"displayName,omitempty"`
-	// The email field.
+	// The email field of the application user.
 	Email *string `json:"email,omitempty"`
-	// The id field.
+	// A unique idenditfier of the application user.
 	ID *string `json:"id,omitempty"`
-	// The identityUserId field.
+	// The conductor one user ID of the account owner.
 	IdentityUserID *string                `json:"identityUserId,omitempty"`
 	Profile        map[string]interface{} `json:"profile,omitempty"`
 	UpdatedAt      *time.Time             `json:"updatedAt,omitempty"`

@@ -2,6 +2,6 @@
 
 package shared
 
-// EntitlementOwnerApproval1 -  The entitlement owner approval allows configuration of the approval step when the target approvers are the entitlement owners.
+// EntitlementOwnerApproval1 - The entitlement owner approval allows configuration of the approval step when the target approvers are the entitlement owners.
 type EntitlementOwnerApproval1 struct {
 }

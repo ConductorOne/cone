@@ -2,21 +2,18 @@
 
 package shared
 
-// ProvisionPolicy - The ProvisionPolicy message.
+// ProvisionPolicy - ProvisionPolicy is a oneOf that indicates how a provision step should be processed.
 //
 // This message contains a oneof named typ. Only a single field of the following list may be set at a time:
 //   - connector
 //   - manual
 //   - delegated
 type ProvisionPolicy struct {
-	//  Indicates that a connector should perform the provisioning. This object has no fields.
-	//
+	// Indicates that a connector should perform the provisioning. This object has no fields.
 	ConnectorProvision *ConnectorProvision `json:"connector,omitempty"`
-	//  This provision step indicates that we should delegate provisioning to the configuration of another app entitlement. This app entitlement does not have to be one from the same app, but MUST be configured as a proxy binding leading into this entitlement.
-	//
+	// This provision step indicates that we should delegate provisioning to the configuration of another app entitlement. This app entitlement does not have to be one from the same app, but MUST be configured as a proxy binding leading into this entitlement.
 	DelegatedProvision *DelegatedProvision `json:"delegated,omitempty"`
-	//  Manual provisioning indicates that a human must intervene for the provisioning of this step.
-	//
+	// Manual provisioning indicates that a human must intervene for the provisioning of this step.
 	ManualProvision *ManualProvision `json:"manual,omitempty"`
 }
 

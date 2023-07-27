@@ -77,7 +77,7 @@ func (e *TaskActions) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// TaskProcessing -  The processing state of a task as defined by the `processing_enum`
+// TaskProcessing - The processing state of a task as defined by the `processing_enum`
 type TaskProcessing string
 
 const (
@@ -111,7 +111,7 @@ func (e *TaskProcessing) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// TaskState -  The current state of the task as defined by the `state_enum`
+// TaskState - The current state of the task as defined by the `state_enum`
 type TaskState string
 
 const (
@@ -142,12 +142,11 @@ func (e *TaskState) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// Task -  A fully-fleged task object. Includes its policy, references to external apps, its type, its processing history, and more.
+// Task - A fully-fleged task object. Includes its policy, references to external apps, its type, its processing history, and more.
 type Task struct {
-	//  A policy instance is an object that contains a reference to the policy it was created from, the currently executing step, the next steps, and the history of previously completed steps.
-	//
+	// A policy instance is an object that contains a reference to the policy it was created from, the currently executing step, the next steps, and the history of previously completed steps.
 	PolicyInstance *PolicyInstance `json:"policy,omitempty"`
-	// The TaskType message.
+	// Task Type provides configuration for the type of task: certify, grant, or revoke
 	//
 	// This message contains a oneof named task_type. Only a single field of the following list may be set at a time:
 	//   - grant
@@ -155,53 +154,38 @@ type Task struct {
 	//   - certify
 	//
 	TaskType *TaskType `json:"type,omitempty"`
-	//  The actions that can be performed on the task by the current user.
-	//
+	// The actions that can be performed on the task by the current user.
 	Actions []TaskActions `json:"actions,omitempty"`
-	//  The ID of the analysis object associated with this task created by an analysis workflow if the analysis feature is enabled for your tenant.
-	//
+	// The ID of the analysis object associated with this task created by an analysis workflow if the analysis feature is enabled for your tenant.
 	AnalysisID *string `json:"analysisId,omitempty"`
-	//  An array of `google.protobuf.Any` annotations with various base64-encoded data.
-	//
+	// An array of `google.protobuf.Any` annotations with various base64-encoded data.
 	Annotations []map[string]interface{} `json:"annotations,omitempty"`
-	//  The count of comments.
-	//
+	// The count of comments.
 	CommentCount *float64   `json:"commentCount,omitempty"`
 	CreatedAt    *time.Time `json:"createdAt,omitempty"`
-	//  The ID of the user that is the creator of this task. This may not always match the userId field.
-	//
+	// The ID of the user that is the creator of this task. This may not always match the userId field.
 	CreatedByUserID *string    `json:"createdByUserId,omitempty"`
 	DeletedAt       *time.Time `json:"deletedAt,omitempty"`
-	//  The description of the task. This is also known as justification.
-	//
+	// The description of the task. This is also known as justification.
 	Description *string `json:"description,omitempty"`
-	//  The display name of the task.
-	//
+	// The display name of the task.
 	DisplayName *string `json:"displayName,omitempty"`
-	//  A field indicating whether this task was created using an emergency access flow, or escalated to emergency access. On task creation, it will also use the app entitlement's emergency policy when possible.
-	//
+	// A field indicating whether this task was created using an emergency access flow, or escalated to emergency access. On task creation, it will also use the app entitlement's emergency policy when possible.
 	EmergencyAccess *bool `json:"emergencyAccess,omitempty"`
-	//  An array of external references to the task. Historically that has been items like Jira task IDs. This is currently unused, but may come back in the future for integrations.
-	//
+	// An array of external references to the task. Historically that has been items like Jira task IDs. This is currently unused, but may come back in the future for integrations.
 	ExternalRefs []ExternalRef `json:"externalRefs,omitempty"`
-	//  The ID of the task.
-	//
+	// The ID of the task.
 	ID *string `json:"id,omitempty"`
-	//  A human-usable numeric ID of a task which can be included in place of the fully qualified task id in path parmeters (but not search queries).
-	//
+	// A human-usable numeric ID of a task which can be included in place of the fully qualified task id in path parmeters (but not search queries).
 	NumericID *string `json:"numericId,omitempty"`
-	//  The processing state of a task as defined by the `processing_enum`
-	//
+	// The processing state of a task as defined by the `processing_enum`
 	Processing *TaskProcessing `json:"processing,omitempty"`
-	//  The current state of the task as defined by the `state_enum`
-	//
+	// The current state of the task as defined by the `state_enum`
 	State *TaskState `json:"state,omitempty"`
-	//  An array of IDs belonging to Identity Users that are allowed to review this step in a task.
-	//
+	// An array of IDs belonging to Identity Users that are allowed to review this step in a task.
 	StepApproverIds []string   `json:"stepApproverIds,omitempty"`
 	UpdatedAt       *time.Time `json:"updatedAt,omitempty"`
-	//  The ID of the user that is the target of this task. This may be empty if we're targeting a specific app user that has no known identity user.
-	//
+	// The ID of the user that is the target of this task. This may be empty if we're targeting a specific app user that has no known identity user.
 	UserID *string `json:"userId,omitempty"`
 }
 

@@ -6,25 +6,26 @@ import (
 	"time"
 )
 
-// RequestCatalog - The RequestCatalog message.
+// RequestCatalog - The RequestCatalog is used for managing which entitlements are requestable, and who can request them.
 type RequestCatalog struct {
-	// The accessEntitlements field.
+	// An array of app entitlements that, if the user has, can view the contents of this catalog.
 	AccessEntitlements []AppEntitlement `json:"accessEntitlements,omitempty"`
-	// The appIds field.
+	// The Apps contained in this request catalog.
 	AppIds    []string   `json:"appIds,omitempty"`
 	CreatedAt *time.Time `json:"createdAt,omitempty"`
-	// The createdByUserId field.
-	CreatedByUserID *string `json:"createdByUserId,omitempty"`
-	// The description field.
+	// The id of the user this request catalog was created by.
+	CreatedByUserID *string    `json:"createdByUserId,omitempty"`
+	DeletedAt       *time.Time `json:"deletedAt,omitempty"`
+	// The description of the request catalog.
 	Description *string `json:"description,omitempty"`
-	// The displayName field.
+	// The display name of the request catalog.
 	DisplayName *string `json:"displayName,omitempty"`
-	// The id field.
+	// The id of the request catalog.
 	ID *string `json:"id,omitempty"`
-	// The published field.
+	// Whether or not this catalog is published.
 	Published *bool      `json:"published,omitempty"`
 	UpdatedAt *time.Time `json:"updatedAt,omitempty"`
-	// The visibleToEveryone field.
+	// If this is true, the access entitlement requirement is ignored.
 	VisibleToEveryone *bool `json:"visibleToEveryone,omitempty"`
 }
 
@@ -54,6 +55,13 @@ func (o *RequestCatalog) GetCreatedByUserID() *string {
 		return nil
 	}
 	return o.CreatedByUserID
+}
+
+func (o *RequestCatalog) GetDeletedAt() *time.Time {
+	if o == nil {
+		return nil
+	}
+	return o.DeletedAt
 }
 
 func (o *RequestCatalog) GetDescription() *string {
@@ -98,23 +106,23 @@ func (o *RequestCatalog) GetVisibleToEveryone() *bool {
 	return o.VisibleToEveryone
 }
 
-// RequestCatalogInput - The RequestCatalog message.
+// RequestCatalogInput - The RequestCatalog is used for managing which entitlements are requestable, and who can request them.
 type RequestCatalogInput struct {
-	// The accessEntitlements field.
+	// An array of app entitlements that, if the user has, can view the contents of this catalog.
 	AccessEntitlements []AppEntitlementInput `json:"accessEntitlements,omitempty"`
-	// The appIds field.
+	// The Apps contained in this request catalog.
 	AppIds []string `json:"appIds,omitempty"`
-	// The createdByUserId field.
+	// The id of the user this request catalog was created by.
 	CreatedByUserID *string `json:"createdByUserId,omitempty"`
-	// The description field.
+	// The description of the request catalog.
 	Description *string `json:"description,omitempty"`
-	// The displayName field.
+	// The display name of the request catalog.
 	DisplayName *string `json:"displayName,omitempty"`
-	// The id field.
+	// The id of the request catalog.
 	ID *string `json:"id,omitempty"`
-	// The published field.
+	// Whether or not this catalog is published.
 	Published *bool `json:"published,omitempty"`
-	// The visibleToEveryone field.
+	// If this is true, the access entitlement requirement is ignored.
 	VisibleToEveryone *bool `json:"visibleToEveryone,omitempty"`
 }
 

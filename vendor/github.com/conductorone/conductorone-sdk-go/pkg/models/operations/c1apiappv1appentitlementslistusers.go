@@ -8,8 +8,10 @@ import (
 )
 
 type C1APIAppV1AppEntitlementsListUsersRequest struct {
-	AppEntitlementID string `pathParam:"style=simple,explode=false,name=app_entitlement_id"`
-	AppID            string `pathParam:"style=simple,explode=false,name=app_id"`
+	AppEntitlementID string   `pathParam:"style=simple,explode=false,name=app_entitlement_id"`
+	AppID            string   `pathParam:"style=simple,explode=false,name=app_id"`
+	PageSize         *float64 `queryParam:"style=form,explode=true,name=page_size"`
+	PageToken        *string  `queryParam:"style=form,explode=true,name=page_token"`
 }
 
 func (o *C1APIAppV1AppEntitlementsListUsersRequest) GetAppEntitlementID() string {
@@ -26,9 +28,23 @@ func (o *C1APIAppV1AppEntitlementsListUsersRequest) GetAppID() string {
 	return o.AppID
 }
 
+func (o *C1APIAppV1AppEntitlementsListUsersRequest) GetPageSize() *float64 {
+	if o == nil {
+		return nil
+	}
+	return o.PageSize
+}
+
+func (o *C1APIAppV1AppEntitlementsListUsersRequest) GetPageToken() *string {
+	if o == nil {
+		return nil
+	}
+	return o.PageToken
+}
+
 type C1APIAppV1AppEntitlementsListUsersResponse struct {
 	ContentType string
-	// Successful response
+	// The ListAppEntitlementUsersResponse message contains a list of results and a nextPageToken if applicable.
 	ListAppEntitlementUsersResponse *shared.ListAppEntitlementUsersResponse
 	StatusCode                      int
 	RawResponse                     *http.Response

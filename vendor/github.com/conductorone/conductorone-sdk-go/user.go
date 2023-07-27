@@ -26,7 +26,7 @@ func newUser(sdkConfig sdkConfiguration) *user {
 }
 
 // Get - Get
-// Invokes the c1.api.user.v1.UserService.Get method.
+// Get a user by ID.
 func (s *user) Get(ctx context.Context, request operations.C1APIUserV1UserServiceGetRequest) (*operations.C1APIUserV1UserServiceGetResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/api/v1/users/{id}", request, nil)
@@ -84,8 +84,8 @@ func (s *user) Get(ctx context.Context, request operations.C1APIUserV1UserServic
 }
 
 // List - List
-// Invokes the c1.api.user.v1.UserService.List method.
-func (s *user) List(ctx context.Context) (*operations.C1APIUserV1UserServiceListResponse, error) {
+// List users.
+func (s *user) List(ctx context.Context, request operations.C1APIUserV1UserServiceListRequest) (*operations.C1APIUserV1UserServiceListResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/api/v1/users"
 
@@ -95,6 +95,10 @@ func (s *user) List(ctx context.Context) (*operations.C1APIUserV1UserServiceList
 	}
 	req.Header.Set("Accept", "application/json")
 	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s %s", s.sdkConfiguration.Language, s.sdkConfiguration.SDKVersion, s.sdkConfiguration.GenVersion, s.sdkConfiguration.OpenAPIDocVersion))
+
+	if err := utils.PopulateQueryParams(ctx, req, request, nil); err != nil {
+		return nil, fmt.Errorf("error populating query params: %w", err)
+	}
 
 	client := s.sdkConfiguration.SecurityClient
 

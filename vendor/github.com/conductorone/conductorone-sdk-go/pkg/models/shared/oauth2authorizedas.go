@@ -6,9 +6,9 @@ import (
 	"time"
 )
 
-// OAuth2AuthorizedAs - The OAuth2AuthorizedAs message.
+// OAuth2AuthorizedAs - OAuth2AuthorizedAs tracks the user that OAuthed with the connector.
 type OAuth2AuthorizedAs struct {
-	// The authEmail field.
+	// authEmail is the email of the user that authorized the connector using OAuth.
 	AuthEmail    *string    `json:"authEmail,omitempty"`
 	AuthorizedAt *time.Time `json:"authorizedAt,omitempty"`
 }

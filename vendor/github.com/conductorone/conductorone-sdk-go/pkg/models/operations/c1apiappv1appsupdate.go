@@ -30,7 +30,7 @@ type C1APIAppV1AppsUpdateResponse struct {
 	ContentType string
 	StatusCode  int
 	RawResponse *http.Response
-	// Successful response
+	// Returns the updated app's new values.
 	UpdateAppResponse *shared.UpdateAppResponse
 }
 

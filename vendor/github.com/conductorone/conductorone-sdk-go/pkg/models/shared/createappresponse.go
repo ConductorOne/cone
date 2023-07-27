@@ -2,9 +2,9 @@
 
 package shared
 
-// CreateAppResponse - The CreateAppResponse message.
+// CreateAppResponse - Returns the new app's values.
 type CreateAppResponse struct {
-	// The App message.
+	// The App object provides all of the details for an app, as well as some configuration.
 	App *App `json:"app,omitempty"`
 }
 

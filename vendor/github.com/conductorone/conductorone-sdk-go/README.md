@@ -165,6 +165,7 @@ func main() {
 
 ### [Connector](docs/sdks/connector/README.md)
 
+* [Create](docs/sdks/connector/README.md#create) - Create
 * [CreateDelegated](docs/sdks/connector/README.md#createdelegated) - Create Delegated
 * [Delete](docs/sdks/connector/README.md#delete) - Delete
 * [Get](docs/sdks/connector/README.md#get) - Get

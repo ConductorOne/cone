@@ -7,7 +7,7 @@ import (
 	"fmt"
 )
 
-// ExternalRefExternalRefSource -  The source of the external reference.
+// ExternalRefExternalRefSource - The source of the external reference.
 type ExternalRefExternalRefSource string
 
 const (
@@ -35,16 +35,13 @@ func (e *ExternalRefExternalRefSource) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// ExternalRef -  A reference to an external source. This value is unused currently, but may be brought back.
+// ExternalRef - A reference to an external source. This value is unused currently, but may be brought back.
 type ExternalRef struct {
-	//  The source of the external reference.
-	//
+	// The source of the external reference.
 	ExternalRefSource *ExternalRefExternalRefSource `json:"externalRefSource,omitempty"`
-	//  The name of the external reference.
-	//
+	// The name of the external reference.
 	Name *string `json:"name,omitempty"`
-	//  The URL to the external reference.
-	//
+	// The URL to the external reference.
 	URL *string `json:"url,omitempty"`
 }
 

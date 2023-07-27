@@ -2,9 +2,9 @@
 
 package shared
 
-// UpdateRolesResponse - The UpdateRolesResponse message.
+// UpdateRolesResponse - UpdateRolesResponse is the response message containing the updated role.
 type UpdateRolesResponse struct {
-	// The Role message.
+	// Role is a role that can be assigned to a user in ConductorOne.
 	Role *Role `json:"role,omitempty"`
 }
 

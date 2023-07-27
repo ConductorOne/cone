@@ -28,7 +28,7 @@ func (o *C1APIRequestcatalogV1RequestCatalogManagementServiceRemoveAccessEntitle
 
 type C1APIRequestcatalogV1RequestCatalogManagementServiceRemoveAccessEntitlementsResponse struct {
 	ContentType string
-	// Successful response
+	// Empty response with a status code indicating success.
 	RequestCatalogManagementServiceRemoveAccessEntitlementsResponse *shared.RequestCatalogManagementServiceRemoveAccessEntitlementsResponse
 	StatusCode                                                      int
 	RawResponse                                                     *http.Response

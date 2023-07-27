@@ -9,7 +9,7 @@ import (
 
 type C1APIAuthV1AuthIntrospectResponse struct {
 	ContentType string
-	// Successful response
+	// IntrospectResponse contains information about the current user who is authenticated.
 	IntrospectResponse *shared.IntrospectResponse
 	StatusCode         int
 	RawResponse        *http.Response

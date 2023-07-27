@@ -2,11 +2,11 @@
 
 package shared
 
-// RequestCatalogManagementServiceGetResponse - The RequestCatalogManagementServiceGetResponse message.
+// RequestCatalogManagementServiceGetResponse - The request catalog management service get response returns a request catalog view with the expanded items in the expanded array indicated by the expand mask in the request.
 type RequestCatalogManagementServiceGetResponse struct {
-	// The RequestCatalogView message.
+	// The request catalog view contains the serialized request catalog and paths to objects referenced by the request catalog.
 	RequestCatalogView *RequestCatalogView `json:"requestCatalogView,omitempty"`
-	// The expanded field.
+	// List of serialized related objects.
 	Expanded []map[string]interface{} `json:"expanded,omitempty"`
 }
 

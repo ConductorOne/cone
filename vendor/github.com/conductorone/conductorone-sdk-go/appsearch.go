@@ -26,7 +26,7 @@ func newAppSearch(sdkConfig sdkConfiguration) *appSearch {
 }
 
 // Search - Search
-// Invokes the c1.api.app.v1.AppSearch.Search method.
+// Search apps based on filters specified in the request body.
 func (s *appSearch) Search(ctx context.Context, request shared.SearchAppsRequest) (*operations.C1APIAppV1AppSearchSearchResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/api/v1/search/apps"

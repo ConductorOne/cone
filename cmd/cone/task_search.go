@@ -68,11 +68,11 @@ func searchTasksRun(cmd *cobra.Command, args []string) error {
 	var taskType *shared.TaskTypeInput
 	switch strings.ToLower(v.GetString(taskTypeFlag)) {
 	case "grant":
-		taskType = &shared.TaskTypeInput{TaskTypeGrant: &shared.TaskTypeGrant{}}
+		taskType = &shared.TaskTypeInput{TaskTypeGrant: &shared.TaskTypeGrantInput{}}
 	case "revoke":
 		taskType = &shared.TaskTypeInput{TaskTypeRevoke: &shared.TaskTypeRevokeInput{}}
 	case "certify":
-		taskType = &shared.TaskTypeInput{TaskTypeCertify: &shared.TaskTypeCertify{}}
+		taskType = &shared.TaskTypeInput{TaskTypeCertify: &shared.TaskTypeCertifyInput{}}
 	}
 
 	if taskType != nil {

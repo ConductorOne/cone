@@ -20,6 +20,7 @@ type SearchEntitlementsFilter struct {
 	EntitlementAlias string
 	AppDisplayName   string
 	GrantedStatus    shared.RequestCatalogSearchServiceSearchEntitlementsRequestGrantedStatus
+	IncludeDeleted   bool
 }
 
 type AppEntitlement shared.AppEntitlement
@@ -51,6 +52,7 @@ func (c *client) SearchEntitlements(ctx context.Context, filter *SearchEntitleme
 		PageToken:        nil,
 		Query:            stringPtr(filter.Query),
 		AppDisplayName:   stringPtr(filter.AppDisplayName),
+		IncludeDeleted:   &filter.IncludeDeleted,
 	})
 	if err != nil {
 		return nil, err

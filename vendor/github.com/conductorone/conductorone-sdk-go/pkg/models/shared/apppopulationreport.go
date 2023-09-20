@@ -42,7 +42,7 @@ func (e *AppPopulationReportState) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// AppPopulationReport - The AppPopulationReport is a generated report for a specific app that gives details about the app's users. These details include what groups, roles, and other entitlements the users have access to.
+// The AppPopulationReport is a generated report for a specific app that gives details about the app's users. These details include what groups, roles, and other entitlements the users have access to.
 type AppPopulationReport struct {
 	// The appId is the Id of the app which the report is generated for.
 	AppID     *string    `json:"appId,omitempty"`

@@ -65,6 +65,8 @@ type PolicyStepInstance struct {
 	ProvisionInstance *ProvisionInstance `json:"provision,omitempty"`
 	// The ID of the PolicyStepInstance. This is required by many action submission endpoints to indicate what step you're approving.
 	ID *string `json:"id,omitempty"`
+	// The policy generation id refers to the version of the policy that this step was created from.
+	PolicyGenerationID *string `json:"policyGenerationId,omitempty"`
 	// The state of the step, which is either active or done.
 	State *PolicyStepInstanceState `json:"state,omitempty"`
 }
@@ -88,6 +90,13 @@ func (o *PolicyStepInstance) GetID() *string {
 		return nil
 	}
 	return o.ID
+}
+
+func (o *PolicyStepInstance) GetPolicyGenerationID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.PolicyGenerationID
 }
 
 func (o *PolicyStepInstance) GetState() *PolicyStepInstanceState {

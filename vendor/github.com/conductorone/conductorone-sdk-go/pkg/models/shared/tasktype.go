@@ -10,21 +10,21 @@ package shared
 //   - certify
 type TaskTypeInput struct {
 	// The TaskTypeCertify message indicates that a task is a certify task and all related details.
-	TaskTypeCertify *TaskTypeCertify `json:"certify,omitempty"`
+	TaskTypeCertify *TaskTypeCertifyInput `json:"certify,omitempty"`
 	// The TaskTypeGrant message indicates that a task is a grant task and all related details.
-	TaskTypeGrant *TaskTypeGrant `json:"grant,omitempty"`
+	TaskTypeGrant *TaskTypeGrantInput `json:"grant,omitempty"`
 	// The TaskTypeRevoke message indicates that a task is a revoke task and all related details.
 	TaskTypeRevoke *TaskTypeRevokeInput `json:"revoke,omitempty"`
 }
 
-func (o *TaskTypeInput) GetTaskTypeCertify() *TaskTypeCertify {
+func (o *TaskTypeInput) GetTaskTypeCertify() *TaskTypeCertifyInput {
 	if o == nil {
 		return nil
 	}
 	return o.TaskTypeCertify
 }
 
-func (o *TaskTypeInput) GetTaskTypeGrant() *TaskTypeGrant {
+func (o *TaskTypeInput) GetTaskTypeGrant() *TaskTypeGrantInput {
 	if o == nil {
 		return nil
 	}
@@ -46,21 +46,21 @@ func (o *TaskTypeInput) GetTaskTypeRevoke() *TaskTypeRevokeInput {
 //   - certify
 type TaskType struct {
 	// The TaskTypeCertify message indicates that a task is a certify task and all related details.
-	TaskTypeCertify *TaskTypeCertify1 `json:"certify,omitempty"`
+	TaskTypeCertify *TaskTypeCertify `json:"certify,omitempty"`
 	// The TaskTypeGrant message indicates that a task is a grant task and all related details.
-	TaskTypeGrant *TaskTypeGrant1 `json:"grant,omitempty"`
+	TaskTypeGrant *TaskTypeGrant `json:"grant,omitempty"`
 	// The TaskTypeRevoke message indicates that a task is a revoke task and all related details.
 	TaskTypeRevoke *TaskTypeRevoke `json:"revoke,omitempty"`
 }
 
-func (o *TaskType) GetTaskTypeCertify() *TaskTypeCertify1 {
+func (o *TaskType) GetTaskTypeCertify() *TaskTypeCertify {
 	if o == nil {
 		return nil
 	}
 	return o.TaskTypeCertify
 }
 
-func (o *TaskType) GetTaskTypeGrant() *TaskTypeGrant1 {
+func (o *TaskType) GetTaskTypeGrant() *TaskTypeGrant {
 	if o == nil {
 		return nil
 	}

@@ -2,7 +2,7 @@
 
 package shared
 
-// ConnectorServiceListResponse - The ConnectorServiceListResponse message contains a list of results and a nextPageToken if applicable
+// The ConnectorServiceListResponse message contains a list of results and a nextPageToken if applicable
 type ConnectorServiceListResponse struct {
 	// List of serialized related objects
 	Expanded []map[string]interface{} `json:"expanded,omitempty"`

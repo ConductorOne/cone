@@ -2,7 +2,7 @@
 
 package shared
 
-// AppReportServiceListResponse - The AppReportServiceListResponse message contains a list of results and a nextPageToken if applicable.
+// The AppReportServiceListResponse message contains a list of results and a nextPageToken if applicable.
 type AppReportServiceListResponse struct {
 	// The list of results containing up to X results, where X is the page size defined in the request.
 	List []AppPopulationReport `json:"list,omitempty"`

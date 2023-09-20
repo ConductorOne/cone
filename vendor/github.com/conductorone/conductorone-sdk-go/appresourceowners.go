@@ -24,7 +24,7 @@ func newAppResourceOwners(sdkConfig sdkConfiguration) *appResourceOwners {
 	}
 }
 
-// List - List
+// List
 // List all owners of an app resource.
 func (s *appResourceOwners) List(ctx context.Context, request operations.C1APIAppV1AppResourceOwnersListRequest) (*operations.C1APIAppV1AppResourceOwnersListResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())

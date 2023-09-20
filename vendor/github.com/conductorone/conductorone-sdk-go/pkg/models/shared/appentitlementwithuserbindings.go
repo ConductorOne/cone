@@ -2,7 +2,7 @@
 
 package shared
 
-// AppEntitlementWithUserBindings - The AppEntitlementWithUserBindings message represents an app entitlement and its associated user bindings.
+// The AppEntitlementWithUserBindings message represents an app entitlement and its associated user bindings.
 type AppEntitlementWithUserBindings struct {
 	// The app entitlement view contains the serialized app entitlement and paths to objects referenced by the app entitlement.
 	AppEntitlementView *AppEntitlementView `json:"entitlement,omitempty"`

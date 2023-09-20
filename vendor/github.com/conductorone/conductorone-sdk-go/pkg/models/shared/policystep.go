@@ -2,7 +2,7 @@
 
 package shared
 
-// PolicyStep - The PolicyStep message.
+// The PolicyStep message.
 //
 // This message contains a oneof named step. Only a single field of the following list may be set at a time:
 //   - approval
@@ -17,6 +17,7 @@ type PolicyStep struct {
 	//   - group
 	//   - self
 	//   - entitlementOwners
+	//   - expression
 	//
 	Approval *Approval `json:"approval,omitempty"`
 	// The provision step references a provision policy for this step.
@@ -52,6 +53,7 @@ type PolicyStepInput struct {
 	//   - group
 	//   - self
 	//   - entitlementOwners
+	//   - expression
 	//
 	Approval *ApprovalInput `json:"approval,omitempty"`
 	// The provision step references a provision policy for this step.

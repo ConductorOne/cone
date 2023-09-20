@@ -66,6 +66,8 @@ type Policy struct {
 	PostActions []PolicyPostActions `json:"postActions,omitempty"`
 	// A policy configuration option that allows for reassinging tasks to delgated users. This level of delegation referrs to the individual delegates users set on their account.
 	ReassignTasksToDelegates *bool `json:"reassignTasksToDelegates,omitempty"`
+	// The rules field.
+	Rules []Rule `json:"rules,omitempty"`
 	// Whether this policy is a builtin system policy. Builtin system policies cannot be edited.
 	SystemBuiltin *bool      `json:"systemBuiltin,omitempty"`
 	UpdatedAt     *time.Time `json:"updatedAt,omitempty"`
@@ -134,6 +136,13 @@ func (o *Policy) GetReassignTasksToDelegates() *bool {
 	return o.ReassignTasksToDelegates
 }
 
+func (o *Policy) GetRules() []Rule {
+	if o == nil {
+		return nil
+	}
+	return o.Rules
+}
+
 func (o *Policy) GetSystemBuiltin() *bool {
 	if o == nil {
 		return nil
@@ -162,6 +171,8 @@ type PolicyInput struct {
 	PostActions []PolicyPostActions `json:"postActions,omitempty"`
 	// A policy configuration option that allows for reassinging tasks to delgated users. This level of delegation referrs to the individual delegates users set on their account.
 	ReassignTasksToDelegates *bool `json:"reassignTasksToDelegates,omitempty"`
+	// The rules field.
+	Rules []Rule `json:"rules,omitempty"`
 }
 
 func (o *PolicyInput) GetDescription() *string {
@@ -204,4 +215,11 @@ func (o *PolicyInput) GetReassignTasksToDelegates() *bool {
 		return nil
 	}
 	return o.ReassignTasksToDelegates
+}
+
+func (o *PolicyInput) GetRules() []Rule {
+	if o == nil {
+		return nil
+	}
+	return o.Rules
 }

@@ -11,7 +11,7 @@ type ConnectorInput struct {
 	// The status field on the connector is used to track the status of the connectors sync, and when syncing last started, completed, or caused the connector to update.
 	ConnectorStatus *ConnectorStatus `json:"status,omitempty"`
 	// OAuth2AuthorizedAs tracks the user that OAuthed with the connector.
-	OAuth2AuthorizedAs *OAuth2AuthorizedAs1 `json:"oauthAuthorizedAs,omitempty"`
+	OAuth2AuthorizedAs *OAuth2AuthorizedAsInput `json:"oauthAuthorizedAs,omitempty"`
 	// The id of the app the connector is associated with.
 	AppID *string `json:"appId,omitempty"`
 	// Contains an arbitrary serialized message along with a @type that describes the type of the serialized message.
@@ -33,7 +33,7 @@ func (o *ConnectorInput) GetConnectorStatus() *ConnectorStatus {
 	return o.ConnectorStatus
 }
 
-func (o *ConnectorInput) GetOAuth2AuthorizedAs() *OAuth2AuthorizedAs1 {
+func (o *ConnectorInput) GetOAuth2AuthorizedAs() *OAuth2AuthorizedAsInput {
 	if o == nil {
 		return nil
 	}
@@ -82,7 +82,7 @@ func (o *ConnectorInput) GetUserIds() []string {
 	return o.UserIds
 }
 
-// Connector - A Connector is used to sync objects into Apps
+// A Connector is used to sync objects into Apps
 type Connector struct {
 	// The status field on the connector is used to track the status of the connectors sync, and when syncing last started, completed, or caused the connector to update.
 	ConnectorStatus *ConnectorStatus `json:"status,omitempty"`

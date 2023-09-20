@@ -7,104 +7,6 @@ import (
 	"fmt"
 )
 
-// C1APIPolicyV1CreatePolicyRequestPolicyType - The enum of the policy type.
-type C1APIPolicyV1CreatePolicyRequestPolicyType string
-
-const (
-	C1APIPolicyV1CreatePolicyRequestPolicyTypePolicyTypeUnspecified   C1APIPolicyV1CreatePolicyRequestPolicyType = "POLICY_TYPE_UNSPECIFIED"
-	C1APIPolicyV1CreatePolicyRequestPolicyTypePolicyTypeGrant         C1APIPolicyV1CreatePolicyRequestPolicyType = "POLICY_TYPE_GRANT"
-	C1APIPolicyV1CreatePolicyRequestPolicyTypePolicyTypeRevoke        C1APIPolicyV1CreatePolicyRequestPolicyType = "POLICY_TYPE_REVOKE"
-	C1APIPolicyV1CreatePolicyRequestPolicyTypePolicyTypeCertify       C1APIPolicyV1CreatePolicyRequestPolicyType = "POLICY_TYPE_CERTIFY"
-	C1APIPolicyV1CreatePolicyRequestPolicyTypePolicyTypeAccessRequest C1APIPolicyV1CreatePolicyRequestPolicyType = "POLICY_TYPE_ACCESS_REQUEST"
-	C1APIPolicyV1CreatePolicyRequestPolicyTypePolicyTypeProvision     C1APIPolicyV1CreatePolicyRequestPolicyType = "POLICY_TYPE_PROVISION"
-)
-
-func (e C1APIPolicyV1CreatePolicyRequestPolicyType) ToPointer() *C1APIPolicyV1CreatePolicyRequestPolicyType {
-	return &e
-}
-
-func (e *C1APIPolicyV1CreatePolicyRequestPolicyType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "POLICY_TYPE_UNSPECIFIED":
-		fallthrough
-	case "POLICY_TYPE_GRANT":
-		fallthrough
-	case "POLICY_TYPE_REVOKE":
-		fallthrough
-	case "POLICY_TYPE_CERTIFY":
-		fallthrough
-	case "POLICY_TYPE_ACCESS_REQUEST":
-		fallthrough
-	case "POLICY_TYPE_PROVISION":
-		*e = C1APIPolicyV1CreatePolicyRequestPolicyType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for C1APIPolicyV1CreatePolicyRequestPolicyType: %v", v)
-	}
-}
-
-// CreatePolicyRequest - The CreatePolicyRequest message is used to create a new policy.
-type CreatePolicyRequest struct {
-	// The description of the new policy.
-	Description *string `json:"description,omitempty"`
-	// The display name of the new policy.
-	DisplayName *string `json:"displayName,omitempty"`
-	// The map of policy type to policy steps. The key is the stringified version of the enum. See other policies for examples.
-	PolicySteps map[string]PolicySteps `json:"policySteps,omitempty"`
-	// The enum of the policy type.
-	PolicyType *C1APIPolicyV1CreatePolicyRequestPolicyType `json:"policyType,omitempty"`
-	// Actions to occur after a policy finishes. As of now this is only valid on a certify policy to remediate a denied certification immediately.
-	PostActions []PolicyPostActions `json:"postActions,omitempty"`
-	// Allows reassigning tasks to delegates.
-	ReassignTasksToDelegates *bool `json:"reassignTasksToDelegates,omitempty"`
-}
-
-func (o *CreatePolicyRequest) GetDescription() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Description
-}
-
-func (o *CreatePolicyRequest) GetDisplayName() *string {
-	if o == nil {
-		return nil
-	}
-	return o.DisplayName
-}
-
-func (o *CreatePolicyRequest) GetPolicySteps() map[string]PolicySteps {
-	if o == nil {
-		return nil
-	}
-	return o.PolicySteps
-}
-
-func (o *CreatePolicyRequest) GetPolicyType() *C1APIPolicyV1CreatePolicyRequestPolicyType {
-	if o == nil {
-		return nil
-	}
-	return o.PolicyType
-}
-
-func (o *CreatePolicyRequest) GetPostActions() []PolicyPostActions {
-	if o == nil {
-		return nil
-	}
-	return o.PostActions
-}
-
-func (o *CreatePolicyRequest) GetReassignTasksToDelegates() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.ReassignTasksToDelegates
-}
-
 // CreatePolicyRequestPolicyType - The enum of the policy type.
 type CreatePolicyRequestPolicyType string
 
@@ -143,6 +45,64 @@ func (e *CreatePolicyRequestPolicyType) UnmarshalJSON(data []byte) error {
 	default:
 		return fmt.Errorf("invalid value for CreatePolicyRequestPolicyType: %v", v)
 	}
+}
+
+// The CreatePolicyRequest message is used to create a new policy.
+type CreatePolicyRequest struct {
+	// The description of the new policy.
+	Description *string `json:"description,omitempty"`
+	// The display name of the new policy.
+	DisplayName *string `json:"displayName,omitempty"`
+	// The map of policy type to policy steps. The key is the stringified version of the enum. See other policies for examples.
+	PolicySteps map[string]PolicySteps `json:"policySteps,omitempty"`
+	// The enum of the policy type.
+	PolicyType *CreatePolicyRequestPolicyType `json:"policyType,omitempty"`
+	// Actions to occur after a policy finishes. As of now this is only valid on a certify policy to remediate a denied certification immediately.
+	PostActions []PolicyPostActions `json:"postActions,omitempty"`
+	// Allows reassigning tasks to delegates.
+	ReassignTasksToDelegates *bool `json:"reassignTasksToDelegates,omitempty"`
+}
+
+func (o *CreatePolicyRequest) GetDescription() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Description
+}
+
+func (o *CreatePolicyRequest) GetDisplayName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.DisplayName
+}
+
+func (o *CreatePolicyRequest) GetPolicySteps() map[string]PolicySteps {
+	if o == nil {
+		return nil
+	}
+	return o.PolicySteps
+}
+
+func (o *CreatePolicyRequest) GetPolicyType() *CreatePolicyRequestPolicyType {
+	if o == nil {
+		return nil
+	}
+	return o.PolicyType
+}
+
+func (o *CreatePolicyRequest) GetPostActions() []PolicyPostActions {
+	if o == nil {
+		return nil
+	}
+	return o.PostActions
+}
+
+func (o *CreatePolicyRequest) GetReassignTasksToDelegates() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.ReassignTasksToDelegates
 }
 
 // CreatePolicyRequestInput - The CreatePolicyRequest message is used to create a new policy.

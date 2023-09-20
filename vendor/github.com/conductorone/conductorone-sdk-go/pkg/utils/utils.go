@@ -12,6 +12,8 @@ import (
 	"strings"
 	"time"
 
+	"github.com/ericlagergren/decimal"
+
 	"github.com/conductorone/conductorone-sdk-go/pkg/types"
 )
 
@@ -131,6 +133,10 @@ func valToString(val interface{}) string {
 		return v.String()
 	case big.Int:
 		return v.String()
+	case types.Decimal:
+		return v.String()
+	case decimal.Big:
+		return v.String()
 	default:
 		return fmt.Sprintf("%v", v)
 	}
@@ -153,4 +159,12 @@ func populateFromGlobals(fieldType reflect.StructField, valType reflect.Value, p
 	}
 
 	return valType
+}
+
+func isNil(typ reflect.Type, val reflect.Value) bool {
+	if typ.Kind() == reflect.Ptr || typ.Kind() == reflect.Map || typ.Kind() == reflect.Slice || typ.Kind() == reflect.Interface {
+		return val.IsNil()
+	}
+
+	return false
 }

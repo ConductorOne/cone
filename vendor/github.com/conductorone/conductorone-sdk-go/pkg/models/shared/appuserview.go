@@ -2,7 +2,7 @@
 
 package shared
 
-// AppUserView - The AppUserView contains an app user as well as paths for apps, identity users, and last usage in expanded arrays.
+// The AppUserView contains an app user as well as paths for apps, identity users, and last usage in expanded arrays.
 type AppUserView struct {
 	// Application User that represents an account in the application.
 	AppUser *AppUser `json:"appUser,omitempty"`

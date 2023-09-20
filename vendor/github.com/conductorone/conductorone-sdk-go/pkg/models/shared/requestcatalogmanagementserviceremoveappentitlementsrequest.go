@@ -2,7 +2,7 @@
 
 package shared
 
-// RequestCatalogManagementServiceRemoveAppEntitlementsRequest - The RequestCatalogManagementServiceRemoveAppEntitlementsRequest message is used to remove app entitlements from a request catalog.
+// The RequestCatalogManagementServiceRemoveAppEntitlementsRequest message is used to remove app entitlements from a request catalog.
 type RequestCatalogManagementServiceRemoveAppEntitlementsRequest struct {
 	// The list of app entitlements to remove from the catalog.
 	AppEntitlements []AppEntitlementRef `json:"appEntitlements,omitempty"`

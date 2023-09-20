@@ -2,7 +2,7 @@
 
 package shared
 
-// ConnectorServiceCreateDelegatedRequest - The ConnectorServiceCreateDelegatedRequest message contains the fields required to create a connector.
+// The ConnectorServiceCreateDelegatedRequest message contains the fields required to create a connector.
 type ConnectorServiceCreateDelegatedRequest struct {
 	// The ConnectorExpandMask is used to expand related objects on a connector.
 	ConnectorExpandMask *ConnectorExpandMask `json:"expandMask,omitempty"`

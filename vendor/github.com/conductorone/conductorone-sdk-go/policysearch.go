@@ -25,7 +25,7 @@ func newPolicySearch(sdkConfig sdkConfiguration) *policySearch {
 	}
 }
 
-// Search - Search
+// Search
 // Search policies based on filters specified in the request body.
 func (s *policySearch) Search(ctx context.Context, request shared.SearchPoliciesRequest) (*operations.C1APIPolicyV1PolicySearchSearchResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())

@@ -2,7 +2,7 @@
 
 package shared
 
-// UserAttributeMappingSource - The UserAttributeMappingSource message.
+// The UserAttributeMappingSource message.
 type UserAttributeMappingSource struct {
 	// The appId field.
 	AppID *string `json:"appId,omitempty"`

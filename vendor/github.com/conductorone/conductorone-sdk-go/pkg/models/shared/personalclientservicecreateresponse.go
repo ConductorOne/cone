@@ -2,7 +2,7 @@
 
 package shared
 
-// PersonalClientServiceCreateResponse - The PersonalClientServiceCreateResponse message contains the created personal client and client secret.
+// The PersonalClientServiceCreateResponse message contains the created personal client and client secret.
 type PersonalClientServiceCreateResponse struct {
 	// The PersonalClient message contains information about a presonal client credential.
 	PersonalClient *PersonalClient `json:"client,omitempty"`

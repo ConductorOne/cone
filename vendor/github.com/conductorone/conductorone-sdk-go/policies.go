@@ -25,7 +25,7 @@ func newPolicies(sdkConfig sdkConfiguration) *policies {
 	}
 }
 
-// Create - Create
+// Create
 // Create a policy.
 func (s *policies) Create(ctx context.Context, request shared.CreatePolicyRequestInput) (*operations.C1APIPolicyV1PoliciesCreateResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
@@ -87,7 +87,7 @@ func (s *policies) Create(ctx context.Context, request shared.CreatePolicyReques
 	return res, nil
 }
 
-// Delete - Delete
+// Delete
 // Delete a policy by ID.
 func (s *policies) Delete(ctx context.Context, request operations.C1APIPolicyV1PoliciesDeleteRequest) (*operations.C1APIPolicyV1PoliciesDeleteResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
@@ -152,7 +152,7 @@ func (s *policies) Delete(ctx context.Context, request operations.C1APIPolicyV1P
 	return res, nil
 }
 
-// Get - Get
+// Get
 // Get a policy by ID.
 func (s *policies) Get(ctx context.Context, request operations.C1APIPolicyV1PoliciesGetRequest) (*operations.C1APIPolicyV1PoliciesGetResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
@@ -210,7 +210,7 @@ func (s *policies) Get(ctx context.Context, request operations.C1APIPolicyV1Poli
 	return res, nil
 }
 
-// List - List
+// List
 // List policies.
 func (s *policies) List(ctx context.Context, request operations.C1APIPolicyV1PoliciesListRequest) (*operations.C1APIPolicyV1PoliciesListResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
@@ -269,7 +269,7 @@ func (s *policies) List(ctx context.Context, request operations.C1APIPolicyV1Pol
 	return res, nil
 }
 
-// Update - Update
+// Update
 // Update a policy by providing a policy object and an update mask.
 func (s *policies) Update(ctx context.Context, request operations.C1APIPolicyV1PoliciesUpdateRequest) (*operations.C1APIPolicyV1PoliciesUpdateResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())

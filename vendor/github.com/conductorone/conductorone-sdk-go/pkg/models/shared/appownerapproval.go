@@ -14,3 +14,7 @@ func (o *AppOwnerApproval) GetAllowSelfApproval() *bool {
 	}
 	return o.AllowSelfApproval
 }
+
+// AppOwnerApprovalInput - App owner approval provides the configuration for an approval step when the app owner is the target.
+type AppOwnerApprovalInput struct {
+}

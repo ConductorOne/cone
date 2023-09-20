@@ -24,7 +24,7 @@ func newConnector(sdkConfig sdkConfiguration) *connector {
 	}
 }
 
-// Create - Create
+// Create
 // Create a configured connector.
 func (s *connector) Create(ctx context.Context, request operations.C1APIAppV1ConnectorServiceCreateRequest) (*operations.C1APIAppV1ConnectorServiceCreateResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
@@ -154,7 +154,7 @@ func (s *connector) CreateDelegated(ctx context.Context, request operations.C1AP
 	return res, nil
 }
 
-// Delete - Delete
+// Delete
 // Delete a connector.
 func (s *connector) Delete(ctx context.Context, request operations.C1APIAppV1ConnectorServiceDeleteRequest) (*operations.C1APIAppV1ConnectorServiceDeleteResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
@@ -219,7 +219,7 @@ func (s *connector) Delete(ctx context.Context, request operations.C1APIAppV1Con
 	return res, nil
 }
 
-// Get - Get
+// Get
 // Get a connector.
 func (s *connector) Get(ctx context.Context, request operations.C1APIAppV1ConnectorServiceGetRequest) (*operations.C1APIAppV1ConnectorServiceGetResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
@@ -335,7 +335,7 @@ func (s *connector) GetCredentials(ctx context.Context, request operations.C1API
 	return res, nil
 }
 
-// List - List
+// List
 // List connectors for an app.
 func (s *connector) List(ctx context.Context, request operations.C1APIAppV1ConnectorServiceListRequest) (*operations.C1APIAppV1ConnectorServiceListResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
@@ -527,7 +527,7 @@ func (s *connector) RotateCredential(ctx context.Context, request operations.C1A
 	return res, nil
 }
 
-// Update - Update
+// Update
 // Update a connector.
 func (s *connector) Update(ctx context.Context, request operations.C1APIAppV1ConnectorServiceUpdateRequest) (*operations.C1APIAppV1ConnectorServiceUpdateResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())

@@ -2,7 +2,7 @@
 
 package shared
 
-// ConnectorServiceGetCredentialsResponse - ConnectorServiceGetCredentialsResponse is the response returned by the get method.
+// ConnectorServiceGetCredentialsResponse is the response returned by the get method.
 type ConnectorServiceGetCredentialsResponse struct {
 	// ConnectorCredential is used by a connector to authenticate with conductor one.
 	ConnectorCredential *ConnectorCredential `json:"credential,omitempty"`

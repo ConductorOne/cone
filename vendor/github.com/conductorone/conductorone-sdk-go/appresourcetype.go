@@ -24,7 +24,7 @@ func newAppResourceType(sdkConfig sdkConfiguration) *appResourceType {
 	}
 }
 
-// Get - Get
+// Get
 // Get an app resource type.
 func (s *appResourceType) Get(ctx context.Context, request operations.C1APIAppV1AppResourceTypeServiceGetRequest) (*operations.C1APIAppV1AppResourceTypeServiceGetResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
@@ -82,7 +82,7 @@ func (s *appResourceType) Get(ctx context.Context, request operations.C1APIAppV1
 	return res, nil
 }
 
-// List - List
+// List
 // List app resource types.
 func (s *appResourceType) List(ctx context.Context, request operations.C1APIAppV1AppResourceTypeServiceListRequest) (*operations.C1APIAppV1AppResourceTypeServiceListResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())

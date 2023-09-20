@@ -25,7 +25,7 @@ func newPersonalClient(sdkConfig sdkConfiguration) *personalClient {
 	}
 }
 
-// Create - Create
+// Create
 // Create creates a new PersonalClient object for the current User.
 func (s *personalClient) Create(ctx context.Context, request shared.PersonalClientServiceCreateRequest) (*operations.C1APIIamV1PersonalClientServiceCreateResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())

@@ -24,7 +24,7 @@ func newTaskActions(sdkConfig sdkConfiguration) *taskActions {
 	}
 }
 
-// Approve - Approve
+// Approve
 // Invokes the c1.api.task.v1.TaskActionsService.Approve method.
 func (s *taskActions) Approve(ctx context.Context, request operations.C1APITaskV1TaskActionsServiceApproveRequest) (*operations.C1APITaskV1TaskActionsServiceApproveResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
@@ -89,7 +89,7 @@ func (s *taskActions) Approve(ctx context.Context, request operations.C1APITaskV
 	return res, nil
 }
 
-// Comment - Comment
+// Comment
 // Invokes the c1.api.task.v1.TaskActionsService.Comment method.
 func (s *taskActions) Comment(ctx context.Context, request operations.C1APITaskV1TaskActionsServiceCommentRequest) (*operations.C1APITaskV1TaskActionsServiceCommentResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
@@ -154,7 +154,7 @@ func (s *taskActions) Comment(ctx context.Context, request operations.C1APITaskV
 	return res, nil
 }
 
-// Deny - Deny
+// Deny
 // Invokes the c1.api.task.v1.TaskActionsService.Deny method.
 func (s *taskActions) Deny(ctx context.Context, request operations.C1APITaskV1TaskActionsServiceDenyRequest) (*operations.C1APITaskV1TaskActionsServiceDenyResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())

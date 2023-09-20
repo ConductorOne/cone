@@ -2,7 +2,7 @@
 
 package shared
 
-// ConnectorServiceRotateCredentialResponse - ConnectorServiceRotateCredentialResponse is the response returned by the rotate method.
+// ConnectorServiceRotateCredentialResponse is the response returned by the rotate method.
 type ConnectorServiceRotateCredentialResponse struct {
 	// ConnectorCredential is used by a connector to authenticate with conductor one.
 	ConnectorCredential *ConnectorCredential `json:"credential,omitempty"`

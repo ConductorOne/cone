@@ -6,6 +6,8 @@ package shared
 type TaskServiceCreateGrantRequest struct {
 	// The task expand mask is an array of strings that specifes the related objects the requester wishes to have returned when making a request where the expand mask is part of the input. Use '*' to view all possible responses.
 	TaskExpandMask *TaskExpandMask `json:"expandMask,omitempty"`
+	// The TaskGrantSource message tracks which external URL was the source of the specificed grant ticket.
+	TaskGrantSource *TaskGrantSource `json:"source,omitempty"`
 	// The ID of the app entitlement to grant access to.
 	AppEntitlementID string `json:"appEntitlementId"`
 	// The ID of the app that is associated with the entitlement.
@@ -26,6 +28,13 @@ func (o *TaskServiceCreateGrantRequest) GetTaskExpandMask() *TaskExpandMask {
 		return nil
 	}
 	return o.TaskExpandMask
+}
+
+func (o *TaskServiceCreateGrantRequest) GetTaskGrantSource() *TaskGrantSource {
+	if o == nil {
+		return nil
+	}
+	return o.TaskGrantSource
 }
 
 func (o *TaskServiceCreateGrantRequest) GetAppEntitlementID() string {

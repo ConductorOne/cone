@@ -20,6 +20,8 @@ type AppEntitlementSearchServiceSearchRequest struct {
 	ExcludeAppIds []string `json:"excludeAppIds,omitempty"`
 	// Exclude app entitlements from the results that these app users have granted.
 	ExcludeAppUserIds []string `json:"excludeAppUserIds,omitempty"`
+	// Include deleted app entitlements, this includes app entitlements that have a deleted parent object (app, app resource, app resource type)
+	IncludeDeleted *bool `json:"includeDeleted,omitempty"`
 	// Restrict results to only those who have expiring app entitlement user bindings.
 	OnlyGetExpiring *bool `json:"onlyGetExpiring,omitempty"`
 	// The pageSize where 0 <= pageSize <= 100. Values < 10 will be set to 10. A value of 0 returns the default page size (currently 25)
@@ -88,6 +90,13 @@ func (o *AppEntitlementSearchServiceSearchRequest) GetExcludeAppUserIds() []stri
 		return nil
 	}
 	return o.ExcludeAppUserIds
+}
+
+func (o *AppEntitlementSearchServiceSearchRequest) GetIncludeDeleted() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.IncludeDeleted
 }
 
 func (o *AppEntitlementSearchServiceSearchRequest) GetOnlyGetExpiring() *bool {

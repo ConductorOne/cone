@@ -2,7 +2,7 @@
 
 package shared
 
-// AppEntitlementRef - The AppEntitlementRef message.
+// The AppEntitlementRef message.
 type AppEntitlementRef struct {
 	// The appId field.
 	AppID *string `json:"appId,omitempty"`

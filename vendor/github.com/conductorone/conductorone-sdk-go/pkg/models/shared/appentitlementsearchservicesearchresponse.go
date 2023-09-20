@@ -2,7 +2,7 @@
 
 package shared
 
-// AppEntitlementSearchServiceSearchResponse - The AppEntitlementSearchServiceSearchResponse message.
+// The AppEntitlementSearchServiceSearchResponse message.
 type AppEntitlementSearchServiceSearchResponse struct {
 	// Indicates one value of a facet.
 	Facets *Facets `json:"facets,omitempty"`

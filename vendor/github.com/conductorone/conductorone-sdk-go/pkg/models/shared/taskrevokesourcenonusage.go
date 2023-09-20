@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-// TaskRevokeSourceNonUsage - The TaskRevokeSourceNonUsage message indicates that the source of the revoke task is due to the grant not being used.
+// The TaskRevokeSourceNonUsage message indicates that the source of the revoke task is due to the grant not being used.
 type TaskRevokeSourceNonUsage struct {
 	ExpiresAt *time.Time `json:"expiresAt,omitempty"`
 	LastLogin *time.Time `json:"lastLogin,omitempty"`

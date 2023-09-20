@@ -25,7 +25,7 @@ func newRoles(sdkConfig sdkConfiguration) *roles {
 	}
 }
 
-// Get - Get
+// Get
 // Get a role by id.
 func (s *roles) Get(ctx context.Context, request operations.C1APIIamV1RolesGetRequest) (*operations.C1APIIamV1RolesGetResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
@@ -83,7 +83,7 @@ func (s *roles) Get(ctx context.Context, request operations.C1APIIamV1RolesGetRe
 	return res, nil
 }
 
-// List - List
+// List
 // List all roles for the current user.
 func (s *roles) List(ctx context.Context, request operations.C1APIIamV1RolesListRequest) (*operations.C1APIIamV1RolesListResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
@@ -142,7 +142,7 @@ func (s *roles) List(ctx context.Context, request operations.C1APIIamV1RolesList
 	return res, nil
 }
 
-// Update - Update
+// Update
 // Update a role by passing a Role object.
 func (s *roles) Update(ctx context.Context, request operations.C1APIIamV1RolesUpdateRequest) (*operations.C1APIIamV1RolesUpdateResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())

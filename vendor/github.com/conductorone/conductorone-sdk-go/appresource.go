@@ -24,7 +24,7 @@ func newAppResource(sdkConfig sdkConfiguration) *appResource {
 	}
 }
 
-// Get - Get
+// Get
 // Invokes the c1.api.app.v1.AppResourceService.Get method.
 func (s *appResource) Get(ctx context.Context, request operations.C1APIAppV1AppResourceServiceGetRequest) (*operations.C1APIAppV1AppResourceServiceGetResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
@@ -82,7 +82,7 @@ func (s *appResource) Get(ctx context.Context, request operations.C1APIAppV1AppR
 	return res, nil
 }
 
-// List - List
+// List
 // Invokes the c1.api.app.v1.AppResourceService.List method.
 func (s *appResource) List(ctx context.Context, request operations.C1APIAppV1AppResourceServiceListRequest) (*operations.C1APIAppV1AppResourceServiceListResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())

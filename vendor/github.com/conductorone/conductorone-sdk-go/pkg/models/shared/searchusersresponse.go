@@ -2,7 +2,7 @@
 
 package shared
 
-// SearchUsersResponse - The SearchUsersResponse message.
+// The SearchUsersResponse message.
 type SearchUsersResponse struct {
 	// List of related objects
 	Expanded []map[string]interface{} `json:"expanded,omitempty"`
@@ -10,8 +10,6 @@ type SearchUsersResponse struct {
 	List []UserView `json:"list,omitempty"`
 	// The nextPageToken is shown for the next page if the number of results is larger than the max page size. The server returns one page of results and the nextPageToken until all results are retreived. To retrieve the next page, use the same request and append a pageToken field with the value of nextPageToken shown on the previous page.
 	NextPageToken *string `json:"nextPageToken,omitempty"`
-	// Deprecated
-	NotificationToken *string `json:"notificationToken,omitempty"`
 }
 
 func (o *SearchUsersResponse) GetExpanded() []map[string]interface{} {
@@ -33,11 +31,4 @@ func (o *SearchUsersResponse) GetNextPageToken() *string {
 		return nil
 	}
 	return o.NextPageToken
-}
-
-func (o *SearchUsersResponse) GetNotificationToken() *string {
-	if o == nil {
-		return nil
-	}
-	return o.NotificationToken
 }

@@ -2,7 +2,7 @@
 
 package shared
 
-// FacetCategory - The FacetCategory indicates a grouping of facets by type. For example, facets "OnePassword" and "Okta" would group under an "Apps" category.
+// The FacetCategory indicates a grouping of facets by type. For example, facets "OnePassword" and "Okta" would group under an "Apps" category.
 //
 // This message contains a oneof named item. Only a single field of the following list may be set at a time:
 //   - value

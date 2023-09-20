@@ -20,68 +20,30 @@ import(
 	"log"
 	"github.com/conductorone/conductorone-sdk-go"
 	"github.com/conductorone/conductorone-sdk-go/pkg/models/shared"
+	"github.com/conductorone/conductorone-sdk-go/pkg/models/operations"
 )
 
 func main() {
     s := conductoroneapi.New(
         conductoroneapi.WithSecurity(shared.Security{
+            BearerAuth: "",
             Oauth: "",
         }),
     )
 
     ctx := context.Background()
-    res, err := s.AppEntitlementSearch.Search(ctx, shared.AppEntitlementSearchServiceSearchRequest{
-        AppEntitlementExpandMask: &shared.AppEntitlementExpandMask{
-            Paths: []string{
-                "provident",
-                "distinctio",
-                "quibusdam",
-            },
+    res, err := s.AppEntitlementOwners.Add(ctx, operations.C1APIAppV1AppEntitlementOwnersAddRequest{
+        AddAppEntitlementOwnerRequest: &shared.AddAppEntitlementOwnerRequest{
+            UserID: conductoroneapi.String("corrupti"),
         },
-        AccessReviewID: conductoroneapi.String("unde"),
-        Alias: conductoroneapi.String("nulla"),
-        AppIds: []string{
-            "illum",
-            "vel",
-            "error",
-        },
-        AppUserIds: []string{
-            "suscipit",
-            "iure",
-            "magnam",
-        },
-        ComplianceFrameworkIds: []string{
-            "ipsa",
-            "delectus",
-            "tempora",
-            "suscipit",
-        },
-        ExcludeAppIds: []string{
-            "minus",
-            "placeat",
-        },
-        ExcludeAppUserIds: []string{
-            "iusto",
-            "excepturi",
-            "nisi",
-        },
-        OnlyGetExpiring: conductoroneapi.Bool(false),
-        PageSize: conductoroneapi.Float64(9255.97),
-        PageToken: conductoroneapi.String("temporibus"),
-        Query: conductoroneapi.String("ab"),
-        ResourceTypeIds: []string{
-            "veritatis",
-            "deserunt",
-        },
-        RiskLevelIds: []string{
-            "ipsam",
-        },
+        AppID: "provident",
+        EntitlementID: "distinctio",
     })
     if err != nil {
         log.Fatal(err)
     }
 
-    if res.AppEntitlementSearchServiceSearchResponse != nil {
+    if res.AddAppEntitlementOwnerResponse != nil {
         // handle response
     }
 }
@@ -91,6 +53,13 @@ func main() {
 <!-- Start SDK Available Operations -->
 ## Available Resources and Operations
 
+
+### [AppEntitlementOwners](docs/sdks/appentitlementowners/README.md)
+
+* [Add](docs/sdks/appentitlementowners/README.md#add) - Add
+* [List](docs/sdks/appentitlementowners/README.md#list) - List
+* [Remove](docs/sdks/appentitlementowners/README.md#remove) - Remove
+* [Set](docs/sdks/appentitlementowners/README.md#set) - Set
 
 ### [AppEntitlementSearch](docs/sdks/appentitlementsearch/README.md)
 
@@ -106,7 +75,6 @@ func main() {
 * [List](docs/sdks/appentitlements/README.md#list) - List
 * [ListForAppResource](docs/sdks/appentitlements/README.md#listforappresource) - List For App Resource
 * [ListForAppUser](docs/sdks/appentitlements/README.md#listforappuser) - List For App User
-* [ListGroups](docs/sdks/appentitlements/README.md#listgroups) - List Groups
 * [ListUsers](docs/sdks/appentitlements/README.md#listusers) - List Users
 * [Update](docs/sdks/appentitlements/README.md#update) - Update
 
@@ -151,6 +119,10 @@ func main() {
 * [Get](docs/sdks/appusagecontrols/README.md#get) - Get
 * [Update](docs/sdks/appusagecontrols/README.md#update) - Update
 
+### [AppUser](docs/sdks/appuser/README.md)
+
+* [Update](docs/sdks/appuser/README.md#update) - Update
+
 ### [Apps](docs/sdks/apps/README.md)
 
 * [Create](docs/sdks/apps/README.md#create) - Create
@@ -158,6 +130,18 @@ func main() {
 * [Get](docs/sdks/apps/README.md#get) - Get
 * [List](docs/sdks/apps/README.md#list) - List
 * [Update](docs/sdks/apps/README.md#update) - Update
+
+### [AttributeSearch](docs/sdks/attributesearch/README.md)
+
+* [SearchAttributeValues](docs/sdks/attributesearch/README.md#searchattributevalues) - Search Attribute Values
+
+### [Attributes](docs/sdks/attributes/README.md)
+
+* [CreateAttributeValue](docs/sdks/attributes/README.md#createattributevalue) - Create Attribute Value
+* [DeleteAttributeValue](docs/sdks/attributes/README.md#deleteattributevalue) - Delete Attribute Value
+* [GetAttributeValue](docs/sdks/attributes/README.md#getattributevalue) - Get Attribute Value
+* [ListAttributeTypes](docs/sdks/attributes/README.md#listattributetypes) - List Attribute Types
+* [ListAttributeValues](docs/sdks/attributes/README.md#listattributevalues) - List Attribute Values
 
 ### [Auth](docs/sdks/auth/README.md)
 
@@ -206,6 +190,7 @@ func main() {
 * [Create](docs/sdks/requestcatalogmanagement/README.md#create) - Create
 * [Delete](docs/sdks/requestcatalogmanagement/README.md#delete) - Delete
 * [Get](docs/sdks/requestcatalogmanagement/README.md#get) - Get
+* [List](docs/sdks/requestcatalogmanagement/README.md#list) - List
 * [ListEntitlementsForAccess](docs/sdks/requestcatalogmanagement/README.md#listentitlementsforaccess) - List Entitlements For Access
 * [ListEntitlementsPerCatalog](docs/sdks/requestcatalogmanagement/README.md#listentitlementspercatalog) - List Entitlements Per Catalog
 * [RemoveAccessEntitlements](docs/sdks/requestcatalogmanagement/README.md#removeaccessentitlements) - Remove Access Entitlements

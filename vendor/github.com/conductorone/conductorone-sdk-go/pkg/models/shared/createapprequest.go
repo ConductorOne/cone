@@ -2,7 +2,7 @@
 
 package shared
 
-// CreateAppRequest - The CreateAppRequest message is used to create a new app.
+// The CreateAppRequest message is used to create a new app.
 type CreateAppRequest struct {
 	// Creates the app with this certify policy.
 	CertifyPolicyID *string `json:"certifyPolicyId,omitempty"`

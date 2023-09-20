@@ -2,7 +2,7 @@
 
 package shared
 
-// FacetValue - A FacetValue message contains count and value of the facet entry.
+// A FacetValue message contains count and value of the facet entry.
 type FacetValue struct {
 	// The count of the values in this facet.
 	Count *string `json:"count,omitempty"`

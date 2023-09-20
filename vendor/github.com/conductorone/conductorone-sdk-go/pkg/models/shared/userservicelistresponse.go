@@ -2,7 +2,7 @@
 
 package shared
 
-// UserServiceListResponse - The UserServiceListResponse message contains a list of results and a nextPageToken if applicable.
+// The UserServiceListResponse message contains a list of results and a nextPageToken if applicable.
 type UserServiceListResponse struct {
 	// List of serialized related objects.
 	Expanded []map[string]interface{} `json:"expanded,omitempty"`
@@ -12,8 +12,6 @@ type UserServiceListResponse struct {
 	//  The server returns one page of results and the nextPageToken until all results are retreived.
 	//  To retrieve the next page, use the same request and append a pageToken field with the value of nextPageToken shown on the previous page.
 	NextPageToken *string `json:"nextPageToken,omitempty"`
-	// Deprecated.
-	NotificationToken *string `json:"notificationToken,omitempty"`
 }
 
 func (o *UserServiceListResponse) GetExpanded() []map[string]interface{} {
@@ -35,11 +33,4 @@ func (o *UserServiceListResponse) GetNextPageToken() *string {
 		return nil
 	}
 	return o.NextPageToken
-}
-
-func (o *UserServiceListResponse) GetNotificationToken() *string {
-	if o == nil {
-		return nil
-	}
-	return o.NotificationToken
 }

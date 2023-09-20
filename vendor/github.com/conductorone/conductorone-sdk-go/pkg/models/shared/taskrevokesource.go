@@ -2,7 +2,7 @@
 
 package shared
 
-// TaskRevokeSource - The TaskRevokeSource message indicates the source of the revoke task is one of expired, nonUsage, request, or review.
+// The TaskRevokeSource message indicates the source of the revoke task is one of expired, nonUsage, request, or review.
 //
 // This message contains a oneof named origin. Only a single field of the following list may be set at a time:
 //   - review

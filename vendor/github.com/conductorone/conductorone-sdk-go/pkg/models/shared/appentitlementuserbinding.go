@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-// AppEntitlementUserBinding - The AppEntitlementUserBinding represents the relationship that gives an app user access to an app entitlement
+// The AppEntitlementUserBinding represents the relationship that gives an app user access to an app entitlement
 type AppEntitlementUserBinding struct {
 	// The ID of the app entitlement that the app user has access to
 	AppEntitlementID *string `json:"appEntitlementId,omitempty"`

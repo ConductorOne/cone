@@ -2,7 +2,7 @@
 
 package shared
 
-// ListAppEntitlementsResponse - The ListAppEntitlementsResponse message contains a list of results and a nextPageToken if applicable.
+// The ListAppEntitlementsResponse message contains a list of results and a nextPageToken if applicable.
 type ListAppEntitlementsResponse struct {
 	// List of related objects
 	Expanded []map[string]interface{} `json:"expanded,omitempty"`

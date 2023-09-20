@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-// AppResourceType - The AppResourceType is referenced by an app entitlement defining its resource types. Commonly things like Group or Role.
+// The AppResourceType is referenced by an app entitlement defining its resource types. Commonly things like Group or Role.
 type AppResourceType struct {
 	// The ID of the app that is associated with the app resource type
 	AppID     *string    `json:"appId,omitempty"`

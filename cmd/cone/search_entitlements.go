@@ -49,7 +49,7 @@ func searchEntitlementsRun(cmd *cobra.Command, args []string) error {
 		EntitlementAlias: alias,
 		GrantedStatus:    grantedStatus,
 		AppDisplayName:   v.GetString(appDisplayNameFlag),
-		IncludeDeleted:   false,
+		IncludeDeleted:   v.GetBool(includeDeletedFlag),
 	})
 	if err != nil {
 		return err

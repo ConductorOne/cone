@@ -149,7 +149,7 @@ func (s *task) CreateRevokeTask(ctx context.Context, request shared.TaskServiceC
 	return res, nil
 }
 
-// Get - Get
+// Get
 // Get a task by ID
 func (s *task) Get(ctx context.Context, request operations.C1APITaskV1TaskServiceGetRequest) (*operations.C1APITaskV1TaskServiceGetResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())

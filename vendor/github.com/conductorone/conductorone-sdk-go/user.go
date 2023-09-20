@@ -25,7 +25,7 @@ func newUser(sdkConfig sdkConfiguration) *user {
 	}
 }
 
-// Get - Get
+// Get
 // Get a user by ID.
 func (s *user) Get(ctx context.Context, request operations.C1APIUserV1UserServiceGetRequest) (*operations.C1APIUserV1UserServiceGetResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
@@ -83,7 +83,7 @@ func (s *user) Get(ctx context.Context, request operations.C1APIUserV1UserServic
 	return res, nil
 }
 
-// List - List
+// List
 // List users.
 func (s *user) List(ctx context.Context, request operations.C1APIUserV1UserServiceListRequest) (*operations.C1APIUserV1UserServiceListResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())

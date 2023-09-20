@@ -2,7 +2,7 @@
 
 package shared
 
-// RequestCatalogSearchServiceSearchEntitlementsResponse - The RequestCatalogSearchServiceSearchEntitlementsResponse message contains a list of results and a nextPageToken if applicable.
+// The RequestCatalogSearchServiceSearchEntitlementsResponse message contains a list of results and a nextPageToken if applicable.
 type RequestCatalogSearchServiceSearchEntitlementsResponse struct {
 	// The list of results containing up to X results, where X is the page size defined in the request.
 	Expanded []map[string]interface{} `json:"expanded,omitempty"`

@@ -2,7 +2,7 @@
 
 package shared
 
-// UpdateAppEntitlementResponse - The UpdateAppEntitlementResponse message.
+// The UpdateAppEntitlementResponse message.
 type UpdateAppEntitlementResponse struct {
 	// The app entitlement view contains the serialized app entitlement and paths to objects referenced by the app entitlement.
 	AppEntitlementView *AppEntitlementView `json:"appEntitlementView,omitempty"`

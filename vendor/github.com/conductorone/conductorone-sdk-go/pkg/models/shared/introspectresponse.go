@@ -2,7 +2,7 @@
 
 package shared
 
-// IntrospectResponse - IntrospectResponse contains information about the current user who is authenticated.
+// IntrospectResponse contains information about the current user who is authenticated.
 type IntrospectResponse struct {
 	// The list of feature flags enabled for the tenant the logged in user belongs to.
 	Features []string `json:"features,omitempty"`

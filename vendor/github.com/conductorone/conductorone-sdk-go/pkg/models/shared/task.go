@@ -11,22 +11,24 @@ import (
 type TaskActions string
 
 const (
-	TaskActionsTaskActionTypeUnspecified                   TaskActions = "TASK_ACTION_TYPE_UNSPECIFIED"
-	TaskActionsTaskActionTypeClose                         TaskActions = "TASK_ACTION_TYPE_CLOSE"
-	TaskActionsTaskActionTypeApprove                       TaskActions = "TASK_ACTION_TYPE_APPROVE"
-	TaskActionsTaskActionTypeDeny                          TaskActions = "TASK_ACTION_TYPE_DENY"
-	TaskActionsTaskActionTypeComment                       TaskActions = "TASK_ACTION_TYPE_COMMENT"
-	TaskActionsTaskActionTypeDelete                        TaskActions = "TASK_ACTION_TYPE_DELETE"
-	TaskActionsTaskActionTypeReassign                      TaskActions = "TASK_ACTION_TYPE_REASSIGN"
-	TaskActionsTaskActionTypeRestart                       TaskActions = "TASK_ACTION_TYPE_RESTART"
-	TaskActionsTaskActionTypeSendReminder                  TaskActions = "TASK_ACTION_TYPE_SEND_REMINDER"
-	TaskActionsTaskActionTypeProvisionComplete             TaskActions = "TASK_ACTION_TYPE_PROVISION_COMPLETE"
-	TaskActionsTaskActionTypeProvisionCancelled            TaskActions = "TASK_ACTION_TYPE_PROVISION_CANCELLED"
-	TaskActionsTaskActionTypeProvisionErrored              TaskActions = "TASK_ACTION_TYPE_PROVISION_ERRORED"
-	TaskActionsTaskActionTypeProvisionAppUserTargetCreated TaskActions = "TASK_ACTION_TYPE_PROVISION_APP_USER_TARGET_CREATED"
-	TaskActionsTaskActionTypeRollbackSkipped               TaskActions = "TASK_ACTION_TYPE_ROLLBACK_SKIPPED"
-	TaskActionsTaskActionTypeHardReset                     TaskActions = "TASK_ACTION_TYPE_HARD_RESET"
-	TaskActionsTaskActionTypeEscalateToEmergencyAccess     TaskActions = "TASK_ACTION_TYPE_ESCALATE_TO_EMERGENCY_ACCESS"
+	TaskActionsTaskActionTypeUnspecified                              TaskActions = "TASK_ACTION_TYPE_UNSPECIFIED"
+	TaskActionsTaskActionTypeClose                                    TaskActions = "TASK_ACTION_TYPE_CLOSE"
+	TaskActionsTaskActionTypeApprove                                  TaskActions = "TASK_ACTION_TYPE_APPROVE"
+	TaskActionsTaskActionTypeDeny                                     TaskActions = "TASK_ACTION_TYPE_DENY"
+	TaskActionsTaskActionTypeComment                                  TaskActions = "TASK_ACTION_TYPE_COMMENT"
+	TaskActionsTaskActionTypeDelete                                   TaskActions = "TASK_ACTION_TYPE_DELETE"
+	TaskActionsTaskActionTypeReassign                                 TaskActions = "TASK_ACTION_TYPE_REASSIGN"
+	TaskActionsTaskActionTypeRestart                                  TaskActions = "TASK_ACTION_TYPE_RESTART"
+	TaskActionsTaskActionTypeSendReminder                             TaskActions = "TASK_ACTION_TYPE_SEND_REMINDER"
+	TaskActionsTaskActionTypeProvisionComplete                        TaskActions = "TASK_ACTION_TYPE_PROVISION_COMPLETE"
+	TaskActionsTaskActionTypeProvisionCancelled                       TaskActions = "TASK_ACTION_TYPE_PROVISION_CANCELLED"
+	TaskActionsTaskActionTypeProvisionErrored                         TaskActions = "TASK_ACTION_TYPE_PROVISION_ERRORED"
+	TaskActionsTaskActionTypeProvisionAppUserTargetCreated            TaskActions = "TASK_ACTION_TYPE_PROVISION_APP_USER_TARGET_CREATED"
+	TaskActionsTaskActionTypeRollbackSkipped                          TaskActions = "TASK_ACTION_TYPE_ROLLBACK_SKIPPED"
+	TaskActionsTaskActionTypeHardReset                                TaskActions = "TASK_ACTION_TYPE_HARD_RESET"
+	TaskActionsTaskActionTypeEscalateToEmergencyAccess                TaskActions = "TASK_ACTION_TYPE_ESCALATE_TO_EMERGENCY_ACCESS"
+	TaskActionsTaskActionTypeChangePolicy                             TaskActions = "TASK_ACTION_TYPE_CHANGE_POLICY"
+	TaskActionsTaskActionTypeRecalculateDenialFromBasePolicyDecisions TaskActions = "TASK_ACTION_TYPE_RECALCULATE_DENIAL_FROM_BASE_POLICY_DECISIONS"
 )
 
 func (e TaskActions) ToPointer() *TaskActions {
@@ -70,6 +72,10 @@ func (e *TaskActions) UnmarshalJSON(data []byte) error {
 	case "TASK_ACTION_TYPE_HARD_RESET":
 		fallthrough
 	case "TASK_ACTION_TYPE_ESCALATE_TO_EMERGENCY_ACCESS":
+		fallthrough
+	case "TASK_ACTION_TYPE_CHANGE_POLICY":
+		fallthrough
+	case "TASK_ACTION_TYPE_RECALCULATE_DENIAL_FROM_BASE_POLICY_DECISIONS":
 		*e = TaskActions(v)
 		return nil
 	default:
@@ -178,6 +184,8 @@ type Task struct {
 	ID *string `json:"id,omitempty"`
 	// A human-usable numeric ID of a task which can be included in place of the fully qualified task id in path parmeters (but not search queries).
 	NumericID *string `json:"numericId,omitempty"`
+	// The policy generation id refers to the current policy's generation ID. This is changed when the policy is changed on a task.
+	PolicyGenerationID *string `json:"policyGenerationId,omitempty"`
 	// The processing state of a task as defined by the `processing_enum`
 	Processing *TaskProcessing `json:"processing,omitempty"`
 	// The current state of the task as defined by the `state_enum`
@@ -292,6 +300,13 @@ func (o *Task) GetNumericID() *string {
 		return nil
 	}
 	return o.NumericID
+}
+
+func (o *Task) GetPolicyGenerationID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.PolicyGenerationID
 }
 
 func (o *Task) GetProcessing() *TaskProcessing {

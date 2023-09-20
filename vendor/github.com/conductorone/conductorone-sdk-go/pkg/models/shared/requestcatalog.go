@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-// RequestCatalog - The RequestCatalog is used for managing which entitlements are requestable, and who can request them.
+// The RequestCatalog is used for managing which entitlements are requestable, and who can request them.
 type RequestCatalog struct {
 	// An array of app entitlements that, if the user has, can view the contents of this catalog.
 	AccessEntitlements []AppEntitlement `json:"accessEntitlements,omitempty"`

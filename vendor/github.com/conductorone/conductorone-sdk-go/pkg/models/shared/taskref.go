@@ -4,7 +4,7 @@ package shared
 
 // TaskRef - This object references a task by ID.
 type TaskRef struct {
-	// The ID of the TaskRef
+	// The ID of the referenced Task
 	ID *string `json:"id,omitempty"`
 }
 

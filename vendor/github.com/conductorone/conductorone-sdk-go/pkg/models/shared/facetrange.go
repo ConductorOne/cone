@@ -2,7 +2,7 @@
 
 package shared
 
-// FacetRange - The FacetRange message.
+// The FacetRange message.
 type FacetRange struct {
 	// The count of items in the range.
 	Count *string `json:"count,omitempty"`

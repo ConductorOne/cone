@@ -12,6 +12,8 @@ type Provision struct {
 	//   - delegated
 	//
 	ProvisionPolicy *ProvisionPolicy `json:"provisionPolicy,omitempty"`
+	// ProvisionTarget indicates the specific app, app entitlement, and if known, the app user and grant duration of this provision step
+	ProvisionTarget *ProvisionTarget `json:"provisionTarget,omitempty"`
 	// A field indicating whether this step is assigned.
 	Assigned *bool `json:"assigned,omitempty"`
 }
@@ -21,6 +23,13 @@ func (o *Provision) GetProvisionPolicy() *ProvisionPolicy {
 		return nil
 	}
 	return o.ProvisionPolicy
+}
+
+func (o *Provision) GetProvisionTarget() *ProvisionTarget {
+	if o == nil {
+		return nil
+	}
+	return o.ProvisionTarget
 }
 
 func (o *Provision) GetAssigned() *bool {

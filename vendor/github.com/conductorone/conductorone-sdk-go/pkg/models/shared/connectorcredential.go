@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-// ConnectorCredential - ConnectorCredential is used by a connector to authenticate with conductor one.
+// ConnectorCredential is used by a connector to authenticate with conductor one.
 type ConnectorCredential struct {
 	// The appId of the app the connector is attached to.
 	AppID *string `json:"appId,omitempty"`

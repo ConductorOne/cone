@@ -2,7 +2,7 @@
 
 package shared
 
-// UserView - The UserView object provides a user response object, as well as JSONPATHs to related objects provided by expanders.
+// The UserView object provides a user response object, as well as JSONPATHs to related objects provided by expanders.
 type UserView struct {
 	// The User object provides all of the details for an user, as well as some configuration.
 	User *User `json:"user,omitempty"`

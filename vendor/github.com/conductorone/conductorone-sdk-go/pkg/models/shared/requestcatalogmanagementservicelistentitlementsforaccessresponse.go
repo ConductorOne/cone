@@ -2,7 +2,7 @@
 
 package shared
 
-// RequestCatalogManagementServiceListEntitlementsForAccessResponse - The RequestCatalogManagementServiceListEntitlementsForAccessResponse message contains a list of results and a nextPageToken if applicable.
+// The RequestCatalogManagementServiceListEntitlementsForAccessResponse message contains a list of results and a nextPageToken if applicable.
 type RequestCatalogManagementServiceListEntitlementsForAccessResponse struct {
 	// List of serialized related objects.
 	Expanded []map[string]interface{} `json:"expanded,omitempty"`

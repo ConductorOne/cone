@@ -2,7 +2,7 @@
 
 package shared
 
-// UpdatePolicyResponse - The UpdatePolicyResponse message contains the updated policy object.
+// The UpdatePolicyResponse message contains the updated policy object.
 type UpdatePolicyResponse struct {
 	// A policy describes the behavior of the ConductorOne system when processing a task. You can describe the type, approvers, fallback behavior, and escalation processes.
 	Policy *Policy `json:"policy,omitempty"`

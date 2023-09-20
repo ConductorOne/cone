@@ -2,7 +2,7 @@
 
 package shared
 
-// TaskActionsServiceApproveResponse - The TaskActionsServiceApproveResponse returns a task view with paths indicating the location of expanded items in the array.
+// The TaskActionsServiceApproveResponse returns a task view with paths indicating the location of expanded items in the array.
 type TaskActionsServiceApproveResponse struct {
 	// Contains a task and JSONPATH expressions that describe where in the expanded array related objects are located. This view can be used to display a fully-detailed dashboard of task information.
 	TaskView *TaskView `json:"taskView,omitempty"`

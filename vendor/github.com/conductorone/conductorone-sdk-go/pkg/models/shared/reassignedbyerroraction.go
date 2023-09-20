@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-// ReassignedByErrorAction - The ReassignedByErrorAction object describes the outcome of a policy step that has been reassigned because it had an error provisioning.
+// The ReassignedByErrorAction object describes the outcome of a policy step that has been reassigned because it had an error provisioning.
 type ReassignedByErrorAction struct {
 	// The description of the error with more details on why this was reassigned.
 	Description *string `json:"description,omitempty"`

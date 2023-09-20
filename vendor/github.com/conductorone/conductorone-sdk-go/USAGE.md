@@ -9,68 +9,30 @@ import(
 	"log"
 	"github.com/conductorone/conductorone-sdk-go"
 	"github.com/conductorone/conductorone-sdk-go/pkg/models/shared"
+	"github.com/conductorone/conductorone-sdk-go/pkg/models/operations"
 )
 
 func main() {
     s := conductoroneapi.New(
         conductoroneapi.WithSecurity(shared.Security{
+            BearerAuth: "",
             Oauth: "",
         }),
     )
 
     ctx := context.Background()
-    res, err := s.AppEntitlementSearch.Search(ctx, shared.AppEntitlementSearchServiceSearchRequest{
-        AppEntitlementExpandMask: &shared.AppEntitlementExpandMask{
-            Paths: []string{
-                "provident",
-                "distinctio",
-                "quibusdam",
-            },
+    res, err := s.AppEntitlementOwners.Add(ctx, operations.C1APIAppV1AppEntitlementOwnersAddRequest{
+        AddAppEntitlementOwnerRequest: &shared.AddAppEntitlementOwnerRequest{
+            UserID: conductoroneapi.String("corrupti"),
         },
-        AccessReviewID: conductoroneapi.String("unde"),
-        Alias: conductoroneapi.String("nulla"),
-        AppIds: []string{
-            "illum",
-            "vel",
-            "error",
-        },
-        AppUserIds: []string{
-            "suscipit",
-            "iure",
-            "magnam",
-        },
-        ComplianceFrameworkIds: []string{
-            "ipsa",
-            "delectus",
-            "tempora",
-            "suscipit",
-        },
-        ExcludeAppIds: []string{
-            "minus",
-            "placeat",
-        },
-        ExcludeAppUserIds: []string{
-            "iusto",
-            "excepturi",
-            "nisi",
-        },
-        OnlyGetExpiring: conductoroneapi.Bool(false),
-        PageSize: conductoroneapi.Float64(9255.97),
-        PageToken: conductoroneapi.String("temporibus"),
-        Query: conductoroneapi.String("ab"),
-        ResourceTypeIds: []string{
-            "veritatis",
-            "deserunt",
-        },
-        RiskLevelIds: []string{
-            "ipsam",
-        },
+        AppID: "provident",
+        EntitlementID: "distinctio",
     })
     if err != nil {
         log.Fatal(err)
     }
 
-    if res.AppEntitlementSearchServiceSearchResponse != nil {
+    if res.AddAppEntitlementOwnerResponse != nil {
         // handle response
     }
 }

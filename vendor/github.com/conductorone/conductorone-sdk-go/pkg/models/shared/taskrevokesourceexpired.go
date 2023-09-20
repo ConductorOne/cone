@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-// TaskRevokeSourceExpired - The TaskRevokeSourceExpired message indicates that the source of the revoke task is due to a grant expiring.
+// The TaskRevokeSourceExpired message indicates that the source of the revoke task is due to a grant expiring.
 type TaskRevokeSourceExpired struct {
 	ExpiredAt *time.Time `json:"expiredAt,omitempty"`
 }

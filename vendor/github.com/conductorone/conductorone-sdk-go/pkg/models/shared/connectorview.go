@@ -2,7 +2,7 @@
 
 package shared
 
-// ConnectorView - The ConnectorView object provides a connector response object, as well as JSONPATHs to related objects provided by expanders.
+// The ConnectorView object provides a connector response object, as well as JSONPATHs to related objects provided by expanders.
 type ConnectorView struct {
 	// A Connector is used to sync objects into Apps
 	Connector *Connector `json:"connector,omitempty"`

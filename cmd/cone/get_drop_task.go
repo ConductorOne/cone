@@ -410,7 +410,7 @@ func getEntitlementDetails(ctx context.Context, c client.C1Client, v *viper.Vipe
 				client.StringFromPtr(e.Entitlement.ID),
 			)
 			entitlementOptions = append(entitlementOptions, entitlementOptionName)
-			optionToEntitlementMap[entitlementOptionName] = &e.Entitlement
+			optionToEntitlementMap[entitlementOptionName] = &(e.Entitlement)
 		}
 		selectedOption, _ := pterm.DefaultInteractiveSelect.WithOptions(entitlementOptions).WithDefaultText("Please select an entitlement").Show()
 		entitlementId = client.StringFromPtr(optionToEntitlementMap[selectedOption].ID)

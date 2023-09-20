@@ -2,6 +2,124 @@
 
 package shared
 
-// TaskTypeCertify - The TaskTypeCertify message indicates that a task is a certify task and all related details.
+import (
+	"encoding/json"
+	"fmt"
+	"time"
+)
+
+// TaskTypeCertifyInput - The TaskTypeCertify message indicates that a task is a certify task and all related details.
+type TaskTypeCertifyInput struct {
+}
+
+// TaskTypeCertifyOutcome - The outcome of the certification.
+type TaskTypeCertifyOutcome string
+
+const (
+	TaskTypeCertifyOutcomeCertifyOutcomeUnspecified TaskTypeCertifyOutcome = "CERTIFY_OUTCOME_UNSPECIFIED"
+	TaskTypeCertifyOutcomeCertifyOutcomeCertified   TaskTypeCertifyOutcome = "CERTIFY_OUTCOME_CERTIFIED"
+	TaskTypeCertifyOutcomeCertifyOutcomeDecertified TaskTypeCertifyOutcome = "CERTIFY_OUTCOME_DECERTIFIED"
+	TaskTypeCertifyOutcomeCertifyOutcomeError       TaskTypeCertifyOutcome = "CERTIFY_OUTCOME_ERROR"
+	TaskTypeCertifyOutcomeCertifyOutcomeCancelled   TaskTypeCertifyOutcome = "CERTIFY_OUTCOME_CANCELLED"
+)
+
+func (e TaskTypeCertifyOutcome) ToPointer() *TaskTypeCertifyOutcome {
+	return &e
+}
+
+func (e *TaskTypeCertifyOutcome) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "CERTIFY_OUTCOME_UNSPECIFIED":
+		fallthrough
+	case "CERTIFY_OUTCOME_CERTIFIED":
+		fallthrough
+	case "CERTIFY_OUTCOME_DECERTIFIED":
+		fallthrough
+	case "CERTIFY_OUTCOME_ERROR":
+		fallthrough
+	case "CERTIFY_OUTCOME_CANCELLED":
+		*e = TaskTypeCertifyOutcome(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for TaskTypeCertifyOutcome: %v", v)
+	}
+}
+
+// The TaskTypeCertify message indicates that a task is a certify task and all related details.
 type TaskTypeCertify struct {
+	// The ID of the access review.
+	AccessReviewID *string `json:"accessReviewId,omitempty"`
+	// The ID of the specific access review object that owns this certify task. This is also set on a revoke task if the revoke task is created from the denied outcome of a certify task.
+	AccessReviewSelection *string `json:"accessReviewSelection,omitempty"`
+	// The ID of the app entitlement.
+	AppEntitlementID *string `json:"appEntitlementId,omitempty"`
+	// The ID of the app.
+	AppID *string `json:"appId,omitempty"`
+	// The ID of the app user.
+	AppUserID *string `json:"appUserId,omitempty"`
+	// The ID of the user.
+	IdentityUserID *string `json:"identityUserId,omitempty"`
+	// The outcome of the certification.
+	Outcome     *TaskTypeCertifyOutcome `json:"outcome,omitempty"`
+	OutcomeTime *time.Time              `json:"outcomeTime,omitempty"`
+}
+
+func (o *TaskTypeCertify) GetAccessReviewID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AccessReviewID
+}
+
+func (o *TaskTypeCertify) GetAccessReviewSelection() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AccessReviewSelection
+}
+
+func (o *TaskTypeCertify) GetAppEntitlementID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AppEntitlementID
+}
+
+func (o *TaskTypeCertify) GetAppID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AppID
+}
+
+func (o *TaskTypeCertify) GetAppUserID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AppUserID
+}
+
+func (o *TaskTypeCertify) GetIdentityUserID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.IdentityUserID
+}
+
+func (o *TaskTypeCertify) GetOutcome() *TaskTypeCertifyOutcome {
+	if o == nil {
+		return nil
+	}
+	return o.Outcome
+}
+
+func (o *TaskTypeCertify) GetOutcomeTime() *time.Time {
+	if o == nil {
+		return nil
+	}
+	return o.OutcomeTime
 }

@@ -2,7 +2,7 @@
 
 package shared
 
-// GetAppUsageControlsResponse - The GetAppUsageControlsResponse message contains the retrieved AppUsageControls object.
+// The GetAppUsageControlsResponse message contains the retrieved AppUsageControls object.
 type GetAppUsageControlsResponse struct {
 	// The AppUsageControls object describes some peripheral configuration for an app.
 	AppUsageControls *AppUsageControls `json:"appUsageControls,omitempty"`

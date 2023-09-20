@@ -76,7 +76,7 @@ func (e *UserStatus) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// User - The User object provides all of the details for an user, as well as some configuration.
+// The User object provides all of the details for an user, as well as some configuration.
 type User struct {
 	CreatedAt *time.Time `json:"createdAt,omitempty"`
 	// The id of the user to whom tasks will be automatically reassigned to.

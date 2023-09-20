@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-// AppEntitlementUserView - The AppEntitlementUserView (aka grant view) describes the relationship between an app user and an entitlement. They have more recently been referred to as grants.
+// The AppEntitlementUserView (aka grant view) describes the relationship between an app user and an entitlement. They have more recently been referred to as grants.
 type AppEntitlementUserView struct {
 	// The AppUserView contains an app user as well as paths for apps, identity users, and last usage in expanded arrays.
 	AppUserView                            *AppUserView `json:"appUser,omitempty"`

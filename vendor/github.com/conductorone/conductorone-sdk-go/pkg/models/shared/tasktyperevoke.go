@@ -65,7 +65,7 @@ func (e *TaskTypeRevokeOutcome) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// TaskTypeRevoke - The TaskTypeRevoke message indicates that a task is a revoke task and all related details.
+// The TaskTypeRevoke message indicates that a task is a revoke task and all related details.
 type TaskTypeRevoke struct {
 	// The TaskRevokeSource message indicates the source of the revoke task is one of expired, nonUsage, request, or review.
 	//

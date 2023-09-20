@@ -6,7 +6,7 @@ package shared
 type SearchAppsRequest struct {
 	// A list of app IDs to restrict the search to.
 	AppIds []string `json:"appIds,omitempty"`
-	// Search for apps with an exact match on the display name.
+	// Search for apps with a case insensitive match on the display name.
 	DisplayName *string `json:"displayName,omitempty"`
 	// A list of app IDs to remove from the results.
 	ExcludeAppIds []string `json:"excludeAppIds,omitempty"`

@@ -2,7 +2,7 @@
 
 package shared
 
-// ConnectorServiceCreateRequest - The ConnectorServiceCreateRequest message.
+// The ConnectorServiceCreateRequest message.
 type ConnectorServiceCreateRequest struct {
 	// The ConnectorExpandMask is used to expand related objects on a connector.
 	ConnectorExpandMask *ConnectorExpandMask `json:"expandMask,omitempty"`

@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-// App - The App object provides all of the details for an app, as well as some configuration.
+// The App object provides all of the details for an app, as well as some configuration.
 type App struct {
 	// The ID of the Account named by AccountName.
 	AppAccountID *string `json:"appAccountId,omitempty"`

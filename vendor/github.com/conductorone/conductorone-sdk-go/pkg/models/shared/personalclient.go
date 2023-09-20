@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-// PersonalClient - The PersonalClient message contains information about a presonal client credential.
+// The PersonalClient message contains information about a presonal client credential.
 type PersonalClient struct {
 	// If set, only allows the CIDRs in the array to use the credential.
 	AllowSourceCidr []string `json:"allowSourceCidr,omitempty"`

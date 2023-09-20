@@ -18,6 +18,7 @@ func searchEntitlementsCmd() *cobra.Command {
 	addGrantedFlag(cmd)
 	addNotGrantedFlag(cmd)
 	addAppDisplayNameFlag(cmd)
+	addIncludeDeletedFlag(cmd)
 	cmd.MarkFlagsMutuallyExclusive(grantedFlag, notGrantedFlag)
 	return cmd
 }
@@ -48,6 +49,7 @@ func searchEntitlementsRun(cmd *cobra.Command, args []string) error {
 		EntitlementAlias: alias,
 		GrantedStatus:    grantedStatus,
 		AppDisplayName:   v.GetString(appDisplayNameFlag),
+		IncludeDeleted:   v.GetBool(includeDeletedFlag),
 	})
 	if err != nil {
 		return err

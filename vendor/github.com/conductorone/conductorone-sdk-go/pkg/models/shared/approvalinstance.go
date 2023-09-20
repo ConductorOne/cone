@@ -62,6 +62,7 @@ type ApprovalInstance struct {
 	//   - group
 	//   - self
 	//   - entitlementOwners
+	//   - expression
 	//
 	Approval *Approval `json:"approval,omitempty"`
 	// The approved action indicates that the approvalinstance had an outcome of approved.

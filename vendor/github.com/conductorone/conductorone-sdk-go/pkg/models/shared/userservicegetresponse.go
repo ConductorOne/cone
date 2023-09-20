@@ -2,7 +2,7 @@
 
 package shared
 
-// UserServiceGetResponse - The UserServiceGetResponse returns a user view which has a user including JSONPATHs to the expanded items in the expanded array.
+// The UserServiceGetResponse returns a user view which has a user including JSONPATHs to the expanded items in the expanded array.
 type UserServiceGetResponse struct {
 	// The UserView object provides a user response object, as well as JSONPATHs to related objects provided by expanders.
 	UserView *UserView `json:"userView,omitempty"`

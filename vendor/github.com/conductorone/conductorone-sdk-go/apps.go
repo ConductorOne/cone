@@ -25,7 +25,7 @@ func newApps(sdkConfig sdkConfiguration) *apps {
 	}
 }
 
-// Create - Create
+// Create
 // Create a new app.
 func (s *apps) Create(ctx context.Context, request shared.CreateAppRequest) (*operations.C1APIAppV1AppsCreateResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
@@ -87,7 +87,7 @@ func (s *apps) Create(ctx context.Context, request shared.CreateAppRequest) (*op
 	return res, nil
 }
 
-// Delete - Delete
+// Delete
 // Delete an app.
 func (s *apps) Delete(ctx context.Context, request operations.C1APIAppV1AppsDeleteRequest) (*operations.C1APIAppV1AppsDeleteResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
@@ -152,7 +152,7 @@ func (s *apps) Delete(ctx context.Context, request operations.C1APIAppV1AppsDele
 	return res, nil
 }
 
-// Get - Get
+// Get
 // Get an app by ID.
 func (s *apps) Get(ctx context.Context, request operations.C1APIAppV1AppsGetRequest) (*operations.C1APIAppV1AppsGetResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
@@ -210,7 +210,7 @@ func (s *apps) Get(ctx context.Context, request operations.C1APIAppV1AppsGetRequ
 	return res, nil
 }
 
-// List - List
+// List
 // List all apps.
 func (s *apps) List(ctx context.Context, request operations.C1APIAppV1AppsListRequest) (*operations.C1APIAppV1AppsListResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
@@ -269,7 +269,7 @@ func (s *apps) List(ctx context.Context, request operations.C1APIAppV1AppsListRe
 	return res, nil
 }
 
-// Update - Update
+// Update
 // Update an existing app.
 func (s *apps) Update(ctx context.Context, request operations.C1APIAppV1AppsUpdateRequest) (*operations.C1APIAppV1AppsUpdateResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())

@@ -50,6 +50,7 @@ type sdkConfiguration struct {
 	OpenAPIDocVersion string
 	SDKVersion        string
 	GenVersion        string
+	RetryConfig       *utils.RetryConfig
 }
 
 func (c *sdkConfiguration) GetServerDetails() (string, map[string]string) {
@@ -62,6 +63,7 @@ func (c *sdkConfiguration) GetServerDetails() (string, map[string]string) {
 
 // ConductoroneAPI - ConductorOne API: The ConductorOne API is a HTTP API for managing ConductorOne resources.
 type ConductoroneAPI struct {
+	AppEntitlementOwners      *appEntitlementOwners
 	AppEntitlementSearch      *appEntitlementSearch
 	AppEntitlementUserBinding *appEntitlementUserBinding
 	AppEntitlements           *appEntitlements
@@ -74,7 +76,10 @@ type ConductoroneAPI struct {
 	AppResourceType           *appResourceType
 	AppSearch                 *appSearch
 	AppUsageControls          *appUsageControls
+	AppUser                   *appUser
 	Apps                      *apps
+	AttributeSearch           *attributeSearch
+	Attributes                *attributes
 	Auth                      *auth
 	Connector                 *connector
 	Directory                 *directory
@@ -124,7 +129,7 @@ func WithServerIndex(serverIndex int) SDKOption {
 	}
 }
 
-// WithTenantDomain allows setting the $name variable for url substitution
+// WithTenantDomain allows setting the tenantDomain variable for url substitution
 func WithTenantDomain(tenantDomain string) SDKOption {
 	return func(sdk *ConductoroneAPI) {
 		for idx := range sdk.sdkConfiguration.ServerDefaults {
@@ -151,14 +156,20 @@ func WithSecurity(security shared.Security) SDKOption {
 	}
 }
 
+func WithRetryConfig(retryConfig utils.RetryConfig) SDKOption {
+	return func(sdk *ConductoroneAPI) {
+		sdk.sdkConfiguration.RetryConfig = &retryConfig
+	}
+}
+
 // New creates a new instance of the SDK with the provided options
 func New(opts ...SDKOption) *ConductoroneAPI {
 	sdk := &ConductoroneAPI{
 		sdkConfiguration: sdkConfiguration{
 			Language:          "go",
 			OpenAPIDocVersion: "0.1.0-alpha",
-			SDKVersion:        "1.6.0",
-			GenVersion:        "2.73.1",
+			SDKVersion:        "1.9.0",
+			GenVersion:        "2.116.0",
 			ServerDefaults: []map[string]string{
 				{
 					"tenantDomain": "example",
@@ -181,6 +192,8 @@ func New(opts ...SDKOption) *ConductoroneAPI {
 			sdk.sdkConfiguration.SecurityClient = sdk.sdkConfiguration.DefaultClient
 		}
 	}
+
+	sdk.AppEntitlementOwners = newAppEntitlementOwners(sdk.sdkConfiguration)
 
 	sdk.AppEntitlementSearch = newAppEntitlementSearch(sdk.sdkConfiguration)
 
@@ -206,7 +219,13 @@ func New(opts ...SDKOption) *ConductoroneAPI {
 
 	sdk.AppUsageControls = newAppUsageControls(sdk.sdkConfiguration)
 
+	sdk.AppUser = newAppUser(sdk.sdkConfiguration)
+
 	sdk.Apps = newApps(sdk.sdkConfiguration)
+
+	sdk.AttributeSearch = newAttributeSearch(sdk.sdkConfiguration)
+
+	sdk.Attributes = newAttributes(sdk.sdkConfiguration)
 
 	sdk.Auth = newAuth(sdk.sdkConfiguration)
 

@@ -2,7 +2,7 @@
 
 package shared
 
-// TaskActionsServiceDenyResponse - The TaskActionsServiceDenyResponse returns a task view with paths indicating the location of expanded items in the array.
+// The TaskActionsServiceDenyResponse returns a task view with paths indicating the location of expanded items in the array.
 type TaskActionsServiceDenyResponse struct {
 	// Contains a task and JSONPATH expressions that describe where in the expanded array related objects are located. This view can be used to display a fully-detailed dashboard of task information.
 	TaskView *TaskView `json:"taskView,omitempty"`

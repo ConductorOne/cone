@@ -48,7 +48,7 @@ func (e *SearchPoliciesRequestPolicyTypes) UnmarshalJSON(data []byte) error {
 
 // SearchPoliciesRequest - Search Policies by a few properties.
 type SearchPoliciesRequest struct {
-	// Search for policies with an exact match on the display name.
+	// Search for policies with a case insensitive match on the display name.
 	DisplayName *string `json:"displayName,omitempty"`
 	// The pageSize where 0 <= pageSize <= 100. Values < 10 will be set to 10. A value of 0 returns the default page size (currently 25)
 	PageSize *float64 `json:"pageSize,omitempty"`
@@ -58,6 +58,8 @@ type SearchPoliciesRequest struct {
 	PolicyTypes []SearchPoliciesRequestPolicyTypes `json:"policyTypes,omitempty"`
 	// Query the policies with a fuzzy search on display name and description.
 	Query *string `json:"query,omitempty"`
+	// The refs field.
+	Refs []PolicyRef `json:"refs,omitempty"`
 }
 
 func (o *SearchPoliciesRequest) GetDisplayName() *string {
@@ -93,4 +95,11 @@ func (o *SearchPoliciesRequest) GetQuery() *string {
 		return nil
 	}
 	return o.Query
+}
+
+func (o *SearchPoliciesRequest) GetRefs() []PolicyRef {
+	if o == nil {
+		return nil
+	}
+	return o.Refs
 }

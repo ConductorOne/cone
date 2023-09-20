@@ -2,7 +2,7 @@
 
 package shared
 
-// RequestCatalogManagementServiceAddAccessEntitlementsRequest - The RequestCatalogManagementServiceAddAccessEntitlementsRequest message is used to add access entitlements to a request
+// The RequestCatalogManagementServiceAddAccessEntitlementsRequest message is used to add access entitlements to a request
 //
 //	catalog to determine which users can view the request catalog.
 type RequestCatalogManagementServiceAddAccessEntitlementsRequest struct {

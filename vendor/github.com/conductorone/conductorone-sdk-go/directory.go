@@ -25,7 +25,7 @@ func newDirectory(sdkConfig sdkConfiguration) *directory {
 	}
 }
 
-// Create - Create
+// Create
 // Create a directory.
 func (s *directory) Create(ctx context.Context, request shared.DirectoryServiceCreateRequest) (*operations.C1APIDirectoryV1DirectoryServiceCreateResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
@@ -87,7 +87,7 @@ func (s *directory) Create(ctx context.Context, request shared.DirectoryServiceC
 	return res, nil
 }
 
-// Delete - Delete
+// Delete
 // Delete a directory by app_id.
 func (s *directory) Delete(ctx context.Context, request operations.C1APIDirectoryV1DirectoryServiceDeleteRequest) (*operations.C1APIDirectoryV1DirectoryServiceDeleteResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
@@ -152,7 +152,7 @@ func (s *directory) Delete(ctx context.Context, request operations.C1APIDirector
 	return res, nil
 }
 
-// Get - Get
+// Get
 // Get a directory by app_id.
 func (s *directory) Get(ctx context.Context, request operations.C1APIDirectoryV1DirectoryServiceGetRequest) (*operations.C1APIDirectoryV1DirectoryServiceGetResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
@@ -210,7 +210,7 @@ func (s *directory) Get(ctx context.Context, request operations.C1APIDirectoryV1
 	return res, nil
 }
 
-// List - List
+// List
 // List directories.
 func (s *directory) List(ctx context.Context, request operations.C1APIDirectoryV1DirectoryServiceListRequest) (*operations.C1APIDirectoryV1DirectoryServiceListResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())

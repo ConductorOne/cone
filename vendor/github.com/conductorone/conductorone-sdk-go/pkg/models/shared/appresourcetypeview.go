@@ -2,7 +2,7 @@
 
 package shared
 
-// AppResourceTypeView - The AppResourceTypeView message.
+// The AppResourceTypeView message.
 type AppResourceTypeView struct {
 	// The AppResourceType is referenced by an app entitlement defining its resource types. Commonly things like Group or Role.
 	AppResourceType *AppResourceType `json:"appResourceType,omitempty"`

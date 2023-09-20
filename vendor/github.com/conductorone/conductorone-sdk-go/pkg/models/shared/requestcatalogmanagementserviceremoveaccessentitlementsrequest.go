@@ -2,7 +2,7 @@
 
 package shared
 
-// RequestCatalogManagementServiceRemoveAccessEntitlementsRequest - The RequestCatalogManagementServiceRemoveAccessEntitlementsRequest message is used to remove access entitlements from a request catalog.
+// The RequestCatalogManagementServiceRemoveAccessEntitlementsRequest message is used to remove access entitlements from a request catalog.
 //
 //	The access entitlements are used to determine which users can view the request catalog.
 type RequestCatalogManagementServiceRemoveAccessEntitlementsRequest struct {

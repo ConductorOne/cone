@@ -2,7 +2,7 @@
 
 package shared
 
-// PolicySteps - The PolicySteps message.
+// The PolicySteps message.
 type PolicySteps struct {
 	// An array of policy steps indicating the processing flow of a policy. These steps are oneOfs, and only one property may be set for each array index at a time.
 	Steps []PolicyStep `json:"steps,omitempty"`

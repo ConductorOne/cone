@@ -37,7 +37,7 @@ func (o *RoleInput) GetServiceRoles() []string {
 	return o.ServiceRoles
 }
 
-// Role - Role is a role that can be assigned to a user in ConductorOne.
+// Role is a role that can be assigned to a user in ConductorOne.
 type Role struct {
 	CreatedAt *time.Time `json:"createdAt,omitempty"`
 	DeletedAt *time.Time `json:"deletedAt,omitempty"`

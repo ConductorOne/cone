@@ -2,7 +2,7 @@
 
 package shared
 
-// AppUsageControls - The AppUsageControls object describes some peripheral configuration for an app.
+// The AppUsageControls object describes some peripheral configuration for an app.
 type AppUsageControls struct {
 	// The app that this object belongs to.
 	AppID *string `json:"appId,omitempty"`

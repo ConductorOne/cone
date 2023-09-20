@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-// ReassignedAction - The ReassignedAction object describes the outcome of a policy step that has been reassigned.
+// The ReassignedAction object describes the outcome of a policy step that has been reassigned.
 type ReassignedAction struct {
 	// The ID of the policy step that was created as a result of this reassignment.
 	NewPolicyStepID *string    `json:"newPolicyStepId,omitempty"`

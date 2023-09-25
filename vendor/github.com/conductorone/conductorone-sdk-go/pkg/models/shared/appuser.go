@@ -5,6 +5,7 @@ package shared
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/conductorone/conductorone-sdk-go/pkg/utils"
 	"time"
 )
 
@@ -84,6 +85,17 @@ type AppUser struct {
 	IdentityUserID *string                `json:"identityUserId,omitempty"`
 	Profile        map[string]interface{} `json:"profile,omitempty"`
 	UpdatedAt      *time.Time             `json:"updatedAt,omitempty"`
+}
+
+func (a AppUser) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(a, "", false)
+}
+
+func (a *AppUser) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &a, "", false, false); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *AppUser) GetAppUserStatus() *AppUserStatus {

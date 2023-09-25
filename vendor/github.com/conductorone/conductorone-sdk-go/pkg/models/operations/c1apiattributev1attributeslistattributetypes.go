@@ -27,11 +27,14 @@ func (o *C1APIAttributeV1AttributesListAttributeTypesRequest) GetPageToken() *st
 }
 
 type C1APIAttributeV1AttributesListAttributeTypesResponse struct {
+	// HTTP response content type for this operation
 	ContentType string
 	// ListAttributeTypesResponse is the response for listing attribute types.
 	ListAttributeTypesResponse *shared.ListAttributeTypesResponse
-	StatusCode                 int
-	RawResponse                *http.Response
+	// HTTP response status code for this operation
+	StatusCode int
+	// Raw HTTP response; suitable for custom response parsing
+	RawResponse *http.Response
 }
 
 func (o *C1APIAttributeV1AttributesListAttributeTypesResponse) GetContentType() string {

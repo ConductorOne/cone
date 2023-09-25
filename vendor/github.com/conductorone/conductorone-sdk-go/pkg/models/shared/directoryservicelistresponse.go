@@ -2,19 +2,55 @@
 
 package shared
 
+import (
+	"github.com/conductorone/conductorone-sdk-go/pkg/utils"
+)
+
+// DirectoryServiceListResponseExpanded - Contains an arbitrary serialized message along with a @type that describes the type of the serialized message.
+type DirectoryServiceListResponseExpanded struct {
+	// The type of the serialized message.
+	AtType               *string                `json:"@type,omitempty"`
+	AdditionalProperties map[string]interface{} `additionalProperties:"true" json:"-"`
+}
+
+func (d DirectoryServiceListResponseExpanded) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DirectoryServiceListResponseExpanded) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DirectoryServiceListResponseExpanded) GetAtType() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AtType
+}
+
+func (o *DirectoryServiceListResponseExpanded) GetAdditionalProperties() map[string]interface{} {
+	if o == nil {
+		return nil
+	}
+	return o.AdditionalProperties
+}
+
 // The DirectoryServiceListResponse message contains a list of results and a nextPageToken if applicable.
 type DirectoryServiceListResponse struct {
 	// The nextPageToken is shown for the next page if the number of results is larger than the max page size.
 	//  The server returns one page of results and the nextPageToken until all results are retreived.
 	//  To retrieve the next page, use the same request and append a pageToken field with the value of nextPageToken shown on the previous page.
-	Expanded []map[string]interface{} `json:"expanded,omitempty"`
+	Expanded []DirectoryServiceListResponseExpanded `json:"expanded,omitempty"`
 	// The list of results containing up to X results, where X is the page size defined in the request.
 	List []DirectoryView `json:"list,omitempty"`
 	// List of serialized related objects.
 	NextPageToken *string `json:"nextPageToken,omitempty"`
 }
 
-func (o *DirectoryServiceListResponse) GetExpanded() []map[string]interface{} {
+func (o *DirectoryServiceListResponse) GetExpanded() []DirectoryServiceListResponseExpanded {
 	if o == nil {
 		return nil
 	}

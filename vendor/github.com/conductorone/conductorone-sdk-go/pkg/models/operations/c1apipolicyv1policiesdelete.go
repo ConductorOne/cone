@@ -27,11 +27,14 @@ func (o *C1APIPolicyV1PoliciesDeleteRequest) GetID() string {
 }
 
 type C1APIPolicyV1PoliciesDeleteResponse struct {
+	// HTTP response content type for this operation
 	ContentType string
 	// Empty response with a status code indicating success.
 	DeletePolicyResponse *shared.DeletePolicyResponse
-	StatusCode           int
-	RawResponse          *http.Response
+	// HTTP response status code for this operation
+	StatusCode int
+	// Raw HTTP response; suitable for custom response parsing
+	RawResponse *http.Response
 }
 
 func (o *C1APIPolicyV1PoliciesDeleteResponse) GetContentType() string {

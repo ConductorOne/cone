@@ -44,8 +44,8 @@
 
 <a href="https://github.com/pterm/pterm/tree/master/_examples/demo/demo" style="text-decoration: none">
 <img src="https://raw.githubusercontent.com/pterm/pterm/master/_examples/demo/demo/animation.svg" alt="PTerm">
-<p align="center">Show Demo Code</p>
 </a>
+<p align="center"><a href="https://github.com/pterm/pterm/tree/master/_examples/demo/demo" >Show Demo Code</p></p>
 
 </p>
 
@@ -92,25 +92,30 @@ go get github.com/pterm/pterm
 
 ### Printers (Components)
 
+<div align="center">
+
 <!-- printers:start -->
 | Feature | Feature | Feature | Feature | Feature |
 | :-------: | :-------: | :-------: | :-------: | :-------: |
 | Area <br/> [(Examples)](https://github.com/pterm/pterm/tree/master/_examples/area) |Barchart <br/> [(Examples)](https://github.com/pterm/pterm/tree/master/_examples/barchart) |Basictext <br/> [(Examples)](https://github.com/pterm/pterm/tree/master/_examples/basictext) |Bigtext <br/> [(Examples)](https://github.com/pterm/pterm/tree/master/_examples/bigtext) |Box <br/> [(Examples)](https://github.com/pterm/pterm/tree/master/_examples/box) |
 | Bulletlist <br/> [(Examples)](https://github.com/pterm/pterm/tree/master/_examples/bulletlist) |Center <br/> [(Examples)](https://github.com/pterm/pterm/tree/master/_examples/center) |Coloring <br/> [(Examples)](https://github.com/pterm/pterm/tree/master/_examples/coloring) |Demo <br/> [(Examples)](https://github.com/pterm/pterm/tree/master/_examples/demo) |Header <br/> [(Examples)](https://github.com/pterm/pterm/tree/master/_examples/header) |
 | Interactive confirm <br/> [(Examples)](https://github.com/pterm/pterm/tree/master/_examples/interactive_confirm) |Interactive continue <br/> [(Examples)](https://github.com/pterm/pterm/tree/master/_examples/interactive_continue) |Interactive multiselect <br/> [(Examples)](https://github.com/pterm/pterm/tree/master/_examples/interactive_multiselect) |Interactive select <br/> [(Examples)](https://github.com/pterm/pterm/tree/master/_examples/interactive_select) |Interactive textinput <br/> [(Examples)](https://github.com/pterm/pterm/tree/master/_examples/interactive_textinput) |
-| Logger <br/> [(Examples)](https://github.com/pterm/pterm/tree/master/_examples/logger) |Panel <br/> [(Examples)](https://github.com/pterm/pterm/tree/master/_examples/panel) |Paragraph <br/> [(Examples)](https://github.com/pterm/pterm/tree/master/_examples/paragraph) |Prefix <br/> [(Examples)](https://github.com/pterm/pterm/tree/master/_examples/prefix) |Progressbar <br/> [(Examples)](https://github.com/pterm/pterm/tree/master/_examples/progressbar) |
-| Section <br/> [(Examples)](https://github.com/pterm/pterm/tree/master/_examples/section) |Spinner <br/> [(Examples)](https://github.com/pterm/pterm/tree/master/_examples/spinner) |Style <br/> [(Examples)](https://github.com/pterm/pterm/tree/master/_examples/style) |Table <br/> [(Examples)](https://github.com/pterm/pterm/tree/master/_examples/table) |Theme <br/> [(Examples)](https://github.com/pterm/pterm/tree/master/_examples/theme) |
-| Tree <br/> [(Examples)](https://github.com/pterm/pterm/tree/master/_examples/tree) | |  |  |  | 
+| Logger <br/> [(Examples)](https://github.com/pterm/pterm/tree/master/_examples/logger) |Multiple-live-printers <br/> [(Examples)](https://github.com/pterm/pterm/tree/master/_examples/multiple-live-printers) |Panel <br/> [(Examples)](https://github.com/pterm/pterm/tree/master/_examples/panel) |Paragraph <br/> [(Examples)](https://github.com/pterm/pterm/tree/master/_examples/paragraph) |Prefix <br/> [(Examples)](https://github.com/pterm/pterm/tree/master/_examples/prefix) |
+| Progressbar <br/> [(Examples)](https://github.com/pterm/pterm/tree/master/_examples/progressbar) |Section <br/> [(Examples)](https://github.com/pterm/pterm/tree/master/_examples/section) |Slog <br/> [(Examples)](https://github.com/pterm/pterm/tree/master/_examples/slog) |Spinner <br/> [(Examples)](https://github.com/pterm/pterm/tree/master/_examples/spinner) |Style <br/> [(Examples)](https://github.com/pterm/pterm/tree/master/_examples/style) |
+| Table <br/> [(Examples)](https://github.com/pterm/pterm/tree/master/_examples/table) |Theme <br/> [(Examples)](https://github.com/pterm/pterm/tree/master/_examples/theme) |Tree <br/> [(Examples)](https://github.com/pterm/pterm/tree/master/_examples/tree) | |  | 
 <!-- printers:end -->
 
+</div>
+
+---
 
 <div align="center">
 
-### 🦸‍♂️ Supporters
+### 🦸‍♂️ Sponsors
 
-|-|User|💸|
-|---|---|---|
-|![Jens Lauterbach](https://avatars.githubusercontent.com/u/1292368?s=25)|[@jenslauterbach](https://github.com/jenslauterbach)|25$|
+<img src="https://resources.jetbrains.com/storage/products/company/brand/logos/jb_beam.svg" />
+
+---
 
 </div>
 
@@ -2127,6 +2132,73 @@ func main() {
 
 </details>
 
+### multiple-live-printers/demo
+
+![Animation](https://raw.githubusercontent.com/pterm/pterm/master/_examples/multiple-live-printers/demo/animation.svg)
+
+<details>
+
+<summary>SHOW SOURCE</summary>
+
+```go
+package main
+
+import (
+	"github.com/pterm/pterm"
+	"time"
+)
+
+func main() {
+	multi := pterm.DefaultMultiPrinter
+
+	spinner1, _ := pterm.DefaultSpinner.WithWriter(multi.NewWriter()).Start("Spinner 1")
+	spinner2, _ := pterm.DefaultSpinner.WithWriter(multi.NewWriter()).Start("Spinner 2")
+	pb1, _ := pterm.DefaultProgressbar.WithTotal(100).WithWriter(multi.NewWriter()).Start("Progressbar 1")
+	pb2, _ := pterm.DefaultProgressbar.WithTotal(100).WithWriter(multi.NewWriter()).Start("Progressbar 2")
+	pb3, _ := pterm.DefaultProgressbar.WithTotal(100).WithWriter(multi.NewWriter()).Start("Progressbar 3")
+	pb4, _ := pterm.DefaultProgressbar.WithTotal(100).WithWriter(multi.NewWriter()).Start("Progressbar 4")
+	pb5, _ := pterm.DefaultProgressbar.WithTotal(100).WithWriter(multi.NewWriter()).Start("Progressbar 5")
+
+	multi.Start()
+
+	// Randomly increment progress bars for demo purposes.
+	for i := 1; i <= 100; i++ {
+		pb1.Increment()
+
+		if i%2 == 0 {
+			pb2.Add(3)
+		}
+
+		if i%5 == 0 {
+			pb3.Increment()
+		}
+
+		if i%10 == 0 {
+			pb4.Increment()
+		}
+
+		if i%3 == 0 {
+			pb5.Increment()
+		}
+
+		if i%50 == 0 {
+			spinner1.Success("Spinner 1 is done!")
+		}
+
+		if i%60 == 0 {
+			spinner2.Fail("Spinner 2 failed!")
+		}
+
+		time.Sleep(time.Millisecond * 50)
+	}
+
+	multi.Stop()
+}
+
+```
+
+</details>
+
 ### panel/demo
 
 ![Animation](https://raw.githubusercontent.com/pterm/pterm/master/_examples/panel/demo/animation.svg)
@@ -2289,6 +2361,63 @@ func main() {
 
 </details>
 
+### progressbar/multiple
+
+![Animation](https://raw.githubusercontent.com/pterm/pterm/master/_examples/progressbar/multiple/animation.svg)
+
+<details>
+
+<summary>SHOW SOURCE</summary>
+
+```go
+package main
+
+import (
+	"github.com/pterm/pterm"
+	"time"
+)
+
+func main() {
+	multi := pterm.DefaultMultiPrinter
+
+	pb1, _ := pterm.DefaultProgressbar.WithTotal(100).WithWriter(multi.NewWriter()).Start("Progressbar 1")
+	pb2, _ := pterm.DefaultProgressbar.WithTotal(100).WithWriter(multi.NewWriter()).Start("Progressbar 2")
+	pb3, _ := pterm.DefaultProgressbar.WithTotal(100).WithWriter(multi.NewWriter()).Start("Progressbar 3")
+	pb4, _ := pterm.DefaultProgressbar.WithTotal(100).WithWriter(multi.NewWriter()).Start("Progressbar 4")
+	pb5, _ := pterm.DefaultProgressbar.WithTotal(100).WithWriter(multi.NewWriter()).Start("Progressbar 5")
+
+	multi.Start()
+
+	// Randomly increment progress bars for demo purposes.
+	for i := 1; i <= 100; i++ {
+		pb1.Increment()
+
+		if i%2 == 0 {
+			pb2.Add(3)
+		}
+
+		if i%5 == 0 {
+			pb3.Increment()
+		}
+
+		if i%10 == 0 {
+			pb4.Increment()
+		}
+
+		if i%3 == 0 {
+			pb5.Increment()
+		}
+
+		time.Sleep(time.Millisecond * 50)
+	}
+
+	multi.Stop()
+}
+
+```
+
+</details>
+
 ### section/demo
 
 ![Animation](https://raw.githubusercontent.com/pterm/pterm/master/_examples/section/demo/animation.svg)
@@ -2312,6 +2441,38 @@ func main() {
 	pterm.DefaultSection.WithLevel(2).Println("This is another section!")
 	// Print placeholder.
 	pterm.Info.Println("And this is\nmore placeholder text")
+}
+
+```
+
+</details>
+
+### slog/demo
+
+![Animation](https://raw.githubusercontent.com/pterm/pterm/master/_examples/slog/demo/animation.svg)
+
+<details>
+
+<summary>SHOW SOURCE</summary>
+
+```go
+package main
+
+import (
+	"github.com/pterm/pterm"
+	"log/slog"
+)
+
+func main() {
+	handler := pterm.NewSlogHandler(&pterm.DefaultLogger)
+	logger := slog.New(handler)
+
+	logger.Debug("This is a debug message that won't show")
+	pterm.DefaultLogger.Level = pterm.LogLevelDebug // Enable debug messages
+	logger.Debug("This is a debug message", "changedLevel", true)
+	logger.Info("This is an info message")
+	logger.Warn("This is a warning message")
+	logger.Error("This is an error message")
 }
 
 ```
@@ -2377,6 +2538,45 @@ func main() {
 	spinnerLiveText.UpdateText("We're nearly done!") // Update spinner text.
 	time.Sleep(time.Second)                          // Simulate 2 seconds of processing something.
 	spinnerLiveText.Success("Finally!")              // Resolve spinner with success message.
+}
+
+```
+
+</details>
+
+### spinner/multiple
+
+![Animation](https://raw.githubusercontent.com/pterm/pterm/master/_examples/spinner/multiple/animation.svg)
+
+<details>
+
+<summary>SHOW SOURCE</summary>
+
+```go
+package main
+
+import (
+	"github.com/pterm/pterm"
+	"time"
+)
+
+func main() {
+	multi := pterm.DefaultMultiPrinter
+
+	spinner1, _ := pterm.DefaultSpinner.WithWriter(multi.NewWriter()).Start("Spinner 1")
+	spinner2, _ := pterm.DefaultSpinner.WithWriter(multi.NewWriter()).Start("Spinner 2")
+	spinner3, _ := pterm.DefaultSpinner.WithWriter(multi.NewWriter()).Start("Spinner 3")
+
+	multi.Start()
+
+	time.Sleep(time.Millisecond * 1000)
+	spinner1.Success("Spinner 1 is done!")
+	time.Sleep(time.Millisecond * 750)
+	spinner2.Fail("Spinner 2 failed!")
+	time.Sleep(time.Millisecond * 500)
+	spinner3.Warning("Spinner 3 has a warning!")
+
+	multi.Stop()
 }
 
 ```

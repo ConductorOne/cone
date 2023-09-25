@@ -27,8 +27,11 @@ func (o *C1APIAppV1AppUsageControlsServiceUpdateRequest) GetAppID() string {
 }
 
 type C1APIAppV1AppUsageControlsServiceUpdateResponse struct {
+	// HTTP response content type for this operation
 	ContentType string
-	StatusCode  int
+	// HTTP response status code for this operation
+	StatusCode int
+	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// The UpdateAppUsageControlsResponse message contains the updated AppUsageControls object.
 	UpdateAppUsageControlsResponse *shared.UpdateAppUsageControlsResponse

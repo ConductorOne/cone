@@ -37,9 +37,12 @@ func (o *C1APIAppV1ConnectorServiceRotateCredentialRequest) GetConnectorID() str
 type C1APIAppV1ConnectorServiceRotateCredentialResponse struct {
 	// ConnectorServiceRotateCredentialResponse is the response returned by the rotate method.
 	ConnectorServiceRotateCredentialResponse *shared.ConnectorServiceRotateCredentialResponse
-	ContentType                              string
-	StatusCode                               int
-	RawResponse                              *http.Response
+	// HTTP response content type for this operation
+	ContentType string
+	// HTTP response status code for this operation
+	StatusCode int
+	// Raw HTTP response; suitable for custom response parsing
+	RawResponse *http.Response
 }
 
 func (o *C1APIAppV1ConnectorServiceRotateCredentialResponse) GetConnectorServiceRotateCredentialResponse() *shared.ConnectorServiceRotateCredentialResponse {

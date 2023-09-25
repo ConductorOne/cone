@@ -3,8 +3,41 @@
 package shared
 
 import (
+	"github.com/conductorone/conductorone-sdk-go/pkg/utils"
 	"time"
 )
+
+// ConnectorConfig - Contains an arbitrary serialized message along with a @type that describes the type of the serialized message.
+type ConnectorConfig struct {
+	// The type of the serialized message.
+	AtType               *string                `json:"@type,omitempty"`
+	AdditionalProperties map[string]interface{} `additionalProperties:"true" json:"-"`
+}
+
+func (c ConnectorConfig) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(c, "", false)
+}
+
+func (c *ConnectorConfig) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &c, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *ConnectorConfig) GetAtType() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AtType
+}
+
+func (o *ConnectorConfig) GetAdditionalProperties() map[string]interface{} {
+	if o == nil {
+		return nil
+	}
+	return o.AdditionalProperties
+}
 
 // ConnectorInput - A Connector is used to sync objects into Apps
 type ConnectorInput struct {
@@ -15,7 +48,7 @@ type ConnectorInput struct {
 	// The id of the app the connector is associated with.
 	AppID *string `json:"appId,omitempty"`
 	// Contains an arbitrary serialized message along with a @type that describes the type of the serialized message.
-	Config map[string]interface{} `json:"config,omitempty"`
+	Config *ConnectorConfig `json:"config,omitempty"`
 	// The description of the connector.
 	Description *string `json:"description,omitempty"`
 	// The display name of the connector.
@@ -47,7 +80,7 @@ func (o *ConnectorInput) GetAppID() *string {
 	return o.AppID
 }
 
-func (o *ConnectorInput) GetConfig() map[string]interface{} {
+func (o *ConnectorInput) GetConfig() *ConnectorConfig {
 	if o == nil {
 		return nil
 	}
@@ -93,9 +126,9 @@ type Connector struct {
 	// The catalogId describes which catalog entry this connector is an instance of. For example, every Okta connector will have the same catalogId indicating it is an Okta connector.
 	CatalogID *string `json:"catalogId,omitempty"`
 	// Contains an arbitrary serialized message along with a @type that describes the type of the serialized message.
-	Config    map[string]interface{} `json:"config,omitempty"`
-	CreatedAt *time.Time             `json:"createdAt,omitempty"`
-	DeletedAt *time.Time             `json:"deletedAt,omitempty"`
+	Config    *ConnectorConfig `json:"config,omitempty"`
+	CreatedAt *time.Time       `json:"createdAt,omitempty"`
+	DeletedAt *time.Time       `json:"deletedAt,omitempty"`
 	// The description of the connector.
 	Description *string `json:"description,omitempty"`
 	// The display name of the connector.
@@ -107,6 +140,17 @@ type Connector struct {
 	UpdatedAt *time.Time `json:"updatedAt,omitempty"`
 	// The userIds field is used to define the integration owners of the connector.
 	UserIds []string `json:"userIds,omitempty"`
+}
+
+func (c Connector) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(c, "", false)
+}
+
+func (c *Connector) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &c, "", false, false); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *Connector) GetConnectorStatus() *ConnectorStatus {
@@ -137,7 +181,7 @@ func (o *Connector) GetCatalogID() *string {
 	return o.CatalogID
 }
 
-func (o *Connector) GetConfig() map[string]interface{} {
+func (o *Connector) GetConfig() *ConnectorConfig {
 	if o == nil {
 		return nil
 	}

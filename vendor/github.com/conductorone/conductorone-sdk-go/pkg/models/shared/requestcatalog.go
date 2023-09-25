@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"github.com/conductorone/conductorone-sdk-go/pkg/utils"
 	"time"
 )
 
@@ -27,6 +28,17 @@ type RequestCatalog struct {
 	UpdatedAt *time.Time `json:"updatedAt,omitempty"`
 	// If this is true, the access entitlement requirement is ignored.
 	VisibleToEveryone *bool `json:"visibleToEveryone,omitempty"`
+}
+
+func (r RequestCatalog) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(r, "", false)
+}
+
+func (r *RequestCatalog) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &r, "", false, false); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *RequestCatalog) GetAccessEntitlements() []AppEntitlement {

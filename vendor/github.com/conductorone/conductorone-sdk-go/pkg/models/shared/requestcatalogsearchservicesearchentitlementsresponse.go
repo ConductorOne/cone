@@ -2,10 +2,46 @@
 
 package shared
 
+import (
+	"github.com/conductorone/conductorone-sdk-go/pkg/utils"
+)
+
+// RequestCatalogSearchServiceSearchEntitlementsResponseExpanded - Contains an arbitrary serialized message along with a @type that describes the type of the serialized message.
+type RequestCatalogSearchServiceSearchEntitlementsResponseExpanded struct {
+	// The type of the serialized message.
+	AtType               *string                `json:"@type,omitempty"`
+	AdditionalProperties map[string]interface{} `additionalProperties:"true" json:"-"`
+}
+
+func (r RequestCatalogSearchServiceSearchEntitlementsResponseExpanded) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(r, "", false)
+}
+
+func (r *RequestCatalogSearchServiceSearchEntitlementsResponseExpanded) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &r, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *RequestCatalogSearchServiceSearchEntitlementsResponseExpanded) GetAtType() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AtType
+}
+
+func (o *RequestCatalogSearchServiceSearchEntitlementsResponseExpanded) GetAdditionalProperties() map[string]interface{} {
+	if o == nil {
+		return nil
+	}
+	return o.AdditionalProperties
+}
+
 // The RequestCatalogSearchServiceSearchEntitlementsResponse message contains a list of results and a nextPageToken if applicable.
 type RequestCatalogSearchServiceSearchEntitlementsResponse struct {
 	// The list of results containing up to X results, where X is the page size defined in the request.
-	Expanded []map[string]interface{} `json:"expanded,omitempty"`
+	Expanded []RequestCatalogSearchServiceSearchEntitlementsResponseExpanded `json:"expanded,omitempty"`
 	// List of serialized related objects.
 	List []AppEntitlementWithUserBindings `json:"list,omitempty"`
 	// The nextPageToken is shown for the next page if the number of results is larger than the max page size.
@@ -14,7 +50,7 @@ type RequestCatalogSearchServiceSearchEntitlementsResponse struct {
 	NextPageToken *string `json:"nextPageToken,omitempty"`
 }
 
-func (o *RequestCatalogSearchServiceSearchEntitlementsResponse) GetExpanded() []map[string]interface{} {
+func (o *RequestCatalogSearchServiceSearchEntitlementsResponse) GetExpanded() []RequestCatalogSearchServiceSearchEntitlementsResponseExpanded {
 	if o == nil {
 		return nil
 	}

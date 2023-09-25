@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"github.com/conductorone/conductorone-sdk-go/pkg/utils"
 	"time"
 )
 
@@ -12,6 +13,17 @@ type AppEntitlementUserView struct {
 	AppUserView                            *AppUserView `json:"appUser,omitempty"`
 	AppEntitlementUserBindingCreatedAt     *time.Time   `json:"appEntitlementUserBindingCreatedAt,omitempty"`
 	AppEntitlementUserBindingDeprovisionAt *time.Time   `json:"appEntitlementUserBindingDeprovisionAt,omitempty"`
+}
+
+func (a AppEntitlementUserView) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(a, "", false)
+}
+
+func (a *AppEntitlementUserView) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &a, "", false, false); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *AppEntitlementUserView) GetAppUserView() *AppUserView {

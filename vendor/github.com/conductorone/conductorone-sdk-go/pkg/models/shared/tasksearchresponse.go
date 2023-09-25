@@ -2,10 +2,46 @@
 
 package shared
 
+import (
+	"github.com/conductorone/conductorone-sdk-go/pkg/utils"
+)
+
+// TaskSearchResponseExpanded - Contains an arbitrary serialized message along with a @type that describes the type of the serialized message.
+type TaskSearchResponseExpanded struct {
+	// The type of the serialized message.
+	AtType               *string                `json:"@type,omitempty"`
+	AdditionalProperties map[string]interface{} `additionalProperties:"true" json:"-"`
+}
+
+func (t TaskSearchResponseExpanded) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(t, "", false)
+}
+
+func (t *TaskSearchResponseExpanded) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &t, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *TaskSearchResponseExpanded) GetAtType() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AtType
+}
+
+func (o *TaskSearchResponseExpanded) GetAdditionalProperties() map[string]interface{} {
+	if o == nil {
+		return nil
+	}
+	return o.AdditionalProperties
+}
+
 // The TaskSearchResponse message contains a list of results and a nextPageToken if applicable.
 type TaskSearchResponse struct {
 	// The list of results containing up to X results, where X is the page size defined in the request.
-	Expanded []map[string]interface{} `json:"expanded,omitempty"`
+	Expanded []TaskSearchResponseExpanded `json:"expanded,omitempty"`
 	// List of serialized related objects.
 	List []TaskView `json:"list,omitempty"`
 	// The nextPageToken is shown for the next page if the number of results is larger than the max page size.
@@ -14,7 +50,7 @@ type TaskSearchResponse struct {
 	NextPageToken *string `json:"nextPageToken,omitempty"`
 }
 
-func (o *TaskSearchResponse) GetExpanded() []map[string]interface{} {
+func (o *TaskSearchResponse) GetExpanded() []TaskSearchResponseExpanded {
 	if o == nil {
 		return nil
 	}

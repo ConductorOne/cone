@@ -2,12 +2,48 @@
 
 package shared
 
+import (
+	"github.com/conductorone/conductorone-sdk-go/pkg/utils"
+)
+
+// TaskServiceCreateRevokeResponseExpanded - Contains an arbitrary serialized message along with a @type that describes the type of the serialized message.
+type TaskServiceCreateRevokeResponseExpanded struct {
+	// The type of the serialized message.
+	AtType               *string                `json:"@type,omitempty"`
+	AdditionalProperties map[string]interface{} `additionalProperties:"true" json:"-"`
+}
+
+func (t TaskServiceCreateRevokeResponseExpanded) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(t, "", false)
+}
+
+func (t *TaskServiceCreateRevokeResponseExpanded) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &t, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *TaskServiceCreateRevokeResponseExpanded) GetAtType() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AtType
+}
+
+func (o *TaskServiceCreateRevokeResponseExpanded) GetAdditionalProperties() map[string]interface{} {
+	if o == nil {
+		return nil
+	}
+	return o.AdditionalProperties
+}
+
 // The TaskServiceCreateRevokeResponse returns a task view which has a task including JSONPATHs to the expanded items in the expanded array.
 type TaskServiceCreateRevokeResponse struct {
 	// Contains a task and JSONPATH expressions that describe where in the expanded array related objects are located. This view can be used to display a fully-detailed dashboard of task information.
 	TaskView *TaskView `json:"taskView,omitempty"`
 	// List of serialized related objects.
-	Expanded []map[string]interface{} `json:"expanded,omitempty"`
+	Expanded []TaskServiceCreateRevokeResponseExpanded `json:"expanded,omitempty"`
 }
 
 func (o *TaskServiceCreateRevokeResponse) GetTaskView() *TaskView {
@@ -17,7 +53,7 @@ func (o *TaskServiceCreateRevokeResponse) GetTaskView() *TaskView {
 	return o.TaskView
 }
 
-func (o *TaskServiceCreateRevokeResponse) GetExpanded() []map[string]interface{} {
+func (o *TaskServiceCreateRevokeResponse) GetExpanded() []TaskServiceCreateRevokeResponseExpanded {
 	if o == nil {
 		return nil
 	}

@@ -2,12 +2,48 @@
 
 package shared
 
+import (
+	"github.com/conductorone/conductorone-sdk-go/pkg/utils"
+)
+
+// UserServiceGetResponseExpanded - Contains an arbitrary serialized message along with a @type that describes the type of the serialized message.
+type UserServiceGetResponseExpanded struct {
+	// The type of the serialized message.
+	AtType               *string                `json:"@type,omitempty"`
+	AdditionalProperties map[string]interface{} `additionalProperties:"true" json:"-"`
+}
+
+func (u UserServiceGetResponseExpanded) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(u, "", false)
+}
+
+func (u *UserServiceGetResponseExpanded) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &u, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *UserServiceGetResponseExpanded) GetAtType() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AtType
+}
+
+func (o *UserServiceGetResponseExpanded) GetAdditionalProperties() map[string]interface{} {
+	if o == nil {
+		return nil
+	}
+	return o.AdditionalProperties
+}
+
 // The UserServiceGetResponse returns a user view which has a user including JSONPATHs to the expanded items in the expanded array.
 type UserServiceGetResponse struct {
 	// The UserView object provides a user response object, as well as JSONPATHs to related objects provided by expanders.
 	UserView *UserView `json:"userView,omitempty"`
 	// List of serialized related objects.
-	Expanded []map[string]interface{} `json:"expanded,omitempty"`
+	Expanded []UserServiceGetResponseExpanded `json:"expanded,omitempty"`
 }
 
 func (o *UserServiceGetResponse) GetUserView() *UserView {
@@ -17,7 +53,7 @@ func (o *UserServiceGetResponse) GetUserView() *UserView {
 	return o.UserView
 }
 
-func (o *UserServiceGetResponse) GetExpanded() []map[string]interface{} {
+func (o *UserServiceGetResponse) GetExpanded() []UserServiceGetResponseExpanded {
 	if o == nil {
 		return nil
 	}

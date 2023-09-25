@@ -45,7 +45,7 @@ type EntitlementWithBindings struct {
 func (c *client) SearchEntitlements(ctx context.Context, filter *SearchEntitlementsFilter) ([]*EntitlementWithBindings, error) {
 	// TODO(morgabra) Pagination
 	// TODO(morgabra) Should we abstract the OpenAPI objects from the rest of cone? Kinda... no? But they aren't typed...
-	resp, err := c.sdk.RequestCatalogSearch.SearchEntitlements(ctx, shared.RequestCatalogSearchServiceSearchEntitlementsRequest{
+	resp, err := c.sdk.RequestCatalogSearch.SearchEntitlements(ctx, &shared.RequestCatalogSearchServiceSearchEntitlementsRequest{
 		EntitlementAlias: stringPtr(filter.EntitlementAlias),
 		GrantedStatus:    filter.GrantedStatus.ToPointer(),
 		PageSize:         float64Ptr(100),

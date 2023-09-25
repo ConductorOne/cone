@@ -3,12 +3,24 @@
 package shared
 
 import (
+	"github.com/conductorone/conductorone-sdk-go/pkg/utils"
 	"time"
 )
 
 // The TaskRevokeSourceExpired message indicates that the source of the revoke task is due to a grant expiring.
 type TaskRevokeSourceExpired struct {
 	ExpiredAt *time.Time `json:"expiredAt,omitempty"`
+}
+
+func (t TaskRevokeSourceExpired) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(t, "", false)
+}
+
+func (t *TaskRevokeSourceExpired) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &t, "", false, false); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *TaskRevokeSourceExpired) GetExpiredAt() *time.Time {

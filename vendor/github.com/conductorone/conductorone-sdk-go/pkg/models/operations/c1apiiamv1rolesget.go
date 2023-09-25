@@ -19,11 +19,14 @@ func (o *C1APIIamV1RolesGetRequest) GetRoleID() string {
 }
 
 type C1APIIamV1RolesGetResponse struct {
+	// HTTP response content type for this operation
 	ContentType string
 	// The GetRolesResponse message contains the retrieved role.
 	GetRolesResponse *shared.GetRolesResponse
-	StatusCode       int
-	RawResponse      *http.Response
+	// HTTP response status code for this operation
+	StatusCode int
+	// Raw HTTP response; suitable for custom response parsing
+	RawResponse *http.Response
 }
 
 func (o *C1APIIamV1RolesGetResponse) GetContentType() string {

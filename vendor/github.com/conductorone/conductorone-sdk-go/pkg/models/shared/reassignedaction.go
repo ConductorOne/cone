@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"github.com/conductorone/conductorone-sdk-go/pkg/utils"
 	"time"
 )
 
@@ -13,6 +14,17 @@ type ReassignedAction struct {
 	ReassignedAt    *time.Time `json:"reassignedAt,omitempty"`
 	// The UserID of the person who reassigned this step.
 	UserID *string `json:"userId,omitempty"`
+}
+
+func (r ReassignedAction) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(r, "", false)
+}
+
+func (r *ReassignedAction) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &r, "", false, false); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *ReassignedAction) GetNewPolicyStepID() *string {

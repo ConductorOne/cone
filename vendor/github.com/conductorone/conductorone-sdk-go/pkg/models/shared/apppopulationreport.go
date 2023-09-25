@@ -5,6 +5,7 @@ package shared
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/conductorone/conductorone-sdk-go/pkg/utils"
 	"time"
 )
 
@@ -55,6 +56,17 @@ type AppPopulationReport struct {
 	ID *string `json:"id,omitempty"`
 	// The state field tracks the state of the AppPopulationReport. This state field can be one of REPORT_STATE_PENDING, REPORT_STATE_UNSPECIFIED, REPORT_STATE_OK, REPORT_STATE_ERROR.
 	State *AppPopulationReportState `json:"state,omitempty"`
+}
+
+func (a AppPopulationReport) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(a, "", false)
+}
+
+func (a *AppPopulationReport) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &a, "", false, false); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *AppPopulationReport) GetAppID() *string {

@@ -14,7 +14,8 @@ generation:
   tagNamespacingDisabled: false
 features:
   go:
-    core: 2.88.2
+    additionalProperties: 0.1.0
+    core: 2.89.0
     globalSecurity: 2.81.1
     globalServerURLs: 2.82.0
     groups: 2.81.1

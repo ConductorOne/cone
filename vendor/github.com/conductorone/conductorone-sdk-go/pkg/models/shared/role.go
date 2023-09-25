@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"github.com/conductorone/conductorone-sdk-go/pkg/utils"
 	"time"
 )
 
@@ -54,6 +55,17 @@ type Role struct {
 	// The system builtin field. If this field is set, the role is not editable.
 	SystemBuiltin *bool      `json:"systemBuiltin,omitempty"`
 	UpdatedAt     *time.Time `json:"updatedAt,omitempty"`
+}
+
+func (r Role) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(r, "", false)
+}
+
+func (r *Role) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &r, "", false, false); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *Role) GetCreatedAt() *time.Time {

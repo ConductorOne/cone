@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"github.com/conductorone/conductorone-sdk-go/pkg/utils"
 	"time"
 )
 
@@ -11,6 +12,17 @@ type CancelledAction struct {
 	CancelledAt *time.Time `json:"cancelledAt,omitempty"`
 	// The userID, usually the system, that cancells a provision instance.
 	CancelledByUserID *string `json:"cancelledByUserId,omitempty"`
+}
+
+func (c CancelledAction) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(c, "", false)
+}
+
+func (c *CancelledAction) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &c, "", false, false); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *CancelledAction) GetCancelledAt() *time.Time {

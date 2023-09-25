@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"github.com/conductorone/conductorone-sdk-go/pkg/utils"
 	"time"
 )
 
@@ -17,6 +18,17 @@ type AttributeValue struct {
 	UpdatedAt *time.Time `json:"updatedAt,omitempty"`
 	// The value of the AttributeValue. This is the string that will be displayed to the user.
 	Value *string `json:"value,omitempty"`
+}
+
+func (a AttributeValue) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(a, "", false)
+}
+
+func (a *AttributeValue) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &a, "", false, false); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *AttributeValue) GetAttributeTypeID() *string {

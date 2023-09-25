@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"github.com/conductorone/conductorone-sdk-go/pkg/utils"
 	"time"
 )
 
@@ -13,6 +14,17 @@ type ErroredAction struct {
 	// The error code of a provision instance that has errored. This is only PEC-1 for now, but more will be added in the future.
 	ErrorCode *string    `json:"errorCode,omitempty"`
 	ErroredAt *time.Time `json:"erroredAt,omitempty"`
+}
+
+func (e ErroredAction) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(e, "", false)
+}
+
+func (e *ErroredAction) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &e, "", false, false); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *ErroredAction) GetDescription() *string {

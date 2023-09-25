@@ -19,12 +19,15 @@ func (o *C1APIDirectoryV1DirectoryServiceGetRequest) GetAppID() string {
 }
 
 type C1APIDirectoryV1DirectoryServiceGetResponse struct {
+	// HTTP response content type for this operation
 	ContentType string
 	// The Directory Service Get Response returns a directory view with a directory and JSONPATHs indicating the
 	//  location in the expanded array that items are expanded as indicated by the expand mask in the request.
 	DirectoryServiceGetResponse *shared.DirectoryServiceGetResponse
-	StatusCode                  int
-	RawResponse                 *http.Response
+	// HTTP response status code for this operation
+	StatusCode int
+	// Raw HTTP response; suitable for custom response parsing
+	RawResponse *http.Response
 }
 
 func (o *C1APIDirectoryV1DirectoryServiceGetResponse) GetContentType() string {

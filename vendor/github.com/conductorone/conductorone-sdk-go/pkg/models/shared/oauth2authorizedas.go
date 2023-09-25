@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"github.com/conductorone/conductorone-sdk-go/pkg/utils"
 	"time"
 )
 
@@ -15,6 +16,17 @@ type OAuth2AuthorizedAs struct {
 	// authEmail is the email of the user that authorized the connector using OAuth.
 	AuthEmail    *string    `json:"authEmail,omitempty"`
 	AuthorizedAt *time.Time `json:"authorizedAt,omitempty"`
+}
+
+func (o OAuth2AuthorizedAs) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(o, "", false)
+}
+
+func (o *OAuth2AuthorizedAs) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &o, "", false, false); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *OAuth2AuthorizedAs) GetAuthEmail() *string {

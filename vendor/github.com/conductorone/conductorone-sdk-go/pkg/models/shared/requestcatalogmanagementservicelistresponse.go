@@ -2,10 +2,46 @@
 
 package shared
 
+import (
+	"github.com/conductorone/conductorone-sdk-go/pkg/utils"
+)
+
+// RequestCatalogManagementServiceListResponseExpanded - Contains an arbitrary serialized message along with a @type that describes the type of the serialized message.
+type RequestCatalogManagementServiceListResponseExpanded struct {
+	// The type of the serialized message.
+	AtType               *string                `json:"@type,omitempty"`
+	AdditionalProperties map[string]interface{} `additionalProperties:"true" json:"-"`
+}
+
+func (r RequestCatalogManagementServiceListResponseExpanded) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(r, "", false)
+}
+
+func (r *RequestCatalogManagementServiceListResponseExpanded) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &r, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *RequestCatalogManagementServiceListResponseExpanded) GetAtType() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AtType
+}
+
+func (o *RequestCatalogManagementServiceListResponseExpanded) GetAdditionalProperties() map[string]interface{} {
+	if o == nil {
+		return nil
+	}
+	return o.AdditionalProperties
+}
+
 // The RequestCatalogManagementServiceListResponse message.
 type RequestCatalogManagementServiceListResponse struct {
 	// List of serialized related objects.
-	Expanded []map[string]interface{} `json:"expanded,omitempty"`
+	Expanded []RequestCatalogManagementServiceListResponseExpanded `json:"expanded,omitempty"`
 	// The list of request catalogs.
 	List []RequestCatalogView `json:"list,omitempty"`
 	// The nextPageToken is shown for the next page if the number of results is larger than the max page size.
@@ -14,7 +50,7 @@ type RequestCatalogManagementServiceListResponse struct {
 	NextPageToken *string `json:"nextPageToken,omitempty"`
 }
 
-func (o *RequestCatalogManagementServiceListResponse) GetExpanded() []map[string]interface{} {
+func (o *RequestCatalogManagementServiceListResponse) GetExpanded() []RequestCatalogManagementServiceListResponseExpanded {
 	if o == nil {
 		return nil
 	}

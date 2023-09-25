@@ -12,7 +12,7 @@ atomicgo.dev/schedule
 # github.com/cenkalti/backoff/v4 v4.2.1
 ## explicit; go 1.18
 github.com/cenkalti/backoff/v4
-# github.com/conductorone/conductorone-sdk-go v1.9.0
+# github.com/conductorone/conductorone-sdk-go v1.11.0
 ## explicit; go 1.14
 github.com/conductorone/conductorone-sdk-go
 github.com/conductorone/conductorone-sdk-go/pkg/models/operations
@@ -205,10 +205,10 @@ google.golang.org/appengine/internal/log
 google.golang.org/appengine/internal/remote_api
 google.golang.org/appengine/internal/urlfetch
 google.golang.org/appengine/urlfetch
-# google.golang.org/genproto/googleapis/rpc v0.0.0-20230913181813-007df8e322eb
+# google.golang.org/genproto/googleapis/rpc v0.0.0-20230920204549-e6e6cdab5c13
 ## explicit; go 1.19
 google.golang.org/genproto/googleapis/rpc/status
-# google.golang.org/grpc v1.58.1
+# google.golang.org/grpc v1.58.2
 ## explicit; go 1.19
 google.golang.org/grpc
 google.golang.org/grpc/attributes

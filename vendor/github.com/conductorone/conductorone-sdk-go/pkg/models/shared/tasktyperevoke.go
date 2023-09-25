@@ -5,6 +5,7 @@ package shared
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/conductorone/conductorone-sdk-go/pkg/utils"
 	"time"
 )
 
@@ -87,6 +88,17 @@ type TaskTypeRevoke struct {
 	// The outcome of the revoke.
 	Outcome     *TaskTypeRevokeOutcome `json:"outcome,omitempty"`
 	OutcomeTime *time.Time             `json:"outcomeTime,omitempty"`
+}
+
+func (t TaskTypeRevoke) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(t, "", false)
+}
+
+func (t *TaskTypeRevoke) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &t, "", false, false); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *TaskTypeRevoke) GetTaskRevokeSource() *TaskRevokeSource {

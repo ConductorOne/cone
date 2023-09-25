@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"github.com/conductorone/conductorone-sdk-go/pkg/utils"
 	"time"
 )
 
@@ -28,6 +29,17 @@ type PersonalClient struct {
 	UpdatedAt   *time.Time `json:"updatedAt,omitempty"`
 	// The ID of the user that this credential is created for.
 	UserID *string `json:"userId,omitempty"`
+}
+
+func (p PersonalClient) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(p, "", false)
+}
+
+func (p *PersonalClient) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &p, "", false, false); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *PersonalClient) GetAllowSourceCidr() []string {

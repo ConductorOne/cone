@@ -11,6 +11,8 @@ type PolicyInstance struct {
 	// This message contains a oneof named instance. Only a single field of the following list may be set at a time:
 	//   - approval
 	//   - provision
+	//   - accept
+	//   - reject
 	//
 	PolicyStepInstance *PolicyStepInstance `json:"current,omitempty"`
 	// An array of steps that were previously processed by the ticket with their outcomes set, in order.

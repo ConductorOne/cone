@@ -1,4 +1,4 @@
-package conductoroneapi
+package conductoronesdkgo
 
 import (
 	"bytes"

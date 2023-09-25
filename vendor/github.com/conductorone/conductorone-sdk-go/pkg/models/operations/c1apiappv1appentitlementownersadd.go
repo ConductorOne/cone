@@ -37,9 +37,12 @@ func (o *C1APIAppV1AppEntitlementOwnersAddRequest) GetEntitlementID() string {
 type C1APIAppV1AppEntitlementOwnersAddResponse struct {
 	// The empty response message for adding an app entitlement owner.
 	AddAppEntitlementOwnerResponse *shared.AddAppEntitlementOwnerResponse
-	ContentType                    string
-	StatusCode                     int
-	RawResponse                    *http.Response
+	// HTTP response content type for this operation
+	ContentType string
+	// HTTP response status code for this operation
+	StatusCode int
+	// Raw HTTP response; suitable for custom response parsing
+	RawResponse *http.Response
 }
 
 func (o *C1APIAppV1AppEntitlementOwnersAddResponse) GetAddAppEntitlementOwnerResponse() *shared.AddAppEntitlementOwnerResponse {

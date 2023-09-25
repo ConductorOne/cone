@@ -2,6 +2,42 @@
 
 package shared
 
+import (
+	"github.com/conductorone/conductorone-sdk-go/pkg/utils"
+)
+
+// DirectoryServiceGetResponseExpanded - Contains an arbitrary serialized message along with a @type that describes the type of the serialized message.
+type DirectoryServiceGetResponseExpanded struct {
+	// The type of the serialized message.
+	AtType               *string                `json:"@type,omitempty"`
+	AdditionalProperties map[string]interface{} `additionalProperties:"true" json:"-"`
+}
+
+func (d DirectoryServiceGetResponseExpanded) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DirectoryServiceGetResponseExpanded) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DirectoryServiceGetResponseExpanded) GetAtType() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AtType
+}
+
+func (o *DirectoryServiceGetResponseExpanded) GetAdditionalProperties() map[string]interface{} {
+	if o == nil {
+		return nil
+	}
+	return o.AdditionalProperties
+}
+
 // DirectoryServiceGetResponse - The Directory Service Get Response returns a directory view with a directory and JSONPATHs indicating the
 //
 //	location in the expanded array that items are expanded as indicated by the expand mask in the request.
@@ -9,7 +45,7 @@ type DirectoryServiceGetResponse struct {
 	// The directory view contains a directory and an app_path which is a JSONPATH set to the location in the expand mask that the expanded app will live if requested by the expander.
 	DirectoryView *DirectoryView `json:"directoryView,omitempty"`
 	// List of serialized related objects.
-	Expanded []map[string]interface{} `json:"expanded,omitempty"`
+	Expanded []DirectoryServiceGetResponseExpanded `json:"expanded,omitempty"`
 }
 
 func (o *DirectoryServiceGetResponse) GetDirectoryView() *DirectoryView {
@@ -19,7 +55,7 @@ func (o *DirectoryServiceGetResponse) GetDirectoryView() *DirectoryView {
 	return o.DirectoryView
 }
 
-func (o *DirectoryServiceGetResponse) GetExpanded() []map[string]interface{} {
+func (o *DirectoryServiceGetResponse) GetExpanded() []DirectoryServiceGetResponseExpanded {
 	if o == nil {
 		return nil
 	}

@@ -19,11 +19,14 @@ func (o *C1APIPolicyV1PoliciesGetRequest) GetID() string {
 }
 
 type C1APIPolicyV1PoliciesGetResponse struct {
+	// HTTP response content type for this operation
 	ContentType string
 	// The GetPolicyResponse message contains the policy object.
 	GetPolicyResponse *shared.GetPolicyResponse
-	StatusCode        int
-	RawResponse       *http.Response
+	// HTTP response status code for this operation
+	StatusCode int
+	// Raw HTTP response; suitable for custom response parsing
+	RawResponse *http.Response
 }
 
 func (o *C1APIPolicyV1PoliciesGetResponse) GetContentType() string {

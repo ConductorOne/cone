@@ -2,12 +2,48 @@
 
 package shared
 
+import (
+	"github.com/conductorone/conductorone-sdk-go/pkg/utils"
+)
+
+// TaskServiceActionResponseExpanded - Contains an arbitrary serialized message along with a @type that describes the type of the serialized message.
+type TaskServiceActionResponseExpanded struct {
+	// The type of the serialized message.
+	AtType               *string                `json:"@type,omitempty"`
+	AdditionalProperties map[string]interface{} `additionalProperties:"true" json:"-"`
+}
+
+func (t TaskServiceActionResponseExpanded) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(t, "", false)
+}
+
+func (t *TaskServiceActionResponseExpanded) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &t, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *TaskServiceActionResponseExpanded) GetAtType() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AtType
+}
+
+func (o *TaskServiceActionResponseExpanded) GetAdditionalProperties() map[string]interface{} {
+	if o == nil {
+		return nil
+	}
+	return o.AdditionalProperties
+}
+
 // The TaskServiceActionResponse message.
 type TaskServiceActionResponse struct {
 	// Contains a task and JSONPATH expressions that describe where in the expanded array related objects are located. This view can be used to display a fully-detailed dashboard of task information.
 	TaskView *TaskView `json:"taskView,omitempty"`
 	// The expanded field.
-	Expanded []map[string]interface{} `json:"expanded,omitempty"`
+	Expanded []TaskServiceActionResponseExpanded `json:"expanded,omitempty"`
 	// The ticketActionId field.
 	TicketActionID *string `json:"ticketActionId,omitempty"`
 }
@@ -19,7 +55,7 @@ func (o *TaskServiceActionResponse) GetTaskView() *TaskView {
 	return o.TaskView
 }
 
-func (o *TaskServiceActionResponse) GetExpanded() []map[string]interface{} {
+func (o *TaskServiceActionResponse) GetExpanded() []TaskServiceActionResponseExpanded {
 	if o == nil {
 		return nil
 	}

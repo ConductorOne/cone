@@ -5,6 +5,7 @@ package shared
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/conductorone/conductorone-sdk-go/pkg/utils"
 	"time"
 )
 
@@ -66,6 +67,17 @@ type TaskTypeCertify struct {
 	// The outcome of the certification.
 	Outcome     *TaskTypeCertifyOutcome `json:"outcome,omitempty"`
 	OutcomeTime *time.Time              `json:"outcomeTime,omitempty"`
+}
+
+func (t TaskTypeCertify) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(t, "", false)
+}
+
+func (t *TaskTypeCertify) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &t, "", false, false); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *TaskTypeCertify) GetAccessReviewID() *string {

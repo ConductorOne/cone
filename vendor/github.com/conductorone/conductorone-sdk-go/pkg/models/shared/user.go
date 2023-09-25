@@ -5,6 +5,7 @@ package shared
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/conductorone/conductorone-sdk-go/pkg/utils"
 	"time"
 )
 
@@ -119,6 +120,17 @@ type User struct {
 	// The status of the user in the system.
 	Status    *UserStatus `json:"status,omitempty"`
 	UpdatedAt *time.Time  `json:"updatedAt,omitempty"`
+}
+
+func (u User) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(u, "", false)
+}
+
+func (u *User) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &u, "", false, false); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *User) GetCreatedAt() *time.Time {

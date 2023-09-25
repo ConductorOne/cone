@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"github.com/conductorone/conductorone-sdk-go/pkg/utils"
 	"time"
 )
 
@@ -10,6 +11,17 @@ import (
 type TaskRevokeSourceNonUsage struct {
 	ExpiresAt *time.Time `json:"expiresAt,omitempty"`
 	LastLogin *time.Time `json:"lastLogin,omitempty"`
+}
+
+func (t TaskRevokeSourceNonUsage) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(t, "", false)
+}
+
+func (t *TaskRevokeSourceNonUsage) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &t, "", false, false); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *TaskRevokeSourceNonUsage) GetExpiresAt() *time.Time {

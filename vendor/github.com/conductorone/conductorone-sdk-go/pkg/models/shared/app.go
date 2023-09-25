@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"github.com/conductorone/conductorone-sdk-go/pkg/utils"
 	"time"
 )
 
@@ -38,6 +39,17 @@ type App struct {
 	UpdatedAt      *time.Time `json:"updatedAt,omitempty"`
 	// The number of users with grants to this app.
 	UserCount *string `json:"userCount,omitempty"`
+}
+
+func (a App) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(a, "", false)
+}
+
+func (a *App) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &a, "", false, false); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *App) GetAppAccountID() *string {

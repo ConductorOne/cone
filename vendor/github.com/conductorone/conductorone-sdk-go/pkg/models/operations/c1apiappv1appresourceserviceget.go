@@ -37,9 +37,12 @@ func (o *C1APIAppV1AppResourceServiceGetRequest) GetID() string {
 type C1APIAppV1AppResourceServiceGetResponse struct {
 	// The app resource service get response contains the app resource view and array of expanded items indicated by the request's expand mask.
 	AppResourceServiceGetResponse *shared.AppResourceServiceGetResponse
-	ContentType                   string
-	StatusCode                    int
-	RawResponse                   *http.Response
+	// HTTP response content type for this operation
+	ContentType string
+	// HTTP response status code for this operation
+	StatusCode int
+	// Raw HTTP response; suitable for custom response parsing
+	RawResponse *http.Response
 }
 
 func (o *C1APIAppV1AppResourceServiceGetResponse) GetAppResourceServiceGetResponse() *shared.AppResourceServiceGetResponse {

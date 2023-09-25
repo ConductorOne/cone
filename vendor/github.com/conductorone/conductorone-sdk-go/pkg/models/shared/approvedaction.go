@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"github.com/conductorone/conductorone-sdk-go/pkg/utils"
 	"time"
 )
 
@@ -13,6 +14,17 @@ type ApprovedAction struct {
 	Entitlements []AppEntitlementReference `json:"entitlements,omitempty"`
 	// The UserID that approved this step.
 	UserID *string `json:"userId,omitempty"`
+}
+
+func (a ApprovedAction) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(a, "", false)
+}
+
+func (a *ApprovedAction) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &a, "", false, false); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *ApprovedAction) GetApprovedAt() *time.Time {

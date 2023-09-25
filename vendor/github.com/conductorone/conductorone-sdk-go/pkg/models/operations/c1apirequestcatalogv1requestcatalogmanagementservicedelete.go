@@ -27,11 +27,14 @@ func (o *C1APIRequestcatalogV1RequestCatalogManagementServiceDeleteRequest) GetI
 }
 
 type C1APIRequestcatalogV1RequestCatalogManagementServiceDeleteResponse struct {
+	// HTTP response content type for this operation
 	ContentType string
 	// Empty response with a status code indicating success.
 	RequestCatalogManagementServiceDeleteResponse *shared.RequestCatalogManagementServiceDeleteResponse
-	StatusCode                                    int
-	RawResponse                                   *http.Response
+	// HTTP response status code for this operation
+	StatusCode int
+	// Raw HTTP response; suitable for custom response parsing
+	RawResponse *http.Response
 }
 
 func (o *C1APIRequestcatalogV1RequestCatalogManagementServiceDeleteResponse) GetContentType() string {

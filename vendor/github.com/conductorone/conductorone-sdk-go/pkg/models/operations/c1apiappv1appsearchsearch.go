@@ -8,11 +8,14 @@ import (
 )
 
 type C1APIAppV1AppSearchSearchResponse struct {
+	// HTTP response content type for this operation
 	ContentType string
 	// The SearchAppsResponse message contains a list of results and a nextPageToken if applicable.
 	SearchAppsResponse *shared.SearchAppsResponse
-	StatusCode         int
-	RawResponse        *http.Response
+	// HTTP response status code for this operation
+	StatusCode int
+	// Raw HTTP response; suitable for custom response parsing
+	RawResponse *http.Response
 }
 
 func (o *C1APIAppV1AppSearchSearchResponse) GetContentType() string {

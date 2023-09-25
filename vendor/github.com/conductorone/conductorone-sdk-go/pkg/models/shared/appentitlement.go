@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"github.com/conductorone/conductorone-sdk-go/pkg/utils"
 	"time"
 )
 
@@ -62,6 +63,17 @@ type AppEntitlement struct {
 	// This field indicates if this is a system builtin entitlement.
 	SystemBuiltin *bool      `json:"systemBuiltin,omitempty"`
 	UpdatedAt     *time.Time `json:"updatedAt,omitempty"`
+}
+
+func (a AppEntitlement) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(a, "", false)
+}
+
+func (a *AppEntitlement) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &a, "", false, false); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *AppEntitlement) GetProvisionPolicy() *ProvisionPolicy {

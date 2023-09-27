@@ -15,7 +15,7 @@ generation:
 features:
   go:
     additionalProperties: 0.1.0
-    core: 2.89.0
+    core: 2.89.3
     globalSecurity: 2.81.1
     globalServerURLs: 2.82.0
     groups: 2.81.1

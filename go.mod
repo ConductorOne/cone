@@ -1,6 +1,6 @@
 module github.com/conductorone/cone
 
-go 1.20
+go 1.21
 
 require (
 	go.uber.org/zap v1.26.0
@@ -10,7 +10,7 @@ require (
 )
 
 require (
-	github.com/conductorone/conductorone-sdk-go v1.11.0
+	github.com/conductorone/conductorone-sdk-go v1.12.0
 	github.com/pterm/pterm v0.12.62
 	github.com/toqueteos/webbrowser v1.2.0
 	github.com/xhit/go-str2duration/v2 v2.1.0

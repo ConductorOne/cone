@@ -19,11 +19,14 @@ func (o *C1APIAttributeV1AttributesGetAttributeValueRequest) GetID() string {
 }
 
 type C1APIAttributeV1AttributesGetAttributeValueResponse struct {
+	// HTTP response content type for this operation
 	ContentType string
 	// GetAttributeValueResponse is the response for getting an attribute value by id.
 	GetAttributeValueResponse *shared.GetAttributeValueResponse
-	StatusCode                int
-	RawResponse               *http.Response
+	// HTTP response status code for this operation
+	StatusCode int
+	// Raw HTTP response; suitable for custom response parsing
+	RawResponse *http.Response
 }
 
 func (o *C1APIAttributeV1AttributesGetAttributeValueResponse) GetContentType() string {

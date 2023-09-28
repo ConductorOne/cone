@@ -19,11 +19,14 @@ func (o *C1APIAppV1AppsGetRequest) GetID() string {
 }
 
 type C1APIAppV1AppsGetResponse struct {
+	// HTTP response content type for this operation
 	ContentType string
 	// The GetAppResponse message contains the details of the requested app in the app field.
 	GetAppResponse *shared.GetAppResponse
-	StatusCode     int
-	RawResponse    *http.Response
+	// HTTP response status code for this operation
+	StatusCode int
+	// Raw HTTP response; suitable for custom response parsing
+	RawResponse *http.Response
 }
 
 func (o *C1APIAppV1AppsGetResponse) GetContentType() string {

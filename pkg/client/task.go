@@ -39,7 +39,7 @@ func (c *client) CreateGrantTask(
 	if duration != "" {
 		req.GrantDuration = &duration
 	}
-	resp, err := c.sdk.Task.CreateGrantTask(ctx, req)
+	resp, err := c.sdk.Task.CreateGrantTask(ctx, &req)
 	if err != nil {
 		return nil, err
 	}
@@ -64,7 +64,7 @@ func (c *client) CreateRevokeTask(
 		AppID:            appId,
 		Description:      &justification,
 	}
-	resp, err := c.sdk.Task.CreateRevokeTask(ctx, req)
+	resp, err := c.sdk.Task.CreateRevokeTask(ctx, &req)
 	if err != nil {
 		return nil, err
 	}
@@ -77,7 +77,7 @@ func (c *client) CreateRevokeTask(
 }
 
 func (c *client) SearchTasks(ctx context.Context, taskFilter shared.TaskSearchRequestInput) (*shared.TaskSearchResponse, error) {
-	resp, err := c.sdk.TaskSearch.Search(ctx, taskFilter)
+	resp, err := c.sdk.TaskSearch.Search(ctx, &taskFilter)
 	if err != nil {
 		return nil, err
 	}

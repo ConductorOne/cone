@@ -5,6 +5,7 @@ package shared
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/conductorone/conductorone-sdk-go/pkg/utils"
 	"time"
 )
 
@@ -81,6 +82,38 @@ func (e *TaskActions) UnmarshalJSON(data []byte) error {
 	default:
 		return fmt.Errorf("invalid value for TaskActions: %v", v)
 	}
+}
+
+// TaskAnnotations - Contains an arbitrary serialized message along with a @type that describes the type of the serialized message.
+type TaskAnnotations struct {
+	// The type of the serialized message.
+	AtType               *string                `json:"@type,omitempty"`
+	AdditionalProperties map[string]interface{} `additionalProperties:"true" json:"-"`
+}
+
+func (t TaskAnnotations) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(t, "", false)
+}
+
+func (t *TaskAnnotations) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &t, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *TaskAnnotations) GetAtType() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AtType
+}
+
+func (o *TaskAnnotations) GetAdditionalProperties() map[string]interface{} {
+	if o == nil {
+		return nil
+	}
+	return o.AdditionalProperties
 }
 
 // TaskProcessing - The processing state of a task as defined by the `processing_enum`
@@ -165,7 +198,7 @@ type Task struct {
 	// The ID of the analysis object associated with this task created by an analysis workflow if the analysis feature is enabled for your tenant.
 	AnalysisID *string `json:"analysisId,omitempty"`
 	// An array of `google.protobuf.Any` annotations with various base64-encoded data.
-	Annotations []map[string]interface{} `json:"annotations,omitempty"`
+	Annotations []TaskAnnotations `json:"annotations,omitempty"`
 	// The count of comments.
 	CommentCount *float64   `json:"commentCount,omitempty"`
 	CreatedAt    *time.Time `json:"createdAt,omitempty"`
@@ -197,6 +230,17 @@ type Task struct {
 	UserID *string `json:"userId,omitempty"`
 }
 
+func (t Task) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(t, "", false)
+}
+
+func (t *Task) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &t, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
 func (o *Task) GetPolicyInstance() *PolicyInstance {
 	if o == nil {
 		return nil
@@ -225,7 +269,7 @@ func (o *Task) GetAnalysisID() *string {
 	return o.AnalysisID
 }
 
-func (o *Task) GetAnnotations() []map[string]interface{} {
+func (o *Task) GetAnnotations() []TaskAnnotations {
 	if o == nil {
 		return nil
 	}

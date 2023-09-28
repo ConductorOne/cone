@@ -5,6 +5,7 @@ package shared
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/conductorone/conductorone-sdk-go/pkg/utils"
 	"time"
 )
 
@@ -196,6 +197,17 @@ type TaskSearchRequestInput struct {
 	TaskStates []TaskSearchRequestTaskStates `json:"taskStates,omitempty"`
 	// Search tasks with this task type. This is a oneOf, and needs an object, which can be empty, to sort.
 	TaskTypes []TaskTypeInput `json:"taskTypes,omitempty"`
+}
+
+func (t TaskSearchRequestInput) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(t, "", false)
+}
+
+func (t *TaskSearchRequestInput) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &t, "", false, false); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *TaskSearchRequestInput) GetTaskExpandMask() *TaskExpandMask {

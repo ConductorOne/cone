@@ -2,12 +2,48 @@
 
 package shared
 
+import (
+	"github.com/conductorone/conductorone-sdk-go/pkg/utils"
+)
+
+// TaskActionsServiceCommentResponseExpanded - Contains an arbitrary serialized message along with a @type that describes the type of the serialized message.
+type TaskActionsServiceCommentResponseExpanded struct {
+	// The type of the serialized message.
+	AtType               *string                `json:"@type,omitempty"`
+	AdditionalProperties map[string]interface{} `additionalProperties:"true" json:"-"`
+}
+
+func (t TaskActionsServiceCommentResponseExpanded) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(t, "", false)
+}
+
+func (t *TaskActionsServiceCommentResponseExpanded) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &t, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *TaskActionsServiceCommentResponseExpanded) GetAtType() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AtType
+}
+
+func (o *TaskActionsServiceCommentResponseExpanded) GetAdditionalProperties() map[string]interface{} {
+	if o == nil {
+		return nil
+	}
+	return o.AdditionalProperties
+}
+
 // TaskActionsServiceCommentResponse - Task actions service comment response returns the task view inluding the expanded array of items that are indicated by the expand mask on the request.
 type TaskActionsServiceCommentResponse struct {
 	// Contains a task and JSONPATH expressions that describe where in the expanded array related objects are located. This view can be used to display a fully-detailed dashboard of task information.
 	TaskView *TaskView `json:"taskView,omitempty"`
 	// List of serialized related objects.
-	Expanded []map[string]interface{} `json:"expanded,omitempty"`
+	Expanded []TaskActionsServiceCommentResponseExpanded `json:"expanded,omitempty"`
 }
 
 func (o *TaskActionsServiceCommentResponse) GetTaskView() *TaskView {
@@ -17,7 +53,7 @@ func (o *TaskActionsServiceCommentResponse) GetTaskView() *TaskView {
 	return o.TaskView
 }
 
-func (o *TaskActionsServiceCommentResponse) GetExpanded() []map[string]interface{} {
+func (o *TaskActionsServiceCommentResponse) GetExpanded() []TaskActionsServiceCommentResponseExpanded {
 	if o == nil {
 		return nil
 	}

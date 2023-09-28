@@ -19,8 +19,11 @@ func (o *C1APIUserV1UserServiceGetRequest) GetID() string {
 }
 
 type C1APIUserV1UserServiceGetResponse struct {
+	// HTTP response content type for this operation
 	ContentType string
-	StatusCode  int
+	// HTTP response status code for this operation
+	StatusCode int
+	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// The UserServiceGetResponse returns a user view which has a user including JSONPATHs to the expanded items in the expanded array.
 	UserServiceGetResponse *shared.UserServiceGetResponse

@@ -43,11 +43,14 @@ func (o *C1APIAppV1AppEntitlementOwnersListRequest) GetPageToken() *string {
 }
 
 type C1APIAppV1AppEntitlementOwnersListResponse struct {
+	// HTTP response content type for this operation
 	ContentType string
 	// The response message for listing app entitlement owners.
 	ListAppEntitlementOwnersResponse *shared.ListAppEntitlementOwnersResponse
-	StatusCode                       int
-	RawResponse                      *http.Response
+	// HTTP response status code for this operation
+	StatusCode int
+	// Raw HTTP response; suitable for custom response parsing
+	RawResponse *http.Response
 }
 
 func (o *C1APIAppV1AppEntitlementOwnersListResponse) GetContentType() string {

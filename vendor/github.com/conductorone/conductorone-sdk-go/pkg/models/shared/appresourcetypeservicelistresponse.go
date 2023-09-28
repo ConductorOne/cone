@@ -2,10 +2,46 @@
 
 package shared
 
+import (
+	"github.com/conductorone/conductorone-sdk-go/pkg/utils"
+)
+
+// AppResourceTypeServiceListResponseExpanded - Contains an arbitrary serialized message along with a @type that describes the type of the serialized message.
+type AppResourceTypeServiceListResponseExpanded struct {
+	// The type of the serialized message.
+	AtType               *string                `json:"@type,omitempty"`
+	AdditionalProperties map[string]interface{} `additionalProperties:"true" json:"-"`
+}
+
+func (a AppResourceTypeServiceListResponseExpanded) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(a, "", false)
+}
+
+func (a *AppResourceTypeServiceListResponseExpanded) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &a, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *AppResourceTypeServiceListResponseExpanded) GetAtType() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AtType
+}
+
+func (o *AppResourceTypeServiceListResponseExpanded) GetAdditionalProperties() map[string]interface{} {
+	if o == nil {
+		return nil
+	}
+	return o.AdditionalProperties
+}
+
 // The AppResourceTypeServiceListResponse message contains a list of results and a nextPageToken if applicable.
 type AppResourceTypeServiceListResponse struct {
 	// List of serialized related objects.
-	Expanded []map[string]interface{} `json:"expanded,omitempty"`
+	Expanded []AppResourceTypeServiceListResponseExpanded `json:"expanded,omitempty"`
 	// The list of results containing up to X results, where X is the page size defined in the request.
 	List []AppResourceTypeView `json:"list,omitempty"`
 	// The nextPageToken is shown for the next page if the number of results is larger than the max page size.
@@ -14,7 +50,7 @@ type AppResourceTypeServiceListResponse struct {
 	NextPageToken *string `json:"nextPageToken,omitempty"`
 }
 
-func (o *AppResourceTypeServiceListResponse) GetExpanded() []map[string]interface{} {
+func (o *AppResourceTypeServiceListResponse) GetExpanded() []AppResourceTypeServiceListResponseExpanded {
 	if o == nil {
 		return nil
 	}

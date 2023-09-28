@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"github.com/conductorone/conductorone-sdk-go/pkg/utils"
 	"time"
 )
 
@@ -13,6 +14,17 @@ type CompletedAction struct {
 	Entitlements []AppEntitlementReference `json:"entitlements,omitempty"`
 	// The UserID of who completed provisioning. For connector provisioning this is the system user id, for manual provisioning this is who clicked "provision complete"
 	UserID *string `json:"userId,omitempty"`
+}
+
+func (c CompletedAction) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(c, "", false)
+}
+
+func (c *CompletedAction) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &c, "", false, false); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *CompletedAction) GetCompletedAt() *time.Time {

@@ -27,8 +27,11 @@ func (o *C1APITaskV1TaskActionsServiceCommentRequest) GetTaskID() string {
 }
 
 type C1APITaskV1TaskActionsServiceCommentResponse struct {
+	// HTTP response content type for this operation
 	ContentType string
-	StatusCode  int
+	// HTTP response status code for this operation
+	StatusCode int
+	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
 	// Task actions service comment response returns the task view inluding the expanded array of items that are indicated by the expand mask on the request.
 	TaskActionsServiceCommentResponse *shared.TaskActionsServiceCommentResponse

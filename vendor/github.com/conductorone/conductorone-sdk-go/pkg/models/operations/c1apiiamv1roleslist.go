@@ -27,11 +27,14 @@ func (o *C1APIIamV1RolesListRequest) GetPageToken() *string {
 }
 
 type C1APIIamV1RolesListResponse struct {
+	// HTTP response content type for this operation
 	ContentType string
 	// The ListRolesResponse message contains a list of results and a nextPageToken if applicable.
 	ListRolesResponse *shared.ListRolesResponse
-	StatusCode        int
-	RawResponse       *http.Response
+	// HTTP response status code for this operation
+	StatusCode int
+	// Raw HTTP response; suitable for custom response parsing
+	RawResponse *http.Response
 }
 
 func (o *C1APIIamV1RolesListResponse) GetContentType() string {

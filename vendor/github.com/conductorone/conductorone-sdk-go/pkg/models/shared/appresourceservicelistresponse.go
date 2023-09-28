@@ -2,10 +2,46 @@
 
 package shared
 
+import (
+	"github.com/conductorone/conductorone-sdk-go/pkg/utils"
+)
+
+// AppResourceServiceListResponseExpanded - Contains an arbitrary serialized message along with a @type that describes the type of the serialized message.
+type AppResourceServiceListResponseExpanded struct {
+	// The type of the serialized message.
+	AtType               *string                `json:"@type,omitempty"`
+	AdditionalProperties map[string]interface{} `additionalProperties:"true" json:"-"`
+}
+
+func (a AppResourceServiceListResponseExpanded) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(a, "", false)
+}
+
+func (a *AppResourceServiceListResponseExpanded) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &a, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *AppResourceServiceListResponseExpanded) GetAtType() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AtType
+}
+
+func (o *AppResourceServiceListResponseExpanded) GetAdditionalProperties() map[string]interface{} {
+	if o == nil {
+		return nil
+	}
+	return o.AdditionalProperties
+}
+
 // The AppResourceServiceListResponse message contains a list of results and a nextPageToken if applicable.
 type AppResourceServiceListResponse struct {
 	// List of serialized related objects.
-	Expanded []map[string]interface{} `json:"expanded,omitempty"`
+	Expanded []AppResourceServiceListResponseExpanded `json:"expanded,omitempty"`
 	// The list of results containing up to X results, where X is the page size defined in the request.
 	List []AppResourceView `json:"list,omitempty"`
 	// The nextPageToken is shown for the next page if the number of results is larger than the max page size.
@@ -14,7 +50,7 @@ type AppResourceServiceListResponse struct {
 	NextPageToken *string `json:"nextPageToken,omitempty"`
 }
 
-func (o *AppResourceServiceListResponse) GetExpanded() []map[string]interface{} {
+func (o *AppResourceServiceListResponse) GetExpanded() []AppResourceServiceListResponseExpanded {
 	if o == nil {
 		return nil
 	}

@@ -2,12 +2,48 @@
 
 package shared
 
+import (
+	"github.com/conductorone/conductorone-sdk-go/pkg/utils"
+)
+
+// AppEntitlementSearchServiceSearchResponseExpanded - Contains an arbitrary serialized message along with a @type that describes the type of the serialized message.
+type AppEntitlementSearchServiceSearchResponseExpanded struct {
+	// The type of the serialized message.
+	AtType               *string                `json:"@type,omitempty"`
+	AdditionalProperties map[string]interface{} `additionalProperties:"true" json:"-"`
+}
+
+func (a AppEntitlementSearchServiceSearchResponseExpanded) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(a, "", false)
+}
+
+func (a *AppEntitlementSearchServiceSearchResponseExpanded) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &a, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *AppEntitlementSearchServiceSearchResponseExpanded) GetAtType() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AtType
+}
+
+func (o *AppEntitlementSearchServiceSearchResponseExpanded) GetAdditionalProperties() map[string]interface{} {
+	if o == nil {
+		return nil
+	}
+	return o.AdditionalProperties
+}
+
 // The AppEntitlementSearchServiceSearchResponse message.
 type AppEntitlementSearchServiceSearchResponse struct {
 	// Indicates one value of a facet.
 	Facets *Facets `json:"facets,omitempty"`
 	// List of related objects.
-	Expanded []map[string]interface{} `json:"expanded,omitempty"`
+	Expanded []AppEntitlementSearchServiceSearchResponseExpanded `json:"expanded,omitempty"`
 	// List of app entitlement view objects.
 	List []AppEntitlementView `json:"list,omitempty"`
 	// The nextPageToken is shown for the next page if the number of results is larger than the max page size. The server returns one page of results and the nextPageToken until all results are retreived. To retrieve the next page, use the same request and append a pageToken field with the value of nextPageToken shown on the previous page.
@@ -21,7 +57,7 @@ func (o *AppEntitlementSearchServiceSearchResponse) GetFacets() *Facets {
 	return o.Facets
 }
 
-func (o *AppEntitlementSearchServiceSearchResponse) GetExpanded() []map[string]interface{} {
+func (o *AppEntitlementSearchServiceSearchResponse) GetExpanded() []AppEntitlementSearchServiceSearchResponseExpanded {
 	if o == nil {
 		return nil
 	}

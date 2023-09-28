@@ -2,12 +2,48 @@
 
 package shared
 
+import (
+	"github.com/conductorone/conductorone-sdk-go/pkg/utils"
+)
+
+// DirectoryServiceCreateResponseExpanded - Contains an arbitrary serialized message along with a @type that describes the type of the serialized message.
+type DirectoryServiceCreateResponseExpanded struct {
+	// The type of the serialized message.
+	AtType               *string                `json:"@type,omitempty"`
+	AdditionalProperties map[string]interface{} `additionalProperties:"true" json:"-"`
+}
+
+func (d DirectoryServiceCreateResponseExpanded) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(d, "", false)
+}
+
+func (d *DirectoryServiceCreateResponseExpanded) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &d, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *DirectoryServiceCreateResponseExpanded) GetAtType() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AtType
+}
+
+func (o *DirectoryServiceCreateResponseExpanded) GetAdditionalProperties() map[string]interface{} {
+	if o == nil {
+		return nil
+	}
+	return o.AdditionalProperties
+}
+
 // The DirectoryServiceCreateResponse message.
 type DirectoryServiceCreateResponse struct {
 	// The directory view contains a directory and an app_path which is a JSONPATH set to the location in the expand mask that the expanded app will live if requested by the expander.
 	DirectoryView *DirectoryView `json:"directoryView,omitempty"`
 	// List of serialized related objects.
-	Expanded []map[string]interface{} `json:"expanded,omitempty"`
+	Expanded []DirectoryServiceCreateResponseExpanded `json:"expanded,omitempty"`
 }
 
 func (o *DirectoryServiceCreateResponse) GetDirectoryView() *DirectoryView {
@@ -17,7 +53,7 @@ func (o *DirectoryServiceCreateResponse) GetDirectoryView() *DirectoryView {
 	return o.DirectoryView
 }
 
-func (o *DirectoryServiceCreateResponse) GetExpanded() []map[string]interface{} {
+func (o *DirectoryServiceCreateResponse) GetExpanded() []DirectoryServiceCreateResponseExpanded {
 	if o == nil {
 		return nil
 	}

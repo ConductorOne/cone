@@ -27,11 +27,14 @@ func (o *C1APIAppV1AppsListRequest) GetPageToken() *string {
 }
 
 type C1APIAppV1AppsListResponse struct {
+	// HTTP response content type for this operation
 	ContentType string
 	// The ListAppsResponse message contains a list of results and a nextPageToken if applicable.
 	ListAppsResponse *shared.ListAppsResponse
-	StatusCode       int
-	RawResponse      *http.Response
+	// HTTP response status code for this operation
+	StatusCode int
+	// Raw HTTP response; suitable for custom response parsing
+	RawResponse *http.Response
 }
 
 func (o *C1APIAppV1AppsListResponse) GetContentType() string {

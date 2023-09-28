@@ -5,6 +5,7 @@ package shared
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/conductorone/conductorone-sdk-go/pkg/utils"
 	"time"
 )
 
@@ -51,6 +52,17 @@ type ConnectorStatus struct {
 	// The status of the connector sync.
 	Status    *ConnectorStatusStatus `json:"status,omitempty"`
 	UpdatedAt *time.Time             `json:"updatedAt,omitempty"`
+}
+
+func (c ConnectorStatus) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(c, "", false)
+}
+
+func (c *ConnectorStatus) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &c, "", false, false); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *ConnectorStatus) GetCompletedAt() *time.Time {

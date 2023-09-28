@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"github.com/conductorone/conductorone-sdk-go/pkg/utils"
 	"time"
 )
 
@@ -23,6 +24,17 @@ type ConnectorCredential struct {
 	ID         *string    `json:"id,omitempty"`
 	LastUsedAt *time.Time `json:"lastUsedAt,omitempty"`
 	UpdatedAt  *time.Time `json:"updatedAt,omitempty"`
+}
+
+func (c ConnectorCredential) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(c, "", false)
+}
+
+func (c *ConnectorCredential) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &c, "", false, false); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *ConnectorCredential) GetAppID() *string {

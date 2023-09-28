@@ -27,11 +27,14 @@ func (o *C1APIDirectoryV1DirectoryServiceListRequest) GetPageToken() *string {
 }
 
 type C1APIDirectoryV1DirectoryServiceListResponse struct {
+	// HTTP response content type for this operation
 	ContentType string
 	// The DirectoryServiceListResponse message contains a list of results and a nextPageToken if applicable.
 	DirectoryServiceListResponse *shared.DirectoryServiceListResponse
-	StatusCode                   int
-	RawResponse                  *http.Response
+	// HTTP response status code for this operation
+	StatusCode int
+	// Raw HTTP response; suitable for custom response parsing
+	RawResponse *http.Response
 }
 
 func (o *C1APIDirectoryV1DirectoryServiceListResponse) GetContentType() string {

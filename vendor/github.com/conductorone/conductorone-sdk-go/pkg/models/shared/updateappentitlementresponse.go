@@ -2,12 +2,48 @@
 
 package shared
 
+import (
+	"github.com/conductorone/conductorone-sdk-go/pkg/utils"
+)
+
+// UpdateAppEntitlementResponseExpanded - Contains an arbitrary serialized message along with a @type that describes the type of the serialized message.
+type UpdateAppEntitlementResponseExpanded struct {
+	// The type of the serialized message.
+	AtType               *string                `json:"@type,omitempty"`
+	AdditionalProperties map[string]interface{} `additionalProperties:"true" json:"-"`
+}
+
+func (u UpdateAppEntitlementResponseExpanded) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(u, "", false)
+}
+
+func (u *UpdateAppEntitlementResponseExpanded) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &u, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *UpdateAppEntitlementResponseExpanded) GetAtType() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AtType
+}
+
+func (o *UpdateAppEntitlementResponseExpanded) GetAdditionalProperties() map[string]interface{} {
+	if o == nil {
+		return nil
+	}
+	return o.AdditionalProperties
+}
+
 // The UpdateAppEntitlementResponse message.
 type UpdateAppEntitlementResponse struct {
 	// The app entitlement view contains the serialized app entitlement and paths to objects referenced by the app entitlement.
 	AppEntitlementView *AppEntitlementView `json:"appEntitlementView,omitempty"`
 	// List of related objects
-	Expanded []map[string]interface{} `json:"expanded,omitempty"`
+	Expanded []UpdateAppEntitlementResponseExpanded `json:"expanded,omitempty"`
 }
 
 func (o *UpdateAppEntitlementResponse) GetAppEntitlementView() *AppEntitlementView {
@@ -17,7 +53,7 @@ func (o *UpdateAppEntitlementResponse) GetAppEntitlementView() *AppEntitlementVi
 	return o.AppEntitlementView
 }
 
-func (o *UpdateAppEntitlementResponse) GetExpanded() []map[string]interface{} {
+func (o *UpdateAppEntitlementResponse) GetExpanded() []UpdateAppEntitlementResponseExpanded {
 	if o == nil {
 		return nil
 	}

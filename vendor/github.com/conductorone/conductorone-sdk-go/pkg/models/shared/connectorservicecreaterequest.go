@@ -2,6 +2,42 @@
 
 package shared
 
+import (
+	"github.com/conductorone/conductorone-sdk-go/pkg/utils"
+)
+
+// ConnectorServiceCreateRequestConfig - Contains an arbitrary serialized message along with a @type that describes the type of the serialized message.
+type ConnectorServiceCreateRequestConfig struct {
+	// The type of the serialized message.
+	AtType               *string                `json:"@type,omitempty"`
+	AdditionalProperties map[string]interface{} `additionalProperties:"true" json:"-"`
+}
+
+func (c ConnectorServiceCreateRequestConfig) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(c, "", false)
+}
+
+func (c *ConnectorServiceCreateRequestConfig) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &c, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *ConnectorServiceCreateRequestConfig) GetAtType() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AtType
+}
+
+func (o *ConnectorServiceCreateRequestConfig) GetAdditionalProperties() map[string]interface{} {
+	if o == nil {
+		return nil
+	}
+	return o.AdditionalProperties
+}
+
 // The ConnectorServiceCreateRequest message.
 type ConnectorServiceCreateRequest struct {
 	// The ConnectorExpandMask is used to expand related objects on a connector.
@@ -9,7 +45,7 @@ type ConnectorServiceCreateRequest struct {
 	// The catalogId field.
 	CatalogID *string `json:"catalogId,omitempty"`
 	// Contains an arbitrary serialized message along with a @type that describes the type of the serialized message.
-	Config map[string]interface{} `json:"config,omitempty"`
+	Config *ConnectorServiceCreateRequestConfig `json:"config,omitempty"`
 	// The description field.
 	Description *string `json:"description,omitempty"`
 	// The userIds field.
@@ -30,7 +66,7 @@ func (o *ConnectorServiceCreateRequest) GetCatalogID() *string {
 	return o.CatalogID
 }
 
-func (o *ConnectorServiceCreateRequest) GetConfig() map[string]interface{} {
+func (o *ConnectorServiceCreateRequest) GetConfig() *ConnectorServiceCreateRequestConfig {
 	if o == nil {
 		return nil
 	}

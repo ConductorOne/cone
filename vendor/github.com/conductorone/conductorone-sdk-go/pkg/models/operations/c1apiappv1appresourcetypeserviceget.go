@@ -30,9 +30,12 @@ type C1APIAppV1AppResourceTypeServiceGetResponse struct {
 	// The AppResourceTypeServiceGetResponse contains an expanded array containing the expanded values indicated by the expand mask
 	//  in the request and an app resource type view containing the resource type and JSONPATHs indicating which objects are where in the expand mask.
 	AppResourceTypeServiceGetResponse *shared.AppResourceTypeServiceGetResponse
-	ContentType                       string
-	StatusCode                        int
-	RawResponse                       *http.Response
+	// HTTP response content type for this operation
+	ContentType string
+	// HTTP response status code for this operation
+	StatusCode int
+	// Raw HTTP response; suitable for custom response parsing
+	RawResponse *http.Response
 }
 
 func (o *C1APIAppV1AppResourceTypeServiceGetResponse) GetAppResourceTypeServiceGetResponse() *shared.AppResourceTypeServiceGetResponse {

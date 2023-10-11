@@ -7,7 +7,6 @@ import (
 	"net"
 	"net/http"
 	"net/http/httputil"
-	"regexp"
 	"sync"
 	"time"
 
@@ -16,12 +15,6 @@ import (
 	"golang.org/x/net/http2"
 	"golang.org/x/oauth2"
 )
-
-var authorizationRegexFilter *regexp.Regexp
-
-func init() {
-	authorizationRegexFilter = regexp.MustCompile("Authorization: Bearer .*\n")
-}
 
 // NewTransport creates a new Transport, applies the options, and then cycles the transport.
 func NewTransport(ctx context.Context, options ...Option) (*Transport, error) {
@@ -103,21 +96,22 @@ func (uat *debugTripper) RoundTrip(req *http.Request) (*http.Response, error) {
 		return uat.next.RoundTrip(req)
 	}
 
+	resp, err := uat.next.RoundTrip(req)
+	if err != nil {
+		return nil, err
+	}
+
+	if req.Header.Get("Authorization") != "" {
+		resp.Header.Set("Authorization", "[REDACTED]")
+	}
+
 	requestBytes, err := httputil.DumpRequest(req, true)
 	if err != nil {
 		return nil, err
 	}
 
-	requestString := string(requestBytes)
-	requestString = authorizationRegexFilter.ReplaceAllString(requestString, "Authorization: [REDACTED]\n")
-
 	//nolint:forbidigo
-	fmt.Println(requestString)
-
-	resp, err := uat.next.RoundTrip(req)
-	if err != nil {
-		return nil, err
-	}
+	fmt.Println(string(requestBytes))
 
 	responseBytes, err := httputil.DumpResponse(resp, true)
 	if err != nil {

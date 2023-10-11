@@ -17,6 +17,12 @@ import (
 	"golang.org/x/oauth2"
 )
 
+var authorizationRegexFilter *regexp.Regexp
+
+func init() {
+	authorizationRegexFilter = regexp.MustCompile("Authorization: Bearer .*\n")
+}
+
 // NewTransport creates a new Transport, applies the options, and then cycles the transport.
 func NewTransport(ctx context.Context, options ...Option) (*Transport, error) {
 	t := newTransport()
@@ -102,12 +108,8 @@ func (uat *debugTripper) RoundTrip(req *http.Request) (*http.Response, error) {
 		return nil, err
 	}
 
-	reg, err := regexp.Compile("Authorization: Bearer .*\n")
-	if err != nil {
-		return nil, err
-	}
 	requestString := string(requestBytes)
-	requestString = reg.ReplaceAllString(requestString, "Authorization: [REDACTED]\n")
+	requestString = authorizationRegexFilter.ReplaceAllString(requestString, "Authorization: [REDACTED]\n")
 
 	//nolint:forbidigo
 	fmt.Println(requestString)

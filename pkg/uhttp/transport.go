@@ -7,6 +7,7 @@ import (
 	"net"
 	"net/http"
 	"net/http/httputil"
+	"regexp"
 	"sync"
 	"time"
 
@@ -100,8 +101,16 @@ func (uat *debugTripper) RoundTrip(req *http.Request) (*http.Response, error) {
 	if err != nil {
 		return nil, err
 	}
+
+	reg, err := regexp.Compile("Authorization: Bearer .*\n")
+	if err != nil {
+		return nil, err
+	}
+	requestString := string(requestBytes)
+	requestString = reg.ReplaceAllString(requestString, "Authorization: [REDACTED]\n")
+
 	//nolint:forbidigo
-	fmt.Println(string(requestBytes))
+	fmt.Println(requestString)
 
 	resp, err := uat.next.RoundTrip(req)
 	if err != nil {

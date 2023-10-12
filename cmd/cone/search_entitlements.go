@@ -120,7 +120,6 @@ func (r *ExpandedEntitlementsResponse) Rows() [][]string {
 	return rows
 }
 
-// Columns to sort by ordered by priority
 func (r *ExpandedEntitlementsResponse) OrderedSortColumns() []string {
 	return []string{
 		DisplayNameHeader,

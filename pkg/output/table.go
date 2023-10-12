@@ -68,17 +68,13 @@ func (c *tableManager) sortData(header []string, tableData [][]string, out inter
 				if ii != jj {
 					return ii < jj
 				}
-			} else {
-				if tableData[i][sortCol] != tableData[j][sortCol] {
-					return tableData[i][sortCol] < tableData[j][sortCol]
-				}
+			} else if tableData[i][sortCol] != tableData[j][sortCol] {
+				return tableData[i][sortCol] < tableData[j][sortCol]
 			}
 		}
 		return false
 	})
-
 }
-
 func (c *tableManager) getTableData(out interface{}) (pterm.TableData, error) {
 	var getHeader func() []string
 	var getRows func() [][]string
@@ -199,5 +195,6 @@ type PreText interface {
 }
 
 type TableSort interface {
+	// Columns to sort by ordered by priority.
 	OrderedSortColumns() []string
 }

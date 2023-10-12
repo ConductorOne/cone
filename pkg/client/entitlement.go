@@ -44,7 +44,7 @@ type EntitlementWithBindings struct {
 	Bindings    []shared.AppEntitlementUserBinding
 	// The expanded fields are stored here
 	// TODO @anthony: marshall into actual types
-	Expanded map[string]*shared.RequestCatalogSearchServiceSearchEntitlementsResponseExpanded
+	Expanded map[string]shared.RequestCatalogSearchServiceSearchEntitlementsResponseExpanded
 }
 
 type ExpandableEntitlementWithBindings struct {

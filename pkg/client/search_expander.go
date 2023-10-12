@@ -1,7 +1,6 @@
 package client
 
 import (
-	"fmt"
 	"regexp"
 	"strconv"
 )
@@ -16,12 +15,10 @@ type Expandable interface {
 	SetPath(pathname string, value int)
 }
 
-func PopulateExpandedMap[T any](expandMap map[string]int, expanded []T) map[string]*T {
-	fmt.Printf("%v", expanded)
-	rv := make(map[string]*T)
+func PopulateExpandedMap[T any](expandMap map[string]int, expanded []T) map[string]T {
+	rv := make(map[string]T)
 	for k, v := range expandMap {
-		fmt.Printf("%v", expanded[v])
-		rv[k] = &expanded[v]
+		rv[k] = expanded[v]
 	}
 	return rv
 }

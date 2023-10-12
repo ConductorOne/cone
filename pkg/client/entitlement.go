@@ -16,11 +16,12 @@ const (
 )
 
 type SearchEntitlementsFilter struct {
-	Query            string
-	EntitlementAlias string
-	AppDisplayName   string
-	GrantedStatus    shared.RequestCatalogSearchServiceSearchEntitlementsRequestGrantedStatus
-	IncludeDeleted   bool
+	Query                    string
+	EntitlementAlias         string
+	AppDisplayName           string
+	GrantedStatus            shared.RequestCatalogSearchServiceSearchEntitlementsRequestGrantedStatus
+	IncludeDeleted           bool
+	AppEntitlementExpandMask shared.AppEntitlementExpandMask
 }
 
 type AppEntitlement shared.AppEntitlement
@@ -40,19 +41,51 @@ func (a AppEntitlement) GetAppId() string {
 type EntitlementWithBindings struct {
 	Entitlement AppEntitlement
 	Bindings    []shared.AppEntitlementUserBinding
+	// The expanded fields are stored here
+	// TODO @anthony: marshall into actual types
+	Expanded map[string]*shared.RequestCatalogSearchServiceSearchEntitlementsResponseExpanded
+}
+
+type ExpandableEntitlementResponse struct {
+	Expanded []shared.RequestCatalogSearchServiceSearchEntitlementsResponseExpanded
+	List     []*ExpandableEntitlementWithBindings
+}
+
+type ExpandableEntitlementWithBindings struct {
+	shared.AppEntitlementWithUserBindings
+	Expanded map[string]*shared.RequestCatalogSearchServiceSearchEntitlementsResponseExpanded
+}
+
+func NewExpandableEntitlementWithBindings(v shared.AppEntitlementWithUserBindings) *ExpandableEntitlementWithBindings {
+	if v.AppEntitlementView == nil {
+		return nil
+	}
+	return &ExpandableEntitlementWithBindings{
+		AppEntitlementWithUserBindings: v,
+	}
+}
+
+func (e ExpandableEntitlementWithBindings) GetPaths() []*string {
+	view := *e.AppEntitlementWithUserBindings.AppEntitlementView
+	return []*string{
+		view.AppPath,
+		view.AppResourcePath,
+		view.AppResourceTypePath,
+	}
 }
 
 func (c *client) SearchEntitlements(ctx context.Context, filter *SearchEntitlementsFilter) ([]*EntitlementWithBindings, error) {
 	// TODO(morgabra) Pagination
 	// TODO(morgabra) Should we abstract the OpenAPI objects from the rest of cone? Kinda... no? But they aren't typed...
 	req := shared.RequestCatalogSearchServiceSearchEntitlementsRequest{
-		EntitlementAlias: stringPtr(filter.EntitlementAlias),
-		GrantedStatus:    filter.GrantedStatus.ToPointer(),
-		PageSize:         float64Ptr(100),
-		PageToken:        nil,
-		Query:            stringPtr(filter.Query),
-		AppDisplayName:   stringPtr(filter.AppDisplayName),
-		IncludeDeleted:   &filter.IncludeDeleted,
+		EntitlementAlias:         stringPtr(filter.EntitlementAlias),
+		GrantedStatus:            filter.GrantedStatus.ToPointer(),
+		PageSize:                 float64Ptr(100),
+		PageToken:                nil,
+		Query:                    stringPtr(filter.Query),
+		AppDisplayName:           stringPtr(filter.AppDisplayName),
+		IncludeDeleted:           &filter.IncludeDeleted,
+		AppEntitlementExpandMask: &filter.AppEntitlementExpandMask,
 	}
 	resp, err := c.sdk.RequestCatalogSearch.SearchEntitlements(ctx, &req)
 	if err != nil {
@@ -68,17 +101,23 @@ func (c *client) SearchEntitlements(ctx context.Context, filter *SearchEntitleme
 		return nil, errors.New("search-entitlements: list is nil")
 	}
 
-	rv := make([]*EntitlementWithBindings, 0, len(list))
+	expanded := make([]*shared.RequestCatalogSearchServiceSearchEntitlementsResponseExpanded, len(list))
+	for _, v := range resp.RequestCatalogSearchServiceSearchEntitlementsResponse.Expanded {
+		expanded = append(expanded, &v)
+	}
+
+	rv := make([]ExpandableEntitlementWithBindings, 0, len(list))
 	for _, v := range list {
-		ent := v.AppEntitlementView
+		ent := NewExpandableEntitlementWithBindings(v)
 		if ent == nil {
 			return nil, errors.New("search-entitlements: entitlement is nil")
 		}
 
-		rv = append(rv, &EntitlementWithBindings{
-			Entitlement: AppEntitlement(*ent.AppEntitlement),
-			Bindings:    v.AppEntitlementUserBindings,
-		})
+		rv = append(rv, *ent)
+	}
+	x := &ExpandableReponse[*shared.RequestCatalogSearchServiceSearchEntitlementsResponseExpanded, ExpandableEntitlementWithBindings]{
+		Expanded: expanded,
+		List:     rv,
 	}
 
 	return rv, nil

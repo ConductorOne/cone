@@ -3,6 +3,7 @@ package main
 import (
 	"github.com/spf13/cobra"
 
+	"github.com/conductorone/conductorone-sdk-go/pkg/models/shared"
 	"github.com/conductorone/cone/pkg/client"
 	"github.com/conductorone/cone/pkg/output"
 )
@@ -45,11 +46,12 @@ func searchEntitlementsRun(cmd *cobra.Command, args []string) error {
 	// 1. Test if it's a direct alias
 	// 2. Use it as a query
 	entitlements, err := c.SearchEntitlements(ctx, &client.SearchEntitlementsFilter{
-		Query:            query,
-		EntitlementAlias: alias,
-		GrantedStatus:    grantedStatus,
-		AppDisplayName:   v.GetString(appDisplayNameFlag),
-		IncludeDeleted:   v.GetBool(includeDeletedFlag),
+		Query:                    query,
+		EntitlementAlias:         alias,
+		GrantedStatus:            grantedStatus,
+		AppDisplayName:           v.GetString(appDisplayNameFlag),
+		IncludeDeleted:           v.GetBool(includeDeletedFlag),
+		AppEntitlementExpandMask: shared.AppEntitlementExpandMask{Paths: []string{"*"}},
 	})
 	if err != nil {
 		return err

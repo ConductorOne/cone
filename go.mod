@@ -23,6 +23,7 @@ require (
 	atomicgo.dev/schedule v0.0.2 // indirect
 	github.com/cenkalti/backoff/v4 v4.2.1 // indirect
 	github.com/containerd/console v1.0.3 // indirect
+	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/ericlagergren/decimal v0.0.0-20221120152707-495c53812d05 // indirect
 	github.com/go-jose/go-jose/v3 v3.0.0 // indirect
 	github.com/golang/protobuf v1.5.3 // indirect

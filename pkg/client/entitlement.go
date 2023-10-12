@@ -6,6 +6,7 @@ import (
 
 	"github.com/conductorone/conductorone-sdk-go/pkg/models/operations"
 	"github.com/conductorone/conductorone-sdk-go/pkg/models/shared"
+	"github.com/davecgh/go-spew/spew"
 )
 
 const (
@@ -46,14 +47,9 @@ type EntitlementWithBindings struct {
 	Expanded map[string]*shared.RequestCatalogSearchServiceSearchEntitlementsResponseExpanded
 }
 
-type ExpandableEntitlementResponse struct {
-	Expanded []shared.RequestCatalogSearchServiceSearchEntitlementsResponseExpanded
-	List     []*ExpandableEntitlementWithBindings
-}
-
 type ExpandableEntitlementWithBindings struct {
 	shared.AppEntitlementWithUserBindings
-	Expanded map[string]*shared.RequestCatalogSearchServiceSearchEntitlementsResponseExpanded
+	ExpandedMap map[string]int
 }
 
 func NewExpandableEntitlementWithBindings(v shared.AppEntitlementWithUserBindings) *ExpandableEntitlementWithBindings {
@@ -65,13 +61,29 @@ func NewExpandableEntitlementWithBindings(v shared.AppEntitlementWithUserBinding
 	}
 }
 
-func (e ExpandableEntitlementWithBindings) GetPaths() []*string {
+func (e ExpandableEntitlementWithBindings) GetPaths() []PathDetails {
 	view := *e.AppEntitlementWithUserBindings.AppEntitlementView
-	return []*string{
-		view.AppPath,
-		view.AppResourcePath,
-		view.AppResourceTypePath,
+	return []PathDetails{
+		{
+			Name: "App",
+			Path: view.AppPath,
+		},
+		{
+			Name: "AppResource",
+			Path: view.AppResourcePath,
+		},
+		{
+			Name: "AppResourceType",
+			Path: view.AppResourceTypePath,
+		},
 	}
+}
+
+func (e ExpandableEntitlementWithBindings) SetPath(pathname string, value int) {
+	if e.ExpandedMap == nil {
+		e.ExpandedMap = make(map[string]int)
+	}
+	e.ExpandedMap[pathname] = value
 }
 
 func (c *client) SearchEntitlements(ctx context.Context, filter *SearchEntitlementsFilter) ([]*EntitlementWithBindings, error) {
@@ -101,42 +113,29 @@ func (c *client) SearchEntitlements(ctx context.Context, filter *SearchEntitleme
 		return nil, errors.New("search-entitlements: list is nil")
 	}
 
-	expanded := make([]*shared.RequestCatalogSearchServiceSearchEntitlementsResponseExpanded, len(list))
-	for _, v := range resp.RequestCatalogSearchServiceSearchEntitlementsResponse.Expanded {
-		expanded = append(expanded, &v)
-	}
-
-	rv := make([]ExpandableEntitlementWithBindings, 0, len(list))
+	expandableList := make([]ExpandableEntitlementWithBindings, 0, len(list))
 	for _, v := range list {
 		ent := NewExpandableEntitlementWithBindings(v)
 		if ent == nil {
 			return nil, errors.New("search-entitlements: entitlement is nil")
 		}
 
-		rv = append(rv, *ent)
+		expandableList = append(expandableList, *ent)
 	}
-	x := &ExpandableReponse[*shared.RequestCatalogSearchServiceSearchEntitlementsResponseExpanded, ExpandableEntitlementWithBindings]{
-		Expanded: expanded,
-		List:     rv,
-	}
+	ExpandableReponse[ExpandableEntitlementWithBindings]{
+		List: expandableList,
+	}.PopulateExpandedIndexes()
 
+	rv := make([]*EntitlementWithBindings, 0, len(list))
+	for _, v := range expandableList {
+		rv = append(rv, &EntitlementWithBindings{
+			Entitlement: AppEntitlement(*v.AppEntitlementWithUserBindings.AppEntitlementView.AppEntitlement),
+			Bindings:    v.AppEntitlementWithUserBindings.AppEntitlementUserBindings,
+			Expanded:    PopulateExpandedMap[shared.RequestCatalogSearchServiceSearchEntitlementsResponseExpanded](v.ExpandedMap, resp.RequestCatalogSearchServiceSearchEntitlementsResponse.Expanded),
+		})
+	}
+	spew.Dump(rv)
 	return rv, nil
-}
-
-func (c *client) ExpandEntitlements(ctx context.Context, in []*EntitlementWithBindings) (*Expander, error) {
-	expander := &Expander{}
-	for _, v := range in {
-		expander.ExpandApp(v.Entitlement)
-		expander.ExpandResourceType(v.Entitlement)
-		expander.ExpandResource(v.Entitlement)
-	}
-
-	err := expander.Run(ctx, c)
-	if err != nil {
-		return nil, err
-	}
-
-	return expander, nil
 }
 
 func (c *client) GetEntitlement(ctx context.Context, appId string, entitlementId string) (*shared.AppEntitlement, error) {

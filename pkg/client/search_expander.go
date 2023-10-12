@@ -1,44 +1,49 @@
 package client
 
 import (
+	"fmt"
 	"regexp"
 	"strconv"
 )
 
-type Expanded interface {
-	GetAtType() *string
-	GetAdditionalProperties() map[string]interface{}
+type PathDetails struct {
+	Name string
+	Path *string
 }
 
-type Expandable[E Expanded] interface {
-	GetPaths() []*string
+type Expandable interface {
+	GetPaths() []PathDetails
+	SetPath(pathname string, value int)
 }
 
-type ExpandableReponse[E Expanded, T Expandable[E]] struct {
-	// 1D array of expanded objects
-	Expanded []E
-	// List of objects with references to expanded objects
-	List []T
-}
-
-func (o *ExpandableReponse[E, T]) GetExpanded() []map[string]*E {
-	rv := make([]map[string]*E, len(o.List))
-	for _, v := range o.List {
-		temp := make(map[string]*E)
-		for _, path := range v.GetPaths() {
-			expanded := o.GetJSONPath(path)
-			if expanded != nil {
-				temp[*path] = expanded
-			}
-		}
-		rv = append(rv, temp)
+func PopulateExpandedMap[T any](expandMap map[string]int, expanded []T) map[string]*T {
+	fmt.Printf("%v", expanded)
+	rv := make(map[string]*T)
+	for k, v := range expandMap {
+		fmt.Printf("%v", expanded[v])
+		rv[k] = &expanded[v]
 	}
 	return rv
 }
 
-func (o *ExpandableReponse[E, T]) GetJSONPath(jsonpath *string) *E {
+type ExpandableReponse[T Expandable] struct {
+	List []T
+}
+
+func (o ExpandableReponse[T]) PopulateExpandedIndexes() {
+	for _, v := range o.List {
+		for _, path := range v.GetPaths() {
+			expanded := o.GetJSONPath(path.Path)
+			if expanded != -1 {
+				v.SetPath(path.Name, expanded)
+			}
+		}
+	}
+}
+
+func (o ExpandableReponse[T]) GetJSONPath(jsonpath *string) int {
 	if jsonpath == nil || *jsonpath == "" {
-		return nil
+		return -1
 	}
 	// TODO: support more complex paths?
 	// Matches "$.expanded[0]"
@@ -49,9 +54,10 @@ func (o *ExpandableReponse[E, T]) GetJSONPath(jsonpath *string) *E {
 		// Remove the brackets to leave just the number
 		indexStr, err := strconv.Atoi(matches[0][1 : len(matches[0])-1])
 		if err != nil {
-			return nil
+			return -1
 		}
-		return &o.Expanded[indexStr]
+
+		return indexStr
 	}
-	return nil
+	return -1
 }

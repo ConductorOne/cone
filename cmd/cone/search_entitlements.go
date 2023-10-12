@@ -56,15 +56,8 @@ func searchEntitlementsRun(cmd *cobra.Command, args []string) error {
 	if err != nil {
 		return err
 	}
-
-	expander, err := c.ExpandEntitlements(ctx, entitlements)
-	if err != nil {
-		return err
-	}
-
 	resp := &ExpandedEntitlementsResponse{
 		Entitlements: entitlements,
-		expander:     expander,
 	}
 	outputManager := output.NewManager(ctx, v)
 	err = outputManager.Output(ctx, resp)
@@ -77,7 +70,6 @@ func searchEntitlementsRun(cmd *cobra.Command, args []string) error {
 
 type ExpandedEntitlementsResponse struct {
 	Entitlements []*client.EntitlementWithBindings `json:"entitlements"`
-	expander     *client.Expander
 }
 
 const DisplayNameHeader = "Display Name"
@@ -91,32 +83,28 @@ func (r *ExpandedEntitlementsResponse) WideHeader() []string {
 	return append(r.Header(), "Description", "App ID", "Entitlement ID")
 }
 
+func (r *ExpandedEntitlementsResponse) GetExpandedDisplayName(pathname string, e *client.EntitlementWithBindings) string {
+	app := e.Expanded[pathname]
+	if app == nil {
+		return ""
+	}
+	return app.AdditionalProperties["displayName"].(string)
+}
+
 func (r *ExpandedEntitlementsResponse) Rows() [][]string {
 	rows := [][]string{}
 	for _, e := range r.Entitlements {
-		app, _ := r.expander.GetApp(client.StringFromPtr(e.Entitlement.AppID))
-		resourceType, _ := r.expander.GetResourceType(
-			client.StringFromPtr(e.Entitlement.AppID),
-			client.StringFromPtr(e.Entitlement.AppResourceTypeID),
-		)
-		resource, _ := r.expander.GetResource(
-			client.StringFromPtr(e.Entitlement.AppID),
-			client.StringFromPtr(e.Entitlement.AppResourceTypeID),
-			client.StringFromPtr(e.Entitlement.AppResourceID),
-		)
-
 		granted := output.Checkmark
 		if len(e.Bindings) == 0 {
 			granted = output.Unchecked
 		}
-
 		rows = append(rows, []string{
 			granted,
 			client.StringFromPtr(e.Entitlement.Alias),
 			client.StringFromPtr(e.Entitlement.DisplayName),
-			client.StringFromPtr(app.DisplayName),
-			client.StringFromPtr(resourceType.DisplayName),
-			client.StringFromPtr(resource.DisplayName),
+			r.GetExpandedDisplayName("App", e),
+			r.GetExpandedDisplayName("AppResourceType", e),
+			r.GetExpandedDisplayName("AppResource", e),
 		})
 	}
 	return rows

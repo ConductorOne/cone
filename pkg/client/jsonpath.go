@@ -44,13 +44,12 @@ func GetJSONPathIndex(jsonpath *string) (int, error) {
 	}
 	// Only support dot notation for now.
 	path := strings.Split(*jsonpath, ".")
-	if len(path) > 1 {
+	if len(path) > 2 {
 		return -1, errors.New("jsonpath: invalid path, nested jsonpath operations are not supported")
 	}
 
 	if path[0] != "$" {
 		return -1, errors.New("jsonpath: invalid path, no root element")
 	}
-
 	return getInsideParentheses(path[1])
 }

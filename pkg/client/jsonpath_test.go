@@ -4,81 +4,59 @@ import (
 	"testing"
 )
 
-func TestGetJSONPathIndexNil(t *testing.T) {
-	want := -1
-	got, err := GetJSONPathIndex(nil)
-	if err != nil {
-		t.Errorf("GetJSONPathIndex(nil) returned error: %v", err)
+func TestGetJSONPathIndex(t *testing.T) {
+	tests := []struct {
+		name    string
+		input   *string
+		want    int
+		wantErr bool
+	}{
+		{name: "Nil", input: nil, want: -1, wantErr: false},
+		{name: "Empty", input: newString(""), want: -1, wantErr: false},
+		{name: "BadRoot", input: newString("badroot"), want: -1, wantErr: true},
+		{name: "NestedPath", input: newString("$.nested.path"), want: -1, wantErr: true},
+		{name: "WorkingPath", input: newString("$.expanded[0]"), want: 0, wantErr: false},
 	}
-	if got != want {
-		t.Errorf("GetJSONPathIndex(nil) = %v, want %v", got, want)
+
+	for _, tc := range tests {
+		got, err := GetJSONPathIndex(tc.input)
+		if (err != nil) != tc.wantErr {
+			t.Errorf("%s: expected error: %v, got: %v", tc.name, tc.wantErr, err)
+		}
+		if got != tc.want {
+			t.Errorf("%s: expected: %v, got: %v", tc.name, tc.want, got)
+		}
 	}
 }
 
-func TestGetJsonPathIndexEmpty(t *testing.T) {
-	want := -1
-	str := ""
-	got, err := GetJSONPathIndex(&str)
-	if err != nil {
-		t.Errorf("GetJSONPathIndex(\"\") returned error: %v", err)
+func TestGetInsideParentheses(t *testing.T) {
+	tests := []struct {
+		name    string
+		input   string
+		want    int
+		wantErr bool
+	}{
+		{name: "NoParentheses", input: "no parentheses", want: -1, wantErr: true},
+		{name: "NestedParentheses", input: "[[0]]", want: -1, wantErr: true},
+		{name: "NumerousParentheses", input: "[1][1]", want: -1, wantErr: true},
+		{name: "Wildcard", input: "a[*]", want: -1, wantErr: true},
+		{name: "InvalidIndex", input: "aa[invalid]", want: -1, wantErr: true},
+		{name: "NegativeIndex", input: "asd[-1]", want: -1, wantErr: true},
+		{name: "ProperPath", input: "expanded[1]", want: 1, wantErr: false},
 	}
-	if got != want {
-		t.Errorf("GetJSONPathIndex(\"\") = %v, want %v", got, want)
+
+	for _, tc := range tests {
+		got, err := getInsideParentheses(tc.input)
+		if (err != nil) != tc.wantErr {
+			t.Errorf("%s: expected error: %v, got: %v", tc.name, tc.wantErr, err)
+		}
+		if got != tc.want { // Adjust this based on the type of 'want'
+			t.Errorf("%s: expected: %v, got: %v", tc.name, tc.want, got)
+		}
 	}
 }
 
-func TestGetJsonPathIndexBadRoot(t *testing.T) {
-	str := "badroot"
-	_, err := GetJSONPathIndex(&str)
-	if err == nil {
-		t.Errorf("GetJSONPathIndex(\"badroot\") returned no error")
-	}
-}
-
-func TestGetJsonPathIndexNestedPath(t *testing.T) {
-	str := "$.nested.path"
-	_, err := GetJSONPathIndex(&str)
-	if err == nil {
-		t.Errorf("GetJSONPathIndex(\"$.nested.path\") returned no error")
-	}
-}
-
-func TestGetInsideParenthesesNoParentheses(t *testing.T) {
-	str := "no parentheses"
-	_, err := getInsideParentheses(str)
-	if err == nil {
-		t.Errorf("GetJSONPathIndex(\"no parentheses\") returned no error")
-	}
-}
-
-func TestGetInsideParenthesesNestedParentheses(t *testing.T) {
-	str := "[[0]]"
-	_, err := getInsideParentheses(str)
-	if err == nil {
-		t.Errorf("GetJSONPathIndex(\"[[0]]\") returned no error")
-	}
-}
-
-func TestGetInsideParenthesesWildcard(t *testing.T) {
-	str := "a[*]"
-	_, err := getInsideParentheses(str)
-	if err == nil {
-		t.Errorf("GetJSONPathIndex(\"[*]\") returned no error")
-	}
-}
-
-func TestGetInsideParenthesesInvalidIndex(t *testing.T) {
-	str := "aa[invalid]"
-	_, err := getInsideParentheses(str)
-	if err == nil {
-		t.Errorf("GetJSONPathIndex(\"[invalid]\") returned no error")
-	}
-}
-
-func TestGetInsideParenthesesNegativeIndex(t *testing.T) {
-	str := "asd[-1]"
-	_, err := getInsideParentheses(str)
-	if err == nil {
-		t.Errorf("GetJSONPathIndex(\"asd[-1]\") returned no error")
-	}
+// Helper function to return a pointer to a string.
+func newString(s string) *string {
+	return &s
 }

@@ -8,15 +8,17 @@ import (
 	"strings"
 )
 
-var matchParentheses = regexp.MustCompile(`\[\d+\]`)
+var matchParentheses = regexp.MustCompile(`\[.*\]`)
 
 func getInsideParentheses(str string) (int, error) {
-	matches := matchParentheses.FindStringSubmatch(str)
-	if len(matches) == 0 {
+	// Find all matches of the form [.*] then check if there is only one match, to ensure no false positives.
+	matches := matchParentheses.FindAllString(str, 2)
+	if matches == nil {
 		return -1, errors.New("jsonpath: invalid path, no array index operation found")
 	}
+
 	if len(matches) > 1 {
-		return -1, errors.New("jsonpath: invalid path, nested parentheses not supported")
+		return -1, errors.New("jsonpath: invalid path, multiple array index operations not supported")
 	}
 
 	match := matches[0][1 : len(matches[0])-1]
@@ -37,14 +39,11 @@ func getInsideParentheses(str string) (int, error) {
 // If you need to support more complex JSONPath operations, please use a library.
 // Example: matches "$.expanded[0]".
 func GetJSONPathIndex(jsonpath *string) (int, error) {
-	if jsonpath == nil {
+	if jsonpath == nil || *jsonpath == "" {
 		return -1, nil
 	}
 	// Only support dot notation for now.
 	path := strings.Split(*jsonpath, ".")
-	if len(path) == 0 {
-		return -1, nil
-	}
 	if len(path) > 1 {
 		return -1, errors.New("jsonpath: invalid path, nested jsonpath operations are not supported")
 	}

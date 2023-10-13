@@ -8,11 +8,11 @@ import (
 	"strings"
 )
 
-var matchParentheses = regexp.MustCompile(`\[.*\]`)
+var jsonIndexRegexExp = regexp.MustCompile(`\[.*\]`)
 
-func getInsideParentheses(str string) (int, error) {
+func getIndexInsideParentheses(str string) (int, error) {
 	// Find all matches of the form [.*] then check if there is only one match, to ensure no false positives.
-	matches := matchParentheses.FindAllString(str, 2)
+	matches := jsonIndexRegexExp.FindAllString(str, 2)
 	if matches == nil {
 		return -1, errors.New("jsonpath: invalid path, no array index operation found")
 	}

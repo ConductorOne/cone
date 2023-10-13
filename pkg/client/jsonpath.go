@@ -13,7 +13,7 @@ var matchParentheses = regexp.MustCompile(`\[\d+\]`)
 func getInsideParentheses(str string) (int, error) {
 	matches := matchParentheses.FindStringSubmatch(str)
 	if len(matches) == 0 {
-		return -1, nil
+		return -1, errors.New("jsonpath: invalid path, no array index operation found")
 	}
 	if len(matches) > 1 {
 		return -1, errors.New("jsonpath: invalid path, nested parentheses not supported")
@@ -26,6 +26,9 @@ func getInsideParentheses(str string) (int, error) {
 	index, err := strconv.Atoi(match)
 	if err != nil {
 		return -1, fmt.Errorf("jsonpath: invalid path, only array index operations are supported: %w", err)
+	}
+	if index < 0 {
+		return -1, errors.New("jsonpath: invalid path, negative array indexing not supported")
 	}
 	return index, nil
 }

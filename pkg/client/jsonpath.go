@@ -37,7 +37,7 @@ func GetJSONPathIndex(jsonpath *string) (int, error) {
 	if jsonpath == nil {
 		return -1, nil
 	}
-	// Only support dot notation for now
+	// Only support dot notation for now.
 	path := strings.Split(*jsonpath, ".")
 	if len(path) == 0 {
 		return -1, nil

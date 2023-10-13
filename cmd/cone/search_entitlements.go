@@ -51,7 +51,7 @@ func searchEntitlementsRun(cmd *cobra.Command, args []string) error {
 		GrantedStatus:            grantedStatus,
 		AppDisplayName:           v.GetString(appDisplayNameFlag),
 		IncludeDeleted:           v.GetBool(includeDeletedFlag),
-		AppEntitlementExpandMask: shared.AppEntitlementExpandMask{Paths: []string{"*"}},
+		AppEntitlementExpandMask: shared.AppEntitlementExpandMask{Paths: []string{"app_id", "app_resource_type_id", "app_resource_id"}},
 	})
 	if err != nil {
 		return err

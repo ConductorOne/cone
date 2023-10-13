@@ -65,15 +65,15 @@ func (e *ExpandableEntitlementWithBindings) GetPaths() []PathDetails {
 	return []PathDetails{
 		{
 			Name: "App",
-			Path: view.AppPath,
+			Path: view.GetAppPath(),
 		},
 		{
 			Name: "AppResource",
-			Path: view.AppResourcePath,
+			Path: view.GetAppResourcePath(),
 		},
 		{
 			Name: "AppResourceType",
-			Path: view.AppResourceTypePath,
+			Path: view.GetAppResourceTypePath(),
 		},
 	}
 }
@@ -121,9 +121,13 @@ func (c *client) SearchEntitlements(ctx context.Context, filter *SearchEntitleme
 
 		expandableList = append(expandableList, ent)
 	}
-	ExpandableReponse[*ExpandableEntitlementWithBindings]{
+	err = ExpandableReponse[*ExpandableEntitlementWithBindings]{
 		List: expandableList,
 	}.PopulateExpandedIndexes()
+
+	if err != nil {
+		return nil, err
+	}
 
 	rv := make([]*EntitlementWithBindings, 0, len(list))
 	for _, v := range expandableList {

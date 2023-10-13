@@ -30,9 +30,9 @@ func getInsideParentheses(str string) (int, error) {
 	return index, nil
 }
 
-// Implementation of JSONPath only intended to allow expansion of non nested search results using array indexing
-// If you need to support more complex JSONPath operations, please use a library
-// Example: matches "$.expanded[0]"
+// Implementation of JSONPath only intended to allow expansion of non nested search results using array indexing.
+// If you need to support more complex JSONPath operations, please use a library.
+// Example: matches "$.expanded[0]".
 func GetJSONPathIndex(jsonpath *string) (int, error) {
 	if jsonpath == nil {
 		return -1, nil

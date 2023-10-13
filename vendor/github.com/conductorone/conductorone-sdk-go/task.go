@@ -41,7 +41,7 @@ func (s *task) CreateGrantTask(ctx context.Context, request *shared.TaskServiceC
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 	req.Header.Set("Accept", "application/json")
-	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s %s", s.sdkConfiguration.Language, s.sdkConfiguration.SDKVersion, s.sdkConfiguration.GenVersion, s.sdkConfiguration.OpenAPIDocVersion))
+	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
 
 	req.Header.Set("Content-Type", reqContentType)
 
@@ -55,13 +55,6 @@ func (s *task) CreateGrantTask(ctx context.Context, request *shared.TaskServiceC
 		return nil, fmt.Errorf("error sending request: no response")
 	}
 
-	rawBody, err := io.ReadAll(httpRes.Body)
-	if err != nil {
-		return nil, fmt.Errorf("error reading response body: %w", err)
-	}
-	httpRes.Body.Close()
-	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
-
 	contentType := httpRes.Header.Get("Content-Type")
 
 	res := &operations.C1APITaskV1TaskServiceCreateGrantTaskResponse{
@@ -69,6 +62,13 @@ func (s *task) CreateGrantTask(ctx context.Context, request *shared.TaskServiceC
 		ContentType: contentType,
 		RawResponse: httpRes,
 	}
+
+	rawBody, err := io.ReadAll(httpRes.Body)
+	if err != nil {
+		return nil, fmt.Errorf("error reading response body: %w", err)
+	}
+	httpRes.Body.Close()
+	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 	switch {
 	case httpRes.StatusCode == 200:
 		switch {
@@ -103,7 +103,7 @@ func (s *task) CreateRevokeTask(ctx context.Context, request *shared.TaskService
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 	req.Header.Set("Accept", "application/json")
-	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s %s", s.sdkConfiguration.Language, s.sdkConfiguration.SDKVersion, s.sdkConfiguration.GenVersion, s.sdkConfiguration.OpenAPIDocVersion))
+	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
 
 	req.Header.Set("Content-Type", reqContentType)
 
@@ -117,13 +117,6 @@ func (s *task) CreateRevokeTask(ctx context.Context, request *shared.TaskService
 		return nil, fmt.Errorf("error sending request: no response")
 	}
 
-	rawBody, err := io.ReadAll(httpRes.Body)
-	if err != nil {
-		return nil, fmt.Errorf("error reading response body: %w", err)
-	}
-	httpRes.Body.Close()
-	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
-
 	contentType := httpRes.Header.Get("Content-Type")
 
 	res := &operations.C1APITaskV1TaskServiceCreateRevokeTaskResponse{
@@ -131,6 +124,13 @@ func (s *task) CreateRevokeTask(ctx context.Context, request *shared.TaskService
 		ContentType: contentType,
 		RawResponse: httpRes,
 	}
+
+	rawBody, err := io.ReadAll(httpRes.Body)
+	if err != nil {
+		return nil, fmt.Errorf("error reading response body: %w", err)
+	}
+	httpRes.Body.Close()
+	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 	switch {
 	case httpRes.StatusCode == 200:
 		switch {
@@ -163,7 +163,7 @@ func (s *task) Get(ctx context.Context, request operations.C1APITaskV1TaskServic
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
 	req.Header.Set("Accept", "application/json")
-	req.Header.Set("user-agent", fmt.Sprintf("speakeasy-sdk/%s %s %s %s", s.sdkConfiguration.Language, s.sdkConfiguration.SDKVersion, s.sdkConfiguration.GenVersion, s.sdkConfiguration.OpenAPIDocVersion))
+	req.Header.Set("user-agent", s.sdkConfiguration.UserAgent)
 
 	client := s.sdkConfiguration.SecurityClient
 
@@ -175,13 +175,6 @@ func (s *task) Get(ctx context.Context, request operations.C1APITaskV1TaskServic
 		return nil, fmt.Errorf("error sending request: no response")
 	}
 
-	rawBody, err := io.ReadAll(httpRes.Body)
-	if err != nil {
-		return nil, fmt.Errorf("error reading response body: %w", err)
-	}
-	httpRes.Body.Close()
-	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
-
 	contentType := httpRes.Header.Get("Content-Type")
 
 	res := &operations.C1APITaskV1TaskServiceGetResponse{
@@ -189,6 +182,13 @@ func (s *task) Get(ctx context.Context, request operations.C1APITaskV1TaskServic
 		ContentType: contentType,
 		RawResponse: httpRes,
 	}
+
+	rawBody, err := io.ReadAll(httpRes.Body)
+	if err != nil {
+		return nil, fmt.Errorf("error reading response body: %w", err)
+	}
+	httpRes.Body.Close()
+	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 	switch {
 	case httpRes.StatusCode == 200:
 		switch {

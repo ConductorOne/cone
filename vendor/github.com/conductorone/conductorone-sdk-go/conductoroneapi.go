@@ -3,6 +3,7 @@
 package conductoronesdkgo
 
 import (
+	"context"
 	"fmt"
 	"github.com/conductorone/conductorone-sdk-go/pkg/models/shared"
 	"github.com/conductorone/conductorone-sdk-go/pkg/utils"
@@ -42,7 +43,7 @@ func Float64(f float64) *float64 { return &f }
 type sdkConfiguration struct {
 	DefaultClient     HTTPClient
 	SecurityClient    HTTPClient
-	Security          *shared.Security
+	Security          func(context.Context) (interface{}, error)
 	ServerURL         string
 	ServerIndex       int
 	ServerDefaults    []map[string]string
@@ -50,6 +51,7 @@ type sdkConfiguration struct {
 	OpenAPIDocVersion string
 	SDKVersion        string
 	GenVersion        string
+	UserAgent         string
 	RetryConfig       *utils.RetryConfig
 }
 
@@ -149,10 +151,26 @@ func WithClient(client HTTPClient) SDKOption {
 	}
 }
 
+func withSecurity(security interface{}) func(context.Context) (interface{}, error) {
+	return func(context.Context) (interface{}, error) {
+		return &security, nil
+	}
+}
+
 // WithSecurity configures the SDK to use the provided security details
+
 func WithSecurity(security shared.Security) SDKOption {
 	return func(sdk *ConductoroneAPI) {
-		sdk.sdkConfiguration.Security = &security
+		sdk.sdkConfiguration.Security = withSecurity(security)
+	}
+}
+
+// WithSecuritySource configures the SDK to invoke the Security Source function on each method call to determine authentication
+func WithSecuritySource(security func(context.Context) (shared.Security, error)) SDKOption {
+	return func(sdk *ConductoroneAPI) {
+		sdk.sdkConfiguration.Security = func(ctx context.Context) (interface{}, error) {
+			return security(ctx)
+		}
 	}
 }
 
@@ -168,8 +186,9 @@ func New(opts ...SDKOption) *ConductoroneAPI {
 		sdkConfiguration: sdkConfiguration{
 			Language:          "go",
 			OpenAPIDocVersion: "0.1.0-alpha",
-			SDKVersion:        "1.9.0",
-			GenVersion:        "2.131.1",
+			SDKVersion:        "1.11.2",
+			GenVersion:        "2.152.1",
+			UserAgent:         "speakeasy-sdk/go 1.11.2 2.152.1 0.1.0-alpha github.com/conductorone/conductorone-sdk-go",
 			ServerDefaults: []map[string]string{
 				{
 					"tenantDomain": "example",

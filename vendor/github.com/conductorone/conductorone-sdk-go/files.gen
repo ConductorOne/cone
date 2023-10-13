@@ -46,6 +46,7 @@ pkg/utils/requestbody.go
 pkg/utils/retries.go
 pkg/utils/security.go
 pkg/utils/utils.go
+tests/helpers.go
 pkg/models/operations/c1apiappv1appentitlementownersadd.go
 pkg/models/operations/c1apiappv1appentitlementownerslist.go
 pkg/models/operations/c1apiappv1appentitlementownersremove.go
@@ -517,6 +518,8 @@ docs/models/shared/addappentitlementownerresponse.md
 docs/models/shared/addappentitlementownerrequest.md
 docs/models/shared/listappentitlementownersresponse.md
 docs/models/shared/userdirectorystatus.md
+docs/models/shared/userprofile3.md
+docs/models/shared/userprofile.md
 docs/models/shared/userstatus.md
 docs/models/shared/user.md
 docs/models/shared/userattributemappingsource.md
@@ -554,6 +557,8 @@ docs/models/shared/appentitlementuserview.md
 docs/models/shared/appuserview.md
 docs/models/shared/appuserappusertype.md
 docs/models/shared/appuserinput.md
+docs/models/shared/appuserprofile3.md
+docs/models/shared/appuserprofile.md
 docs/models/shared/appuser.md
 docs/models/shared/appuserstatusinput.md
 docs/models/shared/appuserstatusstatus.md

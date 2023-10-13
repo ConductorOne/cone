@@ -1,9 +1,9 @@
 configVersion: 1.0.0
 management:
-  docChecksum: 0c26c86561cb7258a30f8f45bfa26218
+  docChecksum: d3c26becd73429035fbcaeb45feff007
   docVersion: 0.1.0-alpha
-  speakeasyVersion: 1.82.0
-  generationVersion: 2.107.0
+  speakeasyVersion: 1.97.1
+  generationVersion: 2.152.1
 generation:
   comments:
     disableComments: false
@@ -14,15 +14,17 @@ generation:
   tagNamespacingDisabled: false
 features:
   go:
-    additionalProperties: 0.1.0
-    core: 2.89.3
-    globalSecurity: 2.81.1
+    additionalProperties: 0.1.1
+    core: 2.91.4
+    globalSecurity: 2.82.2
     globalServerURLs: 2.82.0
-    groups: 2.81.1
+    groups: 2.81.2
     includes: 2.81.1
     inputOutputModels: 2.81.1
     nameOverrides: 2.81.1
+    unions: 2.83.1
 go:
-  version: 1.9.0
+  version: 1.11.2
+  flattenGlobalSecurity: true
   maxMethodParams: 0
   packageName: github.com/conductorone/conductorone-sdk-go

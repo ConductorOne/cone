@@ -4,6 +4,7 @@ package shared
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"github.com/conductorone/conductorone-sdk-go/pkg/utils"
 	"time"
@@ -41,6 +42,138 @@ func (e *UserDirectoryStatus) UnmarshalJSON(data []byte) error {
 	default:
 		return fmt.Errorf("invalid value for UserDirectoryStatus: %v", v)
 	}
+}
+
+type UserProfile3 struct {
+}
+
+type UserProfileType string
+
+const (
+	UserProfileTypeStr          UserProfileType = "str"
+	UserProfileTypeNumber       UserProfileType = "number"
+	UserProfileTypeUserProfile3 UserProfileType = "User_profile_3"
+	UserProfileTypeArrayOfany   UserProfileType = "arrayOfany"
+	UserProfileTypeBoolean      UserProfileType = "boolean"
+)
+
+type UserProfile struct {
+	Str          *string
+	Number       *float64
+	UserProfile3 *UserProfile3
+	ArrayOfany   []interface{}
+	Boolean      *bool
+
+	Type UserProfileType
+}
+
+func CreateUserProfileStr(str string) UserProfile {
+	typ := UserProfileTypeStr
+
+	return UserProfile{
+		Str:  &str,
+		Type: typ,
+	}
+}
+
+func CreateUserProfileNumber(number float64) UserProfile {
+	typ := UserProfileTypeNumber
+
+	return UserProfile{
+		Number: &number,
+		Type:   typ,
+	}
+}
+
+func CreateUserProfileUserProfile3(userProfile3 UserProfile3) UserProfile {
+	typ := UserProfileTypeUserProfile3
+
+	return UserProfile{
+		UserProfile3: &userProfile3,
+		Type:         typ,
+	}
+}
+
+func CreateUserProfileArrayOfany(arrayOfany []interface{}) UserProfile {
+	typ := UserProfileTypeArrayOfany
+
+	return UserProfile{
+		ArrayOfany: arrayOfany,
+		Type:       typ,
+	}
+}
+
+func CreateUserProfileBoolean(boolean bool) UserProfile {
+	typ := UserProfileTypeBoolean
+
+	return UserProfile{
+		Boolean: &boolean,
+		Type:    typ,
+	}
+}
+
+func (u *UserProfile) UnmarshalJSON(data []byte) error {
+
+	userProfile3 := new(UserProfile3)
+	if err := utils.UnmarshalJSON(data, &userProfile3, "", true, true); err == nil {
+		u.UserProfile3 = userProfile3
+		u.Type = UserProfileTypeUserProfile3
+		return nil
+	}
+
+	str := new(string)
+	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
+		u.Str = str
+		u.Type = UserProfileTypeStr
+		return nil
+	}
+
+	number := new(float64)
+	if err := utils.UnmarshalJSON(data, &number, "", true, true); err == nil {
+		u.Number = number
+		u.Type = UserProfileTypeNumber
+		return nil
+	}
+
+	arrayOfany := []interface{}{}
+	if err := utils.UnmarshalJSON(data, &arrayOfany, "", true, true); err == nil {
+		u.ArrayOfany = arrayOfany
+		u.Type = UserProfileTypeArrayOfany
+		return nil
+	}
+
+	boolean := new(bool)
+	if err := utils.UnmarshalJSON(data, &boolean, "", true, true); err == nil {
+		u.Boolean = boolean
+		u.Type = UserProfileTypeBoolean
+		return nil
+	}
+
+	return errors.New("could not unmarshal into supported union types")
+}
+
+func (u UserProfile) MarshalJSON() ([]byte, error) {
+	if u.Str != nil {
+		return utils.MarshalJSON(u.Str, "", true)
+	}
+
+	if u.Number != nil {
+		return utils.MarshalJSON(u.Number, "", true)
+	}
+
+	if u.UserProfile3 != nil {
+		return utils.MarshalJSON(u.UserProfile3, "", true)
+	}
+
+	if u.ArrayOfany != nil {
+		return utils.MarshalJSON(u.ArrayOfany, "", true)
+	}
+
+	if u.Boolean != nil {
+		return utils.MarshalJSON(u.Boolean, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type: all fields are null")
 }
 
 // UserStatus - The status of the user in the system.
@@ -115,6 +248,7 @@ type User struct {
 	ManagerIds []string `json:"managerIds,omitempty"`
 	// A list of objects mapped based on managerId attribute mappings configured in the system.
 	ManagerSources []UserAttributeMappingSource `json:"managerSources,omitempty"`
+	Profile        map[string]UserProfile       `json:"profile,omitempty"`
 	// A list of unique identifiers that maps to ConductorOne’s user roles let you assign users permissions tailored to the work they do in the software.
 	RoleIds []string `json:"roleIds,omitempty"`
 	// The status of the user in the system.
@@ -264,6 +398,13 @@ func (o *User) GetManagerSources() []UserAttributeMappingSource {
 		return nil
 	}
 	return o.ManagerSources
+}
+
+func (o *User) GetProfile() map[string]UserProfile {
+	if o == nil {
+		return nil
+	}
+	return o.Profile
 }
 
 func (o *User) GetRoleIds() []string {

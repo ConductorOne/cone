@@ -58,7 +58,7 @@ func SerializeRequestBody(ctx context.Context, request interface{}, nullable, op
 					return nil, "", nil
 				}
 
-				return serializeContentType(requestFieldName, SerializationMethodToContentType[serializationMethod], requestVal, tag.MediaType)
+				return serializeContentType(requestFieldName, tag.MediaType, requestVal, string(requestField.Tag))
 			}
 
 			return serializeContentType(requestFieldName, tag.MediaType, requestVal, string(requestField.Tag))

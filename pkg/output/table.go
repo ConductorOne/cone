@@ -39,6 +39,7 @@ func (c *tableManager) sortData(header []string, tableData [][]string, out inter
 		return
 	}
 
+	sortColsMap := map[int]bool{}
 	sortCols := []int{}
 	sorter, sorterOk := out.(TableSort)
 	if sorterOk {
@@ -46,17 +47,19 @@ func (c *tableManager) sortData(header []string, tableData [][]string, out inter
 			sortCol := slices.Index(header, col)
 			if sortCol != -1 {
 				sortCols = append(sortCols, sortCol)
+				sortColsMap[sortCol] = true
 			}
 		}
 	}
 
-	// If we didn't find any columns to sort by, just sort by the first non-empty column
-	if len(sortCols) == 0 {
-		for i, col := range tableData[0] {
-			if col != "" {
-				sortCols = append(sortCols, i)
-				break
-			}
+	// Sort by rest of columns in order they are displayed in
+	for i, col := range tableData[0] {
+		if _, ok := sortColsMap[i]; ok {
+			continue
+		}
+		if col != "" {
+			sortCols = append(sortCols, i)
+			sortColsMap[i] = true
 		}
 	}
 

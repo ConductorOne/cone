@@ -51,5 +51,5 @@ func GetJSONPathIndex(jsonpath *string) (int, error) {
 	if path[0] != "$" {
 		return -1, errors.New("jsonpath: invalid path, no root element")
 	}
-	return getInsideParentheses(path[1])
+	return getIndexInsideParentheses(path[1])
 }

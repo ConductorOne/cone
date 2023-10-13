@@ -46,7 +46,7 @@ func TestGetInsideParentheses(t *testing.T) {
 	}
 
 	for _, tc := range tests {
-		got, err := getInsideParentheses(tc.input)
+		got, err := getIndexInsideParentheses(tc.input)
 		if (err != nil) != tc.wantErr {
 			t.Errorf("%s: expected error: %v, got: %v", tc.name, tc.wantErr, err)
 		}

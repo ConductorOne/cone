@@ -79,9 +79,10 @@ type ExpandedEntitlementsResponse struct {
 }
 
 const DisplayNameHeader = "Display Name"
+const AppHeader = "App"
 
 func (r *ExpandedEntitlementsResponse) Header() []string {
-	return []string{"", "Alias", DisplayNameHeader, "App", "Resource Type", "Resource"}
+	return []string{"", "Alias", DisplayNameHeader, AppHeader, "Resource Type", "Resource"}
 }
 
 func (r *ExpandedEntitlementsResponse) WideHeader() []string {
@@ -118,8 +119,12 @@ func (r *ExpandedEntitlementsResponse) Rows() [][]string {
 	}
 	return rows
 }
-func (r *ExpandedEntitlementsResponse) SortByColumnName() string {
-	return DisplayNameHeader
+
+func (r *ExpandedEntitlementsResponse) OrderedSortColumns() []string {
+	return []string{
+		DisplayNameHeader,
+		AppHeader,
+	}
 }
 
 func (r *ExpandedEntitlementsResponse) WideRows() [][]string {

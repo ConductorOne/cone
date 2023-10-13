@@ -34,37 +34,47 @@ func (c *tableManager) isIntColumn(tableData [][]string, col int) bool {
 	}
 	return true
 }
-
 func (c *tableManager) sortData(header []string, tableData [][]string, out interface{}) {
 	if len(tableData) == 0 {
 		return
 	}
-	sortCol := -1
+
+	sortCols := []int{}
 	sorter, sorterOk := out.(TableSort)
 	if sorterOk {
-		sortCol = slices.Index(header, sorter.SortByColumnName())
+		for _, col := range sorter.OrderedSortColumns() {
+			sortCol := slices.Index(header, col)
+			if sortCol != -1 {
+				sortCols = append(sortCols, sortCol)
+			}
+		}
 	}
-	if sortCol == -1 {
+
+	// If we didn't find any columns to sort by, just sort by the first non-empty column
+	if len(sortCols) == 0 {
 		for i, col := range tableData[0] {
 			if col != "" {
-				sortCol = i
+				sortCols = append(sortCols, i)
 				break
 			}
 		}
 	}
-	if c.isIntColumn(tableData, sortCol) {
-		sort.SliceStable(tableData, func(i, j int) bool {
-			ii, _ := strconv.Atoi(tableData[i][sortCol])
-			jj, _ := strconv.Atoi(tableData[j][sortCol])
-			return ii < jj
-		})
-	} else {
-		sort.SliceStable(tableData, func(i, j int) bool {
-			return tableData[i][sortCol] < tableData[j][sortCol]
-		})
-	}
-}
 
+	sort.SliceStable(tableData, func(i, j int) bool {
+		for _, sortCol := range sortCols {
+			if c.isIntColumn(tableData, sortCol) {
+				ii, _ := strconv.Atoi(tableData[i][sortCol])
+				jj, _ := strconv.Atoi(tableData[j][sortCol])
+				if ii != jj {
+					return ii < jj
+				}
+			} else if tableData[i][sortCol] != tableData[j][sortCol] {
+				return tableData[i][sortCol] < tableData[j][sortCol]
+			}
+		}
+		return false
+	})
+}
 func (c *tableManager) getTableData(out interface{}) (pterm.TableData, error) {
 	var getHeader func() []string
 	var getRows func() [][]string
@@ -185,5 +195,6 @@ type PreText interface {
 }
 
 type TableSort interface {
-	SortByColumnName() string
+	// Columns to sort by ordered by priority.
+	OrderedSortColumns() []string
 }

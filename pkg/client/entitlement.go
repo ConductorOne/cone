@@ -6,7 +6,6 @@ import (
 
 	"github.com/conductorone/conductorone-sdk-go/pkg/models/operations"
 	"github.com/conductorone/conductorone-sdk-go/pkg/models/shared"
-	"github.com/davecgh/go-spew/spew"
 )
 
 const (
@@ -44,7 +43,7 @@ type EntitlementWithBindings struct {
 	Bindings    []shared.AppEntitlementUserBinding
 	// The expanded fields are stored here
 	// TODO @anthony: marshall into actual types
-	Expanded map[string]shared.RequestCatalogSearchServiceSearchEntitlementsResponseExpanded
+	Expanded map[string]*shared.RequestCatalogSearchServiceSearchEntitlementsResponseExpanded
 }
 
 type ExpandableEntitlementWithBindings struct {
@@ -61,7 +60,7 @@ func NewExpandableEntitlementWithBindings(v shared.AppEntitlementWithUserBinding
 	}
 }
 
-func (e ExpandableEntitlementWithBindings) GetPaths() []PathDetails {
+func (e *ExpandableEntitlementWithBindings) GetPaths() []PathDetails {
 	view := *e.AppEntitlementWithUserBindings.AppEntitlementView
 	return []PathDetails{
 		{
@@ -79,7 +78,7 @@ func (e ExpandableEntitlementWithBindings) GetPaths() []PathDetails {
 	}
 }
 
-func (e ExpandableEntitlementWithBindings) SetPath(pathname string, value int) {
+func (e *ExpandableEntitlementWithBindings) SetPath(pathname string, value int) {
 	if e.ExpandedMap == nil {
 		e.ExpandedMap = make(map[string]int)
 	}
@@ -113,16 +112,16 @@ func (c *client) SearchEntitlements(ctx context.Context, filter *SearchEntitleme
 		return nil, errors.New("search-entitlements: list is nil")
 	}
 
-	expandableList := make([]ExpandableEntitlementWithBindings, 0, len(list))
+	expandableList := make([]*ExpandableEntitlementWithBindings, 0, len(list))
 	for _, v := range list {
 		ent := NewExpandableEntitlementWithBindings(v)
 		if ent == nil {
 			return nil, errors.New("search-entitlements: entitlement is nil")
 		}
 
-		expandableList = append(expandableList, *ent)
+		expandableList = append(expandableList, ent)
 	}
-	ExpandableReponse[ExpandableEntitlementWithBindings]{
+	ExpandableReponse[*ExpandableEntitlementWithBindings]{
 		List: expandableList,
 	}.PopulateExpandedIndexes()
 
@@ -134,7 +133,6 @@ func (c *client) SearchEntitlements(ctx context.Context, filter *SearchEntitleme
 			Expanded:    PopulateExpandedMap[shared.RequestCatalogSearchServiceSearchEntitlementsResponseExpanded](v.ExpandedMap, resp.RequestCatalogSearchServiceSearchEntitlementsResponse.Expanded),
 		})
 	}
-	spew.Dump(rv)
 	return rv, nil
 }
 

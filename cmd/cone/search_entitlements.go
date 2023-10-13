@@ -85,7 +85,7 @@ func (r *ExpandedEntitlementsResponse) WideHeader() []string {
 
 func (r *ExpandedEntitlementsResponse) GetExpandedDisplayName(pathname string, e *client.EntitlementWithBindings) string {
 	app := e.Expanded[pathname]
-	if app.AdditionalProperties["displayName"] == nil {
+	if app == nil {
 		return ""
 	}
 	return app.AdditionalProperties["displayName"].(string)

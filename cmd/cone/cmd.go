@@ -22,12 +22,19 @@ func cmdContext(cmd *cobra.Command) (context.Context, client.C1Client, *viper.Vi
 		return nil, nil, nil, err
 	}
 
-	c, err := client.New(ctx, clientId, clientSecret, v)
+	c, err := client.New(ctx, clientId, clientSecret, v, getCmdName(cmd))
 	if err != nil {
 		return nil, nil, nil, err
 	}
 
 	return ctx, c, v, nil
+}
+
+func getCmdName(cmd *cobra.Command) string {
+	if cmd.HasParent() {
+		return getCmdName(cmd.Parent()) + ":" + cmd.Name()
+	}
+	return cmd.Name()
 }
 
 func validateArgLenth(expectedCount int, args []string, cmd *cobra.Command) error {

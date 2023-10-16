@@ -91,6 +91,7 @@ func New(
 	clientId string,
 	clientSecret string,
 	v *viper.Viper,
+	cmdName string,
 ) (C1Client, error) {
 	tokenSrc, clientName, tokenHost, err := NewC1TokenSource(ctx, clientId, clientSecret)
 	if err != nil {
@@ -101,6 +102,7 @@ func New(
 		ctx,
 		uhttp.WithTokenSource(tokenSrc),
 		uhttp.WithDebug(v.GetBool("debug")),
+		uhttp.WithRequestSource(cmdName),
 	)
 	if err != nil {
 		return nil, err

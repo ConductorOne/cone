@@ -102,7 +102,7 @@ func (uat *debugTripper) RoundTrip(req *http.Request) (*http.Response, error) {
 	}
 
 	if req.Header.Get("Authorization") != "" {
-		resp.Header.Set("Authorization", "[REDACTED]")
+		req.Header.Set("Authorization", "[REDACTED]")
 	}
 
 	requestBytes, err := httputil.DumpRequest(req, true)

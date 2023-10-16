@@ -76,13 +76,13 @@ func (t *Transport) cycle(ctx context.Context) (http.RoundTripper, error) {
 }
 
 type requestSourceTripper struct {
-	next   http.RoundTripper
-	source string
+	next          http.RoundTripper
+	requestSource string
 }
 
 func (rst *requestSourceTripper) RoundTrip(req *http.Request) (*http.Response, error) {
 	if req.Header.Get("c1-request-source") == "" {
-		req.Header.Set("c1-request-source", rst.source)
+		req.Header.Set("c1-request-source", rst.requestSource)
 	}
 	return rst.next.RoundTrip(req)
 }
@@ -178,7 +178,7 @@ func (t *Transport) make(ctx context.Context) (http.RoundTripper, error) {
 	rv = &debugTripper{next: rv, debug: t.debug}
 	rv = &userAgentTripper{next: rv, userAgent: t.userAgent}
 	rv = &tokenSourceTripper{next: rv, tokenSource: t.tokenSource}
-	rv = &requestSourceTripper{next: rv, source: t.requestSource}
+	rv = &requestSourceTripper{next: rv, requestSource: t.requestSource}
 	return rv, nil
 }
 

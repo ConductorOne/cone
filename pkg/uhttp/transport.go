@@ -81,7 +81,7 @@ type requestSourceTripper struct {
 }
 
 func (rst *requestSourceTripper) RoundTrip(req *http.Request) (*http.Response, error) {
-	if req.Header.Get("c1-request-source") == "" {
+	if req.Header.Get("c1-request-source") == "" && rst.requestSource != "" {
 		req.Header.Set("c1-request-source", rst.requestSource)
 	}
 	return rst.next.RoundTrip(req)

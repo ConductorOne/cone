@@ -44,9 +44,9 @@ type EntitlementWithBindings struct {
 	expanded    map[string]*any
 }
 
-func (e EntitlementWithBindings) GetExpanded() map[string]*any {
-	if e.expanded == nil {
-		return make(map[string]*any)
+func (e *EntitlementWithBindings) GetExpanded() map[string]*any {
+	if e == nil {
+		return nil
 	}
 	return e.expanded
 }

@@ -97,9 +97,9 @@ func (r *ExpandedEntitlementsResponse) Rows() [][]string {
 			granted,
 			client.StringFromPtr(e.Entitlement.Alias),
 			client.StringFromPtr(e.Entitlement.DisplayName),
-			client.StringFromPtr(app.DisplayName),
-			client.StringFromPtr(appResourceType.DisplayName),
-			client.StringFromPtr(appResource.DisplayName),
+			client.StringFromPtr(app.GetDisplayName()),
+			client.StringFromPtr(appResourceType.GetDisplayName()),
+			client.StringFromPtr(appResource.GetDisplayName()),
 		})
 	}
 	return rows

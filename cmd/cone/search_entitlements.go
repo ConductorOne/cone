@@ -90,9 +90,9 @@ func (r *ExpandedEntitlementsResponse) Rows() [][]string {
 		if len(e.Bindings) == 0 {
 			granted = output.Unchecked
 		}
-		app := client.GetExpanded[shared.App](e, "App")
-		appResourceType := client.GetExpanded[shared.AppResourceType](e, "AppResourceType")
-		appResource := client.GetExpanded[shared.AppResource](e, "AppResource")
+		app := client.GetExpanded[shared.App](e, client.ExpandedApp)
+		appResourceType := client.GetExpanded[shared.AppResourceType](e, client.ExpandedAppResourceType)
+		appResource := client.GetExpanded[shared.AppResource](e, client.ExpandedAppResource)
 		rows = append(rows, []string{
 			granted,
 			client.StringFromPtr(e.Entitlement.Alias),

@@ -69,15 +69,15 @@ func (e *ExpandableEntitlementWithBindings) GetPaths() []PathDetails {
 	view := *e.AppEntitlementWithUserBindings.AppEntitlementView
 	return []PathDetails{
 		{
-			Name: "App",
+			Name: ExpandedApp,
 			Path: view.GetAppPath(),
 		},
 		{
-			Name: "AppResource",
+			Name: ExpandedAppResource,
 			Path: view.GetAppResourcePath(),
 		},
 		{
-			Name: "AppResourceType",
+			Name: ExpandedAppResourceType,
 			Path: view.GetAppResourceTypePath(),
 		},
 	}

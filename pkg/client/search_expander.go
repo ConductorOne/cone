@@ -7,6 +7,15 @@ import (
 	"github.com/conductorone/conductorone-sdk-go/pkg/models/shared"
 )
 
+const (
+	atTypeApp               = "type.googleapis.com/c1.api.app.v1.App"
+	atTypeAppResource       = "type.googleapis.com/c1.api.app.v1.AppResource"
+	atTypeAppResourceType   = "type.googleapis.com/c1.api.app.v1.AppResourceType"
+	ExpandedApp             = "App"
+	ExpandedAppResource     = "AppResource"
+	ExpandedAppResourceType = "AppResourceType"
+)
+
 type PathDetails struct {
 	Name string
 	Path *string
@@ -91,11 +100,11 @@ func UnmarshalAnyType[T AnyType, PT interface {
 	}
 
 	switch *inputType {
-	case "type.googleapis.com/c1.api.app.v1.App":
+	case atTypeApp:
 		return As[T, shared.App](*input)
-	case "type.googleapis.com/c1.api.app.v1.AppResource":
+	case atTypeAppResource:
 		return As[T, shared.AppResource](*input)
-	case "type.googleapis.com/c1.api.app.v1.AppResourceType":
+	case atTypeAppResourceType:
 		return As[T, shared.AppResourceType](*input)
 	default:
 		return nil, errors.New("unknown type")

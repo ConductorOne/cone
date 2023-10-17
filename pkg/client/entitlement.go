@@ -66,6 +66,9 @@ func NewExpandableEntitlementWithBindings(v shared.AppEntitlementWithUserBinding
 }
 
 func (e *ExpandableEntitlementWithBindings) GetPaths() []PathDetails {
+	if e == nil {
+		return nil
+	}
 	view := *e.AppEntitlementWithUserBindings.AppEntitlementView
 	return []PathDetails{
 		{
@@ -84,6 +87,9 @@ func (e *ExpandableEntitlementWithBindings) GetPaths() []PathDetails {
 }
 
 func (e *ExpandableEntitlementWithBindings) SetPath(pathname string, value int) {
+	if e == nil {
+		return
+	}
 	if e.ExpandedMap == nil {
 		e.ExpandedMap = make(map[string]int)
 	}

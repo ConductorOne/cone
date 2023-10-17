@@ -1,5 +1,12 @@
 package client
 
+import (
+	"encoding/json"
+	"errors"
+
+	"github.com/conductorone/conductorone-sdk-go/pkg/models/shared"
+)
+
 type PathDetails struct {
 	Name string
 	Path *string
@@ -10,8 +17,9 @@ type Expandable interface {
 	SetPath(pathname string, value int)
 }
 
-func PopulateExpandedMap[T any](expandMap map[string]int, expanded []T) map[string]*T {
-	rv := make(map[string]*T)
+// Populate the expanded map with references to the related objects.
+func PopulateExpandedMap(expandMap map[string]int, expanded []any) map[string]*any {
+	rv := make(map[string]*any)
 	for k, v := range expandMap {
 		rv[k] = &expanded[v]
 	}
@@ -35,4 +43,62 @@ func (o ExpandableReponse[T]) PopulateExpandedIndexes() error {
 		}
 	}
 	return nil
+}
+
+type ExpandedReponse interface {
+	GetExpanded() map[string]*any
+}
+
+func GetExpanded[T any](e ExpandedReponse, key string) *T {
+	var rv *T
+	if x, ok := e.GetExpanded()[key]; ok {
+		if x == nil {
+			return nil
+		}
+		if x, ok := (*x).(*T); ok {
+			rv = x
+		}
+	}
+	return rv
+}
+
+type AnyType interface {
+	MarshalJSON() ([]byte, error)
+}
+
+func As[T AnyType, V any](input T) (*V, error) {
+	d, err := input.MarshalJSON()
+	if err != nil {
+		return nil, err
+	}
+
+	var rv V
+	err = json.Unmarshal(d, &rv)
+	if err != nil {
+		return nil, err
+	}
+
+	return &rv, nil
+}
+
+func UnmarshalAnyType[T AnyType, PT interface {
+	*T
+	GetAtType() *string
+}](input PT) (any, error) {
+	inputType := input.GetAtType()
+	if inputType == nil {
+		return nil, errors.New("input type is nil")
+	}
+
+	switch *inputType {
+	case "type.googleapis.com/c1.api.app.v1.App":
+		return As[T, shared.App](*input)
+	case "type.googleapis.com/c1.api.app.v1.AppResource":
+		return As[T, shared.AppResource](*input)
+	case "type.googleapis.com/c1.api.app.v1.AppResourceType":
+		return As[T, shared.AppResourceType](*input)
+	default:
+		return nil, errors.New("unknown type")
+	}
+
 }

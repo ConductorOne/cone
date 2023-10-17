@@ -230,6 +230,8 @@ type User struct {
 	DisplayName *string `json:"displayName,omitempty"`
 	// This is the user's email.
 	Email *string `json:"email,omitempty"`
+	// This is a list of all of the user's emails from app users.
+	Emails []string `json:"emails,omitempty"`
 	// The users employment status.
 	EmploymentStatus *string `json:"employmentStatus,omitempty"`
 	// A list of objects mapped based on employmentStatus attribute mappings configured in the system.
@@ -254,6 +256,10 @@ type User struct {
 	// The status of the user in the system.
 	Status    *UserStatus `json:"status,omitempty"`
 	UpdatedAt *time.Time  `json:"updatedAt,omitempty"`
+	// This is the user's primary username. Typically sourced from the primary directory.
+	Username *string `json:"username,omitempty"`
+	// This is a list of all of the user's usernames from app users.
+	Usernames []string `json:"usernames,omitempty"`
 }
 
 func (u User) MarshalJSON() ([]byte, error) {
@@ -335,6 +341,13 @@ func (o *User) GetEmail() *string {
 		return nil
 	}
 	return o.Email
+}
+
+func (o *User) GetEmails() []string {
+	if o == nil {
+		return nil
+	}
+	return o.Emails
 }
 
 func (o *User) GetEmploymentStatus() *string {
@@ -426,4 +439,18 @@ func (o *User) GetUpdatedAt() *time.Time {
 		return nil
 	}
 	return o.UpdatedAt
+}
+
+func (o *User) GetUsername() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Username
+}
+
+func (o *User) GetUsernames() []string {
+	if o == nil {
+		return nil
+	}
+	return o.Usernames
 }

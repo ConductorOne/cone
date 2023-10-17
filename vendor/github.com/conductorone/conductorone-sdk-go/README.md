@@ -32,8 +32,8 @@ func main() {
 	ctx := context.Background()
 	res, err := s.AppEntitlementOwners.Add(ctx, operations.C1APIAppV1AppEntitlementOwnersAddRequest{
 		AddAppEntitlementOwnerRequest: &shared.AddAppEntitlementOwnerRequest{},
-		AppID:                         "Small West",
-		EntitlementID:                 "Officer impactful",
+		AppID:                         "program",
+		EntitlementID:                 "North",
 	})
 	if err != nil {
 		log.Fatal(err)

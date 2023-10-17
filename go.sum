@@ -71,6 +71,8 @@ github.com/conductorone/conductorone-sdk-go v1.12.0 h1:kWItKMLa+9zM8JbLjLIraBbTP
 github.com/conductorone/conductorone-sdk-go v1.12.0/go.mod h1:O6TqBVNDtC1cfnF0XmXhG4ysBILMJKB7w/s4hLV0jxY=
 github.com/conductorone/conductorone-sdk-go v1.13.0 h1:oaStbVXVkZWzcgrqpUoMPNwY4Uo/3OJdyT9p497+iqo=
 github.com/conductorone/conductorone-sdk-go v1.13.0/go.mod h1:O6TqBVNDtC1cfnF0XmXhG4ysBILMJKB7w/s4hLV0jxY=
+github.com/conductorone/conductorone-sdk-go v1.14.0 h1:zYK+UJb4VQVttIMaHxbmBcyacfFkaYFt/BmRQRqaTLY=
+github.com/conductorone/conductorone-sdk-go v1.14.0/go.mod h1:O6TqBVNDtC1cfnF0XmXhG4ysBILMJKB7w/s4hLV0jxY=
 github.com/containerd/console v1.0.3 h1:lIr7SlA5PxZyMV30bDW0MGbiOPXwc63yRuCP0ARubLw=
 github.com/containerd/console v1.0.3/go.mod h1:7LqA/THxQ86k76b8c/EMSiaJ3h1eZkMkXar0TQ1gf3U=
 github.com/cpuguy83/go-md2man/v2 v2.0.2/go.mod h1:tgQtvFlXSQOSOSIRvRPT7W67SCa46tRHOmNcaadrF8o=
@@ -601,6 +603,8 @@ google.golang.org/genproto/googleapis/rpc v0.0.0-20230920204549-e6e6cdab5c13 h1:
 google.golang.org/genproto/googleapis/rpc v0.0.0-20230920204549-e6e6cdab5c13/go.mod h1:KSqppvjFjtoCI+KGd4PELB0qLNxdJHRGqRI09mB6pQA=
 google.golang.org/genproto/googleapis/rpc v0.0.0-20231012201019-e917dd12ba7a h1:a2MQQVoTo96JC9PMGtGBymLp7+/RzpFc2yX/9WfFg1c=
 google.golang.org/genproto/googleapis/rpc v0.0.0-20231012201019-e917dd12ba7a/go.mod h1:4cYg8o5yUbm77w8ZX00LhMVNl/YVBFJRYWDc0uYWMs0=
+google.golang.org/genproto/googleapis/rpc v0.0.0-20231016165738-49dd2c1f3d0b h1:ZlWIi1wSK56/8hn4QcBp/j9M7Gt3U/3hZw3mC7vDICo=
+google.golang.org/genproto/googleapis/rpc v0.0.0-20231016165738-49dd2c1f3d0b/go.mod h1:swOH3j0KzcDDgGUWr+SNpyTen5YrXjS3eyPzFYKc6lc=
 google.golang.org/grpc v1.19.0/go.mod h1:mqu4LbDTu4XGKhr4mRzUsmM4RtVoemTSY81AxZiDr8c=
 google.golang.org/grpc v1.20.1/go.mod h1:10oTOabMzJvdu6/UiuZezV6QK5dSlG84ov/aaiqXj38=
 google.golang.org/grpc v1.21.1/go.mod h1:oYelfM1adQP15Ek0mdvEgi9Df8B9CZIaU1084ijfRaM=

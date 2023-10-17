@@ -41,9 +41,14 @@ func (a AppEntitlement) GetAppId() string {
 type EntitlementWithBindings struct {
 	Entitlement AppEntitlement
 	Bindings    []shared.AppEntitlementUserBinding
-	// The expanded fields are stored here
-	// TODO @anthony: marshall into actual types
-	Expanded map[string]*shared.RequestCatalogSearchServiceSearchEntitlementsResponseExpanded
+	expanded    map[string]*any
+}
+
+func (e EntitlementWithBindings) GetExpanded() map[string]*any {
+	if e.expanded == nil {
+		return make(map[string]*any)
+	}
+	return e.expanded
 }
 
 type ExpandableEntitlementWithBindings struct {
@@ -112,6 +117,17 @@ func (c *client) SearchEntitlements(ctx context.Context, filter *SearchEntitleme
 		return nil, errors.New("search-entitlements: list is nil")
 	}
 
+	// Unmarshal the expanded fields
+	expanded := make([]any, 0, len(resp.RequestCatalogSearchServiceSearchEntitlementsResponse.Expanded))
+	for _, x := range resp.RequestCatalogSearchServiceSearchEntitlementsResponse.Expanded {
+		converted, err := UnmarshalAnyType[shared.RequestCatalogSearchServiceSearchEntitlementsResponseExpanded](&x)
+		if err != nil {
+			return nil, err
+		}
+		expanded = append(expanded, converted)
+	}
+
+	// Convert the list of entitlements to a list of expandable entitlements
 	expandableList := make([]*ExpandableEntitlementWithBindings, 0, len(list))
 	for _, v := range list {
 		ent := NewExpandableEntitlementWithBindings(v)
@@ -121,6 +137,8 @@ func (c *client) SearchEntitlements(ctx context.Context, filter *SearchEntitleme
 
 		expandableList = append(expandableList, ent)
 	}
+
+	// Populate the expandable objects with the indexes of related objects
 	err = ExpandableReponse[*ExpandableEntitlementWithBindings]{
 		List: expandableList,
 	}.PopulateExpandedIndexes()
@@ -129,12 +147,13 @@ func (c *client) SearchEntitlements(ctx context.Context, filter *SearchEntitleme
 		return nil, err
 	}
 
+	// Iterate over the expandable objects and convert them to the final response
 	rv := make([]*EntitlementWithBindings, 0, len(list))
 	for _, v := range expandableList {
 		rv = append(rv, &EntitlementWithBindings{
 			Entitlement: AppEntitlement(*v.AppEntitlementWithUserBindings.AppEntitlementView.AppEntitlement),
 			Bindings:    v.AppEntitlementWithUserBindings.AppEntitlementUserBindings,
-			Expanded:    PopulateExpandedMap[shared.RequestCatalogSearchServiceSearchEntitlementsResponseExpanded](v.ExpandedMap, resp.RequestCatalogSearchServiceSearchEntitlementsResponse.Expanded),
+			expanded:    PopulateExpandedMap(v.ExpandedMap, expanded),
 		})
 	}
 	return rv, nil

@@ -40,9 +40,9 @@ func (o *RequestCatalogSearchServiceSearchEntitlementsResponseExpanded) GetAddit
 
 // The RequestCatalogSearchServiceSearchEntitlementsResponse message contains a list of results and a nextPageToken if applicable.
 type RequestCatalogSearchServiceSearchEntitlementsResponse struct {
-	// The list of results containing up to X results, where X is the page size defined in the request.
-	Expanded []RequestCatalogSearchServiceSearchEntitlementsResponseExpanded `json:"expanded,omitempty"`
 	// List of serialized related objects.
+	Expanded []RequestCatalogSearchServiceSearchEntitlementsResponseExpanded `json:"expanded,omitempty"`
+	// The list of results containing up to X results, where X is the page size defined in the request.
 	List []AppEntitlementWithUserBindings `json:"list,omitempty"`
 	// The nextPageToken is shown for the next page if the number of results is larger than the max page size.
 	//  The server returns one page of results and the nextPageToken until all results are retreived.

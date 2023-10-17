@@ -83,14 +83,6 @@ func (r *ExpandedEntitlementsResponse) WideHeader() []string {
 	return append(r.Header(), "Description", "App ID", "Entitlement ID")
 }
 
-func (r *ExpandedEntitlementsResponse) GetExpandedDisplayName(pathname string, e *client.EntitlementWithBindings) string {
-	app := e.Expanded[pathname]
-	if app == nil {
-		return ""
-	}
-	return app.AdditionalProperties["displayName"].(string)
-}
-
 func (r *ExpandedEntitlementsResponse) Rows() [][]string {
 	rows := [][]string{}
 	for _, e := range r.Entitlements {
@@ -98,13 +90,16 @@ func (r *ExpandedEntitlementsResponse) Rows() [][]string {
 		if len(e.Bindings) == 0 {
 			granted = output.Unchecked
 		}
+		app := client.GetExpanded[shared.App](e, "App")
+		appResourceType := client.GetExpanded[shared.AppResourceType](e, "AppResourceType")
+		appResource := client.GetExpanded[shared.AppResource](e, "AppResource")
 		rows = append(rows, []string{
 			granted,
 			client.StringFromPtr(e.Entitlement.Alias),
 			client.StringFromPtr(e.Entitlement.DisplayName),
-			r.GetExpandedDisplayName("App", e),
-			r.GetExpandedDisplayName("AppResourceType", e),
-			r.GetExpandedDisplayName("AppResource", e),
+			client.StringFromPtr(app.DisplayName),
+			client.StringFromPtr(appResourceType.DisplayName),
+			client.StringFromPtr(appResource.DisplayName),
 		})
 	}
 	return rows

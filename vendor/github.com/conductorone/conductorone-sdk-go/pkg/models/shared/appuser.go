@@ -212,12 +212,18 @@ type AppUser struct {
 	DisplayName *string `json:"displayName,omitempty"`
 	// The email field of the application user.
 	Email *string `json:"email,omitempty"`
+	// The emails field of the application user.
+	Emails []string `json:"emails,omitempty"`
 	// A unique idenditfier of the application user.
 	ID *string `json:"id,omitempty"`
 	// The conductor one user ID of the account owner.
 	IdentityUserID *string                   `json:"identityUserId,omitempty"`
 	Profile        map[string]AppUserProfile `json:"profile,omitempty"`
 	UpdatedAt      *time.Time                `json:"updatedAt,omitempty"`
+	// The username field of the application user.
+	Username *string `json:"username,omitempty"`
+	// The usernames field of the application user.
+	Usernames []string `json:"usernames,omitempty"`
 }
 
 func (a AppUser) MarshalJSON() ([]byte, error) {
@@ -280,6 +286,13 @@ func (o *AppUser) GetEmail() *string {
 	return o.Email
 }
 
+func (o *AppUser) GetEmails() []string {
+	if o == nil {
+		return nil
+	}
+	return o.Emails
+}
+
 func (o *AppUser) GetID() *string {
 	if o == nil {
 		return nil
@@ -306,4 +319,18 @@ func (o *AppUser) GetUpdatedAt() *time.Time {
 		return nil
 	}
 	return o.UpdatedAt
+}
+
+func (o *AppUser) GetUsername() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Username
+}
+
+func (o *AppUser) GetUsernames() []string {
+	if o == nil {
+		return nil
+	}
+	return o.Usernames
 }

@@ -100,5 +100,4 @@ func UnmarshalAnyType[T AnyType, PT interface {
 	default:
 		return nil, errors.New("unknown type")
 	}
-
 }

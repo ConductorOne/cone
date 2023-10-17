@@ -120,6 +120,7 @@ func (c *client) SearchEntitlements(ctx context.Context, filter *SearchEntitleme
 	// Unmarshal the expanded fields
 	expanded := make([]any, 0, len(resp.RequestCatalogSearchServiceSearchEntitlementsResponse.Expanded))
 	for _, x := range resp.RequestCatalogSearchServiceSearchEntitlementsResponse.Expanded {
+		x := x
 		converted, err := UnmarshalAnyType[shared.RequestCatalogSearchServiceSearchEntitlementsResponseExpanded](&x)
 		if err != nil {
 			return nil, err

@@ -32,6 +32,7 @@ func NewTransport(ctx context.Context, options ...Option) (*Transport, error) {
 type Transport struct {
 	userAgent       string
 	tokenSource     oauth2.TokenSource
+	requestSource   string
 	tlsClientConfig *tls.Config
 	roundTripper    http.RoundTripper
 	logger          *zap.Logger
@@ -72,6 +73,18 @@ func (t *Transport) cycle(ctx context.Context) (http.RoundTripper, error) {
 	}
 	t.nextCycle = n.Add(time.Minute * 5)
 	return t.roundTripper, nil
+}
+
+type requestSourceTripper struct {
+	next          http.RoundTripper
+	requestSource string
+}
+
+func (rst *requestSourceTripper) RoundTrip(req *http.Request) (*http.Response, error) {
+	if req.Header.Get("c1-request-source") == "" && rst.requestSource != "" {
+		req.Header.Set("c1-request-source", rst.requestSource)
+	}
+	return rst.next.RoundTrip(req)
 }
 
 type userAgentTripper struct {
@@ -165,6 +178,7 @@ func (t *Transport) make(ctx context.Context) (http.RoundTripper, error) {
 	rv = &debugTripper{next: rv, debug: t.debug}
 	rv = &userAgentTripper{next: rv, userAgent: t.userAgent}
 	rv = &tokenSourceTripper{next: rv, tokenSource: t.tokenSource}
+	rv = &requestSourceTripper{next: rv, requestSource: t.requestSource}
 	return rv, nil
 }
 

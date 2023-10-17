@@ -56,6 +56,20 @@ func WithTokenSource(tokenSource oauth2.TokenSource) Option {
 	}
 }
 
+type requestSourceOption struct {
+	requestSource string
+}
+
+func (o requestSourceOption) Apply(c *Transport) {
+	c.requestSource = o.requestSource
+}
+
+func WithRequestSource(cmdName string) Option {
+	return requestSourceOption{
+		requestSource: cmdName,
+	}
+}
+
 type userAgentOption struct {
 	userAgent string
 }

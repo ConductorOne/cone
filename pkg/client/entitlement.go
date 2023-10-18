@@ -16,11 +16,12 @@ const (
 )
 
 type SearchEntitlementsFilter struct {
-	Query            string
-	EntitlementAlias string
-	AppDisplayName   string
-	GrantedStatus    shared.RequestCatalogSearchServiceSearchEntitlementsRequestGrantedStatus
-	IncludeDeleted   bool
+	Query                    string
+	EntitlementAlias         string
+	AppDisplayName           string
+	GrantedStatus            shared.RequestCatalogSearchServiceSearchEntitlementsRequestGrantedStatus
+	IncludeDeleted           bool
+	AppEntitlementExpandMask shared.AppEntitlementExpandMask
 }
 
 type AppEntitlement shared.AppEntitlement
@@ -40,19 +41,73 @@ func (a AppEntitlement) GetAppId() string {
 type EntitlementWithBindings struct {
 	Entitlement AppEntitlement
 	Bindings    []shared.AppEntitlementUserBinding
+	expanded    map[string]*any
+}
+
+func (e *EntitlementWithBindings) GetExpanded() map[string]*any {
+	if e == nil {
+		return nil
+	}
+	return e.expanded
+}
+
+type ExpandableEntitlementWithBindings struct {
+	shared.AppEntitlementWithUserBindings
+	ExpandedMap map[string]int
+}
+
+func NewExpandableEntitlementWithBindings(v shared.AppEntitlementWithUserBindings) *ExpandableEntitlementWithBindings {
+	if v.AppEntitlementView == nil {
+		return nil
+	}
+	return &ExpandableEntitlementWithBindings{
+		AppEntitlementWithUserBindings: v,
+	}
+}
+
+func (e *ExpandableEntitlementWithBindings) GetPaths() []PathDetails {
+	if e == nil {
+		return nil
+	}
+	view := *e.AppEntitlementWithUserBindings.AppEntitlementView
+	return []PathDetails{
+		{
+			Name: ExpandedApp,
+			Path: view.GetAppPath(),
+		},
+		{
+			Name: ExpandedAppResource,
+			Path: view.GetAppResourcePath(),
+		},
+		{
+			Name: ExpandedAppResourceType,
+			Path: view.GetAppResourceTypePath(),
+		},
+	}
+}
+
+func (e *ExpandableEntitlementWithBindings) SetPath(pathname string, value int) {
+	if e == nil {
+		return
+	}
+	if e.ExpandedMap == nil {
+		e.ExpandedMap = make(map[string]int)
+	}
+	e.ExpandedMap[pathname] = value
 }
 
 func (c *client) SearchEntitlements(ctx context.Context, filter *SearchEntitlementsFilter) ([]*EntitlementWithBindings, error) {
 	// TODO(morgabra) Pagination
 	// TODO(morgabra) Should we abstract the OpenAPI objects from the rest of cone? Kinda... no? But they aren't typed...
 	req := shared.RequestCatalogSearchServiceSearchEntitlementsRequest{
-		EntitlementAlias: stringPtr(filter.EntitlementAlias),
-		GrantedStatus:    filter.GrantedStatus.ToPointer(),
-		PageSize:         float64Ptr(100),
-		PageToken:        nil,
-		Query:            stringPtr(filter.Query),
-		AppDisplayName:   stringPtr(filter.AppDisplayName),
-		IncludeDeleted:   &filter.IncludeDeleted,
+		EntitlementAlias:         stringPtr(filter.EntitlementAlias),
+		GrantedStatus:            filter.GrantedStatus.ToPointer(),
+		PageSize:                 float64Ptr(100),
+		PageToken:                nil,
+		Query:                    stringPtr(filter.Query),
+		AppDisplayName:           stringPtr(filter.AppDisplayName),
+		IncludeDeleted:           &filter.IncludeDeleted,
+		AppEntitlementExpandMask: &filter.AppEntitlementExpandMask,
 	}
 	resp, err := c.sdk.RequestCatalogSearch.SearchEntitlements(ctx, &req)
 	if err != nil {
@@ -68,36 +123,47 @@ func (c *client) SearchEntitlements(ctx context.Context, filter *SearchEntitleme
 		return nil, errors.New("search-entitlements: list is nil")
 	}
 
-	rv := make([]*EntitlementWithBindings, 0, len(list))
+	// Unmarshal the expanded fields
+	expanded := make([]any, 0, len(resp.RequestCatalogSearchServiceSearchEntitlementsResponse.Expanded))
+	for _, x := range resp.RequestCatalogSearchServiceSearchEntitlementsResponse.Expanded {
+		x := x
+		converted, err := UnmarshalAnyType[shared.RequestCatalogSearchServiceSearchEntitlementsResponseExpanded](&x)
+		if err != nil {
+			return nil, err
+		}
+		expanded = append(expanded, converted)
+	}
+
+	// Convert the list of entitlements to a list of expandable entitlements
+	expandableList := make([]*ExpandableEntitlementWithBindings, 0, len(list))
 	for _, v := range list {
-		ent := v.AppEntitlementView
+		ent := NewExpandableEntitlementWithBindings(v)
 		if ent == nil {
 			return nil, errors.New("search-entitlements: entitlement is nil")
 		}
 
-		rv = append(rv, &EntitlementWithBindings{
-			Entitlement: AppEntitlement(*ent.AppEntitlement),
-			Bindings:    v.AppEntitlementUserBindings,
-		})
+		expandableList = append(expandableList, ent)
 	}
 
-	return rv, nil
-}
+	// Populate the expandable objects with the indexes of related objects
+	err = ExpandableReponse[*ExpandableEntitlementWithBindings]{
+		List: expandableList,
+	}.PopulateExpandedIndexes()
 
-func (c *client) ExpandEntitlements(ctx context.Context, in []*EntitlementWithBindings) (*Expander, error) {
-	expander := &Expander{}
-	for _, v := range in {
-		expander.ExpandApp(v.Entitlement)
-		expander.ExpandResourceType(v.Entitlement)
-		expander.ExpandResource(v.Entitlement)
-	}
-
-	err := expander.Run(ctx, c)
 	if err != nil {
 		return nil, err
 	}
 
-	return expander, nil
+	// Iterate over the expandable objects and convert them to the final response
+	rv := make([]*EntitlementWithBindings, 0, len(list))
+	for _, v := range expandableList {
+		rv = append(rv, &EntitlementWithBindings{
+			Entitlement: AppEntitlement(*v.AppEntitlementWithUserBindings.AppEntitlementView.AppEntitlement),
+			Bindings:    v.AppEntitlementWithUserBindings.AppEntitlementUserBindings,
+			expanded:    PopulateExpandedMap(v.ExpandedMap, expanded),
+		})
+	}
+	return rv, nil
 }
 
 func (c *client) GetEntitlement(ctx context.Context, appId string, entitlementId string) (*shared.AppEntitlement, error) {

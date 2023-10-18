@@ -3,6 +3,7 @@ package main
 import (
 	"github.com/spf13/cobra"
 
+	"github.com/conductorone/conductorone-sdk-go/pkg/models/shared"
 	"github.com/conductorone/cone/pkg/client"
 	"github.com/conductorone/cone/pkg/output"
 )
@@ -45,24 +46,18 @@ func searchEntitlementsRun(cmd *cobra.Command, args []string) error {
 	// 1. Test if it's a direct alias
 	// 2. Use it as a query
 	entitlements, err := c.SearchEntitlements(ctx, &client.SearchEntitlementsFilter{
-		Query:            query,
-		EntitlementAlias: alias,
-		GrantedStatus:    grantedStatus,
-		AppDisplayName:   v.GetString(appDisplayNameFlag),
-		IncludeDeleted:   v.GetBool(includeDeletedFlag),
+		Query:                    query,
+		EntitlementAlias:         alias,
+		GrantedStatus:            grantedStatus,
+		AppDisplayName:           v.GetString(appDisplayNameFlag),
+		IncludeDeleted:           v.GetBool(includeDeletedFlag),
+		AppEntitlementExpandMask: shared.AppEntitlementExpandMask{Paths: []string{"app_id", "app_resource_type_id", "app_resource_id"}},
 	})
 	if err != nil {
 		return err
 	}
-
-	expander, err := c.ExpandEntitlements(ctx, entitlements)
-	if err != nil {
-		return err
-	}
-
 	resp := &ExpandedEntitlementsResponse{
 		Entitlements: entitlements,
-		expander:     expander,
 	}
 	outputManager := output.NewManager(ctx, v)
 	err = outputManager.Output(ctx, resp)
@@ -75,7 +70,6 @@ func searchEntitlementsRun(cmd *cobra.Command, args []string) error {
 
 type ExpandedEntitlementsResponse struct {
 	Entitlements []*client.EntitlementWithBindings `json:"entitlements"`
-	expander     *client.Expander
 }
 
 const DisplayNameHeader = "Display Name"
@@ -92,29 +86,20 @@ func (r *ExpandedEntitlementsResponse) WideHeader() []string {
 func (r *ExpandedEntitlementsResponse) Rows() [][]string {
 	rows := [][]string{}
 	for _, e := range r.Entitlements {
-		app, _ := r.expander.GetApp(client.StringFromPtr(e.Entitlement.AppID))
-		resourceType, _ := r.expander.GetResourceType(
-			client.StringFromPtr(e.Entitlement.AppID),
-			client.StringFromPtr(e.Entitlement.AppResourceTypeID),
-		)
-		resource, _ := r.expander.GetResource(
-			client.StringFromPtr(e.Entitlement.AppID),
-			client.StringFromPtr(e.Entitlement.AppResourceTypeID),
-			client.StringFromPtr(e.Entitlement.AppResourceID),
-		)
-
 		granted := output.Checkmark
 		if len(e.Bindings) == 0 {
 			granted = output.Unchecked
 		}
-
+		app := client.GetExpanded[shared.App](e, client.ExpandedApp)
+		appResourceType := client.GetExpanded[shared.AppResourceType](e, client.ExpandedAppResourceType)
+		appResource := client.GetExpanded[shared.AppResource](e, client.ExpandedAppResource)
 		rows = append(rows, []string{
 			granted,
 			client.StringFromPtr(e.Entitlement.Alias),
 			client.StringFromPtr(e.Entitlement.DisplayName),
-			client.StringFromPtr(app.DisplayName),
-			client.StringFromPtr(resourceType.DisplayName),
-			client.StringFromPtr(resource.DisplayName),
+			client.StringFromPtr(app.GetDisplayName()),
+			client.StringFromPtr(appResourceType.GetDisplayName()),
+			client.StringFromPtr(appResource.GetDisplayName()),
 		})
 	}
 	return rows

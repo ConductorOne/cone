@@ -6,7 +6,6 @@ import (
 	"io"
 	"net/http"
 	"net/url"
-	"os"
 
 	"github.com/spf13/viper"
 
@@ -21,7 +20,7 @@ const ConeClientID = "2RGdOS94VDferT9e80mdgntl36K"
 type client struct {
 	httpClient *http.Client
 	clientName string
-	tokenHost  string
+	endpoint   string
 	baseURL    *url.URL
 	sdk        *sdk.ConductoroneAPI
 }
@@ -92,7 +91,11 @@ func New(
 	v *viper.Viper,
 	cmdName string,
 ) (C1Client, error) {
-	tokenSrc, clientName, tokenHost, err := NewC1TokenSource(ctx, clientId, clientSecret)
+	tokenSrc, clientName, tokenHost, err := NewC1TokenSource(ctx,
+		clientId, clientSecret,
+		v.GetString("api-endpoint"),
+		v.GetBool("debug"),
+	)
 	if err != nil {
 		return nil, err
 	}
@@ -107,22 +110,14 @@ func New(
 		return nil, err
 	}
 	c := &client{
-		tokenHost:  tokenHost,
+		endpoint:   tokenHost,
 		clientName: clientName,
 		httpClient: uclient,
 	}
 
-	var apiHostname string
-	// If the API host is set in the environment, use that instead of the default
-	// HACK(jirwin): Instead of using the generated client's server address, use the hostname from the token.
-	if apiHost, ok := os.LookupEnv("CONE_API_ENDPOINT"); ok && apiHost != "" {
-		apiHostname = apiHost
-	} else {
-		apiHostname = c.tokenHost
-	}
 	apiURL := url.URL{
 		Scheme: "https",
-		Host:   apiHostname,
+		Host:   c.endpoint,
 	}
 	c.baseURL = &apiURL
 

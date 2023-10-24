@@ -109,22 +109,25 @@ func (uat *debugTripper) RoundTrip(req *http.Request) (*http.Response, error) {
 		return uat.next.RoundTrip(req)
 	}
 
-	resp, err := uat.next.RoundTrip(req)
+	authorizationHdr := req.Header.Get("Authorization")
+	if authorizationHdr != "" {
+		req.Header.Set("Authorization", "[REDACTED]")
+	}
+	requestBytes, err := httputil.DumpRequestOut(req, true)
 	if err != nil {
 		return nil, err
 	}
+	req.Header.Set("Authorization", authorizationHdr)
 
-	if req.Header.Get("Authorization") != "" {
-		req.Header.Set("Authorization", "[REDACTED]")
-	}
-
-	requestBytes, err := httputil.DumpRequest(req, true)
+	resp, err := uat.next.RoundTrip(req)
 	if err != nil {
 		return nil, err
 	}
 
 	//nolint:forbidigo
 	fmt.Println(string(requestBytes))
+	//nolint:forbidigo
+	fmt.Println("")
 
 	responseBytes, err := httputil.DumpResponse(resp, true)
 	if err != nil {
@@ -132,6 +135,8 @@ func (uat *debugTripper) RoundTrip(req *http.Request) (*http.Response, error) {
 	}
 	//nolint:forbidigo
 	fmt.Println(string(responseBytes))
+	//nolint:forbidigo
+	fmt.Println("")
 
 	return resp, nil
 }

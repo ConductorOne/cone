@@ -49,7 +49,7 @@ type c1TokenSource struct {
 	httpClient   *http.Client
 }
 
-func parseClientID(input string) (string, string, error) {
+func parseClientID(input string, forceTokenHost string) (string, string, error) {
 	// split the input into 2 parts by @
 	items := strings.SplitN(input, "@", 2)
 	if len(items) != 2 {
@@ -61,6 +61,10 @@ func parseClientID(input string) (string, string, error) {
 	items = strings.SplitN(items[1], "/", 2)
 	if len(items) != 2 {
 		return "", "", ErrInvalidClientID
+	}
+
+	if forceTokenHost != "" {
+		return clientName, forceTokenHost, nil
 	}
 
 	return clientName, items[0], nil
@@ -191,8 +195,14 @@ func (c *c1TokenSource) Token() (*oauth2.Token, error) {
 	}, nil
 }
 
-func NewC1TokenSource(ctx context.Context, clientID string, clientSecret string) (oauth2.TokenSource, string, string, error) {
-	clientName, tokenHost, err := parseClientID(clientID)
+func NewC1TokenSource(
+	ctx context.Context,
+	clientID string,
+	clientSecret string,
+	forceTokenHost string,
+	debug bool,
+) (oauth2.TokenSource, string, string, error) {
+	clientName, tokenHost, err := parseClientID(clientID, forceTokenHost)
 	if err != nil {
 		return nil, "", "", err
 	}
@@ -202,7 +212,11 @@ func NewC1TokenSource(ctx context.Context, clientID string, clientSecret string)
 		return nil, "", "", err
 	}
 
-	httpClient, err := uhttp.NewClient(ctx, uhttp.WithLogger(true, ctxzap.Extract(ctx)), uhttp.WithUserAgent("cone-c1-credential-provider"))
+	httpClient, err := uhttp.NewClient(ctx,
+		uhttp.WithLogger(true, ctxzap.Extract(ctx)),
+		uhttp.WithUserAgent("cone-c1-credential-provider"),
+		uhttp.WithDebug(debug),
+	)
 	if err != nil {
 		return nil, "", "", err
 	}

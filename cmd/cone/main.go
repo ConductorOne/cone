@@ -49,6 +49,7 @@ func runCli(ctx context.Context) int {
 	cliCmd.PersistentFlags().BoolP("non-interactive", "i", false, "Disable prompts.")
 	cliCmd.PersistentFlags().String("client-id", "", "Client ID")
 	cliCmd.PersistentFlags().String("client-secret", "", "Client secret")
+	cliCmd.PersistentFlags().String("api-endpoint", "", "Override the API endpoint")
 	cliCmd.PersistentFlags().StringP("output", "o", "table", "Output format. Valid values: table, json, json-pretty, wide.")
 	cliCmd.PersistentFlags().Bool("debug", false, "Enable debug logging")
 

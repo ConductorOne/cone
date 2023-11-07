@@ -1,0 +1,5 @@
+data "{{.GetType}}" "{{.GetPk}}" {{"{"}}
+  {{- range $key, $value := .GetIds}}
+    {{$key}} = "{{$value}}"
+  {{- end}}
+{{"}"}}

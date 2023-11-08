@@ -26,7 +26,7 @@ func tfRun(cmd *cobra.Command, args []string) error {
 	if err != nil {
 		return err
 	}
-
+	x := ""
 	for _, app := range apps {
 		// Create an instance of AppTemplate with the app
 		appTmpl := resource.AppTemplate{App: app} // Now using the exported field 'App'
@@ -36,12 +36,9 @@ func tfRun(cmd *cobra.Command, args []string) error {
 		if err != nil {
 			return err
 		}
-		fmt.Print(tmpl)
-		if err = resource.ExecuteTerraform(tmpl, "terraform"); err != nil {
-			return err
-		}
-		break
-	}
 
+		x = x + tmpl
+	}
+	fmt.Print(x)
 	return nil
 }

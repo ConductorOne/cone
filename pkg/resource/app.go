@@ -8,26 +8,18 @@ type AppTemplate struct {
 	App shared.App
 }
 
-func (a AppTemplate) GetName() string {
-	return a.GetType() + "_" + a.GetPk()
-}
-
-func (a AppTemplate) GetIds() map[string]string {
+func (a AppTemplate) GetRequired() map[string]string {
 	ids := make(map[string]string)
-	if a.App.ID != nil {
-		ids["id"] = *a.App.ID
+	if a.App.DisplayName != nil {
+		ids["display_name"] = *a.App.DisplayName
 	}
 	return ids
-}
-
-func (a AppTemplate) GetResourceType() string {
-	return "app"
 }
 
 func (a AppTemplate) GetType() string {
 	return TerraformAppType // Assuming the type is "App"
 }
 
-func (a AppTemplate) GetPk() string {
-	return GeneratePK(a)
+func (a AppTemplate) GetId() string {
+	return *a.App.ID
 }

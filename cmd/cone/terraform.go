@@ -3,8 +3,6 @@ package main
 import (
 	"fmt"
 
-	"github.com/conductorone/cone/pkg/client"
-
 	"github.com/conductorone/cone/pkg/resource"
 	"github.com/spf13/cobra"
 )
@@ -31,7 +29,7 @@ func tfRun(cmd *cobra.Command, args []string) error {
 
 	for _, app := range apps {
 		// Create an instance of AppTemplate with the app
-		appTmpl := client.AppTemplate{App: app} // Now using the exported field 'App'
+		appTmpl := resource.AppTemplate{App: app} // Now using the exported field 'App'
 
 		// Apply the template using the appTmpl
 		tmpl, err := resource.ApplyTemplate(appTmpl)

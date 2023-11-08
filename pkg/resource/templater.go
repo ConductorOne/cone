@@ -10,13 +10,12 @@ import (
 	"text/template"
 )
 
-const outputDir = "terraform"
 const datasourceTemplateString = `data "{{.GetType}}" "{{.GetPk}}" {{"{"}}
 {{- range $key, $value := .GetIds}}
 	{{$key}} = "{{$value}}"
 {{- end}}
 {{"}\n"}}`
-const outputTemplateString = `output "{{GetType}}_{{GetPk}}" {{"{"}}
+const outputTemplateString = `output {{.GetName}} {"{"}}
 	value = data.{{GetType}}.{{GetPk}}
 {{"}\n"}}`
 
@@ -25,6 +24,7 @@ type templateData interface {
 	GetType() string
 	GetResourceType() string
 	GetPk() string
+	GetName() string
 }
 
 func GeneratePK(data templateData) string {
@@ -99,9 +99,6 @@ func ExecuteTerraform(tfConfig string, outputDir string) error {
 func runTerraformCommand() error {
 
 	cmd := exec.Command("/bin/sh", "-c", "terraform init; terraform plan")
-	cmd.Env = append(os.Environ(), // Include the current environment
-		` TF_REATTACH_PROVIDERS={"conductorone":{"Protocol":"grpc","ProtocolVersion":6,"Pid":59343,"Test":true,"Addr":{"Network":"unix","String":"/var/folders/2m/510pxxl11w7g1ldvlht5krbw0000gn/T/plugin76083934"}}}`,
-	)
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
 	return cmd.Run()

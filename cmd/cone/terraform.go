@@ -1,11 +1,13 @@
 package main
 
 import (
-	"fmt"
+	"os"
 
 	"github.com/conductorone/cone/pkg/resource"
 	"github.com/spf13/cobra"
 )
+
+const terraformDir = "terraform"
 
 func tfCmd() *cobra.Command {
 	cmd := &cobra.Command{
@@ -14,6 +16,21 @@ func tfCmd() *cobra.Command {
 	}
 
 	return cmd
+}
+
+func writeToFile(filename, data string) error {
+	file, err := os.Create(filename)
+	if err != nil {
+		return err
+	}
+	defer file.Close()
+
+	_, err = file.WriteString(data)
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
 
 func tfRun(cmd *cobra.Command, args []string) error {
@@ -26,7 +43,7 @@ func tfRun(cmd *cobra.Command, args []string) error {
 	if err != nil {
 		return err
 	}
-	x := ""
+	res := ""
 	for _, app := range apps {
 		// Create an instance of AppTemplate with the app
 		appTmpl := resource.AppTemplate{App: app} // Now using the exported field 'App'
@@ -37,8 +54,21 @@ func tfRun(cmd *cobra.Command, args []string) error {
 			return err
 		}
 
-		x = x + tmpl
+		res = res + tmpl
 	}
-	fmt.Print(x)
+
+	resource.ExecuteTerraform(res, terraformDir)
+	x, err := resource.ParseFieldAttributes("app")
+	if err != nil {
+		return err
+	}
+
+	mappings := make(map[string]map[string]resource.FieldAttribute)
+	mappings["conductorone_app"] = x
+	result, err := resource.ParseHCLBlocks(terraformDir, "plan", mappings)
+	if err != nil {
+		return err
+	}
+	writeToFile("terraform/imports.tf", result)
 	return nil
 }

@@ -1,45 +1,56 @@
 package resource
 
-type terraformState struct {
-	Outputs map[string]interface{} `json:"outputs"`
-}
+import (
+	"bufio"
+	"os"
+	"regexp"
+	"strings"
+)
 
-type terraforProviderSchema struct {
-}
-
-func mapInputs(inputs []templateData) map[string]templateData {
-	inputMap := make(map[string]templateData)
-	for _, input := range inputs {
-		inputMap[input.GetType()+"."+input.GetId()] = input
+func ParseHCLBlocks(outputDir string, filename string, mappings map[string]map[string]FieldAttribute) (string, error) {
+	file, err := os.Open(outputDir + "/plan.txt")
+	if err != nil {
+		return "", err
 	}
-	return inputMap
-}
+	defer file.Close()
 
-func createResource(input templateData) error {
-	switch input.GetType() {
-	case TerraformAppType:
+	scanner := bufio.NewScanner(file)
+	pattern := `\s+#\s+([a-zA-Z_.0-9]+) will be imported`
+	rStart := regexp.MustCompile(pattern)
+	resourceFmt := regexp.MustCompile(`\s*#\s*`)
+	rAttribute := regexp.MustCompile(`\s+[a-zA-Z_]+\s+= \"`)
 
+	res := ""
+	start := false
+	resource := ""
+	for scanner.Scan() {
+		line := scanner.Text()
+		if strings.TrimSpace(line) == "}" {
+			res = res + line + "\n"
+			start = false
+			resource = ""
+			continue
+		}
+		if start && resource != "" {
+			matches := rAttribute.FindStringSubmatch(line)
+			if len(matches) > 0 {
+				attribute := strings.TrimSpace(matches[0])
+				attribute = strings.Split(attribute, " ")[0]
+				if mappings[resource][attribute] == READ_ONLY {
+					continue
+				}
+			}
+			res = res + line + "\n"
+		}
+		matches := rStart.FindStringSubmatch(line)
+		if len(matches) > 0 {
+			start = true
+			unformattedResource := strings.Split(matches[0], ".")[0]
+			resource = resourceFmt.ReplaceAllString(unformattedResource, "")
+		}
 	}
-	return nil
+	if err := scanner.Err(); err != nil {
+		return "", err
+	}
+	return res, nil
 }
-
-// func readTfState(terraformDir string, inputs []templateData) error {
-// 	inputMap := mapInputs(inputs)
-// 	fileBytes, err := os.ReadFile(terraformDir + "/terraform.tfstate")
-// 	if err != nil {
-// 		return err
-// 	}
-// 	var data terraformState
-// 	err = json.Unmarshal(fileBytes, &data)
-// 	if err != nil {
-// 		return err
-// 	}
-
-// 	for key, value := range data.Outputs {
-// 		if input, ok := inputMap[key]; ok {
-// 			input.GetResourceType()
-// 		}
-
-// 	}
-// 	return nil
-// }

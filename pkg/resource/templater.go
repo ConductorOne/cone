@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"os"
 	"os/exec"
-	"path/filepath"
 	"text/template"
 )
 
@@ -71,20 +70,18 @@ func ExecuteTerraform(tfConfig string, outputDir string) error {
 	}
 	exec.Command("cd " + outputDir).Run()
 
-	// Write the Terraform configuration to a file
-	tfFilePath := filepath.Join("main.tf")
-	if err := os.WriteFile(tfFilePath, []byte(tfConfig), 0644); err != nil {
+	if err := os.WriteFile(outputDir+"/imports.tf", []byte(tfConfig), 0644); err != nil {
 		return err
 	}
 
 	// Apply the Terraform configuration
-	return runTerraformCommand()
+	return runTerraformCommand(outputDir)
 }
 
 // runTerraformCommand runs a Terraform command with the given arguments.
-func runTerraformCommand() error {
+func runTerraformCommand(outputDir string) error {
 
-	cmd := exec.Command("/bin/sh", "-c", "terraform apply")
+	cmd := exec.Command("/bin/sh", "-c", "terraform plan > "+outputDir+"/plan.txt")
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
 	return cmd.Run()

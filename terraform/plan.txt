@@ -1,0 +1,238 @@
+anthonyzhao@anthony terraform % terraform plan                      
+conductorone_app.id_2Va7nPy3gJ4YJw7kKOyZbSA9xgM: Preparing import... [id=2Va7nPy3gJ4YJw7kKOyZbSA9xgM]
+conductorone_app.id_2Va8BlQpp7RzEBscOtRO9iwhZ0h: Preparing import... [id=2Va8BlQpp7RzEBscOtRO9iwhZ0h]
+conductorone_app.id_2XDrh4Zmim21ecKV7yEgM8JJmE7: Preparing import... [id=2XDrh4Zmim21ecKV7yEgM8JJmE7]
+conductorone_app.id_2XBCKLfhzH2sl1oVMpzlzlPQ3x8: Preparing import... [id=2XBCKLfhzH2sl1oVMpzlzlPQ3x8]
+conductorone_app.id_2Qo2VKyGbzEp6DUWoVltnau6clx: Preparing import... [id=2Qo2VKyGbzEp6DUWoVltnau6clx]
+conductorone_app.id_2TisuhnWkxX6TzXnQP7YWs4Hqhj: Preparing import... [id=2TisuhnWkxX6TzXnQP7YWs4Hqhj]
+conductorone_app.id_2Qo36p0ZqiZMeEXY8FMDUwrca2H: Preparing import... [id=2Qo36p0ZqiZMeEXY8FMDUwrca2H]
+conductorone_app.id_2UOvT4aMAP7WetxdoU7gdvtpnG7: Preparing import... [id=2UOvT4aMAP7WetxdoU7gdvtpnG7]
+conductorone_app.id_2Qo2VJ5Fccc8mgfA1DAtLujP4Ky: Preparing import... [id=2Qo2VJ5Fccc8mgfA1DAtLujP4Ky]
+conductorone_app.id_2XBCJbM3t3F9NVI1q1zWD7dJz8R: Preparing import... [id=2XBCJbM3t3F9NVI1q1zWD7dJz8R]
+conductorone_app.id_2UOvT4aMAP7WetxdoU7gdvtpnG7: Refreshing state... [id=2UOvT4aMAP7WetxdoU7gdvtpnG7]
+conductorone_app.id_2Qo2VKyGbzEp6DUWoVltnau6clx: Refreshing state... [id=2Qo2VKyGbzEp6DUWoVltnau6clx]
+conductorone_app.id_2Qo36p0ZqiZMeEXY8FMDUwrca2H: Refreshing state... [id=2Qo36p0ZqiZMeEXY8FMDUwrca2H]
+conductorone_app.id_2XBCJbM3t3F9NVI1q1zWD7dJz8R: Refreshing state... [id=2XBCJbM3t3F9NVI1q1zWD7dJz8R]
+conductorone_app.id_2Qo2VJ5Fccc8mgfA1DAtLujP4Ky: Refreshing state... [id=2Qo2VJ5Fccc8mgfA1DAtLujP4Ky]
+conductorone_app.id_2XBCKLfhzH2sl1oVMpzlzlPQ3x8: Refreshing state... [id=2XBCKLfhzH2sl1oVMpzlzlPQ3x8]
+conductorone_app.id_2Va8BlQpp7RzEBscOtRO9iwhZ0h: Refreshing state... [id=2Va8BlQpp7RzEBscOtRO9iwhZ0h]
+conductorone_app.id_2XDrh4Zmim21ecKV7yEgM8JJmE7: Refreshing state... [id=2XDrh4Zmim21ecKV7yEgM8JJmE7]
+conductorone_app.id_2TisuhnWkxX6TzXnQP7YWs4Hqhj: Refreshing state... [id=2TisuhnWkxX6TzXnQP7YWs4Hqhj]
+conductorone_app.id_2Va7nPy3gJ4YJw7kKOyZbSA9xgM: Refreshing state... [id=2Va7nPy3gJ4YJw7kKOyZbSA9xgM]
+conductorone_app.id_2Qo2VH99Q1qnqog9Vpk0KMrfn3o: Preparing import... [id=2Qo2VH99Q1qnqog9Vpk0KMrfn3o]
+conductorone_app.id_2Qo2VKPZCCCkiSr9Af8DH5Jl4oA: Preparing import... [id=2Qo2VKPZCCCkiSr9Af8DH5Jl4oA]
+conductorone_app.id_2Qo2VKPZCCCkiSr9Af8DH5Jl4oA: Refreshing state... [id=2Qo2VKPZCCCkiSr9Af8DH5Jl4oA]
+conductorone_app.id_2Qo1YQ24RQMUISlqtpJ4IPzxQdp: Preparing import... [id=2Qo1YQ24RQMUISlqtpJ4IPzxQdp]
+conductorone_app.id_2VGMcAR9jhzz4J3RifiK7Za7p7b: Preparing import... [id=2VGMcAR9jhzz4J3RifiK7Za7p7b]
+conductorone_app.id_2Qo2VH99Q1qnqog9Vpk0KMrfn3o: Refreshing state... [id=2Qo2VH99Q1qnqog9Vpk0KMrfn3o]
+conductorone_app.id_2VGMcAR9jhzz4J3RifiK7Za7p7b: Refreshing state... [id=2VGMcAR9jhzz4J3RifiK7Za7p7b]
+conductorone_app.id_2Qo1YQ24RQMUISlqtpJ4IPzxQdp: Refreshing state... [id=2Qo1YQ24RQMUISlqtpJ4IPzxQdp]
+
+Terraform will perform the following actions:
+
+  # conductorone_app.id_2Qo1YQ24RQMUISlqtpJ4IPzxQdp will be imported
+    resource "conductorone_app" "id_2Qo1YQ24RQMUISlqtpJ4IPzxQdp" {
+        app_account_name  = "dev-71620138.okta.com"
+        certify_policy_id = "20n6suDXRPLSiTnRLS8CURTCIq7"
+        created_at        = "2023-06-05T22:46:06Z"
+        description       = "Integrates with Okta Users, Groups and Roles"
+        display_name      = "Okta"
+        field_mask        = "monthlyCostUsd"
+        grant_policy_id   = "2XDtdd6VlXLm1P7gFVM5vwFMq7X"
+        icon_url          = "/static/app-icons/okta.svg"
+        id                = "2Qo1YQ24RQMUISlqtpJ4IPzxQdp"
+        monthly_cost_usd  = 11
+        revoke_policy_id  = "1xJnEz4VE1uT1xwHcFfMja0KF6Y"
+        updated_at        = "2023-11-08T19:20:55Z"
+        user_count        = "5"
+    }
+
+  # conductorone_app.id_2Qo2VH99Q1qnqog9Vpk0KMrfn3o will be imported
+    resource "conductorone_app" "id_2Qo2VH99Q1qnqog9Vpk0KMrfn3o" {
+        created_at       = "2023-06-05T22:53:55Z"
+        display_name     = "ConductorOne"
+        grant_policy_id  = "1vPv2JswIqSI9M2DXN0eQhboegU"
+        icon_url         = "/static/app-icons/default.svg"
+        id               = "2Qo2VH99Q1qnqog9Vpk0KMrfn3o"
+        logo_uri         = "https://ok12static.oktacdn.com/fs/bcg/4/gfs89lk1x4v3msI9n5d7"
+        monthly_cost_usd = 0
+        parent_app_id    = "2Qo1YQ24RQMUISlqtpJ4IPzxQdp"
+        revoke_policy_id = "1xJnEz4VE1uT1xwHcFfMja0KF6Y"
+        updated_at       = "2023-06-05T22:58:53Z"
+        user_count       = "1"
+    }
+
+  # conductorone_app.id_2Qo2VJ5Fccc8mgfA1DAtLujP4Ky will be imported
+    resource "conductorone_app" "id_2Qo2VJ5Fccc8mgfA1DAtLujP4Ky" {
+        created_at       = "2023-06-05T22:53:55Z"
+        display_name     = "Okta Dashboard"
+        grant_policy_id  = "1vPv2JswIqSI9M2DXN0eQhboegU"
+        icon_url         = "/static/app-icons/okta.svg"
+        id               = "2Qo2VJ5Fccc8mgfA1DAtLujP4Ky"
+        logo_uri         = "https://ok12static.oktacdn.com/assets/img/logos/okta-logo-end-user-dashboard.fc6d8fdbcb8cb4c933d009e71456cec6.svg"
+        monthly_cost_usd = 0
+        parent_app_id    = "2Qo1YQ24RQMUISlqtpJ4IPzxQdp"
+        revoke_policy_id = "1xJnEz4VE1uT1xwHcFfMja0KF6Y"
+        updated_at       = "2023-06-05T22:58:53Z"
+        user_count       = "0"
+    }
+
+  # conductorone_app.id_2Qo2VKPZCCCkiSr9Af8DH5Jl4oA will be imported
+    resource "conductorone_app" "id_2Qo2VKPZCCCkiSr9Af8DH5Jl4oA" {
+        created_at       = "2023-06-05T22:53:55Z"
+        display_name     = "Okta Browser Plugin"
+        grant_policy_id  = "1vPv2JswIqSI9M2DXN0eQhboegU"
+        icon_url         = "/static/app-icons/okta.svg"
+        id               = "2Qo2VKPZCCCkiSr9Af8DH5Jl4oA"
+        logo_uri         = "https://ok12static.oktacdn.com/assets/img/logos/okta-logo-browser-plugin.1db9f55776407dfc548a5d6985ff280a.svg"
+        monthly_cost_usd = 0
+        parent_app_id    = "2Qo1YQ24RQMUISlqtpJ4IPzxQdp"
+        revoke_policy_id = "1xJnEz4VE1uT1xwHcFfMja0KF6Y"
+        updated_at       = "2023-06-05T22:58:53Z"
+        user_count       = "0"
+    }
+
+  # conductorone_app.id_2Qo2VKyGbzEp6DUWoVltnau6clx will be imported
+    resource "conductorone_app" "id_2Qo2VKyGbzEp6DUWoVltnau6clx" {
+        created_at       = "2023-06-05T22:53:55Z"
+        display_name     = "Okta Admin Console"
+        grant_policy_id  = "1vPv2JswIqSI9M2DXN0eQhboegU"
+        icon_url         = "/static/app-icons/okta.svg"
+        id               = "2Qo2VKyGbzEp6DUWoVltnau6clx"
+        logo_uri         = "https://ok12static.oktacdn.com/assets/img/logos/okta_admin_app.da3325676d57eaf566cb786dd0c7a819.png"
+        monthly_cost_usd = 0
+        parent_app_id    = "2Qo1YQ24RQMUISlqtpJ4IPzxQdp"
+        revoke_policy_id = "1xJnEz4VE1uT1xwHcFfMja0KF6Y"
+        updated_at       = "2023-06-05T22:58:53Z"
+        user_count       = "1"
+    }
+
+  # conductorone_app.id_2Qo36p0ZqiZMeEXY8FMDUwrca2H will be imported
+    resource "conductorone_app" "id_2Qo36p0ZqiZMeEXY8FMDUwrca2H" {
+        created_at       = "2023-06-05T22:58:53Z"
+        display_name     = "Salesforce.com"
+        grant_policy_id  = "1vPv2JswIqSI9M2DXN0eQhboegU"
+        icon_url         = "/static/app-icons/salesforce.svg"
+        id               = "2Qo36p0ZqiZMeEXY8FMDUwrca2H"
+        logo_uri         = "https://ok12static.oktacdn.com/fs/bcg/4/gfsd7z3aoD2cT9yBM5d6"
+        monthly_cost_usd = 0
+        parent_app_id    = "2Qo1YQ24RQMUISlqtpJ4IPzxQdp"
+        revoke_policy_id = "1xJnEz4VE1uT1xwHcFfMja0KF6Y"
+        updated_at       = "2023-10-26T20:48:13Z"
+        user_count       = "0"
+    }
+
+  # conductorone_app.id_2TisuhnWkxX6TzXnQP7YWs4Hqhj will be imported
+    resource "conductorone_app" "id_2TisuhnWkxX6TzXnQP7YWs4Hqhj" {
+        created_at       = "2023-08-08T23:30:59Z"
+        display_name     = "2020 Spaces"
+        grant_policy_id  = "1vPv2JswIqSI9M2DXN0eQhboegU"
+        icon_url         = "/static/app-icons/default.svg"
+        id               = "2TisuhnWkxX6TzXnQP7YWs4Hqhj"
+        logo_uri         = "https://ok12static.oktacdn.com/fs/bcg/4/gfs1gzs719qjiVMLW1d8"
+        monthly_cost_usd = 0
+        parent_app_id    = "2Qo1YQ24RQMUISlqtpJ4IPzxQdp"
+        revoke_policy_id = "1xJnEz4VE1uT1xwHcFfMja0KF6Y"
+        updated_at       = "2023-08-09T00:33:05Z"
+        user_count       = "0"
+    }
+
+  # conductorone_app.id_2UOvT4aMAP7WetxdoU7gdvtpnG7 will be imported
+    resource "conductorone_app" "id_2UOvT4aMAP7WetxdoU7gdvtpnG7" {
+        app_account_name = "conductorone.atlassian.net"
+        created_at       = "2023-08-23T20:44:05Z"
+        description      = "Integrates with Confluence"
+        display_name     = "Confluence"
+        grant_policy_id  = "1vPv2JswIqSI9M2DXN0eQhboegU"
+        icon_url         = "/static/app-icons/confluence.svg"
+        id               = "2UOvT4aMAP7WetxdoU7gdvtpnG7"
+        monthly_cost_usd = 0
+        revoke_policy_id = "1xJnEz4VE1uT1xwHcFfMja0KF6Y"
+        updated_at       = "2023-11-06T17:01:01Z"
+        user_count       = "57"
+    }
+
+  # conductorone_app.id_2VGMcAR9jhzz4J3RifiK7Za7p7b will be imported
+    resource "conductorone_app" "id_2VGMcAR9jhzz4J3RifiK7Za7p7b" {
+        created_at       = "2023-09-11T18:47:20Z"
+        description      = "Integrates with Expensify users, groups, roles, and apps"
+        display_name     = "Expensify"
+        grant_policy_id  = "1vPv2JswIqSI9M2DXN0eQhboegU"
+        icon_url         = "/static/app-icons/expensify.svg"
+        id               = "2VGMcAR9jhzz4J3RifiK7Za7p7b"
+        monthly_cost_usd = 0
+        revoke_policy_id = "1xJnEz4VE1uT1xwHcFfMja0KF6Y"
+        updated_at       = "2023-09-14T21:28:49Z"
+        user_count       = "3"
+    }
+
+  # conductorone_app.id_2Va7nPy3gJ4YJw7kKOyZbSA9xgM will be imported
+    resource "conductorone_app" "id_2Va7nPy3gJ4YJw7kKOyZbSA9xgM" {
+        created_at       = "2023-09-18T18:41:43Z"
+        description      = "a"
+        display_name     = "LDAP"
+        grant_policy_id  = "1vPv2JswIqSI9M2DXN0eQhboegU"
+        icon_url         = "/static/app-icons/default.svg"
+        id               = "2Va7nPy3gJ4YJw7kKOyZbSA9xgM"
+        monthly_cost_usd = 0
+        revoke_policy_id = "1xJnEz4VE1uT1xwHcFfMja0KF6Y"
+        updated_at       = "2023-09-18T18:48:32Z"
+        user_count       = "2"
+    }
+
+  # conductorone_app.id_2Va8BlQpp7RzEBscOtRO9iwhZ0h will be imported
+    resource "conductorone_app" "id_2Va8BlQpp7RzEBscOtRO9iwhZ0h" {
+        created_at       = "2023-09-18T18:44:57Z"
+        description      = "Integrates with self-hosted Baton connectors."
+        display_name     = "Baton"
+        grant_policy_id  = "1vPv2JswIqSI9M2DXN0eQhboegU"
+        icon_url         = "/static/app-icons/baton.svg"
+        id               = "2Va8BlQpp7RzEBscOtRO9iwhZ0h"
+        monthly_cost_usd = 0
+        revoke_policy_id = "1xJnEz4VE1uT1xwHcFfMja0KF6Y"
+        updated_at       = "2023-09-18T18:44:57Z"
+        user_count       = "0"
+    }
+
+  # conductorone_app.id_2XBCJbM3t3F9NVI1q1zWD7dJz8R will be imported
+    resource "conductorone_app" "id_2XBCJbM3t3F9NVI1q1zWD7dJz8R" {
+        created_at       = "2023-10-23T20:30:14Z"
+        display_name     = "Population Report Test"
+        grant_policy_id  = "1vPv2JswIqSI9M2DXN0eQhboegU"
+        icon_url         = "/static/app-icons/default.svg"
+        id               = "2XBCJbM3t3F9NVI1q1zWD7dJz8R"
+        monthly_cost_usd = 0
+        revoke_policy_id = "1xJnEz4VE1uT1xwHcFfMja0KF6Y"
+        updated_at       = "2023-10-23T21:29:41Z"
+        user_count       = "0"
+    }
+
+  # conductorone_app.id_2XBCKLfhzH2sl1oVMpzlzlPQ3x8 will be imported
+    resource "conductorone_app" "id_2XBCKLfhzH2sl1oVMpzlzlPQ3x8" {
+        created_at       = "2023-10-23T20:30:20Z"
+        display_name     = "Population Report Test"
+        grant_policy_id  = "1vPv2JswIqSI9M2DXN0eQhboegU"
+        icon_url         = "/static/app-icons/default.svg"
+        id               = "2XBCKLfhzH2sl1oVMpzlzlPQ3x8"
+        monthly_cost_usd = 0
+        revoke_policy_id = "1xJnEz4VE1uT1xwHcFfMja0KF6Y"
+        updated_at       = "2023-10-23T20:30:20Z"
+        user_count       = "0"
+    }
+
+  # conductorone_app.id_2XDrh4Zmim21ecKV7yEgM8JJmE7 will be imported
+    resource "conductorone_app" "id_2XDrh4Zmim21ecKV7yEgM8JJmE7" {
+        app_account_name = "c11"
+        created_at       = "2023-10-24T19:10:06Z"
+        description      = "Integrates with Twingate"
+        display_name     = "Twingate"
+        grant_policy_id  = "2XDtsEeogS7LLBfrFjEk8gSGIQO"
+        icon_url         = "/static/app-icons/twingate.svg"
+        id               = "2XDrh4Zmim21ecKV7yEgM8JJmE7"
+        monthly_cost_usd = 0
+        revoke_policy_id = "2XDvAkgmJ3HpwIH7m85ykYwqXCq"
+        updated_at       = "2023-10-24T19:39:09Z"
+        user_count       = "1"
+    }
+
+Plan: 14 to import, 0 to add, 0 to change, 0 to destroy.

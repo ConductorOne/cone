@@ -1,18 +1,23 @@
 package main
 
 import (
+	"fmt"
 	"os"
 
 	"github.com/conductorone/cone/pkg/resource"
 	"github.com/spf13/cobra"
+	"golang.org/x/exp/slices"
 )
 
 const terraformDir = "terraform"
 
+var objects = []string{"app", "policy"}
+
 func tfCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:  "tf",
-		RunE: tfRun,
+		Use:   "tf <object-name>",
+		Short: "Import unmanaged terraform resources for the specified object",
+		RunE:  tfRun,
 	}
 
 	return cmd
@@ -39,36 +44,71 @@ func tfRun(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
-	apps, err := c.ListApps(ctx)
-	if err != nil {
+	if err := validateArgLenth(1, args, cmd); err != nil {
 		return err
 	}
-	res := ""
-	for _, app := range apps {
-		// Create an instance of AppTemplate with the app
-		appTmpl := resource.AppTemplate{App: app} // Now using the exported field 'App'
 
-		// Apply the template using the appTmpl
-		tmpl, err := resource.ApplyTemplate(appTmpl)
+	object := args[0]
+	if !slices.Contains[string](objects, object) && object != "*" {
+		return fmt.Errorf("invalid object name, only support %v and * for all", objects)
+	}
+
+	resources := make(map[string]resource.TemplateData)
+	if object == "app" || object == "*" {
+		apps, err := c.ListApps(ctx)
 		if err != nil {
 			return err
 		}
-
-		res = res + tmpl
+		for _, app := range apps {
+			tmplData := resource.AppTemplate{App: app}
+			resources[tmplData.GetOutputId()] = tmplData
+		}
+	}
+	if object == "policy" || object == "*" {
+		policies, err := c.ListPolicies(ctx)
+		if err != nil {
+			return err
+		}
+		for _, policy := range policies {
+			tmplData := resource.PolicyTemplate{Policy: policy}
+			resources[tmplData.GetOutputId()] = tmplData
+		}
 	}
 
-	resource.ExecuteTerraform(res, terraformDir)
-	x, err := resource.ParseFieldAttributes("app")
-	if err != nil {
-		return err
+	// Creates the import template
+	importTemplate := ""
+	for _, v := range resources {
+		tmpl, err := resource.ApplyTemplate(v)
+		if err != nil {
+			return err
+		}
+		importTemplate = importTemplate + tmpl
 	}
+	// resource.ExecuteTerraform(importTemplate, terraformDir)
 
-	mappings := make(map[string]map[string]resource.FieldAttribute)
-	mappings["conductorone_app"] = x
-	result, err := resource.ParseHCLBlocks(terraformDir, "plan", mappings)
+	// Creates the mappings to parse the terraform plan
+	mappings := make(map[string](map[string]map[string]resource.FieldAttribute))
+	if object == "*" {
+		for _, object := range objects {
+			x, err := resource.ParseFieldAttributes(object)
+			if err != nil {
+				return err
+			}
+			mappings[resource.ObjectNameToTerraformType(object)] = x
+		}
+	} else {
+		x, err := resource.ParseFieldAttributes(object)
+		if err != nil {
+			return err
+		}
+		mappings[resource.ObjectNameToTerraformType(object)] = x
+	}
+	// Parses the terraform plan and generates the imports.tf file
+	result, err := resource.ParseHCLBlocks(terraformDir, mappings, resources)
 	if err != nil {
 		return err
 	}
 	writeToFile("terraform/imports.tf", result)
+
 	return nil
 }

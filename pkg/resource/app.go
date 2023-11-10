@@ -23,3 +23,11 @@ func (a AppTemplate) GetType() string {
 func (a AppTemplate) GetId() string {
 	return *a.App.ID
 }
+
+func (a AppTemplate) GetDatasourceId() string {
+	return "id_" + *a.App.ID
+}
+
+func (a AppTemplate) GetOutputId() string {
+	return a.GetType() + "_" + a.GetDatasourceId()
+}

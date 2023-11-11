@@ -7,13 +7,17 @@ import (
 	"text/template"
 )
 
-const resourceTemplateString = `data "{{.GetType}}" "{{.GetDatasourceId}}" {{"{"}}
+const DataTemplateString = `data "{{.GetType}}" "{{.GetDatasourceId}}" {{"{"}}
 {{- range $key, $value := .GetRequired}}
 	{{$key}} = "{{$value}}"
 {{- end}}
 {{"}\n"}}`
-const importTemplateString = `output  {{.GetOutputId}} {{"{"}}
+const OutputTemplateString = `output  {{.GetOutputId}} {{"{"}}
 	value = data.{{.GetType}}.{{.GetDatasourceId}}
+{{"}\n"}}`
+const ImportTemplateString = `import   {{"{"}}
+	to = {{.GetType}}.{{.GetDatasourceId}}
+	id = "{{.GetId}}"
 {{"}\n"}}`
 
 type TemplateData interface {
@@ -35,7 +39,7 @@ func ObjectNameToTerraformType(objectName string) string {
 	}
 }
 
-func ApplyTemplate(data TemplateData) (string, error) {
+func ApplyTemplate(data TemplateData, tmpl string) (string, error) {
 	// Prepare a buffer to hold the combined output
 	var combinedOutput bytes.Buffer
 
@@ -47,24 +51,14 @@ func ApplyTemplate(data TemplateData) (string, error) {
 	}
 
 	// Process the datasource template
-	resourceTemplate := template.New("resource").Funcs(funcMap)
+	templateString := template.New("tmpl").Funcs(funcMap)
 
 	// Parse the template file
-	resourceTemplate, err := resourceTemplate.Parse(resourceTemplateString)
+	templateString, err := templateString.Parse(tmpl)
 	if err != nil {
 		return "", err
 	}
-	err = resourceTemplate.Execute(&combinedOutput, data)
-	if err != nil {
-		return "", err
-	}
-
-	importTemplate := template.New("import").Funcs(funcMap)
-	importTemplate, err = importTemplate.Parse(importTemplateString)
-	if err != nil {
-		return "", err
-	}
-	err = importTemplate.Execute(&combinedOutput, data)
+	err = templateString.Execute(&combinedOutput, data)
 	if err != nil {
 		return "", err
 	}

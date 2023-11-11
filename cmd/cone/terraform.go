@@ -75,16 +75,30 @@ func tfRun(cmd *cobra.Command, args []string) error {
 		}
 	}
 
+	outputTemplate := ""
+	for _, r := range resources {
+		tmpl1, err := resource.ApplyTemplate(r, resource.DataTemplateString)
+		if err != nil {
+			return err
+		}
+		tmpl2, err := resource.ApplyTemplate(r, resource.OutputTemplateString)
+		if err != nil {
+			return err
+		}
+		outputTemplate = outputTemplate + tmpl1 + tmpl2
+	}
+	resource.ExecuteTerraform(outputTemplate, terraformDir)
+
 	// Creates the import template
 	importTemplate := ""
 	for _, v := range resources {
-		tmpl, err := resource.ApplyTemplate(v)
+		tmpl, err := resource.ApplyTemplate(v, resource.ImportTemplateString)
 		if err != nil {
 			return err
 		}
 		importTemplate = importTemplate + tmpl
 	}
-	// resource.ExecuteTerraform(importTemplate, terraformDir)
+	writeToFile("terraform/output.tf", importTemplate)
 
 	// Creates the mappings to parse the terraform plan
 	mappings := make(map[string](map[string]map[string]resource.FieldAttribute))

@@ -11,7 +11,8 @@ import (
 	"golang.org/x/exp/slices"
 )
 
-var planOutputFile = "cone_temp.txt"
+var tempFile = "cone_temp.txt"
+var tempTfFile = "cone_temp.tf"
 
 var objects = []string{"app", "policy"}
 
@@ -86,9 +87,12 @@ func terraformGen(cmd *cobra.Command, args []string) error {
 	if err != nil {
 		return err
 	}
-	writeToFile(terraformDir+"/cone_temp.tf", outputTemplate)
+	err = writeToFile(terraformDir+"/cone_temp.tf", outputTemplate)
+	if err != nil {
+		return err
+	}
 	pterm.Info.Println("Please run this command in the terraform directory:")
-	pterm.Info.Printfln(`touch %s; terraform plan | sed 's/\x1b\[[0-9;]*m//g'> %s`, planOutputFile, planOutputFile)
+	pterm.Info.Printfln(`touch %s; terraform plan | sed 's/\x1b\[[0-9;]*m//g'> %s`, tempFile, tempFile)
 
 	ok, err := pterm.DefaultInteractiveConfirm.WithDefaultText("Have you run the command?").Show()
 	if err != nil {
@@ -118,16 +122,28 @@ func terraformGen(cmd *cobra.Command, args []string) error {
 	}
 
 	// Parses the terraform plan and generates the imports.tf file
-	result, err := resource.ParseHCLBlocks(terraformDir+"/"+planOutputFile, mappings, resources)
+	result, err := resource.ParseHCLBlocks(terraformDir+"/"+tempFile, mappings, resources)
 	if err != nil {
 		return err
 	}
 
 	// Writes the final imports and deletes the temp files
-	writeToFile(terraformDir+"/cone_output.tf", importTemplate)
-	writeToFile(terraformDir+"/cone_imports.tf", result)
-	os.Remove(terraformDir + "/cone_temp.txt")
-	os.Remove(terraformDir + "/cone_temp.tf")
+	err = writeToFile(terraformDir+"/cone_output.tf", importTemplate)
+	if err != nil {
+		return err
+	}
+	err = writeToFile(terraformDir+"/cone_imports.tf", result)
+	if err != nil {
+		return err
+	}
+	err = os.Remove(fmt.Sprintf("%s/%s.txt", terraformDir, tempFile))
+	if err != nil {
+		return err
+	}
+	err = os.Remove(fmt.Sprintf("%s/%s.txt", terraformDir, tempTfFile))
+	if err != nil {
+		return err
+	}
 
 	return nil
 }

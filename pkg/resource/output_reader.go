@@ -46,7 +46,7 @@ func (l *levelAttributes) AddLevel(lock bool, fieldName string) {
 	}
 }
 
-// Peek and determine if the current level is locked
+// Peek and determine if the current level is locked.
 func (l *levelAttributes) IsLocked() bool {
 	if len(l.levelAttributes) == 0 {
 		return false
@@ -118,12 +118,12 @@ func (s *Stack) parseField(input string, fieldName string) error {
 	// Only Include the field if it is not read-only
 	// TODO: @anthony unknown fields are allowed for now, fix this later
 	fieldAtttribute := s.mappings[s.resource.GetType()][s.levelAttributes.GetLevel()][fieldName]
-	if fieldAtttribute != READ_ONLY {
+	if fieldAtttribute != ReadOnly {
 		s.Result += strings.Repeat("\t", len(s.items)) + strings.TrimSpace(input)[2:] + "\n"
 	}
 
 	if isNested {
-		s.Push(input, fieldAtttribute != READ_ONLY, fieldName)
+		s.Push(input, fieldAtttribute != ReadOnly, fieldName)
 	} else {
 		s.Push(input, false, "")
 	}
@@ -209,7 +209,7 @@ func (s *Stack) CheckLine(input string) error {
 	return s.checkLine(input)
 }
 
-// Push a new value onto the stack
+// Push a new value onto the stack.
 func (s *Stack) Push(str string, lock bool, fieldName string) bool {
 	x := str[len(str)-1:]
 	if x != "{" && x != "[" {

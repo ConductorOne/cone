@@ -73,7 +73,7 @@ func ApplyTemplates(data []TemplateData, templates ...string) (string, error) {
 			if err != nil {
 				return "", err
 			}
-			res = res + str
+			res += str
 		}
 	}
 	return res, nil

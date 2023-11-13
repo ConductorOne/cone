@@ -9,6 +9,6 @@ terraform {
 
 provider "conductorone" {
   server_url    = "SERVER_URL"
-  client_id     = "CONE_CLIENT_ID"
-  client_secret = "CONE_CLIENT_SECRET"
+  client_id     = "C1_CLIENT_ID"
+  client_secret = "C1_CLIENT_SECRET"
 }

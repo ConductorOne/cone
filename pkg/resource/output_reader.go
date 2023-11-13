@@ -98,6 +98,8 @@ func (s *Stack) intializeResourceBlock(input string) error {
 		if r := s.resources[temp]; r != nil {
 			s.resource = r
 			s.Result += "resource \"" + r.GetType() + "\" " + "\"" + r.GetDatasourceId() + "\" " + "{\n"
+		} else {
+			return errors.New("mapping error: unknown resource import")
 		}
 	} else {
 		return nil
@@ -247,8 +249,8 @@ func (s *Stack) Level() int {
 	return len(s.items)
 }
 
-func ParseHCLBlocks(outputDir string, mappings map[string](map[string]map[string]FieldAttribute), resources map[string]TemplateData) (string, error) {
-	file, err := os.Open(outputDir + "/plan.txt")
+func ParseHCLBlocks(outputPath string, mappings map[string](map[string]map[string]FieldAttribute), resources map[string]TemplateData) (string, error) {
+	file, err := os.Open(outputPath)
 	if err != nil {
 		return "", err
 	}

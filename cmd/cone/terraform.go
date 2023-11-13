@@ -120,7 +120,8 @@ func tfRun(cmd *cobra.Command, args []string) error {
 	}
 
 	// Writes the final imports and deletes the temp files
-	writeToFile("terraform/cone_imports.tf", importTemplate+result)
+	writeToFile(terraformDir+"/cone_output.tf", importTemplate+result)
+	writeToFile(terraformDir+"/cone_imports.tf", result)
 	os.Remove(terraformDir + "/cone_temp.txt")
 	os.Remove(terraformDir + "/cone_temp.tf")
 

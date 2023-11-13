@@ -15,8 +15,8 @@ var objects = []string{"app", "policy"}
 
 func tfCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "tf <object-name> <terraform-dir>",
-		Short: "Import unmanaged terraform resources for the specified object",
+		Use:   "tf <resource-type> <terraform-directory-path>",
+		Short: "Import all terraform resources for the specified resource type",
 		RunE:  tfRun,
 	}
 
@@ -60,7 +60,7 @@ func tfRun(cmd *cobra.Command, args []string) error {
 	}
 
 	object := args[0]
-	if !slices.Contains[string](objects, object) && object != "*" {
+	if !slices.Contains(objects, object) && object != "*" {
 		return fmt.Errorf("invalid object name, only support %v and * for all", objects)
 	}
 
@@ -91,12 +91,12 @@ func tfRun(cmd *cobra.Command, args []string) error {
 		}
 	}
 
-	outputTemplate, err := resource.ApplyTemplates(maps.Values(), resource.DataTemplateString, resource.OutputTemplateString)
+	outputTemplate, err := resource.ApplyTemplates(maps.Values(resources), resource.DataTemplateString, resource.OutputTemplateString)
 	writeToFile(terraformDir+"/cone_temp.tf", outputTemplate)
 	executeTerraformPlan(terraformDir)
 
 	// Creates the import template
-	importTemplate, err := resource.ApplyTemplates(maps.Values(), resource.ImportTemplateString)
+	importTemplate, err := resource.ApplyTemplates(maps.Values(resources), resource.ImportTemplateString)
 	if err != nil {
 		return err
 	}

@@ -55,7 +55,7 @@ func tfRun(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
-	if err := validateArgLenth(1, args, cmd); err != nil {
+	if err := validateArgLenth(2, args, cmd); err != nil {
 		return err
 	}
 

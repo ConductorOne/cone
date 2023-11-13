@@ -2,8 +2,6 @@ package resource
 
 import (
 	"bytes"
-	"os"
-	"os/exec"
 	"text/template"
 )
 
@@ -67,28 +65,16 @@ func ApplyTemplate(data TemplateData, tmpl string) (string, error) {
 	return combinedOutput.String(), nil
 }
 
-// ExecuteTerraform takes the Terraform configuration content, writes it to a file,
-// and executes Terraform commands in the given directory.
-func ExecuteTerraform(tfConfig string, outputDir string) error {
-	// Ensure the output directory exists
-	if err := os.MkdirAll(outputDir, 0755); err != nil {
-		return err
+func ApplyTemplates(data []TemplateData, templates ...string) (string, error) {
+	res := ""
+	for _, v := range data {
+		for _, template := range templates {
+			str, err := ApplyTemplate(v, template)
+			if err != nil {
+				return "", err
+			}
+			res = res + str
+		}
 	}
-	exec.Command("cd " + outputDir).Run()
-
-	if err := os.WriteFile(outputDir+"/output.tf", []byte(tfConfig), 0644); err != nil {
-		return err
-	}
-
-	// Apply the Terraform configuration
-	return runTerraformCommand(outputDir)
-}
-
-// runTerraformCommand runs a Terraform command with the given arguments.
-func runTerraformCommand(outputDir string) error {
-
-	cmd := exec.Command("/bin/sh", "-c", "terraform plan "+`| sed 's/\x1b\[[0-9;]*m//g'>`+outputDir+"/plan.txt")
-	cmd.Stdout = os.Stdout
-	cmd.Stderr = os.Stderr
-	return cmd.Run()
+	return res, nil
 }

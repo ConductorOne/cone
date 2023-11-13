@@ -3,19 +3,19 @@ package main
 import (
 	"fmt"
 	"os"
+	"os/exec"
 
 	"github.com/conductorone/cone/pkg/resource"
 	"github.com/spf13/cobra"
+	"golang.org/x/exp/maps"
 	"golang.org/x/exp/slices"
 )
-
-const terraformDir = "terraform"
 
 var objects = []string{"app", "policy"}
 
 func tfCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "tf <object-name>",
+		Use:   "tf <object-name> <terraform-dir>",
 		Short: "Import unmanaged terraform resources for the specified object",
 		RunE:  tfRun,
 	}
@@ -38,6 +38,17 @@ func writeToFile(filename, data string) error {
 	return nil
 }
 
+func executeTerraformPlan(outputDir string) error {
+	err := exec.Command("cd " + outputDir).Run()
+	if err != nil {
+		return err
+	}
+	cmd := exec.Command("/bin/sh", "-c", "terraform plan "+`| sed 's/\x1b\[[0-9;]*m//g'>`+outputDir+"/cone_temp.txt")
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+	return cmd.Run()
+}
+
 func tfRun(cmd *cobra.Command, args []string) error {
 	ctx, c, _, err := cmdContext(cmd)
 	if err != nil {
@@ -51,6 +62,11 @@ func tfRun(cmd *cobra.Command, args []string) error {
 	object := args[0]
 	if !slices.Contains[string](objects, object) && object != "*" {
 		return fmt.Errorf("invalid object name, only support %v and * for all", objects)
+	}
+
+	terraformDir := args[1]
+	if _, err := os.Stat(terraformDir); err != nil {
+		return fmt.Errorf("terraform directory %s does not exist", terraformDir)
 	}
 
 	resources := make(map[string]resource.TemplateData)
@@ -75,54 +91,38 @@ func tfRun(cmd *cobra.Command, args []string) error {
 		}
 	}
 
-	outputTemplate := ""
-	for _, r := range resources {
-		tmpl1, err := resource.ApplyTemplate(r, resource.DataTemplateString)
-		if err != nil {
-			return err
-		}
-		tmpl2, err := resource.ApplyTemplate(r, resource.OutputTemplateString)
-		if err != nil {
-			return err
-		}
-		outputTemplate = outputTemplate + tmpl1 + tmpl2
-	}
-	resource.ExecuteTerraform(outputTemplate, terraformDir)
+	outputTemplate, err := resource.ApplyTemplates(maps.Values(), resource.DataTemplateString, resource.OutputTemplateString)
+	writeToFile(terraformDir+"/cone_temp.tf", outputTemplate)
+	executeTerraformPlan(terraformDir)
 
 	// Creates the import template
-	importTemplate := ""
-	for _, v := range resources {
-		tmpl, err := resource.ApplyTemplate(v, resource.ImportTemplateString)
-		if err != nil {
-			return err
-		}
-		importTemplate = importTemplate + tmpl
+	importTemplate, err := resource.ApplyTemplates(maps.Values(), resource.ImportTemplateString)
+	if err != nil {
+		return err
 	}
-	writeToFile("terraform/output.tf", importTemplate)
 
 	// Creates the mappings to parse the terraform plan
 	mappings := make(map[string](map[string]map[string]resource.FieldAttribute))
-	if object == "*" {
-		for _, object := range objects {
+	for _, v := range objects {
+		if object == v || object == "*" {
 			x, err := resource.ParseFieldAttributes(object)
 			if err != nil {
 				return err
 			}
 			mappings[resource.ObjectNameToTerraformType(object)] = x
 		}
-	} else {
-		x, err := resource.ParseFieldAttributes(object)
-		if err != nil {
-			return err
-		}
-		mappings[resource.ObjectNameToTerraformType(object)] = x
 	}
+
 	// Parses the terraform plan and generates the imports.tf file
 	result, err := resource.ParseHCLBlocks(terraformDir, mappings, resources)
 	if err != nil {
 		return err
 	}
-	writeToFile("terraform/imports.tf", result)
+
+	// Writes the final imports and deletes the temp files
+	writeToFile("terraform/cone_imports.tf", importTemplate+result)
+	os.Remove(terraformDir + "/cone_temp.txt")
+	os.Remove(terraformDir + "/cone_temp.tf")
 
 	return nil
 }

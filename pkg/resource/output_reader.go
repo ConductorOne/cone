@@ -252,7 +252,7 @@ func (s *Stack) Level() int {
 
 /* We maintain two stacks that keep track of the current level and the current level's attributes.
 * The first stack is used to keep track of opening and closing brackets. The second stack contains information
-* on wether are are in a nested attribute and wether or not it is read only.
+* on the start of a nested attribute and whether or not it is read-only.
  */
 func ParseHCLBlocks(outputPath string, mappings map[string](map[string]map[string]FieldAttribute), resources map[string]TemplateData) (string, error) {
 	file, err := os.Open(outputPath)

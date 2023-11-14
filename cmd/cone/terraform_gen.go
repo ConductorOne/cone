@@ -1,12 +1,16 @@
 package main
 
 import (
+	"context"
+	"errors"
 	"fmt"
 	"os"
 
+	"github.com/conductorone/cone/pkg/client"
 	"github.com/conductorone/cone/pkg/resource"
 	"github.com/pterm/pterm"
 	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 	"golang.org/x/exp/maps"
 	"golang.org/x/exp/slices"
 )
@@ -14,14 +18,15 @@ import (
 var tempFile = "cone_temp.txt"
 var tempTfFile = "cone_temp.tf"
 
-var objects = []string{"app", "policy"}
+var objects = []string{"app", "policy", "app_entitlement"}
 
 func terraformGenCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "gen <object-name> <terraform-directory-path>",
-		Short: "Intermediate step to import all terraform resources for the specified object type",
+		Short: "Import all terraform resources for the specified object type",
 		RunE:  terraformGen,
 	}
+	addTfAppIdFlag(cmd)
 
 	return cmd
 }
@@ -41,8 +46,49 @@ func writeToFile(filename, data string) error {
 	return nil
 }
 
+func getResourceMap(ctx context.Context, c client.C1Client, v *viper.Viper, object string) (map[string]resource.TemplateData, error) {
+	resources := make(map[string]resource.TemplateData)
+	if object == "app" || object == "*" {
+		apps, err := c.ListApps(ctx)
+		if err != nil {
+			return nil, err
+		}
+		for _, app := range apps {
+			tmplData := resource.AppTemplate{App: app}
+			resources[tmplData.GetOutputId()] = tmplData
+		}
+	}
+	if object == "policy" || object == "*" {
+		policies, err := c.ListPolicies(ctx)
+		if err != nil {
+			return nil, err
+		}
+		for _, policy := range policies {
+			tmplData := resource.PolicyTemplate{Policy: policy}
+			resources[tmplData.GetOutputId()] = tmplData
+		}
+	}
+
+	if object == "app_entitlement" || object == "*" {
+		appId := v.GetString(tfAppIdFlag)
+		if appId == "" {
+			return nil, errors.New("app-id flag is required for app_entitlement object")
+		}
+
+		entitlements, err := c.ListEntitlements(ctx, appId)
+		if err != nil {
+			return nil, err
+		}
+		for _, entitlement := range entitlements {
+			tmplData := resource.AppEntitlementTemplate{AppEntitlement: entitlement}
+			resources[tmplData.GetOutputId()] = tmplData
+		}
+	}
+	return resources, nil
+}
+
 func terraformGen(cmd *cobra.Command, args []string) error {
-	ctx, c, _, err := cmdContext(cmd)
+	ctx, c, v, err := cmdContext(cmd)
 	if err != nil {
 		return err
 	}
@@ -61,26 +107,9 @@ func terraformGen(cmd *cobra.Command, args []string) error {
 		return fmt.Errorf("terraform directory %s does not exist", terraformDir)
 	}
 
-	resources := make(map[string]resource.TemplateData)
-	if object == "app" || object == "*" {
-		apps, err := c.ListApps(ctx)
-		if err != nil {
-			return err
-		}
-		for _, app := range apps {
-			tmplData := resource.AppTemplate{App: app}
-			resources[tmplData.GetOutputId()] = tmplData
-		}
-	}
-	if object == "policy" || object == "*" {
-		policies, err := c.ListPolicies(ctx)
-		if err != nil {
-			return err
-		}
-		for _, policy := range policies {
-			tmplData := resource.PolicyTemplate{Policy: policy}
-			resources[tmplData.GetOutputId()] = tmplData
-		}
+	resources, err := getResourceMap(ctx, c, v, object)
+	if err != nil {
+		return err
 	}
 
 	outputTemplate, err := resource.ApplyTemplates(maps.Values(resources), resource.DataTemplateString, resource.OutputTemplateString)

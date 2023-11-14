@@ -80,6 +80,7 @@ type C1Client interface {
 	EscalateTask(ctx context.Context, taskId string) (*shared.TaskServiceActionResponse, error)
 	ListApps(ctx context.Context) ([]shared.App, error)
 	ListPolicies(ctx context.Context) ([]shared.Policy, error)
+	ListEntitlements(ctx context.Context, appId string) ([]shared.AppEntitlement, error)
 }
 
 func (c *client) BaseURL() string {

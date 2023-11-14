@@ -189,3 +189,36 @@ func (c *client) GetEntitlement(ctx context.Context, appId string, entitlementId
 
 	return resp.GetAppEntitlementResponse.AppEntitlementView.AppEntitlement, nil
 }
+
+func (c *client) ListEntitlements(ctx context.Context, appId string) ([]shared.AppEntitlement, error) {
+	entitlements := make([]shared.AppEntitlement, 0)
+	pageSize := float64(100)
+	pageToken := ""
+	for {
+		resp, err := c.sdk.AppEntitlements.List(ctx, operations.C1APIAppV1AppEntitlementsListRequest{
+			PageSize:  &pageSize,
+			AppID:     appId,
+			PageToken: &pageToken,
+		})
+		if err != nil {
+			return nil, err
+		}
+		if err := handleBadStatus(resp.RawResponse); err != nil {
+			return nil, err
+		}
+
+		for _, v := range resp.ListAppEntitlementsResponse.List {
+			if v.AppEntitlement == nil {
+				continue
+			}
+			entitlements = append(entitlements, *v.AppEntitlement)
+		}
+
+		if resp.ListAppEntitlementsResponse.NextPageToken == nil || *resp.ListAppEntitlementsResponse.NextPageToken == "" {
+			break
+		}
+		pageToken = *resp.ListAppEntitlementsResponse.NextPageToken
+	}
+
+	return entitlements, nil
+}

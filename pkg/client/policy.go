@@ -10,27 +10,26 @@ import (
 func (c *client) ListPolicies(ctx context.Context) ([]shared.Policy, error) {
 	policies := make([]shared.Policy, 0)
 	pageSize := float64(100)
-	resp, err := c.sdk.Policies.List(ctx, operations.C1APIPolicyV1PoliciesListRequest{
-		PageSize: &pageSize,
-	})
-	if err != nil {
-		return nil, err
-	}
-	policies = append(policies, resp.ListPolicyResponse.List...)
-
-	for resp.ListPolicyResponse.NextPageToken != nil && *resp.ListPolicyResponse.NextPageToken != "" {
+	pageToken := ""
+	for {
 		resp, err := c.sdk.Policies.List(ctx, operations.C1APIPolicyV1PoliciesListRequest{
-			PageToken: resp.ListPolicyResponse.NextPageToken,
+			PageToken: &pageToken,
 			PageSize:  &pageSize,
 		})
 		if err != nil {
 			return nil, err
 		}
+		if err := handleBadStatus(resp.RawResponse); err != nil {
+			return nil, err
+		}
+
 		policies = append(policies, resp.ListPolicyResponse.List...)
+
+		if resp.ListPolicyResponse.NextPageToken == nil || *resp.ListPolicyResponse.NextPageToken == "" {
+			break
+		}
+		pageToken = *resp.ListPolicyResponse.NextPageToken
 	}
 
-	if err := handleBadStatus(resp.RawResponse); err != nil {
-		return nil, err
-	}
 	return policies, nil
 }

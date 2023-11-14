@@ -32,6 +32,8 @@ func ObjectNameToTerraformType(objectName string) string {
 		return TerraformAppType
 	case "policy":
 		return TerraformPolicyType
+	case "app_entitlement":
+		return TerraformAppEntilementType
 	default:
 		return ""
 	}

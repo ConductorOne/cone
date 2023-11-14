@@ -28,7 +28,7 @@ func (ae AppEntitlementTemplate) GetType() string {
 
 func (ae AppEntitlementTemplate) GetId() string {
 	ids := ae.GetRequired()
-	return ids["id"] + "_" + ids["app_id"]
+	return ids["id"] + "." + ids["app_id"]
 }
 
 func (ae AppEntitlementTemplate) GetDatasourceId() string {

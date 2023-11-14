@@ -5,6 +5,7 @@ import (
 	"text/template"
 )
 
+const datasourcePrefix = "id_"
 const DataTemplateString = `data "{{.GetType}}" "{{.GetDatasourceId}}" {{"{"}}
 {{- range $key, $value := .GetRequired}}
 	{{$key}} = "{{$value}}"

@@ -25,7 +25,7 @@ func (a AppTemplate) GetId() string {
 }
 
 func (a AppTemplate) GetDatasourceId() string {
-	return "id_" + *a.App.ID
+	return datasourcePrefix + *a.App.ID
 }
 
 func (a AppTemplate) GetOutputId() string {

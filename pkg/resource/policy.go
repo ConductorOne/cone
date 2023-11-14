@@ -27,7 +27,7 @@ func (p PolicyTemplate) GetId() string {
 }
 
 func (p PolicyTemplate) GetDatasourceId() string {
-	return "id_" + *p.Policy.ID
+	return datasourcePrefix + *p.Policy.ID
 }
 
 func (p PolicyTemplate) GetOutputId() string {

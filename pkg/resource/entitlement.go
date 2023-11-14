@@ -32,7 +32,7 @@ func (ae AppEntitlementTemplate) GetId() string {
 }
 
 func (ae AppEntitlementTemplate) GetDatasourceId() string {
-	return "id_" + ae.GetId()
+	return datasourcePrefix + ae.GetId()
 }
 
 func (ae AppEntitlementTemplate) GetOutputId() string {

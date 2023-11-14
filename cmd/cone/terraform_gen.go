@@ -136,14 +136,14 @@ func terraformGen(cmd *cobra.Command, args []string) error {
 	if err != nil {
 		return err
 	}
-	err = os.Remove(fmt.Sprintf("%s/%s.txt", terraformDir, tempFile))
+	err = os.Remove(fmt.Sprintf("%s/%s", terraformDir, tempFile))
 	if err != nil {
 		return err
 	}
-	err = os.Remove(fmt.Sprintf("%s/%s.txt", terraformDir, tempTfFile))
+	err = os.Remove(fmt.Sprintf("%s/%s", terraformDir, tempTfFile))
 	if err != nil {
 		return err
 	}
-
+	pterm.Info.Println("You can now run terraform refresh to import the resources. After that you can delete the cone_output.tf file")
 	return nil
 }

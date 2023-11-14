@@ -46,6 +46,7 @@ func writeToFile(filename, data string) error {
 	return nil
 }
 
+// TODO @anthony: this probably could be cleaned up if we made the template generic
 func getResourceMap(ctx context.Context, c client.C1Client, v *viper.Viper, object string) (map[string]resource.TemplateData, error) {
 	resources := make(map[string]resource.TemplateData)
 	if object == "app" || object == "*" {
@@ -107,11 +108,18 @@ func terraformGen(cmd *cobra.Command, args []string) error {
 		return fmt.Errorf("terraform directory %s does not exist", terraformDir)
 	}
 
+	// Turns objects into dataTemplates
 	resources, err := getResourceMap(ctx, c, v, object)
 	if err != nil {
 		return err
 	}
 
+	/* TODO @anthony: this all could be simplier if our terraform provider was better at imports.
+	* Currently imports are not supported for some nested objects, for example, policy.steps gets imported incorrectly.
+	* This way of doing it forces datasources to match resources, which is not ideal.
+	*
+	* For each object, we create a template that will import the datasource then output it.
+	 */
 	outputTemplate, err := resource.ApplyTemplates(maps.Values(resources), resource.DataTemplateString, resource.OutputTemplateString)
 	if err != nil {
 		return err
@@ -120,6 +128,8 @@ func terraformGen(cmd *cobra.Command, args []string) error {
 	if err != nil {
 		return err
 	}
+
+	// By running the command the output of terraform plan is piped to a text file
 	pterm.Info.Println("Please run this command in the terraform directory:")
 	pterm.Info.Printfln(`touch %s; terraform plan | sed 's/\x1b\[[0-9;]*m//g'> %s`, tempFile, tempFile)
 
@@ -132,13 +142,8 @@ func terraformGen(cmd *cobra.Command, args []string) error {
 		return nil
 	}
 
-	// Creates the import template
-	importTemplate, err := resource.ApplyTemplates(maps.Values(resources), resource.ImportTemplateString)
-	if err != nil {
-		return err
-	}
-
-	// Creates the mappings to parse the terraform plan
+	// TODO @anthony: bit hacky would be better to parse the terraform schema instead of the md file
+	// Creates the mappings for each terraform object/nested attribute which fields are read-only
 	mappings := make(map[string](map[string]map[string]resource.FieldAttribute))
 	for _, v := range objects {
 		if object == v || object == "*" {
@@ -150,8 +155,14 @@ func terraformGen(cmd *cobra.Command, args []string) error {
 		}
 	}
 
-	// Parses the terraform plan and generates the imports.tf file
+	// Parses the text file with the terraform plan output and generates the terraform resources
 	result, err := resource.ParseHCLBlocks(terraformDir+"/"+tempFile, mappings, resources)
+	if err != nil {
+		return err
+	}
+
+	// Creates the import template
+	importTemplate, err := resource.ApplyTemplates(maps.Values(resources), resource.ImportTemplateString)
 	if err != nil {
 		return err
 	}

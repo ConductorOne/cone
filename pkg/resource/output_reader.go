@@ -30,6 +30,7 @@ func (l *levelAttributes) GetLevel() string {
 }
 
 func (l *levelAttributes) AddLevel(lock bool, fieldName string) {
+	// If a top level field is read-only, we lock all subobjects as well
 	if l.IsLocked() {
 		// TODO: @anthony add error handling
 		l.levelAttributes = append(l.levelAttributes, levelAttribute{true, fieldName})
@@ -141,11 +142,10 @@ func (s *Stack) checkLine(input string) error {
 		closure = input[len(input)-1:]
 	}
 
+	// TODO @anthony: this could be simplified with a map
 	switch closure {
 	case "{":
-		s.Push(input, false, "")
-		s.Result += strings.Repeat("\t", len(s.items)) + closure + "\n"
-		return nil
+		fallthrough
 	case "[":
 		s.Push(input, false, "")
 		s.Result += strings.Repeat("\t", len(s.items)) + closure + "\n"
@@ -184,6 +184,7 @@ func (s *Stack) checkLine(input string) error {
 		return nil
 	}
 
+	// This is how we get rid of the + signs
 	str := strings.TrimSpace(input)[2:]
 	s.Result += strings.Repeat("\t", len(s.items)) + str + "\n"
 	return nil
@@ -249,6 +250,10 @@ func (s *Stack) Level() int {
 	return len(s.items)
 }
 
+/* We maintain two stacks that keep track of the current level and the current level's attributes.
+* The first stack is used to keep track of opening and closing brackets. The second stack contains information
+* on wether are are in a nested attribute and wether or not it is read only.
+ */
 func ParseHCLBlocks(outputPath string, mappings map[string](map[string]map[string]FieldAttribute), resources map[string]TemplateData) (string, error) {
 	file, err := os.Open(outputPath)
 	if err != nil {

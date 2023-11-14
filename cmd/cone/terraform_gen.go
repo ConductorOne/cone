@@ -18,7 +18,8 @@ import (
 var tempFile = "cone_temp.txt"
 var tempTfFile = "cone_temp.tf"
 
-var objects = []string{"app", "policy", "app_entitlement"}
+// Removed "app" from objects because it is not supported by the terraform provider
+var objects = []string{"policy", "app_entitlement"}
 
 func terraformGenCmd() *cobra.Command {
 	cmd := &cobra.Command{

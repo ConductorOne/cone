@@ -261,13 +261,17 @@ func ParseHCLBlocks(outputPath string, mappings map[string](map[string]map[strin
 	}
 	defer file.Close()
 
-	stack := Stack{mappings: mappings, resources: resources}
-	scanner := bufio.NewScanner(file)
 	startRegex := regexp.MustCompile(`Changes to Outputs:`)
-	start := false
+	endline := "─────────────────────────────────────────────────────────────────────────────"
+	stack := Stack{mappings: mappings, resources: resources}
 
+	start := false
+	scanner := bufio.NewScanner(file)
 	for scanner.Scan() {
 		line := scanner.Text()
+		if start && line == endline {
+			break
+		}
 
 		if start {
 			err := stack.CheckLine(line)

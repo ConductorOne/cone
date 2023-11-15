@@ -15,8 +15,11 @@ import (
 	"golang.org/x/exp/slices"
 )
 
-var tempFile = "cone_temp.txt"
-var tempTfFile = "cone_temp.tf"
+const (
+	terraformProviderExample = "https://github.com/ConductorOne/terraform-provider-conductorone/blob/main/examples/provider/provider.tf"
+	tempFile                 = "cone_temp.txt"
+	tempTfFile               = "cone_temp.tf"
+)
 
 var objects = []string{"policy", "app_entitlement"}
 
@@ -46,46 +49,65 @@ func writeToFile(filename, data string) error {
 	return nil
 }
 
-// TODO @anthony: this probably could be cleaned up if we made the template generic
 func getResourceMap(ctx context.Context, c client.C1Client, v *viper.Viper, object string) (map[string]resource.TemplateData, error) {
 	resources := make(map[string]resource.TemplateData)
+	if err := populateResourcesWithApps(ctx, c, object, resources); err != nil {
+		return nil, err
+	}
+	if err := populateResourcesWithPolicies(ctx, c, object, resources); err != nil {
+		return nil, err
+	}
+	if err := populateResourcesWithEntitlements(ctx, c, v, object, resources); err != nil {
+		return nil, err
+	}
+	return resources, nil
+}
+
+func populateResourcesWithApps(ctx context.Context, c client.C1Client, object string, resources map[string]resource.TemplateData) error {
 	if object == "app" || object == "*" {
 		apps, err := c.ListApps(ctx)
 		if err != nil {
-			return nil, err
+			return err
 		}
 		for _, app := range apps {
 			tmplData := resource.AppTemplate{App: app}
 			resources[tmplData.GetOutputId()] = tmplData
 		}
 	}
+	return nil
+}
+
+func populateResourcesWithPolicies(ctx context.Context, c client.C1Client, object string, resources map[string]resource.TemplateData) error {
 	if object == "policy" || object == "*" {
 		policies, err := c.ListPolicies(ctx)
 		if err != nil {
-			return nil, err
+			return err
 		}
 		for _, policy := range policies {
 			tmplData := resource.PolicyTemplate{Policy: policy}
 			resources[tmplData.GetOutputId()] = tmplData
 		}
 	}
+	return nil
+}
 
+func populateResourcesWithEntitlements(ctx context.Context, c client.C1Client, v *viper.Viper, object string, resources map[string]resource.TemplateData) error {
 	if object == "app_entitlement" || object == "*" {
 		appId := v.GetString(tfAppIdFlag)
 		if appId == "" {
-			return nil, errors.New("app-id flag is required for app_entitlement object")
+			return errors.New("app-id flag is required for app_entitlement object")
 		}
 
 		entitlements, err := c.ListEntitlements(ctx, appId)
 		if err != nil {
-			return nil, err
+			return err
 		}
 		for _, entitlement := range entitlements {
 			tmplData := resource.AppEntitlementTemplate{AppEntitlement: entitlement}
 			resources[tmplData.GetOutputId()] = tmplData
 		}
 	}
-	return resources, nil
+	return nil
 }
 
 func terraformGen(cmd *cobra.Command, args []string) error {
@@ -105,7 +127,7 @@ func terraformGen(cmd *cobra.Command, args []string) error {
 
 	terraformDir := args[1]
 	if _, err := os.Stat(terraformDir); err != nil {
-		return fmt.Errorf("terraform directory %s does not exist", terraformDir)
+		return fmt.Errorf("terraform directory %s does not exist (see here: %s for an example)", terraformDir, terraformProviderExample)
 	}
 
 	// Turns objects into dataTemplates
@@ -138,6 +160,7 @@ func terraformGen(cmd *cobra.Command, args []string) error {
 		return err
 	}
 	if !ok {
+		pterm.Info.Printfln("See here for an example: %s", terraformProviderExample)
 		pterm.Error.Println("You must run the command to continue")
 		return nil
 	}

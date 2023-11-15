@@ -24,3 +24,5 @@ dist/
 
 # IDE Config Directories
 .idea/
+
+terraform_example/

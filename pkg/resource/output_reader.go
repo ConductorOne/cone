@@ -8,8 +8,8 @@ import (
 	"strings"
 )
 
-var resourceRegex = regexp.MustCompile(`\s+[a-zA-Z_0-9]+\s+= {`)
-var fieldRegex = regexp.MustCompile(`\+\s+([a-zA-Z_]+)\s+=`)
+var resourceRegex = regexp.MustCompile(`^\s+\+\s+[a-zA-Z_0-9]+\s+= {`)
+var fieldRegex = regexp.MustCompile(`^\s+\+\s+([a-zA-Z_0-9\-\"]+)\s+=`)
 
 type levelAttribute struct {
 	Locked    bool

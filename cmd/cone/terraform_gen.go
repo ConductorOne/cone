@@ -153,7 +153,7 @@ func terraformGen(cmd *cobra.Command, args []string) error {
 
 	// By running the command the output of terraform plan is piped to a text file
 	pterm.Info.Println("Please run this command in the terraform directory:")
-	pterm.Info.Printfln(`touch %s; terraform plan | sed 's/\x1b\[[0-9;]*m//g'> %s`, tempFile, tempFile)
+	pterm.Info.Printfln(`touch %s; terraform plan -no-color > %s`, tempFile, tempFile)
 
 	ok, err := pterm.DefaultInteractiveConfirm.WithDefaultText("Have you run the command?").Show()
 	if err != nil {

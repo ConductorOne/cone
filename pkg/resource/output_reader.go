@@ -99,8 +99,7 @@ func (s *Stack) intializeResourceBlock(input string) error {
 			s.resource = r
 			s.Result += "resource \"" + r.GetType() + "\" " + "\"" + r.GetDatasourceId() + "\" " + "{\n"
 		} else {
-			fmt.Print(temp)
-			return errors.New("mapping error: unknown resource import")
+			return fmt.Errorf("mapping error: unknown resource %s", temp)
 		}
 	} else {
 		return nil

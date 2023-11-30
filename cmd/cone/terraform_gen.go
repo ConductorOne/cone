@@ -163,7 +163,7 @@ func terraformGen(cmd *cobra.Command, args []string) error {
 	cmdTf.Stdout = &buffer
 	err = cmdTf.Run()
 	if err != nil {
-		return fmt.Errorf("terraform plan failed: %s", err)
+		return fmt.Errorf("terraform plan failed: %w", err)
 	}
 
 	// TODO @anthony: bit hacky would be better to parse the terraform schema instead of the md file

@@ -17,7 +17,7 @@ import (
 
 const (
 	terraformProviderExample = "https://github.com/ConductorOne/terraform-provider-conductorone/blob/main/examples/provider/provider.tf"
-	tempFile                 = "cone_temp.txt"
+	tempFile                 = "tfplan"
 	tempTfFile               = "cone_temp.tf"
 )
 
@@ -146,14 +146,19 @@ func terraformGen(cmd *cobra.Command, args []string) error {
 	if err != nil {
 		return err
 	}
-	err = writeToFile(terraformDir+"/cone_temp.tf", outputTemplate)
+	err = writeToFile(terraformDir+"/"+tempTfFile, outputTemplate)
+	if err != nil {
+		return err
+	}
+
+	_, err = os.Create(terraformDir + "/" + tempFile)
 	if err != nil {
 		return err
 	}
 
 	// By running the command the output of terraform plan is piped to a text file
 	pterm.Info.Println("Please run this command in the terraform directory:")
-	pterm.Info.Printfln(`touch %s; terraform plan -no-color > %s`, tempFile, tempFile)
+	pterm.Info.Printfln("terraform plan -no-color > %s", tempFile)
 
 	ok, err := pterm.DefaultInteractiveConfirm.WithDefaultText("Have you run the command?").Show()
 	if err != nil {

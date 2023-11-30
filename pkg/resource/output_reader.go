@@ -3,12 +3,13 @@ package resource
 import (
 	"bufio"
 	"errors"
+	"fmt"
 	"os"
 	"regexp"
 	"strings"
 )
 
-var resourceRegex = regexp.MustCompile(`^\s+\+\s+[a-zA-Z_0-9]+\s+= {`)
+var resourceRegex = regexp.MustCompile(`^\s+\+\s+([a-zA-Z_0-9]+)\s+= {`)
 var fieldRegex = regexp.MustCompile(`^\s+\+\s+([a-zA-Z_0-9\-\"]+)\s+=`)
 
 type levelAttribute struct {
@@ -92,14 +93,13 @@ type Stack struct {
 
 func (s *Stack) intializeResourceBlock(input string) error {
 	// Extract the resource name
-	matches := resourceRegex.FindStringSubmatch(input)
-	if len(matches) > 0 {
-		temp := strings.TrimSpace(matches[0])
-		temp = strings.Split(temp, " ")[0]
+	if matches := resourceRegex.FindStringSubmatch(input); len(matches) > 0 {
+		temp := strings.TrimSpace(matches[1])
 		if r := s.resources[temp]; r != nil {
 			s.resource = r
 			s.Result += "resource \"" + r.GetType() + "\" " + "\"" + r.GetDatasourceId() + "\" " + "{\n"
 		} else {
+			fmt.Print(temp)
 			return errors.New("mapping error: unknown resource import")
 		}
 	} else {

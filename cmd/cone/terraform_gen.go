@@ -1,10 +1,13 @@
 package main
 
 import (
+	"bytes"
 	"context"
 	"errors"
 	"fmt"
 	"os"
+	"os/exec"
+	"path"
 
 	"github.com/conductorone/cone/pkg/client"
 	"github.com/conductorone/cone/pkg/resource"
@@ -130,6 +133,8 @@ func terraformGen(cmd *cobra.Command, args []string) error {
 		return fmt.Errorf("terraform directory %s does not exist (see here: %s for an example)", terraformDir, terraformProviderExample)
 	}
 
+	tempFilePath := path.Join(terraformDir, tempTfFile)
+
 	// Turns objects into dataTemplates
 	resources, err := getResourceMap(ctx, c, v, object)
 	if err != nil {
@@ -146,28 +151,19 @@ func terraformGen(cmd *cobra.Command, args []string) error {
 	if err != nil {
 		return err
 	}
-	err = writeToFile(terraformDir+"/"+tempTfFile, outputTemplate)
+
+	err = writeToFile(tempFilePath, outputTemplate)
 	if err != nil {
 		return err
 	}
 
-	_, err = os.Create(terraformDir + "/" + tempFile)
+	var buffer bytes.Buffer
+	cmdTf := exec.Command("terraform", "plan", "-no-color")
+	cmdTf.Dir = terraformDir
+	cmdTf.Stdout = &buffer
+	err = cmdTf.Run()
 	if err != nil {
-		return err
-	}
-
-	// By running the command the output of terraform plan is piped to a text file
-	pterm.Info.Println("Please run this command in the terraform directory:")
-	pterm.Info.Printfln("terraform plan -no-color > %s", tempFile)
-
-	ok, err := pterm.DefaultInteractiveConfirm.WithDefaultText("Have you run the command?").Show()
-	if err != nil {
-		return err
-	}
-	if !ok {
-		pterm.Info.Printfln("See here for an example: %s", terraformProviderExample)
-		pterm.Error.Println("You must run the command to continue")
-		return nil
+		return fmt.Errorf("terraform plan failed: %s", err)
 	}
 
 	// TODO @anthony: bit hacky would be better to parse the terraform schema instead of the md file
@@ -184,7 +180,7 @@ func terraformGen(cmd *cobra.Command, args []string) error {
 	}
 
 	// Parses the text file with the terraform plan output and generates the terraform resources
-	result, err := resource.ParseHCLBlocks(terraformDir+"/"+tempFile, mappings, resources)
+	result, err := resource.ParseHCLBlocks(buffer, mappings, resources)
 	if err != nil {
 		return err
 	}
@@ -196,19 +192,15 @@ func terraformGen(cmd *cobra.Command, args []string) error {
 	}
 
 	// Writes the final imports and deletes the temp files
-	err = writeToFile(terraformDir+"/cone_output.tf", importTemplate)
+	err = writeToFile(path.Join(terraformDir, "cone_output.tf"), importTemplate)
 	if err != nil {
 		return err
 	}
-	err = writeToFile(terraformDir+"/cone_imports.tf", result)
+	err = writeToFile(path.Join(terraformDir, "cone_imports.tf"), result)
 	if err != nil {
 		return err
 	}
-	err = os.Remove(fmt.Sprintf("%s/%s", terraformDir, tempFile))
-	if err != nil {
-		return err
-	}
-	err = os.Remove(fmt.Sprintf("%s/%s", terraformDir, tempTfFile))
+	err = os.Remove(tempFilePath)
 	if err != nil {
 		return err
 	}

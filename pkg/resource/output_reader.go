@@ -2,9 +2,9 @@ package resource
 
 import (
 	"bufio"
+	"bytes"
 	"errors"
 	"fmt"
-	"os"
 	"regexp"
 	"strings"
 )
@@ -253,19 +253,13 @@ func (s *Stack) Level() int {
 * The first stack is used to keep track of opening and closing brackets. The second stack contains information
 * on the start of a nested attribute and whether or not it is read-only.
  */
-func ParseHCLBlocks(outputPath string, mappings map[string](map[string]map[string]FieldAttribute), resources map[string]TemplateData) (string, error) {
-	file, err := os.Open(outputPath)
-	if err != nil {
-		return "", err
-	}
-	defer file.Close()
-
+func ParseHCLBlocks(in bytes.Buffer, mappings map[string](map[string]map[string]FieldAttribute), resources map[string]TemplateData) (string, error) {
 	startRegex := regexp.MustCompile(`Changes to Outputs:`)
 	endline := "─────────────────────────────────────────────────────────────────────────────"
 	stack := Stack{mappings: mappings, resources: resources}
 
 	start := false
-	scanner := bufio.NewScanner(file)
+	scanner := bufio.NewScanner(&in)
 	for scanner.Scan() {
 		line := scanner.Text()
 		if start && line == endline {

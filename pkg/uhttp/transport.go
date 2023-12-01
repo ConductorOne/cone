@@ -106,9 +106,6 @@ type debugTripper struct {
 	debug bool
 }
 
-// var accessTokenRegex = regexp.MustCompile(`("access_token":\s*)"[^"]*"`)
-// var clientAssertionRegex = regexp.MustCompile(`(client_assertion=)[^\s]*`)
-
 type regexReplacement struct {
 	regex       *regexp.Regexp
 	replacement string
@@ -119,7 +116,6 @@ var regexList = []regexReplacement{
 	{regexp.MustCompile(`client_assertion=[^\s]*`), `client_assertion=[REDACTED]`},
 }
 
-// ScrubSensitiveData replaces sensitive data in the request
 func GetRedactedString(data []byte) string {
 	dataStr := string(data)
 	matched := false
@@ -136,10 +132,9 @@ func GetRedactedString(data []byte) string {
 	// The regex matching process appends a <nil> to the end of the string, remove it
 	lastIndex := strings.LastIndex(dataStr, "<nil>")
 	if lastIndex == -1 || !matched {
-		return dataStr // <nil> not found, return original string
+		return dataStr
 	}
 
-	// Remove <nil> by slicing the string
 	return dataStr[:lastIndex] + dataStr[lastIndex+len("<nil>"):]
 }
 

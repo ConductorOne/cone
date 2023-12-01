@@ -7,5 +7,5 @@ const (
 )
 
 func addTfAppIdFlag(cmd *cobra.Command) {
-	cmd.Flags().String(tfAppIdFlag, "a", "App ID to get entitlements for.")
+	cmd.Flags().String(tfAppIdFlag, "", "App ID to get entitlements for.")
 }

@@ -29,7 +29,7 @@ var objects = []string{"policy", "app_entitlement"}
 func terraformGenCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "gen <object-name> <terraform-directory-path>",
-		Short: "Import all terraform resources for the specified object type",
+		Short: "Import all terraform resources for the specified object type (policy & app_entitlement are supported)",
 		RunE:  terraformGen,
 	}
 	addTfAppIdFlag(cmd)

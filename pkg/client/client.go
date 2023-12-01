@@ -78,6 +78,9 @@ type C1Client interface {
 	ApproveTask(ctx context.Context, taskId string, comment string, policyId string) (*shared.TaskActionsServiceApproveResponse, error)
 	DenyTask(ctx context.Context, taskId string, comment string, policyId string) (*shared.TaskActionsServiceDenyResponse, error)
 	EscalateTask(ctx context.Context, taskId string) (*shared.TaskServiceActionResponse, error)
+	ListApps(ctx context.Context) ([]shared.App, error)
+	ListPolicies(ctx context.Context) ([]shared.Policy, error)
+	ListEntitlements(ctx context.Context, appId string) ([]shared.AppEntitlement, error)
 }
 
 func (c *client) BaseURL() string {

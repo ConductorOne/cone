@@ -7,6 +7,8 @@ import (
 	"net"
 	"net/http"
 	"net/http/httputil"
+	"regexp"
+	"strings"
 	"sync"
 	"time"
 
@@ -104,6 +106,43 @@ type debugTripper struct {
 	debug bool
 }
 
+// var accessTokenRegex = regexp.MustCompile(`("access_token":\s*)"[^"]*"`)
+// var clientAssertionRegex = regexp.MustCompile(`(client_assertion=)[^\s]*`)
+
+type regexReplacement struct {
+	regex       *regexp.Regexp
+	replacement string
+}
+
+var regexList = []regexReplacement{
+	{regexp.MustCompile(`"access_token":\s*"[^"]*"`), `"access_token": "[REDACTED]"`},
+	{regexp.MustCompile(`client_assertion=[^\s]*`), `client_assertion=[REDACTED]`},
+}
+
+// ScrubSensitiveData replaces sensitive data in the request
+func GetRedactedString(data []byte) string {
+	dataStr := string(data)
+	matched := false
+
+	// Iterate over the regex list and replace sensitive data
+	for _, rr := range regexList {
+		before := len(dataStr)
+		dataStr = rr.regex.ReplaceAllString(dataStr, rr.replacement)
+		if before != len(dataStr) {
+			matched = true
+		}
+	}
+
+	// The regex matching process appends a <nil> to the end of the string, remove it
+	lastIndex := strings.LastIndex(dataStr, "<nil>")
+	if lastIndex == -1 || !matched {
+		return dataStr // <nil> not found, return original string
+	}
+
+	// Remove <nil> by slicing the string
+	return dataStr[:lastIndex] + dataStr[lastIndex+len("<nil>"):]
+}
+
 func (uat *debugTripper) RoundTrip(req *http.Request) (*http.Response, error) {
 	if !uat.debug {
 		return uat.next.RoundTrip(req)
@@ -125,7 +164,7 @@ func (uat *debugTripper) RoundTrip(req *http.Request) (*http.Response, error) {
 	}
 
 	//nolint:forbidigo
-	fmt.Println(string(requestBytes))
+	fmt.Println(GetRedactedString(requestBytes))
 	//nolint:forbidigo
 	fmt.Println("")
 
@@ -134,7 +173,7 @@ func (uat *debugTripper) RoundTrip(req *http.Request) (*http.Response, error) {
 		return nil, err
 	}
 	//nolint:forbidigo
-	fmt.Println(string(responseBytes))
+	fmt.Println(GetRedactedString(responseBytes))
 	//nolint:forbidigo
 	fmt.Println("")
 

@@ -116,7 +116,7 @@ var regexList = []regexReplacement{
 	{regexp.MustCompile(`client_assertion=[^\s]*`), `client_assertion=[REDACTED]`},
 }
 
-func GetRedactedString(data []byte) string {
+func getRedactedString(data []byte) string {
 	dataStr := string(data)
 	matched := false
 
@@ -159,7 +159,7 @@ func (uat *debugTripper) RoundTrip(req *http.Request) (*http.Response, error) {
 	}
 
 	//nolint:forbidigo
-	fmt.Println(GetRedactedString(requestBytes))
+	fmt.Println(getRedactedString(requestBytes))
 	//nolint:forbidigo
 	fmt.Println("")
 
@@ -168,7 +168,7 @@ func (uat *debugTripper) RoundTrip(req *http.Request) (*http.Response, error) {
 		return nil, err
 	}
 	//nolint:forbidigo
-	fmt.Println(GetRedactedString(responseBytes))
+	fmt.Println(getRedactedString(responseBytes))
 	//nolint:forbidigo
 	fmt.Println("")
 

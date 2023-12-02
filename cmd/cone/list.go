@@ -67,6 +67,10 @@ func listRun(cmd *cobra.Command, args []string) error {
 	}
 	object := args[0]
 
+	if v.GetString("output") != "" || v.GetString("output") != "wide" {
+		return fmt.Errorf("only default and wide output is supported for list")
+	}
+
 	switch object {
 	case "apps":
 		return listApps(ctx, c, v)

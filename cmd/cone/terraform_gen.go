@@ -8,6 +8,7 @@ import (
 	"os"
 	"os/exec"
 	"path"
+	"strings"
 
 	"github.com/conductorone/cone/pkg/client"
 	"github.com/conductorone/cone/pkg/resource"
@@ -24,12 +25,13 @@ const (
 	tempTfFile               = "cone_temp.tf"
 )
 
-var objects = []string{"policy", "app_entitlement"}
+var tfObjects = []string{"policy", "app_entitlement"}
+var tfObjectsStr = strings.Join(tfObjects, ", ")
 
 func terraformGenCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "gen <object-name> <terraform-directory-path>",
-		Short: "Import all terraform resources for the specified object type (policy & app_entitlement are supported)",
+		Short: fmt.Sprintf("Import all terraform resources for the specified object type (%s, or *)", tfObjectsStr),
 		RunE:  terraformGen,
 	}
 	addTfAppIdFlag(cmd)
@@ -98,6 +100,7 @@ func populateResourcesWithEntitlements(ctx context.Context, c client.C1Client, v
 	if object == "app_entitlement" || object == "*" {
 		appId := v.GetString(tfAppIdFlag)
 		if appId == "" {
+			pterm.Info.Println("You can use cone list apps -o wide to list all apps and their ids")
 			return errors.New("app-id flag is required for app_entitlement object")
 		}
 
@@ -124,8 +127,8 @@ func terraformGen(cmd *cobra.Command, args []string) error {
 	}
 
 	object := args[0]
-	if !slices.Contains(objects, object) && object != "*" {
-		return fmt.Errorf("invalid object name, only support %v and * for all", objects)
+	if !slices.Contains(tfObjects, object) && object != "*" {
+		return fmt.Errorf("invalid object name, only support %s, and * for all", tfObjectsStr)
 	}
 
 	terraformDir := args[1]
@@ -169,7 +172,7 @@ func terraformGen(cmd *cobra.Command, args []string) error {
 	// TODO @anthony: bit hacky would be better to parse the terraform schema instead of the md file
 	// Creates the mappings for each terraform object/nested attribute which fields are read-only
 	mappings := make(map[string](map[string]map[string]resource.FieldAttribute))
-	for _, v := range objects {
+	for _, v := range tfObjects {
 		if object == v || object == "*" {
 			x, err := resource.ParseFieldAttributes(object)
 			if err != nil {

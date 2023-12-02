@@ -7,6 +7,7 @@ import (
 	"github.com/conductorone/cone/pkg/client"
 )
 
+// Single app
 type App struct {
 	app    *shared.App
 	client client.C1Client
@@ -28,4 +29,13 @@ func (r *App) Rows() [][]string {
 		client.StringFromPtr(r.app.DisplayName),
 		client.StringFromPtr(r.app.Description),
 	}}
+}
+
+func (r *App) WideHeader() []string {
+	return append(r.Header(), "Id")
+}
+
+func (r *App) WideRows() [][]string {
+	temp := r.Rows()[0]
+	return [][]string{append(temp, client.StringFromPtr(r.app.ID))}
 }

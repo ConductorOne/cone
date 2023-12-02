@@ -69,6 +69,7 @@ func runCli(ctx context.Context) int {
 	cliCmd.AddCommand(hasCmd())
 	cliCmd.AddCommand(tokenCmd())
 	cliCmd.AddCommand(terraformCmd())
+	cliCmd.AddCommand(listCmd())
 
 	err = cliCmd.ExecuteContext(ctx)
 	if err != nil {

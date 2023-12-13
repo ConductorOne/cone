@@ -3,8 +3,7 @@ package main
 import "github.com/spf13/cobra"
 
 const (
-	tfAppIdFlag  = "app-id"
-	tfOutputFlag = "out"
+	tfAppIdFlag = "app-id"
 )
 
 func addTfAppIdFlag(cmd *cobra.Command) {

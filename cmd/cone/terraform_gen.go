@@ -33,7 +33,6 @@ func terraformGenCmd() *cobra.Command {
 		RunE:  terraformGen,
 	}
 	addTfAppIdFlag(cmd)
-	addTfOutputFlag(cmd)
 
 	return cmd
 }
@@ -135,11 +134,6 @@ func terraformGen(cmd *cobra.Command, args []string) error {
 		return fmt.Errorf("terraform directory %s does not exist", terraformDir)
 	}
 
-	outputName := v.GetString(tfOutputFlag)
-	if outputName == "" {
-		return errors.New("output file name is required")
-	}
-
 	tempFilePath := path.Join(terraformDir, tempTfFile)
 
 	// Turns objects into dataTemplates
@@ -159,7 +153,7 @@ func terraformGen(cmd *cobra.Command, args []string) error {
 	}
 
 	var buffer bytes.Buffer
-	cmdTf := exec.Command("terraform", "plan", "-generate-config-output="+outputName)
+	cmdTf := exec.Command("terraform", "plan", "-generate-config-output=generated_resources.tf")
 	cmdTf.Dir = terraformDir
 	cmdTf.Stdout = &buffer
 	err = cmdTf.Run()

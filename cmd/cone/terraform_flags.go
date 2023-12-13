@@ -10,7 +10,3 @@ const (
 func addTfAppIdFlag(cmd *cobra.Command) {
 	cmd.Flags().String(tfAppIdFlag, "", "App ID to get entitlements for.")
 }
-
-func addTfOutputFlag(cmd *cobra.Command) {
-	cmd.Flags().String(tfOutputFlag, "generated_resources.tf", "File name for generated resources, default name is generated_resources.tf")
-}

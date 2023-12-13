@@ -6,9 +6,10 @@ import (
 
 func terraformCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "terraform",
-		Short: "A group of commands related to interacting with a terraform provider.",
-		RunE:  terraformRun,
+		Use:     "terraform",
+		Aliases: []string{"tf"},
+		Short:   "A group of commands related to interacting with a terraform provider.",
+		RunE:    terraformRun,
 	}
 
 	cmd.AddCommand(terraformGenCmd())

@@ -173,7 +173,7 @@ func terraformGen(cmd *cobra.Command, args []string) error {
 	}
 
 	var buffer bytes.Buffer
-	// nolint:gosec the generatedFileName is constructed from a constant string and the object name which has to be one of the objects in the objects array. See above comment for more details
+	//nolint:gosec the generatedFileName is constructed from a constant string and the object name which has to be one of the objects in the objects array. See above comment for more details
 	cmdTf := exec.Command("terraform", "plan", "-generate-config-out="+generatedFileName)
 	cmdTf.Dir = terraformDir
 	cmdTf.Stdout = &buffer

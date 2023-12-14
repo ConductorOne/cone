@@ -13,6 +13,7 @@ import (
 
 	"github.com/conductorone/cone/pkg/client"
 	"github.com/conductorone/cone/pkg/terraform"
+	"github.com/pterm/pterm"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	"golang.org/x/exp/maps"
@@ -134,6 +135,19 @@ func terraformGen(cmd *cobra.Command, args []string) error {
 		return fmt.Errorf("terraform directory %s does not exist", terraformDir)
 	}
 
+	objectStr := object + "s"
+	if object == "*" {
+		objectStr = "resources"
+	}
+	generatedFileName := fmt.Sprintf("generated_%s.tf", objectStr)
+
+	// File cannot already exist
+	generatedFilePath := path.Join(terraformDir, generatedFileName)
+	if _, err := os.Stat(generatedFilePath); err == nil {
+		pterm.Error.Printfln("The file %s already exists in the directory. Please remove it and try again.", generatedFileName)
+		return fmt.Errorf("file %s already exists", generatedFileName)
+	}
+
 	tempFilePath := path.Join(terraformDir, tempTfFile)
 
 	// Turns objects into dataTemplates
@@ -153,14 +167,18 @@ func terraformGen(cmd *cobra.Command, args []string) error {
 	}
 
 	var buffer bytes.Buffer
-	cmdTf := exec.Command("terraform", "plan", "-generate-config-output=generated_resources.tf")
+	cmdTf := exec.Command("terraform", "plan", "-generate-config-out="+generatedFileName)
 	cmdTf.Dir = terraformDir
 	cmdTf.Stdout = &buffer
 	err = cmdTf.Run()
 	if err != nil {
-		return fmt.Errorf("terraform plan failed: %w.\nThis relies on an experimental feature from Hashicorp, make sure you are running Terraform v1.5 or later", err)
+		pterm.Info.Println("Please make sure you have Terraform v1.5 or later installed and the conductorone provider is v0.4.1 or later")
+		pterm.Info.Println("You can find out more here: https://developer.hashicorp.com/terraform/language/import/generating-configuration")
+		pterm.Error.Printfln("Try running `terraform plan -generate-config-out=generated_resources.tf` in `%s` to see a more detailed error message.", terraformDir)
+		return fmt.Errorf("terraform plan failed: %w", err)
 	}
 
+	pterm.Success.Println("Successfully generated terraform resources! Please review these resources and move them into your main configuration files.")
 	err = os.Remove(tempFilePath)
 	if err != nil {
 		return err

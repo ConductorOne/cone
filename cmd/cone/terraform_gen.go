@@ -126,10 +126,7 @@ func terraformGen(cmd *cobra.Command, args []string) error {
 
 	object := args[0]
 	/* This validation is IMPORTANT, user input is being used in a command, be careful when changing it.
-	*  It is a flag for a terraform command, so it should be safe, and it specifies a file path to write to
-	*  so exercise caution
-	*  Command Information: https://developer.hashicorp.com/terraform/language/import/generating-configuration
-	*  Command Execution: https://github.com/ConductorOne/cone/blob/5c4b000904239839a378c0a976f393b2baa157b6/cmd/cone/terraform_gen.go#L170
+	 * See here for the cmd.exec: https://github.com/ConductorOne/cone/blob/5c4b000904239839a378c0a976f393b2baa157b6/cmd/cone/terraform_gen.go#L170
 	 */
 	if !slices.Contains(objects, object) && object != "*" {
 		return fmt.Errorf("invalid object name, the following are supported: %s, or * for all)", strings.Join(objects, ", "))
@@ -173,7 +170,10 @@ func terraformGen(cmd *cobra.Command, args []string) error {
 	}
 
 	var buffer bytes.Buffer
-	//nolint:gosec the generatedFileName is constructed from a constant string and the object name which has to be one of the objects in the objects array. See above comment for more details
+	/* This user input is being validated above, it should be safe to use here.
+	 * For more info about the command see here: https://developer.hashicorp.com/terraform/language/import/generating-configuration
+	 */
+	//nolint:gosec
 	cmdTf := exec.Command("terraform", "plan", "-generate-config-out="+generatedFileName)
 	cmdTf.Dir = terraformDir
 	cmdTf.Stdout = &buffer

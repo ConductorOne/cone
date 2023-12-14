@@ -36,13 +36,6 @@ func ApplyTemplate(data TemplateData, tmpl string) (string, error) {
 	// Prepare a buffer to hold the combined output
 	var combinedOutput bytes.Buffer
 
-	// // Create a FuncMap to register functions.
-	// funcMap := template.FuncMap{
-	// 	"GetType":     data.GetType,     // Pass the method itself
-	// 	"GetRequired": data.GetRequired, // Pass the method itself
-	// 	"GetId":       data.GetId,       // Pass the method itself
-	// }
-
 	// Process the datasource template
 	templateString := template.New("tmpl")
 

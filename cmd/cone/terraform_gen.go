@@ -171,7 +171,7 @@ func terraformGen(cmd *cobra.Command, args []string) error {
 
 	var buffer bytes.Buffer
 
-	//nolint:gosec // this user input is being validated above, it should be safe to use here.
+	//nolint:gosec // this user input is being validated above, it should be safe to use here
 	cmdTf := exec.Command("terraform", "plan", "-generate-config-out="+generatedFileName)
 	cmdTf.Dir = terraformDir
 	cmdTf.Stdout = &buffer

@@ -114,6 +114,19 @@ func populateResourcesWithEntitlements(ctx context.Context, c client.C1Client, v
 	return nil
 }
 
+func getFileName(object string) string {
+	switch object {
+	case "app_entitlement":
+		return "generated_app_entitlements.tf"
+	case "policy":
+		return "generated_policies.tf"
+	case "*":
+		return "generated_resources.tf"
+	default:
+		return "generated_objects.tf"
+	}
+}
+
 func terraformGen(cmd *cobra.Command, args []string) error {
 	ctx, c, v, err := cmdContext(cmd)
 	if err != nil {
@@ -125,9 +138,6 @@ func terraformGen(cmd *cobra.Command, args []string) error {
 	}
 
 	object := args[0]
-	/* This validation is IMPORTANT, user input is being used in a command, be careful when changing it.
-	 * See here for the cmd.exec: https://github.com/ConductorOne/cone/blob/5c4b000904239839a378c0a976f393b2baa157b6/cmd/cone/terraform_gen.go#L170
-	 */
 	if !slices.Contains(objects, object) && object != "*" {
 		return fmt.Errorf("invalid object name, the following are supported: %s, or * for all)", strings.Join(objects, ", "))
 	}
@@ -138,11 +148,7 @@ func terraformGen(cmd *cobra.Command, args []string) error {
 		return fmt.Errorf("terraform directory %s does not exist", terraformDir)
 	}
 
-	objectStr := object + "s"
-	if object == "*" {
-		objectStr = "resources"
-	}
-	generatedFileName := fmt.Sprintf("generated_%s.tf", objectStr)
+	generatedFileName := getFileName(object)
 
 	// File cannot already exist
 	generatedFilePath := path.Join(terraformDir, generatedFileName)

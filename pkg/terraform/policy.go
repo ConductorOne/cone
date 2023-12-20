@@ -1,4 +1,4 @@
-package resource
+package terraform
 
 import (
 	"github.com/conductorone/conductorone-sdk-go/pkg/models/shared"
@@ -26,10 +26,10 @@ func (p PolicyTemplate) GetId() string {
 	return *p.Policy.ID
 }
 
-func (p PolicyTemplate) GetDatasourceId() string {
-	return datasourcePrefix + *p.Policy.ID
+func (p PolicyTemplate) GetResourceId() string {
+	return resourcePrefix + *p.Policy.ID
 }
 
 func (p PolicyTemplate) GetOutputId() string {
-	return p.GetType() + "_" + p.GetDatasourceId()
+	return p.GetType() + "_" + p.GetResourceId()
 }

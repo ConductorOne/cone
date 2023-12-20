@@ -1,21 +1,13 @@
-package resource
+package terraform
 
 import (
 	"bytes"
 	"text/template"
 )
 
-const datasourcePrefix = "id_"
-const DataTemplateString = `data "{{.GetType}}" "{{.GetDatasourceId}}" {{"{"}}
-{{- range $key, $value := .GetRequired}}
-	{{$key}} = "{{$value}}"
-{{- end}}
-{{"}\n"}}`
-const OutputTemplateString = `output  {{.GetOutputId}} {{"{"}}
-	value = data.{{.GetType}}.{{.GetDatasourceId}}
-{{"}\n"}}`
+const resourcePrefix = "id_"
 const ImportTemplateString = `import   {{"{"}}
-	to = {{.GetType}}.{{.GetDatasourceId}}
+	to = {{.GetType}}.{{.GetResourceId}}
 	id = "{{.GetId}}"
 {{"}\n"}}`
 
@@ -23,7 +15,7 @@ type TemplateData interface {
 	GetRequired() map[string]string
 	GetType() string
 	GetId() string
-	GetDatasourceId() string
+	GetResourceId() string
 	GetOutputId() string
 }
 
@@ -44,15 +36,8 @@ func ApplyTemplate(data TemplateData, tmpl string) (string, error) {
 	// Prepare a buffer to hold the combined output
 	var combinedOutput bytes.Buffer
 
-	// Create a FuncMap to register functions.
-	funcMap := template.FuncMap{
-		"GetType":     data.GetType,     // Pass the method itself
-		"GetRequired": data.GetRequired, // Pass the method itself
-		"GetId":       data.GetId,       // Pass the method itself
-	}
-
 	// Process the datasource template
-	templateString := template.New("tmpl").Funcs(funcMap)
+	templateString := template.New("tmpl")
 
 	// Parse the template file
 	templateString, err := templateString.Parse(tmpl)

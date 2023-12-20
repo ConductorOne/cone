@@ -1,4 +1,4 @@
-package resource
+package terraform
 
 import (
 	"github.com/conductorone/conductorone-sdk-go/pkg/models/shared"
@@ -31,10 +31,10 @@ func (ae AppEntitlementTemplate) GetId() string {
 	return ids["id"] + "_" + ids["app_id"]
 }
 
-func (ae AppEntitlementTemplate) GetDatasourceId() string {
-	return datasourcePrefix + ae.GetId()
+func (ae AppEntitlementTemplate) GetResourceId() string {
+	return resourcePrefix + ae.GetId()
 }
 
 func (ae AppEntitlementTemplate) GetOutputId() string {
-	return ae.GetType() + "_" + ae.GetDatasourceId()
+	return ae.GetType() + "_" + ae.GetResourceId()
 }

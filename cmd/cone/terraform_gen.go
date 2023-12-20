@@ -8,9 +8,11 @@ import (
 	"os"
 	"os/exec"
 	"path"
+	"path/filepath"
+	"strings"
 
 	"github.com/conductorone/cone/pkg/client"
-	"github.com/conductorone/cone/pkg/resource"
+	"github.com/conductorone/cone/pkg/terraform"
 	"github.com/pterm/pterm"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -20,7 +22,6 @@ import (
 
 const (
 	terraformProviderExample = "https://github.com/ConductorOne/terraform-provider-conductorone/blob/main/examples/provider/provider.tf"
-	tempFile                 = "tfplan"
 	tempTfFile               = "cone_temp.tf"
 )
 
@@ -29,7 +30,7 @@ var objects = []string{"policy", "app_entitlement"}
 func terraformGenCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "gen <object-name> <terraform-directory-path>",
-		Short: "Import all terraform resources for the specified object type (policy & app_entitlement are supported)",
+		Short: fmt.Sprintf("Import all terraform resources for the specified object type (%s, or * for all). Terraform v1.5 or later is required", strings.Join(objects, ", ")),
 		RunE:  terraformGen,
 	}
 	addTfAppIdFlag(cmd)
@@ -52,8 +53,8 @@ func writeToFile(filename, data string) error {
 	return nil
 }
 
-func getResourceMap(ctx context.Context, c client.C1Client, v *viper.Viper, object string) (map[string]resource.TemplateData, error) {
-	resources := make(map[string]resource.TemplateData)
+func getResourceMap(ctx context.Context, c client.C1Client, v *viper.Viper, object string) (map[string]terraform.TemplateData, error) {
+	resources := make(map[string]terraform.TemplateData)
 	if err := populateResourcesWithApps(ctx, c, object, resources); err != nil {
 		return nil, err
 	}
@@ -66,35 +67,35 @@ func getResourceMap(ctx context.Context, c client.C1Client, v *viper.Viper, obje
 	return resources, nil
 }
 
-func populateResourcesWithApps(ctx context.Context, c client.C1Client, object string, resources map[string]resource.TemplateData) error {
+func populateResourcesWithApps(ctx context.Context, c client.C1Client, object string, resources map[string]terraform.TemplateData) error {
 	if object == "app" || object == "*" {
 		apps, err := c.ListApps(ctx)
 		if err != nil {
 			return err
 		}
 		for _, app := range apps {
-			tmplData := resource.AppTemplate{App: app}
+			tmplData := terraform.AppTemplate{App: app}
 			resources[tmplData.GetOutputId()] = tmplData
 		}
 	}
 	return nil
 }
 
-func populateResourcesWithPolicies(ctx context.Context, c client.C1Client, object string, resources map[string]resource.TemplateData) error {
+func populateResourcesWithPolicies(ctx context.Context, c client.C1Client, object string, resources map[string]terraform.TemplateData) error {
 	if object == "policy" || object == "*" {
 		policies, err := c.ListPolicies(ctx)
 		if err != nil {
 			return err
 		}
 		for _, policy := range policies {
-			tmplData := resource.PolicyTemplate{Policy: policy}
+			tmplData := terraform.PolicyTemplate{Policy: policy}
 			resources[tmplData.GetOutputId()] = tmplData
 		}
 	}
 	return nil
 }
 
-func populateResourcesWithEntitlements(ctx context.Context, c client.C1Client, v *viper.Viper, object string, resources map[string]resource.TemplateData) error {
+func populateResourcesWithEntitlements(ctx context.Context, c client.C1Client, v *viper.Viper, object string, resources map[string]terraform.TemplateData) error {
 	if object == "app_entitlement" || object == "*" {
 		appId := v.GetString(tfAppIdFlag)
 		if appId == "" {
@@ -106,11 +107,24 @@ func populateResourcesWithEntitlements(ctx context.Context, c client.C1Client, v
 			return err
 		}
 		for _, entitlement := range entitlements {
-			tmplData := resource.AppEntitlementTemplate{AppEntitlement: entitlement}
+			tmplData := terraform.AppEntitlementTemplate{AppEntitlement: entitlement}
 			resources[tmplData.GetOutputId()] = tmplData
 		}
 	}
 	return nil
+}
+
+func getFileName(object string) string {
+	switch object {
+	case "app_entitlement":
+		return "generated_app_entitlements.tf"
+	case "policy":
+		return "generated_policies.tf"
+	case "*":
+		return "generated_resources.tf"
+	default:
+		return "generated_objects.tf"
+	}
 }
 
 func terraformGen(cmd *cobra.Command, args []string) error {
@@ -125,12 +139,22 @@ func terraformGen(cmd *cobra.Command, args []string) error {
 
 	object := args[0]
 	if !slices.Contains(objects, object) && object != "*" {
-		return fmt.Errorf("invalid object name, only support %v and * for all", objects)
+		return fmt.Errorf("invalid object name, the following are supported: %s, or * for all)", strings.Join(objects, ", "))
 	}
 
-	terraformDir := args[1]
-	if _, err := os.Stat(terraformDir); err != nil {
-		return fmt.Errorf("terraform directory %s does not exist (see here: %s for an example)", terraformDir, terraformProviderExample)
+	inputDir := args[1]
+	terraformDir, err := filepath.Abs(inputDir)
+	if err != nil {
+		return fmt.Errorf("terraform directory %s does not exist", terraformDir)
+	}
+
+	generatedFileName := getFileName(object)
+
+	// File cannot already exist
+	generatedFilePath := path.Join(terraformDir, generatedFileName)
+	if _, err := os.Stat(generatedFilePath); err == nil {
+		pterm.Error.Printfln("The file %s already exists in the directory. Please remove it and try again.", generatedFileName)
+		return fmt.Errorf("file %s already exists", generatedFileName)
 	}
 
 	tempFilePath := path.Join(terraformDir, tempTfFile)
@@ -141,13 +165,7 @@ func terraformGen(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
-	/* TODO @anthony: this all could be simplier if our terraform provider was better at imports.
-	* Currently imports are not supported for some nested objects, for example, policy.steps gets imported incorrectly.
-	* This way of doing it forces datasources to match resources, which is not ideal.
-	*
-	* For each object, we create a template that will import the datasource then output it.
-	 */
-	outputTemplate, err := resource.ApplyTemplates(maps.Values(resources), resource.DataTemplateString, resource.OutputTemplateString)
+	outputTemplate, err := terraform.ApplyTemplates(maps.Values(resources), terraform.ImportTemplateString)
 	if err != nil {
 		return err
 	}
@@ -158,52 +176,23 @@ func terraformGen(cmd *cobra.Command, args []string) error {
 	}
 
 	var buffer bytes.Buffer
-	cmdTf := exec.Command("terraform", "plan", "-no-color")
+
+	//nolint:gosec // this user input is being validated above, it should be safe to use here
+	cmdTf := exec.Command("terraform", "plan", "-generate-config-out="+generatedFileName)
 	cmdTf.Dir = terraformDir
 	cmdTf.Stdout = &buffer
 	err = cmdTf.Run()
 	if err != nil {
+		pterm.Info.Println("Please make sure you have Terraform v1.5 or later installed and the conductorone provider is v0.4.1 or later")
+		pterm.Info.Println("You can find out more here: https://developer.hashicorp.com/terraform/language/import/generating-configuration")
+		pterm.Error.Printfln("Try running `terraform plan -generate-config-out=generated_resources.tf` in `%s` to see a more detailed error message.", terraformDir)
 		return fmt.Errorf("terraform plan failed: %w", err)
 	}
 
-	// TODO @anthony: bit hacky would be better to parse the terraform schema instead of the md file
-	// Creates the mappings for each terraform object/nested attribute which fields are read-only
-	mappings := make(map[string](map[string]map[string]resource.FieldAttribute))
-	for _, v := range objects {
-		if object == v || object == "*" {
-			x, err := resource.ParseFieldAttributes(object)
-			if err != nil {
-				return err
-			}
-			mappings[resource.ObjectNameToTerraformType(object)] = x
-		}
-	}
-
-	// Parses the text file with the terraform plan output and generates the terraform resources
-	result, err := resource.ParseHCLBlocks(buffer, mappings, resources)
-	if err != nil {
-		return err
-	}
-
-	// Creates the import template
-	importTemplate, err := resource.ApplyTemplates(maps.Values(resources), resource.ImportTemplateString)
-	if err != nil {
-		return err
-	}
-
-	// Writes the final imports and deletes the temp files
-	err = writeToFile(path.Join(terraformDir, "cone_output.tf"), importTemplate)
-	if err != nil {
-		return err
-	}
-	err = writeToFile(path.Join(terraformDir, "cone_imports.tf"), result)
-	if err != nil {
-		return err
-	}
+	pterm.Success.Println("Successfully generated terraform resources! Please review these resources and move them into your main configuration files.")
 	err = os.Remove(tempFilePath)
 	if err != nil {
 		return err
 	}
-	pterm.Info.Println("You can now run terraform refresh to import the resources. After that you can delete the cone_output.tf file")
 	return nil
 }

@@ -15,23 +15,7 @@ type jsonManager struct {
 }
 
 func (j *jsonManager) Output(ctx context.Context, out interface{}, opts ...outputOption) error {
-	if m, ok := out.(proto.Message); ok {
-		return j.printProto(ctx, m)
-	}
-
-	return j.printInterface(ctx, out)
-}
-
-func (j *jsonManager) printProto(ctx context.Context, m proto.Message) error {
-	opts := protojson.MarshalOptions{
-		EmitUnpopulated: true,
-	}
-	if j.pretty {
-		opts.Multiline = true
-		opts.Indent = "  "
-	}
-
-	outBytes, err := opts.Marshal(m)
+	outBytes, err := MakeJSON(ctx, out, j.pretty)
 	if err != nil {
 		return err
 	}
@@ -44,27 +28,44 @@ func (j *jsonManager) printProto(ctx context.Context, m proto.Message) error {
 	return nil
 }
 
-func (j *jsonManager) printInterface(ctx context.Context, data interface{}) error {
-	if j.pretty {
+func MakeJSON(ctx context.Context, out interface{}, pretty bool) ([]byte, error) {
+	if m, ok := out.(proto.Message); ok {
+		return MakeJSONFromProto(ctx, m, pretty)
+	}
+
+	return MakeJSONFromInterface(ctx, out, pretty)
+}
+
+func MakeJSONFromProto(ctx context.Context, m proto.Message, pretty bool) ([]byte, error) {
+	opts := protojson.MarshalOptions{
+		EmitUnpopulated: true,
+	}
+	if pretty {
+		opts.Multiline = true
+		opts.Indent = "  "
+	}
+
+	outBytes, err := opts.Marshal(m)
+	if err != nil {
+		return nil, err
+	}
+
+	return outBytes, nil
+}
+
+func MakeJSONFromInterface(ctx context.Context, data interface{}, pretty bool) ([]byte, error) {
+	if pretty {
 		prettyJSON, err := json.MarshalIndent(data, "", "  ")
 		if err != nil {
-			return err
+			return nil, err
 		}
-		_, err = fmt.Fprint(os.Stdout, string(prettyJSON))
-		if err != nil {
-			return err
-		}
-		return nil
+		return prettyJSON, nil
 	}
 
 	plainJSON, err := json.Marshal(data)
 	if err != nil {
-		return err
-	}
-	_, err = fmt.Fprint(os.Stdout, string(plainJSON))
-	if err != nil {
-		return err
+		return nil, err
 	}
 
-	return nil
+	return plainJSON, nil
 }

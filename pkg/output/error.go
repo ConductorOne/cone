@@ -7,14 +7,22 @@ import (
 	"github.com/spf13/viper"
 )
 
-const defaultJSONError = `{"error": "%s"}`
+const defaultJSONError = `{"error": "unable to marshal error to JSON %s"}`
 
-func HandleErrors(ctx context.Context, v *viper.Viper, err error) error {
+type JSONError struct {
+	Error string `json:"error"`
+}
+
+func HandleErrors(ctx context.Context, v *viper.Viper, input error) error {
 	outputType := v.GetString("output")
 	if outputType != "json" && outputType != "json-pretty" {
-		return err
+		return input
+	}
+	// TODO: @anthony - handle errors better, for example, HTTP errors could be better, see client.go
+	jsonError, err := MakeJSONFromInterface(ctx, JSONError{Error: input.Error()}, outputType == "json-pretty")
+	if err != nil {
+		return fmt.Errorf(defaultJSONError, input.Error())
 	}
 
-	// TODO: @anthony - handle errors better, for example, HTTP errors could be better, see client.go
-	return fmt.Errorf(defaultJSONError, err.Error())
+	return fmt.Errorf(string(jsonError))
 }

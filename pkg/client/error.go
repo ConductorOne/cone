@@ -2,6 +2,7 @@ package client
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"io"
 	"net/http"
@@ -66,10 +67,11 @@ func HandleErrors(ctx context.Context, v *viper.Viper, input error) error {
 	}
 	var jsonError []byte
 
-	if serr, ok := input.(*HTTPError); ok {
-		jsonError, err := output.MakeJSONFromInterface(ctx, serr, outputType == output.JSONPretty)
+	if errors.Is(input, ErrHTTPError) {
+		httpErr := input.(*HTTPError)
+		jsonError, err := output.MakeJSONFromInterface(ctx, httpErr, outputType == output.JSONPretty)
 		if err != nil {
-			return fmt.Errorf(defaultJSONError, serr.Error())
+			return fmt.Errorf(defaultJSONError, httpErr.Error())
 		}
 		return fmt.Errorf(string(jsonError))
 	}

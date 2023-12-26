@@ -13,7 +13,7 @@ func (c *client) GetTask(ctx context.Context, taskId string) (*shared.TaskServic
 		return nil, err
 	}
 
-	if err := handleBadStatus(resp.RawResponse); err != nil {
+	if err := NewHTTPError(resp.RawResponse); err != nil {
 		return nil, err
 	}
 
@@ -44,7 +44,7 @@ func (c *client) CreateGrantTask(
 		return nil, err
 	}
 
-	if err := handleBadStatus(resp.RawResponse); err != nil {
+	if err := NewHTTPError(resp.RawResponse); err != nil {
 		return nil, err
 	}
 
@@ -69,7 +69,7 @@ func (c *client) CreateRevokeTask(
 		return nil, err
 	}
 
-	if err := handleBadStatus(resp.RawResponse); err != nil {
+	if err := NewHTTPError(resp.RawResponse); err != nil {
 		return nil, err
 	}
 
@@ -82,7 +82,7 @@ func (c *client) SearchTasks(ctx context.Context, taskFilter shared.TaskSearchRe
 		return nil, err
 	}
 
-	if err := handleBadStatus(resp.RawResponse); err != nil {
+	if err := NewHTTPError(resp.RawResponse); err != nil {
 		return nil, err
 	}
 
@@ -100,7 +100,7 @@ func (c *client) CommentOnTask(ctx context.Context, taskID string, comment strin
 		return nil, err
 	}
 
-	if err := handleBadStatus(resp.RawResponse); err != nil {
+	if err := NewHTTPError(resp.RawResponse); err != nil {
 		return nil, err
 	}
 	return resp.TaskActionsServiceCommentResponse, nil
@@ -118,7 +118,7 @@ func (c *client) ApproveTask(ctx context.Context, taskId string, comment string,
 		return nil, err
 	}
 
-	if err := handleBadStatus(resp.RawResponse); err != nil {
+	if err := NewHTTPError(resp.RawResponse); err != nil {
 		return nil, err
 	}
 	return resp.TaskActionsServiceApproveResponse, nil
@@ -136,7 +136,7 @@ func (c *client) DenyTask(ctx context.Context, taskId string, comment string, po
 		return nil, err
 	}
 
-	if err := handleBadStatus(resp.RawResponse); err != nil {
+	if err := NewHTTPError(resp.RawResponse); err != nil {
 		return nil, err
 	}
 	return resp.TaskActionsServiceDenyResponse, nil
@@ -151,7 +151,7 @@ func (c *client) EscalateTask(ctx context.Context, taskID string) (*shared.TaskS
 		return nil, err
 	}
 
-	if err := handleBadStatus(resp.RawResponse); err != nil {
+	if err := NewHTTPError(resp.RawResponse); err != nil {
 		return nil, err
 	}
 	return resp.TaskServiceActionResponse, nil

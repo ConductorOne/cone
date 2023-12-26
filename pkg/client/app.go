@@ -15,7 +15,7 @@ func (c *client) GetApp(ctx context.Context, appID string) (*shared.App, error) 
 		return nil, err
 	}
 
-	if err := handleBadStatus(resp.RawResponse); err != nil {
+	if err := NewHTTPError(resp.RawResponse); err != nil {
 		return nil, err
 	}
 	return resp.GetAppResponse.App, nil
@@ -33,7 +33,7 @@ func (c *client) ListApps(ctx context.Context) ([]shared.App, error) {
 		if err != nil {
 			return nil, err
 		}
-		if err := handleBadStatus(resp.RawResponse); err != nil {
+		if err := NewHTTPError(resp.RawResponse); err != nil {
 			return nil, err
 		}
 

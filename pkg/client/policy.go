@@ -19,7 +19,7 @@ func (c *client) ListPolicies(ctx context.Context) ([]shared.Policy, error) {
 		if err != nil {
 			return nil, err
 		}
-		if err := handleBadStatus(resp.RawResponse); err != nil {
+		if err := NewHTTPError(resp.RawResponse); err != nil {
 			return nil, err
 		}
 

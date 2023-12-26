@@ -7,7 +7,7 @@ import (
 	"os/signal"
 	"syscall"
 
-	"github.com/conductorone/cone/pkg/output"
+	"github.com/conductorone/cone/pkg/client"
 	"github.com/spf13/cobra"
 )
 
@@ -74,7 +74,7 @@ func runCli(ctx context.Context) int {
 	err = cliCmd.ExecuteContext(ctx)
 	if err != nil {
 		_, _, v, _ := cmdContext(cliCmd)
-		fmt.Fprintln(os.Stderr, output.HandleErrors(ctx, v, err))
+		fmt.Fprintln(os.Stderr, client.HandleErrors(ctx, v, err))
 		return 1
 	}
 

@@ -67,8 +67,8 @@ func HandleErrors(ctx context.Context, v *viper.Viper, input error) error {
 	}
 	var jsonError []byte
 
-	if errors.Is(input, ErrHTTPError) {
-		httpErr := input.(*HTTPError)
+	var httpErr *HTTPError
+	if errors.As(input, &httpErr) {
 		jsonError, err := output.MakeJSONFromInterface(ctx, httpErr, outputType == output.JSONPretty)
 		if err != nil {
 			return fmt.Errorf(defaultJSONError, httpErr.Error())

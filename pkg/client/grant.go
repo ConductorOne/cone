@@ -17,7 +17,7 @@ func (c *client) GetGrantsForIdentity(ctx context.Context, appID string, appEnti
 		return nil, err
 	}
 
-	if err := handleBadStatus(resp.RawResponse); err != nil {
+	if err := NewHTTPError(resp.RawResponse); err != nil {
 		return nil, err
 	}
 

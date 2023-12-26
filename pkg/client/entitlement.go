@@ -114,7 +114,7 @@ func (c *client) SearchEntitlements(ctx context.Context, filter *SearchEntitleme
 		return nil, err
 	}
 
-	if err := handleBadStatus(resp.RawResponse); err != nil {
+	if err := NewHTTPError(resp.RawResponse); err != nil {
 		return nil, err
 	}
 
@@ -174,8 +174,7 @@ func (c *client) GetEntitlement(ctx context.Context, appId string, entitlementId
 	if err != nil {
 		return nil, err
 	}
-
-	if err := handleBadStatus(resp.RawResponse); err != nil {
+	if err := NewHTTPError(resp.RawResponse); err != nil {
 		return nil, err
 	}
 
@@ -203,7 +202,7 @@ func (c *client) ListEntitlements(ctx context.Context, appId string) ([]shared.A
 		if err != nil {
 			return nil, err
 		}
-		if err := handleBadStatus(resp.RawResponse); err != nil {
+		if err := NewHTTPError(resp.RawResponse); err != nil {
 			return nil, err
 		}
 

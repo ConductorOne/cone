@@ -2,8 +2,6 @@ package client
 
 import (
 	"context"
-	"fmt"
-	"io"
 	"net/http"
 	"net/url"
 
@@ -130,19 +128,4 @@ func New(
 	)
 
 	return c, nil
-}
-
-func handleBadStatus(resp *http.Response) error {
-	// This is added temporarily to ensure we return an error if we get a non-success status code.
-	// Eventually (ideally), we'll be generating this error handling as part of the SDK
-	if resp.StatusCode >= http.StatusBadRequest {
-		body, err := io.ReadAll(resp.Body)
-		if err != nil {
-			return err
-		}
-
-		return fmt.Errorf("status %d: %s", resp.StatusCode, string(body))
-	}
-
-	return nil
 }

@@ -14,7 +14,7 @@ func (c *client) GetUser(ctx context.Context, userID string) (*shared.User, erro
 		return nil, err
 	}
 
-	if err := handleBadStatus(resp.RawResponse); err != nil {
+	if err := NewHTTPError(resp.RawResponse); err != nil {
 		return nil, err
 	}
 

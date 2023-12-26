@@ -17,7 +17,7 @@ func (c *client) GetResourceType(ctx context.Context, appID string, resourceType
 		return nil, err
 	}
 
-	if err := handleBadStatus(resp.RawResponse); err != nil {
+	if err := NewHTTPError(resp.RawResponse); err != nil {
 		return nil, err
 	}
 	v := resp.AppResourceTypeServiceGetResponse.AppResourceTypeView
@@ -43,7 +43,7 @@ func (c *client) GetResource(ctx context.Context, appID string, resourceTypeID s
 		return nil, err
 	}
 
-	if err := handleBadStatus(resp.RawResponse); err != nil {
+	if err := NewHTTPError(resp.RawResponse); err != nil {
 		return nil, err
 	}
 	v := resp.AppResourceServiceGetResponse.AppResourceView

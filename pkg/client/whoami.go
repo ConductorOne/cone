@@ -12,7 +12,7 @@ func (c *client) AuthIntrospect(ctx context.Context) (*shared.IntrospectResponse
 		return nil, err
 	}
 
-	if err := handleBadStatus(resp.RawResponse); err != nil {
+	if err := NewHTTPError(resp.RawResponse); err != nil {
 		return nil, err
 	}
 

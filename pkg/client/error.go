@@ -11,10 +11,6 @@ import (
 	"github.com/spf13/viper"
 )
 
-var (
-	ErrHTTPError = fmt.Errorf("HTTP error")
-)
-
 const defaultJSONError = `{"error": "unable to marshal error to JSON %s"}`
 
 type JSONError struct {
@@ -24,7 +20,6 @@ type JSONError struct {
 type HTTPError struct {
 	StatusCode int    `json:"status_code"`
 	Body       string `json:"body"`
-	Err        error  `json:"-"`
 }
 
 func NewHTTPError(resp *http.Response) *HTTPError {
@@ -37,23 +32,17 @@ func NewHTTPError(resp *http.Response) *HTTPError {
 			httpErr = HTTPError{
 				StatusCode: resp.StatusCode,
 				Body:       fmt.Errorf("unable to read response body: %w", err).Error(),
-				Err:        ErrHTTPError,
 			}
 		} else {
 			httpErr = HTTPError{
 				StatusCode: resp.StatusCode,
 				Body:       string(body),
-				Err:        ErrHTTPError,
 			}
 		}
 		return &httpErr
 	}
 
 	return nil
-}
-
-func (e *HTTPError) Unwrap() error {
-	return e.Err
 }
 
 func (e *HTTPError) Error() string {

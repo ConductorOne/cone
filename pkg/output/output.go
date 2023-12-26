@@ -11,7 +11,7 @@ type Manager interface {
 	Output(ctx context.Context, out interface{}, opts ...outputOption) error
 }
 
-const JsonPretty = "json-pretty"
+const JSONPretty = "json-pretty"
 
 func NewManager(ctx context.Context, v *viper.Viper) Manager {
 	var area *pterm.AreaPrinter
@@ -24,7 +24,7 @@ func NewManager(ctx context.Context, v *viper.Viper) Manager {
 		return &tableManager{area: area, isWide: false}
 	case "json":
 		return &jsonManager{}
-	case JsonPretty:
+	case JSONPretty:
 		return &jsonManager{pretty: true}
 	case "wide":
 		return &tableManager{area: area, isWide: true}

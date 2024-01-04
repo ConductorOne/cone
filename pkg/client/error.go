@@ -50,6 +50,9 @@ func (e *HTTPError) Error() string {
 }
 
 func HandleErrors(ctx context.Context, v *viper.Viper, input error) error {
+	if v == nil {
+		return input
+	}
 	outputType := v.GetString("output")
 	if outputType != "json" && outputType != output.JSONPretty {
 		return input

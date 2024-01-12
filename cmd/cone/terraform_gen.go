@@ -25,7 +25,7 @@ const (
 	tempTfFile               = "cone_temp.tf"
 )
 
-var objects = []string{"policy", "app_entitlement"}
+var objects = []string{"policy", "app_entitlement", "catalog", "app"}
 
 func terraformGenCmd() *cobra.Command {
 	cmd := &cobra.Command{
@@ -64,7 +64,24 @@ func getResourceMap(ctx context.Context, c client.C1Client, v *viper.Viper, obje
 	if err := populateResourcesWithEntitlements(ctx, c, v, object, resources); err != nil {
 		return nil, err
 	}
+	if err := populateResourceWithCatalog(ctx, c, object, resources); err != nil {
+		return nil, err
+	}
 	return resources, nil
+}
+
+func populateResourceWithCatalog(ctx context.Context, c client.C1Client, object string, resources map[string]terraform.TemplateData) error {
+	if object == "catalog" || object == "*" {
+		catalogs, err := c.ListCatalogs(ctx)
+		if err != nil {
+			return err
+		}
+		for _, catalog := range catalogs {
+			tmplData := terraform.CatalogTemplate{RequestCatalog: catalog}
+			resources[tmplData.GetOutputId()] = tmplData
+		}
+	}
+	return nil
 }
 
 func populateResourcesWithApps(ctx context.Context, c client.C1Client, object string, resources map[string]terraform.TemplateData) error {
@@ -120,6 +137,8 @@ func getFileName(object string) string {
 		return "generated_app_entitlements.tf"
 	case "policy":
 		return "generated_policies.tf"
+	case "catalog":
+		return "generated_catalog.tf"
 	case "*":
 		return "generated_resources.tf"
 	default:

@@ -79,6 +79,7 @@ type C1Client interface {
 	ListApps(ctx context.Context) ([]shared.App, error)
 	ListPolicies(ctx context.Context) ([]shared.Policy, error)
 	ListEntitlements(ctx context.Context, appId string) ([]shared.AppEntitlement, error)
+	ListCatalogs(ctx context.Context) ([]shared.RequestCatalog, error)
 }
 
 func (c *client) BaseURL() string {

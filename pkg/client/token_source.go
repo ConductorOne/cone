@@ -70,7 +70,7 @@ func parseClientID(input string, forceTokenHost string) (string, string, error) 
 	return clientName, items[0], nil
 }
 
-func parseSecret(input []byte) (*jose.JSONWebKey, error) {
+func ParseSecret(input []byte) (*jose.JSONWebKey, error) {
 	items := bytes.SplitN(input, []byte(":"), 4)
 	if len(items) != 4 {
 		return nil, ErrInvalidClientSecret
@@ -207,7 +207,7 @@ func NewC1TokenSource(
 		return nil, "", "", err
 	}
 
-	secret, err := parseSecret([]byte(clientSecret))
+	secret, err := ParseSecret([]byte(clientSecret))
 	if err != nil {
 		return nil, "", "", err
 	}

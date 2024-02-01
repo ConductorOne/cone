@@ -7,8 +7,9 @@ import (
 	"os/signal"
 	"syscall"
 
-	"github.com/conductorone/cone/pkg/client"
 	"github.com/spf13/cobra"
+
+	"github.com/conductorone/cone/pkg/client"
 )
 
 var version = "dev"
@@ -70,6 +71,7 @@ func runCli(ctx context.Context) int {
 	cliCmd.AddCommand(hasCmd())
 	cliCmd.AddCommand(tokenCmd())
 	cliCmd.AddCommand(terraformCmd())
+	cliCmd.AddCommand(decryptCredentialCmd())
 
 	err = cliCmd.ExecuteContext(ctx)
 	if err != nil {

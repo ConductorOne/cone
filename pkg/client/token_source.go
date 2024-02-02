@@ -67,6 +67,10 @@ func parseClientID(input string, forceTokenHost string) (string, string, error) 
 		return clientName, forceTokenHost, nil
 	}
 
+	if envHost, ok := os.LookupEnv("CONE_API_ENDPOINT"); ok && envHost != "" {
+		return clientName, envHost, nil
+	}
+
 	return clientName, items[0], nil
 }
 

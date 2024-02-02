@@ -1,7 +1,9 @@
 package main
 
 import (
+	"crypto"
 	"encoding/base64"
+	"encoding/hex"
 	"fmt"
 
 	v2 "github.com/conductorone/baton-sdk/pb/c1/connector/v2"
@@ -9,6 +11,7 @@ import (
 	"github.com/conductorone/baton-sdk/pkg/crypto/providers/jwk"
 	"github.com/spf13/cobra"
 	"google.golang.org/protobuf/encoding/protojson"
+	"gopkg.in/square/go-jose.v2"
 
 	"github.com/conductorone/cone/pkg/client"
 )
@@ -21,6 +24,14 @@ func decryptCredentialCmd() *cobra.Command {
 	}
 
 	return cmd
+}
+
+func thumbprint(jwk jose.JSONWebKey) string {
+	tp, err := jwk.Thumbprint(crypto.SHA256)
+	if err != nil {
+		panic(fmt.Errorf("failed to compute key id: %w", err))
+	}
+	return hex.EncodeToString(tp)
 }
 
 func decryptCredentialRun(cmd *cobra.Command, args []string) error {
@@ -78,6 +89,7 @@ func decryptCredentialRun(cmd *cobra.Command, args []string) error {
 	if err != nil {
 		return fmt.Errorf("failed to marshal plaintext: %w", err)
 	}
+	fmt.Printf("Thumbprint: %s\n", thumbprint(privateJWK.Public()))
 	fmt.Printf("Decrypted credential: %s\n", pt)
 	fmt.Printf("Decrypted bytes: %s\n", plaintext.Bytes)
 	return nil

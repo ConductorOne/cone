@@ -75,6 +75,8 @@ github.com/conductorone/baton-sdk v0.1.19 h1:Iport25WNojfTbFFnBI6YYcHiZNolfbixbB
 github.com/conductorone/baton-sdk v0.1.19/go.mod h1:1VMycIep+HU8JXef2wenT3ECzx1w3Jr3KDQG+L6Mv30=
 github.com/conductorone/conductorone-sdk-go v1.16.1-0.20240202005358-480d5bf343e2 h1:konPg3TW1qLyxdORgUrQ6+xQQxjNyiRA1fLehI409+A=
 github.com/conductorone/conductorone-sdk-go v1.16.1-0.20240202005358-480d5bf343e2/go.mod h1:vr3946WqFYEpOuIGy/TqXkarhhCzHSKsmXXsxCmeIj8=
+github.com/conductorone/conductorone-sdk-go v1.16.1-0.20240202071037-57db5fc49c64 h1:UnobIZSLv0R9YE8zno+ncxbnM5pPMVTanedhmIKHgNk=
+github.com/conductorone/conductorone-sdk-go v1.16.1-0.20240202071037-57db5fc49c64/go.mod h1:vr3946WqFYEpOuIGy/TqXkarhhCzHSKsmXXsxCmeIj8=
 github.com/containerd/console v1.0.3 h1:lIr7SlA5PxZyMV30bDW0MGbiOPXwc63yRuCP0ARubLw=
 github.com/containerd/console v1.0.3/go.mod h1:7LqA/THxQ86k76b8c/EMSiaJ3h1eZkMkXar0TQ1gf3U=
 github.com/cpuguy83/go-md2man/v2 v2.0.3/go.mod h1:tgQtvFlXSQOSOSIRvRPT7W67SCa46tRHOmNcaadrF8o=

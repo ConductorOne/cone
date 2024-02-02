@@ -72,6 +72,8 @@ type C1Client interface {
 	DenyTask(ctx context.Context, taskId string, comment string, policyId string) (*shared.TaskActionsServiceDenyResponse, error)
 	EscalateTask(ctx context.Context, taskId string) (*shared.TaskServiceActionResponse, error)
 	ListApps(ctx context.Context) ([]shared.App, error)
+	ListAppUsers(ctx context.Context, appID string) ([]shared.AppUser, error)
+	ListAppUserCredentials(ctx context.Context, appID string, appUserID string) ([]shared.AppUserCredential, error)
 	ListPolicies(ctx context.Context) ([]shared.Policy, error)
 	ListEntitlements(ctx context.Context, appId string) ([]shared.AppEntitlement, error)
 }

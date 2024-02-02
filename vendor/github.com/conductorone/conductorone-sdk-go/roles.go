@@ -15,19 +15,19 @@ import (
 	"strings"
 )
 
-type roles struct {
+type Roles struct {
 	sdkConfiguration sdkConfiguration
 }
 
-func newRoles(sdkConfig sdkConfiguration) *roles {
-	return &roles{
+func newRoles(sdkConfig sdkConfiguration) *Roles {
+	return &Roles{
 		sdkConfiguration: sdkConfig,
 	}
 }
 
 // Get
 // Get a role by id.
-func (s *roles) Get(ctx context.Context, request operations.C1APIIamV1RolesGetRequest) (*operations.C1APIIamV1RolesGetResponse, error) {
+func (s *Roles) Get(ctx context.Context, request operations.C1APIIamV1RolesGetRequest) (*operations.C1APIIamV1RolesGetResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/api/v1/iam/roles/{role_id}", request, nil)
 	if err != nil {
@@ -78,6 +78,10 @@ func (s *roles) Get(ctx context.Context, request operations.C1APIIamV1RolesGetRe
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
+	case httpRes.StatusCode >= 400 && httpRes.StatusCode < 500:
+		fallthrough
+	case httpRes.StatusCode >= 500 && httpRes.StatusCode < 600:
+		return nil, sdkerrors.NewSDKError("API error occurred", httpRes.StatusCode, string(rawBody), httpRes)
 	}
 
 	return res, nil
@@ -85,7 +89,7 @@ func (s *roles) Get(ctx context.Context, request operations.C1APIIamV1RolesGetRe
 
 // List
 // List all roles for the current user.
-func (s *roles) List(ctx context.Context, request operations.C1APIIamV1RolesListRequest) (*operations.C1APIIamV1RolesListResponse, error) {
+func (s *Roles) List(ctx context.Context, request operations.C1APIIamV1RolesListRequest) (*operations.C1APIIamV1RolesListResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/api/v1/iam/roles"
 
@@ -137,6 +141,10 @@ func (s *roles) List(ctx context.Context, request operations.C1APIIamV1RolesList
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
+	case httpRes.StatusCode >= 400 && httpRes.StatusCode < 500:
+		fallthrough
+	case httpRes.StatusCode >= 500 && httpRes.StatusCode < 600:
+		return nil, sdkerrors.NewSDKError("API error occurred", httpRes.StatusCode, string(rawBody), httpRes)
 	}
 
 	return res, nil
@@ -144,14 +152,14 @@ func (s *roles) List(ctx context.Context, request operations.C1APIIamV1RolesList
 
 // Update
 // Update a role by passing a Role object.
-func (s *roles) Update(ctx context.Context, request operations.C1APIIamV1RolesUpdateRequest) (*operations.C1APIIamV1RolesUpdateResponse, error) {
+func (s *Roles) Update(ctx context.Context, request operations.C1APIIamV1RolesUpdateRequest) (*operations.C1APIIamV1RolesUpdateResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/api/v1/iam/roles/{role_id}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
-	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "UpdateRoleRequestInput", "json", `request:"mediaType=application/json"`)
+	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "UpdateRoleRequest", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
@@ -202,6 +210,10 @@ func (s *roles) Update(ctx context.Context, request operations.C1APIIamV1RolesUp
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
+	case httpRes.StatusCode >= 400 && httpRes.StatusCode < 500:
+		fallthrough
+	case httpRes.StatusCode >= 500 && httpRes.StatusCode < 600:
+		return nil, sdkerrors.NewSDKError("API error occurred", httpRes.StatusCode, string(rawBody), httpRes)
 	}
 
 	return res, nil

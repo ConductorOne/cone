@@ -15,19 +15,19 @@ import (
 	"strings"
 )
 
-type attributes struct {
+type Attributes struct {
 	sdkConfiguration sdkConfiguration
 }
 
-func newAttributes(sdkConfig sdkConfiguration) *attributes {
-	return &attributes{
+func newAttributes(sdkConfig sdkConfiguration) *Attributes {
+	return &Attributes{
 		sdkConfiguration: sdkConfig,
 	}
 }
 
 // CreateAttributeValue - Create Attribute Value
 // Create a new attribute value.
-func (s *attributes) CreateAttributeValue(ctx context.Context, request *shared.CreateAttributeValueRequest) (*operations.C1APIAttributeV1AttributesCreateAttributeValueResponse, error) {
+func (s *Attributes) CreateAttributeValue(ctx context.Context, request *shared.CreateAttributeValueRequest) (*operations.C1APIAttributeV1AttributesCreateAttributeValueResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/api/v1/attributes"
 
@@ -82,6 +82,10 @@ func (s *attributes) CreateAttributeValue(ctx context.Context, request *shared.C
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
+	case httpRes.StatusCode >= 400 && httpRes.StatusCode < 500:
+		fallthrough
+	case httpRes.StatusCode >= 500 && httpRes.StatusCode < 600:
+		return nil, sdkerrors.NewSDKError("API error occurred", httpRes.StatusCode, string(rawBody), httpRes)
 	}
 
 	return res, nil
@@ -89,7 +93,7 @@ func (s *attributes) CreateAttributeValue(ctx context.Context, request *shared.C
 
 // DeleteAttributeValue - Delete Attribute Value
 // Delete an attribute value by id.
-func (s *attributes) DeleteAttributeValue(ctx context.Context, request operations.C1APIAttributeV1AttributesDeleteAttributeValueRequest) (*operations.C1APIAttributeV1AttributesDeleteAttributeValueResponse, error) {
+func (s *Attributes) DeleteAttributeValue(ctx context.Context, request operations.C1APIAttributeV1AttributesDeleteAttributeValueRequest) (*operations.C1APIAttributeV1AttributesDeleteAttributeValueResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/api/v1/attribute/{id}", request, nil)
 	if err != nil {
@@ -147,6 +151,10 @@ func (s *attributes) DeleteAttributeValue(ctx context.Context, request operation
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
+	case httpRes.StatusCode >= 400 && httpRes.StatusCode < 500:
+		fallthrough
+	case httpRes.StatusCode >= 500 && httpRes.StatusCode < 600:
+		return nil, sdkerrors.NewSDKError("API error occurred", httpRes.StatusCode, string(rawBody), httpRes)
 	}
 
 	return res, nil
@@ -154,7 +162,7 @@ func (s *attributes) DeleteAttributeValue(ctx context.Context, request operation
 
 // GetAttributeValue - Get Attribute Value
 // Get an attribute value by id.
-func (s *attributes) GetAttributeValue(ctx context.Context, request operations.C1APIAttributeV1AttributesGetAttributeValueRequest) (*operations.C1APIAttributeV1AttributesGetAttributeValueResponse, error) {
+func (s *Attributes) GetAttributeValue(ctx context.Context, request operations.C1APIAttributeV1AttributesGetAttributeValueRequest) (*operations.C1APIAttributeV1AttributesGetAttributeValueResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/api/v1/attributes/{id}", request, nil)
 	if err != nil {
@@ -205,6 +213,10 @@ func (s *attributes) GetAttributeValue(ctx context.Context, request operations.C
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
+	case httpRes.StatusCode >= 400 && httpRes.StatusCode < 500:
+		fallthrough
+	case httpRes.StatusCode >= 500 && httpRes.StatusCode < 600:
+		return nil, sdkerrors.NewSDKError("API error occurred", httpRes.StatusCode, string(rawBody), httpRes)
 	}
 
 	return res, nil
@@ -212,7 +224,7 @@ func (s *attributes) GetAttributeValue(ctx context.Context, request operations.C
 
 // ListAttributeTypes - List Attribute Types
 // List all attribute types.
-func (s *attributes) ListAttributeTypes(ctx context.Context, request operations.C1APIAttributeV1AttributesListAttributeTypesRequest) (*operations.C1APIAttributeV1AttributesListAttributeTypesResponse, error) {
+func (s *Attributes) ListAttributeTypes(ctx context.Context, request operations.C1APIAttributeV1AttributesListAttributeTypesRequest) (*operations.C1APIAttributeV1AttributesListAttributeTypesResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/api/v1/attributes/types"
 
@@ -264,6 +276,10 @@ func (s *attributes) ListAttributeTypes(ctx context.Context, request operations.
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
+	case httpRes.StatusCode >= 400 && httpRes.StatusCode < 500:
+		fallthrough
+	case httpRes.StatusCode >= 500 && httpRes.StatusCode < 600:
+		return nil, sdkerrors.NewSDKError("API error occurred", httpRes.StatusCode, string(rawBody), httpRes)
 	}
 
 	return res, nil
@@ -271,7 +287,7 @@ func (s *attributes) ListAttributeTypes(ctx context.Context, request operations.
 
 // ListAttributeValues - List Attribute Values
 // List all attribute values for a given attribute type.
-func (s *attributes) ListAttributeValues(ctx context.Context, request operations.C1APIAttributeV1AttributesListAttributeValuesRequest) (*operations.C1APIAttributeV1AttributesListAttributeValuesResponse, error) {
+func (s *Attributes) ListAttributeValues(ctx context.Context, request operations.C1APIAttributeV1AttributesListAttributeValuesRequest) (*operations.C1APIAttributeV1AttributesListAttributeValuesResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/api/v1/attributes/types/{attribute_type_id}/values", request, nil)
 	if err != nil {
@@ -326,6 +342,10 @@ func (s *attributes) ListAttributeValues(ctx context.Context, request operations
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
+	case httpRes.StatusCode >= 400 && httpRes.StatusCode < 500:
+		fallthrough
+	case httpRes.StatusCode >= 500 && httpRes.StatusCode < 600:
+		return nil, sdkerrors.NewSDKError("API error occurred", httpRes.StatusCode, string(rawBody), httpRes)
 	}
 
 	return res, nil

@@ -14,19 +14,19 @@ import (
 	"net/http"
 )
 
-type appEntitlementOwners struct {
+type AppEntitlementOwners struct {
 	sdkConfiguration sdkConfiguration
 }
 
-func newAppEntitlementOwners(sdkConfig sdkConfiguration) *appEntitlementOwners {
-	return &appEntitlementOwners{
+func newAppEntitlementOwners(sdkConfig sdkConfiguration) *AppEntitlementOwners {
+	return &AppEntitlementOwners{
 		sdkConfiguration: sdkConfig,
 	}
 }
 
 // Add
 // Add an owner to a given app entitlement.
-func (s *appEntitlementOwners) Add(ctx context.Context, request operations.C1APIAppV1AppEntitlementOwnersAddRequest) (*operations.C1APIAppV1AppEntitlementOwnersAddResponse, error) {
+func (s *AppEntitlementOwners) Add(ctx context.Context, request operations.C1APIAppV1AppEntitlementOwnersAddRequest) (*operations.C1APIAppV1AppEntitlementOwnersAddResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/api/v1/apps/{app_id}/entitlements/{entitlement_id}/owners", request, nil)
 	if err != nil {
@@ -84,6 +84,10 @@ func (s *appEntitlementOwners) Add(ctx context.Context, request operations.C1API
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
+	case httpRes.StatusCode >= 400 && httpRes.StatusCode < 500:
+		fallthrough
+	case httpRes.StatusCode >= 500 && httpRes.StatusCode < 600:
+		return nil, sdkerrors.NewSDKError("API error occurred", httpRes.StatusCode, string(rawBody), httpRes)
 	}
 
 	return res, nil
@@ -91,7 +95,7 @@ func (s *appEntitlementOwners) Add(ctx context.Context, request operations.C1API
 
 // List
 // List owners for a given app entitlement.
-func (s *appEntitlementOwners) List(ctx context.Context, request operations.C1APIAppV1AppEntitlementOwnersListRequest) (*operations.C1APIAppV1AppEntitlementOwnersListResponse, error) {
+func (s *AppEntitlementOwners) List(ctx context.Context, request operations.C1APIAppV1AppEntitlementOwnersListRequest) (*operations.C1APIAppV1AppEntitlementOwnersListResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/api/v1/apps/{app_id}/entitlements/{entitlement_id}/owners", request, nil)
 	if err != nil {
@@ -146,6 +150,10 @@ func (s *appEntitlementOwners) List(ctx context.Context, request operations.C1AP
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
+	case httpRes.StatusCode >= 400 && httpRes.StatusCode < 500:
+		fallthrough
+	case httpRes.StatusCode >= 500 && httpRes.StatusCode < 600:
+		return nil, sdkerrors.NewSDKError("API error occurred", httpRes.StatusCode, string(rawBody), httpRes)
 	}
 
 	return res, nil
@@ -153,7 +161,7 @@ func (s *appEntitlementOwners) List(ctx context.Context, request operations.C1AP
 
 // Remove
 // Remove an owner from a given app entitlement.
-func (s *appEntitlementOwners) Remove(ctx context.Context, request operations.C1APIAppV1AppEntitlementOwnersRemoveRequest) (*operations.C1APIAppV1AppEntitlementOwnersRemoveResponse, error) {
+func (s *AppEntitlementOwners) Remove(ctx context.Context, request operations.C1APIAppV1AppEntitlementOwnersRemoveRequest) (*operations.C1APIAppV1AppEntitlementOwnersRemoveResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/api/v1/apps/{app_id}/entitlements/{entitlement_id}/owners/{user_id}", request, nil)
 	if err != nil {
@@ -211,6 +219,10 @@ func (s *appEntitlementOwners) Remove(ctx context.Context, request operations.C1
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
+	case httpRes.StatusCode >= 400 && httpRes.StatusCode < 500:
+		fallthrough
+	case httpRes.StatusCode >= 500 && httpRes.StatusCode < 600:
+		return nil, sdkerrors.NewSDKError("API error occurred", httpRes.StatusCode, string(rawBody), httpRes)
 	}
 
 	return res, nil
@@ -218,7 +230,7 @@ func (s *appEntitlementOwners) Remove(ctx context.Context, request operations.C1
 
 // Set
 // Sets the owners for a given app entitlement to the specified list of users.
-func (s *appEntitlementOwners) Set(ctx context.Context, request operations.C1APIAppV1AppEntitlementOwnersSetRequest) (*operations.C1APIAppV1AppEntitlementOwnersSetResponse, error) {
+func (s *AppEntitlementOwners) Set(ctx context.Context, request operations.C1APIAppV1AppEntitlementOwnersSetRequest) (*operations.C1APIAppV1AppEntitlementOwnersSetResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/api/v1/apps/{app_id}/entitlements/{entitlement_id}/owners", request, nil)
 	if err != nil {
@@ -276,6 +288,10 @@ func (s *appEntitlementOwners) Set(ctx context.Context, request operations.C1API
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
+	case httpRes.StatusCode >= 400 && httpRes.StatusCode < 500:
+		fallthrough
+	case httpRes.StatusCode >= 500 && httpRes.StatusCode < 600:
+		return nil, sdkerrors.NewSDKError("API error occurred", httpRes.StatusCode, string(rawBody), httpRes)
 	}
 
 	return res, nil

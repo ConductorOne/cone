@@ -15,19 +15,19 @@ import (
 	"strings"
 )
 
-type task struct {
+type Task struct {
 	sdkConfiguration sdkConfiguration
 }
 
-func newTask(sdkConfig sdkConfiguration) *task {
-	return &task{
+func newTask(sdkConfig sdkConfiguration) *Task {
+	return &Task{
 		sdkConfiguration: sdkConfig,
 	}
 }
 
 // CreateGrantTask - Create Grant Task
 // Create a grant task
-func (s *task) CreateGrantTask(ctx context.Context, request *shared.TaskServiceCreateGrantRequest) (*operations.C1APITaskV1TaskServiceCreateGrantTaskResponse, error) {
+func (s *Task) CreateGrantTask(ctx context.Context, request *shared.TaskServiceCreateGrantRequest) (*operations.C1APITaskV1TaskServiceCreateGrantTaskResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/api/v1/task/grant"
 
@@ -82,6 +82,10 @@ func (s *task) CreateGrantTask(ctx context.Context, request *shared.TaskServiceC
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
+	case httpRes.StatusCode >= 400 && httpRes.StatusCode < 500:
+		fallthrough
+	case httpRes.StatusCode >= 500 && httpRes.StatusCode < 600:
+		return nil, sdkerrors.NewSDKError("API error occurred", httpRes.StatusCode, string(rawBody), httpRes)
 	}
 
 	return res, nil
@@ -89,7 +93,7 @@ func (s *task) CreateGrantTask(ctx context.Context, request *shared.TaskServiceC
 
 // CreateRevokeTask - Create Revoke Task
 // Create a revoke task
-func (s *task) CreateRevokeTask(ctx context.Context, request *shared.TaskServiceCreateRevokeRequest) (*operations.C1APITaskV1TaskServiceCreateRevokeTaskResponse, error) {
+func (s *Task) CreateRevokeTask(ctx context.Context, request *shared.TaskServiceCreateRevokeRequest) (*operations.C1APITaskV1TaskServiceCreateRevokeTaskResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/api/v1/task/revoke"
 
@@ -144,6 +148,10 @@ func (s *task) CreateRevokeTask(ctx context.Context, request *shared.TaskService
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
+	case httpRes.StatusCode >= 400 && httpRes.StatusCode < 500:
+		fallthrough
+	case httpRes.StatusCode >= 500 && httpRes.StatusCode < 600:
+		return nil, sdkerrors.NewSDKError("API error occurred", httpRes.StatusCode, string(rawBody), httpRes)
 	}
 
 	return res, nil
@@ -151,7 +159,7 @@ func (s *task) CreateRevokeTask(ctx context.Context, request *shared.TaskService
 
 // Get
 // Get a task by ID
-func (s *task) Get(ctx context.Context, request operations.C1APITaskV1TaskServiceGetRequest) (*operations.C1APITaskV1TaskServiceGetResponse, error) {
+func (s *Task) Get(ctx context.Context, request operations.C1APITaskV1TaskServiceGetRequest) (*operations.C1APITaskV1TaskServiceGetResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/api/v1/tasks/{id}", request, nil)
 	if err != nil {
@@ -202,6 +210,10 @@ func (s *task) Get(ctx context.Context, request operations.C1APITaskV1TaskServic
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
+	case httpRes.StatusCode >= 400 && httpRes.StatusCode < 500:
+		fallthrough
+	case httpRes.StatusCode >= 500 && httpRes.StatusCode < 600:
+		return nil, sdkerrors.NewSDKError("API error occurred", httpRes.StatusCode, string(rawBody), httpRes)
 	}
 
 	return res, nil

@@ -9,20 +9,20 @@ import (
 	"time"
 )
 
-// TaskSearchRequestCurrentStep - Search tasks that have this type of step as the current step.
-type TaskSearchRequestCurrentStep string
+// CurrentStep - Search tasks that have this type of step as the current step.
+type CurrentStep string
 
 const (
-	TaskSearchRequestCurrentStepTaskSearchCurrentStepUnspecified TaskSearchRequestCurrentStep = "TASK_SEARCH_CURRENT_STEP_UNSPECIFIED"
-	TaskSearchRequestCurrentStepTaskSearchCurrentStepApproval    TaskSearchRequestCurrentStep = "TASK_SEARCH_CURRENT_STEP_APPROVAL"
-	TaskSearchRequestCurrentStepTaskSearchCurrentStepProvision   TaskSearchRequestCurrentStep = "TASK_SEARCH_CURRENT_STEP_PROVISION"
+	CurrentStepTaskSearchCurrentStepUnspecified CurrentStep = "TASK_SEARCH_CURRENT_STEP_UNSPECIFIED"
+	CurrentStepTaskSearchCurrentStepApproval    CurrentStep = "TASK_SEARCH_CURRENT_STEP_APPROVAL"
+	CurrentStepTaskSearchCurrentStepProvision   CurrentStep = "TASK_SEARCH_CURRENT_STEP_PROVISION"
 )
 
-func (e TaskSearchRequestCurrentStep) ToPointer() *TaskSearchRequestCurrentStep {
+func (e CurrentStep) ToPointer() *CurrentStep {
 	return &e
 }
 
-func (e *TaskSearchRequestCurrentStep) UnmarshalJSON(data []byte) error {
+func (e *CurrentStep) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -33,28 +33,28 @@ func (e *TaskSearchRequestCurrentStep) UnmarshalJSON(data []byte) error {
 	case "TASK_SEARCH_CURRENT_STEP_APPROVAL":
 		fallthrough
 	case "TASK_SEARCH_CURRENT_STEP_PROVISION":
-		*e = TaskSearchRequestCurrentStep(v)
+		*e = CurrentStep(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for TaskSearchRequestCurrentStep: %v", v)
+		return fmt.Errorf("invalid value for CurrentStep: %v", v)
 	}
 }
 
-// TaskSearchRequestEmergencyStatus - Search tasks that are or are not emergency access.
-type TaskSearchRequestEmergencyStatus string
+// EmergencyStatus - Search tasks that are or are not emergency access.
+type EmergencyStatus string
 
 const (
-	TaskSearchRequestEmergencyStatusUnspecified  TaskSearchRequestEmergencyStatus = "UNSPECIFIED"
-	TaskSearchRequestEmergencyStatusAll          TaskSearchRequestEmergencyStatus = "ALL"
-	TaskSearchRequestEmergencyStatusNonEmergency TaskSearchRequestEmergencyStatus = "NON_EMERGENCY"
-	TaskSearchRequestEmergencyStatusEmergency    TaskSearchRequestEmergencyStatus = "EMERGENCY"
+	EmergencyStatusUnspecified  EmergencyStatus = "UNSPECIFIED"
+	EmergencyStatusAll          EmergencyStatus = "ALL"
+	EmergencyStatusNonEmergency EmergencyStatus = "NON_EMERGENCY"
+	EmergencyStatusEmergency    EmergencyStatus = "EMERGENCY"
 )
 
-func (e TaskSearchRequestEmergencyStatus) ToPointer() *TaskSearchRequestEmergencyStatus {
+func (e EmergencyStatus) ToPointer() *EmergencyStatus {
 	return &e
 }
 
-func (e *TaskSearchRequestEmergencyStatus) UnmarshalJSON(data []byte) error {
+func (e *EmergencyStatus) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -67,29 +67,29 @@ func (e *TaskSearchRequestEmergencyStatus) UnmarshalJSON(data []byte) error {
 	case "NON_EMERGENCY":
 		fallthrough
 	case "EMERGENCY":
-		*e = TaskSearchRequestEmergencyStatus(v)
+		*e = EmergencyStatus(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for TaskSearchRequestEmergencyStatus: %v", v)
+		return fmt.Errorf("invalid value for EmergencyStatus: %v", v)
 	}
 }
 
-// TaskSearchRequestSortBy - Sort tasks in a specific order.
-type TaskSearchRequestSortBy string
+// SortBy - Sort tasks in a specific order.
+type SortBy string
 
 const (
-	TaskSearchRequestSortByTaskSearchSortByUnspecified     TaskSearchRequestSortBy = "TASK_SEARCH_SORT_BY_UNSPECIFIED"
-	TaskSearchRequestSortByTaskSearchSortByAccount         TaskSearchRequestSortBy = "TASK_SEARCH_SORT_BY_ACCOUNT"
-	TaskSearchRequestSortByTaskSearchSortByResource        TaskSearchRequestSortBy = "TASK_SEARCH_SORT_BY_RESOURCE"
-	TaskSearchRequestSortByTaskSearchSortByAccountOwner    TaskSearchRequestSortBy = "TASK_SEARCH_SORT_BY_ACCOUNT_OWNER"
-	TaskSearchRequestSortByTaskSearchSortByReverseTicketID TaskSearchRequestSortBy = "TASK_SEARCH_SORT_BY_REVERSE_TICKET_ID"
+	SortByTaskSearchSortByUnspecified     SortBy = "TASK_SEARCH_SORT_BY_UNSPECIFIED"
+	SortByTaskSearchSortByAccount         SortBy = "TASK_SEARCH_SORT_BY_ACCOUNT"
+	SortByTaskSearchSortByResource        SortBy = "TASK_SEARCH_SORT_BY_RESOURCE"
+	SortByTaskSearchSortByAccountOwner    SortBy = "TASK_SEARCH_SORT_BY_ACCOUNT_OWNER"
+	SortByTaskSearchSortByReverseTicketID SortBy = "TASK_SEARCH_SORT_BY_REVERSE_TICKET_ID"
 )
 
-func (e TaskSearchRequestSortBy) ToPointer() *TaskSearchRequestSortBy {
+func (e SortBy) ToPointer() *SortBy {
 	return &e
 }
 
-func (e *TaskSearchRequestSortBy) UnmarshalJSON(data []byte) error {
+func (e *SortBy) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -104,26 +104,26 @@ func (e *TaskSearchRequestSortBy) UnmarshalJSON(data []byte) error {
 	case "TASK_SEARCH_SORT_BY_ACCOUNT_OWNER":
 		fallthrough
 	case "TASK_SEARCH_SORT_BY_REVERSE_TICKET_ID":
-		*e = TaskSearchRequestSortBy(v)
+		*e = SortBy(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for TaskSearchRequestSortBy: %v", v)
+		return fmt.Errorf("invalid value for SortBy: %v", v)
 	}
 }
 
-type TaskSearchRequestTaskStates string
+type TaskStates string
 
 const (
-	TaskSearchRequestTaskStatesTaskStateUnspecified TaskSearchRequestTaskStates = "TASK_STATE_UNSPECIFIED"
-	TaskSearchRequestTaskStatesTaskStateOpen        TaskSearchRequestTaskStates = "TASK_STATE_OPEN"
-	TaskSearchRequestTaskStatesTaskStateClosed      TaskSearchRequestTaskStates = "TASK_STATE_CLOSED"
+	TaskStatesTaskStateUnspecified TaskStates = "TASK_STATE_UNSPECIFIED"
+	TaskStatesTaskStateOpen        TaskStates = "TASK_STATE_OPEN"
+	TaskStatesTaskStateClosed      TaskStates = "TASK_STATE_CLOSED"
 )
 
-func (e TaskSearchRequestTaskStates) ToPointer() *TaskSearchRequestTaskStates {
+func (e TaskStates) ToPointer() *TaskStates {
 	return &e
 }
 
-func (e *TaskSearchRequestTaskStates) UnmarshalJSON(data []byte) error {
+func (e *TaskStates) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -134,15 +134,15 @@ func (e *TaskSearchRequestTaskStates) UnmarshalJSON(data []byte) error {
 	case "TASK_STATE_OPEN":
 		fallthrough
 	case "TASK_STATE_CLOSED":
-		*e = TaskSearchRequestTaskStates(v)
+		*e = TaskStates(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for TaskSearchRequestTaskStates: %v", v)
+		return fmt.Errorf("invalid value for TaskStates: %v", v)
 	}
 }
 
-// TaskSearchRequestInput - Search for tasks based on a plethora filters.
-type TaskSearchRequestInput struct {
+// TaskSearchRequest - Search for tasks based on a plethora filters.
+type TaskSearchRequest struct {
 	// The task expand mask is an array of strings that specifes the related objects the requester wishes to have returned when making a request where the expand mask is part of the input. Use '*' to view all possible responses.
 	TaskExpandMask *TaskExpandMask `json:"expandMask,omitempty"`
 	// Search tasks that belong to any of the access reviews included in this list.
@@ -166,9 +166,9 @@ type TaskSearchRequestInput struct {
 	CreatedAfter   *time.Time `json:"createdAfter,omitempty"`
 	CreatedBefore  *time.Time `json:"createdBefore,omitempty"`
 	// Search tasks that have this type of step as the current step.
-	CurrentStep *TaskSearchRequestCurrentStep `json:"currentStep,omitempty"`
+	CurrentStep *CurrentStep `json:"currentStep,omitempty"`
 	// Search tasks that are or are not emergency access.
-	EmergencyStatus *TaskSearchRequestEmergencyStatus `json:"emergencyStatus,omitempty"`
+	EmergencyStatus *EmergencyStatus `json:"emergencyStatus,omitempty"`
 	// Search tasks that do not have any of these app entitlement IDs.
 	ExcludeAppEntitlementIds []string `json:"excludeAppEntitlementIds,omitempty"`
 	// Exclude Specific TaskIDs from this serach result.
@@ -180,7 +180,7 @@ type TaskSearchRequestInput struct {
 	// Search tasks that were created by any of the users in this array.
 	OpenerIds []string `json:"openerIds,omitempty"`
 	// The pageSize where 0 <= pageSize <= 100. Values < 10 will be set to 10. A value of 0 returns the default page size (currently 25)
-	PageSize *float64 `json:"pageSize,omitempty"`
+	PageSize *int `json:"pageSize,omitempty"`
 	// The pageToken field.
 	PageToken *string `json:"pageToken,omitempty"`
 	// Search tasks that were acted on by any of these users.
@@ -190,216 +190,216 @@ type TaskSearchRequestInput struct {
 	// Query tasks by display name, description, or numeric ID.
 	Refs []TaskRef `json:"refs,omitempty"`
 	// Sort tasks in a specific order.
-	SortBy *TaskSearchRequestSortBy `json:"sortBy,omitempty"`
+	SortBy *SortBy `json:"sortBy,omitempty"`
 	// Search tasks where these users are the subject.
 	SubjectIds []string `json:"subjectIds,omitempty"`
 	// Search tasks with this task state.
-	TaskStates []TaskSearchRequestTaskStates `json:"taskStates,omitempty"`
+	TaskStates []TaskStates `json:"taskStates,omitempty"`
 	// Search tasks with this task type. This is a oneOf, and needs an object, which can be empty, to sort.
 	TaskTypes []TaskTypeInput `json:"taskTypes,omitempty"`
 }
 
-func (t TaskSearchRequestInput) MarshalJSON() ([]byte, error) {
+func (t TaskSearchRequest) MarshalJSON() ([]byte, error) {
 	return utils.MarshalJSON(t, "", false)
 }
 
-func (t *TaskSearchRequestInput) UnmarshalJSON(data []byte) error {
+func (t *TaskSearchRequest) UnmarshalJSON(data []byte) error {
 	if err := utils.UnmarshalJSON(data, &t, "", false, false); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *TaskSearchRequestInput) GetTaskExpandMask() *TaskExpandMask {
+func (o *TaskSearchRequest) GetTaskExpandMask() *TaskExpandMask {
 	if o == nil {
 		return nil
 	}
 	return o.TaskExpandMask
 }
 
-func (o *TaskSearchRequestInput) GetAccessReviewIds() []string {
+func (o *TaskSearchRequest) GetAccessReviewIds() []string {
 	if o == nil {
 		return nil
 	}
 	return o.AccessReviewIds
 }
 
-func (o *TaskSearchRequestInput) GetAccountOwnerIds() []string {
+func (o *TaskSearchRequest) GetAccountOwnerIds() []string {
 	if o == nil {
 		return nil
 	}
 	return o.AccountOwnerIds
 }
 
-func (o *TaskSearchRequestInput) GetActorID() *string {
+func (o *TaskSearchRequest) GetActorID() *string {
 	if o == nil {
 		return nil
 	}
 	return o.ActorID
 }
 
-func (o *TaskSearchRequestInput) GetAppEntitlementIds() []string {
+func (o *TaskSearchRequest) GetAppEntitlementIds() []string {
 	if o == nil {
 		return nil
 	}
 	return o.AppEntitlementIds
 }
 
-func (o *TaskSearchRequestInput) GetAppResourceIds() []string {
+func (o *TaskSearchRequest) GetAppResourceIds() []string {
 	if o == nil {
 		return nil
 	}
 	return o.AppResourceIds
 }
 
-func (o *TaskSearchRequestInput) GetAppResourceTypeIds() []string {
+func (o *TaskSearchRequest) GetAppResourceTypeIds() []string {
 	if o == nil {
 		return nil
 	}
 	return o.AppResourceTypeIds
 }
 
-func (o *TaskSearchRequestInput) GetAppUserSubjectIds() []string {
+func (o *TaskSearchRequest) GetAppUserSubjectIds() []string {
 	if o == nil {
 		return nil
 	}
 	return o.AppUserSubjectIds
 }
 
-func (o *TaskSearchRequestInput) GetApplicationIds() []string {
+func (o *TaskSearchRequest) GetApplicationIds() []string {
 	if o == nil {
 		return nil
 	}
 	return o.ApplicationIds
 }
 
-func (o *TaskSearchRequestInput) GetAssigneesInIds() []string {
+func (o *TaskSearchRequest) GetAssigneesInIds() []string {
 	if o == nil {
 		return nil
 	}
 	return o.AssigneesInIds
 }
 
-func (o *TaskSearchRequestInput) GetCreatedAfter() *time.Time {
+func (o *TaskSearchRequest) GetCreatedAfter() *time.Time {
 	if o == nil {
 		return nil
 	}
 	return o.CreatedAfter
 }
 
-func (o *TaskSearchRequestInput) GetCreatedBefore() *time.Time {
+func (o *TaskSearchRequest) GetCreatedBefore() *time.Time {
 	if o == nil {
 		return nil
 	}
 	return o.CreatedBefore
 }
 
-func (o *TaskSearchRequestInput) GetCurrentStep() *TaskSearchRequestCurrentStep {
+func (o *TaskSearchRequest) GetCurrentStep() *CurrentStep {
 	if o == nil {
 		return nil
 	}
 	return o.CurrentStep
 }
 
-func (o *TaskSearchRequestInput) GetEmergencyStatus() *TaskSearchRequestEmergencyStatus {
+func (o *TaskSearchRequest) GetEmergencyStatus() *EmergencyStatus {
 	if o == nil {
 		return nil
 	}
 	return o.EmergencyStatus
 }
 
-func (o *TaskSearchRequestInput) GetExcludeAppEntitlementIds() []string {
+func (o *TaskSearchRequest) GetExcludeAppEntitlementIds() []string {
 	if o == nil {
 		return nil
 	}
 	return o.ExcludeAppEntitlementIds
 }
 
-func (o *TaskSearchRequestInput) GetExcludeIds() []string {
+func (o *TaskSearchRequest) GetExcludeIds() []string {
 	if o == nil {
 		return nil
 	}
 	return o.ExcludeIds
 }
 
-func (o *TaskSearchRequestInput) GetIncludeDeleted() *bool {
+func (o *TaskSearchRequest) GetIncludeDeleted() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.IncludeDeleted
 }
 
-func (o *TaskSearchRequestInput) GetMyWorkUserIds() []string {
+func (o *TaskSearchRequest) GetMyWorkUserIds() []string {
 	if o == nil {
 		return nil
 	}
 	return o.MyWorkUserIds
 }
 
-func (o *TaskSearchRequestInput) GetOpenerIds() []string {
+func (o *TaskSearchRequest) GetOpenerIds() []string {
 	if o == nil {
 		return nil
 	}
 	return o.OpenerIds
 }
 
-func (o *TaskSearchRequestInput) GetPageSize() *float64 {
+func (o *TaskSearchRequest) GetPageSize() *int {
 	if o == nil {
 		return nil
 	}
 	return o.PageSize
 }
 
-func (o *TaskSearchRequestInput) GetPageToken() *string {
+func (o *TaskSearchRequest) GetPageToken() *string {
 	if o == nil {
 		return nil
 	}
 	return o.PageToken
 }
 
-func (o *TaskSearchRequestInput) GetPreviouslyActedOnIds() []string {
+func (o *TaskSearchRequest) GetPreviouslyActedOnIds() []string {
 	if o == nil {
 		return nil
 	}
 	return o.PreviouslyActedOnIds
 }
 
-func (o *TaskSearchRequestInput) GetQuery() *string {
+func (o *TaskSearchRequest) GetQuery() *string {
 	if o == nil {
 		return nil
 	}
 	return o.Query
 }
 
-func (o *TaskSearchRequestInput) GetRefs() []TaskRef {
+func (o *TaskSearchRequest) GetRefs() []TaskRef {
 	if o == nil {
 		return nil
 	}
 	return o.Refs
 }
 
-func (o *TaskSearchRequestInput) GetSortBy() *TaskSearchRequestSortBy {
+func (o *TaskSearchRequest) GetSortBy() *SortBy {
 	if o == nil {
 		return nil
 	}
 	return o.SortBy
 }
 
-func (o *TaskSearchRequestInput) GetSubjectIds() []string {
+func (o *TaskSearchRequest) GetSubjectIds() []string {
 	if o == nil {
 		return nil
 	}
 	return o.SubjectIds
 }
 
-func (o *TaskSearchRequestInput) GetTaskStates() []TaskSearchRequestTaskStates {
+func (o *TaskSearchRequest) GetTaskStates() []TaskStates {
 	if o == nil {
 		return nil
 	}
 	return o.TaskStates
 }
 
-func (o *TaskSearchRequestInput) GetTaskTypes() []TaskTypeInput {
+func (o *TaskSearchRequest) GetTaskTypes() []TaskTypeInput {
 	if o == nil {
 		return nil
 	}

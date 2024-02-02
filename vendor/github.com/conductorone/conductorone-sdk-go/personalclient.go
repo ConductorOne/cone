@@ -15,19 +15,19 @@ import (
 	"strings"
 )
 
-type personalClient struct {
+type PersonalClient struct {
 	sdkConfiguration sdkConfiguration
 }
 
-func newPersonalClient(sdkConfig sdkConfiguration) *personalClient {
-	return &personalClient{
+func newPersonalClient(sdkConfig sdkConfiguration) *PersonalClient {
+	return &PersonalClient{
 		sdkConfiguration: sdkConfig,
 	}
 }
 
 // Create
 // Create creates a new PersonalClient object for the current User.
-func (s *personalClient) Create(ctx context.Context, request *shared.PersonalClientServiceCreateRequest) (*operations.C1APIIamV1PersonalClientServiceCreateResponse, error) {
+func (s *PersonalClient) Create(ctx context.Context, request *shared.PersonalClientServiceCreateRequest) (*operations.C1APIIamV1PersonalClientServiceCreateResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/api/v1/iam/personal_clients"
 
@@ -82,6 +82,10 @@ func (s *personalClient) Create(ctx context.Context, request *shared.PersonalCli
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
+	case httpRes.StatusCode >= 400 && httpRes.StatusCode < 500:
+		fallthrough
+	case httpRes.StatusCode >= 500 && httpRes.StatusCode < 600:
+		return nil, sdkerrors.NewSDKError("API error occurred", httpRes.StatusCode, string(rawBody), httpRes)
 	}
 
 	return res, nil

@@ -15,19 +15,19 @@ import (
 	"strings"
 )
 
-type appEntitlementSearch struct {
+type AppEntitlementSearch struct {
 	sdkConfiguration sdkConfiguration
 }
 
-func newAppEntitlementSearch(sdkConfig sdkConfiguration) *appEntitlementSearch {
-	return &appEntitlementSearch{
+func newAppEntitlementSearch(sdkConfig sdkConfiguration) *AppEntitlementSearch {
+	return &AppEntitlementSearch{
 		sdkConfiguration: sdkConfig,
 	}
 }
 
 // Search
 // Search app entitlements based on filters specified in the request body.
-func (s *appEntitlementSearch) Search(ctx context.Context, request *shared.AppEntitlementSearchServiceSearchRequest) (*operations.C1APIAppV1AppEntitlementSearchServiceSearchResponse, error) {
+func (s *AppEntitlementSearch) Search(ctx context.Context, request *shared.AppEntitlementSearchServiceSearchRequest) (*operations.C1APIAppV1AppEntitlementSearchServiceSearchResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/api/v1/search/entitlements"
 
@@ -82,6 +82,10 @@ func (s *appEntitlementSearch) Search(ctx context.Context, request *shared.AppEn
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
+	case httpRes.StatusCode >= 400 && httpRes.StatusCode < 500:
+		fallthrough
+	case httpRes.StatusCode >= 500 && httpRes.StatusCode < 600:
+		return nil, sdkerrors.NewSDKError("API error occurred", httpRes.StatusCode, string(rawBody), httpRes)
 	}
 
 	return res, nil

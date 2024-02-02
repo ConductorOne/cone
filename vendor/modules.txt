@@ -26,10 +26,9 @@ github.com/cenkalti/backoff/v4
 # github.com/conductorone/baton-sdk v0.1.18 => /Users/morgabra/src/go/src/github.com/conductorone/baton-sdk
 ## explicit; go 1.20
 github.com/conductorone/baton-sdk/pb/c1/connector/v2
-github.com/conductorone/baton-sdk/pkg/crypto
 github.com/conductorone/baton-sdk/pkg/crypto/providers
 github.com/conductorone/baton-sdk/pkg/crypto/providers/jwk
-# github.com/conductorone/conductorone-sdk-go v1.14.0
+# github.com/conductorone/conductorone-sdk-go v1.14.0 => /Users/morgabra/src/go/src/github.com/conductorone/conductorone-sdk-go
 ## explicit; go 1.21
 github.com/conductorone/conductorone-sdk-go
 github.com/conductorone/conductorone-sdk-go/pkg/models/operations
@@ -204,7 +203,7 @@ golang.org/x/exp/slices
 golang.org/x/exp/slog
 golang.org/x/exp/slog/internal
 golang.org/x/exp/slog/internal/buffer
-# golang.org/x/net v0.18.0
+# golang.org/x/net v0.19.0
 ## explicit; go 1.18
 golang.org/x/net/http/httpguts
 golang.org/x/net/http2
@@ -212,7 +211,7 @@ golang.org/x/net/http2/hpack
 golang.org/x/net/idna
 golang.org/x/net/internal/timeseries
 golang.org/x/net/trace
-# golang.org/x/oauth2 v0.14.0
+# golang.org/x/oauth2 v0.15.0
 ## explicit; go 1.18
 golang.org/x/oauth2
 golang.org/x/oauth2/internal
@@ -356,4 +355,5 @@ gopkg.in/square/go-jose.v2/jwt
 # gopkg.in/yaml.v3 v3.0.1
 ## explicit
 gopkg.in/yaml.v3
+# github.com/conductorone/conductorone-sdk-go => /Users/morgabra/src/go/src/github.com/conductorone/conductorone-sdk-go
 # github.com/conductorone/baton-sdk => /Users/morgabra/src/go/src/github.com/conductorone/baton-sdk

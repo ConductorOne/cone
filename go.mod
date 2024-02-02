@@ -4,7 +4,7 @@ go 1.21
 
 require (
 	go.uber.org/zap v1.26.0
-	golang.org/x/net v0.18.0
+	golang.org/x/net v0.19.0
 	google.golang.org/grpc v1.59.0
 	google.golang.org/protobuf v1.31.0
 )
@@ -61,12 +61,14 @@ require (
 	github.com/spf13/viper v1.17.0
 	github.com/subosito/gotenv v1.6.0 // indirect
 	golang.org/x/exp v0.0.0-20231110203233-9a3e6036ecaa
-	golang.org/x/oauth2 v0.14.0
+	golang.org/x/oauth2 v0.15.0
 	golang.org/x/sys v0.15.0 // indirect
 	golang.org/x/text v0.14.0 // indirect
 	gopkg.in/ini.v1 v1.67.0 // indirect
 	gopkg.in/square/go-jose.v2 v2.6.0
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
+
+replace github.com/conductorone/conductorone-sdk-go => /Users/morgabra/src/go/src/github.com/conductorone/conductorone-sdk-go
 
 replace github.com/conductorone/baton-sdk => /Users/morgabra/src/go/src/github.com/conductorone/baton-sdk

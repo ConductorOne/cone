@@ -14,19 +14,19 @@ import (
 	"net/http"
 )
 
-type appReport struct {
+type AppReport struct {
 	sdkConfiguration sdkConfiguration
 }
 
-func newAppReport(sdkConfig sdkConfiguration) *appReport {
-	return &appReport{
+func newAppReport(sdkConfig sdkConfiguration) *AppReport {
+	return &AppReport{
 		sdkConfiguration: sdkConfig,
 	}
 }
 
 // List
 // Get a list of reports for the given app.
-func (s *appReport) List(ctx context.Context, request operations.C1APIAppV1AppReportServiceListRequest) (*operations.C1APIAppV1AppReportServiceListResponse, error) {
+func (s *AppReport) List(ctx context.Context, request operations.C1APIAppV1AppReportServiceListRequest) (*operations.C1APIAppV1AppReportServiceListResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/api/v1/apps/{app_id}/report", request, nil)
 	if err != nil {
@@ -81,6 +81,10 @@ func (s *appReport) List(ctx context.Context, request operations.C1APIAppV1AppRe
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
+	case httpRes.StatusCode >= 400 && httpRes.StatusCode < 500:
+		fallthrough
+	case httpRes.StatusCode >= 500 && httpRes.StatusCode < 600:
+		return nil, sdkerrors.NewSDKError("API error occurred", httpRes.StatusCode, string(rawBody), httpRes)
 	}
 
 	return res, nil

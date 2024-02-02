@@ -8,11 +8,11 @@ import (
 )
 
 type C1APIAttributeV1AttributesListAttributeTypesRequest struct {
-	PageSize  *float64 `queryParam:"style=form,explode=true,name=page_size"`
-	PageToken *string  `queryParam:"style=form,explode=true,name=page_token"`
+	PageSize  *int    `queryParam:"style=form,explode=true,name=page_size"`
+	PageToken *string `queryParam:"style=form,explode=true,name=page_token"`
 }
 
-func (o *C1APIAttributeV1AttributesListAttributeTypesRequest) GetPageSize() *float64 {
+func (o *C1APIAttributeV1AttributesListAttributeTypesRequest) GetPageSize() *int {
 	if o == nil {
 		return nil
 	}

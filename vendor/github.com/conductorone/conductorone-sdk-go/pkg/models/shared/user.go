@@ -10,21 +10,21 @@ import (
 	"time"
 )
 
-// UserDirectoryStatus - The status of the user in the directory.
-type UserDirectoryStatus string
+// DirectoryStatus - The status of the user in the directory.
+type DirectoryStatus string
 
 const (
-	UserDirectoryStatusUnknown  UserDirectoryStatus = "UNKNOWN"
-	UserDirectoryStatusEnabled  UserDirectoryStatus = "ENABLED"
-	UserDirectoryStatusDisabled UserDirectoryStatus = "DISABLED"
-	UserDirectoryStatusDeleted  UserDirectoryStatus = "DELETED"
+	DirectoryStatusUnknown  DirectoryStatus = "UNKNOWN"
+	DirectoryStatusEnabled  DirectoryStatus = "ENABLED"
+	DirectoryStatusDisabled DirectoryStatus = "DISABLED"
+	DirectoryStatusDeleted  DirectoryStatus = "DELETED"
 )
 
-func (e UserDirectoryStatus) ToPointer() *UserDirectoryStatus {
+func (e DirectoryStatus) ToPointer() *DirectoryStatus {
 	return &e
 }
 
-func (e *UserDirectoryStatus) UnmarshalJSON(data []byte) error {
+func (e *DirectoryStatus) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -37,32 +37,32 @@ func (e *UserDirectoryStatus) UnmarshalJSON(data []byte) error {
 	case "DISABLED":
 		fallthrough
 	case "DELETED":
-		*e = UserDirectoryStatus(v)
+		*e = DirectoryStatus(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for UserDirectoryStatus: %v", v)
+		return fmt.Errorf("invalid value for DirectoryStatus: %v", v)
 	}
 }
 
-type UserProfile3 struct {
+type User3 struct {
 }
 
 type UserProfileType string
 
 const (
-	UserProfileTypeStr          UserProfileType = "str"
-	UserProfileTypeNumber       UserProfileType = "number"
-	UserProfileTypeUserProfile3 UserProfileType = "User_profile_3"
-	UserProfileTypeArrayOfany   UserProfileType = "arrayOfany"
-	UserProfileTypeBoolean      UserProfileType = "boolean"
+	UserProfileTypeStr        UserProfileType = "str"
+	UserProfileTypeNumber     UserProfileType = "number"
+	UserProfileTypeUser3      UserProfileType = "User_3"
+	UserProfileTypeArrayOfany UserProfileType = "arrayOfany"
+	UserProfileTypeBoolean    UserProfileType = "boolean"
 )
 
 type UserProfile struct {
-	Str          *string
-	Number       *float64
-	UserProfile3 *UserProfile3
-	ArrayOfany   []interface{}
-	Boolean      *bool
+	Str        *string
+	Number     *float64
+	User3      *User3
+	ArrayOfany []interface{}
+	Boolean    *bool
 
 	Type UserProfileType
 }
@@ -85,12 +85,12 @@ func CreateUserProfileNumber(number float64) UserProfile {
 	}
 }
 
-func CreateUserProfileUserProfile3(userProfile3 UserProfile3) UserProfile {
-	typ := UserProfileTypeUserProfile3
+func CreateUserProfileUser3(user3 User3) UserProfile {
+	typ := UserProfileTypeUser3
 
 	return UserProfile{
-		UserProfile3: &userProfile3,
-		Type:         typ,
+		User3: &user3,
+		Type:  typ,
 	}
 }
 
@@ -114,23 +114,23 @@ func CreateUserProfileBoolean(boolean bool) UserProfile {
 
 func (u *UserProfile) UnmarshalJSON(data []byte) error {
 
-	userProfile3 := new(UserProfile3)
-	if err := utils.UnmarshalJSON(data, &userProfile3, "", true, true); err == nil {
-		u.UserProfile3 = userProfile3
-		u.Type = UserProfileTypeUserProfile3
+	user3 := User3{}
+	if err := utils.UnmarshalJSON(data, &user3, "", true, true); err == nil {
+		u.User3 = &user3
+		u.Type = UserProfileTypeUser3
 		return nil
 	}
 
-	str := new(string)
+	str := ""
 	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
-		u.Str = str
+		u.Str = &str
 		u.Type = UserProfileTypeStr
 		return nil
 	}
 
-	number := new(float64)
+	number := float64(0)
 	if err := utils.UnmarshalJSON(data, &number, "", true, true); err == nil {
-		u.Number = number
+		u.Number = &number
 		u.Type = UserProfileTypeNumber
 		return nil
 	}
@@ -142,9 +142,9 @@ func (u *UserProfile) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	boolean := new(bool)
+	boolean := false
 	if err := utils.UnmarshalJSON(data, &boolean, "", true, true); err == nil {
-		u.Boolean = boolean
+		u.Boolean = &boolean
 		u.Type = UserProfileTypeBoolean
 		return nil
 	}
@@ -161,8 +161,8 @@ func (u UserProfile) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.Number, "", true)
 	}
 
-	if u.UserProfile3 != nil {
-		return utils.MarshalJSON(u.UserProfile3, "", true)
+	if u.User3 != nil {
+		return utils.MarshalJSON(u.User3, "", true)
 	}
 
 	if u.ArrayOfany != nil {
@@ -223,7 +223,7 @@ type User struct {
 	// A list of unique ids that represent different directories.
 	DirectoryIds []string `json:"directoryIds,omitempty"`
 	// The status of the user in the directory.
-	DirectoryStatus *UserDirectoryStatus `json:"directoryStatus,omitempty"`
+	DirectoryStatus *DirectoryStatus `json:"directoryStatus,omitempty"`
 	// A list of objects mapped based on directoryStatus attribute mappings configured in the system.
 	DirectoryStatusSources []UserAttributeMappingSource `json:"directoryStatusSources,omitempty"`
 	// The display name of the user.
@@ -315,7 +315,7 @@ func (o *User) GetDirectoryIds() []string {
 	return o.DirectoryIds
 }
 
-func (o *User) GetDirectoryStatus() *UserDirectoryStatus {
+func (o *User) GetDirectoryStatus() *DirectoryStatus {
 	if o == nil {
 		return nil
 	}

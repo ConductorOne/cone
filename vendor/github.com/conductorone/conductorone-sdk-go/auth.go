@@ -15,19 +15,19 @@ import (
 	"strings"
 )
 
-type auth struct {
+type Auth struct {
 	sdkConfiguration sdkConfiguration
 }
 
-func newAuth(sdkConfig sdkConfiguration) *auth {
-	return &auth{
+func newAuth(sdkConfig sdkConfiguration) *Auth {
+	return &Auth{
 		sdkConfiguration: sdkConfig,
 	}
 }
 
 // Introspect
 // Introspect returns the current user's principle_id, user_id and a list of roles, permissions, and enabled features.
-func (s *auth) Introspect(ctx context.Context) (*operations.C1APIAuthV1AuthIntrospectResponse, error) {
+func (s *Auth) Introspect(ctx context.Context) (*operations.C1APIAuthV1AuthIntrospectResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/api/v1/auth/introspect"
 
@@ -75,6 +75,10 @@ func (s *auth) Introspect(ctx context.Context) (*operations.C1APIAuthV1AuthIntro
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
+	case httpRes.StatusCode >= 400 && httpRes.StatusCode < 500:
+		fallthrough
+	case httpRes.StatusCode >= 500 && httpRes.StatusCode < 600:
+		return nil, sdkerrors.NewSDKError("API error occurred", httpRes.StatusCode, string(rawBody), httpRes)
 	}
 
 	return res, nil

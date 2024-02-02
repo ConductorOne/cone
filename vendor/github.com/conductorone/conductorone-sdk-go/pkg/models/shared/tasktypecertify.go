@@ -9,26 +9,22 @@ import (
 	"time"
 )
 
-// TaskTypeCertifyInput - The TaskTypeCertify message indicates that a task is a certify task and all related details.
-type TaskTypeCertifyInput struct {
-}
-
-// TaskTypeCertifyOutcome - The outcome of the certification.
-type TaskTypeCertifyOutcome string
+// Outcome - The outcome of the certification.
+type Outcome string
 
 const (
-	TaskTypeCertifyOutcomeCertifyOutcomeUnspecified TaskTypeCertifyOutcome = "CERTIFY_OUTCOME_UNSPECIFIED"
-	TaskTypeCertifyOutcomeCertifyOutcomeCertified   TaskTypeCertifyOutcome = "CERTIFY_OUTCOME_CERTIFIED"
-	TaskTypeCertifyOutcomeCertifyOutcomeDecertified TaskTypeCertifyOutcome = "CERTIFY_OUTCOME_DECERTIFIED"
-	TaskTypeCertifyOutcomeCertifyOutcomeError       TaskTypeCertifyOutcome = "CERTIFY_OUTCOME_ERROR"
-	TaskTypeCertifyOutcomeCertifyOutcomeCancelled   TaskTypeCertifyOutcome = "CERTIFY_OUTCOME_CANCELLED"
+	OutcomeCertifyOutcomeUnspecified Outcome = "CERTIFY_OUTCOME_UNSPECIFIED"
+	OutcomeCertifyOutcomeCertified   Outcome = "CERTIFY_OUTCOME_CERTIFIED"
+	OutcomeCertifyOutcomeDecertified Outcome = "CERTIFY_OUTCOME_DECERTIFIED"
+	OutcomeCertifyOutcomeError       Outcome = "CERTIFY_OUTCOME_ERROR"
+	OutcomeCertifyOutcomeCancelled   Outcome = "CERTIFY_OUTCOME_CANCELLED"
 )
 
-func (e TaskTypeCertifyOutcome) ToPointer() *TaskTypeCertifyOutcome {
+func (e Outcome) ToPointer() *Outcome {
 	return &e
 }
 
-func (e *TaskTypeCertifyOutcome) UnmarshalJSON(data []byte) error {
+func (e *Outcome) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -43,10 +39,10 @@ func (e *TaskTypeCertifyOutcome) UnmarshalJSON(data []byte) error {
 	case "CERTIFY_OUTCOME_ERROR":
 		fallthrough
 	case "CERTIFY_OUTCOME_CANCELLED":
-		*e = TaskTypeCertifyOutcome(v)
+		*e = Outcome(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for TaskTypeCertifyOutcome: %v", v)
+		return fmt.Errorf("invalid value for Outcome: %v", v)
 	}
 }
 
@@ -65,8 +61,8 @@ type TaskTypeCertify struct {
 	// The ID of the user.
 	IdentityUserID *string `json:"identityUserId,omitempty"`
 	// The outcome of the certification.
-	Outcome     *TaskTypeCertifyOutcome `json:"outcome,omitempty"`
-	OutcomeTime *time.Time              `json:"outcomeTime,omitempty"`
+	Outcome     *Outcome   `json:"outcome,omitempty"`
+	OutcomeTime *time.Time `json:"outcomeTime,omitempty"`
 }
 
 func (t TaskTypeCertify) MarshalJSON() ([]byte, error) {
@@ -122,7 +118,7 @@ func (o *TaskTypeCertify) GetIdentityUserID() *string {
 	return o.IdentityUserID
 }
 
-func (o *TaskTypeCertify) GetOutcome() *TaskTypeCertifyOutcome {
+func (o *TaskTypeCertify) GetOutcome() *Outcome {
 	if o == nil {
 		return nil
 	}

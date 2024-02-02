@@ -14,19 +14,19 @@ import (
 	"net/http"
 )
 
-type appResourceOwners struct {
+type AppResourceOwners struct {
 	sdkConfiguration sdkConfiguration
 }
 
-func newAppResourceOwners(sdkConfig sdkConfiguration) *appResourceOwners {
-	return &appResourceOwners{
+func newAppResourceOwners(sdkConfig sdkConfiguration) *AppResourceOwners {
+	return &AppResourceOwners{
 		sdkConfiguration: sdkConfig,
 	}
 }
 
 // List
 // List all owners of an app resource.
-func (s *appResourceOwners) List(ctx context.Context, request operations.C1APIAppV1AppResourceOwnersListRequest) (*operations.C1APIAppV1AppResourceOwnersListResponse, error) {
+func (s *AppResourceOwners) List(ctx context.Context, request operations.C1APIAppV1AppResourceOwnersListRequest) (*operations.C1APIAppV1AppResourceOwnersListResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/api/v1/apps/{app_id}/resource_types/{resource_type_id}/resource/{resource_id}/owners", request, nil)
 	if err != nil {
@@ -81,6 +81,10 @@ func (s *appResourceOwners) List(ctx context.Context, request operations.C1APIAp
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
+	case httpRes.StatusCode >= 400 && httpRes.StatusCode < 500:
+		fallthrough
+	case httpRes.StatusCode >= 500 && httpRes.StatusCode < 600:
+		return nil, sdkerrors.NewSDKError("API error occurred", httpRes.StatusCode, string(rawBody), httpRes)
 	}
 
 	return res, nil

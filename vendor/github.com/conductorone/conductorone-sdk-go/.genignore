@@ -6,6 +6,7 @@ extra_sdk_options.go
 extra_sdk_options_test.go
 token_source.go
 uhttp/
-go.mod
 .ci
+go.mod
 go.sum
+USAGE.md

@@ -42,27 +42,10 @@ type c1Token struct {
 }
 
 type c1TokenSource struct {
-	ctx          context.Context
 	clientID     string
 	clientSecret *jose.JSONWebKey
 	tokenHost    string
 	httpClient   *http.Client
-}
-
-func parseClientID(input string) (string, error) {
-	// split the input into 2 parts by @
-	items := strings.SplitN(input, "@", 2)
-	if len(items) != 2 {
-		return "", ErrInvalidClientID
-	}
-
-	// split the right part into 2 parts by /
-	items = strings.SplitN(items[1], "/", 2)
-	if len(items) != 2 {
-		return "", ErrInvalidClientID
-	}
-
-	return items[0], nil
 }
 
 func parseSecret(input []byte) (*jose.JSONWebKey, error) {
@@ -154,7 +137,7 @@ func (c *c1TokenSource) Token() (*oauth2.Token, error) {
 		Path:   "auth/v1/token",
 	}
 
-	req, err := http.NewRequestWithContext(c.ctx, http.MethodPost, tokenUrl.String(), strings.NewReader(body.Encode()))
+	req, err := http.NewRequestWithContext(context.Background(), http.MethodPost, tokenUrl.String(), strings.NewReader(body.Encode()))
 	if err != nil {
 		return nil, err
 	}
@@ -186,19 +169,10 @@ func (c *c1TokenSource) Token() (*oauth2.Token, error) {
 	}, nil
 }
 
-func NewTokenSource(ctx context.Context, clientID string, clientSecret string, hostOverride string) (oauth2.TokenSource, error) {
-	tokenHost, err := parseClientID(clientID)
-	if err != nil {
-		return nil, err
-	}
-
+func NewTokenSource(ctx context.Context, clientID string, clientSecret string, tokenHost string) (oauth2.TokenSource, error) {
 	secret, err := parseSecret([]byte(clientSecret))
 	if err != nil {
 		return nil, err
-	}
-
-	if hostOverride != "" {
-		tokenHost = hostOverride
 	}
 
 	httpClient, err := uhttp.NewClient(ctx, uhttp.WithLogger(true, ctxzap.Extract(ctx)), uhttp.WithUserAgent("cone-c1-credential-provider"))
@@ -206,7 +180,6 @@ func NewTokenSource(ctx context.Context, clientID string, clientSecret string, h
 		return nil, err
 	}
 	return oauth2.ReuseTokenSource(nil, &c1TokenSource{
-		ctx:          ctx,
 		clientID:     clientID,
 		clientSecret: secret,
 		tokenHost:    strings.TrimLeft(tokenHost, "https://"),

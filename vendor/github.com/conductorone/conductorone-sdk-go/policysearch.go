@@ -15,19 +15,19 @@ import (
 	"strings"
 )
 
-type policySearch struct {
+type PolicySearch struct {
 	sdkConfiguration sdkConfiguration
 }
 
-func newPolicySearch(sdkConfig sdkConfiguration) *policySearch {
-	return &policySearch{
+func newPolicySearch(sdkConfig sdkConfiguration) *PolicySearch {
+	return &PolicySearch{
 		sdkConfiguration: sdkConfig,
 	}
 }
 
 // Search
 // Search policies based on filters specified in the request body.
-func (s *policySearch) Search(ctx context.Context, request *shared.SearchPoliciesRequest) (*operations.C1APIPolicyV1PolicySearchSearchResponse, error) {
+func (s *PolicySearch) Search(ctx context.Context, request *shared.SearchPoliciesRequest) (*operations.C1APIPolicyV1PolicySearchSearchResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/api/v1/search/policies"
 
@@ -82,6 +82,10 @@ func (s *policySearch) Search(ctx context.Context, request *shared.SearchPolicie
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
+	case httpRes.StatusCode >= 400 && httpRes.StatusCode < 500:
+		fallthrough
+	case httpRes.StatusCode >= 500 && httpRes.StatusCode < 600:
+		return nil, sdkerrors.NewSDKError("API error occurred", httpRes.StatusCode, string(rawBody), httpRes)
 	}
 
 	return res, nil

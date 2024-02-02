@@ -14,19 +14,19 @@ import (
 	"net/http"
 )
 
-type appReportAction struct {
+type AppReportAction struct {
 	sdkConfiguration sdkConfiguration
 }
 
-func newAppReportAction(sdkConfig sdkConfiguration) *appReportAction {
-	return &appReportAction{
+func newAppReportAction(sdkConfig sdkConfiguration) *AppReportAction {
+	return &AppReportAction{
 		sdkConfiguration: sdkConfig,
 	}
 }
 
 // GenerateReport - Generate Report
 // Generate a report for the given app.
-func (s *appReportAction) GenerateReport(ctx context.Context, request operations.C1APIAppV1AppReportActionServiceGenerateReportRequest) (*operations.C1APIAppV1AppReportActionServiceGenerateReportResponse, error) {
+func (s *AppReportAction) GenerateReport(ctx context.Context, request operations.C1APIAppV1AppReportActionServiceGenerateReportRequest) (*operations.C1APIAppV1AppReportActionServiceGenerateReportResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/api/v1/apps/{app_id}/report", request, nil)
 	if err != nil {
@@ -84,6 +84,10 @@ func (s *appReportAction) GenerateReport(ctx context.Context, request operations
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
+	case httpRes.StatusCode >= 400 && httpRes.StatusCode < 500:
+		fallthrough
+	case httpRes.StatusCode >= 500 && httpRes.StatusCode < 600:
+		return nil, sdkerrors.NewSDKError("API error occurred", httpRes.StatusCode, string(rawBody), httpRes)
 	}
 
 	return res, nil

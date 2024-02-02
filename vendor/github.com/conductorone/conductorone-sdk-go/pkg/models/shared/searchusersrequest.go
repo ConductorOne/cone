@@ -7,20 +7,20 @@ import (
 	"fmt"
 )
 
-type SearchUsersRequestUserStatuses string
+type UserStatuses string
 
 const (
-	SearchUsersRequestUserStatusesUnknown  SearchUsersRequestUserStatuses = "UNKNOWN"
-	SearchUsersRequestUserStatusesEnabled  SearchUsersRequestUserStatuses = "ENABLED"
-	SearchUsersRequestUserStatusesDisabled SearchUsersRequestUserStatuses = "DISABLED"
-	SearchUsersRequestUserStatusesDeleted  SearchUsersRequestUserStatuses = "DELETED"
+	UserStatusesUnknown  UserStatuses = "UNKNOWN"
+	UserStatusesEnabled  UserStatuses = "ENABLED"
+	UserStatusesDisabled UserStatuses = "DISABLED"
+	UserStatusesDeleted  UserStatuses = "DELETED"
 )
 
-func (e SearchUsersRequestUserStatuses) ToPointer() *SearchUsersRequestUserStatuses {
+func (e UserStatuses) ToPointer() *UserStatuses {
 	return &e
 }
 
-func (e *SearchUsersRequestUserStatuses) UnmarshalJSON(data []byte) error {
+func (e *UserStatuses) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -33,10 +33,10 @@ func (e *SearchUsersRequestUserStatuses) UnmarshalJSON(data []byte) error {
 	case "DISABLED":
 		fallthrough
 	case "DELETED":
-		*e = SearchUsersRequestUserStatuses(v)
+		*e = UserStatuses(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SearchUsersRequestUserStatuses: %v", v)
+		return fmt.Errorf("invalid value for UserStatuses: %v", v)
 	}
 }
 
@@ -52,7 +52,7 @@ type SearchUsersRequest struct {
 	// Deprecated. Use refs array instead.
 	Ids []string `json:"ids,omitempty"`
 	// The pageSize where 0 <= pageSize <= 100. Values < 10 will be set to 10. A value of 0 returns the default page size (currently 25)
-	PageSize *float64 `json:"pageSize,omitempty"`
+	PageSize *int `json:"pageSize,omitempty"`
 	// The pageToken field.
 	PageToken *string `json:"pageToken,omitempty"`
 	// Query the apps with a fuzzy search on display name and emails.
@@ -62,7 +62,7 @@ type SearchUsersRequest struct {
 	// Search for users that have any of the role IDs on this list.
 	RoleIds []string `json:"roleIds,omitempty"`
 	// Search for users that have any of the statuses on this list. This can only be ENABLED, DISABLED, and DELETED
-	UserStatuses []SearchUsersRequestUserStatuses `json:"userStatuses,omitempty"`
+	UserStatuses []UserStatuses `json:"userStatuses,omitempty"`
 }
 
 func (o *SearchUsersRequest) GetUserExpandMask() *UserExpandMask {
@@ -93,7 +93,7 @@ func (o *SearchUsersRequest) GetIds() []string {
 	return o.Ids
 }
 
-func (o *SearchUsersRequest) GetPageSize() *float64 {
+func (o *SearchUsersRequest) GetPageSize() *int {
 	if o == nil {
 		return nil
 	}
@@ -128,7 +128,7 @@ func (o *SearchUsersRequest) GetRoleIds() []string {
 	return o.RoleIds
 }
 
-func (o *SearchUsersRequest) GetUserStatuses() []SearchUsersRequestUserStatuses {
+func (o *SearchUsersRequest) GetUserStatuses() []UserStatuses {
 	if o == nil {
 		return nil
 	}

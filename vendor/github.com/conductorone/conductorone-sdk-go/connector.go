@@ -14,19 +14,19 @@ import (
 	"net/http"
 )
 
-type connector struct {
+type Connector struct {
 	sdkConfiguration sdkConfiguration
 }
 
-func newConnector(sdkConfig sdkConfiguration) *connector {
-	return &connector{
+func newConnector(sdkConfig sdkConfiguration) *Connector {
+	return &Connector{
 		sdkConfiguration: sdkConfig,
 	}
 }
 
 // Create
 // Create a configured connector.
-func (s *connector) Create(ctx context.Context, request operations.C1APIAppV1ConnectorServiceCreateRequest) (*operations.C1APIAppV1ConnectorServiceCreateResponse, error) {
+func (s *Connector) Create(ctx context.Context, request operations.C1APIAppV1ConnectorServiceCreateRequest) (*operations.C1APIAppV1ConnectorServiceCreateResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/api/v1/apps/{app_id}/connectors/create", request, nil)
 	if err != nil {
@@ -84,6 +84,10 @@ func (s *connector) Create(ctx context.Context, request operations.C1APIAppV1Con
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
+	case httpRes.StatusCode >= 400 && httpRes.StatusCode < 500:
+		fallthrough
+	case httpRes.StatusCode >= 500 && httpRes.StatusCode < 600:
+		return nil, sdkerrors.NewSDKError("API error occurred", httpRes.StatusCode, string(rawBody), httpRes)
 	}
 
 	return res, nil
@@ -91,7 +95,7 @@ func (s *connector) Create(ctx context.Context, request operations.C1APIAppV1Con
 
 // CreateDelegated - Create Delegated
 // Create a connector that is pending a connector config.
-func (s *connector) CreateDelegated(ctx context.Context, request operations.C1APIAppV1ConnectorServiceCreateDelegatedRequest) (*operations.C1APIAppV1ConnectorServiceCreateDelegatedResponse, error) {
+func (s *Connector) CreateDelegated(ctx context.Context, request operations.C1APIAppV1ConnectorServiceCreateDelegatedRequest) (*operations.C1APIAppV1ConnectorServiceCreateDelegatedResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/api/v1/apps/{app_id}/connectors", request, nil)
 	if err != nil {
@@ -149,6 +153,10 @@ func (s *connector) CreateDelegated(ctx context.Context, request operations.C1AP
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
+	case httpRes.StatusCode >= 400 && httpRes.StatusCode < 500:
+		fallthrough
+	case httpRes.StatusCode >= 500 && httpRes.StatusCode < 600:
+		return nil, sdkerrors.NewSDKError("API error occurred", httpRes.StatusCode, string(rawBody), httpRes)
 	}
 
 	return res, nil
@@ -156,7 +164,7 @@ func (s *connector) CreateDelegated(ctx context.Context, request operations.C1AP
 
 // Delete
 // Delete a connector.
-func (s *connector) Delete(ctx context.Context, request operations.C1APIAppV1ConnectorServiceDeleteRequest) (*operations.C1APIAppV1ConnectorServiceDeleteResponse, error) {
+func (s *Connector) Delete(ctx context.Context, request operations.C1APIAppV1ConnectorServiceDeleteRequest) (*operations.C1APIAppV1ConnectorServiceDeleteResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/api/v1/apps/{app_id}/connectors/{id}", request, nil)
 	if err != nil {
@@ -214,6 +222,10 @@ func (s *connector) Delete(ctx context.Context, request operations.C1APIAppV1Con
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
+	case httpRes.StatusCode >= 400 && httpRes.StatusCode < 500:
+		fallthrough
+	case httpRes.StatusCode >= 500 && httpRes.StatusCode < 600:
+		return nil, sdkerrors.NewSDKError("API error occurred", httpRes.StatusCode, string(rawBody), httpRes)
 	}
 
 	return res, nil
@@ -221,7 +233,7 @@ func (s *connector) Delete(ctx context.Context, request operations.C1APIAppV1Con
 
 // Get
 // Get a connector.
-func (s *connector) Get(ctx context.Context, request operations.C1APIAppV1ConnectorServiceGetRequest) (*operations.C1APIAppV1ConnectorServiceGetResponse, error) {
+func (s *Connector) Get(ctx context.Context, request operations.C1APIAppV1ConnectorServiceGetRequest) (*operations.C1APIAppV1ConnectorServiceGetResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/api/v1/apps/{app_id}/connectors/{id}", request, nil)
 	if err != nil {
@@ -272,6 +284,10 @@ func (s *connector) Get(ctx context.Context, request operations.C1APIAppV1Connec
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
+	case httpRes.StatusCode >= 400 && httpRes.StatusCode < 500:
+		fallthrough
+	case httpRes.StatusCode >= 500 && httpRes.StatusCode < 600:
+		return nil, sdkerrors.NewSDKError("API error occurred", httpRes.StatusCode, string(rawBody), httpRes)
 	}
 
 	return res, nil
@@ -279,7 +295,7 @@ func (s *connector) Get(ctx context.Context, request operations.C1APIAppV1Connec
 
 // GetCredentials - Get Credentials
 // Get credentials for a connector.
-func (s *connector) GetCredentials(ctx context.Context, request operations.C1APIAppV1ConnectorServiceGetCredentialsRequest) (*operations.C1APIAppV1ConnectorServiceGetCredentialsResponse, error) {
+func (s *Connector) GetCredentials(ctx context.Context, request operations.C1APIAppV1ConnectorServiceGetCredentialsRequest) (*operations.C1APIAppV1ConnectorServiceGetCredentialsResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/api/v1/apps/{app_id}/connectors/{connector_id}/credentials/{id}", request, nil)
 	if err != nil {
@@ -330,6 +346,10 @@ func (s *connector) GetCredentials(ctx context.Context, request operations.C1API
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
+	case httpRes.StatusCode >= 400 && httpRes.StatusCode < 500:
+		fallthrough
+	case httpRes.StatusCode >= 500 && httpRes.StatusCode < 600:
+		return nil, sdkerrors.NewSDKError("API error occurred", httpRes.StatusCode, string(rawBody), httpRes)
 	}
 
 	return res, nil
@@ -337,7 +357,7 @@ func (s *connector) GetCredentials(ctx context.Context, request operations.C1API
 
 // List
 // List connectors for an app.
-func (s *connector) List(ctx context.Context, request operations.C1APIAppV1ConnectorServiceListRequest) (*operations.C1APIAppV1ConnectorServiceListResponse, error) {
+func (s *Connector) List(ctx context.Context, request operations.C1APIAppV1ConnectorServiceListRequest) (*operations.C1APIAppV1ConnectorServiceListResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/api/v1/apps/{app_id}/connectors", request, nil)
 	if err != nil {
@@ -392,6 +412,10 @@ func (s *connector) List(ctx context.Context, request operations.C1APIAppV1Conne
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
+	case httpRes.StatusCode >= 400 && httpRes.StatusCode < 500:
+		fallthrough
+	case httpRes.StatusCode >= 500 && httpRes.StatusCode < 600:
+		return nil, sdkerrors.NewSDKError("API error occurred", httpRes.StatusCode, string(rawBody), httpRes)
 	}
 
 	return res, nil
@@ -399,7 +423,7 @@ func (s *connector) List(ctx context.Context, request operations.C1APIAppV1Conne
 
 // RevokeCredential - Revoke Credential
 // Revoke credentials for a connector.
-func (s *connector) RevokeCredential(ctx context.Context, request operations.C1APIAppV1ConnectorServiceRevokeCredentialRequest) (*operations.C1APIAppV1ConnectorServiceRevokeCredentialResponse, error) {
+func (s *Connector) RevokeCredential(ctx context.Context, request operations.C1APIAppV1ConnectorServiceRevokeCredentialRequest) (*operations.C1APIAppV1ConnectorServiceRevokeCredentialResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/api/v1/apps/{app_id}/connectors/{connector_id}/credentials/{id}", request, nil)
 	if err != nil {
@@ -457,6 +481,10 @@ func (s *connector) RevokeCredential(ctx context.Context, request operations.C1A
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
+	case httpRes.StatusCode >= 400 && httpRes.StatusCode < 500:
+		fallthrough
+	case httpRes.StatusCode >= 500 && httpRes.StatusCode < 600:
+		return nil, sdkerrors.NewSDKError("API error occurred", httpRes.StatusCode, string(rawBody), httpRes)
 	}
 
 	return res, nil
@@ -464,7 +492,7 @@ func (s *connector) RevokeCredential(ctx context.Context, request operations.C1A
 
 // RotateCredential - Rotate Credential
 // Rotate credentials for a connector.
-func (s *connector) RotateCredential(ctx context.Context, request operations.C1APIAppV1ConnectorServiceRotateCredentialRequest) (*operations.C1APIAppV1ConnectorServiceRotateCredentialResponse, error) {
+func (s *Connector) RotateCredential(ctx context.Context, request operations.C1APIAppV1ConnectorServiceRotateCredentialRequest) (*operations.C1APIAppV1ConnectorServiceRotateCredentialResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/api/v1/apps/{app_id}/connectors/{connector_id}/credentials", request, nil)
 	if err != nil {
@@ -522,6 +550,10 @@ func (s *connector) RotateCredential(ctx context.Context, request operations.C1A
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
+	case httpRes.StatusCode >= 400 && httpRes.StatusCode < 500:
+		fallthrough
+	case httpRes.StatusCode >= 500 && httpRes.StatusCode < 600:
+		return nil, sdkerrors.NewSDKError("API error occurred", httpRes.StatusCode, string(rawBody), httpRes)
 	}
 
 	return res, nil
@@ -529,14 +561,14 @@ func (s *connector) RotateCredential(ctx context.Context, request operations.C1A
 
 // Update
 // Update a connector.
-func (s *connector) Update(ctx context.Context, request operations.C1APIAppV1ConnectorServiceUpdateRequest) (*operations.C1APIAppV1ConnectorServiceUpdateResponse, error) {
+func (s *Connector) Update(ctx context.Context, request operations.C1APIAppV1ConnectorServiceUpdateRequest) (*operations.C1APIAppV1ConnectorServiceUpdateResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/api/v1/apps/{app_id}/connectors/{id}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
-	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "ConnectorServiceUpdateRequestInput", "json", `request:"mediaType=application/json"`)
+	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "ConnectorServiceUpdateRequest", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
@@ -587,6 +619,10 @@ func (s *connector) Update(ctx context.Context, request operations.C1APIAppV1Con
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
+	case httpRes.StatusCode >= 400 && httpRes.StatusCode < 500:
+		fallthrough
+	case httpRes.StatusCode >= 500 && httpRes.StatusCode < 600:
+		return nil, sdkerrors.NewSDKError("API error occurred", httpRes.StatusCode, string(rawBody), httpRes)
 	}
 
 	return res, nil
@@ -594,14 +630,14 @@ func (s *connector) Update(ctx context.Context, request operations.C1APIAppV1Con
 
 // UpdateDelegated - Update Delegated
 // Update a delegated connector.
-func (s *connector) UpdateDelegated(ctx context.Context, request operations.C1APIAppV1ConnectorServiceUpdateDelegatedRequest) (*operations.C1APIAppV1ConnectorServiceUpdateDelegatedResponse, error) {
+func (s *Connector) UpdateDelegated(ctx context.Context, request operations.C1APIAppV1ConnectorServiceUpdateDelegatedRequest) (*operations.C1APIAppV1ConnectorServiceUpdateDelegatedResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/api/v1/apps/{connector_app_id}/connectors/{connector_id}/delegated", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
-	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "ConnectorServiceUpdateDelegatedRequestInput", "json", `request:"mediaType=application/json"`)
+	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "ConnectorServiceUpdateDelegatedRequest", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
@@ -652,6 +688,10 @@ func (s *connector) UpdateDelegated(ctx context.Context, request operations.C1AP
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
+	case httpRes.StatusCode >= 400 && httpRes.StatusCode < 500:
+		fallthrough
+	case httpRes.StatusCode >= 500 && httpRes.StatusCode < 600:
+		return nil, sdkerrors.NewSDKError("API error occurred", httpRes.StatusCode, string(rawBody), httpRes)
 	}
 
 	return res, nil

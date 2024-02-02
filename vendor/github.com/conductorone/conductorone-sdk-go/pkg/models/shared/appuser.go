@@ -10,21 +10,21 @@ import (
 	"time"
 )
 
-// AppUserAppUserType - The appplication user type. Type can be user, system or service.
-type AppUserAppUserType string
+// AppUserType - The appplication user type. Type can be user, system or service.
+type AppUserType string
 
 const (
-	AppUserAppUserTypeAppUserTypeUnspecified    AppUserAppUserType = "APP_USER_TYPE_UNSPECIFIED"
-	AppUserAppUserTypeAppUserTypeUser           AppUserAppUserType = "APP_USER_TYPE_USER"
-	AppUserAppUserTypeAppUserTypeServiceAccount AppUserAppUserType = "APP_USER_TYPE_SERVICE_ACCOUNT"
-	AppUserAppUserTypeAppUserTypeSystemAccount  AppUserAppUserType = "APP_USER_TYPE_SYSTEM_ACCOUNT"
+	AppUserTypeAppUserTypeUnspecified    AppUserType = "APP_USER_TYPE_UNSPECIFIED"
+	AppUserTypeAppUserTypeUser           AppUserType = "APP_USER_TYPE_USER"
+	AppUserTypeAppUserTypeServiceAccount AppUserType = "APP_USER_TYPE_SERVICE_ACCOUNT"
+	AppUserTypeAppUserTypeSystemAccount  AppUserType = "APP_USER_TYPE_SYSTEM_ACCOUNT"
 )
 
-func (e AppUserAppUserType) ToPointer() *AppUserAppUserType {
+func (e AppUserType) ToPointer() *AppUserType {
 	return &e
 }
 
-func (e *AppUserAppUserType) UnmarshalJSON(data []byte) error {
+func (e *AppUserType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -37,144 +37,122 @@ func (e *AppUserAppUserType) UnmarshalJSON(data []byte) error {
 	case "APP_USER_TYPE_SERVICE_ACCOUNT":
 		fallthrough
 	case "APP_USER_TYPE_SYSTEM_ACCOUNT":
-		*e = AppUserAppUserType(v)
+		*e = AppUserType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for AppUserAppUserType: %v", v)
+		return fmt.Errorf("invalid value for AppUserType: %v", v)
 	}
 }
 
-// AppUserInput - Application User that represents an account in the application.
-type AppUserInput struct {
-	// The satus of the applicaiton user.
-	AppUserStatus *AppUserStatusInput `json:"status,omitempty"`
-	// The appplication user type. Type can be user, system or service.
-	AppUserType *AppUserAppUserType `json:"appUserType,omitempty"`
+type Three struct {
 }
 
-func (o *AppUserInput) GetAppUserStatus() *AppUserStatusInput {
-	if o == nil {
-		return nil
-	}
-	return o.AppUserStatus
-}
-
-func (o *AppUserInput) GetAppUserType() *AppUserAppUserType {
-	if o == nil {
-		return nil
-	}
-	return o.AppUserType
-}
-
-type AppUserProfile3 struct {
-}
-
-type AppUserProfileType string
+type ProfileType string
 
 const (
-	AppUserProfileTypeStr             AppUserProfileType = "str"
-	AppUserProfileTypeNumber          AppUserProfileType = "number"
-	AppUserProfileTypeAppUserProfile3 AppUserProfileType = "AppUser_profile_3"
-	AppUserProfileTypeArrayOfany      AppUserProfileType = "arrayOfany"
-	AppUserProfileTypeBoolean         AppUserProfileType = "boolean"
+	ProfileTypeStr        ProfileType = "str"
+	ProfileTypeNumber     ProfileType = "number"
+	ProfileTypeThree      ProfileType = "3"
+	ProfileTypeArrayOfany ProfileType = "arrayOfany"
+	ProfileTypeBoolean    ProfileType = "boolean"
 )
 
-type AppUserProfile struct {
-	Str             *string
-	Number          *float64
-	AppUserProfile3 *AppUserProfile3
-	ArrayOfany      []interface{}
-	Boolean         *bool
+type Profile struct {
+	Str        *string
+	Number     *float64
+	Three      *Three
+	ArrayOfany []interface{}
+	Boolean    *bool
 
-	Type AppUserProfileType
+	Type ProfileType
 }
 
-func CreateAppUserProfileStr(str string) AppUserProfile {
-	typ := AppUserProfileTypeStr
+func CreateProfileStr(str string) Profile {
+	typ := ProfileTypeStr
 
-	return AppUserProfile{
+	return Profile{
 		Str:  &str,
 		Type: typ,
 	}
 }
 
-func CreateAppUserProfileNumber(number float64) AppUserProfile {
-	typ := AppUserProfileTypeNumber
+func CreateProfileNumber(number float64) Profile {
+	typ := ProfileTypeNumber
 
-	return AppUserProfile{
+	return Profile{
 		Number: &number,
 		Type:   typ,
 	}
 }
 
-func CreateAppUserProfileAppUserProfile3(appUserProfile3 AppUserProfile3) AppUserProfile {
-	typ := AppUserProfileTypeAppUserProfile3
+func CreateProfileThree(three Three) Profile {
+	typ := ProfileTypeThree
 
-	return AppUserProfile{
-		AppUserProfile3: &appUserProfile3,
-		Type:            typ,
+	return Profile{
+		Three: &three,
+		Type:  typ,
 	}
 }
 
-func CreateAppUserProfileArrayOfany(arrayOfany []interface{}) AppUserProfile {
-	typ := AppUserProfileTypeArrayOfany
+func CreateProfileArrayOfany(arrayOfany []interface{}) Profile {
+	typ := ProfileTypeArrayOfany
 
-	return AppUserProfile{
+	return Profile{
 		ArrayOfany: arrayOfany,
 		Type:       typ,
 	}
 }
 
-func CreateAppUserProfileBoolean(boolean bool) AppUserProfile {
-	typ := AppUserProfileTypeBoolean
+func CreateProfileBoolean(boolean bool) Profile {
+	typ := ProfileTypeBoolean
 
-	return AppUserProfile{
+	return Profile{
 		Boolean: &boolean,
 		Type:    typ,
 	}
 }
 
-func (u *AppUserProfile) UnmarshalJSON(data []byte) error {
+func (u *Profile) UnmarshalJSON(data []byte) error {
 
-	appUserProfile3 := new(AppUserProfile3)
-	if err := utils.UnmarshalJSON(data, &appUserProfile3, "", true, true); err == nil {
-		u.AppUserProfile3 = appUserProfile3
-		u.Type = AppUserProfileTypeAppUserProfile3
+	three := Three{}
+	if err := utils.UnmarshalJSON(data, &three, "", true, true); err == nil {
+		u.Three = &three
+		u.Type = ProfileTypeThree
 		return nil
 	}
 
-	str := new(string)
+	str := ""
 	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
-		u.Str = str
-		u.Type = AppUserProfileTypeStr
+		u.Str = &str
+		u.Type = ProfileTypeStr
 		return nil
 	}
 
-	number := new(float64)
+	number := float64(0)
 	if err := utils.UnmarshalJSON(data, &number, "", true, true); err == nil {
-		u.Number = number
-		u.Type = AppUserProfileTypeNumber
+		u.Number = &number
+		u.Type = ProfileTypeNumber
 		return nil
 	}
 
 	arrayOfany := []interface{}{}
 	if err := utils.UnmarshalJSON(data, &arrayOfany, "", true, true); err == nil {
 		u.ArrayOfany = arrayOfany
-		u.Type = AppUserProfileTypeArrayOfany
+		u.Type = ProfileTypeArrayOfany
 		return nil
 	}
 
-	boolean := new(bool)
+	boolean := false
 	if err := utils.UnmarshalJSON(data, &boolean, "", true, true); err == nil {
-		u.Boolean = boolean
-		u.Type = AppUserProfileTypeBoolean
+		u.Boolean = &boolean
+		u.Type = ProfileTypeBoolean
 		return nil
 	}
 
 	return errors.New("could not unmarshal into supported union types")
 }
 
-func (u AppUserProfile) MarshalJSON() ([]byte, error) {
+func (u Profile) MarshalJSON() ([]byte, error) {
 	if u.Str != nil {
 		return utils.MarshalJSON(u.Str, "", true)
 	}
@@ -183,8 +161,8 @@ func (u AppUserProfile) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.Number, "", true)
 	}
 
-	if u.AppUserProfile3 != nil {
-		return utils.MarshalJSON(u.AppUserProfile3, "", true)
+	if u.Three != nil {
+		return utils.MarshalJSON(u.Three, "", true)
 	}
 
 	if u.ArrayOfany != nil {
@@ -205,9 +183,9 @@ type AppUser struct {
 	// The ID of the application.
 	AppID *string `json:"appId,omitempty"`
 	// The appplication user type. Type can be user, system or service.
-	AppUserType *AppUserAppUserType `json:"appUserType,omitempty"`
-	CreatedAt   *time.Time          `json:"createdAt,omitempty"`
-	DeletedAt   *time.Time          `json:"deletedAt,omitempty"`
+	AppUserType *AppUserType `json:"appUserType,omitempty"`
+	CreatedAt   *time.Time   `json:"createdAt,omitempty"`
+	DeletedAt   *time.Time   `json:"deletedAt,omitempty"`
 	// The display name of the application user.
 	DisplayName *string `json:"displayName,omitempty"`
 	// The email field of the application user.
@@ -217,9 +195,9 @@ type AppUser struct {
 	// A unique idenditfier of the application user.
 	ID *string `json:"id,omitempty"`
 	// The conductor one user ID of the account owner.
-	IdentityUserID *string                   `json:"identityUserId,omitempty"`
-	Profile        map[string]AppUserProfile `json:"profile,omitempty"`
-	UpdatedAt      *time.Time                `json:"updatedAt,omitempty"`
+	IdentityUserID *string            `json:"identityUserId,omitempty"`
+	Profile        map[string]Profile `json:"profile,omitempty"`
+	UpdatedAt      *time.Time         `json:"updatedAt,omitempty"`
 	// The username field of the application user.
 	Username *string `json:"username,omitempty"`
 	// The usernames field of the application user.
@@ -251,7 +229,7 @@ func (o *AppUser) GetAppID() *string {
 	return o.AppID
 }
 
-func (o *AppUser) GetAppUserType() *AppUserAppUserType {
+func (o *AppUser) GetAppUserType() *AppUserType {
 	if o == nil {
 		return nil
 	}
@@ -307,7 +285,7 @@ func (o *AppUser) GetIdentityUserID() *string {
 	return o.IdentityUserID
 }
 
-func (o *AppUser) GetProfile() map[string]AppUserProfile {
+func (o *AppUser) GetProfile() map[string]Profile {
 	if o == nil {
 		return nil
 	}
@@ -333,4 +311,26 @@ func (o *AppUser) GetUsernames() []string {
 		return nil
 	}
 	return o.Usernames
+}
+
+// AppUserInput - Application User that represents an account in the application.
+type AppUserInput struct {
+	// The satus of the applicaiton user.
+	AppUserStatus *AppUserStatusInput `json:"status,omitempty"`
+	// The appplication user type. Type can be user, system or service.
+	AppUserType *AppUserType `json:"appUserType,omitempty"`
+}
+
+func (o *AppUserInput) GetAppUserStatus() *AppUserStatusInput {
+	if o == nil {
+		return nil
+	}
+	return o.AppUserStatus
+}
+
+func (o *AppUserInput) GetAppUserType() *AppUserType {
+	if o == nil {
+		return nil
+	}
+	return o.AppUserType
 }

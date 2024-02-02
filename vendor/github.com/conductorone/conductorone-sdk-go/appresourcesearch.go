@@ -15,19 +15,19 @@ import (
 	"strings"
 )
 
-type appResourceSearch struct {
+type AppResourceSearch struct {
 	sdkConfiguration sdkConfiguration
 }
 
-func newAppResourceSearch(sdkConfig sdkConfiguration) *appResourceSearch {
-	return &appResourceSearch{
+func newAppResourceSearch(sdkConfig sdkConfiguration) *AppResourceSearch {
+	return &AppResourceSearch{
 		sdkConfiguration: sdkConfig,
 	}
 }
 
 // SearchAppResourceTypes - Search App Resource Types
 // Search app resources based on filters specified in the request body.
-func (s *appResourceSearch) SearchAppResourceTypes(ctx context.Context, request *shared.SearchAppResourceTypesRequest) (*operations.C1APIAppV1AppResourceSearchSearchAppResourceTypesResponse, error) {
+func (s *AppResourceSearch) SearchAppResourceTypes(ctx context.Context, request *shared.SearchAppResourceTypesRequest) (*operations.C1APIAppV1AppResourceSearchSearchAppResourceTypesResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/api/v1/search/app_resource_types"
 
@@ -82,6 +82,10 @@ func (s *appResourceSearch) SearchAppResourceTypes(ctx context.Context, request 
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
+	case httpRes.StatusCode >= 400 && httpRes.StatusCode < 500:
+		fallthrough
+	case httpRes.StatusCode >= 500 && httpRes.StatusCode < 600:
+		return nil, sdkerrors.NewSDKError("API error occurred", httpRes.StatusCode, string(rawBody), httpRes)
 	}
 
 	return res, nil

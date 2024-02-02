@@ -15,19 +15,19 @@ import (
 	"strings"
 )
 
-type user struct {
+type User struct {
 	sdkConfiguration sdkConfiguration
 }
 
-func newUser(sdkConfig sdkConfiguration) *user {
-	return &user{
+func newUser(sdkConfig sdkConfiguration) *User {
+	return &User{
 		sdkConfiguration: sdkConfig,
 	}
 }
 
 // Get
 // Get a user by ID.
-func (s *user) Get(ctx context.Context, request operations.C1APIUserV1UserServiceGetRequest) (*operations.C1APIUserV1UserServiceGetResponse, error) {
+func (s *User) Get(ctx context.Context, request operations.C1APIUserV1UserServiceGetRequest) (*operations.C1APIUserV1UserServiceGetResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/api/v1/users/{id}", request, nil)
 	if err != nil {
@@ -78,6 +78,10 @@ func (s *user) Get(ctx context.Context, request operations.C1APIUserV1UserServic
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
+	case httpRes.StatusCode >= 400 && httpRes.StatusCode < 500:
+		fallthrough
+	case httpRes.StatusCode >= 500 && httpRes.StatusCode < 600:
+		return nil, sdkerrors.NewSDKError("API error occurred", httpRes.StatusCode, string(rawBody), httpRes)
 	}
 
 	return res, nil
@@ -85,7 +89,7 @@ func (s *user) Get(ctx context.Context, request operations.C1APIUserV1UserServic
 
 // List
 // List users.
-func (s *user) List(ctx context.Context, request operations.C1APIUserV1UserServiceListRequest) (*operations.C1APIUserV1UserServiceListResponse, error) {
+func (s *User) List(ctx context.Context, request operations.C1APIUserV1UserServiceListRequest) (*operations.C1APIUserV1UserServiceListResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/api/v1/users"
 
@@ -137,6 +141,10 @@ func (s *user) List(ctx context.Context, request operations.C1APIUserV1UserServi
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
+	case httpRes.StatusCode >= 400 && httpRes.StatusCode < 500:
+		fallthrough
+	case httpRes.StatusCode >= 500 && httpRes.StatusCode < 600:
+		return nil, sdkerrors.NewSDKError("API error occurred", httpRes.StatusCode, string(rawBody), httpRes)
 	}
 
 	return res, nil

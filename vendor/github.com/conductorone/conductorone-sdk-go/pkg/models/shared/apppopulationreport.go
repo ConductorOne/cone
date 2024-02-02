@@ -9,21 +9,21 @@ import (
 	"time"
 )
 
-// AppPopulationReportState - The state field tracks the state of the AppPopulationReport. This state field can be one of REPORT_STATE_PENDING, REPORT_STATE_UNSPECIFIED, REPORT_STATE_OK, REPORT_STATE_ERROR.
-type AppPopulationReportState string
+// State - The state field tracks the state of the AppPopulationReport. This state field can be one of REPORT_STATE_PENDING, REPORT_STATE_UNSPECIFIED, REPORT_STATE_OK, REPORT_STATE_ERROR.
+type State string
 
 const (
-	AppPopulationReportStateReportStateUnspecified AppPopulationReportState = "REPORT_STATE_UNSPECIFIED"
-	AppPopulationReportStateReportStatePending     AppPopulationReportState = "REPORT_STATE_PENDING"
-	AppPopulationReportStateReportStateOk          AppPopulationReportState = "REPORT_STATE_OK"
-	AppPopulationReportStateReportStateError       AppPopulationReportState = "REPORT_STATE_ERROR"
+	StateReportStateUnspecified State = "REPORT_STATE_UNSPECIFIED"
+	StateReportStatePending     State = "REPORT_STATE_PENDING"
+	StateReportStateOk          State = "REPORT_STATE_OK"
+	StateReportStateError       State = "REPORT_STATE_ERROR"
 )
 
-func (e AppPopulationReportState) ToPointer() *AppPopulationReportState {
+func (e State) ToPointer() *State {
 	return &e
 }
 
-func (e *AppPopulationReportState) UnmarshalJSON(data []byte) error {
+func (e *State) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -36,10 +36,10 @@ func (e *AppPopulationReportState) UnmarshalJSON(data []byte) error {
 	case "REPORT_STATE_OK":
 		fallthrough
 	case "REPORT_STATE_ERROR":
-		*e = AppPopulationReportState(v)
+		*e = State(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for AppPopulationReportState: %v", v)
+		return fmt.Errorf("invalid value for State: %v", v)
 	}
 }
 
@@ -55,7 +55,7 @@ type AppPopulationReport struct {
 	// The id field.
 	ID *string `json:"id,omitempty"`
 	// The state field tracks the state of the AppPopulationReport. This state field can be one of REPORT_STATE_PENDING, REPORT_STATE_UNSPECIFIED, REPORT_STATE_OK, REPORT_STATE_ERROR.
-	State *AppPopulationReportState `json:"state,omitempty"`
+	State *State `json:"state,omitempty"`
 }
 
 func (a AppPopulationReport) MarshalJSON() ([]byte, error) {
@@ -104,7 +104,7 @@ func (o *AppPopulationReport) GetID() *string {
 	return o.ID
 }
 
-func (o *AppPopulationReport) GetState() *AppPopulationReportState {
+func (o *AppPopulationReport) GetState() *State {
 	if o == nil {
 		return nil
 	}

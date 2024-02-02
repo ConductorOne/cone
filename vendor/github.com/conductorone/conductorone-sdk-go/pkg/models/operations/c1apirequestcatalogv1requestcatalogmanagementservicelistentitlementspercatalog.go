@@ -8,9 +8,9 @@ import (
 )
 
 type C1APIRequestcatalogV1RequestCatalogManagementServiceListEntitlementsPerCatalogRequest struct {
-	CatalogID string   `pathParam:"style=simple,explode=false,name=catalog_id"`
-	PageSize  *float64 `queryParam:"style=form,explode=true,name=page_size"`
-	PageToken *string  `queryParam:"style=form,explode=true,name=page_token"`
+	CatalogID string  `pathParam:"style=simple,explode=false,name=catalog_id"`
+	PageSize  *int    `queryParam:"style=form,explode=true,name=page_size"`
+	PageToken *string `queryParam:"style=form,explode=true,name=page_token"`
 }
 
 func (o *C1APIRequestcatalogV1RequestCatalogManagementServiceListEntitlementsPerCatalogRequest) GetCatalogID() string {
@@ -20,7 +20,7 @@ func (o *C1APIRequestcatalogV1RequestCatalogManagementServiceListEntitlementsPer
 	return o.CatalogID
 }
 
-func (o *C1APIRequestcatalogV1RequestCatalogManagementServiceListEntitlementsPerCatalogRequest) GetPageSize() *float64 {
+func (o *C1APIRequestcatalogV1RequestCatalogManagementServiceListEntitlementsPerCatalogRequest) GetPageSize() *int {
 	if o == nil {
 		return nil
 	}

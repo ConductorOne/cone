@@ -8,10 +8,10 @@ import (
 )
 
 type C1APIAppV1AppEntitlementOwnersListRequest struct {
-	AppID         string   `pathParam:"style=simple,explode=false,name=app_id"`
-	EntitlementID string   `pathParam:"style=simple,explode=false,name=entitlement_id"`
-	PageSize      *float64 `queryParam:"style=form,explode=true,name=page_size"`
-	PageToken     *string  `queryParam:"style=form,explode=true,name=page_token"`
+	AppID         string  `pathParam:"style=simple,explode=false,name=app_id"`
+	EntitlementID string  `pathParam:"style=simple,explode=false,name=entitlement_id"`
+	PageSize      *int    `queryParam:"style=form,explode=true,name=page_size"`
+	PageToken     *string `queryParam:"style=form,explode=true,name=page_token"`
 }
 
 func (o *C1APIAppV1AppEntitlementOwnersListRequest) GetAppID() string {
@@ -28,7 +28,7 @@ func (o *C1APIAppV1AppEntitlementOwnersListRequest) GetEntitlementID() string {
 	return o.EntitlementID
 }
 
-func (o *C1APIAppV1AppEntitlementOwnersListRequest) GetPageSize() *float64 {
+func (o *C1APIAppV1AppEntitlementOwnersListRequest) GetPageSize() *int {
 	if o == nil {
 		return nil
 	}

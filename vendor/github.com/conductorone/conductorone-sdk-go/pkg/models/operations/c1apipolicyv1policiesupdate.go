@@ -8,15 +8,15 @@ import (
 )
 
 type C1APIPolicyV1PoliciesUpdateRequest struct {
-	UpdatePolicyRequestInput *shared.UpdatePolicyRequestInput `request:"mediaType=application/json"`
-	ID                       string                           `pathParam:"style=simple,explode=false,name=id"`
+	UpdatePolicyRequest *shared.UpdatePolicyRequest `request:"mediaType=application/json"`
+	ID                  string                      `pathParam:"style=simple,explode=false,name=id"`
 }
 
-func (o *C1APIPolicyV1PoliciesUpdateRequest) GetUpdatePolicyRequestInput() *shared.UpdatePolicyRequestInput {
+func (o *C1APIPolicyV1PoliciesUpdateRequest) GetUpdatePolicyRequest() *shared.UpdatePolicyRequest {
 	if o == nil {
 		return nil
 	}
-	return o.UpdatePolicyRequestInput
+	return o.UpdatePolicyRequest
 }
 
 func (o *C1APIPolicyV1PoliciesUpdateRequest) GetID() string {

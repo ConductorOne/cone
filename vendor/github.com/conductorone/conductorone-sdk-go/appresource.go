@@ -14,19 +14,19 @@ import (
 	"net/http"
 )
 
-type appResource struct {
+type AppResource struct {
 	sdkConfiguration sdkConfiguration
 }
 
-func newAppResource(sdkConfig sdkConfiguration) *appResource {
-	return &appResource{
+func newAppResource(sdkConfig sdkConfiguration) *AppResource {
+	return &AppResource{
 		sdkConfiguration: sdkConfig,
 	}
 }
 
 // Get
 // Invokes the c1.api.app.v1.AppResourceService.Get method.
-func (s *appResource) Get(ctx context.Context, request operations.C1APIAppV1AppResourceServiceGetRequest) (*operations.C1APIAppV1AppResourceServiceGetResponse, error) {
+func (s *AppResource) Get(ctx context.Context, request operations.C1APIAppV1AppResourceServiceGetRequest) (*operations.C1APIAppV1AppResourceServiceGetResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/api/v1/apps/{app_id}/resource_types/{app_resource_type_id}/resources/{id}", request, nil)
 	if err != nil {
@@ -77,6 +77,10 @@ func (s *appResource) Get(ctx context.Context, request operations.C1APIAppV1AppR
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
+	case httpRes.StatusCode >= 400 && httpRes.StatusCode < 500:
+		fallthrough
+	case httpRes.StatusCode >= 500 && httpRes.StatusCode < 600:
+		return nil, sdkerrors.NewSDKError("API error occurred", httpRes.StatusCode, string(rawBody), httpRes)
 	}
 
 	return res, nil
@@ -84,7 +88,7 @@ func (s *appResource) Get(ctx context.Context, request operations.C1APIAppV1AppR
 
 // List
 // Invokes the c1.api.app.v1.AppResourceService.List method.
-func (s *appResource) List(ctx context.Context, request operations.C1APIAppV1AppResourceServiceListRequest) (*operations.C1APIAppV1AppResourceServiceListResponse, error) {
+func (s *AppResource) List(ctx context.Context, request operations.C1APIAppV1AppResourceServiceListRequest) (*operations.C1APIAppV1AppResourceServiceListResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/api/v1/apps/{app_id}/resource_types/{app_resource_type_id}/resources", request, nil)
 	if err != nil {
@@ -139,6 +143,10 @@ func (s *appResource) List(ctx context.Context, request operations.C1APIAppV1App
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
+	case httpRes.StatusCode >= 400 && httpRes.StatusCode < 500:
+		fallthrough
+	case httpRes.StatusCode >= 500 && httpRes.StatusCode < 600:
+		return nil, sdkerrors.NewSDKError("API error occurred", httpRes.StatusCode, string(rawBody), httpRes)
 	}
 
 	return res, nil

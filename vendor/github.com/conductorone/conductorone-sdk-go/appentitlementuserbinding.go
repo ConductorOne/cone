@@ -14,19 +14,19 @@ import (
 	"net/http"
 )
 
-type appEntitlementUserBinding struct {
+type AppEntitlementUserBinding struct {
 	sdkConfiguration sdkConfiguration
 }
 
-func newAppEntitlementUserBinding(sdkConfig sdkConfiguration) *appEntitlementUserBinding {
-	return &appEntitlementUserBinding{
+func newAppEntitlementUserBinding(sdkConfig sdkConfiguration) *AppEntitlementUserBinding {
+	return &AppEntitlementUserBinding{
 		sdkConfiguration: sdkConfig,
 	}
 }
 
 // ListAppUsersForIdentityWithGrant - List App Users For Identity With Grant
 // Returns a list of app users for the identity in the app. If that app user also has a grant to the entitlement from the request, data about the grant is also returned. It will always return ALL app users for this identity, but only SOME may have grant data.
-func (s *appEntitlementUserBinding) ListAppUsersForIdentityWithGrant(ctx context.Context, request operations.C1APIAppV1AppEntitlementUserBindingServiceListAppUsersForIdentityWithGrantRequest) (*operations.C1APIAppV1AppEntitlementUserBindingServiceListAppUsersForIdentityWithGrantResponse, error) {
+func (s *AppEntitlementUserBinding) ListAppUsersForIdentityWithGrant(ctx context.Context, request operations.C1APIAppV1AppEntitlementUserBindingServiceListAppUsersForIdentityWithGrantRequest) (*operations.C1APIAppV1AppEntitlementUserBindingServiceListAppUsersForIdentityWithGrantResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/api/v1/apps/{app_id}/entitlements/{app_entitlement_id}/users/{identity_user_id}/grants", request, nil)
 	if err != nil {
@@ -77,6 +77,10 @@ func (s *appEntitlementUserBinding) ListAppUsersForIdentityWithGrant(ctx context
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
+	case httpRes.StatusCode >= 400 && httpRes.StatusCode < 500:
+		fallthrough
+	case httpRes.StatusCode >= 500 && httpRes.StatusCode < 600:
+		return nil, sdkerrors.NewSDKError("API error occurred", httpRes.StatusCode, string(rawBody), httpRes)
 	}
 
 	return res, nil

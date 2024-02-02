@@ -8,11 +8,11 @@ import (
 )
 
 type C1APIAppV1AppResourceOwnersListRequest struct {
-	AppID          string   `pathParam:"style=simple,explode=false,name=app_id"`
-	PageSize       *float64 `queryParam:"style=form,explode=true,name=page_size"`
-	PageToken      *string  `queryParam:"style=form,explode=true,name=page_token"`
-	ResourceID     string   `pathParam:"style=simple,explode=false,name=resource_id"`
-	ResourceTypeID string   `pathParam:"style=simple,explode=false,name=resource_type_id"`
+	AppID          string  `pathParam:"style=simple,explode=false,name=app_id"`
+	PageSize       *int    `queryParam:"style=form,explode=true,name=page_size"`
+	PageToken      *string `queryParam:"style=form,explode=true,name=page_token"`
+	ResourceID     string  `pathParam:"style=simple,explode=false,name=resource_id"`
+	ResourceTypeID string  `pathParam:"style=simple,explode=false,name=resource_type_id"`
 }
 
 func (o *C1APIAppV1AppResourceOwnersListRequest) GetAppID() string {
@@ -22,7 +22,7 @@ func (o *C1APIAppV1AppResourceOwnersListRequest) GetAppID() string {
 	return o.AppID
 }
 
-func (o *C1APIAppV1AppResourceOwnersListRequest) GetPageSize() *float64 {
+func (o *C1APIAppV1AppResourceOwnersListRequest) GetPageSize() *int {
 	if o == nil {
 		return nil
 	}

@@ -15,19 +15,19 @@ import (
 	"strings"
 )
 
-type policies struct {
+type Policies struct {
 	sdkConfiguration sdkConfiguration
 }
 
-func newPolicies(sdkConfig sdkConfiguration) *policies {
-	return &policies{
+func newPolicies(sdkConfig sdkConfiguration) *Policies {
+	return &Policies{
 		sdkConfiguration: sdkConfig,
 	}
 }
 
 // Create
 // Create a policy.
-func (s *policies) Create(ctx context.Context, request *shared.CreatePolicyRequestInput) (*operations.C1APIPolicyV1PoliciesCreateResponse, error) {
+func (s *Policies) Create(ctx context.Context, request *shared.CreatePolicyRequest) (*operations.C1APIPolicyV1PoliciesCreateResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/api/v1/policies"
 
@@ -82,6 +82,10 @@ func (s *policies) Create(ctx context.Context, request *shared.CreatePolicyReque
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
+	case httpRes.StatusCode >= 400 && httpRes.StatusCode < 500:
+		fallthrough
+	case httpRes.StatusCode >= 500 && httpRes.StatusCode < 600:
+		return nil, sdkerrors.NewSDKError("API error occurred", httpRes.StatusCode, string(rawBody), httpRes)
 	}
 
 	return res, nil
@@ -89,7 +93,7 @@ func (s *policies) Create(ctx context.Context, request *shared.CreatePolicyReque
 
 // Delete
 // Delete a policy by ID.
-func (s *policies) Delete(ctx context.Context, request operations.C1APIPolicyV1PoliciesDeleteRequest) (*operations.C1APIPolicyV1PoliciesDeleteResponse, error) {
+func (s *Policies) Delete(ctx context.Context, request operations.C1APIPolicyV1PoliciesDeleteRequest) (*operations.C1APIPolicyV1PoliciesDeleteResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/api/v1/policies/{id}", request, nil)
 	if err != nil {
@@ -147,6 +151,10 @@ func (s *policies) Delete(ctx context.Context, request operations.C1APIPolicyV1P
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
+	case httpRes.StatusCode >= 400 && httpRes.StatusCode < 500:
+		fallthrough
+	case httpRes.StatusCode >= 500 && httpRes.StatusCode < 600:
+		return nil, sdkerrors.NewSDKError("API error occurred", httpRes.StatusCode, string(rawBody), httpRes)
 	}
 
 	return res, nil
@@ -154,7 +162,7 @@ func (s *policies) Delete(ctx context.Context, request operations.C1APIPolicyV1P
 
 // Get
 // Get a policy by ID.
-func (s *policies) Get(ctx context.Context, request operations.C1APIPolicyV1PoliciesGetRequest) (*operations.C1APIPolicyV1PoliciesGetResponse, error) {
+func (s *Policies) Get(ctx context.Context, request operations.C1APIPolicyV1PoliciesGetRequest) (*operations.C1APIPolicyV1PoliciesGetResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/api/v1/policies/{id}", request, nil)
 	if err != nil {
@@ -205,6 +213,10 @@ func (s *policies) Get(ctx context.Context, request operations.C1APIPolicyV1Poli
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
+	case httpRes.StatusCode >= 400 && httpRes.StatusCode < 500:
+		fallthrough
+	case httpRes.StatusCode >= 500 && httpRes.StatusCode < 600:
+		return nil, sdkerrors.NewSDKError("API error occurred", httpRes.StatusCode, string(rawBody), httpRes)
 	}
 
 	return res, nil
@@ -212,7 +224,7 @@ func (s *policies) Get(ctx context.Context, request operations.C1APIPolicyV1Poli
 
 // List
 // List policies.
-func (s *policies) List(ctx context.Context, request operations.C1APIPolicyV1PoliciesListRequest) (*operations.C1APIPolicyV1PoliciesListResponse, error) {
+func (s *Policies) List(ctx context.Context, request operations.C1APIPolicyV1PoliciesListRequest) (*operations.C1APIPolicyV1PoliciesListResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/api/v1/policies"
 
@@ -264,6 +276,10 @@ func (s *policies) List(ctx context.Context, request operations.C1APIPolicyV1Pol
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
+	case httpRes.StatusCode >= 400 && httpRes.StatusCode < 500:
+		fallthrough
+	case httpRes.StatusCode >= 500 && httpRes.StatusCode < 600:
+		return nil, sdkerrors.NewSDKError("API error occurred", httpRes.StatusCode, string(rawBody), httpRes)
 	}
 
 	return res, nil
@@ -271,14 +287,14 @@ func (s *policies) List(ctx context.Context, request operations.C1APIPolicyV1Pol
 
 // Update
 // Update a policy by providing a policy object and an update mask.
-func (s *policies) Update(ctx context.Context, request operations.C1APIPolicyV1PoliciesUpdateRequest) (*operations.C1APIPolicyV1PoliciesUpdateResponse, error) {
+func (s *Policies) Update(ctx context.Context, request operations.C1APIPolicyV1PoliciesUpdateRequest) (*operations.C1APIPolicyV1PoliciesUpdateResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/api/v1/policies/{id}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
-	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "UpdatePolicyRequestInput", "json", `request:"mediaType=application/json"`)
+	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "UpdatePolicyRequest", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
@@ -329,6 +345,10 @@ func (s *policies) Update(ctx context.Context, request operations.C1APIPolicyV1P
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
+	case httpRes.StatusCode >= 400 && httpRes.StatusCode < 500:
+		fallthrough
+	case httpRes.StatusCode >= 500 && httpRes.StatusCode < 600:
+		return nil, sdkerrors.NewSDKError("API error occurred", httpRes.StatusCode, string(rawBody), httpRes)
 	}
 
 	return res, nil

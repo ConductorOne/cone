@@ -14,19 +14,19 @@ import (
 	"net/http"
 )
 
-type appEntitlements struct {
+type AppEntitlements struct {
 	sdkConfiguration sdkConfiguration
 }
 
-func newAppEntitlements(sdkConfig sdkConfiguration) *appEntitlements {
-	return &appEntitlements{
+func newAppEntitlements(sdkConfig sdkConfiguration) *AppEntitlements {
+	return &AppEntitlements{
 		sdkConfiguration: sdkConfig,
 	}
 }
 
 // Get
 // Get an app entitlement by ID.
-func (s *appEntitlements) Get(ctx context.Context, request operations.C1APIAppV1AppEntitlementsGetRequest) (*operations.C1APIAppV1AppEntitlementsGetResponse, error) {
+func (s *AppEntitlements) Get(ctx context.Context, request operations.C1APIAppV1AppEntitlementsGetRequest) (*operations.C1APIAppV1AppEntitlementsGetResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/api/v1/apps/{app_id}/entitlements/{id}", request, nil)
 	if err != nil {
@@ -77,6 +77,10 @@ func (s *appEntitlements) Get(ctx context.Context, request operations.C1APIAppV1
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
+	case httpRes.StatusCode >= 400 && httpRes.StatusCode < 500:
+		fallthrough
+	case httpRes.StatusCode >= 500 && httpRes.StatusCode < 600:
+		return nil, sdkerrors.NewSDKError("API error occurred", httpRes.StatusCode, string(rawBody), httpRes)
 	}
 
 	return res, nil
@@ -84,7 +88,7 @@ func (s *appEntitlements) Get(ctx context.Context, request operations.C1APIAppV1
 
 // List
 // List app entitlements associated with an app.
-func (s *appEntitlements) List(ctx context.Context, request operations.C1APIAppV1AppEntitlementsListRequest) (*operations.C1APIAppV1AppEntitlementsListResponse, error) {
+func (s *AppEntitlements) List(ctx context.Context, request operations.C1APIAppV1AppEntitlementsListRequest) (*operations.C1APIAppV1AppEntitlementsListResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/api/v1/apps/{app_id}/entitlements", request, nil)
 	if err != nil {
@@ -139,6 +143,10 @@ func (s *appEntitlements) List(ctx context.Context, request operations.C1APIAppV
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
+	case httpRes.StatusCode >= 400 && httpRes.StatusCode < 500:
+		fallthrough
+	case httpRes.StatusCode >= 500 && httpRes.StatusCode < 600:
+		return nil, sdkerrors.NewSDKError("API error occurred", httpRes.StatusCode, string(rawBody), httpRes)
 	}
 
 	return res, nil
@@ -146,7 +154,7 @@ func (s *appEntitlements) List(ctx context.Context, request operations.C1APIAppV
 
 // ListForAppResource - List For App Resource
 // List app entitlements associated with an app resource.
-func (s *appEntitlements) ListForAppResource(ctx context.Context, request operations.C1APIAppV1AppEntitlementsListForAppResourceRequest) (*operations.C1APIAppV1AppEntitlementsListForAppResourceResponse, error) {
+func (s *AppEntitlements) ListForAppResource(ctx context.Context, request operations.C1APIAppV1AppEntitlementsListForAppResourceRequest) (*operations.C1APIAppV1AppEntitlementsListForAppResourceResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/api/v1/apps/{app_id}/entitlements/resource_types/{app_resource_type_id}/resources/{app_resource_id}", request, nil)
 	if err != nil {
@@ -201,6 +209,10 @@ func (s *appEntitlements) ListForAppResource(ctx context.Context, request operat
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
+	case httpRes.StatusCode >= 400 && httpRes.StatusCode < 500:
+		fallthrough
+	case httpRes.StatusCode >= 500 && httpRes.StatusCode < 600:
+		return nil, sdkerrors.NewSDKError("API error occurred", httpRes.StatusCode, string(rawBody), httpRes)
 	}
 
 	return res, nil
@@ -208,7 +220,7 @@ func (s *appEntitlements) ListForAppResource(ctx context.Context, request operat
 
 // ListForAppUser - List For App User
 // List app entitlements associated with an app user.
-func (s *appEntitlements) ListForAppUser(ctx context.Context, request operations.C1APIAppV1AppEntitlementsListForAppUserRequest) (*operations.C1APIAppV1AppEntitlementsListForAppUserResponse, error) {
+func (s *AppEntitlements) ListForAppUser(ctx context.Context, request operations.C1APIAppV1AppEntitlementsListForAppUserRequest) (*operations.C1APIAppV1AppEntitlementsListForAppUserResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/api/v1/apps/{app_id}/entitlements/users/{app_user_id}", request, nil)
 	if err != nil {
@@ -263,6 +275,10 @@ func (s *appEntitlements) ListForAppUser(ctx context.Context, request operations
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
+	case httpRes.StatusCode >= 400 && httpRes.StatusCode < 500:
+		fallthrough
+	case httpRes.StatusCode >= 500 && httpRes.StatusCode < 600:
+		return nil, sdkerrors.NewSDKError("API error occurred", httpRes.StatusCode, string(rawBody), httpRes)
 	}
 
 	return res, nil
@@ -270,7 +286,7 @@ func (s *appEntitlements) ListForAppUser(ctx context.Context, request operations
 
 // ListUsers - List Users
 // List the users, as AppEntitlementUsers objects, of an app entitlement.
-func (s *appEntitlements) ListUsers(ctx context.Context, request operations.C1APIAppV1AppEntitlementsListUsersRequest) (*operations.C1APIAppV1AppEntitlementsListUsersResponse, error) {
+func (s *AppEntitlements) ListUsers(ctx context.Context, request operations.C1APIAppV1AppEntitlementsListUsersRequest) (*operations.C1APIAppV1AppEntitlementsListUsersResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/api/v1/apps/{app_id}/entitlements/{app_entitlement_id}/users", request, nil)
 	if err != nil {
@@ -325,6 +341,10 @@ func (s *appEntitlements) ListUsers(ctx context.Context, request operations.C1AP
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
+	case httpRes.StatusCode >= 400 && httpRes.StatusCode < 500:
+		fallthrough
+	case httpRes.StatusCode >= 500 && httpRes.StatusCode < 600:
+		return nil, sdkerrors.NewSDKError("API error occurred", httpRes.StatusCode, string(rawBody), httpRes)
 	}
 
 	return res, nil
@@ -332,14 +352,14 @@ func (s *appEntitlements) ListUsers(ctx context.Context, request operations.C1AP
 
 // Update
 // Update an app entitlement by ID.
-func (s *appEntitlements) Update(ctx context.Context, request operations.C1APIAppV1AppEntitlementsUpdateRequest) (*operations.C1APIAppV1AppEntitlementsUpdateResponse, error) {
+func (s *AppEntitlements) Update(ctx context.Context, request operations.C1APIAppV1AppEntitlementsUpdateRequest) (*operations.C1APIAppV1AppEntitlementsUpdateResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/api/v1/apps/{app_id}/entitlements/{id}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
-	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "UpdateAppEntitlementRequestInput", "json", `request:"mediaType=application/json"`)
+	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "UpdateAppEntitlementRequest", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
@@ -390,6 +410,10 @@ func (s *appEntitlements) Update(ctx context.Context, request operations.C1APIAp
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
+	case httpRes.StatusCode >= 400 && httpRes.StatusCode < 500:
+		fallthrough
+	case httpRes.StatusCode >= 500 && httpRes.StatusCode < 600:
+		return nil, sdkerrors.NewSDKError("API error occurred", httpRes.StatusCode, string(rawBody), httpRes)
 	}
 
 	return res, nil

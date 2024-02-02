@@ -15,19 +15,19 @@ import (
 	"strings"
 )
 
-type taskSearch struct {
+type TaskSearch struct {
 	sdkConfiguration sdkConfiguration
 }
 
-func newTaskSearch(sdkConfig sdkConfiguration) *taskSearch {
-	return &taskSearch{
+func newTaskSearch(sdkConfig sdkConfiguration) *TaskSearch {
+	return &TaskSearch{
 		sdkConfiguration: sdkConfig,
 	}
 }
 
 // Search
 // Search tasks based on filters specified in the request body.
-func (s *taskSearch) Search(ctx context.Context, request *shared.TaskSearchRequestInput) (*operations.C1APITaskV1TaskSearchServiceSearchResponse, error) {
+func (s *TaskSearch) Search(ctx context.Context, request *shared.TaskSearchRequest) (*operations.C1APITaskV1TaskSearchServiceSearchResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/api/v1/search/tasks"
 
@@ -82,6 +82,10 @@ func (s *taskSearch) Search(ctx context.Context, request *shared.TaskSearchReque
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
+	case httpRes.StatusCode >= 400 && httpRes.StatusCode < 500:
+		fallthrough
+	case httpRes.StatusCode >= 500 && httpRes.StatusCode < 600:
+		return nil, sdkerrors.NewSDKError("API error occurred", httpRes.StatusCode, string(rawBody), httpRes)
 	}
 
 	return res, nil

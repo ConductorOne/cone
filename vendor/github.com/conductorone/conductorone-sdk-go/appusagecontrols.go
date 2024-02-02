@@ -14,19 +14,19 @@ import (
 	"net/http"
 )
 
-type appUsageControls struct {
+type AppUsageControls struct {
 	sdkConfiguration sdkConfiguration
 }
 
-func newAppUsageControls(sdkConfig sdkConfiguration) *appUsageControls {
-	return &appUsageControls{
+func newAppUsageControls(sdkConfig sdkConfiguration) *AppUsageControls {
+	return &AppUsageControls{
 		sdkConfiguration: sdkConfig,
 	}
 }
 
 // Get
 // Get usage controls, as an AppUsageControls object which describes some peripheral configuration, for an app.
-func (s *appUsageControls) Get(ctx context.Context, request operations.C1APIAppV1AppUsageControlsServiceGetRequest) (*operations.C1APIAppV1AppUsageControlsServiceGetResponse, error) {
+func (s *AppUsageControls) Get(ctx context.Context, request operations.C1APIAppV1AppUsageControlsServiceGetRequest) (*operations.C1APIAppV1AppUsageControlsServiceGetResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/api/v1/apps/{app_id}/usage_controls", request, nil)
 	if err != nil {
@@ -77,6 +77,10 @@ func (s *appUsageControls) Get(ctx context.Context, request operations.C1APIAppV
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
+	case httpRes.StatusCode >= 400 && httpRes.StatusCode < 500:
+		fallthrough
+	case httpRes.StatusCode >= 500 && httpRes.StatusCode < 600:
+		return nil, sdkerrors.NewSDKError("API error occurred", httpRes.StatusCode, string(rawBody), httpRes)
 	}
 
 	return res, nil
@@ -84,7 +88,7 @@ func (s *appUsageControls) Get(ctx context.Context, request operations.C1APIAppV
 
 // Update
 // Update usage controls for an app.
-func (s *appUsageControls) Update(ctx context.Context, request operations.C1APIAppV1AppUsageControlsServiceUpdateRequest) (*operations.C1APIAppV1AppUsageControlsServiceUpdateResponse, error) {
+func (s *AppUsageControls) Update(ctx context.Context, request operations.C1APIAppV1AppUsageControlsServiceUpdateRequest) (*operations.C1APIAppV1AppUsageControlsServiceUpdateResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url, err := utils.GenerateURL(ctx, baseURL, "/api/v1/apps/{app_id}/usage_controls", request, nil)
 	if err != nil {
@@ -142,6 +146,10 @@ func (s *appUsageControls) Update(ctx context.Context, request operations.C1APIA
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
+	case httpRes.StatusCode >= 400 && httpRes.StatusCode < 500:
+		fallthrough
+	case httpRes.StatusCode >= 500 && httpRes.StatusCode < 600:
+		return nil, sdkerrors.NewSDKError("API error occurred", httpRes.StatusCode, string(rawBody), httpRes)
 	}
 
 	return res, nil

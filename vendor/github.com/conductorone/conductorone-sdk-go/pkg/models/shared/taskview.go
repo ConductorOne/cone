@@ -18,6 +18,8 @@ type TaskView struct {
 	EntitlementsPath *string `json:"entitlementsPath,omitempty"`
 	// JSONPATH expression indicating the location of the User object of the User that this task is targeting in the expanded array. This is the user that is the identity when the target of a task is an app user.
 	IdentityUserPath *string `json:"identityUserPath,omitempty"`
+	// JSONPATH expression indicating the location of the Insights objects in the expanded array
+	InsightsPath *string `json:"insightsPath,omitempty"`
 	// JSONPATH expression indicating the location of the StepApproverUsers objects in the expanded array
 	StepApproversPath *string `json:"stepApproversPath,omitempty"`
 	// JSONPATH expression indicating the location of the User object in the expanded array. This is the user that is a direct target of the ticket without a specific relationship to a potentially non-existent app user.
@@ -71,6 +73,13 @@ func (o *TaskView) GetIdentityUserPath() *string {
 		return nil
 	}
 	return o.IdentityUserPath
+}
+
+func (o *TaskView) GetInsightsPath() *string {
+	if o == nil {
+		return nil
+	}
+	return o.InsightsPath
 }
 
 func (o *TaskView) GetStepApproversPath() *string {

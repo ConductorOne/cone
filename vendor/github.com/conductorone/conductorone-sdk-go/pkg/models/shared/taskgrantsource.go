@@ -8,6 +8,8 @@ type TaskGrantSource struct {
 	ExternalURL *string `json:"externalUrl,omitempty"`
 	// The integration id for the source of tickets.
 	IntegrationID *string `json:"integrationId,omitempty"`
+	// the request id for the grant ticket if the source is external
+	RequestID *string `json:"requestId,omitempty"`
 }
 
 func (o *TaskGrantSource) GetExternalURL() *string {
@@ -22,4 +24,11 @@ func (o *TaskGrantSource) GetIntegrationID() *string {
 		return nil
 	}
 	return o.IntegrationID
+}
+
+func (o *TaskGrantSource) GetRequestID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.RequestID
 }

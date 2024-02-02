@@ -15,19 +15,19 @@ import (
 	"strings"
 )
 
-type userSearch struct {
+type UserSearch struct {
 	sdkConfiguration sdkConfiguration
 }
 
-func newUserSearch(sdkConfig sdkConfiguration) *userSearch {
-	return &userSearch{
+func newUserSearch(sdkConfig sdkConfiguration) *UserSearch {
+	return &UserSearch{
 		sdkConfiguration: sdkConfig,
 	}
 }
 
 // Search
 // Search users based on filters specified in the request body.
-func (s *userSearch) Search(ctx context.Context, request *shared.SearchUsersRequest) (*operations.C1APIUserV1UserSearchSearchResponse, error) {
+func (s *UserSearch) Search(ctx context.Context, request *shared.SearchUsersRequest) (*operations.C1APIUserV1UserSearchSearchResponse, error) {
 	baseURL := utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
 	url := strings.TrimSuffix(baseURL, "/") + "/api/v1/search/users"
 
@@ -82,6 +82,10 @@ func (s *userSearch) Search(ctx context.Context, request *shared.SearchUsersRequ
 		default:
 			return nil, sdkerrors.NewSDKError(fmt.Sprintf("unknown content-type received: %s", contentType), httpRes.StatusCode, string(rawBody), httpRes)
 		}
+	case httpRes.StatusCode >= 400 && httpRes.StatusCode < 500:
+		fallthrough
+	case httpRes.StatusCode >= 500 && httpRes.StatusCode < 600:
+		return nil, sdkerrors.NewSDKError("API error occurred", httpRes.StatusCode, string(rawBody), httpRes)
 	}
 
 	return res, nil

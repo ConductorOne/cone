@@ -9,7 +9,7 @@ import (
 
 func (c *client) ListPolicies(ctx context.Context) ([]shared.Policy, error) {
 	policies := make([]shared.Policy, 0)
-	pageSize := float64(100)
+	pageSize := 100
 	pageToken := ""
 	for {
 		resp, err := c.sdk.Policies.List(ctx, operations.C1APIPolicyV1PoliciesListRequest{

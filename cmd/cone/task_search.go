@@ -55,12 +55,12 @@ func searchTasksRun(cmd *cobra.Command, args []string) error {
 		query = &queryVal
 	}
 
-	var state []shared.TaskSearchRequestTaskStates
+	var state []shared.TaskStates
 	switch strings.ToLower(v.GetString(stateFlag)) {
 	case "open", "task_state_open":
-		state = []shared.TaskSearchRequestTaskStates{shared.TaskSearchRequestTaskStatesTaskStateOpen}
+		state = []shared.TaskStates{shared.TaskStatesTaskStateOpen}
 	case "closed", "task_state_closed":
-		state = []shared.TaskSearchRequestTaskStates{shared.TaskSearchRequestTaskStatesTaskStateClosed}
+		state = []shared.TaskStates{shared.TaskStatesTaskStateClosed}
 	case "":
 	}
 
@@ -79,7 +79,7 @@ func searchTasksRun(cmd *cobra.Command, args []string) error {
 		taskTypes = []shared.TaskTypeInput{*taskType}
 	}
 
-	taskResp, err := c.SearchTasks(ctx, shared.TaskSearchRequestInput{
+	taskResp, err := c.SearchTasks(ctx, &shared.TaskSearchRequest{
 		AccessReviewIds:    v.GetStringSlice(accessReviewIdsFlag),
 		AppEntitlementIds:  v.GetStringSlice(appEntitlementIdsFlag),
 		AppResourceIds:     v.GetStringSlice(appResourceIdsFlag),

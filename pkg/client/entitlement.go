@@ -9,17 +9,17 @@ import (
 )
 
 const (
-	GrantedStatusGranted     = shared.RequestCatalogSearchServiceSearchEntitlementsRequestGrantedStatusGranted
-	GrantedStatusUnspecified = shared.RequestCatalogSearchServiceSearchEntitlementsRequestGrantedStatusUnspecified
-	GrantedStatusNotGranted  = shared.RequestCatalogSearchServiceSearchEntitlementsRequestGrantedStatusNotGranted
-	GrantedStatusAll         = shared.RequestCatalogSearchServiceSearchEntitlementsRequestGrantedStatusAll
+	GrantedStatusGranted     = shared.GrantedStatusGranted
+	GrantedStatusUnspecified = shared.GrantedStatusUnspecified
+	GrantedStatusNotGranted  = shared.GrantedStatusNotGranted
+	GrantedStatusAll         = shared.GrantedStatusAll
 )
 
 type SearchEntitlementsFilter struct {
 	Query                    string
 	EntitlementAlias         string
 	AppDisplayName           string
-	GrantedStatus            shared.RequestCatalogSearchServiceSearchEntitlementsRequestGrantedStatus
+	GrantedStatus            shared.GrantedStatus
 	IncludeDeleted           bool
 	AppEntitlementExpandMask shared.AppEntitlementExpandMask
 }
@@ -99,10 +99,11 @@ func (e *ExpandableEntitlementWithBindings) SetPath(pathname string, value int) 
 func (c *client) SearchEntitlements(ctx context.Context, filter *SearchEntitlementsFilter) ([]*EntitlementWithBindings, error) {
 	// TODO(morgabra) Pagination
 	// TODO(morgabra) Should we abstract the OpenAPI objects from the rest of cone? Kinda... no? But they aren't typed...
+	pageSize := 100
 	req := shared.RequestCatalogSearchServiceSearchEntitlementsRequest{
 		EntitlementAlias:         stringPtr(filter.EntitlementAlias),
 		GrantedStatus:            filter.GrantedStatus.ToPointer(),
-		PageSize:                 float64Ptr(100),
+		PageSize:                 &pageSize,
 		PageToken:                nil,
 		Query:                    stringPtr(filter.Query),
 		AppDisplayName:           stringPtr(filter.AppDisplayName),
@@ -191,7 +192,7 @@ func (c *client) GetEntitlement(ctx context.Context, appId string, entitlementId
 
 func (c *client) ListEntitlements(ctx context.Context, appId string) ([]shared.AppEntitlement, error) {
 	entitlements := make([]shared.AppEntitlement, 0)
-	pageSize := float64(100)
+	pageSize := 100
 	pageToken := ""
 	for {
 		resp, err := c.sdk.AppEntitlements.List(ctx, operations.C1APIAppV1AppEntitlementsListRequest{

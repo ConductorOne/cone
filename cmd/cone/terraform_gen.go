@@ -185,7 +185,7 @@ func terraformGen(cmd *cobra.Command, args []string) error {
 	if err != nil {
 		pterm.Info.Println("Please make sure you have Terraform v1.5 or later installed and the conductorone provider is v0.4.2 or later")
 		pterm.Info.Println("You can find out more here: https://developer.hashicorp.com/terraform/language/import/generating-configuration")
-		pterm.Error.Printfln("Try running `terraform plan -generate-config-out=generated_resources.tf` in `%s` to see a more detailed error message.", terraformDir)
+		pterm.Error.Printfln("Try running `terraform plan -generate-config-out=%s` in `%s` to see a more detailed error message.", generatedFileName, terraformDir)
 		return fmt.Errorf("terraform plan failed: %w", err)
 	}
 

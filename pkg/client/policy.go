@@ -3,7 +3,6 @@ package client
 import (
 	"context"
 
-	"github.com/conductorone/conductorone-sdk-go/pkg/models/operations"
 	"github.com/conductorone/conductorone-sdk-go/pkg/models/shared"
 )
 
@@ -12,9 +11,9 @@ func (c *client) ListPolicies(ctx context.Context) ([]shared.Policy, error) {
 	pageSize := float64(100)
 	pageToken := ""
 	for {
-		resp, err := c.sdk.Policies.List(ctx, operations.C1APIPolicyV1PoliciesListRequest{
-			PageToken: &pageToken,
+		resp, err := c.sdk.PolicySearch.Search(ctx, &shared.SearchPoliciesRequest{
 			PageSize:  &pageSize,
+			PageToken: &pageToken,
 		})
 		if err != nil {
 			return nil, err

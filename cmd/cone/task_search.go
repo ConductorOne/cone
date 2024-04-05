@@ -80,18 +80,18 @@ func searchTasksRun(cmd *cobra.Command, args []string) error {
 	}
 
 	taskResp, err := c.SearchTasks(ctx, shared.TaskSearchRequestInput{
-		AccessReviewIds:    v.GetStringSlice(accessReviewIdsFlag),
-		AppEntitlementIds:  v.GetStringSlice(appEntitlementIdsFlag),
-		AppResourceIds:     v.GetStringSlice(appResourceIdsFlag),
-		AppResourceTypeIds: v.GetStringSlice(appResourceTypeIdsFlag),
-		AppUserSubjectIds:  v.GetStringSlice(appUserSubjectIdsFlag),
-		ApplicationIds:     v.GetStringSlice(appIdsFlag),
-		AssigneesInIds:     v.GetStringSlice(assigneeIdsFlag),
+		AccessReviewIds:    v.GetStringSlice(accessReviewIDsFlag),
+		AppEntitlementIds:  v.GetStringSlice(appEntitlementIDsFlag),
+		AppResourceIds:     v.GetStringSlice(appResourceIDsFlag),
+		AppResourceTypeIds: v.GetStringSlice(appResourceTypeIDsFlag),
+		AppUserSubjectIds:  v.GetStringSlice(appUserSubjectIDsFlag),
+		ApplicationIds:     v.GetStringSlice(appIDsFlag),
+		AssigneesInIds:     v.GetStringSlice(assigneeIDsFlag),
 		IncludeDeleted:     includeDeleted,
 		Query:              query,
 		TaskStates:         state,
 		TaskTypes:          taskTypes,
-		SubjectIds:         v.GetStringSlice(userSubjectIdsFlag),
+		SubjectIds:         v.GetStringSlice(userSubjectIDsFlag),
 	})
 	if err != nil {
 		return err

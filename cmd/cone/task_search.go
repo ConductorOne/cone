@@ -17,14 +17,14 @@ func searchTasksCmd() *cobra.Command {
 		RunE:  searchTasksRun,
 	}
 
-	addAccessReviewIdsFlag(cmd)
-	addAppEntitlementIdsFlag(cmd)
-	addAppResourceIdsFlag(cmd)
-	addAppResourceTypeIdsFlag(cmd)
-	addAppUserSubjectIdsFlag(cmd)
-	addUserSubjectIdsFlag(cmd)
-	addAppApplicationIdsFlag(cmd)
-	addAssigneesIds(cmd)
+	addAccessReviewIDsFlag(cmd)
+	addAppEntitlementIDsFlag(cmd)
+	addAppResourceIDsFlag(cmd)
+	addAppResourceTypeIDsFlag(cmd)
+	addAppUserSubjectIDsFlag(cmd)
+	addUserSubjectIDsFlag(cmd)
+	addAppApplicationIDsFlag(cmd)
+	addAssigneesIDs(cmd)
 	addQueryTaskFlag(cmd)
 	addTaskStatesFlag(cmd)
 	addTaskTypesFlag(cmd)

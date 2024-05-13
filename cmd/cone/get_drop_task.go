@@ -112,7 +112,7 @@ func (j JustificationValidator) Prompt(isFirstRun bool) {
 	if isFirstRun {
 		pterm.Info.Println(justificationInputTip)
 	}
-	pterm.Warning.Println(justificationWarningMessage)
+	pterm.FgMagenta.Println(justificationWarningMessage)
 }
 
 func getValidJustification(ctx context.Context, v *viper.Viper, justification string) (string, error) {

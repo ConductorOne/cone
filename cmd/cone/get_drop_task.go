@@ -102,14 +102,6 @@ func validateGrantTaskArguments(maxProvisionTime *time.Duration, duration *time.
 	return nil
 }
 
-var InfoNeeded = pterm.PrefixPrinter{
-	MessageStyle: &pterm.Style{pterm.FgMagenta},
-	Prefix: pterm.Prefix{
-		Style: &pterm.Style{pterm.BgLightMagenta},
-		Text:  "Info Needed",
-	},
-}
-
 type JustificationValidator struct{}
 
 func (j JustificationValidator) IsValid(txt string) (string, bool) {
@@ -120,7 +112,7 @@ func (j JustificationValidator) Prompt(isFirstRun bool) {
 	if isFirstRun {
 		pterm.Info.Println(justificationInputTip)
 	}
-	InfoNeeded.Println(justificationWarningMessage)
+	output.InputNeeded.Println(justificationWarningMessage)
 }
 
 func getValidJustification(ctx context.Context, v *viper.Viper, justification string) (string, error) {

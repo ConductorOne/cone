@@ -21,7 +21,7 @@ import (
 const durationErrorMessage = "grant duration must be less than or equal to max provision time"
 const durationInputTip = "We accept a sequence of decimal numbers, each with optional fraction and a unit suffix," +
 	"such as \"12h\", \"1w2d\" or \"2h45m\". Valid units are (m)inutes, (h)ours, (d)ays, (w)eeks."
-const justificationErrorMessage = "justification must be provided when requesting access to an entitlement"
+const justificationWarningMessage = "Please provide a justification when requesting access to an entitlement."
 const justificationInputTip = "You can add a justification using -j or --justification"
 
 func getCmd() *cobra.Command {
@@ -112,7 +112,7 @@ func (j JustificationValidator) Prompt(isFirstRun bool) {
 	if isFirstRun {
 		pterm.Info.Println(justificationInputTip)
 	}
-	pterm.Error.Println(justificationErrorMessage)
+	output.InputNeeded.Println(justificationWarningMessage)
 }
 
 func getValidJustification(ctx context.Context, v *viper.Viper, justification string) (string, error) {
@@ -122,7 +122,7 @@ func getValidJustification(ctx context.Context, v *viper.Viper, justification st
 
 	if v.GetBool(nonInteractiveFlag) {
 		pterm.Info.Println(justificationInputTip)
-		return "", errors.New(justificationErrorMessage)
+		return "", errors.New(justificationWarningMessage)
 	}
 	justificationInput, err := output.GetValidInput[string](ctx, justification, JustificationValidator{})
 	if err != nil {

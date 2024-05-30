@@ -19,19 +19,6 @@ type TemplateData interface {
 	GetOutputId() string
 }
 
-func ObjectNameToTerraformType(objectName string) string {
-	switch objectName {
-	case "app":
-		return TerraformAppType
-	case "policy":
-		return TerraformPolicyType
-	case "app_entitlement":
-		return TerraformAppEntilementType
-	default:
-		return ""
-	}
-}
-
 func ApplyTemplate(data TemplateData, tmpl string) (string, error) {
 	// Prepare a buffer to hold the combined output
 	var combinedOutput bytes.Buffer

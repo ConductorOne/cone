@@ -47,11 +47,6 @@ func stringPtr(s string) *string {
 	return &s
 }
 
-func float64Ptr(i int) *float64 {
-	f := float64(i)
-	return &f
-}
-
 func intPtr(i int) *int {
 	return &i
 }

@@ -6,4 +6,13 @@ package shared
 //
 //	The instance is just a marker for it being copied into an active policy.
 type RejectInstance struct {
+	// An optional message to include in the comments when a task is automatically rejected.
+	RejectMessage *string `json:"rejectMessage,omitempty"`
+}
+
+func (o *RejectInstance) GetRejectMessage() *string {
+	if o == nil {
+		return nil
+	}
+	return o.RejectMessage
 }

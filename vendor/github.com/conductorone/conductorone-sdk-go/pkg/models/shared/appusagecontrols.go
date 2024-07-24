@@ -9,11 +9,11 @@ type AppUsageControls struct {
 	// Whether or not to notify some if they have access to the app, but has not used it within a configurable amount of time.
 	Notify *bool `json:"notify,omitempty"`
 	// The duration in days after which we notify users of nonusage.
-	NotifyAfterDays *float64 `json:"notifyAfterDays,omitempty"`
+	NotifyAfterDays *int64 `json:"notifyAfterDays,omitempty"`
 	// Whether or not to revoke a grant if they have access to the app, but has not used it within a configurable amount of time.
 	Revoke *bool `json:"revoke,omitempty"`
 	// The duration in days after which we revoke users that have not used that grant.
-	RevokeAfterDays *float64 `json:"revokeAfterDays,omitempty"`
+	RevokeAfterDays *int64 `json:"revokeAfterDays,omitempty"`
 }
 
 func (o *AppUsageControls) GetAppID() *string {
@@ -30,7 +30,7 @@ func (o *AppUsageControls) GetNotify() *bool {
 	return o.Notify
 }
 
-func (o *AppUsageControls) GetNotifyAfterDays() *float64 {
+func (o *AppUsageControls) GetNotifyAfterDays() *int64 {
 	if o == nil {
 		return nil
 	}
@@ -44,7 +44,7 @@ func (o *AppUsageControls) GetRevoke() *bool {
 	return o.Revoke
 }
 
-func (o *AppUsageControls) GetRevokeAfterDays() *float64 {
+func (o *AppUsageControls) GetRevokeAfterDays() *int64 {
 	if o == nil {
 		return nil
 	}

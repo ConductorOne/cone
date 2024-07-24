@@ -13,7 +13,7 @@ type CreateAppRequest struct {
 	// Creates the app with this grant policy.
 	GrantPolicyID *string `json:"grantPolicyId,omitempty"`
 	// Creates the app with this monthly cost per seat.
-	MonthlyCostUsd *float64 `json:"monthlyCostUsd,omitempty"`
+	MonthlyCostUsd *int `json:"monthlyCostUsd,omitempty"`
 	// Creates the app with this array of owners.
 	Owners []string `json:"owners,omitempty"`
 	// Creates the app with this revoke policy.
@@ -48,7 +48,7 @@ func (o *CreateAppRequest) GetGrantPolicyID() *string {
 	return o.GrantPolicyID
 }
 
-func (o *CreateAppRequest) GetMonthlyCostUsd() *float64 {
+func (o *CreateAppRequest) GetMonthlyCostUsd() *int {
 	if o == nil {
 		return nil
 	}

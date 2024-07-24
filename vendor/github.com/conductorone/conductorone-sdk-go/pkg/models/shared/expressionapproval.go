@@ -50,7 +50,3 @@ func (o *ExpressionApproval) GetFallbackUserIds() []string {
 	}
 	return o.FallbackUserIds
 }
-
-// ExpressionApprovalInput - The ExpressionApproval message.
-type ExpressionApprovalInput struct {
-}

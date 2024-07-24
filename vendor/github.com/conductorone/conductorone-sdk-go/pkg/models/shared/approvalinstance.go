@@ -21,7 +21,6 @@ const (
 func (e ApprovalInstanceState) ToPointer() *ApprovalInstanceState {
 	return &e
 }
-
 func (e *ApprovalInstanceState) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -63,6 +62,7 @@ type ApprovalInstance struct {
 	//   - self
 	//   - entitlementOwners
 	//   - expression
+	//   - webhook
 	//
 	Approval *Approval `json:"approval,omitempty"`
 	// The approved action indicates that the approvalinstance had an outcome of approved.

@@ -8,6 +8,10 @@ type AppResourceView struct {
 	AppResource *AppResource `json:"appResource,omitempty"`
 	// JSONPATH expression indicating the location of the App object in the array
 	AppPath *string `json:"appPath,omitempty"`
+	// JSONPATH expression indicating the location of the Parent Resource object in the array
+	ParentResourcePath *string `json:"parentResourcePath,omitempty"`
+	// JSONPATH expression indicating the location of the Parent Resource Type object in the array
+	ParentResourceTypePath *string `json:"parentResourceTypePath,omitempty"`
 	// JSONPATH expression indicating the location of the Resource Type object in the array
 	ResourceTypePath *string `json:"resourceTypePath,omitempty"`
 }
@@ -24,6 +28,20 @@ func (o *AppResourceView) GetAppPath() *string {
 		return nil
 	}
 	return o.AppPath
+}
+
+func (o *AppResourceView) GetParentResourcePath() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ParentResourcePath
+}
+
+func (o *AppResourceView) GetParentResourceTypePath() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ParentResourceTypePath
 }
 
 func (o *AppResourceView) GetResourceTypePath() *string {

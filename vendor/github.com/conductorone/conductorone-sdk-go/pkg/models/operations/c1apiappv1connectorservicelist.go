@@ -8,9 +8,9 @@ import (
 )
 
 type C1APIAppV1ConnectorServiceListRequest struct {
-	AppID     string   `pathParam:"style=simple,explode=false,name=app_id"`
-	PageSize  *float64 `queryParam:"style=form,explode=true,name=page_size"`
-	PageToken *string  `queryParam:"style=form,explode=true,name=page_token"`
+	AppID     string  `pathParam:"style=simple,explode=false,name=app_id"`
+	PageSize  *int    `queryParam:"style=form,explode=true,name=page_size"`
+	PageToken *string `queryParam:"style=form,explode=true,name=page_token"`
 }
 
 func (o *C1APIAppV1ConnectorServiceListRequest) GetAppID() string {
@@ -20,7 +20,7 @@ func (o *C1APIAppV1ConnectorServiceListRequest) GetAppID() string {
 	return o.AppID
 }
 
-func (o *C1APIAppV1ConnectorServiceListRequest) GetPageSize() *float64 {
+func (o *C1APIAppV1ConnectorServiceListRequest) GetPageSize() *int {
 	if o == nil {
 		return nil
 	}

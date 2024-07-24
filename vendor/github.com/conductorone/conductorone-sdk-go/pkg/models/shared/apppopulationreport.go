@@ -22,7 +22,6 @@ const (
 func (e AppPopulationReportState) ToPointer() *AppPopulationReportState {
 	return &e
 }
-
 func (e *AppPopulationReportState) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {

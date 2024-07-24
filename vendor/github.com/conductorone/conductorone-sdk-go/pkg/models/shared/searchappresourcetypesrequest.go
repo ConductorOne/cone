@@ -6,12 +6,14 @@ package shared
 type SearchAppResourceTypesRequest struct {
 	// A list of app IDs to restrict the search by.
 	AppIds []string `json:"appIds,omitempty"`
+	// A list of app user IDs to restrict the search by.
+	AppUserIds []string `json:"appUserIds,omitempty"`
 	// A list of resource type IDs to exclude from the search.
 	ExcludeResourceTypeIds []string `json:"excludeResourceTypeIds,omitempty"`
 	// A list of resource type trait IDs to exclude from the search.
 	ExcludeResourceTypeTraitIds []string `json:"excludeResourceTypeTraitIds,omitempty"`
 	// The pageSize where 10 <= pageSize <= 100, default 25.
-	PageSize *float64 `json:"pageSize,omitempty"`
+	PageSize *int `json:"pageSize,omitempty"`
 	// The pageToken field.
 	PageToken *string `json:"pageToken,omitempty"`
 	// Fuzzy search the display name of resource types.
@@ -29,6 +31,13 @@ func (o *SearchAppResourceTypesRequest) GetAppIds() []string {
 	return o.AppIds
 }
 
+func (o *SearchAppResourceTypesRequest) GetAppUserIds() []string {
+	if o == nil {
+		return nil
+	}
+	return o.AppUserIds
+}
+
 func (o *SearchAppResourceTypesRequest) GetExcludeResourceTypeIds() []string {
 	if o == nil {
 		return nil
@@ -43,7 +52,7 @@ func (o *SearchAppResourceTypesRequest) GetExcludeResourceTypeTraitIds() []strin
 	return o.ExcludeResourceTypeTraitIds
 }
 
-func (o *SearchAppResourceTypesRequest) GetPageSize() *float64 {
+func (o *SearchAppResourceTypesRequest) GetPageSize() *int {
 	if o == nil {
 		return nil
 	}

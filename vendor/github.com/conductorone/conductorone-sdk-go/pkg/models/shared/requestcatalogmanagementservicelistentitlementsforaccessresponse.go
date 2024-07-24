@@ -9,8 +9,8 @@ import (
 // RequestCatalogManagementServiceListEntitlementsForAccessResponseExpanded - Contains an arbitrary serialized message along with a @type that describes the type of the serialized message.
 type RequestCatalogManagementServiceListEntitlementsForAccessResponseExpanded struct {
 	// The type of the serialized message.
-	AtType               *string                `json:"@type,omitempty"`
-	AdditionalProperties map[string]interface{} `additionalProperties:"true" json:"-"`
+	AtType               *string        `json:"@type,omitempty"`
+	AdditionalProperties map[string]any `additionalProperties:"true" json:"-"`
 }
 
 func (r RequestCatalogManagementServiceListEntitlementsForAccessResponseExpanded) MarshalJSON() ([]byte, error) {
@@ -31,7 +31,7 @@ func (o *RequestCatalogManagementServiceListEntitlementsForAccessResponseExpande
 	return o.AtType
 }
 
-func (o *RequestCatalogManagementServiceListEntitlementsForAccessResponseExpanded) GetAdditionalProperties() map[string]interface{} {
+func (o *RequestCatalogManagementServiceListEntitlementsForAccessResponseExpanded) GetAdditionalProperties() map[string]any {
 	if o == nil {
 		return nil
 	}

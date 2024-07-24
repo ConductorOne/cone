@@ -8,16 +8,16 @@ import (
 )
 
 type C1APIAppV1ConnectorServiceUpdateRequest struct {
-	ConnectorServiceUpdateRequestInput *shared.ConnectorServiceUpdateRequestInput `request:"mediaType=application/json"`
-	AppID                              string                                     `pathParam:"style=simple,explode=false,name=app_id"`
-	ID                                 string                                     `pathParam:"style=simple,explode=false,name=id"`
+	ConnectorServiceUpdateRequest *shared.ConnectorServiceUpdateRequest `request:"mediaType=application/json"`
+	AppID                         string                                `pathParam:"style=simple,explode=false,name=app_id"`
+	ID                            string                                `pathParam:"style=simple,explode=false,name=id"`
 }
 
-func (o *C1APIAppV1ConnectorServiceUpdateRequest) GetConnectorServiceUpdateRequestInput() *shared.ConnectorServiceUpdateRequestInput {
+func (o *C1APIAppV1ConnectorServiceUpdateRequest) GetConnectorServiceUpdateRequest() *shared.ConnectorServiceUpdateRequest {
 	if o == nil {
 		return nil
 	}
-	return o.ConnectorServiceUpdateRequestInput
+	return o.ConnectorServiceUpdateRequest
 }
 
 func (o *C1APIAppV1ConnectorServiceUpdateRequest) GetAppID() string {

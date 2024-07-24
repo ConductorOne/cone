@@ -8,16 +8,16 @@ import (
 )
 
 type C1APIAppV1AppUserServiceUpdateRequest struct {
-	AppUserServiceUpdateRequestInput *shared.AppUserServiceUpdateRequestInput `request:"mediaType=application/json"`
-	AppUserAppID                     string                                   `pathParam:"style=simple,explode=false,name=app_user_app_id"`
-	AppUserID                        string                                   `pathParam:"style=simple,explode=false,name=app_user_id"`
+	AppUserServiceUpdateRequest *shared.AppUserServiceUpdateRequest `request:"mediaType=application/json"`
+	AppUserAppID                string                              `pathParam:"style=simple,explode=false,name=app_user_app_id"`
+	AppUserID                   string                              `pathParam:"style=simple,explode=false,name=app_user_id"`
 }
 
-func (o *C1APIAppV1AppUserServiceUpdateRequest) GetAppUserServiceUpdateRequestInput() *shared.AppUserServiceUpdateRequestInput {
+func (o *C1APIAppV1AppUserServiceUpdateRequest) GetAppUserServiceUpdateRequest() *shared.AppUserServiceUpdateRequest {
 	if o == nil {
 		return nil
 	}
-	return o.AppUserServiceUpdateRequestInput
+	return o.AppUserServiceUpdateRequest
 }
 
 func (o *C1APIAppV1AppUserServiceUpdateRequest) GetAppUserAppID() string {

@@ -8,16 +8,16 @@ import (
 )
 
 type C1APIAppV1AppEntitlementsUpdateRequest struct {
-	UpdateAppEntitlementRequestInput *shared.UpdateAppEntitlementRequestInput `request:"mediaType=application/json"`
-	AppID                            string                                   `pathParam:"style=simple,explode=false,name=app_id"`
-	ID                               string                                   `pathParam:"style=simple,explode=false,name=id"`
+	UpdateAppEntitlementRequest *shared.UpdateAppEntitlementRequest `request:"mediaType=application/json"`
+	AppID                       string                              `pathParam:"style=simple,explode=false,name=app_id"`
+	ID                          string                              `pathParam:"style=simple,explode=false,name=id"`
 }
 
-func (o *C1APIAppV1AppEntitlementsUpdateRequest) GetUpdateAppEntitlementRequestInput() *shared.UpdateAppEntitlementRequestInput {
+func (o *C1APIAppV1AppEntitlementsUpdateRequest) GetUpdateAppEntitlementRequest() *shared.UpdateAppEntitlementRequest {
 	if o == nil {
 		return nil
 	}
-	return o.UpdateAppEntitlementRequestInput
+	return o.UpdateAppEntitlementRequest
 }
 
 func (o *C1APIAppV1AppEntitlementsUpdateRequest) GetAppID() string {

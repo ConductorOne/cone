@@ -22,10 +22,14 @@ type AppResource struct {
 	// The display name for this resource.
 	DisplayName *string `json:"displayName,omitempty"`
 	// The number of grants to this resource.
-	GrantCount *string `json:"grantCount,omitempty"`
+	GrantCount *int64 `integer:"string" json:"grantCount,omitempty"`
 	// The id of the resource.
-	ID        *string    `json:"id,omitempty"`
-	UpdatedAt *time.Time `json:"updatedAt,omitempty"`
+	ID *string `json:"id,omitempty"`
+	// The parent resource id, if this resource is a child of another resource.
+	ParentAppResourceID *string `json:"parentAppResourceId,omitempty"`
+	// The parent resource type id, if this resource is a child of another resource.
+	ParentAppResourceTypeID *string    `json:"parentAppResourceTypeId,omitempty"`
+	UpdatedAt               *time.Time `json:"updatedAt,omitempty"`
 }
 
 func (a AppResource) MarshalJSON() ([]byte, error) {
@@ -88,7 +92,7 @@ func (o *AppResource) GetDisplayName() *string {
 	return o.DisplayName
 }
 
-func (o *AppResource) GetGrantCount() *string {
+func (o *AppResource) GetGrantCount() *int64 {
 	if o == nil {
 		return nil
 	}
@@ -100,6 +104,20 @@ func (o *AppResource) GetID() *string {
 		return nil
 	}
 	return o.ID
+}
+
+func (o *AppResource) GetParentAppResourceID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ParentAppResourceID
+}
+
+func (o *AppResource) GetParentAppResourceTypeID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ParentAppResourceTypeID
 }
 
 func (o *AppResource) GetUpdatedAt() *time.Time {

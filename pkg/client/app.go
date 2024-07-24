@@ -23,7 +23,7 @@ func (c *client) GetApp(ctx context.Context, appID string) (*shared.App, error) 
 
 func (c *client) ListApps(ctx context.Context) ([]shared.App, error) {
 	apps := make([]shared.App, 0)
-	pageSize := float64(100)
+	pageSize := 100
 	pageToken := ""
 	for {
 		resp, err := c.sdk.Apps.List(ctx, operations.C1APIAppV1AppsListRequest{

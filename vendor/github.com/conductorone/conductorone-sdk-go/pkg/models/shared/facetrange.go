@@ -5,18 +5,18 @@ package shared
 // The FacetRange message.
 type FacetRange struct {
 	// The count of items in the range.
-	Count *string `json:"count,omitempty"`
+	Count *int64 `integer:"string" json:"count,omitempty"`
 	// The display name of the range.
 	DisplayName *string `json:"displayName,omitempty"`
 	// The starting value of the range.
-	From *string `json:"from,omitempty"`
+	From *int64 `integer:"string" json:"from,omitempty"`
 	// The icon of the range.
 	IconURL *string `json:"iconUrl,omitempty"`
 	// The ending value of the range.
-	To *string `json:"to,omitempty"`
+	To *int64 `integer:"string" json:"to,omitempty"`
 }
 
-func (o *FacetRange) GetCount() *string {
+func (o *FacetRange) GetCount() *int64 {
 	if o == nil {
 		return nil
 	}
@@ -30,7 +30,7 @@ func (o *FacetRange) GetDisplayName() *string {
 	return o.DisplayName
 }
 
-func (o *FacetRange) GetFrom() *string {
+func (o *FacetRange) GetFrom() *int64 {
 	if o == nil {
 		return nil
 	}
@@ -44,7 +44,7 @@ func (o *FacetRange) GetIconURL() *string {
 	return o.IconURL
 }
 
-func (o *FacetRange) GetTo() *string {
+func (o *FacetRange) GetTo() *int64 {
 	if o == nil {
 		return nil
 	}

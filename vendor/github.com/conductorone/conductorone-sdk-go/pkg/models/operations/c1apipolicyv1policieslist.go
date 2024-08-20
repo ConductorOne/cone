@@ -8,11 +8,11 @@ import (
 )
 
 type C1APIPolicyV1PoliciesListRequest struct {
-	PageSize  *float64 `queryParam:"style=form,explode=true,name=page_size"`
-	PageToken *string  `queryParam:"style=form,explode=true,name=page_token"`
+	PageSize  *int    `queryParam:"style=form,explode=true,name=page_size"`
+	PageToken *string `queryParam:"style=form,explode=true,name=page_token"`
 }
 
-func (o *C1APIPolicyV1PoliciesListRequest) GetPageSize() *float64 {
+func (o *C1APIPolicyV1PoliciesListRequest) GetPageSize() *int {
 	if o == nil {
 		return nil
 	}

@@ -5,7 +5,9 @@ package conductoronesdkgo
 import (
 	"context"
 	"fmt"
+	"github.com/conductorone/conductorone-sdk-go/internal/hooks"
 	"github.com/conductorone/conductorone-sdk-go/pkg/models/shared"
+	"github.com/conductorone/conductorone-sdk-go/pkg/retry"
 	"github.com/conductorone/conductorone-sdk-go/pkg/utils"
 	"net/http"
 	"time"
@@ -41,8 +43,7 @@ func Float32(f float32) *float32 { return &f }
 func Float64(f float64) *float64 { return &f }
 
 type sdkConfiguration struct {
-	DefaultClient     HTTPClient
-	SecurityClient    HTTPClient
+	Client            HTTPClient
 	Security          func(context.Context) (interface{}, error)
 	ServerURL         string
 	ServerIndex       int
@@ -52,7 +53,9 @@ type sdkConfiguration struct {
 	SDKVersion        string
 	GenVersion        string
 	UserAgent         string
-	RetryConfig       *utils.RetryConfig
+	RetryConfig       *retry.Config
+	Hooks             *hooks.Hooks
+	Timeout           *time.Duration
 }
 
 func (c *sdkConfiguration) GetServerDetails() (string, map[string]string) {
@@ -65,37 +68,44 @@ func (c *sdkConfiguration) GetServerDetails() (string, map[string]string) {
 
 // ConductoroneAPI - ConductorOne API: The ConductorOne API is a HTTP API for managing ConductorOne resources.
 type ConductoroneAPI struct {
-	AppEntitlementOwners      *appEntitlementOwners
-	AppEntitlementSearch      *appEntitlementSearch
-	AppEntitlementUserBinding *appEntitlementUserBinding
-	AppEntitlements           *appEntitlements
-	AppOwners                 *appOwners
-	AppReport                 *appReport
-	AppReportAction           *appReportAction
-	AppResource               *appResource
-	AppResourceOwners         *appResourceOwners
-	AppResourceSearch         *appResourceSearch
-	AppResourceType           *appResourceType
-	AppSearch                 *appSearch
-	AppUsageControls          *appUsageControls
-	AppUser                   *appUser
-	Apps                      *apps
-	AttributeSearch           *attributeSearch
-	Attributes                *attributes
-	Auth                      *auth
-	Connector                 *connector
-	Directory                 *directory
-	PersonalClient            *personalClient
-	Policies                  *policies
-	PolicySearch              *policySearch
-	RequestCatalogManagement  *requestCatalogManagement
-	RequestCatalogSearch      *requestCatalogSearch
-	Roles                     *roles
-	Task                      *task
-	TaskActions               *taskActions
-	TaskSearch                *taskSearch
-	User                      *user
-	UserSearch                *userSearch
+	Apps                      *Apps
+	AppAccessRequestsDefaults *AppAccessRequestsDefaults
+	Connector                 *Connector
+	AppEntitlements           *AppEntitlements
+	AppEntitlementSearch      *AppEntitlementSearch
+	AppEntitlementUserBinding *AppEntitlementUserBinding
+	AppEntitlementOwners      *AppEntitlementOwners
+	AppOwners                 *AppOwners
+	AppReport                 *AppReport
+	AppReportAction           *AppReportAction
+	AppResourceType           *AppResourceType
+	AppResource               *AppResource
+	AppResourceOwners         *AppResourceOwners
+	AppUsageControls          *AppUsageControls
+	AppUser                   *AppUser
+	Attributes                *Attributes
+	Auth                      *Auth
+	RequestCatalogManagement  *RequestCatalogManagement
+	Directory                 *Directory
+	PersonalClient            *PersonalClient
+	Roles                     *Roles
+	Policies                  *Policies
+	PolicyValidate            *PolicyValidate
+	AppResourceSearch         *AppResourceSearch
+	AppSearch                 *AppSearch
+	AttributeSearch           *AttributeSearch
+	PolicySearch              *PolicySearch
+	RequestCatalogSearch      *RequestCatalogSearch
+	TaskSearch                *TaskSearch
+	UserSearch                *UserSearch
+	WebhooksSearch            *WebhooksSearch
+	AWSExternalIDSettings     *AWSExternalIDSettings
+	SessionSettings           *SessionSettings
+	SystemLog                 *SystemLog
+	Task                      *Task
+	TaskActions               *TaskActions
+	User                      *User
+	Webhooks                  *Webhooks
 
 	sdkConfiguration sdkConfiguration
 }
@@ -147,21 +157,14 @@ func WithTenantDomain(tenantDomain string) SDKOption {
 // WithClient allows the overriding of the default HTTP client used by the SDK
 func WithClient(client HTTPClient) SDKOption {
 	return func(sdk *ConductoroneAPI) {
-		sdk.sdkConfiguration.DefaultClient = client
-	}
-}
-
-func withSecurity(security interface{}) func(context.Context) (interface{}, error) {
-	return func(context.Context) (interface{}, error) {
-		return &security, nil
+		sdk.sdkConfiguration.Client = client
 	}
 }
 
 // WithSecurity configures the SDK to use the provided security details
-
 func WithSecurity(security shared.Security) SDKOption {
 	return func(sdk *ConductoroneAPI) {
-		sdk.sdkConfiguration.Security = withSecurity(security)
+		sdk.sdkConfiguration.Security = utils.AsSecuritySource(security)
 	}
 }
 
@@ -174,9 +177,16 @@ func WithSecuritySource(security func(context.Context) (shared.Security, error))
 	}
 }
 
-func WithRetryConfig(retryConfig utils.RetryConfig) SDKOption {
+func WithRetryConfig(retryConfig retry.Config) SDKOption {
 	return func(sdk *ConductoroneAPI) {
 		sdk.sdkConfiguration.RetryConfig = &retryConfig
+	}
+}
+
+// WithTimeout Optional request timeout applied to each operation
+func WithTimeout(timeout time.Duration) SDKOption {
+	return func(sdk *ConductoroneAPI) {
+		sdk.sdkConfiguration.Timeout = &timeout
 	}
 }
 
@@ -186,14 +196,15 @@ func New(opts ...SDKOption) *ConductoroneAPI {
 		sdkConfiguration: sdkConfiguration{
 			Language:          "go",
 			OpenAPIDocVersion: "0.1.0-alpha",
-			SDKVersion:        "1.12.0",
-			GenVersion:        "2.161.0",
-			UserAgent:         "speakeasy-sdk/go 1.12.0 2.161.0 0.1.0-alpha github.com/conductorone/conductorone-sdk-go",
+			SDKVersion:        "1.18.3",
+			GenVersion:        "2.378.3",
+			UserAgent:         "speakeasy-sdk/go 1.18.3 2.378.3 0.1.0-alpha github.com/conductorone/conductorone-sdk-go",
 			ServerDefaults: []map[string]string{
 				{
 					"tenantDomain": "example",
 				},
 			},
+			Hooks: hooks.New(),
 		},
 	}
 	for _, opt := range opts {
@@ -201,24 +212,30 @@ func New(opts ...SDKOption) *ConductoroneAPI {
 	}
 
 	// Use WithClient to override the default client if you would like to customize the timeout
-	if sdk.sdkConfiguration.DefaultClient == nil {
-		sdk.sdkConfiguration.DefaultClient = &http.Client{Timeout: 60 * time.Second}
-	}
-	if sdk.sdkConfiguration.SecurityClient == nil {
-		if sdk.sdkConfiguration.Security != nil {
-			sdk.sdkConfiguration.SecurityClient = utils.ConfigureSecurityClient(sdk.sdkConfiguration.DefaultClient, sdk.sdkConfiguration.Security)
-		} else {
-			sdk.sdkConfiguration.SecurityClient = sdk.sdkConfiguration.DefaultClient
-		}
+	if sdk.sdkConfiguration.Client == nil {
+		sdk.sdkConfiguration.Client = &http.Client{Timeout: 60 * time.Second}
 	}
 
-	sdk.AppEntitlementOwners = newAppEntitlementOwners(sdk.sdkConfiguration)
+	currentServerURL, _ := sdk.sdkConfiguration.GetServerDetails()
+	serverURL := currentServerURL
+	serverURL, sdk.sdkConfiguration.Client = sdk.sdkConfiguration.Hooks.SDKInit(currentServerURL, sdk.sdkConfiguration.Client)
+	if serverURL != currentServerURL {
+		sdk.sdkConfiguration.ServerURL = serverURL
+	}
+
+	sdk.Apps = newApps(sdk.sdkConfiguration)
+
+	sdk.AppAccessRequestsDefaults = newAppAccessRequestsDefaults(sdk.sdkConfiguration)
+
+	sdk.Connector = newConnector(sdk.sdkConfiguration)
+
+	sdk.AppEntitlements = newAppEntitlements(sdk.sdkConfiguration)
 
 	sdk.AppEntitlementSearch = newAppEntitlementSearch(sdk.sdkConfiguration)
 
 	sdk.AppEntitlementUserBinding = newAppEntitlementUserBinding(sdk.sdkConfiguration)
 
-	sdk.AppEntitlements = newAppEntitlements(sdk.sdkConfiguration)
+	sdk.AppEntitlementOwners = newAppEntitlementOwners(sdk.sdkConfiguration)
 
 	sdk.AppOwners = newAppOwners(sdk.sdkConfiguration)
 
@@ -226,53 +243,61 @@ func New(opts ...SDKOption) *ConductoroneAPI {
 
 	sdk.AppReportAction = newAppReportAction(sdk.sdkConfiguration)
 
+	sdk.AppResourceType = newAppResourceType(sdk.sdkConfiguration)
+
 	sdk.AppResource = newAppResource(sdk.sdkConfiguration)
 
 	sdk.AppResourceOwners = newAppResourceOwners(sdk.sdkConfiguration)
-
-	sdk.AppResourceSearch = newAppResourceSearch(sdk.sdkConfiguration)
-
-	sdk.AppResourceType = newAppResourceType(sdk.sdkConfiguration)
-
-	sdk.AppSearch = newAppSearch(sdk.sdkConfiguration)
 
 	sdk.AppUsageControls = newAppUsageControls(sdk.sdkConfiguration)
 
 	sdk.AppUser = newAppUser(sdk.sdkConfiguration)
 
-	sdk.Apps = newApps(sdk.sdkConfiguration)
-
-	sdk.AttributeSearch = newAttributeSearch(sdk.sdkConfiguration)
-
 	sdk.Attributes = newAttributes(sdk.sdkConfiguration)
 
 	sdk.Auth = newAuth(sdk.sdkConfiguration)
 
-	sdk.Connector = newConnector(sdk.sdkConfiguration)
+	sdk.RequestCatalogManagement = newRequestCatalogManagement(sdk.sdkConfiguration)
 
 	sdk.Directory = newDirectory(sdk.sdkConfiguration)
 
 	sdk.PersonalClient = newPersonalClient(sdk.sdkConfiguration)
 
+	sdk.Roles = newRoles(sdk.sdkConfiguration)
+
 	sdk.Policies = newPolicies(sdk.sdkConfiguration)
+
+	sdk.PolicyValidate = newPolicyValidate(sdk.sdkConfiguration)
+
+	sdk.AppResourceSearch = newAppResourceSearch(sdk.sdkConfiguration)
+
+	sdk.AppSearch = newAppSearch(sdk.sdkConfiguration)
+
+	sdk.AttributeSearch = newAttributeSearch(sdk.sdkConfiguration)
 
 	sdk.PolicySearch = newPolicySearch(sdk.sdkConfiguration)
 
-	sdk.RequestCatalogManagement = newRequestCatalogManagement(sdk.sdkConfiguration)
-
 	sdk.RequestCatalogSearch = newRequestCatalogSearch(sdk.sdkConfiguration)
 
-	sdk.Roles = newRoles(sdk.sdkConfiguration)
+	sdk.TaskSearch = newTaskSearch(sdk.sdkConfiguration)
+
+	sdk.UserSearch = newUserSearch(sdk.sdkConfiguration)
+
+	sdk.WebhooksSearch = newWebhooksSearch(sdk.sdkConfiguration)
+
+	sdk.AWSExternalIDSettings = newAWSExternalIDSettings(sdk.sdkConfiguration)
+
+	sdk.SessionSettings = newSessionSettings(sdk.sdkConfiguration)
+
+	sdk.SystemLog = newSystemLog(sdk.sdkConfiguration)
 
 	sdk.Task = newTask(sdk.sdkConfiguration)
 
 	sdk.TaskActions = newTaskActions(sdk.sdkConfiguration)
 
-	sdk.TaskSearch = newTaskSearch(sdk.sdkConfiguration)
-
 	sdk.User = newUser(sdk.sdkConfiguration)
 
-	sdk.UserSearch = newUserSearch(sdk.sdkConfiguration)
+	sdk.Webhooks = newWebhooks(sdk.sdkConfiguration)
 
 	return sdk
 }

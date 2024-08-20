@@ -10,6 +10,9 @@ type Provision struct {
 	//   - connector
 	//   - manual
 	//   - delegated
+	//   - webhook
+	//   - multiStep
+	//   - externalTicket
 	//
 	ProvisionPolicy *ProvisionPolicy `json:"provisionPolicy,omitempty"`
 	// ProvisionTarget indicates the specific app, app entitlement, and if known, the app user and grant duration of this provision step

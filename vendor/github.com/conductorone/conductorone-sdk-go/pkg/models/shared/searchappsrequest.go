@@ -10,8 +10,10 @@ type SearchAppsRequest struct {
 	DisplayName *string `json:"displayName,omitempty"`
 	// A list of app IDs to remove from the results.
 	ExcludeAppIds []string `json:"excludeAppIds,omitempty"`
+	// Only return apps which are directories
+	OnlyDirectories *bool `json:"onlyDirectories,omitempty"`
 	// The pageSize where 0 <= pageSize <= 100. Values < 10 will be set to 10. A value of 0 returns the default page size (currently 25)
-	PageSize *float64 `json:"pageSize,omitempty"`
+	PageSize *int `json:"pageSize,omitempty"`
 	// The pageToken field.
 	PageToken *string `json:"pageToken,omitempty"`
 	// Query the apps with a fuzzy search on display name and description.
@@ -39,7 +41,14 @@ func (o *SearchAppsRequest) GetExcludeAppIds() []string {
 	return o.ExcludeAppIds
 }
 
-func (o *SearchAppsRequest) GetPageSize() *float64 {
+func (o *SearchAppsRequest) GetOnlyDirectories() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.OnlyDirectories
+}
+
+func (o *SearchAppsRequest) GetPageSize() *int {
 	if o == nil {
 		return nil
 	}

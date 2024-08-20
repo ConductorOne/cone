@@ -9,8 +9,8 @@ import (
 // RequestCatalogManagementServiceGetResponseExpanded - Contains an arbitrary serialized message along with a @type that describes the type of the serialized message.
 type RequestCatalogManagementServiceGetResponseExpanded struct {
 	// The type of the serialized message.
-	AtType               *string                `json:"@type,omitempty"`
-	AdditionalProperties map[string]interface{} `additionalProperties:"true" json:"-"`
+	AtType               *string        `json:"@type,omitempty"`
+	AdditionalProperties map[string]any `additionalProperties:"true" json:"-"`
 }
 
 func (r RequestCatalogManagementServiceGetResponseExpanded) MarshalJSON() ([]byte, error) {
@@ -31,7 +31,7 @@ func (o *RequestCatalogManagementServiceGetResponseExpanded) GetAtType() *string
 	return o.AtType
 }
 
-func (o *RequestCatalogManagementServiceGetResponseExpanded) GetAdditionalProperties() map[string]interface{} {
+func (o *RequestCatalogManagementServiceGetResponseExpanded) GetAdditionalProperties() map[string]any {
 	if o == nil {
 		return nil
 	}

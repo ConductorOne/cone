@@ -382,7 +382,7 @@ func getEntitlementDetails(ctx context.Context, c client.C1Client, v *viper.Vipe
 	entitlements, err := c.SearchEntitlements(ctx, &client.SearchEntitlementsFilter{
 		EntitlementAlias: alias,
 		Query:            query,
-		GrantedStatus:    shared.RequestCatalogSearchServiceSearchEntitlementsRequestGrantedStatusAll,
+		GrantedStatus:    shared.GrantedStatusAll,
 	})
 	if err != nil {
 		return "", "", err
@@ -465,7 +465,7 @@ func handleWaitBehavior(ctx context.Context, c client.C1Client, task *shared.Tas
 	return nil
 }
 
-var processStateToString = map[shared.TaskProcessing]string{
+var processStateToString = map[shared.Processing]string{
 	"TASK_PROCESSING_TYPE_UNSPECIFIED": "Unknown Processing",
 	"TASK_PROCESSING_TYPE_PROCESSING":  "Processing",
 	"TASK_PROCESSING_TYPE_WAITING":     "Waiting for Action",

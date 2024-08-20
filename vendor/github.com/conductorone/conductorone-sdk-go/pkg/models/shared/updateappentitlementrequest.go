@@ -2,8 +2,8 @@
 
 package shared
 
-// UpdateAppEntitlementRequestInput - The UpdateAppEntitlementRequest message contains the app entitlement and the fields to be updated.
-type UpdateAppEntitlementRequestInput struct {
+// The UpdateAppEntitlementRequest message contains the app entitlement and the fields to be updated.
+type UpdateAppEntitlementRequest struct {
 	// The app entitlement represents one permission in a downstream App (SAAS) that can be granted. For example, GitHub Read vs GitHub Write.
 	//
 	// This message contains a oneof named max_grant_duration. Only a single field of the following list may be set at a time:
@@ -13,24 +13,33 @@ type UpdateAppEntitlementRequestInput struct {
 	AppEntitlement *AppEntitlementInput `json:"entitlement,omitempty"`
 	// The app entitlement expand mask allows the user to get additional information when getting responses containing app entitlement views.
 	AppEntitlementExpandMask *AppEntitlementExpandMask `json:"expandMask,omitempty"`
-	UpdateMask               *string                   `json:"updateMask,omitempty"`
+	// Flag to indicate that access request defaults, if any are applied to these entitlements, should be overridden.
+	OverrideAccessRequestsDefaults *bool   `json:"overrideAccessRequestsDefaults,omitempty"`
+	UpdateMask                     *string `json:"updateMask,omitempty"`
 }
 
-func (o *UpdateAppEntitlementRequestInput) GetAppEntitlement() *AppEntitlementInput {
+func (o *UpdateAppEntitlementRequest) GetAppEntitlement() *AppEntitlementInput {
 	if o == nil {
 		return nil
 	}
 	return o.AppEntitlement
 }
 
-func (o *UpdateAppEntitlementRequestInput) GetAppEntitlementExpandMask() *AppEntitlementExpandMask {
+func (o *UpdateAppEntitlementRequest) GetAppEntitlementExpandMask() *AppEntitlementExpandMask {
 	if o == nil {
 		return nil
 	}
 	return o.AppEntitlementExpandMask
 }
 
-func (o *UpdateAppEntitlementRequestInput) GetUpdateMask() *string {
+func (o *UpdateAppEntitlementRequest) GetOverrideAccessRequestsDefaults() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.OverrideAccessRequestsDefaults
+}
+
+func (o *UpdateAppEntitlementRequest) GetUpdateMask() *string {
 	if o == nil {
 		return nil
 	}

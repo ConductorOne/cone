@@ -12,6 +12,7 @@ package shared
 //   - self
 //   - entitlementOwners
 //   - expression
+//   - webhook
 type Approval struct {
 	// The AppGroupApproval object provides the configuration for setting a group as the approvers of an approval policy step.
 	AppGroupApproval *AppGroupApproval `json:"group,omitempty"`
@@ -27,12 +28,16 @@ type Approval struct {
 	SelfApproval *SelfApproval `json:"self,omitempty"`
 	// The user approval object describes the approval configuration of a policy step that needs to be approved by a specific list of users.
 	UserApproval *UserApproval `json:"users,omitempty"`
+	// The WebhookApproval message.
+	WebhookApproval *WebhookApproval `json:"webhook,omitempty"`
 	// Configuration to allow reassignment by reviewers during this step.
 	AllowReassignment *bool `json:"allowReassignment,omitempty"`
 	// A field indicating whether this step is assigned.
 	Assigned *bool `json:"assigned,omitempty"`
 	// Configuration to require a reason when approving this step.
 	RequireApprovalReason *bool `json:"requireApprovalReason,omitempty"`
+	// Configuration to require a reason when denying this step.
+	RequireDenialReason *bool `json:"requireDenialReason,omitempty"`
 	// Configuration to require a reason when reassigning this step.
 	RequireReassignmentReason *bool `json:"requireReassignmentReason,omitempty"`
 }
@@ -86,6 +91,13 @@ func (o *Approval) GetUserApproval() *UserApproval {
 	return o.UserApproval
 }
 
+func (o *Approval) GetWebhookApproval() *WebhookApproval {
+	if o == nil {
+		return nil
+	}
+	return o.WebhookApproval
+}
+
 func (o *Approval) GetAllowReassignment() *bool {
 	if o == nil {
 		return nil
@@ -107,85 +119,16 @@ func (o *Approval) GetRequireApprovalReason() *bool {
 	return o.RequireApprovalReason
 }
 
+func (o *Approval) GetRequireDenialReason() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.RequireDenialReason
+}
+
 func (o *Approval) GetRequireReassignmentReason() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.RequireReassignmentReason
-}
-
-// ApprovalInput - The Approval message.
-//
-// This message contains a oneof named typ. Only a single field of the following list may be set at a time:
-//   - users
-//   - manager
-//   - appOwners
-//   - group
-//   - self
-//   - entitlementOwners
-//   - expression
-type ApprovalInput struct {
-	// The AppGroupApproval object provides the configuration for setting a group as the approvers of an approval policy step.
-	AppGroupApproval *AppGroupApprovalInput `json:"group,omitempty"`
-	// App owner approval provides the configuration for an approval step when the app owner is the target.
-	AppOwnerApproval *AppOwnerApprovalInput `json:"appOwners,omitempty"`
-	// The entitlement owner approval allows configuration of the approval step when the target approvers are the entitlement owners.
-	EntitlementOwnerApproval *EntitlementOwnerApprovalInput `json:"entitlementOwners,omitempty"`
-	// The ExpressionApproval message.
-	ExpressionApproval *ExpressionApprovalInput `json:"expression,omitempty"`
-	// The manager approval object provides configuration options for approval when the target of the approval is the manager of the user in the task.
-	ManagerApproval *ManagerApprovalInput `json:"manager,omitempty"`
-	// The self approval object describes the configuration of a policy step that needs to be approved by the target of the request.
-	SelfApproval *SelfApprovalInput `json:"self,omitempty"`
-	// The user approval object describes the approval configuration of a policy step that needs to be approved by a specific list of users.
-	UserApproval *UserApprovalInput `json:"users,omitempty"`
-}
-
-func (o *ApprovalInput) GetAppGroupApproval() *AppGroupApprovalInput {
-	if o == nil {
-		return nil
-	}
-	return o.AppGroupApproval
-}
-
-func (o *ApprovalInput) GetAppOwnerApproval() *AppOwnerApprovalInput {
-	if o == nil {
-		return nil
-	}
-	return o.AppOwnerApproval
-}
-
-func (o *ApprovalInput) GetEntitlementOwnerApproval() *EntitlementOwnerApprovalInput {
-	if o == nil {
-		return nil
-	}
-	return o.EntitlementOwnerApproval
-}
-
-func (o *ApprovalInput) GetExpressionApproval() *ExpressionApprovalInput {
-	if o == nil {
-		return nil
-	}
-	return o.ExpressionApproval
-}
-
-func (o *ApprovalInput) GetManagerApproval() *ManagerApprovalInput {
-	if o == nil {
-		return nil
-	}
-	return o.ManagerApproval
-}
-
-func (o *ApprovalInput) GetSelfApproval() *SelfApprovalInput {
-	if o == nil {
-		return nil
-	}
-	return o.SelfApproval
-}
-
-func (o *ApprovalInput) GetUserApproval() *UserApprovalInput {
-	if o == nil {
-		return nil
-	}
-	return o.UserApproval
 }

@@ -9,34 +9,36 @@ import (
 	"time"
 )
 
-type TaskActions string
+type Actions string
 
 const (
-	TaskActionsTaskActionTypeUnspecified                              TaskActions = "TASK_ACTION_TYPE_UNSPECIFIED"
-	TaskActionsTaskActionTypeClose                                    TaskActions = "TASK_ACTION_TYPE_CLOSE"
-	TaskActionsTaskActionTypeApprove                                  TaskActions = "TASK_ACTION_TYPE_APPROVE"
-	TaskActionsTaskActionTypeDeny                                     TaskActions = "TASK_ACTION_TYPE_DENY"
-	TaskActionsTaskActionTypeComment                                  TaskActions = "TASK_ACTION_TYPE_COMMENT"
-	TaskActionsTaskActionTypeDelete                                   TaskActions = "TASK_ACTION_TYPE_DELETE"
-	TaskActionsTaskActionTypeReassign                                 TaskActions = "TASK_ACTION_TYPE_REASSIGN"
-	TaskActionsTaskActionTypeRestart                                  TaskActions = "TASK_ACTION_TYPE_RESTART"
-	TaskActionsTaskActionTypeSendReminder                             TaskActions = "TASK_ACTION_TYPE_SEND_REMINDER"
-	TaskActionsTaskActionTypeProvisionComplete                        TaskActions = "TASK_ACTION_TYPE_PROVISION_COMPLETE"
-	TaskActionsTaskActionTypeProvisionCancelled                       TaskActions = "TASK_ACTION_TYPE_PROVISION_CANCELLED"
-	TaskActionsTaskActionTypeProvisionErrored                         TaskActions = "TASK_ACTION_TYPE_PROVISION_ERRORED"
-	TaskActionsTaskActionTypeProvisionAppUserTargetCreated            TaskActions = "TASK_ACTION_TYPE_PROVISION_APP_USER_TARGET_CREATED"
-	TaskActionsTaskActionTypeRollbackSkipped                          TaskActions = "TASK_ACTION_TYPE_ROLLBACK_SKIPPED"
-	TaskActionsTaskActionTypeHardReset                                TaskActions = "TASK_ACTION_TYPE_HARD_RESET"
-	TaskActionsTaskActionTypeEscalateToEmergencyAccess                TaskActions = "TASK_ACTION_TYPE_ESCALATE_TO_EMERGENCY_ACCESS"
-	TaskActionsTaskActionTypeChangePolicy                             TaskActions = "TASK_ACTION_TYPE_CHANGE_POLICY"
-	TaskActionsTaskActionTypeRecalculateDenialFromBasePolicyDecisions TaskActions = "TASK_ACTION_TYPE_RECALCULATE_DENIAL_FROM_BASE_POLICY_DECISIONS"
+	ActionsTaskActionTypeUnspecified                              Actions = "TASK_ACTION_TYPE_UNSPECIFIED"
+	ActionsTaskActionTypeClose                                    Actions = "TASK_ACTION_TYPE_CLOSE"
+	ActionsTaskActionTypeApprove                                  Actions = "TASK_ACTION_TYPE_APPROVE"
+	ActionsTaskActionTypeDeny                                     Actions = "TASK_ACTION_TYPE_DENY"
+	ActionsTaskActionTypeComment                                  Actions = "TASK_ACTION_TYPE_COMMENT"
+	ActionsTaskActionTypeDelete                                   Actions = "TASK_ACTION_TYPE_DELETE"
+	ActionsTaskActionTypeReassign                                 Actions = "TASK_ACTION_TYPE_REASSIGN"
+	ActionsTaskActionTypeRestart                                  Actions = "TASK_ACTION_TYPE_RESTART"
+	ActionsTaskActionTypeSendReminder                             Actions = "TASK_ACTION_TYPE_SEND_REMINDER"
+	ActionsTaskActionTypeProvisionComplete                        Actions = "TASK_ACTION_TYPE_PROVISION_COMPLETE"
+	ActionsTaskActionTypeProvisionCancelled                       Actions = "TASK_ACTION_TYPE_PROVISION_CANCELLED"
+	ActionsTaskActionTypeProvisionErrored                         Actions = "TASK_ACTION_TYPE_PROVISION_ERRORED"
+	ActionsTaskActionTypeProvisionAppUserTargetCreated            Actions = "TASK_ACTION_TYPE_PROVISION_APP_USER_TARGET_CREATED"
+	ActionsTaskActionTypeRollbackSkipped                          Actions = "TASK_ACTION_TYPE_ROLLBACK_SKIPPED"
+	ActionsTaskActionTypeHardReset                                Actions = "TASK_ACTION_TYPE_HARD_RESET"
+	ActionsTaskActionTypeEscalateToEmergencyAccess                Actions = "TASK_ACTION_TYPE_ESCALATE_TO_EMERGENCY_ACCESS"
+	ActionsTaskActionTypeChangePolicy                             Actions = "TASK_ACTION_TYPE_CHANGE_POLICY"
+	ActionsTaskActionTypeRecalculateDenialFromBasePolicyDecisions Actions = "TASK_ACTION_TYPE_RECALCULATE_DENIAL_FROM_BASE_POLICY_DECISIONS"
+	ActionsTaskActionTypeSetInsightsAndRecommendation             Actions = "TASK_ACTION_TYPE_SET_INSIGHTS_AND_RECOMMENDATION"
+	ActionsTaskActionTypeSetAnalysisID                            Actions = "TASK_ACTION_TYPE_SET_ANALYSIS_ID"
+	ActionsTaskActionTypeRecalculateApproversList                 Actions = "TASK_ACTION_TYPE_RECALCULATE_APPROVERS_LIST"
 )
 
-func (e TaskActions) ToPointer() *TaskActions {
+func (e Actions) ToPointer() *Actions {
 	return &e
 }
-
-func (e *TaskActions) UnmarshalJSON(data []byte) error {
+func (e *Actions) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -77,60 +79,65 @@ func (e *TaskActions) UnmarshalJSON(data []byte) error {
 	case "TASK_ACTION_TYPE_CHANGE_POLICY":
 		fallthrough
 	case "TASK_ACTION_TYPE_RECALCULATE_DENIAL_FROM_BASE_POLICY_DECISIONS":
-		*e = TaskActions(v)
+		fallthrough
+	case "TASK_ACTION_TYPE_SET_INSIGHTS_AND_RECOMMENDATION":
+		fallthrough
+	case "TASK_ACTION_TYPE_SET_ANALYSIS_ID":
+		fallthrough
+	case "TASK_ACTION_TYPE_RECALCULATE_APPROVERS_LIST":
+		*e = Actions(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for TaskActions: %v", v)
+		return fmt.Errorf("invalid value for Actions: %v", v)
 	}
 }
 
-// TaskAnnotations - Contains an arbitrary serialized message along with a @type that describes the type of the serialized message.
-type TaskAnnotations struct {
+// Annotations - Contains an arbitrary serialized message along with a @type that describes the type of the serialized message.
+type Annotations struct {
 	// The type of the serialized message.
-	AtType               *string                `json:"@type,omitempty"`
-	AdditionalProperties map[string]interface{} `additionalProperties:"true" json:"-"`
+	AtType               *string        `json:"@type,omitempty"`
+	AdditionalProperties map[string]any `additionalProperties:"true" json:"-"`
 }
 
-func (t TaskAnnotations) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(t, "", false)
+func (a Annotations) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(a, "", false)
 }
 
-func (t *TaskAnnotations) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &t, "", false, false); err != nil {
+func (a *Annotations) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &a, "", false, false); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *TaskAnnotations) GetAtType() *string {
+func (o *Annotations) GetAtType() *string {
 	if o == nil {
 		return nil
 	}
 	return o.AtType
 }
 
-func (o *TaskAnnotations) GetAdditionalProperties() map[string]interface{} {
+func (o *Annotations) GetAdditionalProperties() map[string]any {
 	if o == nil {
 		return nil
 	}
 	return o.AdditionalProperties
 }
 
-// TaskProcessing - The processing state of a task as defined by the `processing_enum`
-type TaskProcessing string
+// Processing - The processing state of a task as defined by the `processing_enum`
+type Processing string
 
 const (
-	TaskProcessingTaskProcessingTypeUnspecified TaskProcessing = "TASK_PROCESSING_TYPE_UNSPECIFIED"
-	TaskProcessingTaskProcessingTypeProcessing  TaskProcessing = "TASK_PROCESSING_TYPE_PROCESSING"
-	TaskProcessingTaskProcessingTypeWaiting     TaskProcessing = "TASK_PROCESSING_TYPE_WAITING"
-	TaskProcessingTaskProcessingTypeDone        TaskProcessing = "TASK_PROCESSING_TYPE_DONE"
+	ProcessingTaskProcessingTypeUnspecified Processing = "TASK_PROCESSING_TYPE_UNSPECIFIED"
+	ProcessingTaskProcessingTypeProcessing  Processing = "TASK_PROCESSING_TYPE_PROCESSING"
+	ProcessingTaskProcessingTypeWaiting     Processing = "TASK_PROCESSING_TYPE_WAITING"
+	ProcessingTaskProcessingTypeDone        Processing = "TASK_PROCESSING_TYPE_DONE"
 )
 
-func (e TaskProcessing) ToPointer() *TaskProcessing {
+func (e Processing) ToPointer() *Processing {
 	return &e
 }
-
-func (e *TaskProcessing) UnmarshalJSON(data []byte) error {
+func (e *Processing) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -143,10 +150,43 @@ func (e *TaskProcessing) UnmarshalJSON(data []byte) error {
 	case "TASK_PROCESSING_TYPE_WAITING":
 		fallthrough
 	case "TASK_PROCESSING_TYPE_DONE":
-		*e = TaskProcessing(v)
+		*e = Processing(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for TaskProcessing: %v", v)
+		return fmt.Errorf("invalid value for Processing: %v", v)
+	}
+}
+
+// Recommendation - The recommendation field.
+type Recommendation string
+
+const (
+	RecommendationInsightRecommendationUnspecified Recommendation = "INSIGHT_RECOMMENDATION_UNSPECIFIED"
+	RecommendationInsightRecommendationApprove     Recommendation = "INSIGHT_RECOMMENDATION_APPROVE"
+	RecommendationInsightRecommendationDeny        Recommendation = "INSIGHT_RECOMMENDATION_DENY"
+	RecommendationInsightRecommendationReview      Recommendation = "INSIGHT_RECOMMENDATION_REVIEW"
+)
+
+func (e Recommendation) ToPointer() *Recommendation {
+	return &e
+}
+func (e *Recommendation) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "INSIGHT_RECOMMENDATION_UNSPECIFIED":
+		fallthrough
+	case "INSIGHT_RECOMMENDATION_APPROVE":
+		fallthrough
+	case "INSIGHT_RECOMMENDATION_DENY":
+		fallthrough
+	case "INSIGHT_RECOMMENDATION_REVIEW":
+		*e = Recommendation(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for Recommendation: %v", v)
 	}
 }
 
@@ -162,7 +202,6 @@ const (
 func (e TaskState) ToPointer() *TaskState {
 	return &e
 }
-
 func (e *TaskState) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -191,16 +230,17 @@ type Task struct {
 	//   - grant
 	//   - revoke
 	//   - certify
+	//   - offboarding
 	//
 	TaskType *TaskType `json:"type,omitempty"`
 	// The actions that can be performed on the task by the current user.
-	Actions []TaskActions `json:"actions,omitempty"`
+	Actions []Actions `json:"actions,omitempty"`
 	// The ID of the analysis object associated with this task created by an analysis workflow if the analysis feature is enabled for your tenant.
 	AnalysisID *string `json:"analysisId,omitempty"`
 	// An array of `google.protobuf.Any` annotations with various base64-encoded data.
-	Annotations []TaskAnnotations `json:"annotations,omitempty"`
+	Annotations []Annotations `json:"annotations,omitempty"`
 	// The count of comments.
-	CommentCount *float64   `json:"commentCount,omitempty"`
+	CommentCount *int       `json:"commentCount,omitempty"`
 	CreatedAt    *time.Time `json:"createdAt,omitempty"`
 	// The ID of the user that is the creator of this task. This may not always match the userId field.
 	CreatedByUserID *string    `json:"createdByUserId,omitempty"`
@@ -215,12 +255,16 @@ type Task struct {
 	ExternalRefs []ExternalRef `json:"externalRefs,omitempty"`
 	// The ID of the task.
 	ID *string `json:"id,omitempty"`
+	// The insightIds field.
+	InsightIds []string `json:"insightIds,omitempty"`
 	// A human-usable numeric ID of a task which can be included in place of the fully qualified task id in path parmeters (but not search queries).
-	NumericID *string `json:"numericId,omitempty"`
+	NumericID *int64 `integer:"string" json:"numericId,omitempty"`
 	// The policy generation id refers to the current policy's generation ID. This is changed when the policy is changed on a task.
 	PolicyGenerationID *string `json:"policyGenerationId,omitempty"`
 	// The processing state of a task as defined by the `processing_enum`
-	Processing *TaskProcessing `json:"processing,omitempty"`
+	Processing *Processing `json:"processing,omitempty"`
+	// The recommendation field.
+	Recommendation *Recommendation `json:"recommendation,omitempty"`
 	// The current state of the task as defined by the `state_enum`
 	State *TaskState `json:"state,omitempty"`
 	// An array of IDs belonging to Identity Users that are allowed to review this step in a task.
@@ -255,7 +299,7 @@ func (o *Task) GetTaskType() *TaskType {
 	return o.TaskType
 }
 
-func (o *Task) GetActions() []TaskActions {
+func (o *Task) GetActions() []Actions {
 	if o == nil {
 		return nil
 	}
@@ -269,14 +313,14 @@ func (o *Task) GetAnalysisID() *string {
 	return o.AnalysisID
 }
 
-func (o *Task) GetAnnotations() []TaskAnnotations {
+func (o *Task) GetAnnotations() []Annotations {
 	if o == nil {
 		return nil
 	}
 	return o.Annotations
 }
 
-func (o *Task) GetCommentCount() *float64 {
+func (o *Task) GetCommentCount() *int {
 	if o == nil {
 		return nil
 	}
@@ -339,7 +383,14 @@ func (o *Task) GetID() *string {
 	return o.ID
 }
 
-func (o *Task) GetNumericID() *string {
+func (o *Task) GetInsightIds() []string {
+	if o == nil {
+		return nil
+	}
+	return o.InsightIds
+}
+
+func (o *Task) GetNumericID() *int64 {
 	if o == nil {
 		return nil
 	}
@@ -353,11 +404,18 @@ func (o *Task) GetPolicyGenerationID() *string {
 	return o.PolicyGenerationID
 }
 
-func (o *Task) GetProcessing() *TaskProcessing {
+func (o *Task) GetProcessing() *Processing {
 	if o == nil {
 		return nil
 	}
 	return o.Processing
+}
+
+func (o *Task) GetRecommendation() *Recommendation {
+	if o == nil {
+		return nil
+	}
+	return o.Recommendation
 }
 
 func (o *Task) GetState() *TaskState {

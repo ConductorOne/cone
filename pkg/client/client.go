@@ -4,6 +4,7 @@ import (
 	"context"
 	"net/http"
 	"net/url"
+	"strconv"
 
 	"github.com/spf13/viper"
 
@@ -31,6 +32,14 @@ func StringFromPtr(s *string) string {
 	return *s
 }
 
+func StringFromIntPtr(s *int64) string {
+	if s == nil {
+		return ""
+	}
+
+	return strconv.Itoa(int(*s))
+}
+
 func stringPtr(s string) *string {
 	if s == "" {
 		return nil
@@ -38,9 +47,8 @@ func stringPtr(s string) *string {
 	return &s
 }
 
-func float64Ptr(i int) *float64 {
-	f := float64(i)
-	return &f
+func intPtr(i int) *int {
+	return &i
 }
 
 type C1Client interface {
@@ -71,7 +79,7 @@ type C1Client interface {
 		justification string,
 	) (*shared.TaskServiceCreateRevokeResponse, error)
 	GetGrantsForIdentity(ctx context.Context, appID string, appEntitlementID string, identityID string) ([]shared.AppEntitlementUserBinding, error)
-	SearchTasks(ctx context.Context, taskFilter shared.TaskSearchRequestInput) (*shared.TaskSearchResponse, error)
+	SearchTasks(ctx context.Context, taskFilter shared.TaskSearchRequest) (*shared.TaskSearchResponse, error)
 	CommentOnTask(ctx context.Context, taskID string, comment string) (*shared.TaskActionsServiceCommentResponse, error)
 	ApproveTask(ctx context.Context, taskId string, comment string, policyId string) (*shared.TaskActionsServiceApproveResponse, error)
 	DenyTask(ctx context.Context, taskId string, comment string, policyId string) (*shared.TaskActionsServiceDenyResponse, error)

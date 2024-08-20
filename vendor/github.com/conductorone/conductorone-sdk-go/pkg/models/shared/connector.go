@@ -7,112 +7,36 @@ import (
 	"time"
 )
 
-// ConnectorConfig - Contains an arbitrary serialized message along with a @type that describes the type of the serialized message.
-type ConnectorConfig struct {
+// Config - Contains an arbitrary serialized message along with a @type that describes the type of the serialized message.
+type Config struct {
 	// The type of the serialized message.
-	AtType               *string                `json:"@type,omitempty"`
-	AdditionalProperties map[string]interface{} `additionalProperties:"true" json:"-"`
+	AtType               *string        `json:"@type,omitempty"`
+	AdditionalProperties map[string]any `additionalProperties:"true" json:"-"`
 }
 
-func (c ConnectorConfig) MarshalJSON() ([]byte, error) {
+func (c Config) MarshalJSON() ([]byte, error) {
 	return utils.MarshalJSON(c, "", false)
 }
 
-func (c *ConnectorConfig) UnmarshalJSON(data []byte) error {
+func (c *Config) UnmarshalJSON(data []byte) error {
 	if err := utils.UnmarshalJSON(data, &c, "", false, false); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *ConnectorConfig) GetAtType() *string {
+func (o *Config) GetAtType() *string {
 	if o == nil {
 		return nil
 	}
 	return o.AtType
 }
 
-func (o *ConnectorConfig) GetAdditionalProperties() map[string]interface{} {
+func (o *Config) GetAdditionalProperties() map[string]any {
 	if o == nil {
 		return nil
 	}
 	return o.AdditionalProperties
-}
-
-// ConnectorInput - A Connector is used to sync objects into Apps
-type ConnectorInput struct {
-	// The status field on the connector is used to track the status of the connectors sync, and when syncing last started, completed, or caused the connector to update.
-	ConnectorStatus *ConnectorStatus `json:"status,omitempty"`
-	// OAuth2AuthorizedAs tracks the user that OAuthed with the connector.
-	OAuth2AuthorizedAs *OAuth2AuthorizedAsInput `json:"oauthAuthorizedAs,omitempty"`
-	// The id of the app the connector is associated with.
-	AppID *string `json:"appId,omitempty"`
-	// Contains an arbitrary serialized message along with a @type that describes the type of the serialized message.
-	Config *ConnectorConfig `json:"config,omitempty"`
-	// The description of the connector.
-	Description *string `json:"description,omitempty"`
-	// The display name of the connector.
-	DisplayName *string `json:"displayName,omitempty"`
-	// The id of the connector.
-	ID *string `json:"id,omitempty"`
-	// The userIds field is used to define the integration owners of the connector.
-	UserIds []string `json:"userIds,omitempty"`
-}
-
-func (o *ConnectorInput) GetConnectorStatus() *ConnectorStatus {
-	if o == nil {
-		return nil
-	}
-	return o.ConnectorStatus
-}
-
-func (o *ConnectorInput) GetOAuth2AuthorizedAs() *OAuth2AuthorizedAsInput {
-	if o == nil {
-		return nil
-	}
-	return o.OAuth2AuthorizedAs
-}
-
-func (o *ConnectorInput) GetAppID() *string {
-	if o == nil {
-		return nil
-	}
-	return o.AppID
-}
-
-func (o *ConnectorInput) GetConfig() *ConnectorConfig {
-	if o == nil {
-		return nil
-	}
-	return o.Config
-}
-
-func (o *ConnectorInput) GetDescription() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Description
-}
-
-func (o *ConnectorInput) GetDisplayName() *string {
-	if o == nil {
-		return nil
-	}
-	return o.DisplayName
-}
-
-func (o *ConnectorInput) GetID() *string {
-	if o == nil {
-		return nil
-	}
-	return o.ID
-}
-
-func (o *ConnectorInput) GetUserIds() []string {
-	if o == nil {
-		return nil
-	}
-	return o.UserIds
 }
 
 // A Connector is used to sync objects into Apps
@@ -126,9 +50,9 @@ type Connector struct {
 	// The catalogId describes which catalog entry this connector is an instance of. For example, every Okta connector will have the same catalogId indicating it is an Okta connector.
 	CatalogID *string `json:"catalogId,omitempty"`
 	// Contains an arbitrary serialized message along with a @type that describes the type of the serialized message.
-	Config    *ConnectorConfig `json:"config,omitempty"`
-	CreatedAt *time.Time       `json:"createdAt,omitempty"`
-	DeletedAt *time.Time       `json:"deletedAt,omitempty"`
+	Config    *Config    `json:"config,omitempty"`
+	CreatedAt *time.Time `json:"createdAt,omitempty"`
+	DeletedAt *time.Time `json:"deletedAt,omitempty"`
 	// The description of the connector.
 	Description *string `json:"description,omitempty"`
 	// The display name of the connector.
@@ -181,7 +105,7 @@ func (o *Connector) GetCatalogID() *string {
 	return o.CatalogID
 }
 
-func (o *Connector) GetConfig() *ConnectorConfig {
+func (o *Connector) GetConfig() *Config {
 	if o == nil {
 		return nil
 	}
@@ -238,6 +162,82 @@ func (o *Connector) GetUpdatedAt() *time.Time {
 }
 
 func (o *Connector) GetUserIds() []string {
+	if o == nil {
+		return nil
+	}
+	return o.UserIds
+}
+
+// ConnectorInput - A Connector is used to sync objects into Apps
+type ConnectorInput struct {
+	// The status field on the connector is used to track the status of the connectors sync, and when syncing last started, completed, or caused the connector to update.
+	ConnectorStatus *ConnectorStatus `json:"status,omitempty"`
+	// OAuth2AuthorizedAs tracks the user that OAuthed with the connector.
+	OAuth2AuthorizedAs *OAuth2AuthorizedAsInput `json:"oauthAuthorizedAs,omitempty"`
+	// The id of the app the connector is associated with.
+	AppID *string `json:"appId,omitempty"`
+	// Contains an arbitrary serialized message along with a @type that describes the type of the serialized message.
+	Config *Config `json:"config,omitempty"`
+	// The description of the connector.
+	Description *string `json:"description,omitempty"`
+	// The display name of the connector.
+	DisplayName *string `json:"displayName,omitempty"`
+	// The id of the connector.
+	ID *string `json:"id,omitempty"`
+	// The userIds field is used to define the integration owners of the connector.
+	UserIds []string `json:"userIds,omitempty"`
+}
+
+func (o *ConnectorInput) GetConnectorStatus() *ConnectorStatus {
+	if o == nil {
+		return nil
+	}
+	return o.ConnectorStatus
+}
+
+func (o *ConnectorInput) GetOAuth2AuthorizedAs() *OAuth2AuthorizedAsInput {
+	if o == nil {
+		return nil
+	}
+	return o.OAuth2AuthorizedAs
+}
+
+func (o *ConnectorInput) GetAppID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AppID
+}
+
+func (o *ConnectorInput) GetConfig() *Config {
+	if o == nil {
+		return nil
+	}
+	return o.Config
+}
+
+func (o *ConnectorInput) GetDescription() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Description
+}
+
+func (o *ConnectorInput) GetDisplayName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.DisplayName
+}
+
+func (o *ConnectorInput) GetID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ID
+}
+
+func (o *ConnectorInput) GetUserIds() []string {
 	if o == nil {
 		return nil
 	}

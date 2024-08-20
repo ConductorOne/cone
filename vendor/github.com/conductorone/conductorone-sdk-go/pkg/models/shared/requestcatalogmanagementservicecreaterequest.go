@@ -12,6 +12,8 @@ type RequestCatalogManagementServiceCreateRequest struct {
 	DisplayName *string `json:"displayName,omitempty"`
 	// Whether or not the new catalog should be created as published.
 	Published *bool `json:"published,omitempty"`
+	// Whether all the entitlements in the catalog can be requests at once. Your tenant must have the bundles feature to use this.
+	RequestBundle *bool `json:"requestBundle,omitempty"`
 	// Whether or not the new catalog is visible to everyone by default.
 	VisibleToEveryone *bool `json:"visibleToEveryone,omitempty"`
 }
@@ -42,6 +44,13 @@ func (o *RequestCatalogManagementServiceCreateRequest) GetPublished() *bool {
 		return nil
 	}
 	return o.Published
+}
+
+func (o *RequestCatalogManagementServiceCreateRequest) GetRequestBundle() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.RequestBundle
 }
 
 func (o *RequestCatalogManagementServiceCreateRequest) GetVisibleToEveryone() *bool {

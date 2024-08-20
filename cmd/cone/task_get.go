@@ -4,6 +4,7 @@ import (
 	"github.com/spf13/cobra"
 
 	"github.com/conductorone/conductorone-sdk-go/pkg/models/shared"
+
 	"github.com/conductorone/cone/pkg/client"
 	"github.com/conductorone/cone/pkg/output"
 )
@@ -61,7 +62,7 @@ func (r *TaskGetResponse) WideHeader() []string {
 }
 func (r *TaskGetResponse) rows() []string {
 	return []string{
-		client.StringFromPtr(r.NumericID),
+		client.StringFromIntPtr(r.NumericID),
 		client.StringFromPtr(r.DisplayName),
 		taskStateToString[*r.State],
 		processStateToString[*r.Processing],

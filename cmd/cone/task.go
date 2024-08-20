@@ -6,6 +6,7 @@ import (
 	"github.com/spf13/cobra"
 
 	"github.com/conductorone/conductorone-sdk-go/pkg/models/shared"
+
 	"github.com/conductorone/cone/pkg/client"
 	"github.com/conductorone/cone/pkg/output"
 )
@@ -32,7 +33,7 @@ func taskRun(cmd *cobra.Command, _ []string) error {
 }
 
 func (r *Task) Pretext() string {
-	return fmt.Sprintf("Ticket URL: %s/task/%s", r.client.BaseURL(), client.StringFromPtr(r.task.NumericID))
+	return fmt.Sprintf("Ticket URL: %s/task/%s", r.client.BaseURL(), client.StringFromIntPtr(r.task.NumericID))
 }
 
 type Task struct {
@@ -50,7 +51,7 @@ func (r *Task) WideHeader() []string {
 
 func (r *Task) rows() []string {
 	return []string{
-		client.StringFromPtr(r.task.NumericID),
+		client.StringFromIntPtr(r.task.NumericID),
 		client.StringFromPtr(r.task.DisplayName),
 		taskStateToString[*r.task.State],
 		processStateToString[*r.task.Processing],

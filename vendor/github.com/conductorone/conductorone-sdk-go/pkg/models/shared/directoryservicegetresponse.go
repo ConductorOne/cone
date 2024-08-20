@@ -9,8 +9,8 @@ import (
 // DirectoryServiceGetResponseExpanded - Contains an arbitrary serialized message along with a @type that describes the type of the serialized message.
 type DirectoryServiceGetResponseExpanded struct {
 	// The type of the serialized message.
-	AtType               *string                `json:"@type,omitempty"`
-	AdditionalProperties map[string]interface{} `additionalProperties:"true" json:"-"`
+	AtType               *string        `json:"@type,omitempty"`
+	AdditionalProperties map[string]any `additionalProperties:"true" json:"-"`
 }
 
 func (d DirectoryServiceGetResponseExpanded) MarshalJSON() ([]byte, error) {
@@ -31,7 +31,7 @@ func (o *DirectoryServiceGetResponseExpanded) GetAtType() *string {
 	return o.AtType
 }
 
-func (o *DirectoryServiceGetResponseExpanded) GetAdditionalProperties() map[string]interface{} {
+func (o *DirectoryServiceGetResponseExpanded) GetAdditionalProperties() map[string]any {
 	if o == nil {
 		return nil
 	}

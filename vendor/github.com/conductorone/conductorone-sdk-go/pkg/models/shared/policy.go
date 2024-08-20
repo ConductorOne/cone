@@ -24,7 +24,6 @@ const (
 func (e PolicyPolicyType) ToPointer() *PolicyPolicyType {
 	return &e
 }
-
 func (e *PolicyPolicyType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -65,7 +64,7 @@ type Policy struct {
 	PolicyType *PolicyPolicyType `json:"policyType,omitempty"`
 	// An array of actions (ordered) to take place after a policy completes processing.
 	PostActions []PolicyPostActions `json:"postActions,omitempty"`
-	// A policy configuration option that allows for reassinging tasks to delgated users. This level of delegation referrs to the individual delegates users set on their account.
+	// A policy configuration option that allows for reassinging tasks to delgated users. This level of delegation refers to the individual delegates users set on their account.
 	ReassignTasksToDelegates *bool `json:"reassignTasksToDelegates,omitempty"`
 	// The rules field.
 	Rules []Rule `json:"rules,omitempty"`
@@ -176,12 +175,12 @@ type PolicyInput struct {
 	// The display name of the Policy.
 	DisplayName *string `json:"displayName,omitempty"`
 	// A map of string(policy type) to steps in a policy. This structure is leftover from a previous design, and should only ever have one key->value set.
-	PolicySteps map[string]PolicyStepsInput `json:"policySteps,omitempty"`
+	PolicySteps map[string]PolicySteps `json:"policySteps,omitempty"`
 	// Indicates the type of this policy. Can also be used to get the value from policySteps.
 	PolicyType *PolicyPolicyType `json:"policyType,omitempty"`
 	// An array of actions (ordered) to take place after a policy completes processing.
 	PostActions []PolicyPostActions `json:"postActions,omitempty"`
-	// A policy configuration option that allows for reassinging tasks to delgated users. This level of delegation referrs to the individual delegates users set on their account.
+	// A policy configuration option that allows for reassinging tasks to delgated users. This level of delegation refers to the individual delegates users set on their account.
 	ReassignTasksToDelegates *bool `json:"reassignTasksToDelegates,omitempty"`
 	// The rules field.
 	Rules []Rule `json:"rules,omitempty"`
@@ -201,7 +200,7 @@ func (o *PolicyInput) GetDisplayName() *string {
 	return o.DisplayName
 }
 
-func (o *PolicyInput) GetPolicySteps() map[string]PolicyStepsInput {
+func (o *PolicyInput) GetPolicySteps() map[string]PolicySteps {
 	if o == nil {
 		return nil
 	}

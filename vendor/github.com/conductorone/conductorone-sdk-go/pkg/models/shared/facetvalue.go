@@ -5,7 +5,7 @@ package shared
 // A FacetValue message contains count and value of the facet entry.
 type FacetValue struct {
 	// The count of the values in this facet.
-	Count *string `json:"count,omitempty"`
+	Count *int64 `integer:"string" json:"count,omitempty"`
 	// The name of this facet.
 	DisplayName *string `json:"displayName,omitempty"`
 	// The icon for this facet.
@@ -14,7 +14,7 @@ type FacetValue struct {
 	Value *string `json:"value,omitempty"`
 }
 
-func (o *FacetValue) GetCount() *string {
+func (o *FacetValue) GetCount() *int64 {
 	if o == nil {
 		return nil
 	}

@@ -9,34 +9,21 @@ import (
 	"time"
 )
 
-// TaskTypeGrantInput - The TaskTypeGrant message indicates that a task is a grant task and all related details.
-type TaskTypeGrantInput struct {
-	// The TaskGrantSource message tracks which external URL was the source of the specificed grant ticket.
-	TaskGrantSource *TaskGrantSource `json:"source,omitempty"`
-}
-
-func (o *TaskTypeGrantInput) GetTaskGrantSource() *TaskGrantSource {
-	if o == nil {
-		return nil
-	}
-	return o.TaskGrantSource
-}
-
 // TaskTypeGrantOutcome - The outcome of the grant.
 type TaskTypeGrantOutcome string
 
 const (
-	TaskTypeGrantOutcomeGrantOutcomeUnspecified TaskTypeGrantOutcome = "GRANT_OUTCOME_UNSPECIFIED"
-	TaskTypeGrantOutcomeGrantOutcomeGranted     TaskTypeGrantOutcome = "GRANT_OUTCOME_GRANTED"
-	TaskTypeGrantOutcomeGrantOutcomeDenied      TaskTypeGrantOutcome = "GRANT_OUTCOME_DENIED"
-	TaskTypeGrantOutcomeGrantOutcomeError       TaskTypeGrantOutcome = "GRANT_OUTCOME_ERROR"
-	TaskTypeGrantOutcomeGrantOutcomeCancelled   TaskTypeGrantOutcome = "GRANT_OUTCOME_CANCELLED"
+	TaskTypeGrantOutcomeGrantOutcomeUnspecified  TaskTypeGrantOutcome = "GRANT_OUTCOME_UNSPECIFIED"
+	TaskTypeGrantOutcomeGrantOutcomeGranted      TaskTypeGrantOutcome = "GRANT_OUTCOME_GRANTED"
+	TaskTypeGrantOutcomeGrantOutcomeDenied       TaskTypeGrantOutcome = "GRANT_OUTCOME_DENIED"
+	TaskTypeGrantOutcomeGrantOutcomeError        TaskTypeGrantOutcome = "GRANT_OUTCOME_ERROR"
+	TaskTypeGrantOutcomeGrantOutcomeCancelled    TaskTypeGrantOutcome = "GRANT_OUTCOME_CANCELLED"
+	TaskTypeGrantOutcomeGrantOutcomeWaitTimedOut TaskTypeGrantOutcome = "GRANT_OUTCOME_WAIT_TIMED_OUT"
 )
 
 func (e TaskTypeGrantOutcome) ToPointer() *TaskTypeGrantOutcome {
 	return &e
 }
-
 func (e *TaskTypeGrantOutcome) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
@@ -52,6 +39,8 @@ func (e *TaskTypeGrantOutcome) UnmarshalJSON(data []byte) error {
 	case "GRANT_OUTCOME_ERROR":
 		fallthrough
 	case "GRANT_OUTCOME_CANCELLED":
+		fallthrough
+	case "GRANT_OUTCOME_WAIT_TIMED_OUT":
 		*e = TaskTypeGrantOutcome(v)
 		return nil
 	default:

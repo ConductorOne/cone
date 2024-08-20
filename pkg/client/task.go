@@ -76,7 +76,7 @@ func (c *client) CreateRevokeTask(
 	return resp.TaskServiceCreateRevokeResponse, nil
 }
 
-func (c *client) SearchTasks(ctx context.Context, taskFilter shared.TaskSearchRequestInput) (*shared.TaskSearchResponse, error) {
+func (c *client) SearchTasks(ctx context.Context, taskFilter shared.TaskSearchRequest) (*shared.TaskSearchResponse, error) {
 	resp, err := c.sdk.TaskSearch.Search(ctx, &taskFilter)
 	if err != nil {
 		return nil, err

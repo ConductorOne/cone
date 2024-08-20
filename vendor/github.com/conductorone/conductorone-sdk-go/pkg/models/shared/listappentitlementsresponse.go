@@ -9,8 +9,8 @@ import (
 // ListAppEntitlementsResponseExpanded - Contains an arbitrary serialized message along with a @type that describes the type of the serialized message.
 type ListAppEntitlementsResponseExpanded struct {
 	// The type of the serialized message.
-	AtType               *string                `json:"@type,omitempty"`
-	AdditionalProperties map[string]interface{} `additionalProperties:"true" json:"-"`
+	AtType               *string        `json:"@type,omitempty"`
+	AdditionalProperties map[string]any `additionalProperties:"true" json:"-"`
 }
 
 func (l ListAppEntitlementsResponseExpanded) MarshalJSON() ([]byte, error) {
@@ -31,7 +31,7 @@ func (o *ListAppEntitlementsResponseExpanded) GetAtType() *string {
 	return o.AtType
 }
 
-func (o *ListAppEntitlementsResponseExpanded) GetAdditionalProperties() map[string]interface{} {
+func (o *ListAppEntitlementsResponseExpanded) GetAdditionalProperties() map[string]any {
 	if o == nil {
 		return nil
 	}

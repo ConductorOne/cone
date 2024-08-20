@@ -8,7 +8,7 @@ type AppGroupApproval struct {
 	AllowSelfApproval *bool `json:"allowSelfApproval,omitempty"`
 	// The ID of the group specified for approval.
 	AppGroupID *string `json:"appGroupId,omitempty"`
-	// The ID of the app that conatins the group specified for approval.
+	// The ID of the app that contains the group specified for approval.
 	AppID *string `json:"appId,omitempty"`
 	// Configuration to allow a fallback if the group is empty.
 	Fallback *bool `json:"fallback,omitempty"`
@@ -49,8 +49,4 @@ func (o *AppGroupApproval) GetFallbackUserIds() []string {
 		return nil
 	}
 	return o.FallbackUserIds
-}
-
-// AppGroupApprovalInput - The AppGroupApproval object provides the configuration for setting a group as the approvers of an approval policy step.
-type AppGroupApprovalInput struct {
 }

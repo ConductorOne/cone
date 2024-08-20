@@ -22,15 +22,23 @@ type AppEntitlementSearchServiceSearchRequest struct {
 	ExcludeAppUserIds []string `json:"excludeAppUserIds,omitempty"`
 	// Include deleted app entitlements, this includes app entitlements that have a deleted parent object (app, app resource, app resource type)
 	IncludeDeleted *bool `json:"includeDeleted,omitempty"`
+	// The isAutomated field.
+	IsAutomated *bool `json:"isAutomated,omitempty"`
 	// Restrict results to only those who have expiring app entitlement user bindings.
 	OnlyGetExpiring *bool `json:"onlyGetExpiring,omitempty"`
 	// The pageSize where 0 <= pageSize <= 100. Values < 10 will be set to 10. A value of 0 returns the default page size (currently 25)
-	PageSize *float64 `json:"pageSize,omitempty"`
+	PageSize *int `json:"pageSize,omitempty"`
 	// The pageToken field.
 	PageToken *string `json:"pageToken,omitempty"`
 	// Query the app entitlements with a fuzzy search on display name and description.
 	Query *string `json:"query,omitempty"`
-	// Search for app entitlements that are for items on these resource types.
+	// The refs field.
+	Refs []AppEntitlementRef `json:"refs,omitempty"`
+	// Search for app entitlements that belongs to these resources.
+	ResourceIds []string `json:"resourceIds,omitempty"`
+	// The resourceTraitIds field.
+	ResourceTraitIds []string `json:"resourceTraitIds,omitempty"`
+	// Search for app entitlements that are for items with resources types that have matching names. Example names are "group", "role", and "app".
 	ResourceTypeIds []string `json:"resourceTypeIds,omitempty"`
 	// Search for app entitlements with these risk levels.
 	RiskLevelIds []string `json:"riskLevelIds,omitempty"`
@@ -99,6 +107,13 @@ func (o *AppEntitlementSearchServiceSearchRequest) GetIncludeDeleted() *bool {
 	return o.IncludeDeleted
 }
 
+func (o *AppEntitlementSearchServiceSearchRequest) GetIsAutomated() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.IsAutomated
+}
+
 func (o *AppEntitlementSearchServiceSearchRequest) GetOnlyGetExpiring() *bool {
 	if o == nil {
 		return nil
@@ -106,7 +121,7 @@ func (o *AppEntitlementSearchServiceSearchRequest) GetOnlyGetExpiring() *bool {
 	return o.OnlyGetExpiring
 }
 
-func (o *AppEntitlementSearchServiceSearchRequest) GetPageSize() *float64 {
+func (o *AppEntitlementSearchServiceSearchRequest) GetPageSize() *int {
 	if o == nil {
 		return nil
 	}
@@ -125,6 +140,27 @@ func (o *AppEntitlementSearchServiceSearchRequest) GetQuery() *string {
 		return nil
 	}
 	return o.Query
+}
+
+func (o *AppEntitlementSearchServiceSearchRequest) GetRefs() []AppEntitlementRef {
+	if o == nil {
+		return nil
+	}
+	return o.Refs
+}
+
+func (o *AppEntitlementSearchServiceSearchRequest) GetResourceIds() []string {
+	if o == nil {
+		return nil
+	}
+	return o.ResourceIds
+}
+
+func (o *AppEntitlementSearchServiceSearchRequest) GetResourceTraitIds() []string {
+	if o == nil {
+		return nil
+	}
+	return o.ResourceTraitIds
 }
 
 func (o *AppEntitlementSearchServiceSearchRequest) GetResourceTypeIds() []string {

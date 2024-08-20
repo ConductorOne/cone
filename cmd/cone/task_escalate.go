@@ -4,6 +4,7 @@ import (
 	"github.com/spf13/cobra"
 
 	"github.com/conductorone/conductorone-sdk-go/pkg/models/shared"
+
 	"github.com/conductorone/cone/pkg/client"
 	"github.com/conductorone/cone/pkg/output"
 )
@@ -57,7 +58,7 @@ func (t *TaskServiceActionResponse) Header() []string {
 func (t *TaskServiceActionResponse) Rows() [][]string {
 	return [][]string{
 		{
-			client.StringFromPtr(t.TaskView.Task.NumericID),
+			client.StringFromIntPtr(t.TaskView.Task.NumericID),
 			client.StringFromPtr(t.TaskView.Task.DisplayName),
 			taskStateToString[*t.TaskView.Task.State],
 		},

@@ -22,6 +22,9 @@ type AppEntitlement struct {
 	//   - connector
 	//   - manual
 	//   - delegated
+	//   - webhook
+	//   - multiStep
+	//   - externalTicket
 	//
 	ProvisionPolicy *ProvisionPolicy `json:"provisionerPolicy,omitempty"`
 	// The alias of the app entitlement used by Cone. Also exact-match queryable.
@@ -37,7 +40,9 @@ type AppEntitlement struct {
 	// The IDs of different compliance frameworks associated with this app entitlement ex (SOX, HIPAA, PCI, etc.)
 	ComplianceFrameworkValueIds []string   `json:"complianceFrameworkValueIds,omitempty"`
 	CreatedAt                   *time.Time `json:"createdAt,omitempty"`
-	DeletedAt                   *time.Time `json:"deletedAt,omitempty"`
+	// Flag to indicate if app-level access request defaults have been applied to the entitlement
+	DefaultValuesApplied *bool      `json:"defaultValuesApplied,omitempty"`
+	DeletedAt            *time.Time `json:"deletedAt,omitempty"`
 	// The description of the app entitlement.
 	Description *string `json:"description,omitempty"`
 	// The display name of the app entitlement.
@@ -49,20 +54,29 @@ type AppEntitlement struct {
 	// The ID of the policy that will be used for emergency access grant tasks.
 	EmergencyGrantPolicyID *string `json:"emergencyGrantPolicyId,omitempty"`
 	// The amount of grants open for this entitlement
-	GrantCount *string `json:"grantCount,omitempty"`
+	GrantCount *int64 `integer:"string" json:"grantCount,omitempty"`
 	// The ID of the policy that will be used for grant tickets related to the app entitlement.
 	GrantPolicyID *string `json:"grantPolicyId,omitempty"`
 	// The unique ID for the App Entitlement.
 	ID *string `json:"id,omitempty"`
+	// Flag to indicate whether automation (for adding users to entitlement based on rules) has been enabled.
+	IsAutomationEnabled *bool `json:"isAutomationEnabled,omitempty"`
+	// Flag to indicate if the app entitlement is manually managed.
+	IsManuallyManaged *bool `json:"isManuallyManaged,omitempty"`
+	// Flag to indicate if the app-level access request settings have been overridden for the entitlement
+	OverrideAccessRequestsDefaults *bool `json:"overrideAccessRequestsDefaults,omitempty"`
 	// The ID of the policy that will be used for revoke tickets related to the app entitlement
 	RevokePolicyID *string `json:"revokePolicyId,omitempty"`
 	// The riskLevelValueId field.
 	RiskLevelValueID *string `json:"riskLevelValueId,omitempty"`
 	// The slug is displayed as an oval next to the name in the frontend of C1, it tells you what permission the entitlement grants. See https://www.conductorone.com/docs/product/manage-access/entitlements/
 	Slug *string `json:"slug,omitempty"`
+	// Map to tell us which connector the entitlement came from.
+	SourceConnectorIds map[string]string `json:"sourceConnectorIds,omitempty"`
 	// This field indicates if this is a system builtin entitlement.
-	SystemBuiltin *bool      `json:"systemBuiltin,omitempty"`
-	UpdatedAt     *time.Time `json:"updatedAt,omitempty"`
+	SystemBuiltin  *bool      `json:"systemBuiltin,omitempty"`
+	UpdatedAt      *time.Time `json:"updatedAt,omitempty"`
+	UserEditedMask *string    `json:"userEditedMask,omitempty"`
 }
 
 func (a AppEntitlement) MarshalJSON() ([]byte, error) {
@@ -132,6 +146,13 @@ func (o *AppEntitlement) GetCreatedAt() *time.Time {
 	return o.CreatedAt
 }
 
+func (o *AppEntitlement) GetDefaultValuesApplied() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.DefaultValuesApplied
+}
+
 func (o *AppEntitlement) GetDeletedAt() *time.Time {
 	if o == nil {
 		return nil
@@ -181,7 +202,7 @@ func (o *AppEntitlement) GetEmergencyGrantPolicyID() *string {
 	return o.EmergencyGrantPolicyID
 }
 
-func (o *AppEntitlement) GetGrantCount() *string {
+func (o *AppEntitlement) GetGrantCount() *int64 {
 	if o == nil {
 		return nil
 	}
@@ -200,6 +221,27 @@ func (o *AppEntitlement) GetID() *string {
 		return nil
 	}
 	return o.ID
+}
+
+func (o *AppEntitlement) GetIsAutomationEnabled() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.IsAutomationEnabled
+}
+
+func (o *AppEntitlement) GetIsManuallyManaged() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.IsManuallyManaged
+}
+
+func (o *AppEntitlement) GetOverrideAccessRequestsDefaults() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.OverrideAccessRequestsDefaults
 }
 
 func (o *AppEntitlement) GetRevokePolicyID() *string {
@@ -223,6 +265,13 @@ func (o *AppEntitlement) GetSlug() *string {
 	return o.Slug
 }
 
+func (o *AppEntitlement) GetSourceConnectorIds() map[string]string {
+	if o == nil {
+		return nil
+	}
+	return o.SourceConnectorIds
+}
+
 func (o *AppEntitlement) GetSystemBuiltin() *bool {
 	if o == nil {
 		return nil
@@ -237,6 +286,13 @@ func (o *AppEntitlement) GetUpdatedAt() *time.Time {
 	return o.UpdatedAt
 }
 
+func (o *AppEntitlement) GetUserEditedMask() *string {
+	if o == nil {
+		return nil
+	}
+	return o.UserEditedMask
+}
+
 // AppEntitlementInput - The app entitlement represents one permission in a downstream App (SAAS) that can be granted. For example, GitHub Read vs GitHub Write.
 //
 // This message contains a oneof named max_grant_duration. Only a single field of the following list may be set at a time:
@@ -249,6 +305,9 @@ type AppEntitlementInput struct {
 	//   - connector
 	//   - manual
 	//   - delegated
+	//   - webhook
+	//   - multiStep
+	//   - externalTicket
 	//
 	ProvisionPolicy *ProvisionPolicy `json:"provisionerPolicy,omitempty"`
 	// The ID of the app that is associated with the app entitlement.
@@ -261,6 +320,8 @@ type AppEntitlementInput struct {
 	CertifyPolicyID *string `json:"certifyPolicyId,omitempty"`
 	// The IDs of different compliance frameworks associated with this app entitlement ex (SOX, HIPAA, PCI, etc.)
 	ComplianceFrameworkValueIds []string `json:"complianceFrameworkValueIds,omitempty"`
+	// Flag to indicate if app-level access request defaults have been applied to the entitlement
+	DefaultValuesApplied *bool `json:"defaultValuesApplied,omitempty"`
 	// The description of the app entitlement.
 	Description *string `json:"description,omitempty"`
 	// The display name of the app entitlement.
@@ -273,12 +334,19 @@ type AppEntitlementInput struct {
 	EmergencyGrantPolicyID *string `json:"emergencyGrantPolicyId,omitempty"`
 	// The ID of the policy that will be used for grant tickets related to the app entitlement.
 	GrantPolicyID *string `json:"grantPolicyId,omitempty"`
+	// Flag to indicate if the app entitlement is manually managed.
+	IsManuallyManaged *bool `json:"isManuallyManaged,omitempty"`
+	// Flag to indicate if the app-level access request settings have been overridden for the entitlement
+	OverrideAccessRequestsDefaults *bool `json:"overrideAccessRequestsDefaults,omitempty"`
 	// The ID of the policy that will be used for revoke tickets related to the app entitlement
 	RevokePolicyID *string `json:"revokePolicyId,omitempty"`
 	// The riskLevelValueId field.
 	RiskLevelValueID *string `json:"riskLevelValueId,omitempty"`
 	// The slug is displayed as an oval next to the name in the frontend of C1, it tells you what permission the entitlement grants. See https://www.conductorone.com/docs/product/manage-access/entitlements/
 	Slug *string `json:"slug,omitempty"`
+	// Map to tell us which connector the entitlement came from.
+	SourceConnectorIds map[string]string `json:"sourceConnectorIds,omitempty"`
+	UserEditedMask     *string           `json:"userEditedMask,omitempty"`
 }
 
 func (o *AppEntitlementInput) GetProvisionPolicy() *ProvisionPolicy {
@@ -321,6 +389,13 @@ func (o *AppEntitlementInput) GetComplianceFrameworkValueIds() []string {
 		return nil
 	}
 	return o.ComplianceFrameworkValueIds
+}
+
+func (o *AppEntitlementInput) GetDefaultValuesApplied() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.DefaultValuesApplied
 }
 
 func (o *AppEntitlementInput) GetDescription() *string {
@@ -372,6 +447,20 @@ func (o *AppEntitlementInput) GetGrantPolicyID() *string {
 	return o.GrantPolicyID
 }
 
+func (o *AppEntitlementInput) GetIsManuallyManaged() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.IsManuallyManaged
+}
+
+func (o *AppEntitlementInput) GetOverrideAccessRequestsDefaults() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.OverrideAccessRequestsDefaults
+}
+
 func (o *AppEntitlementInput) GetRevokePolicyID() *string {
 	if o == nil {
 		return nil
@@ -391,4 +480,18 @@ func (o *AppEntitlementInput) GetSlug() *string {
 		return nil
 	}
 	return o.Slug
+}
+
+func (o *AppEntitlementInput) GetSourceConnectorIds() map[string]string {
+	if o == nil {
+		return nil
+	}
+	return o.SourceConnectorIds
+}
+
+func (o *AppEntitlementInput) GetUserEditedMask() *string {
+	if o == nil {
+		return nil
+	}
+	return o.UserEditedMask
 }

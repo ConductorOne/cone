@@ -7,6 +7,25 @@ import (
 	"net/http"
 )
 
+type C1APIRequestcatalogV1RequestCatalogManagementServiceListRequest struct {
+	PageSize  *int    `queryParam:"style=form,explode=true,name=page_size"`
+	PageToken *string `queryParam:"style=form,explode=true,name=page_token"`
+}
+
+func (o *C1APIRequestcatalogV1RequestCatalogManagementServiceListRequest) GetPageSize() *int {
+	if o == nil {
+		return nil
+	}
+	return o.PageSize
+}
+
+func (o *C1APIRequestcatalogV1RequestCatalogManagementServiceListRequest) GetPageToken() *string {
+	if o == nil {
+		return nil
+	}
+	return o.PageToken
+}
+
 type C1APIRequestcatalogV1RequestCatalogManagementServiceListResponse struct {
 	// HTTP response content type for this operation
 	ContentType string

@@ -9,8 +9,8 @@ import (
 // ConnectorServiceUpdateResponseExpanded - Contains an arbitrary serialized message along with a @type that describes the type of the serialized message.
 type ConnectorServiceUpdateResponseExpanded struct {
 	// The type of the serialized message.
-	AtType               *string                `json:"@type,omitempty"`
-	AdditionalProperties map[string]interface{} `additionalProperties:"true" json:"-"`
+	AtType               *string        `json:"@type,omitempty"`
+	AdditionalProperties map[string]any `additionalProperties:"true" json:"-"`
 }
 
 func (c ConnectorServiceUpdateResponseExpanded) MarshalJSON() ([]byte, error) {
@@ -31,7 +31,7 @@ func (o *ConnectorServiceUpdateResponseExpanded) GetAtType() *string {
 	return o.AtType
 }
 
-func (o *ConnectorServiceUpdateResponseExpanded) GetAdditionalProperties() map[string]interface{} {
+func (o *ConnectorServiceUpdateResponseExpanded) GetAdditionalProperties() map[string]any {
 	if o == nil {
 		return nil
 	}

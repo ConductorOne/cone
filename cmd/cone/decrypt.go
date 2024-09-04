@@ -21,7 +21,7 @@ import (
 
 func decryptCredentialCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "decrypt-credential <encrypted-credential>",
+		Use:   "decrypt-credential <app-id>",
 		Short: "Attempts to decrypt a credential",
 		RunE:  decryptCredentialRun,
 	}
@@ -84,13 +84,21 @@ func decryptCredentialRun(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
-	if err := validateArgLenth(0, args, cmd); err != nil {
+	err = validateArgLenth(0, args, cmd)
+	if err != nil || validateArgLenth(1, args, cmd) != nil {
 		return err
 	}
 
-	apps, err := c.ListApps(ctx)
-	if err != nil {
-		return err
+	var apps []shared.App
+
+	if len(args) > 0 {
+		apps = []shared.App{{ID: &args[0]}}
+
+	} else {
+		apps, err = c.ListApps(ctx)
+		if err != nil {
+			return err
+		}
 	}
 
 	allCreds := make([]shared.AppUserCredential, 0)

@@ -11,6 +11,7 @@ import (
 	"github.com/conductorone/baton-sdk/pkg/crypto/providers"
 	"github.com/conductorone/baton-sdk/pkg/crypto/providers/jwk"
 	"github.com/conductorone/conductorone-sdk-go/pkg/models/shared"
+	"github.com/pterm/pterm"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	"google.golang.org/protobuf/encoding/protojson"
@@ -21,7 +22,7 @@ import (
 
 func decryptCredentialCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "decrypt-credential <encrypted-credential>",
+		Use:   "decrypt-credential [app-id]",
 		Short: "Attempts to decrypt a credential",
 		RunE:  decryptCredentialRun,
 	}
@@ -74,7 +75,7 @@ func decodeCredential(ctx context.Context, v *viper.Viper, cred shared.AppUserCr
 		return nil, fmt.Errorf("failed to decrypt credential: %w", err)
 	}
 
-	fmt.Printf("Thumbprint: %s\n", thumbprint(privateJWK.Public()))
+	pterm.Printf("Thumbprint: %s\n", thumbprint(privateJWK.Public()))
 	return plaintext, nil
 }
 
@@ -84,13 +85,20 @@ func decryptCredentialRun(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
-	if err := validateArgLenth(0, args, cmd); err != nil {
-		return err
+	if validateArgLenth(0, args, cmd) != nil && validateArgLenth(1, args, cmd) != nil {
+		return fmt.Errorf("expected 0 or 1 arguments, got %d\n%s", len(args), cmd.UsageString())
 	}
 
-	apps, err := c.ListApps(ctx)
-	if err != nil {
-		return err
+	var apps []shared.App
+
+	if len(args) > 0 {
+		apps = []shared.App{{ID: &args[0]}}
+
+	} else {
+		apps, err = c.ListApps(ctx)
+		if err != nil {
+			return err
+		}
 	}
 
 	allCreds := make([]shared.AppUserCredential, 0)
@@ -112,7 +120,7 @@ func decryptCredentialRun(cmd *cobra.Command, args []string) error {
 		}
 	}
 
-	fmt.Printf("Found %d credentials\n", len(allCreds))
+	pterm.Printf("Found %d credentials\n", len(allCreds))
 	for _, cred := range allCreds {
 		plaintext, err := decodeCredential(ctx, v, cred)
 		if err != nil {
@@ -127,8 +135,8 @@ func decryptCredentialRun(cmd *cobra.Command, args []string) error {
 		if err != nil {
 			return fmt.Errorf("failed to marshal plaintext: %w", err)
 		}
-		fmt.Printf("Decrypted credential: %s\n", pt)
-		fmt.Printf("Decrypted bytes: %s\n", plaintext.Bytes)
+		pterm.Printf("Decrypted credential: %s\n", pt)
+		pterm.Printf("Decrypted bytes: %s\n", plaintext.Bytes)
 	}
 
 	return nil

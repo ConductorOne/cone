@@ -11,6 +11,7 @@ import (
 	"github.com/conductorone/baton-sdk/pkg/crypto/providers"
 	"github.com/conductorone/baton-sdk/pkg/crypto/providers/jwk"
 	"github.com/conductorone/conductorone-sdk-go/pkg/models/shared"
+	"github.com/pterm/pterm"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	"google.golang.org/protobuf/encoding/protojson"
@@ -74,7 +75,7 @@ func decodeCredential(ctx context.Context, v *viper.Viper, cred shared.AppUserCr
 		return nil, fmt.Errorf("failed to decrypt credential: %w", err)
 	}
 
-	fmt.Printf("Thumbprint: %s\n", thumbprint(privateJWK.Public()))
+	pterm.Printf("Thumbprint: %s\n", thumbprint(privateJWK.Public()))
 	return plaintext, nil
 }
 
@@ -119,7 +120,7 @@ func decryptCredentialRun(cmd *cobra.Command, args []string) error {
 		}
 	}
 
-	fmt.Printf("Found %d credentials\n", len(allCreds))
+	pterm.Printf("Found %d credentials\n", len(allCreds))
 	for _, cred := range allCreds {
 		plaintext, err := decodeCredential(ctx, v, cred)
 		if err != nil {
@@ -134,8 +135,8 @@ func decryptCredentialRun(cmd *cobra.Command, args []string) error {
 		if err != nil {
 			return fmt.Errorf("failed to marshal plaintext: %w", err)
 		}
-		fmt.Printf("Decrypted credential: %s\n", pt)
-		fmt.Printf("Decrypted bytes: %s\n", plaintext.Bytes)
+		pterm.Printf("Decrypted credential: %s\n", pt)
+		pterm.Printf("Decrypted bytes: %s\n", plaintext.Bytes)
 	}
 
 	return nil

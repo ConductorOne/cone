@@ -86,7 +86,7 @@ func decryptCredentialRun(cmd *cobra.Command, args []string) error {
 	}
 
 	if validateArgLenth(0, args, cmd) != nil && validateArgLenth(1, args, cmd) != nil {
-		return fmt.Errorf("expected 1 or no arguments, got %d\n%s", len(args), cmd.UsageString())
+		return fmt.Errorf("expected 0 or 1 arguments, got %d\n%s", len(args), cmd.UsageString())
 	}
 
 	var apps []shared.App

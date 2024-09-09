@@ -22,7 +22,7 @@ import (
 
 func decryptCredentialCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "decrypt-credential <app-id>",
+		Use:   "decrypt-credential [app-id]",
 		Short: "Attempts to decrypt a credential",
 		RunE:  decryptCredentialRun,
 	}

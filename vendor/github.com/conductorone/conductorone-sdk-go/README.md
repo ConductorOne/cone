@@ -1,8 +1,29 @@
 # conductorone-api
 
+<!-- Start Summary [summary] -->
+## Summary
+
+ConductorOne API: The ConductorOne API is a HTTP API for managing ConductorOne resources.
+<!-- End Summary [summary] -->
+
+<!-- Start Table of Contents [toc] -->
+## Table of Contents
+
+* [SDK Installation](#sdk-installation)
+* [SDK Example Usage](#sdk-example-usage)
+* [Available Resources and Operations](#available-resources-and-operations)
+* [Retries](#retries)
+* [Error Handling](#error-handling)
+* [Server Selection](#server-selection)
+* [Custom HTTP Client](#custom-http-client)
+* [Authentication](#authentication)
+* [Special Types](#special-types)
+<!-- End Table of Contents [toc] -->
+
 <!-- Start SDK Installation [installation] -->
 ## SDK Installation
 
+To add the SDK as a dependency to your project:
 ```bash
 go get github.com/ConductorOne/conductorone-sdk-go
 ```
@@ -50,13 +71,8 @@ func main() {
 <!-- Start Available Resources and Operations [operations] -->
 ## Available Resources and Operations
 
-### [Apps](docs/sdks/apps/README.md)
-
-* [Create](docs/sdks/apps/README.md#create) - Create
-* [Delete](docs/sdks/apps/README.md#delete) - Delete
-* [Get](docs/sdks/apps/README.md#get) - Get
-* [List](docs/sdks/apps/README.md#list) - List
-* [Update](docs/sdks/apps/README.md#update) - Update
+<details open>
+<summary>Available methods</summary>
 
 ### [AppAccessRequestsDefaults](docs/sdks/appaccessrequestsdefaults/README.md)
 
@@ -64,22 +80,17 @@ func main() {
 * [CreateAppAccessRequestsDefaults](docs/sdks/appaccessrequestsdefaults/README.md#createappaccessrequestsdefaults) - Create App Access Requests Defaults
 * [GetAppAccessRequestsDefaults](docs/sdks/appaccessrequestsdefaults/README.md#getappaccessrequestsdefaults) - Get App Access Requests Defaults
 
-### [Connector](docs/sdks/connector/README.md)
+### [AppEntitlementOwners](docs/sdks/appentitlementowners/README.md)
 
-* [Create](docs/sdks/connector/README.md#create) - Create
-* [CreateDelegated](docs/sdks/connector/README.md#createdelegated) - Create Delegated
-* [Delete](docs/sdks/connector/README.md#delete) - Delete
-* [ForceSync](docs/sdks/connector/README.md#forcesync) - Force Sync
-* [Get](docs/sdks/connector/README.md#get) - Get
-* [GetCredentials](docs/sdks/connector/README.md#getcredentials) - Get Credentials
-* [List](docs/sdks/connector/README.md#list) - List
-* [RevokeCredential](docs/sdks/connector/README.md#revokecredential) - Revoke Credential
-* [RotateCredential](docs/sdks/connector/README.md#rotatecredential) - Rotate Credential
-* [Update](docs/sdks/connector/README.md#update) - Update
-* [UpdateDelegated](docs/sdks/connector/README.md#updatedelegated) - Update Delegated
+* [Add](docs/sdks/appentitlementowners/README.md#add) - Add
+* [List](docs/sdks/appentitlementowners/README.md#list) - List
+* [Remove](docs/sdks/appentitlementowners/README.md#remove) - Remove
+* [Set](docs/sdks/appentitlementowners/README.md#set) - Set
 
 ### [AppEntitlements](docs/sdks/appentitlements/README.md)
 
+* [Create](docs/sdks/appentitlements/README.md#create) - Create
+* [Delete](docs/sdks/appentitlements/README.md#delete) - Delete
 * [Get](docs/sdks/appentitlements/README.md#get) - Get
 * [List](docs/sdks/appentitlements/README.md#list) - List
 * [ListForAppResource](docs/sdks/appentitlements/README.md#listforappresource) - List For App Resource
@@ -90,18 +101,14 @@ func main() {
 ### [AppEntitlementSearch](docs/sdks/appentitlementsearch/README.md)
 
 * [Search](docs/sdks/appentitlementsearch/README.md#search) - Search
+* [SearchAppEntitlementsForAppUser](docs/sdks/appentitlementsearch/README.md#searchappentitlementsforappuser) - Search App Entitlements For App User
 * [SearchAppEntitlementsWithExpired](docs/sdks/appentitlementsearch/README.md#searchappentitlementswithexpired) - Search App Entitlements With Expired
 
 ### [AppEntitlementUserBinding](docs/sdks/appentitlementuserbinding/README.md)
 
 * [ListAppUsersForIdentityWithGrant](docs/sdks/appentitlementuserbinding/README.md#listappusersforidentitywithgrant) - List App Users For Identity With Grant
-
-### [AppEntitlementOwners](docs/sdks/appentitlementowners/README.md)
-
-* [Add](docs/sdks/appentitlementowners/README.md#add) - Add
-* [List](docs/sdks/appentitlementowners/README.md#list) - List
-* [Remove](docs/sdks/appentitlementowners/README.md#remove) - Remove
-* [Set](docs/sdks/appentitlementowners/README.md#set) - Set
+* [SearchGrantFeed](docs/sdks/appentitlementuserbinding/README.md#searchgrantfeed) - Search Grant Feed
+* [SearchPastGrants](docs/sdks/appentitlementuserbinding/README.md#searchpastgrants) - Search Past Grants
 
 ### [AppOwners](docs/sdks/appowners/README.md)
 
@@ -118,19 +125,41 @@ func main() {
 
 * [GenerateReport](docs/sdks/appreportaction/README.md#generatereport) - Generate Report
 
-### [AppResourceType](docs/sdks/appresourcetype/README.md)
-
-* [Get](docs/sdks/appresourcetype/README.md#get) - Get
-* [List](docs/sdks/appresourcetype/README.md#list) - List
-
 ### [AppResource](docs/sdks/appresource/README.md)
 
+* [CreateManuallyManagedAppResource](docs/sdks/appresource/README.md#createmanuallymanagedappresource) - Create Manually Managed App Resource
+* [DeleteManuallyManagedAppResource](docs/sdks/appresource/README.md#deletemanuallymanagedappresource) - Delete Manually Managed App Resource
 * [Get](docs/sdks/appresource/README.md#get) - Get
 * [List](docs/sdks/appresource/README.md#list) - List
+* [Update](docs/sdks/appresource/README.md#update) - Update
 
 ### [AppResourceOwners](docs/sdks/appresourceowners/README.md)
 
 * [List](docs/sdks/appresourceowners/README.md#list) - List
+
+### [AppResourceSearch](docs/sdks/appresourcesearch/README.md)
+
+* [SearchAppResourceTypes](docs/sdks/appresourcesearch/README.md#searchappresourcetypes) - Search App Resource Types
+
+### [AppResourceType](docs/sdks/appresourcetype/README.md)
+
+* [CreateManuallyManagedResourceType](docs/sdks/appresourcetype/README.md#createmanuallymanagedresourcetype) - Create Manually Managed Resource Type
+* [DeleteManuallyManagedResourceType](docs/sdks/appresourcetype/README.md#deletemanuallymanagedresourcetype) - Delete Manually Managed Resource Type
+* [Get](docs/sdks/appresourcetype/README.md#get) - Get
+* [List](docs/sdks/appresourcetype/README.md#list) - List
+* [UpdateManuallyManagedResourceType](docs/sdks/appresourcetype/README.md#updatemanuallymanagedresourcetype) - Update Manually Managed Resource Type
+
+### [Apps](docs/sdks/apps/README.md)
+
+* [Create](docs/sdks/apps/README.md#create) - Create
+* [Delete](docs/sdks/apps/README.md#delete) - Delete
+* [Get](docs/sdks/apps/README.md#get) - Get
+* [List](docs/sdks/apps/README.md#list) - List
+* [Update](docs/sdks/apps/README.md#update) - Update
+
+### [AppSearch](docs/sdks/appsearch/README.md)
+
+* [Search](docs/sdks/appsearch/README.md#search) - Search
 
 ### [AppUsageControls](docs/sdks/appusagecontrols/README.md)
 
@@ -149,9 +178,80 @@ func main() {
 * [ListAttributeTypes](docs/sdks/attributes/README.md#listattributetypes) - List Attribute Types
 * [ListAttributeValues](docs/sdks/attributes/README.md#listattributevalues) - List Attribute Values
 
+### [AttributeSearch](docs/sdks/attributesearch/README.md)
+
+* [SearchAttributeValues](docs/sdks/attributesearch/README.md#searchattributevalues) - Search Attribute Values
+
 ### [Auth](docs/sdks/auth/README.md)
 
 * [Introspect](docs/sdks/auth/README.md#introspect) - Introspect
+
+### [AWSExternalIDSettings](docs/sdks/awsexternalidsettings/README.md)
+
+* [Get](docs/sdks/awsexternalidsettings/README.md#get) - Get
+
+
+### [Connector](docs/sdks/connector/README.md)
+
+* [Create](docs/sdks/connector/README.md#create) - Create
+* [CreateDelegated](docs/sdks/connector/README.md#createdelegated) - Create Delegated
+* [Delete](docs/sdks/connector/README.md#delete) - Delete
+* [ForceSync](docs/sdks/connector/README.md#forcesync) - Force Sync
+* [Get](docs/sdks/connector/README.md#get) - Get
+* [GetCredentials](docs/sdks/connector/README.md#getcredentials) - Get Credentials
+* [List](docs/sdks/connector/README.md#list) - List
+* [RevokeCredential](docs/sdks/connector/README.md#revokecredential) - Revoke Credential
+* [RotateCredential](docs/sdks/connector/README.md#rotatecredential) - Rotate Credential
+* [Update](docs/sdks/connector/README.md#update) - Update
+* [UpdateDelegated](docs/sdks/connector/README.md#updatedelegated) - Update Delegated
+
+### [Directory](docs/sdks/directory/README.md)
+
+* [Create](docs/sdks/directory/README.md#create) - Create
+* [Delete](docs/sdks/directory/README.md#delete) - Delete
+* [Get](docs/sdks/directory/README.md#get) - Get
+* [List](docs/sdks/directory/README.md#list) - List
+
+### [Export](docs/sdks/export/README.md)
+
+* [Create](docs/sdks/export/README.md#create) - Create
+* [Delete](docs/sdks/export/README.md#delete) - Delete
+* [Get](docs/sdks/export/README.md#get) - Get
+* [List](docs/sdks/export/README.md#list) - List
+* [ListEvents](docs/sdks/export/README.md#listevents) - List Events
+* [Update](docs/sdks/export/README.md#update) - Update
+
+### [ExportsSearch](docs/sdks/exportssearch/README.md)
+
+* [Search](docs/sdks/exportssearch/README.md#search) - Search
+
+### [PersonalClient](docs/sdks/personalclient/README.md)
+
+* [Create](docs/sdks/personalclient/README.md#create) - Create
+* [Delete](docs/sdks/personalclient/README.md#delete) - Delete
+* [Get](docs/sdks/personalclient/README.md#get) - Get
+* [List](docs/sdks/personalclient/README.md#list) - NOTE: Only shows personal clients for the current user.
+* [Update](docs/sdks/personalclient/README.md#update) - Update
+
+### [PersonalClientSearch](docs/sdks/personalclientsearch/README.md)
+
+* [Search](docs/sdks/personalclientsearch/README.md#search) - NOTE: Searches personal clients for all users
+
+### [Policies](docs/sdks/policies/README.md)
+
+* [Create](docs/sdks/policies/README.md#create) - Create
+* [Delete](docs/sdks/policies/README.md#delete) - Delete
+* [Get](docs/sdks/policies/README.md#get) - Get
+* [List](docs/sdks/policies/README.md#list) - List
+* [Update](docs/sdks/policies/README.md#update) - Update
+
+### [PolicySearch](docs/sdks/policysearch/README.md)
+
+* [Search](docs/sdks/policysearch/README.md#search) - Search
+
+### [PolicyValidate](docs/sdks/policyvalidate/README.md)
+
+* [ValidateCEL](docs/sdks/policyvalidate/README.md#validatecel) - Validate Cel
 
 ### [RequestCatalogManagement](docs/sdks/requestcatalogmanagement/README.md)
 
@@ -159,6 +259,7 @@ func main() {
 * [AddAppEntitlements](docs/sdks/requestcatalogmanagement/README.md#addappentitlements) - Add App Entitlements
 * [Create](docs/sdks/requestcatalogmanagement/README.md#create) - Create
 * [Delete](docs/sdks/requestcatalogmanagement/README.md#delete) - Delete
+* [ForceRunBundleAutomation](docs/sdks/requestcatalogmanagement/README.md#forcerunbundleautomation) - Force Run Bundle Automation
 * [Get](docs/sdks/requestcatalogmanagement/README.md#get) - Get
 * [GetBundleAutomation](docs/sdks/requestcatalogmanagement/README.md#getbundleautomation) - Get Bundle Automation
 * [List](docs/sdks/requestcatalogmanagement/README.md#list) - List
@@ -169,70 +270,15 @@ func main() {
 * [SetBundleAutomation](docs/sdks/requestcatalogmanagement/README.md#setbundleautomation) - Set Bundle Automation
 * [Update](docs/sdks/requestcatalogmanagement/README.md#update) - Update
 
-### [Directory](docs/sdks/directory/README.md)
+### [RequestCatalogSearch](docs/sdks/requestcatalogsearch/README.md)
 
-* [Create](docs/sdks/directory/README.md#create) - Create
-* [Delete](docs/sdks/directory/README.md#delete) - Delete
-* [Get](docs/sdks/directory/README.md#get) - Get
-* [List](docs/sdks/directory/README.md#list) - List
-
-### [PersonalClient](docs/sdks/personalclient/README.md)
-
-* [Create](docs/sdks/personalclient/README.md#create) - Create
+* [SearchEntitlements](docs/sdks/requestcatalogsearch/README.md#searchentitlements) - Search Entitlements
 
 ### [Roles](docs/sdks/roles/README.md)
 
 * [Get](docs/sdks/roles/README.md#get) - Get
 * [List](docs/sdks/roles/README.md#list) - List
 * [Update](docs/sdks/roles/README.md#update) - Update
-
-### [Policies](docs/sdks/policies/README.md)
-
-* [Create](docs/sdks/policies/README.md#create) - Create
-* [Delete](docs/sdks/policies/README.md#delete) - Delete
-* [Get](docs/sdks/policies/README.md#get) - Get
-* [List](docs/sdks/policies/README.md#list) - List
-* [Update](docs/sdks/policies/README.md#update) - Update
-
-### [PolicyValidate](docs/sdks/policyvalidate/README.md)
-
-* [ValidateCEL](docs/sdks/policyvalidate/README.md#validatecel) - Validate Cel
-
-### [AppResourceSearch](docs/sdks/appresourcesearch/README.md)
-
-* [SearchAppResourceTypes](docs/sdks/appresourcesearch/README.md#searchappresourcetypes) - Search App Resource Types
-
-### [AppSearch](docs/sdks/appsearch/README.md)
-
-* [Search](docs/sdks/appsearch/README.md#search) - Search
-
-### [AttributeSearch](docs/sdks/attributesearch/README.md)
-
-* [SearchAttributeValues](docs/sdks/attributesearch/README.md#searchattributevalues) - Search Attribute Values
-
-### [PolicySearch](docs/sdks/policysearch/README.md)
-
-* [Search](docs/sdks/policysearch/README.md#search) - Search
-
-### [RequestCatalogSearch](docs/sdks/requestcatalogsearch/README.md)
-
-* [SearchEntitlements](docs/sdks/requestcatalogsearch/README.md#searchentitlements) - Search Entitlements
-
-### [TaskSearch](docs/sdks/tasksearch/README.md)
-
-* [Search](docs/sdks/tasksearch/README.md#search) - Search
-
-### [UserSearch](docs/sdks/usersearch/README.md)
-
-* [Search](docs/sdks/usersearch/README.md#search) - Search
-
-### [WebhooksSearch](docs/sdks/webhookssearch/README.md)
-
-* [Search](docs/sdks/webhookssearch/README.md#search) - Search
-
-### [AWSExternalIDSettings](docs/sdks/awsexternalidsettings/README.md)
-
-* [Get](docs/sdks/awsexternalidsettings/README.md#get) - Get
 
 ### [SessionSettings](docs/sdks/sessionsettings/README.md)
 
@@ -256,13 +302,22 @@ func main() {
 * [Comment](docs/sdks/taskactions/README.md#comment) - Comment
 * [Deny](docs/sdks/taskactions/README.md#deny) - Deny
 * [EscalateToEmergencyAccess](docs/sdks/taskactions/README.md#escalatetoemergencyaccess) - Escalate To Emergency Access
+* [HardReset](docs/sdks/taskactions/README.md#hardreset) - Hard Reset
 * [Reassign](docs/sdks/taskactions/README.md#reassign) - Reassign
 * [Restart](docs/sdks/taskactions/README.md#restart) - Restart
+
+### [TaskSearch](docs/sdks/tasksearch/README.md)
+
+* [Search](docs/sdks/tasksearch/README.md#search) - Search
 
 ### [User](docs/sdks/user/README.md)
 
 * [Get](docs/sdks/user/README.md#get) - Get
 * [List](docs/sdks/user/README.md#list) - List
+
+### [UserSearch](docs/sdks/usersearch/README.md)
+
+* [Search](docs/sdks/usersearch/README.md#search) - Search
 
 ### [Webhooks](docs/sdks/webhooks/README.md)
 
@@ -272,6 +327,12 @@ func main() {
 * [List](docs/sdks/webhooks/README.md#list) - List
 * [Test](docs/sdks/webhooks/README.md#test) - Test
 * [Update](docs/sdks/webhooks/README.md#update) - Update
+
+### [WebhooksSearch](docs/sdks/webhookssearch/README.md)
+
+* [Search](docs/sdks/webhookssearch/README.md#search) - Search
+
+</details>
 <!-- End Available Resources and Operations [operations] -->
 
 
@@ -392,20 +453,19 @@ import (
 	"github.com/conductorone/conductorone-sdk-go/pkg/models/shared"
 	"github.com/conductorone/conductorone-sdk-go/pkg/retry"
 	"log"
-	"os"
 	"pkg/models/operations"
 )
 
 func main() {
 	s := conductoronesdkgo.New(
 		conductoronesdkgo.WithSecurity(shared.Security{
-			BearerAuth: os.Getenv("BEARER_AUTH"),
-			Oauth:      os.Getenv("OAUTH"),
+			BearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
+			Oauth:      "<YOUR_OAUTH_HERE>",
 		}),
 	)
-	var request *shared.CreateAppRequest = &shared.CreateAppRequest{}
+
 	ctx := context.Background()
-	res, err := s.Apps.Create(ctx, request, operations.WithRetries(
+	res, err := s.Apps.Create(ctx, nil, operations.WithRetries(
 		retry.Config{
 			Strategy: "backoff",
 			Backoff: &retry.BackoffStrategy{
@@ -436,7 +496,6 @@ import (
 	"github.com/conductorone/conductorone-sdk-go/pkg/models/shared"
 	"github.com/conductorone/conductorone-sdk-go/pkg/retry"
 	"log"
-	"os"
 )
 
 func main() {
@@ -453,13 +512,13 @@ func main() {
 				RetryConnectionErrors: false,
 			}),
 		conductoronesdkgo.WithSecurity(shared.Security{
-			BearerAuth: os.Getenv("BEARER_AUTH"),
-			Oauth:      os.Getenv("OAUTH"),
+			BearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
+			Oauth:      "<YOUR_OAUTH_HERE>",
 		}),
 	)
-	var request *shared.CreateAppRequest = &shared.CreateAppRequest{}
+
 	ctx := context.Background()
-	res, err := s.Apps.Create(ctx, request)
+	res, err := s.Apps.Create(ctx, nil)
 	if err != nil {
 		log.Fatal(err)
 	}

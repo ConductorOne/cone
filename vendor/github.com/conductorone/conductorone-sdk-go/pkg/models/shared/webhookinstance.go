@@ -3,8 +3,6 @@
 package shared
 
 import (
-	"encoding/json"
-	"fmt"
 	"github.com/conductorone/conductorone-sdk-go/pkg/utils"
 	"time"
 )
@@ -25,33 +23,6 @@ const (
 
 func (e WebhookInstanceState) ToPointer() *WebhookInstanceState {
 	return &e
-}
-func (e *WebhookInstanceState) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "WEBHOOK_STATE_UNSPECIFIED":
-		fallthrough
-	case "WEBHOOK_STATE_PENDING":
-		fallthrough
-	case "WEBHOOK_STATE_RUNNING":
-		fallthrough
-	case "WEBHOOK_STATE_ERROR":
-		fallthrough
-	case "WEBHOOK_STATE_WAITING_CALLBACK":
-		fallthrough
-	case "WEBHOOK_STATE_PROCESS_RESPONSE":
-		fallthrough
-	case "WEBHOOK_STATE_SUCCESS":
-		fallthrough
-	case "WEBHOOK_STATE_FATAL_ERROR":
-		*e = WebhookInstanceState(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for WebhookInstanceState: %v", v)
-	}
 }
 
 // The WebhookInstance message.

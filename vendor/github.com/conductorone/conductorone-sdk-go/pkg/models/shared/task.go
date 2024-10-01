@@ -140,25 +140,6 @@ const (
 func (e Processing) ToPointer() *Processing {
 	return &e
 }
-func (e *Processing) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "TASK_PROCESSING_TYPE_UNSPECIFIED":
-		fallthrough
-	case "TASK_PROCESSING_TYPE_PROCESSING":
-		fallthrough
-	case "TASK_PROCESSING_TYPE_WAITING":
-		fallthrough
-	case "TASK_PROCESSING_TYPE_DONE":
-		*e = Processing(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for Processing: %v", v)
-	}
-}
 
 // Recommendation - The recommendation field.
 type Recommendation string
@@ -173,25 +154,6 @@ const (
 func (e Recommendation) ToPointer() *Recommendation {
 	return &e
 }
-func (e *Recommendation) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "INSIGHT_RECOMMENDATION_UNSPECIFIED":
-		fallthrough
-	case "INSIGHT_RECOMMENDATION_APPROVE":
-		fallthrough
-	case "INSIGHT_RECOMMENDATION_DENY":
-		fallthrough
-	case "INSIGHT_RECOMMENDATION_REVIEW":
-		*e = Recommendation(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for Recommendation: %v", v)
-	}
-}
 
 // TaskState - The current state of the task as defined by the `state_enum`
 type TaskState string
@@ -204,23 +166,6 @@ const (
 
 func (e TaskState) ToPointer() *TaskState {
 	return &e
-}
-func (e *TaskState) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "TASK_STATE_UNSPECIFIED":
-		fallthrough
-	case "TASK_STATE_OPEN":
-		fallthrough
-	case "TASK_STATE_CLOSED":
-		*e = TaskState(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for TaskState: %v", v)
-	}
 }
 
 // Task - A fully-fleged task object. Includes its policy, references to external apps, its type, its processing history, and more.

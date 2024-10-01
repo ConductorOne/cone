@@ -3,8 +3,6 @@
 package shared
 
 import (
-	"encoding/json"
-	"fmt"
 	"github.com/conductorone/conductorone-sdk-go/pkg/utils"
 	"time"
 )
@@ -21,25 +19,6 @@ const (
 
 func (e WaitInstanceState) ToPointer() *WaitInstanceState {
 	return &e
-}
-func (e *WaitInstanceState) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "WAIT_INSTANCE_STATE_UNSPECIFIED":
-		fallthrough
-	case "WAIT_INSTANCE_STATE_WAITING":
-		fallthrough
-	case "WAIT_INSTANCE_STATE_COMPLETED":
-		fallthrough
-	case "WAIT_INSTANCE_STATE_TIMED_OUT":
-		*e = WaitInstanceState(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for WaitInstanceState: %v", v)
-	}
 }
 
 // WaitInstance - Used by the policy engine to describe an instantiated wait step.

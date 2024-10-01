@@ -3,8 +3,6 @@
 package shared
 
 import (
-	"encoding/json"
-	"fmt"
 	"github.com/conductorone/conductorone-sdk-go/pkg/utils"
 	"time"
 )
@@ -20,23 +18,6 @@ const (
 
 func (e IdentityMatching) ToPointer() *IdentityMatching {
 	return &e
-}
-func (e *IdentityMatching) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "APP_USER_IDENTITY_MATCHING_UNSPECIFIED":
-		fallthrough
-	case "APP_USER_IDENTITY_MATCHING_STRICT":
-		fallthrough
-	case "APP_USER_IDENTITY_MATCHING_DISPLAY_NAME":
-		*e = IdentityMatching(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for IdentityMatching: %v", v)
-	}
 }
 
 // The App object provides all of the details for an app, as well as some configuration.

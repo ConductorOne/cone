@@ -3,8 +3,6 @@
 package shared
 
 import (
-	"encoding/json"
-	"fmt"
 	"github.com/conductorone/conductorone-sdk-go/pkg/utils"
 	"time"
 )
@@ -23,29 +21,6 @@ const (
 
 func (e Outcome) ToPointer() *Outcome {
 	return &e
-}
-func (e *Outcome) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "CERTIFY_OUTCOME_UNSPECIFIED":
-		fallthrough
-	case "CERTIFY_OUTCOME_CERTIFIED":
-		fallthrough
-	case "CERTIFY_OUTCOME_DECERTIFIED":
-		fallthrough
-	case "CERTIFY_OUTCOME_ERROR":
-		fallthrough
-	case "CERTIFY_OUTCOME_CANCELLED":
-		fallthrough
-	case "CERTIFY_OUTCOME_WAIT_TIMED_OUT":
-		*e = Outcome(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for Outcome: %v", v)
-	}
 }
 
 // The TaskTypeCertify message indicates that a task is a certify task and all related details.

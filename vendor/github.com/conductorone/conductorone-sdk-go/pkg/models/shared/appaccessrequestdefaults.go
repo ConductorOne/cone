@@ -2,11 +2,6 @@
 
 package shared
 
-import (
-	"encoding/json"
-	"fmt"
-)
-
 type DurationUnset struct {
 }
 
@@ -25,31 +20,6 @@ const (
 
 func (e State) ToPointer() *State {
 	return &e
-}
-func (e *State) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "APP_ACCESS_REQUEST_DEFAULTS_LAST_APPLY_STATE_UNSPECIFIED":
-		fallthrough
-	case "APP_ACCESS_REQUEST_DEFAULTS_LAST_APPLY_STATE_RUNNING":
-		fallthrough
-	case "APP_ACCESS_REQUEST_DEFAULTS_LAST_APPLY_STATE_SUCCESS":
-		fallthrough
-	case "APP_ACCESS_REQUEST_DEFAULTS_LAST_APPLY_STATE_FAILED":
-		fallthrough
-	case "APP_ACCESS_REQUEST_DEFAULTS_LAST_APPLY_STATE_CANCELING":
-		fallthrough
-	case "APP_ACCESS_REQUEST_DEFAULTS_LAST_APPLY_STATE_CANCEL_SUCCESS":
-		fallthrough
-	case "APP_ACCESS_REQUEST_DEFAULTS_LAST_APPLY_STATE_CANCEL_ERROR":
-		*e = State(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for State: %v", v)
-	}
 }
 
 // The AppAccessRequestDefaults message.

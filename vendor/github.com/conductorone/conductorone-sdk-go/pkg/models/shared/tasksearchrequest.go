@@ -53,23 +53,6 @@ const (
 func (e CurrentStep) ToPointer() *CurrentStep {
 	return &e
 }
-func (e *CurrentStep) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "TASK_SEARCH_CURRENT_STEP_UNSPECIFIED":
-		fallthrough
-	case "TASK_SEARCH_CURRENT_STEP_APPROVAL":
-		fallthrough
-	case "TASK_SEARCH_CURRENT_STEP_PROVISION":
-		*e = CurrentStep(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for CurrentStep: %v", v)
-	}
-}
 
 // EmergencyStatus - Search tasks that are or are not emergency access.
 type EmergencyStatus string
@@ -83,25 +66,6 @@ const (
 
 func (e EmergencyStatus) ToPointer() *EmergencyStatus {
 	return &e
-}
-func (e *EmergencyStatus) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "UNSPECIFIED":
-		fallthrough
-	case "ALL":
-		fallthrough
-	case "NON_EMERGENCY":
-		fallthrough
-	case "EMERGENCY":
-		*e = EmergencyStatus(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for EmergencyStatus: %v", v)
-	}
 }
 
 // SortBy - Sort tasks in a specific order.
@@ -117,27 +81,6 @@ const (
 
 func (e SortBy) ToPointer() *SortBy {
 	return &e
-}
-func (e *SortBy) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "TASK_SEARCH_SORT_BY_UNSPECIFIED":
-		fallthrough
-	case "TASK_SEARCH_SORT_BY_ACCOUNT":
-		fallthrough
-	case "TASK_SEARCH_SORT_BY_RESOURCE":
-		fallthrough
-	case "TASK_SEARCH_SORT_BY_ACCOUNT_OWNER":
-		fallthrough
-	case "TASK_SEARCH_SORT_BY_REVERSE_TICKET_ID":
-		*e = SortBy(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for SortBy: %v", v)
-	}
 }
 
 type TaskStates string

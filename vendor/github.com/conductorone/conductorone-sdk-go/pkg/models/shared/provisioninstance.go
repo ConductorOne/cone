@@ -2,11 +2,6 @@
 
 package shared
 
-import (
-	"encoding/json"
-	"fmt"
-)
-
 // ProvisionInstanceState - This property indicates the current state of this step.
 type ProvisionInstanceState string
 
@@ -25,37 +20,6 @@ const (
 
 func (e ProvisionInstanceState) ToPointer() *ProvisionInstanceState {
 	return &e
-}
-func (e *ProvisionInstanceState) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "PROVISION_INSTANCE_STATE_UNSPECIFIED":
-		fallthrough
-	case "PROVISION_INSTANCE_STATE_INIT":
-		fallthrough
-	case "PROVISION_INSTANCE_STATE_CREATE_CONNECTOR_ACTIONS_FOR_TARGET":
-		fallthrough
-	case "PROVISION_INSTANCE_STATE_SENDING_NOTIFICATIONS":
-		fallthrough
-	case "PROVISION_INSTANCE_STATE_WAITING":
-		fallthrough
-	case "PROVISION_INSTANCE_STATE_WEBHOOK":
-		fallthrough
-	case "PROVISION_INSTANCE_STATE_WEBHOOK_WAITING":
-		fallthrough
-	case "PROVISION_INSTANCE_STATE_EXTERNAL_TICKET":
-		fallthrough
-	case "PROVISION_INSTANCE_STATE_EXTERNAL_TICKET_WAITING":
-		fallthrough
-	case "PROVISION_INSTANCE_STATE_DONE":
-		*e = ProvisionInstanceState(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for ProvisionInstanceState: %v", v)
-	}
 }
 
 // ProvisionInstance - A provision instance describes the specific configuration of an executing provision policy step including actions taken and notification id.

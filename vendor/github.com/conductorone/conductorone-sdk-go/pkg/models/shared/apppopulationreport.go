@@ -3,8 +3,6 @@
 package shared
 
 import (
-	"encoding/json"
-	"fmt"
 	"github.com/conductorone/conductorone-sdk-go/pkg/utils"
 	"time"
 )
@@ -21,25 +19,6 @@ const (
 
 func (e AppPopulationReportState) ToPointer() *AppPopulationReportState {
 	return &e
-}
-func (e *AppPopulationReportState) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "REPORT_STATE_UNSPECIFIED":
-		fallthrough
-	case "REPORT_STATE_PENDING":
-		fallthrough
-	case "REPORT_STATE_OK":
-		fallthrough
-	case "REPORT_STATE_ERROR":
-		*e = AppPopulationReportState(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for AppPopulationReportState: %v", v)
-	}
 }
 
 // The AppPopulationReport is a generated report for a specific app that gives details about the app's users. These details include what groups, roles, and other entitlements the users have access to.

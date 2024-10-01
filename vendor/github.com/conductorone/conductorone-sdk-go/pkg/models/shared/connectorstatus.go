@@ -3,8 +3,6 @@
 package shared
 
 import (
-	"encoding/json"
-	"fmt"
 	"github.com/conductorone/conductorone-sdk-go/pkg/utils"
 	"time"
 )
@@ -22,27 +20,6 @@ const (
 
 func (e ConnectorStatusStatus) ToPointer() *ConnectorStatusStatus {
 	return &e
-}
-func (e *ConnectorStatusStatus) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "SYNC_STATUS_UNSPECIFIED":
-		fallthrough
-	case "SYNC_STATUS_RUNNING":
-		fallthrough
-	case "SYNC_STATUS_DONE":
-		fallthrough
-	case "SYNC_STATUS_ERROR":
-		fallthrough
-	case "SYNC_STATUS_DISABLED":
-		*e = ConnectorStatusStatus(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for ConnectorStatusStatus: %v", v)
-	}
 }
 
 // ConnectorStatus - The status field on the connector is used to track the status of the connectors sync, and when syncing last started, completed, or caused the connector to update.

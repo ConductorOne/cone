@@ -3,8 +3,6 @@
 package shared
 
 import (
-	"encoding/json"
-	"fmt"
 	"github.com/conductorone/conductorone-sdk-go/pkg/utils"
 	"time"
 )
@@ -23,29 +21,6 @@ const (
 
 func (e TaskTypeGrantOutcome) ToPointer() *TaskTypeGrantOutcome {
 	return &e
-}
-func (e *TaskTypeGrantOutcome) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "GRANT_OUTCOME_UNSPECIFIED":
-		fallthrough
-	case "GRANT_OUTCOME_GRANTED":
-		fallthrough
-	case "GRANT_OUTCOME_DENIED":
-		fallthrough
-	case "GRANT_OUTCOME_ERROR":
-		fallthrough
-	case "GRANT_OUTCOME_CANCELLED":
-		fallthrough
-	case "GRANT_OUTCOME_WAIT_TIMED_OUT":
-		*e = TaskTypeGrantOutcome(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for TaskTypeGrantOutcome: %v", v)
-	}
 }
 
 // The TaskTypeGrant message indicates that a task is a grant task and all related details.

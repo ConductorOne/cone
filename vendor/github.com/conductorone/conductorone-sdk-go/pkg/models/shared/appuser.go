@@ -3,8 +3,6 @@
 package shared
 
 import (
-	"encoding/json"
-	"fmt"
 	"github.com/conductorone/conductorone-sdk-go/pkg/utils"
 	"time"
 )
@@ -21,25 +19,6 @@ const (
 
 func (e AppUserType) ToPointer() *AppUserType {
 	return &e
-}
-func (e *AppUserType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "APP_USER_TYPE_UNSPECIFIED":
-		fallthrough
-	case "APP_USER_TYPE_USER":
-		fallthrough
-	case "APP_USER_TYPE_SERVICE_ACCOUNT":
-		fallthrough
-	case "APP_USER_TYPE_SYSTEM_ACCOUNT":
-		*e = AppUserType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for AppUserType: %v", v)
-	}
 }
 
 // AppUser - Application User that represents an account in the application.

@@ -2,11 +2,6 @@
 
 package shared
 
-import (
-	"encoding/json"
-	"fmt"
-)
-
 // ApprovalInstanceState - The state of the approval instance
 type ApprovalInstanceState string
 
@@ -20,27 +15,6 @@ const (
 
 func (e ApprovalInstanceState) ToPointer() *ApprovalInstanceState {
 	return &e
-}
-func (e *ApprovalInstanceState) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "APPROVAL_INSTANCE_STATE_UNSPECIFIED":
-		fallthrough
-	case "APPROVAL_INSTANCE_STATE_INIT":
-		fallthrough
-	case "APPROVAL_INSTANCE_STATE_SENDING_NOTIFICATIONS":
-		fallthrough
-	case "APPROVAL_INSTANCE_STATE_WAITING":
-		fallthrough
-	case "APPROVAL_INSTANCE_STATE_DONE":
-		*e = ApprovalInstanceState(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for ApprovalInstanceState: %v", v)
-	}
 }
 
 // ApprovalInstance - The approval instance object describes the way a policy step should be approved as well as its outcomes and state.

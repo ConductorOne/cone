@@ -3,8 +3,6 @@
 package shared
 
 import (
-	"encoding/json"
-	"fmt"
 	"github.com/conductorone/conductorone-sdk-go/pkg/utils"
 	"time"
 )
@@ -20,23 +18,6 @@ const (
 
 func (e SortDirection) ToPointer() *SortDirection {
 	return &e
-}
-func (e *SortDirection) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "SORT_DIRECTION_UNSPECIFIED":
-		fallthrough
-	case "SORT_DIRECTION_ASC":
-		fallthrough
-	case "SORT_DIRECTION_DESC":
-		*e = SortDirection(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for SortDirection: %v", v)
-	}
 }
 
 // The SystemLogServiceListEventsRequest message.

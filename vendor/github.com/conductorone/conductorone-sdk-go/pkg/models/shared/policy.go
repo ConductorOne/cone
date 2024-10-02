@@ -3,8 +3,6 @@
 package shared
 
 import (
-	"encoding/json"
-	"fmt"
 	"github.com/conductorone/conductorone-sdk-go/pkg/utils"
 	"time"
 )
@@ -23,29 +21,6 @@ const (
 
 func (e PolicyPolicyType) ToPointer() *PolicyPolicyType {
 	return &e
-}
-func (e *PolicyPolicyType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "POLICY_TYPE_UNSPECIFIED":
-		fallthrough
-	case "POLICY_TYPE_GRANT":
-		fallthrough
-	case "POLICY_TYPE_REVOKE":
-		fallthrough
-	case "POLICY_TYPE_CERTIFY":
-		fallthrough
-	case "POLICY_TYPE_ACCESS_REQUEST":
-		fallthrough
-	case "POLICY_TYPE_PROVISION":
-		*e = PolicyPolicyType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for PolicyPolicyType: %v", v)
-	}
 }
 
 // Policy - A policy describes the behavior of the ConductorOne system when processing a task. You can describe the type, approvers, fallback behavior, and escalation processes.

@@ -3,8 +3,6 @@
 package shared
 
 import (
-	"encoding/json"
-	"fmt"
 	"github.com/conductorone/conductorone-sdk-go/pkg/utils"
 	"time"
 )
@@ -22,23 +20,6 @@ const (
 
 func (e ReferenceStrength) ToPointer() *ReferenceStrength {
 	return &e
-}
-func (e *ReferenceStrength) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "GRANT_REASON_REFERENCE_STRENGTH_UNSPECIFIED":
-		fallthrough
-	case "GRANT_REASON_REFERENCE_STRENGTH_WEAK":
-		fallthrough
-	case "GRANT_REASON_REFERENCE_STRENGTH_STRONG":
-		*e = ReferenceStrength(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for ReferenceStrength: %v", v)
-	}
 }
 
 // The GrantReason message.

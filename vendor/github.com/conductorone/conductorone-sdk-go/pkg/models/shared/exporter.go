@@ -3,8 +3,6 @@
 package shared
 
 import (
-	"encoding/json"
-	"fmt"
 	"github.com/conductorone/conductorone-sdk-go/pkg/utils"
 	"time"
 )
@@ -21,25 +19,6 @@ const (
 
 func (e ExporterState) ToPointer() *ExporterState {
 	return &e
-}
-func (e *ExporterState) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "EXPORT_STATE_UNSPECIFIED":
-		fallthrough
-	case "EXPORT_STATE_EXPORTING":
-		fallthrough
-	case "EXPORT_STATE_WAITING":
-		fallthrough
-	case "EXPORT_STATE_ERROR":
-		*e = ExporterState(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for ExporterState: %v", v)
-	}
 }
 
 // The Exporter message.

@@ -2,11 +2,6 @@
 
 package shared
 
-import (
-	"encoding/json"
-	"fmt"
-)
-
 // Status - The application user status field.
 type Status string
 
@@ -19,25 +14,6 @@ const (
 
 func (e Status) ToPointer() *Status {
 	return &e
-}
-func (e *Status) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "STATUS_UNSPECIFIED":
-		fallthrough
-	case "STATUS_ENABLED":
-		fallthrough
-	case "STATUS_DISABLED":
-		fallthrough
-	case "STATUS_DELETED":
-		*e = Status(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for Status: %v", v)
-	}
 }
 
 // AppUserStatus - The satus of the applicaiton user.

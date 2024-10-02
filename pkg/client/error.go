@@ -7,8 +7,9 @@ import (
 	"io"
 	"net/http"
 
-	"github.com/conductorone/cone/pkg/output"
 	"github.com/spf13/viper"
+
+	"github.com/conductorone/cone/pkg/output"
 )
 
 const defaultJSONError = `{"error": "unable to marshal error to JSON %s"}`
@@ -65,12 +66,12 @@ func HandleErrors(ctx context.Context, v *viper.Viper, input error) error {
 		if err != nil {
 			return fmt.Errorf(defaultJSONError, httpErr.Error())
 		}
-		return fmt.Errorf(string(jsonError))
+		return errors.New(string(jsonError))
 	}
 	jsonError, err := output.MakeJSONFromInterface(ctx, JSONError{Error: input.Error()}, outputType == output.JSONPretty)
 	if err != nil {
 		return fmt.Errorf(defaultJSONError, input.Error())
 	}
 
-	return fmt.Errorf(string(jsonError))
+	return errors.New(string(jsonError))
 }

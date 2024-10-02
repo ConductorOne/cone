@@ -3,8 +3,6 @@
 package shared
 
 import (
-	"encoding/json"
-	"fmt"
 	"github.com/conductorone/conductorone-sdk-go/pkg/utils"
 	"time"
 )
@@ -22,25 +20,6 @@ const (
 func (e DirectoryStatus) ToPointer() *DirectoryStatus {
 	return &e
 }
-func (e *DirectoryStatus) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "UNKNOWN":
-		fallthrough
-	case "ENABLED":
-		fallthrough
-	case "DISABLED":
-		fallthrough
-	case "DELETED":
-		*e = DirectoryStatus(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for DirectoryStatus: %v", v)
-	}
-}
 
 // UserStatus - The status of the user in the system.
 type UserStatus string
@@ -54,25 +33,6 @@ const (
 
 func (e UserStatus) ToPointer() *UserStatus {
 	return &e
-}
-func (e *UserStatus) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "UNKNOWN":
-		fallthrough
-	case "ENABLED":
-		fallthrough
-	case "DISABLED":
-		fallthrough
-	case "DELETED":
-		*e = UserStatus(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for UserStatus: %v", v)
-	}
 }
 
 // The User object provides all of the details for an user, as well as some configuration.

@@ -3,8 +3,6 @@
 package shared
 
 import (
-	"encoding/json"
-	"fmt"
 	"github.com/conductorone/conductorone-sdk-go/pkg/utils"
 	"time"
 )
@@ -22,27 +20,6 @@ const (
 
 func (e TaskTypeOffboardingOutcome) ToPointer() *TaskTypeOffboardingOutcome {
 	return &e
-}
-func (e *TaskTypeOffboardingOutcome) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "OFFBOARDING_OUTCOME_UNSPECIFIED":
-		fallthrough
-	case "OFFBOARDING_OUTCOME_IN_PROGRESS":
-		fallthrough
-	case "OFFBOARDING_OUTCOME_DONE":
-		fallthrough
-	case "OFFBOARDING_OUTCOME_ERROR":
-		fallthrough
-	case "OFFBOARDING_OUTCOME_CANCELLED":
-		*e = TaskTypeOffboardingOutcome(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for TaskTypeOffboardingOutcome: %v", v)
-	}
 }
 
 // The TaskTypeOffboarding message.

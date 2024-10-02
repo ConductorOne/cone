@@ -75,7 +75,7 @@ release:
     - darwin-archive
     - windows-archive
 snapshot:
-  name_template: '{{ incpatch .Version }}-dev'
+  version_template: '{{ incpatch .Version }}-dev'
 checksum:
   ids:
     - linux-archive
@@ -85,6 +85,7 @@ checksum:
     - glob: ./dist/*-darwin-arm64.zip
 brews:
   - name: homebrew-cone
+    directory: Formula
     homepage: https://conductorone.com
     test: |
       system "#{bin}/cone -v"

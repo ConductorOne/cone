@@ -85,6 +85,7 @@ checksum:
     - glob: ./dist/*-darwin-arm64.zip
 brews:
   - name: homebrew-cone
+    directory: Formula
     homepage: https://conductorone.com
     test: |
       system "#{bin}/cone -v"

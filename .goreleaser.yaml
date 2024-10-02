@@ -84,7 +84,9 @@ checksum:
     - glob: ./dist/*-darwin-amd64.zip
     - glob: ./dist/*-darwin-arm64.zip
 brews:
-  - name: homebrew-cone
+  - repository:
+      owner: conductorone
+      name: homebrew-cone
     directory: Formula
     homepage: https://conductorone.com
     test: |

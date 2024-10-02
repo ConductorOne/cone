@@ -75,7 +75,7 @@ release:
     - darwin-archive
     - windows-archive
 snapshot:
-  name_template: '{{ incpatch .Version }}-dev'
+  version_template: '{{ incpatch .Version }}-dev'
 checksum:
   ids:
     - linux-archive

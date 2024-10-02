@@ -1,3 +1,4 @@
+version: 2
 project_name: cone
 builds:
   - binary: cone
@@ -83,15 +84,13 @@ checksum:
     - glob: ./dist/*-darwin-amd64.zip
     - glob: ./dist/*-darwin-arm64.zip
 brews:
-  - tap:
-      owner: conductorone
-      name: homebrew-cone
-    folder: Formula
+  - name: homebrew-cone
     homepage: https://conductorone.com
     test: |
       system "#{bin}/cone -v"
     install: |-
       bin.install "cone"
+
 changelog:
   filters:
     exclude:

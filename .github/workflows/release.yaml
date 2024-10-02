@@ -25,13 +25,14 @@ jobs:
           p12-file-base64: ${{ secrets.APPLE_SIGNING_KEY_P12 }}
           p12-password: ${{ secrets.APPLE_SIGNING_KEY_P12_PASSWORD }}
       - name: Run GoReleaser
-        uses: goreleaser/goreleaser-action@v4
+        uses: goreleaser/goreleaser-action@v6
         with:
-          version: latest
+          version: "~> v2"
           args: release --clean
         env:
           GITHUB_TOKEN: ${{ secrets.RELENG_GITHUB_TOKEN }}
           AC_PASSWORD: ${{ secrets.AC_PASSWORD }}
+          AC_PROVIDER: ${{ secrets.AC_PROVIDER }}
   goreleaser-docker:
     runs-on: ubuntu-latest
     steps:
@@ -52,9 +53,9 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
       - name: Run GoReleaser
-        uses: goreleaser/goreleaser-action@v4
+        uses: goreleaser/goreleaser-action@v6
         with:
-          version: latest
+          version: "~> v2"
           args: release --clean -f .goreleaser.docker.yaml
         env:
           GITHUB_TOKEN: ${{ secrets.RELENG_GITHUB_TOKEN }}

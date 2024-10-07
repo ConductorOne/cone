@@ -3,7 +3,6 @@ package client
 import (
 	"context"
 
-	"github.com/conductorone/conductorone-sdk-go/pkg/models/operations"
 	"github.com/conductorone/conductorone-sdk-go/pkg/models/shared"
 )
 
@@ -29,7 +28,8 @@ func (c *client) ListAppUsers(ctx context.Context, appID string) ([]shared.AppUs
 	return appUsers, nil
 }
 
-func (c *client) ListAppUserCredentials(ctx context.Context, appID string, appUserID string) ([]shared.AppUserCredential, error) {
+func (c *client) ListAppUserCredentials(ctx context.Context, appID string, appUserID string) ([]any, error) {
+	func (c *client) ListAppUserCredentials(ctx context.Context, appID string, appUserID string) ([]shared.AppUserCredential, error) {
 	resp, err := c.sdk.AppUser.ListAppUserCredentials(ctx, operations.C1APIAppV1AppUserServiceListAppUserCredentialsRequest{AppID: appID, AppUserID: appUserID})
 	if err != nil {
 		return nil, err

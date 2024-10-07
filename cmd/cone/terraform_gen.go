@@ -25,7 +25,10 @@ const (
 	tempTfFile               = "cone_temp.tf"
 )
 
-var objects = []string{"policy", "app_entitlement"}
+const appEntitlementArg = "app_entitlements"
+const policyArg = "policies"
+
+var objects = []string{policyArg, appEntitlementArg}
 
 func terraformGenCmd() *cobra.Command {
 	cmd := &cobra.Command{
@@ -82,7 +85,7 @@ func populateResourcesWithApps(ctx context.Context, c client.C1Client, object st
 }
 
 func populateResourcesWithPolicies(ctx context.Context, c client.C1Client, object string, resources map[string]terraform.TemplateData) error {
-	if object == "policy" || object == "*" {
+	if object == policyArg || object == "*" {
 		policies, err := c.ListPolicies(ctx)
 		if err != nil {
 			return err
@@ -96,7 +99,7 @@ func populateResourcesWithPolicies(ctx context.Context, c client.C1Client, objec
 }
 
 func populateResourcesWithEntitlements(ctx context.Context, c client.C1Client, v *viper.Viper, object string, resources map[string]terraform.TemplateData) error {
-	if object == "app_entitlement" || object == "*" {
+	if object == appEntitlementArg || object == "*" {
 		appId := v.GetString(tfAppIdFlag)
 		if appId == "" {
 			return errors.New("app-id flag is required for app_entitlement object")
@@ -116,9 +119,9 @@ func populateResourcesWithEntitlements(ctx context.Context, c client.C1Client, v
 
 func getFileName(object string) string {
 	switch object {
-	case "app_entitlement":
+	case appEntitlementArg:
 		return "generated_app_entitlements.tf"
-	case "policy":
+	case policyArg:
 		return "generated_policies.tf"
 	case "*":
 		return "generated_resources.tf"

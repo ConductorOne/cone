@@ -168,6 +168,8 @@ func main() {
 
 ### [AppUser](docs/sdks/appuser/README.md)
 
+* [List](docs/sdks/appuser/README.md#list) - List
+* [ListAppUserCredentials](docs/sdks/appuser/README.md#listappusercredentials) - List App User Credentials
 * [Update](docs/sdks/appuser/README.md#update) - Update
 
 ### [Attributes](docs/sdks/attributes/README.md)

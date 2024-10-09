@@ -90,10 +90,8 @@ func decryptCredentialRun(cmd *cobra.Command, args []string) error {
 	}
 
 	var apps []shared.App
-
 	if len(args) > 0 {
 		apps = []shared.App{{ID: &args[0]}}
-
 	} else {
 		apps, err = c.ListApps(ctx)
 		if err != nil {

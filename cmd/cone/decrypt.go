@@ -122,7 +122,8 @@ func decryptCredentialRun(cmd *cobra.Command, args []string) error {
 	for _, cred := range allCreds {
 		plaintext, err := decodeCredential(ctx, v, cred)
 		if err != nil {
-			return fmt.Errorf("failed to decode credential: %w", err)
+			pterm.Printf("Failed to decode credential: %w\n", err)
+			continue
 		}
 		opt := &protojson.MarshalOptions{
 			Multiline:       true,

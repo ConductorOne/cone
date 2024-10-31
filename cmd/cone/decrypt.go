@@ -14,7 +14,6 @@ import (
 	"github.com/pterm/pterm"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
-	"google.golang.org/protobuf/encoding/protojson"
 	"gopkg.in/square/go-jose.v2"
 
 	"github.com/conductorone/cone/pkg/client"
@@ -89,9 +88,15 @@ func decryptCredentialRun(cmd *cobra.Command, args []string) error {
 		return fmt.Errorf("expected 0 or 1 arguments, got %d\n%s", len(args), cmd.UsageString())
 	}
 
+	appMap := make(map[string]shared.App)
 	var apps []shared.App
 	if len(args) > 0 {
-		apps = []shared.App{{ID: &args[0]}}
+		app, err := c.GetApp(ctx, args[0])
+		if err != nil {
+			return err
+		}
+		apps = append(apps, *app)
+		appMap[*app.ID] = shared.App{ID: &args[0]}
 	} else {
 		apps, err = c.ListApps(ctx)
 		if err != nil {
@@ -115,27 +120,26 @@ func decryptCredentialRun(cmd *cobra.Command, args []string) error {
 				return err
 			}
 			allCreds = append(allCreds, creds...)
+			appMap[*app.ID] = app
 		}
 	}
 
 	pterm.Printf("Found %d credentials\n", len(allCreds))
-	for _, cred := range allCreds {
+	pterm.Printf("========================================\n")
+	for i, cred := range allCreds {
+		pterm.Printf("========================================\n")
+		pterm.Printf("Credential #%d\n", i+1)
+		pterm.Printf("App Display Name: %s\n", *appMap[*cred.AppID].DisplayName)
+		pterm.Printf("App ID: %s\n", *cred.AppID)
+		pterm.Printf("App User ID: %s\n", *cred.AppUserID)
 		plaintext, err := decodeCredential(ctx, v, cred)
 		if err != nil {
-			pterm.Printf("Failed to decode credential: %w\n", err)
+			pterm.Printf("Failed to decode credential: %s\n", err.Error())
+			pterm.Printf("========================================\n")
 			continue
 		}
-		opt := &protojson.MarshalOptions{
-			Multiline:       true,
-			Indent:          "  ",
-			EmitUnpopulated: true,
-		}
-		pt, err := opt.Marshal(plaintext)
-		if err != nil {
-			return fmt.Errorf("failed to marshal plaintext: %w", err)
-		}
-		pterm.Printf("Decrypted credential: %s\n", pt)
-		pterm.Printf("Decrypted bytes: %s\n", plaintext.Bytes)
+		pterm.Printf("Decrypted Credential: %s\n", plaintext.Bytes)
+		pterm.Printf("========================================\n")
 	}
 
 	return nil

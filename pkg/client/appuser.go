@@ -2,6 +2,7 @@ package client
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/conductorone/conductorone-sdk-go/pkg/models/operations"
 	"github.com/conductorone/conductorone-sdk-go/pkg/models/shared"
@@ -35,13 +36,13 @@ func (c *client) ListAppUserCredentials(ctx context.Context, appID string, appUs
 		return nil, err
 	}
 
+	if resp == nil || resp.AppUserServiceListCredentialsResponse == nil {
+		return nil, fmt.Errorf("ListAppUserCredentials: response is nil")
+	}
+
 	if err := NewHTTPError(resp.RawResponse); err != nil {
 		return nil, err
 	}
 
-	// appUsers := make([]shared.AppUser, 0)
-
 	return resp.AppUserServiceListCredentialsResponse.List, nil
-
-	// return appUsers, nil
 }

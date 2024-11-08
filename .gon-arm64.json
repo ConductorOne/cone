@@ -1,5 +1,5 @@
 {
-  "source": ["./dist/macos-arm64_darwin_arm64/cone"],
+  "source": ["./dist/macos-arm64_darwin_arm64_v8.0/cone"],
   "bundle_id": "com.conductorone.cone",
   "apple_id": {
     "username" : "justin.gallardo@conductorone.com"

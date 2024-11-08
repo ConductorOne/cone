@@ -5,10 +5,10 @@ package shared
 // PolicyStepsInput - The PolicySteps message.
 type PolicyStepsInput struct {
 	// An array of policy steps indicating the processing flow of a policy. These steps are oneOfs, and only one property may be set for each array index at a time.
-	Steps []PolicyStep `json:"steps,omitempty"`
+	Steps []PolicyStepInput `json:"steps,omitempty"`
 }
 
-func (o *PolicyStepsInput) GetSteps() []PolicyStep {
+func (o *PolicyStepsInput) GetSteps() []PolicyStepInput {
 	if o == nil {
 		return nil
 	}

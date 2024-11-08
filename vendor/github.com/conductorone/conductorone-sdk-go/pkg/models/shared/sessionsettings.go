@@ -4,7 +4,52 @@ package shared
 
 // The SessionSettings message.
 type SessionSettings struct {
-	MaxSessionLength *string `json:"maxSessionLength,omitempty"`
+	// The CIDRRestriction message.
+	CIDRRestriction *CIDRRestriction `json:"connectorSource,omitempty"`
+	// The CIDRRestriction message.
+	CIDRRestriction1 *CIDRRestriction `json:"pccAdminSource,omitempty"`
+	// The CIDRRestriction message.
+	CIDRRestriction2 *CIDRRestriction `json:"pccUserSource,omitempty"`
+	// The CIDRRestriction message.
+	CIDRRestriction3 *CIDRRestriction `json:"ssoAdminSource,omitempty"`
+	// The CIDRRestriction message.
+	CIDRRestriction4 *CIDRRestriction `json:"ssoUserSource,omitempty"`
+	MaxSessionLength *string          `json:"maxSessionLength,omitempty"`
+}
+
+func (o *SessionSettings) GetCIDRRestriction() *CIDRRestriction {
+	if o == nil {
+		return nil
+	}
+	return o.CIDRRestriction
+}
+
+func (o *SessionSettings) GetCIDRRestriction1() *CIDRRestriction {
+	if o == nil {
+		return nil
+	}
+	return o.CIDRRestriction1
+}
+
+func (o *SessionSettings) GetCIDRRestriction2() *CIDRRestriction {
+	if o == nil {
+		return nil
+	}
+	return o.CIDRRestriction2
+}
+
+func (o *SessionSettings) GetCIDRRestriction3() *CIDRRestriction {
+	if o == nil {
+		return nil
+	}
+	return o.CIDRRestriction3
+}
+
+func (o *SessionSettings) GetCIDRRestriction4() *CIDRRestriction {
+	if o == nil {
+		return nil
+	}
+	return o.CIDRRestriction4
 }
 
 func (o *SessionSettings) GetMaxSessionLength() *string {

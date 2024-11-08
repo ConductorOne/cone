@@ -144,6 +144,8 @@ type TaskSearchRequest struct {
 	EmergencyStatus *EmergencyStatus `json:"emergencyStatus,omitempty"`
 	// Search tasks that do not have any of these app entitlement IDs.
 	ExcludeAppEntitlementIds []string `json:"excludeAppEntitlementIds,omitempty"`
+	// Search tasks that do not have any of these app resource type IDs.
+	ExcludeAppResourceTypeIds []string `json:"excludeAppResourceTypeIds,omitempty"`
 	// Exclude Specific TaskIDs from this serach result.
 	ExcludeIds []string `json:"excludeIds,omitempty"`
 	// Whether or not to include deleted tasks.
@@ -294,6 +296,13 @@ func (o *TaskSearchRequest) GetExcludeAppEntitlementIds() []string {
 		return nil
 	}
 	return o.ExcludeAppEntitlementIds
+}
+
+func (o *TaskSearchRequest) GetExcludeAppResourceTypeIds() []string {
+	if o == nil {
+		return nil
+	}
+	return o.ExcludeAppResourceTypeIds
 }
 
 func (o *TaskSearchRequest) GetExcludeIds() []string {

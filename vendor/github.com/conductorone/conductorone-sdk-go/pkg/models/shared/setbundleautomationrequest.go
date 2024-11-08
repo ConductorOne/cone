@@ -9,6 +9,8 @@ package shared
 type SetBundleAutomationRequest struct {
 	// The BundleAutomationRuleEntitlement message.
 	BundleAutomationRuleEntitlement *BundleAutomationRuleEntitlement `json:"entitlements,omitempty"`
+	// The createTasks field.
+	CreateTasks *bool `json:"createTasks,omitempty"`
 	// The enabled field.
 	Enabled *bool `json:"enabled,omitempty"`
 }
@@ -18,6 +20,13 @@ func (o *SetBundleAutomationRequest) GetBundleAutomationRuleEntitlement() *Bundl
 		return nil
 	}
 	return o.BundleAutomationRuleEntitlement
+}
+
+func (o *SetBundleAutomationRequest) GetCreateTasks() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.CreateTasks
 }
 
 func (o *SetBundleAutomationRequest) GetEnabled() *bool {

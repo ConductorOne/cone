@@ -47,6 +47,8 @@ type App struct {
 	IdentityMatching *IdentityMatching `json:"identityMatching,omitempty"`
 	// Specifies if the app is a directory.
 	IsDirectory *bool `json:"isDirectory,omitempty"`
+	// The isManuallyManaged field.
+	IsManuallyManaged *bool `json:"isManuallyManaged,omitempty"`
 	// The URL of a logo to display for the app.
 	LogoURI *string `json:"logoUri,omitempty"`
 	// The cost of an app per-seat, so that total cost can be calculated by the grant count.
@@ -169,6 +171,13 @@ func (o *App) GetIsDirectory() *bool {
 	return o.IsDirectory
 }
 
+func (o *App) GetIsManuallyManaged() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.IsManuallyManaged
+}
+
 func (o *App) GetLogoURI() *string {
 	if o == nil {
 		return nil
@@ -225,6 +234,8 @@ type AppInput struct {
 	IconURL *string `json:"iconUrl,omitempty"`
 	// The identityMatching field.
 	IdentityMatching *IdentityMatching `json:"identityMatching,omitempty"`
+	// The isManuallyManaged field.
+	IsManuallyManaged *bool `json:"isManuallyManaged,omitempty"`
 	// The cost of an app per-seat, so that total cost can be calculated by the grant count.
 	MonthlyCostUsd *int `json:"monthlyCostUsd,omitempty"`
 	// The ID of the Revoke Policy associated with this App.
@@ -271,6 +282,13 @@ func (o *AppInput) GetIdentityMatching() *IdentityMatching {
 		return nil
 	}
 	return o.IdentityMatching
+}
+
+func (o *AppInput) GetIsManuallyManaged() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.IsManuallyManaged
 }
 
 func (o *AppInput) GetMonthlyCostUsd() *int {

@@ -7,22 +7,21 @@ import (
 	"time"
 )
 
-// AppUserCredential - Application User that represents an account in the application.
+// AppUserCredential - A credentials for the Application User that represents an account in the application.
+//
+// This message contains a oneof named credential. Only a single field of the following list may be set at a time:
+//   - encryptedData
 type AppUserCredential struct {
 	// EncryptedData is a message that contains encrypted bytes and metadata.
 	EncryptedData *EncryptedData `json:"encryptedData,omitempty"`
 	// The ID of the application.
 	AppID *string `json:"appId,omitempty"`
-	// A unique idenditfier of the application user.
-	AppUserID *string `json:"appUserId,omitempty"`
-	// The ID of the connector that generated this credential.
-	ConnectorID *string    `json:"connectorId,omitempty"`
-	CreatedAt   *time.Time `json:"createdAt,omitempty"`
-	DeletedAt   *time.Time `json:"deletedAt,omitempty"`
-	// A unique idenditfier of the credential.
-	ID *string `json:"id,omitempty"`
-	// The ticket ID of the request that generated this credential.
-	TicketID  *string    `json:"ticketId,omitempty"`
+	// A unique identifier of the application user.
+	AppUserID *string    `json:"appUserId,omitempty"`
+	CreatedAt *time.Time `json:"createdAt,omitempty"`
+	DeletedAt *time.Time `json:"deletedAt,omitempty"`
+	// A unique identifier of the credential.
+	ID        *string    `json:"id,omitempty"`
 	UpdatedAt *time.Time `json:"updatedAt,omitempty"`
 }
 
@@ -58,13 +57,6 @@ func (o *AppUserCredential) GetAppUserID() *string {
 	return o.AppUserID
 }
 
-func (o *AppUserCredential) GetConnectorID() *string {
-	if o == nil {
-		return nil
-	}
-	return o.ConnectorID
-}
-
 func (o *AppUserCredential) GetCreatedAt() *time.Time {
 	if o == nil {
 		return nil
@@ -84,13 +76,6 @@ func (o *AppUserCredential) GetID() *string {
 		return nil
 	}
 	return o.ID
-}
-
-func (o *AppUserCredential) GetTicketID() *string {
-	if o == nil {
-		return nil
-	}
-	return o.TicketID
 }
 
 func (o *AppUserCredential) GetUpdatedAt() *time.Time {

@@ -2,28 +2,75 @@
 
 package shared
 
+type CreateAppEntitlementRequestDurationUnset struct {
+}
+
+// CreateAppEntitlementRequestPurpose - The purpose field.
+type CreateAppEntitlementRequestPurpose string
+
+const (
+	CreateAppEntitlementRequestPurposeAppEntitlementPurposeValueUnspecified CreateAppEntitlementRequestPurpose = "APP_ENTITLEMENT_PURPOSE_VALUE_UNSPECIFIED"
+	CreateAppEntitlementRequestPurposeAppEntitlementPurposeValueAssignment  CreateAppEntitlementRequestPurpose = "APP_ENTITLEMENT_PURPOSE_VALUE_ASSIGNMENT"
+	CreateAppEntitlementRequestPurposeAppEntitlementPurposeValuePermission  CreateAppEntitlementRequestPurpose = "APP_ENTITLEMENT_PURPOSE_VALUE_PERMISSION"
+)
+
+func (e CreateAppEntitlementRequestPurpose) ToPointer() *CreateAppEntitlementRequestPurpose {
+	return &e
+}
+
 // The CreateAppEntitlementRequest message.
+//
+// This message contains a oneof named max_grant_duration. Only a single field of the following list may be set at a time:
+//   - durationUnset
+//   - durationGrant
 type CreateAppEntitlementRequest struct {
 	// The app entitlement expand mask allows the user to get additional information when getting responses containing app entitlement views.
 	AppEntitlementExpandMask *AppEntitlementExpandMask `json:"expandMask,omitempty"`
+	// ProvisionPolicy is a oneOf that indicates how a provision step should be processed.
+	//
+	// This message contains a oneof named typ. Only a single field of the following list may be set at a time:
+	//   - connector
+	//   - manual
+	//   - delegated
+	//   - webhook
+	//   - multiStep
+	//   - externalTicket
+	//
+	ProvisionPolicy *ProvisionPolicyInput `json:"provisionPolicy,omitempty"`
+	// The alias field.
+	Alias *string `json:"alias,omitempty"`
 	// The appEntitlementOwnerIds field.
 	AppEntitlementOwnerIds []string `json:"appEntitlementOwnerIds,omitempty"`
 	// The appResourceId field.
 	AppResourceID *string `json:"appResourceId,omitempty"`
 	// The appResourceTypeId field.
 	AppResourceTypeID *string `json:"appResourceTypeId,omitempty"`
+	// The certifyPolicyId field.
+	CertifyPolicyID *string `json:"certifyPolicyId,omitempty"`
+	// The complianceFrameworkValueIds field.
+	ComplianceFrameworkValueIds []string `json:"complianceFrameworkValueIds,omitempty"`
 	// The description field.
 	Description *string `json:"description,omitempty"`
 	// The displayName field.
-	DisplayName *string `json:"displayName,omitempty"`
-	// The entitlementSlug field.
-	EntitlementSlug *string `json:"entitlementSlug,omitempty"`
-	// The isAutomationEnabled field.
-	IsAutomationEnabled *bool `json:"isAutomationEnabled,omitempty"`
-	// The linkedIdpEntitlementAppId field.
-	LinkedIdpEntitlementAppID *string `json:"linkedIdpEntitlementAppId,omitempty"`
-	// The linkedIdpEntitlementId field.
-	LinkedIdpEntitlementID *string `json:"linkedIdpEntitlementId,omitempty"`
+	DisplayName   *string                                   `json:"displayName,omitempty"`
+	DurationGrant *string                                   `json:"durationGrant,omitempty"`
+	DurationUnset *CreateAppEntitlementRequestDurationUnset `json:"durationUnset,omitempty"`
+	// The emergencyGrantEnabled field.
+	EmergencyGrantEnabled *bool `json:"emergencyGrantEnabled,omitempty"`
+	// The emergencyGrantPolicyId field.
+	EmergencyGrantPolicyID *string `json:"emergencyGrantPolicyId,omitempty"`
+	// The grantPolicyId field.
+	GrantPolicyID *string `json:"grantPolicyId,omitempty"`
+	// The overrideAccessRequestsDefaults field.
+	OverrideAccessRequestsDefaults *bool `json:"overrideAccessRequestsDefaults,omitempty"`
+	// The purpose field.
+	Purpose *CreateAppEntitlementRequestPurpose `json:"purpose,omitempty"`
+	// The revokePolicyId field.
+	RevokePolicyID *string `json:"revokePolicyId,omitempty"`
+	// The riskLevelValueId field.
+	RiskLevelValueID *string `json:"riskLevelValueId,omitempty"`
+	// The slug field.
+	Slug *string `json:"slug,omitempty"`
 }
 
 func (o *CreateAppEntitlementRequest) GetAppEntitlementExpandMask() *AppEntitlementExpandMask {
@@ -31,6 +78,20 @@ func (o *CreateAppEntitlementRequest) GetAppEntitlementExpandMask() *AppEntitlem
 		return nil
 	}
 	return o.AppEntitlementExpandMask
+}
+
+func (o *CreateAppEntitlementRequest) GetProvisionPolicy() *ProvisionPolicyInput {
+	if o == nil {
+		return nil
+	}
+	return o.ProvisionPolicy
+}
+
+func (o *CreateAppEntitlementRequest) GetAlias() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Alias
 }
 
 func (o *CreateAppEntitlementRequest) GetAppEntitlementOwnerIds() []string {
@@ -54,6 +115,20 @@ func (o *CreateAppEntitlementRequest) GetAppResourceTypeID() *string {
 	return o.AppResourceTypeID
 }
 
+func (o *CreateAppEntitlementRequest) GetCertifyPolicyID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.CertifyPolicyID
+}
+
+func (o *CreateAppEntitlementRequest) GetComplianceFrameworkValueIds() []string {
+	if o == nil {
+		return nil
+	}
+	return o.ComplianceFrameworkValueIds
+}
+
 func (o *CreateAppEntitlementRequest) GetDescription() *string {
 	if o == nil {
 		return nil
@@ -68,30 +143,72 @@ func (o *CreateAppEntitlementRequest) GetDisplayName() *string {
 	return o.DisplayName
 }
 
-func (o *CreateAppEntitlementRequest) GetEntitlementSlug() *string {
+func (o *CreateAppEntitlementRequest) GetDurationGrant() *string {
 	if o == nil {
 		return nil
 	}
-	return o.EntitlementSlug
+	return o.DurationGrant
 }
 
-func (o *CreateAppEntitlementRequest) GetIsAutomationEnabled() *bool {
+func (o *CreateAppEntitlementRequest) GetDurationUnset() *CreateAppEntitlementRequestDurationUnset {
 	if o == nil {
 		return nil
 	}
-	return o.IsAutomationEnabled
+	return o.DurationUnset
 }
 
-func (o *CreateAppEntitlementRequest) GetLinkedIdpEntitlementAppID() *string {
+func (o *CreateAppEntitlementRequest) GetEmergencyGrantEnabled() *bool {
 	if o == nil {
 		return nil
 	}
-	return o.LinkedIdpEntitlementAppID
+	return o.EmergencyGrantEnabled
 }
 
-func (o *CreateAppEntitlementRequest) GetLinkedIdpEntitlementID() *string {
+func (o *CreateAppEntitlementRequest) GetEmergencyGrantPolicyID() *string {
 	if o == nil {
 		return nil
 	}
-	return o.LinkedIdpEntitlementID
+	return o.EmergencyGrantPolicyID
+}
+
+func (o *CreateAppEntitlementRequest) GetGrantPolicyID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.GrantPolicyID
+}
+
+func (o *CreateAppEntitlementRequest) GetOverrideAccessRequestsDefaults() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.OverrideAccessRequestsDefaults
+}
+
+func (o *CreateAppEntitlementRequest) GetPurpose() *CreateAppEntitlementRequestPurpose {
+	if o == nil {
+		return nil
+	}
+	return o.Purpose
+}
+
+func (o *CreateAppEntitlementRequest) GetRevokePolicyID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.RevokePolicyID
+}
+
+func (o *CreateAppEntitlementRequest) GetRiskLevelValueID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.RiskLevelValueID
+}
+
+func (o *CreateAppEntitlementRequest) GetSlug() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Slug
 }

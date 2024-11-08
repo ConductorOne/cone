@@ -16,8 +16,10 @@ type BundleAutomation struct {
 	BundleAutomationLastRunState *BundleAutomationLastRunState `json:"state,omitempty"`
 	// The BundleAutomationRuleEntitlement message.
 	BundleAutomationRuleEntitlement *BundleAutomationRuleEntitlement `json:"entitlements,omitempty"`
-	CreatedAt                       *time.Time                       `json:"createdAt,omitempty"`
-	DeletedAt                       *time.Time                       `json:"deletedAt,omitempty"`
+	// The createTasks field.
+	CreateTasks *bool      `json:"createTasks,omitempty"`
+	CreatedAt   *time.Time `json:"createdAt,omitempty"`
+	DeletedAt   *time.Time `json:"deletedAt,omitempty"`
 	// The enabled field.
 	Enabled *bool `json:"enabled,omitempty"`
 	// The requestCatalogId field.
@@ -50,6 +52,13 @@ func (o *BundleAutomation) GetBundleAutomationRuleEntitlement() *BundleAutomatio
 		return nil
 	}
 	return o.BundleAutomationRuleEntitlement
+}
+
+func (o *BundleAutomation) GetCreateTasks() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.CreateTasks
 }
 
 func (o *BundleAutomation) GetCreatedAt() *time.Time {

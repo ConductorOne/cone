@@ -127,6 +127,25 @@ func (o *Annotations) GetAdditionalProperties() map[string]any {
 	return o.AdditionalProperties
 }
 
+// Origin - The origin field.
+type Origin string
+
+const (
+	OriginTaskOriginUnspecified                 Origin = "TASK_ORIGIN_UNSPECIFIED"
+	OriginTaskOriginProfileMembershipAutomation Origin = "TASK_ORIGIN_PROFILE_MEMBERSHIP_AUTOMATION"
+	OriginTaskOriginSlack                       Origin = "TASK_ORIGIN_SLACK"
+	OriginTaskOriginAPIRequest                  Origin = "TASK_ORIGIN_API_REQUEST"
+	OriginTaskOriginJira                        Origin = "TASK_ORIGIN_JIRA"
+	OriginTaskOriginCopilot                     Origin = "TASK_ORIGIN_COPILOT"
+	OriginTaskOriginWebappRequest               Origin = "TASK_ORIGIN_WEBAPP_REQUEST"
+	OriginTaskOriginTimeRevoke                  Origin = "TASK_ORIGIN_TIME_REVOKE"
+	OriginTaskOriginNonUsageRevoke              Origin = "TASK_ORIGIN_NON_USAGE_REVOKE"
+)
+
+func (e Origin) ToPointer() *Origin {
+	return &e
+}
+
 // Processing - The processing state of a task as defined by the `processing_enum`
 type Processing string
 
@@ -207,6 +226,8 @@ type Task struct {
 	InsightIds []string `json:"insightIds,omitempty"`
 	// A human-usable numeric ID of a task which can be included in place of the fully qualified task id in path parmeters (but not search queries).
 	NumericID *int64 `integer:"string" json:"numericId,omitempty"`
+	// The origin field.
+	Origin *Origin `json:"origin,omitempty"`
 	// The policy generation id refers to the current policy's generation ID. This is changed when the policy is changed on a task.
 	PolicyGenerationID *string `json:"policyGenerationId,omitempty"`
 	// The processing state of a task as defined by the `processing_enum`
@@ -343,6 +364,13 @@ func (o *Task) GetNumericID() *int64 {
 		return nil
 	}
 	return o.NumericID
+}
+
+func (o *Task) GetOrigin() *Origin {
+	if o == nil {
+		return nil
+	}
+	return o.Origin
 }
 
 func (o *Task) GetPolicyGenerationID() *string {

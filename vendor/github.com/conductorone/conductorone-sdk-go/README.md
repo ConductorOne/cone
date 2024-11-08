@@ -17,7 +17,6 @@ ConductorOne API: The ConductorOne API is a HTTP API for managing ConductorOne r
 * [Server Selection](#server-selection)
 * [Custom HTTP Client](#custom-http-client)
 * [Authentication](#authentication)
-* [Special Types](#special-types)
 <!-- End Table of Contents [toc] -->
 
 <!-- Start SDK Installation [installation] -->
@@ -103,6 +102,12 @@ func main() {
 * [Search](docs/sdks/appentitlementsearch/README.md#search) - Search
 * [SearchAppEntitlementsForAppUser](docs/sdks/appentitlementsearch/README.md#searchappentitlementsforappuser) - Search App Entitlements For App User
 * [SearchAppEntitlementsWithExpired](docs/sdks/appentitlementsearch/README.md#searchappentitlementswithexpired) - Search App Entitlements With Expired
+
+### [AppEntitlementsProxy](docs/sdks/appentitlementsproxy/README.md)
+
+* [Create](docs/sdks/appentitlementsproxy/README.md#create) - Create
+* [Delete](docs/sdks/appentitlementsproxy/README.md#delete) - Delete
+* [Get](docs/sdks/appentitlementsproxy/README.md#get) - Get
 
 ### [AppEntitlementUserBinding](docs/sdks/appentitlementuserbinding/README.md)
 
@@ -285,6 +290,7 @@ func main() {
 ### [SessionSettings](docs/sdks/sessionsettings/README.md)
 
 * [Get](docs/sdks/sessionsettings/README.md#get) - Get
+* [TestSourceIP](docs/sdks/sessionsettings/README.md#testsourceip) - Test Source Ip
 * [Update](docs/sdks/sessionsettings/README.md#update) - Update
 
 ### [SystemLog](docs/sdks/systemlog/README.md)

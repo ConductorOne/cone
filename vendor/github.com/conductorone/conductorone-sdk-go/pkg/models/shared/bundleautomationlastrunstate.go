@@ -23,7 +23,9 @@ func (e BundleAutomationLastRunStateStatus) ToPointer() *BundleAutomationLastRun
 
 // The BundleAutomationLastRunState message.
 type BundleAutomationLastRunState struct {
-	LastRunAt *time.Time `json:"lastRunAt,omitempty"`
+	// The errorMessage field.
+	ErrorMessage *string    `json:"errorMessage,omitempty"`
+	LastRunAt    *time.Time `json:"lastRunAt,omitempty"`
 	// The status field.
 	Status *BundleAutomationLastRunStateStatus `json:"status,omitempty"`
 }
@@ -37,6 +39,13 @@ func (b *BundleAutomationLastRunState) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
+}
+
+func (o *BundleAutomationLastRunState) GetErrorMessage() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ErrorMessage
 }
 
 func (o *BundleAutomationLastRunState) GetLastRunAt() *time.Time {

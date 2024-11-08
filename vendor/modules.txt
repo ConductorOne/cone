@@ -28,7 +28,7 @@ github.com/cenkalti/backoff/v4
 github.com/conductorone/baton-sdk/pb/c1/connector/v2
 github.com/conductorone/baton-sdk/pkg/crypto/providers
 github.com/conductorone/baton-sdk/pkg/crypto/providers/jwk
-# github.com/conductorone/conductorone-sdk-go v1.21.1-0.20241009214436-e388bb33c02f
+# github.com/conductorone/conductorone-sdk-go v1.22.0
 ## explicit; go 1.21
 github.com/conductorone/conductorone-sdk-go
 github.com/conductorone/conductorone-sdk-go/internal/hooks

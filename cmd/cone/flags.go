@@ -20,6 +20,7 @@ const (
 	notGrantedFlag       = "not-granted"
 	rawTokenFlag         = "raw"
 	appDisplayNameFlag   = "app"
+	showEncryptedFlag    = "show-encrypted"
 )
 
 func addWaitFlag(cmd *cobra.Command) {
@@ -77,4 +78,8 @@ func addRawTokenFlag(cmd *cobra.Command) {
 
 func addAppDisplayNameFlag(cmd *cobra.Command) {
 	cmd.Flags().String(appDisplayNameFlag, "", "The display name of the app to filter by.")
+}
+
+func addShowEncryptedFlag(cmd *cobra.Command) {
+	cmd.Flags().Bool(showEncryptedFlag, false, "Show credentials we could not decrypt.")
 }

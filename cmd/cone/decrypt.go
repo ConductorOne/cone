@@ -104,6 +104,13 @@ func decryptCredentialRun(cmd *cobra.Command, args []string) error {
 		}
 	}
 
+	// Get the c1 user ID
+	resp, err := c.AuthIntrospect(ctx)
+	if err != nil {
+		return err
+	}
+	userID := client.StringFromPtr(resp.UserID)
+
 	allCreds := make([]shared.AppUserCredential, 0)
 
 	for _, app := range apps {
@@ -115,6 +122,9 @@ func decryptCredentialRun(cmd *cobra.Command, args []string) error {
 			return err
 		}
 		for _, appUser := range appUsers {
+			if *appUser.GetIdentityUserID() != userID {
+				continue
+			}
 			creds, err := c.ListAppUserCredentials(ctx, *app.ID, *appUser.ID)
 			if err != nil {
 				return err

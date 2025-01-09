@@ -4,6 +4,7 @@ import (
 	"context"
 	"crypto/tls"
 	"errors"
+	"fmt"
 	"net/http"
 	"net/url"
 	"strings"
@@ -15,6 +16,12 @@ import (
 
 const c1TenantDomain = ".conductor.one"
 const ClientIdGolangSDK = "2RCzHlak5q7CY14SdBc8HoZEJRf"
+
+func WithExtraUserAgent(userAgent string) SDKOption {
+	return func(sdk *ConductoroneAPI) {
+		sdk.sdkConfiguration.UserAgent = fmt.Sprintf("%s %s", userAgent, sdk.sdkConfiguration.UserAgent)
+	}
+}
 
 func WithTenant(input string) (SDKOption, error) {
 	resp, err := NormalizeTenant(input)

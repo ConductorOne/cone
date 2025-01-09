@@ -138,11 +138,9 @@ func New(
 	c.baseURL = &apiURL
 
 	var version = "dev"
-	switch v := ctx.Value(VersionKey).(type) {
-	case string:
-		if v != "" {
-			version = v
-		}
+
+	if v := ctx.Value(VersionKey).(string); v != "" {
+		version = v
 	}
 
 	c.sdk = sdk.New(

@@ -21,7 +21,8 @@ func main() {
 	// Notify the channel for specified signals
 	signal.Notify(signalCh, os.Interrupt, syscall.SIGTERM)
 
-	ctx, cancel := context.WithCancel(context.Background())
+	ctx := context.WithValue(context.Background(), client.VersionKey, version)
+	ctx, cancel := context.WithCancel(ctx)
 
 	go func() {
 		// Block until a signal is received

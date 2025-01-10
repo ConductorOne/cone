@@ -2,6 +2,7 @@ package client
 
 import (
 	"context"
+	"fmt"
 	"net/http"
 	"net/url"
 	"strconv"
@@ -15,6 +16,10 @@ import (
 )
 
 const ConeClientID = "2RGdOS94VDferT9e80mdgntl36K"
+
+type contextKey string
+
+const VersionKey contextKey = "version"
 
 type client struct {
 	httpClient *http.Client
@@ -132,9 +137,16 @@ func New(
 	}
 	c.baseURL = &apiURL
 
+	var version = "dev"
+
+	if v := ctx.Value(VersionKey).(string); v != "" {
+		version = v
+	}
+
 	c.sdk = sdk.New(
 		sdk.WithClient(uclient),
 		sdk.WithServerURL(apiURL.String()),
+		sdk.WithExtraUserAgent(fmt.Sprintf("cone/%s", version)),
 	)
 
 	return c, nil

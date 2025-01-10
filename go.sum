@@ -30,8 +30,8 @@ github.com/client9/misspell v0.3.4/go.mod h1:qj6jICC3Q7zFZvVWo7KLAzC3yx5G7kyvSDk
 github.com/cncf/udpa/go v0.0.0-20191209042840-269d4d468f6f/go.mod h1:M8M6+tZqaGXZJjfX53e64911xZQV5JYwmTeXPW+k8Sc=
 github.com/conductorone/baton-sdk v0.2.35 h1:aSdNvlM5HMti8WdhotrXTHWs+b+BmSqMxtGwsSUFxjY=
 github.com/conductorone/baton-sdk v0.2.35/go.mod h1:hmd/Oz3DPIKD+9QmkusZaA18ZoiinnTDdrxh2skcdUc=
-github.com/conductorone/conductorone-sdk-go v1.22.0 h1:sz9nz/85YZ0pJ/U3b63QEzE3WMSz6HuCjRTi/kb3mbU=
-github.com/conductorone/conductorone-sdk-go v1.22.0/go.mod h1:vr3946WqFYEpOuIGy/TqXkarhhCzHSKsmXXsxCmeIj8=
+github.com/conductorone/conductorone-sdk-go v1.23.0 h1:xRWsFNztcFEx4w+e1RRNbUyKaXzrIXk8htASQMAE39g=
+github.com/conductorone/conductorone-sdk-go v1.23.0/go.mod h1:vr3946WqFYEpOuIGy/TqXkarhhCzHSKsmXXsxCmeIj8=
 github.com/containerd/console v1.0.3 h1:lIr7SlA5PxZyMV30bDW0MGbiOPXwc63yRuCP0ARubLw=
 github.com/containerd/console v1.0.3/go.mod h1:7LqA/THxQ86k76b8c/EMSiaJ3h1eZkMkXar0TQ1gf3U=
 github.com/cpuguy83/go-md2man/v2 v2.0.3/go.mod h1:tgQtvFlXSQOSOSIRvRPT7W67SCa46tRHOmNcaadrF8o=

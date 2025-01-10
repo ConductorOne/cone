@@ -4,6 +4,7 @@ import (
 	"context"
 	"crypto/tls"
 	"errors"
+	"fmt"
 	"net/http"
 	"net/url"
 	"strings"
@@ -31,6 +32,12 @@ func WithTenant(input string) (SDKOption, error) {
 	}
 
 	return func(api *ConductoroneAPI) {}, nil
+}
+
+func WithExtraUserAgent(userAgent string) SDKOption {
+	return func(sdk *ConductoroneAPI) {
+		sdk.sdkConfiguration.UserAgent = fmt.Sprintf("%s %s", userAgent, sdk.sdkConfiguration.UserAgent)
+	}
 }
 
 type CustomSDKOption func(*CustomOptions)

@@ -34,7 +34,7 @@ func (c *client) CreateGrantTask(
 		AppEntitlementID: appEntitlementId,
 		IdentityUserID:   &identityUserId,
 		AppID:            appId,
-		AppUserID: 		  &appuserId,	
+		AppUserID:        &appuserId,
 		Description:      &justification,
 		EmergencyAccess:  &emergencyAccess,
 	}

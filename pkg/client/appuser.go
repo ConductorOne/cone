@@ -48,7 +48,7 @@ func (c *client) ListAppUserCredentials(ctx context.Context, appID string, appUs
 }
 
 func (c *client) ListAppUsersForUser(ctx context.Context, appID string, userId string) ([]shared.AppUser, error) {
-	resp, err := c.sdk.AppUser.ListAppUsersForUser(ctx, operations.C1APIAppV1AppUserServiceListAppUsersForUserRequest{AppID: appID, UserID: userId })
+	resp, err := c.sdk.AppUser.ListAppUsersForUser(ctx, operations.C1APIAppV1AppUserServiceListAppUsersForUserRequest{AppID: appID, UserID: userId})
 	if err != nil {
 		return nil, err
 	}

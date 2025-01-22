@@ -231,7 +231,7 @@ func runGet(cmd *cobra.Command, args []string) error {
 			apiDuration = fmt.Sprintf("%ds", seconds)
 		}
 
-		accessRequest, err := c.CreateGrantTask(ctx, appId, entitlementId, userId, appUserId , justification, apiDuration, emergencyAccess)
+		accessRequest, err := c.CreateGrantTask(ctx, appId, entitlementId, userId, appUserId, justification, apiDuration, emergencyAccess)
 		if err != nil {
 			errorBody := err.Error()
 			if strings.Contains(errorBody, durationErrorMessage) {

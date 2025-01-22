@@ -72,6 +72,7 @@ type C1Client interface {
 		appId string,
 		appEntitlementId string,
 		identityUserId string,
+		appUserId string,
 		justification string,
 		duration string,
 		emergencyAccess bool,
@@ -91,6 +92,7 @@ type C1Client interface {
 	EscalateTask(ctx context.Context, taskId string) (*shared.TaskServiceActionResponse, error)
 	ListApps(ctx context.Context) ([]shared.App, error)
 	ListAppUsers(ctx context.Context, appID string) ([]shared.AppUser, error)
+	ListAppUsersForUser(ctx context.Context, appID string, userID string) ([]shared.AppUser, error)
 	ListAppUserCredentials(ctx context.Context, appID string, appUserID string) ([]shared.AppUserCredential, error)
 	ListPolicies(ctx context.Context) ([]shared.Policy, error)
 	ListEntitlements(ctx context.Context, appId string) ([]shared.AppEntitlement, error)

@@ -46,3 +46,25 @@ func (c *client) ListAppUserCredentials(ctx context.Context, appID string, appUs
 
 	return resp.AppUserServiceListCredentialsResponse.List, nil
 }
+
+func (c *client) ListAppUsersForUser(ctx context.Context, appID string, userId string) ([]shared.AppUser, error) {
+	resp, err := c.sdk.AppUser.ListAppUsersForUser(ctx, operations.C1APIAppV1AppUserServiceListAppUsersForUserRequest{AppID: appID, UserID: userId })
+	if err != nil {
+		return nil, err
+	}
+
+	if err := NewHTTPError(resp.RawResponse); err != nil {
+		return nil, err
+	}
+
+	appUsersForUser := make([]shared.AppUser, 0)
+
+	for _, v := range resp.AppUsersForUserServiceListResponse.List {
+		if v.AppUser == nil {
+			continue
+		}
+		appUsersForUser = append(appUsersForUser, *v.AppUser)
+	}
+
+	return appUsersForUser, nil
+}

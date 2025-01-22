@@ -23,6 +23,8 @@ const durationInputTip = "We accept a sequence of decimal numbers, each with opt
 	"such as \"12h\", \"1w2d\" or \"2h45m\". Valid units are (m)inutes, (h)ours, (d)ays, (w)eeks."
 const justificationWarningMessage = "Please provide a justification when requesting access to an entitlement."
 const justificationInputTip = "You can add a justification using -j or --justification"
+const appUserMultipleUsersWarningMessage = "This app has multiple users. Please select any one. "
+const appUserNoUsersErrorMessage = "This app has no users."
 
 func getCmd() *cobra.Command {
 	cmd := &cobra.Command{
@@ -217,6 +219,11 @@ func runGet(cmd *cobra.Command, args []string) error {
 			return nil, err
 		}
 
+		appUserId, err := getAppUserId(ctx, c, v, appId, userId)
+		if err != nil {
+			return nil, err
+		}
+
 		apiDuration := ""
 		if validDuration != nil {
 			// API expects seconds formated like "1s"
@@ -224,7 +231,7 @@ func runGet(cmd *cobra.Command, args []string) error {
 			apiDuration = fmt.Sprintf("%ds", seconds)
 		}
 
-		accessRequest, err := c.CreateGrantTask(ctx, appId, entitlementId, userId, justification, apiDuration, emergencyAccess)
+		accessRequest, err := c.CreateGrantTask(ctx, appId, entitlementId, userId, appUserId , justification, apiDuration, emergencyAccess)
 		if err != nil {
 			errorBody := err.Error()
 			if strings.Contains(errorBody, durationErrorMessage) {
@@ -353,6 +360,50 @@ func runTask(
 	}
 
 	return nil
+}
+
+func getAppUserId(ctx context.Context, c client.C1Client, v *viper.Viper, appId, userId string) (string, error) {
+	appUsers, err := c.ListAppUsersForUser(ctx, appId, userId)
+	if err != nil {
+		return "", err
+	}
+
+	switch len(appUsers) {
+	case 0:
+		return "", nil
+	case 1:
+		return client.StringFromPtr(appUsers[0].ID), nil
+	default:
+		if v.GetBool(nonInteractiveFlag) {
+			return "", errors.New(appUserMultipleUsersWarningMessage)
+		}
+
+		output.InputNeeded.Println(appUserMultipleUsersWarningMessage)
+
+		optionToAppUsersMap := make(map[string]*shared.AppUser, len(appUsers))
+		appUsersOptions := make([]string, 0, len(appUsers))
+
+		for _, au := range appUsers {
+			appUserOptionName := fmt.Sprintf("%s:%s:%s",
+				client.StringFromPtr(au.DisplayName),
+				client.StringFromPtr(au.AppID),
+				client.StringFromPtr(au.ID),
+			)
+			appUsersOptions = append(appUsersOptions, appUserOptionName)
+			optionToAppUsersMap[appUserOptionName] = &au
+		}
+
+		selectedOption, err := pterm.DefaultInteractiveSelect.
+			WithMaxHeight(len(appUsersOptions)).
+			WithOptions(appUsersOptions).
+			WithDefaultText("Please select a user").
+			Show()
+		if err != nil {
+			return "", err
+		}
+
+		return client.StringFromPtr(optionToAppUsersMap[selectedOption].ID), nil
+	}
 }
 
 func getEntitlementDetails(ctx context.Context, c client.C1Client, v *viper.Viper, args []string, cmd *cobra.Command) (string, string, error) {

@@ -24,7 +24,6 @@ const durationInputTip = "We accept a sequence of decimal numbers, each with opt
 const justificationWarningMessage = "Please provide a justification when requesting access to an entitlement."
 const justificationInputTip = "You can add a justification using -j or --justification"
 const appUserMultipleUsersWarningMessage = "This app has multiple users. Please select any one. "
-const appUserNoUsersErrorMessage = "This app has no users."
 
 func getCmd() *cobra.Command {
 	cmd := &cobra.Command{

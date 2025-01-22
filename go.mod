@@ -11,7 +11,7 @@ require (
 
 require (
 	github.com/conductorone/baton-sdk v0.2.35
-	github.com/conductorone/conductorone-sdk-go v1.23.0
+	github.com/conductorone/conductorone-sdk-go v1.24.0
 	github.com/pterm/pterm v0.12.62
 	github.com/toqueteos/webbrowser v1.2.0
 	github.com/xhit/go-str2duration/v2 v2.1.0
@@ -24,7 +24,6 @@ require (
 	atomicgo.dev/schedule v0.0.2 // indirect
 	filippo.io/age v1.1.1 // indirect
 	filippo.io/edwards25519 v1.1.0 // indirect
-	github.com/cenkalti/backoff/v4 v4.3.0 // indirect
 	github.com/containerd/console v1.0.3 // indirect
 	github.com/envoyproxy/protoc-gen-validate v1.1.0 // indirect
 	github.com/ericlagergren/decimal v0.0.0-20240411145413-00de7ca16731 // indirect

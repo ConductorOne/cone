@@ -72,15 +72,68 @@ func (e EmergencyStatus) ToPointer() *EmergencyStatus {
 type SortBy string
 
 const (
-	SortByTaskSearchSortByUnspecified     SortBy = "TASK_SEARCH_SORT_BY_UNSPECIFIED"
-	SortByTaskSearchSortByAccount         SortBy = "TASK_SEARCH_SORT_BY_ACCOUNT"
-	SortByTaskSearchSortByResource        SortBy = "TASK_SEARCH_SORT_BY_RESOURCE"
-	SortByTaskSearchSortByAccountOwner    SortBy = "TASK_SEARCH_SORT_BY_ACCOUNT_OWNER"
-	SortByTaskSearchSortByReverseTicketID SortBy = "TASK_SEARCH_SORT_BY_REVERSE_TICKET_ID"
+	SortByTaskSearchSortByUnspecified      SortBy = "TASK_SEARCH_SORT_BY_UNSPECIFIED"
+	SortByTaskSearchSortByAccount          SortBy = "TASK_SEARCH_SORT_BY_ACCOUNT"
+	SortByTaskSearchSortByResource         SortBy = "TASK_SEARCH_SORT_BY_RESOURCE"
+	SortByTaskSearchSortByAccountOwner     SortBy = "TASK_SEARCH_SORT_BY_ACCOUNT_OWNER"
+	SortByTaskSearchSortByReverseTicketID  SortBy = "TASK_SEARCH_SORT_BY_REVERSE_TICKET_ID"
+	SortByTaskSearchSortByTicketID         SortBy = "TASK_SEARCH_SORT_BY_TICKET_ID"
+	SortByTaskSearchSortByCreatedAt        SortBy = "TASK_SEARCH_SORT_BY_CREATED_AT"
+	SortByTaskSearchSortByReverseCreatedAt SortBy = "TASK_SEARCH_SORT_BY_REVERSE_CREATED_AT"
 )
 
 func (e SortBy) ToPointer() *SortBy {
 	return &e
+}
+
+type StepApprovalTypes string
+
+const (
+	StepApprovalTypesStepApprovalTypeUnspecified       StepApprovalTypes = "STEP_APPROVAL_TYPE_UNSPECIFIED"
+	StepApprovalTypesStepApprovalTypeUsers             StepApprovalTypes = "STEP_APPROVAL_TYPE_USERS"
+	StepApprovalTypesStepApprovalTypeManager           StepApprovalTypes = "STEP_APPROVAL_TYPE_MANAGER"
+	StepApprovalTypesStepApprovalTypeAppOwners         StepApprovalTypes = "STEP_APPROVAL_TYPE_APP_OWNERS"
+	StepApprovalTypesStepApprovalTypeGroup             StepApprovalTypes = "STEP_APPROVAL_TYPE_GROUP"
+	StepApprovalTypesStepApprovalTypeSelf              StepApprovalTypes = "STEP_APPROVAL_TYPE_SELF"
+	StepApprovalTypesStepApprovalTypeEntitlementOwners StepApprovalTypes = "STEP_APPROVAL_TYPE_ENTITLEMENT_OWNERS"
+	StepApprovalTypesStepApprovalTypeExpression        StepApprovalTypes = "STEP_APPROVAL_TYPE_EXPRESSION"
+	StepApprovalTypesStepApprovalTypeWebhook           StepApprovalTypes = "STEP_APPROVAL_TYPE_WEBHOOK"
+	StepApprovalTypesStepApprovalTypeResourceOwners    StepApprovalTypes = "STEP_APPROVAL_TYPE_RESOURCE_OWNERS"
+)
+
+func (e StepApprovalTypes) ToPointer() *StepApprovalTypes {
+	return &e
+}
+func (e *StepApprovalTypes) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "STEP_APPROVAL_TYPE_UNSPECIFIED":
+		fallthrough
+	case "STEP_APPROVAL_TYPE_USERS":
+		fallthrough
+	case "STEP_APPROVAL_TYPE_MANAGER":
+		fallthrough
+	case "STEP_APPROVAL_TYPE_APP_OWNERS":
+		fallthrough
+	case "STEP_APPROVAL_TYPE_GROUP":
+		fallthrough
+	case "STEP_APPROVAL_TYPE_SELF":
+		fallthrough
+	case "STEP_APPROVAL_TYPE_ENTITLEMENT_OWNERS":
+		fallthrough
+	case "STEP_APPROVAL_TYPE_EXPRESSION":
+		fallthrough
+	case "STEP_APPROVAL_TYPE_WEBHOOK":
+		fallthrough
+	case "STEP_APPROVAL_TYPE_RESOURCE_OWNERS":
+		*e = StepApprovalTypes(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for StepApprovalTypes: %v", v)
+	}
 }
 
 type TaskStates string
@@ -167,12 +220,16 @@ type TaskSearchRequest struct {
 	Refs []TaskRef `json:"refs,omitempty"`
 	// Sort tasks in a specific order.
 	SortBy *SortBy `json:"sortBy,omitempty"`
+	// Search tasks that have a current policy step of this type
+	StepApprovalTypes []StepApprovalTypes `json:"stepApprovalTypes,omitempty"`
 	// Search tasks where these users are the subject.
 	SubjectIds []string `json:"subjectIds,omitempty"`
 	// Search tasks with this task state.
 	TaskStates []TaskStates `json:"taskStates,omitempty"`
 	// Search tasks with this task type. This is a oneOf, and needs an object, which can be empty, to sort.
 	TaskTypes []TaskTypeInput `json:"taskTypes,omitempty"`
+	// The userEmploymentStatuses field.
+	UserEmploymentStatuses []string `json:"userEmploymentStatuses,omitempty"`
 }
 
 func (t TaskSearchRequest) MarshalJSON() ([]byte, error) {
@@ -382,6 +439,13 @@ func (o *TaskSearchRequest) GetSortBy() *SortBy {
 	return o.SortBy
 }
 
+func (o *TaskSearchRequest) GetStepApprovalTypes() []StepApprovalTypes {
+	if o == nil {
+		return nil
+	}
+	return o.StepApprovalTypes
+}
+
 func (o *TaskSearchRequest) GetSubjectIds() []string {
 	if o == nil {
 		return nil
@@ -401,4 +465,11 @@ func (o *TaskSearchRequest) GetTaskTypes() []TaskTypeInput {
 		return nil
 	}
 	return o.TaskTypes
+}
+
+func (o *TaskSearchRequest) GetUserEmploymentStatuses() []string {
+	if o == nil {
+		return nil
+	}
+	return o.UserEmploymentStatuses
 }

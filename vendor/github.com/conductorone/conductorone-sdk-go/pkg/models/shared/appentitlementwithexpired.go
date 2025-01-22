@@ -23,6 +23,8 @@ type AppEntitlementWithExpired struct {
 	Expired    *time.Time `json:"expired,omitempty"`
 	// The grantReasons field.
 	GrantReasons []GrantReason `json:"grantReasons,omitempty"`
+	// The grantSources field.
+	GrantSources []AppEntitlementRef `json:"grantSources,omitempty"`
 }
 
 func (a AppEntitlementWithExpired) MarshalJSON() ([]byte, error) {
@@ -90,4 +92,11 @@ func (o *AppEntitlementWithExpired) GetGrantReasons() []GrantReason {
 		return nil
 	}
 	return o.GrantReasons
+}
+
+func (o *AppEntitlementWithExpired) GetGrantSources() []AppEntitlementRef {
+	if o == nil {
+		return nil
+	}
+	return o.GrantSources
 }

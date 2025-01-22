@@ -18,6 +18,8 @@ type AppEntitlementUserBinding struct {
 	CreatedAt     *time.Time `json:"createdAt,omitempty"`
 	DeletedAt     *time.Time `json:"deletedAt,omitempty"`
 	DeprovisionAt *time.Time `json:"deprovisionAt,omitempty"`
+	// The grantSources field.
+	GrantSources []AppEntitlementRef `json:"grantSources,omitempty"`
 }
 
 func (a AppEntitlementUserBinding) MarshalJSON() ([]byte, error) {
@@ -71,4 +73,11 @@ func (o *AppEntitlementUserBinding) GetDeprovisionAt() *time.Time {
 		return nil
 	}
 	return o.DeprovisionAt
+}
+
+func (o *AppEntitlementUserBinding) GetGrantSources() []AppEntitlementRef {
+	if o == nil {
+		return nil
+	}
+	return o.GrantSources
 }

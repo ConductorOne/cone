@@ -383,13 +383,14 @@ func getAppUserId(ctx context.Context, c client.C1Client, v *viper.Viper, appId,
 		appUsersOptions := make([]string, 0, len(appUsers))
 
 		for _, au := range appUsers {
+			appUser := au
 			appUserOptionName := fmt.Sprintf("%s:%s:%s",
 				client.StringFromPtr(au.DisplayName),
 				client.StringFromPtr(au.AppID),
 				client.StringFromPtr(au.ID),
 			)
 			appUsersOptions = append(appUsersOptions, appUserOptionName)
-			optionToAppUsersMap[appUserOptionName] = &au
+			optionToAppUsersMap[appUserOptionName] = &appUser
 		}
 
 		selectedOption, err := pterm.DefaultInteractiveSelect.

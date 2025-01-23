@@ -134,10 +134,10 @@ const (
 	OriginTaskOriginUnspecified                 Origin = "TASK_ORIGIN_UNSPECIFIED"
 	OriginTaskOriginProfileMembershipAutomation Origin = "TASK_ORIGIN_PROFILE_MEMBERSHIP_AUTOMATION"
 	OriginTaskOriginSlack                       Origin = "TASK_ORIGIN_SLACK"
-	OriginTaskOriginAPIRequest                  Origin = "TASK_ORIGIN_API_REQUEST"
+	OriginTaskOriginAPI                         Origin = "TASK_ORIGIN_API"
 	OriginTaskOriginJira                        Origin = "TASK_ORIGIN_JIRA"
 	OriginTaskOriginCopilot                     Origin = "TASK_ORIGIN_COPILOT"
-	OriginTaskOriginWebappRequest               Origin = "TASK_ORIGIN_WEBAPP_REQUEST"
+	OriginTaskOriginWebapp                      Origin = "TASK_ORIGIN_WEBAPP"
 	OriginTaskOriginTimeRevoke                  Origin = "TASK_ORIGIN_TIME_REVOKE"
 	OriginTaskOriginNonUsageRevoke              Origin = "TASK_ORIGIN_NON_USAGE_REVOKE"
 )

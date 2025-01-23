@@ -51,9 +51,7 @@ func (e UnenrollmentEntitlementBehavior) ToPointer() *UnenrollmentEntitlementBeh
 type RequestCatalog struct {
 	// An array of app entitlements that, if the user has, can view the contents of this catalog.
 	AccessEntitlements []AppEntitlement `json:"accessEntitlements,omitempty"`
-	// The Apps contained in this request catalog.
-	AppIds    []string   `json:"appIds,omitempty"`
-	CreatedAt *time.Time `json:"createdAt,omitempty"`
+	CreatedAt          *time.Time       `json:"createdAt,omitempty"`
 	// The id of the user this request catalog was created by.
 	CreatedByUserID *string    `json:"createdByUserId,omitempty"`
 	DeletedAt       *time.Time `json:"deletedAt,omitempty"`
@@ -94,13 +92,6 @@ func (o *RequestCatalog) GetAccessEntitlements() []AppEntitlement {
 		return nil
 	}
 	return o.AccessEntitlements
-}
-
-func (o *RequestCatalog) GetAppIds() []string {
-	if o == nil {
-		return nil
-	}
-	return o.AppIds
 }
 
 func (o *RequestCatalog) GetCreatedAt() *time.Time {
@@ -198,8 +189,6 @@ func (o *RequestCatalog) GetVisibleToEveryone() *bool {
 type RequestCatalogInput struct {
 	// An array of app entitlements that, if the user has, can view the contents of this catalog.
 	AccessEntitlements []AppEntitlementInput `json:"accessEntitlements,omitempty"`
-	// The Apps contained in this request catalog.
-	AppIds []string `json:"appIds,omitempty"`
 	// The id of the user this request catalog was created by.
 	CreatedByUserID *string `json:"createdByUserId,omitempty"`
 	// The description of the request catalog.
@@ -227,13 +216,6 @@ func (o *RequestCatalogInput) GetAccessEntitlements() []AppEntitlementInput {
 		return nil
 	}
 	return o.AccessEntitlements
-}
-
-func (o *RequestCatalogInput) GetAppIds() []string {
-	if o == nil {
-		return nil
-	}
-	return o.AppIds
 }
 
 func (o *RequestCatalogInput) GetCreatedByUserID() *string {

@@ -56,8 +56,10 @@ type App struct {
 	// The ID of the app that created this app, if any.
 	ParentAppID *string `json:"parentAppId,omitempty"`
 	// The ID of the Revoke Policy associated with this App.
-	RevokePolicyID *string    `json:"revokePolicyId,omitempty"`
-	UpdatedAt      *time.Time `json:"updatedAt,omitempty"`
+	RevokePolicyID *string `json:"revokePolicyId,omitempty"`
+	// The strictAccessEntitlementProvisioning field.
+	StrictAccessEntitlementProvisioning *bool      `json:"strictAccessEntitlementProvisioning,omitempty"`
+	UpdatedAt                           *time.Time `json:"updatedAt,omitempty"`
 	// The number of users with grants to this app.
 	UserCount *int64 `integer:"string" json:"userCount,omitempty"`
 }
@@ -206,6 +208,13 @@ func (o *App) GetRevokePolicyID() *string {
 	return o.RevokePolicyID
 }
 
+func (o *App) GetStrictAccessEntitlementProvisioning() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.StrictAccessEntitlementProvisioning
+}
+
 func (o *App) GetUpdatedAt() *time.Time {
 	if o == nil {
 		return nil
@@ -240,6 +249,8 @@ type AppInput struct {
 	MonthlyCostUsd *int `json:"monthlyCostUsd,omitempty"`
 	// The ID of the Revoke Policy associated with this App.
 	RevokePolicyID *string `json:"revokePolicyId,omitempty"`
+	// The strictAccessEntitlementProvisioning field.
+	StrictAccessEntitlementProvisioning *bool `json:"strictAccessEntitlementProvisioning,omitempty"`
 }
 
 func (o *AppInput) GetCertifyPolicyID() *string {
@@ -303,4 +314,11 @@ func (o *AppInput) GetRevokePolicyID() *string {
 		return nil
 	}
 	return o.RevokePolicyID
+}
+
+func (o *AppInput) GetStrictAccessEntitlementProvisioning() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.StrictAccessEntitlementProvisioning
 }

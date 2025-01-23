@@ -8,8 +8,6 @@ type RequestCatalogView struct {
 	RequestCatalog *RequestCatalog `json:"requestCatalog,omitempty"`
 	// JSONPATH expression indicating the location of the access entitlement objects, that the request catalog allows users to request, in the array.
 	AccessEntitlementsPath *string `json:"accessEntitlementsPath,omitempty"`
-	// JSONPATH expression indicating the location of the App object in the array.
-	AppPaths *string `json:"appPaths,omitempty"`
 	// JSONPATH expression indicating the location of the User object, that created the request catalog, in the array.
 	CreatedByUserPath *string `json:"createdByUserPath,omitempty"`
 	// Total number of the members of the catalog
@@ -28,13 +26,6 @@ func (o *RequestCatalogView) GetAccessEntitlementsPath() *string {
 		return nil
 	}
 	return o.AccessEntitlementsPath
-}
-
-func (o *RequestCatalogView) GetAppPaths() *string {
-	if o == nil {
-		return nil
-	}
-	return o.AppPaths
 }
 
 func (o *RequestCatalogView) GetCreatedByUserPath() *string {

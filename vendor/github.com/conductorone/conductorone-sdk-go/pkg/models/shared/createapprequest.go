@@ -18,6 +18,8 @@ type CreateAppRequest struct {
 	Owners []string `json:"owners,omitempty"`
 	// Creates the app with this revoke policy.
 	RevokePolicyID *string `json:"revokePolicyId,omitempty"`
+	// This flag enforces a provisioning mode where the access entitlement is always included in the provisioning flow, if the app user doesn't exist
+	StrictAccessEntitlementProvisioning *bool `json:"strictAccessEntitlementProvisioning,omitempty"`
 }
 
 func (o *CreateAppRequest) GetCertifyPolicyID() *string {
@@ -67,4 +69,11 @@ func (o *CreateAppRequest) GetRevokePolicyID() *string {
 		return nil
 	}
 	return o.RevokePolicyID
+}
+
+func (o *CreateAppRequest) GetStrictAccessEntitlementProvisioning() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.StrictAccessEntitlementProvisioning
 }

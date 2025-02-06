@@ -362,7 +362,7 @@ func runTask(
 }
 
 func getAppUserProfileAttribute(appUserProfile map[string]any, profileAttribute string) string {
-	if appUserProfile == nil {
+	if len(appUserProfile) == 0 || profileAttribute == "" {
 		return ""
 	}
 

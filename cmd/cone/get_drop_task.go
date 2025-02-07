@@ -361,6 +361,19 @@ func runTask(
 	return nil
 }
 
+func getAppUserProfileAttribute(appUserProfile map[string]any, profileAttribute string) string {
+	if len(appUserProfile) == 0 || profileAttribute == "" {
+		return ""
+	}
+
+	attrValue, ok := appUserProfile[profileAttribute]
+	if !ok {
+		return ""
+	}
+
+	return fmt.Sprintf("%v", attrValue)
+}
+
 func getAppUserId(ctx context.Context, c client.C1Client, v *viper.Viper, appId, userId string) (string, error) {
 	appUsers, err := c.ListAppUsersForUser(ctx, appId, userId)
 	if err != nil {
@@ -389,6 +402,11 @@ func getAppUserId(ctx context.Context, c client.C1Client, v *viper.Viper, appId,
 				client.StringFromPtr(au.AppID),
 				client.StringFromPtr(au.ID),
 			)
+			// If exists, append the aws user type to help differentiate between appUsers with the same name.
+			awsUserType := getAppUserProfileAttribute(au.GetProfile(), "aws_user_type")
+			if awsUserType != "" {
+				appUserOptionName = fmt.Sprintf("%s (%s)", appUserOptionName, awsUserType)
+			}
 			appUsersOptions = append(appUsersOptions, appUserOptionName)
 			optionToAppUsersMap[appUserOptionName] = &appUser
 		}

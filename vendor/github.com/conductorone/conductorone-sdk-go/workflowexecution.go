@@ -29,13 +29,6 @@ func newWorkflowExecution(sdkConfig sdkConfiguration) *WorkflowExecution {
 // GetWorkflowExecution - Get Workflow Execution
 // Invokes the c1.api.workflows.v1beta.WorkflowExecutionService.GetWorkflowExecution method.
 func (s *WorkflowExecution) GetWorkflowExecution(ctx context.Context, request operations.C1APIWorkflowsV1betaWorkflowExecutionServiceGetWorkflowExecutionRequest, opts ...operations.Option) (*operations.C1APIWorkflowsV1betaWorkflowExecutionServiceGetWorkflowExecutionResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "c1.api.workflows.v1beta.WorkflowExecutionService.GetWorkflowExecution",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -57,6 +50,14 @@ func (s *WorkflowExecution) GetWorkflowExecution(ctx context.Context, request op
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/api/v1beta/workflow_executions/{id}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "c1.api.workflows.v1beta.WorkflowExecutionService.GetWorkflowExecution",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -229,13 +230,6 @@ func (s *WorkflowExecution) GetWorkflowExecution(ctx context.Context, request op
 // ListWorkflowExecutions - List Workflow Executions
 // Invokes the c1.api.workflows.v1beta.WorkflowExecutionService.ListWorkflowExecutions method.
 func (s *WorkflowExecution) ListWorkflowExecutions(ctx context.Context, opts ...operations.Option) (*operations.C1APIWorkflowsV1betaWorkflowExecutionServiceListWorkflowExecutionsResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "c1.api.workflows.v1beta.WorkflowExecutionService.ListWorkflowExecutions",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -257,6 +251,14 @@ func (s *WorkflowExecution) ListWorkflowExecutions(ctx context.Context, opts ...
 	opURL, err := url.JoinPath(baseURL, "/api/v1beta/workflow_executions")
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "c1.api.workflows.v1beta.WorkflowExecutionService.ListWorkflowExecutions",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout

@@ -28,13 +28,6 @@ func newAppReport(sdkConfig sdkConfiguration) *AppReport {
 // List
 // Get a list of reports for the given app.
 func (s *AppReport) List(ctx context.Context, request operations.C1APIAppV1AppReportServiceListRequest, opts ...operations.Option) (*operations.C1APIAppV1AppReportServiceListResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "c1.api.app.v1.AppReportService.List",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -56,6 +49,14 @@ func (s *AppReport) List(ctx context.Context, request operations.C1APIAppV1AppRe
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/api/v1/apps/{app_id}/report", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "c1.api.app.v1.AppReportService.List",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout

@@ -28,13 +28,6 @@ func newAppReportAction(sdkConfig sdkConfiguration) *AppReportAction {
 // GenerateReport - Generate Report
 // Generate a report for the given app.
 func (s *AppReportAction) GenerateReport(ctx context.Context, request operations.C1APIAppV1AppReportActionServiceGenerateReportRequest, opts ...operations.Option) (*operations.C1APIAppV1AppReportActionServiceGenerateReportResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "c1.api.app.v1.AppReportActionService.GenerateReport",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -58,6 +51,13 @@ func (s *AppReportAction) GenerateReport(ctx context.Context, request operations
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "c1.api.app.v1.AppReportActionService.GenerateReport",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "AppActionsServiceGenerateReportRequest", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err

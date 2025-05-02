@@ -60,8 +60,13 @@ type Connector struct {
 	// The downloadUrl for a spreadsheet if the connector was created from uploading a file.
 	DownloadURL *string `json:"downloadUrl,omitempty"`
 	// The id of the connector.
-	ID        *string    `json:"id,omitempty"`
-	UpdatedAt *time.Time `json:"updatedAt,omitempty"`
+	ID             *string    `json:"id,omitempty"`
+	SyncDisabledAt *time.Time `json:"syncDisabledAt,omitempty"`
+	// The category of the connector sync that was disabled.
+	SyncDisabledCategory *string `json:"syncDisabledCategory,omitempty"`
+	// The reason the connector sync was disabled.
+	SyncDisabledReason *string    `json:"syncDisabledReason,omitempty"`
+	UpdatedAt          *time.Time `json:"updatedAt,omitempty"`
 	// The userIds field is used to define the integration owners of the connector.
 	UserIds []string `json:"userIds,omitempty"`
 }
@@ -154,6 +159,27 @@ func (o *Connector) GetID() *string {
 	return o.ID
 }
 
+func (o *Connector) GetSyncDisabledAt() *time.Time {
+	if o == nil {
+		return nil
+	}
+	return o.SyncDisabledAt
+}
+
+func (o *Connector) GetSyncDisabledCategory() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SyncDisabledCategory
+}
+
+func (o *Connector) GetSyncDisabledReason() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SyncDisabledReason
+}
+
 func (o *Connector) GetUpdatedAt() *time.Time {
 	if o == nil {
 		return nil
@@ -176,6 +202,8 @@ type ConnectorInput struct {
 	OAuth2AuthorizedAs *OAuth2AuthorizedAsInput `json:"oauthAuthorizedAs,omitempty"`
 	// The id of the app the connector is associated with.
 	AppID *string `json:"appId,omitempty"`
+	// The catalogId describes which catalog entry this connector is an instance of. For example, every Okta connector will have the same catalogId indicating it is an Okta connector.
+	CatalogID *string `json:"catalogId,omitempty"`
 	// Contains an arbitrary serialized message along with a @type that describes the type of the serialized message.
 	Config *Config `json:"config,omitempty"`
 	// The description of the connector.
@@ -184,6 +212,10 @@ type ConnectorInput struct {
 	DisplayName *string `json:"displayName,omitempty"`
 	// The id of the connector.
 	ID *string `json:"id,omitempty"`
+	// The category of the connector sync that was disabled.
+	SyncDisabledCategory *string `json:"syncDisabledCategory,omitempty"`
+	// The reason the connector sync was disabled.
+	SyncDisabledReason *string `json:"syncDisabledReason,omitempty"`
 	// The userIds field is used to define the integration owners of the connector.
 	UserIds []string `json:"userIds,omitempty"`
 }
@@ -207,6 +239,13 @@ func (o *ConnectorInput) GetAppID() *string {
 		return nil
 	}
 	return o.AppID
+}
+
+func (o *ConnectorInput) GetCatalogID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.CatalogID
 }
 
 func (o *ConnectorInput) GetConfig() *Config {
@@ -235,6 +274,20 @@ func (o *ConnectorInput) GetID() *string {
 		return nil
 	}
 	return o.ID
+}
+
+func (o *ConnectorInput) GetSyncDisabledCategory() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SyncDisabledCategory
+}
+
+func (o *ConnectorInput) GetSyncDisabledReason() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SyncDisabledReason
 }
 
 func (o *ConnectorInput) GetUserIds() []string {

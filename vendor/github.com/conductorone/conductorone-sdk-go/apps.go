@@ -27,15 +27,8 @@ func newApps(sdkConfig sdkConfiguration) *Apps {
 }
 
 // Create
-// Create a new app.
+// Create a new manual app without a connector.
 func (s *Apps) Create(ctx context.Context, request *shared.CreateAppRequest, opts ...operations.Option) (*operations.C1APIAppV1AppsCreateResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "c1.api.app.v1.Apps.Create",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -59,6 +52,13 @@ func (s *Apps) Create(ctx context.Context, request *shared.CreateAppRequest, opt
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "c1.api.app.v1.Apps.Create",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -237,13 +237,6 @@ func (s *Apps) Create(ctx context.Context, request *shared.CreateAppRequest, opt
 // Delete
 // Delete an app.
 func (s *Apps) Delete(ctx context.Context, request operations.C1APIAppV1AppsDeleteRequest, opts ...operations.Option) (*operations.C1APIAppV1AppsDeleteResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "c1.api.app.v1.Apps.Delete",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -267,6 +260,13 @@ func (s *Apps) Delete(ctx context.Context, request operations.C1APIAppV1AppsDele
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "c1.api.app.v1.Apps.Delete",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "DeleteAppRequest", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -445,13 +445,6 @@ func (s *Apps) Delete(ctx context.Context, request operations.C1APIAppV1AppsDele
 // Get
 // Get an app by ID.
 func (s *Apps) Get(ctx context.Context, request operations.C1APIAppV1AppsGetRequest, opts ...operations.Option) (*operations.C1APIAppV1AppsGetResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "c1.api.app.v1.Apps.Get",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -473,6 +466,14 @@ func (s *Apps) Get(ctx context.Context, request operations.C1APIAppV1AppsGetRequ
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/api/v1/apps/{id}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "c1.api.app.v1.Apps.Get",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -645,13 +646,6 @@ func (s *Apps) Get(ctx context.Context, request operations.C1APIAppV1AppsGetRequ
 // List
 // List all apps.
 func (s *Apps) List(ctx context.Context, request operations.C1APIAppV1AppsListRequest, opts ...operations.Option) (*operations.C1APIAppV1AppsListResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "c1.api.app.v1.Apps.List",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -673,6 +667,14 @@ func (s *Apps) List(ctx context.Context, request operations.C1APIAppV1AppsListRe
 	opURL, err := url.JoinPath(baseURL, "/api/v1/apps")
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "c1.api.app.v1.Apps.List",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -849,13 +851,6 @@ func (s *Apps) List(ctx context.Context, request operations.C1APIAppV1AppsListRe
 // Update
 // Update an existing app.
 func (s *Apps) Update(ctx context.Context, request operations.C1APIAppV1AppsUpdateRequest, opts ...operations.Option) (*operations.C1APIAppV1AppsUpdateResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "c1.api.app.v1.Apps.Update",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -879,6 +874,13 @@ func (s *Apps) Update(ctx context.Context, request operations.C1APIAppV1AppsUpda
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "c1.api.app.v1.Apps.Update",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "UpdateAppRequest", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err

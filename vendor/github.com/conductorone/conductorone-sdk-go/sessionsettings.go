@@ -29,13 +29,6 @@ func newSessionSettings(sdkConfig sdkConfiguration) *SessionSettings {
 // Get
 // Invokes the c1.api.settings.v1.SessionSettingsService.Get method.
 func (s *SessionSettings) Get(ctx context.Context, opts ...operations.Option) (*operations.C1APISettingsV1SessionSettingsServiceGetResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "c1.api.settings.v1.SessionSettingsService.Get",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -57,6 +50,14 @@ func (s *SessionSettings) Get(ctx context.Context, opts ...operations.Option) (*
 	opURL, err := url.JoinPath(baseURL, "/api/v1/settings/session")
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "c1.api.settings.v1.SessionSettingsService.Get",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -229,13 +230,6 @@ func (s *SessionSettings) Get(ctx context.Context, opts ...operations.Option) (*
 // TestSourceIP - Test Source Ip
 // Invokes the c1.api.settings.v1.SessionSettingsService.TestSourceIP method.
 func (s *SessionSettings) TestSourceIP(ctx context.Context, request *shared.TestSourceIPRequest, opts ...operations.Option) (*operations.C1APISettingsV1SessionSettingsServiceTestSourceIPResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "c1.api.settings.v1.SessionSettingsService.TestSourceIP",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -259,6 +253,13 @@ func (s *SessionSettings) TestSourceIP(ctx context.Context, request *shared.Test
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "c1.api.settings.v1.SessionSettingsService.TestSourceIP",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -437,13 +438,6 @@ func (s *SessionSettings) TestSourceIP(ctx context.Context, request *shared.Test
 // Update
 // Invokes the c1.api.settings.v1.SessionSettingsService.Update method.
 func (s *SessionSettings) Update(ctx context.Context, request *shared.UpdateSessionSettingsRequest, opts ...operations.Option) (*operations.C1APISettingsV1SessionSettingsServiceUpdateResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "c1.api.settings.v1.SessionSettingsService.Update",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -467,6 +461,13 @@ func (s *SessionSettings) Update(ctx context.Context, request *shared.UpdateSess
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "c1.api.settings.v1.SessionSettingsService.Update",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err

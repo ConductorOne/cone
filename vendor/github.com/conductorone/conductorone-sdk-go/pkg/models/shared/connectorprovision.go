@@ -3,5 +3,32 @@
 package shared
 
 // ConnectorProvision - Indicates that a connector should perform the provisioning. This object has no fields.
+//
+// This message contains a oneof named provision_type. Only a single field of the following list may be set at a time:
+//   - defaultBehavior
+//   - account
 type ConnectorProvision struct {
+	// The AccountProvision message.
+	//
+	// This message contains a oneof named storage_type. Only a single field of the following list may be set at a time:
+	//   - saveToVault
+	//   - doNotSave
+	//
+	AccountProvision *AccountProvision `json:"account,omitempty"`
+	// The DefaultBehavior message.
+	DefaultBehavior *DefaultBehavior `json:"defaultBehavior,omitempty"`
+}
+
+func (o *ConnectorProvision) GetAccountProvision() *AccountProvision {
+	if o == nil {
+		return nil
+	}
+	return o.AccountProvision
+}
+
+func (o *ConnectorProvision) GetDefaultBehavior() *DefaultBehavior {
+	if o == nil {
+		return nil
+	}
+	return o.DefaultBehavior
 }

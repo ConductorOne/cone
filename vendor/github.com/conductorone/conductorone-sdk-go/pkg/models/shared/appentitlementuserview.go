@@ -13,6 +13,8 @@ type AppEntitlementUserView struct {
 	AppUserView                            *AppUserView `json:"appUser,omitempty"`
 	AppEntitlementUserBindingCreatedAt     *time.Time   `json:"appEntitlementUserBindingCreatedAt,omitempty"`
 	AppEntitlementUserBindingDeprovisionAt *time.Time   `json:"appEntitlementUserBindingDeprovisionAt,omitempty"`
+	// List of sources for the grant, ie. groups, roles, etc.
+	GrantSources []AppEntitlementRef `json:"grantSources,omitempty"`
 }
 
 func (a AppEntitlementUserView) MarshalJSON() ([]byte, error) {
@@ -45,4 +47,11 @@ func (o *AppEntitlementUserView) GetAppEntitlementUserBindingDeprovisionAt() *ti
 		return nil
 	}
 	return o.AppEntitlementUserBindingDeprovisionAt
+}
+
+func (o *AppEntitlementUserView) GetGrantSources() []AppEntitlementRef {
+	if o == nil {
+		return nil
+	}
+	return o.GrantSources
 }

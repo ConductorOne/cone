@@ -4,10 +4,21 @@ package shared
 
 // The CreateAccessReview message.
 type CreateAccessReview struct {
+	// The accessReviewTemplateCel field.
+	AccessReviewTemplateCel *string `json:"accessReviewTemplateCel,omitempty"`
 	// The accessReviewTemplateId field.
 	AccessReviewTemplateID *string `json:"accessReviewTemplateId,omitempty"`
 	// The userIdsCel field.
 	UserIdsCel *string `json:"userIdsCel,omitempty"`
+	// The userRefs field.
+	UserRefs []UserRef `json:"userRefs,omitempty"`
+}
+
+func (o *CreateAccessReview) GetAccessReviewTemplateCel() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AccessReviewTemplateCel
 }
 
 func (o *CreateAccessReview) GetAccessReviewTemplateID() *string {
@@ -22,4 +33,11 @@ func (o *CreateAccessReview) GetUserIdsCel() *string {
 		return nil
 	}
 	return o.UserIdsCel
+}
+
+func (o *CreateAccessReview) GetUserRefs() []UserRef {
+	if o == nil {
+		return nil
+	}
+	return o.UserRefs
 }

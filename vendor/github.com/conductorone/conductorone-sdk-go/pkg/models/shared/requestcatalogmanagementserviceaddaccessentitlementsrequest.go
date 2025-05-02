@@ -7,7 +7,7 @@ package shared
 //	catalog to determine which users can view the request catalog.
 type RequestCatalogManagementServiceAddAccessEntitlementsRequest struct {
 	// List of entitlements to add to the request catalog as access entitlements.
-	AccessEntitlements []AppEntitlementRef `json:"accessEntitlements,omitempty"`
+	AccessEntitlements []AppEntitlementRef `json:"accessEntitlements"`
 }
 
 func (o *RequestCatalogManagementServiceAddAccessEntitlementsRequest) GetAccessEntitlements() []AppEntitlementRef {

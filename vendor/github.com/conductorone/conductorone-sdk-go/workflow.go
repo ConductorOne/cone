@@ -29,13 +29,6 @@ func newWorkflow(sdkConfig sdkConfiguration) *Workflow {
 // CreateWorkflow - Create Workflow
 // Invokes the c1.api.workflows.v1beta.WorkflowService.CreateWorkflow method.
 func (s *Workflow) CreateWorkflow(ctx context.Context, request *shared.CreateWorkflowRequest, opts ...operations.Option) (*operations.C1APIWorkflowsV1betaWorkflowServiceCreateWorkflowResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "c1.api.workflows.v1beta.WorkflowService.CreateWorkflow",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -59,6 +52,13 @@ func (s *Workflow) CreateWorkflow(ctx context.Context, request *shared.CreateWor
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "c1.api.workflows.v1beta.WorkflowService.CreateWorkflow",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -237,13 +237,6 @@ func (s *Workflow) CreateWorkflow(ctx context.Context, request *shared.CreateWor
 // DeleteWorkflow - Delete Workflow
 // Invokes the c1.api.workflows.v1beta.WorkflowService.DeleteWorkflow method.
 func (s *Workflow) DeleteWorkflow(ctx context.Context, request operations.C1APIWorkflowsV1betaWorkflowServiceDeleteWorkflowRequest, opts ...operations.Option) (*operations.C1APIWorkflowsV1betaWorkflowServiceDeleteWorkflowResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "c1.api.workflows.v1beta.WorkflowService.DeleteWorkflow",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -267,6 +260,13 @@ func (s *Workflow) DeleteWorkflow(ctx context.Context, request operations.C1APIW
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "c1.api.workflows.v1beta.WorkflowService.DeleteWorkflow",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "DeleteWorkflowRequest", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -445,13 +445,6 @@ func (s *Workflow) DeleteWorkflow(ctx context.Context, request operations.C1APIW
 // ExecuteWorkflow - Execute Workflow
 // Invokes the c1.api.workflows.v1beta.WorkflowService.ExecuteWorkflow method.
 func (s *Workflow) ExecuteWorkflow(ctx context.Context, request operations.C1APIWorkflowsV1betaWorkflowServiceExecuteWorkflowRequest, opts ...operations.Option) (*operations.C1APIWorkflowsV1betaWorkflowServiceExecuteWorkflowResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "c1.api.workflows.v1beta.WorkflowService.ExecuteWorkflow",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -475,6 +468,13 @@ func (s *Workflow) ExecuteWorkflow(ctx context.Context, request operations.C1API
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "c1.api.workflows.v1beta.WorkflowService.ExecuteWorkflow",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "ExecuteWorkflowRequest", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -653,13 +653,6 @@ func (s *Workflow) ExecuteWorkflow(ctx context.Context, request operations.C1API
 // GetWorkflow - Get Workflow
 // Invokes the c1.api.workflows.v1beta.WorkflowService.GetWorkflow method.
 func (s *Workflow) GetWorkflow(ctx context.Context, request operations.C1APIWorkflowsV1betaWorkflowServiceGetWorkflowRequest, opts ...operations.Option) (*operations.C1APIWorkflowsV1betaWorkflowServiceGetWorkflowResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "c1.api.workflows.v1beta.WorkflowService.GetWorkflow",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -681,6 +674,14 @@ func (s *Workflow) GetWorkflow(ctx context.Context, request operations.C1APIWork
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/api/v1beta/workflows/{id}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "c1.api.workflows.v1beta.WorkflowService.GetWorkflow",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -853,13 +854,6 @@ func (s *Workflow) GetWorkflow(ctx context.Context, request operations.C1APIWork
 // ListWorkflows - List Workflows
 // Invokes the c1.api.workflows.v1beta.WorkflowService.ListWorkflows method.
 func (s *Workflow) ListWorkflows(ctx context.Context, opts ...operations.Option) (*operations.C1APIWorkflowsV1betaWorkflowServiceListWorkflowsResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "c1.api.workflows.v1beta.WorkflowService.ListWorkflows",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -881,6 +875,14 @@ func (s *Workflow) ListWorkflows(ctx context.Context, opts ...operations.Option)
 	opURL, err := url.JoinPath(baseURL, "/api/v1beta/workflows")
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "c1.api.workflows.v1beta.WorkflowService.ListWorkflows",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -1053,13 +1055,6 @@ func (s *Workflow) ListWorkflows(ctx context.Context, opts ...operations.Option)
 // UpdateWorkflow - Update Workflow
 // Invokes the c1.api.workflows.v1beta.WorkflowService.UpdateWorkflow method.
 func (s *Workflow) UpdateWorkflow(ctx context.Context, request operations.C1APIWorkflowsV1betaWorkflowServiceUpdateWorkflowRequest, opts ...operations.Option) (*operations.C1APIWorkflowsV1betaWorkflowServiceUpdateWorkflowResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "c1.api.workflows.v1beta.WorkflowService.UpdateWorkflow",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -1083,6 +1078,13 @@ func (s *Workflow) UpdateWorkflow(ctx context.Context, request operations.C1APIW
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "c1.api.workflows.v1beta.WorkflowService.UpdateWorkflow",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "UpdateWorkflowRequest", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err

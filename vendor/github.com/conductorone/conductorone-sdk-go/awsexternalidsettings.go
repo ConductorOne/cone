@@ -29,13 +29,6 @@ func newAWSExternalIDSettings(sdkConfig sdkConfiguration) *AWSExternalIDSettings
 // Get
 // Invokes the c1.api.settings.v1.AWSExternalIDSettings.Get method.
 func (s *AWSExternalIDSettings) Get(ctx context.Context, opts ...operations.Option) (*operations.C1APISettingsV1AWSExternalIDSettingsGetResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "c1.api.settings.v1.AWSExternalIDSettings.Get",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -57,6 +50,14 @@ func (s *AWSExternalIDSettings) Get(ctx context.Context, opts ...operations.Opti
 	opURL, err := url.JoinPath(baseURL, "/api/v1/settings/aws-external-id")
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "c1.api.settings.v1.AWSExternalIDSettings.Get",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout

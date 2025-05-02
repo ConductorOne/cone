@@ -29,13 +29,6 @@ func newPersonalClient(sdkConfig sdkConfiguration) *PersonalClient {
 // Create
 // Create creates a new PersonalClient object for the current User.
 func (s *PersonalClient) Create(ctx context.Context, request *shared.PersonalClientServiceCreateRequest, opts ...operations.Option) (*operations.C1APIIamV1PersonalClientServiceCreateResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "c1.api.iam.v1.PersonalClientService.Create",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -59,6 +52,13 @@ func (s *PersonalClient) Create(ctx context.Context, request *shared.PersonalCli
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "c1.api.iam.v1.PersonalClientService.Create",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -237,13 +237,6 @@ func (s *PersonalClient) Create(ctx context.Context, request *shared.PersonalCli
 // Delete
 // Invokes the c1.api.iam.v1.PersonalClientService.Delete method.
 func (s *PersonalClient) Delete(ctx context.Context, request operations.C1APIIamV1PersonalClientServiceDeleteRequest, opts ...operations.Option) (*operations.C1APIIamV1PersonalClientServiceDeleteResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "c1.api.iam.v1.PersonalClientService.Delete",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -267,6 +260,13 @@ func (s *PersonalClient) Delete(ctx context.Context, request operations.C1APIIam
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "c1.api.iam.v1.PersonalClientService.Delete",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "PersonalClientServiceDeleteRequest", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -445,13 +445,6 @@ func (s *PersonalClient) Delete(ctx context.Context, request operations.C1APIIam
 // Get
 // Invokes the c1.api.iam.v1.PersonalClientService.Get method.
 func (s *PersonalClient) Get(ctx context.Context, request operations.C1APIIamV1PersonalClientServiceGetRequest, opts ...operations.Option) (*operations.C1APIIamV1PersonalClientServiceGetResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "c1.api.iam.v1.PersonalClientService.Get",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -473,6 +466,14 @@ func (s *PersonalClient) Get(ctx context.Context, request operations.C1APIIamV1P
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/api/v1/iam/personal_clients/{id}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "c1.api.iam.v1.PersonalClientService.Get",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -645,13 +646,6 @@ func (s *PersonalClient) Get(ctx context.Context, request operations.C1APIIamV1P
 // List - NOTE: Only shows personal clients for the current user.
 // Invokes the c1.api.iam.v1.PersonalClientService.List method.
 func (s *PersonalClient) List(ctx context.Context, opts ...operations.Option) (*operations.C1APIIamV1PersonalClientServiceListResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "c1.api.iam.v1.PersonalClientService.List",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -673,6 +667,14 @@ func (s *PersonalClient) List(ctx context.Context, opts ...operations.Option) (*
 	opURL, err := url.JoinPath(baseURL, "/api/v1/iam/personal_clients")
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "c1.api.iam.v1.PersonalClientService.List",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -845,13 +847,6 @@ func (s *PersonalClient) List(ctx context.Context, opts ...operations.Option) (*
 // Update
 // Invokes the c1.api.iam.v1.PersonalClientService.Update method.
 func (s *PersonalClient) Update(ctx context.Context, request operations.C1APIIamV1PersonalClientServiceUpdateRequest, opts ...operations.Option) (*operations.C1APIIamV1PersonalClientServiceUpdateResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "c1.api.iam.v1.PersonalClientService.Update",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -875,6 +870,13 @@ func (s *PersonalClient) Update(ctx context.Context, request operations.C1APIIam
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "c1.api.iam.v1.PersonalClientService.Update",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "PersonalClientServiceUpdateRequest", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err

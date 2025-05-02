@@ -7,9 +7,9 @@ type WebhooksServiceCreateRequest struct {
 	// The description field.
 	Description *string `json:"description,omitempty"`
 	// The displayName field.
-	DisplayName *string `json:"displayName,omitempty"`
+	DisplayName string `json:"displayName"`
 	// The url field.
-	URL *string `json:"url,omitempty"`
+	URL string `json:"url"`
 }
 
 func (o *WebhooksServiceCreateRequest) GetDescription() *string {
@@ -19,16 +19,16 @@ func (o *WebhooksServiceCreateRequest) GetDescription() *string {
 	return o.Description
 }
 
-func (o *WebhooksServiceCreateRequest) GetDisplayName() *string {
+func (o *WebhooksServiceCreateRequest) GetDisplayName() string {
 	if o == nil {
-		return nil
+		return ""
 	}
 	return o.DisplayName
 }
 
-func (o *WebhooksServiceCreateRequest) GetURL() *string {
+func (o *WebhooksServiceCreateRequest) GetURL() string {
 	if o == nil {
-		return nil
+		return ""
 	}
 	return o.URL
 }

@@ -29,13 +29,6 @@ func newRequestCatalogSearch(sdkConfig sdkConfiguration) *RequestCatalogSearch {
 // SearchEntitlements - Search Entitlements
 // Search request catalogs based on filters specified in the request body.
 func (s *RequestCatalogSearch) SearchEntitlements(ctx context.Context, request *shared.RequestCatalogSearchServiceSearchEntitlementsRequest, opts ...operations.Option) (*operations.C1APIRequestcatalogV1RequestCatalogSearchServiceSearchEntitlementsResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "c1.api.requestcatalog.v1.RequestCatalogSearchService.SearchEntitlements",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -59,6 +52,13 @@ func (s *RequestCatalogSearch) SearchEntitlements(ctx context.Context, request *
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "c1.api.requestcatalog.v1.RequestCatalogSearchService.SearchEntitlements",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err

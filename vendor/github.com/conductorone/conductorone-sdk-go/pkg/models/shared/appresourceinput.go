@@ -3,23 +3,39 @@
 package shared
 
 // AppResourceInput - The app resource message is a single resource that can have entitlements.
+//
+// This message contains a oneof named metadata. Only a single field of the following list may be set at a time:
+//   - secretTrait
 type AppResourceInput struct {
+	// The SecretTrait message.
+	SecretTrait *SecretTrait `json:"secretTrait,omitempty"`
 	// The app that this resource belongs to.
 	AppID *string `json:"appId,omitempty"`
 	// The resource type that this resource is.
 	AppResourceTypeID *string `json:"appResourceTypeId,omitempty"`
 	// A custom description that can be set for a resource.
 	CustomDescription *string `json:"customDescription,omitempty"`
+	// The description set for the resource.
+	Description *string `json:"description,omitempty"`
 	// The display name for this resource.
 	DisplayName *string `json:"displayName,omitempty"`
 	// The number of grants to this resource.
 	GrantCount *int64 `integer:"string" json:"grantCount,omitempty"`
 	// The id of the resource.
 	ID *string `json:"id,omitempty"`
+	// The matchBatonId field.
+	MatchBatonID *string `json:"matchBatonId,omitempty"`
 	// The parent resource id, if this resource is a child of another resource.
 	ParentAppResourceID *string `json:"parentAppResourceId,omitempty"`
 	// The parent resource type id, if this resource is a child of another resource.
 	ParentAppResourceTypeID *string `json:"parentAppResourceTypeId,omitempty"`
+}
+
+func (o *AppResourceInput) GetSecretTrait() *SecretTrait {
+	if o == nil {
+		return nil
+	}
+	return o.SecretTrait
 }
 
 func (o *AppResourceInput) GetAppID() *string {
@@ -43,6 +59,13 @@ func (o *AppResourceInput) GetCustomDescription() *string {
 	return o.CustomDescription
 }
 
+func (o *AppResourceInput) GetDescription() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Description
+}
+
 func (o *AppResourceInput) GetDisplayName() *string {
 	if o == nil {
 		return nil
@@ -62,6 +85,13 @@ func (o *AppResourceInput) GetID() *string {
 		return nil
 	}
 	return o.ID
+}
+
+func (o *AppResourceInput) GetMatchBatonID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.MatchBatonID
 }
 
 func (o *AppResourceInput) GetParentAppResourceID() *string {

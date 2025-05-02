@@ -71,53 +71,58 @@ func (c *sdkConfiguration) GetServerDetails() (string, map[string]string) {
 
 // ConductoroneAPI - ConductorOne API: The ConductorOne API is a HTTP API for managing ConductorOne resources.
 type ConductoroneAPI struct {
-	Apps                      *Apps
-	AppAccessRequestsDefaults *AppAccessRequestsDefaults
-	AppUser                   *AppUser
-	Connector                 *Connector
-	AppEntitlements           *AppEntitlements
-	AppEntitlementSearch      *AppEntitlementSearch
-	AppEntitlementUserBinding *AppEntitlementUserBinding
-	AppEntitlementOwners      *AppEntitlementOwners
-	AppOwners                 *AppOwners
-	AppReport                 *AppReport
-	AppReportAction           *AppReportAction
-	AppResourceType           *AppResourceType
-	AppResource               *AppResource
-	AppResourceOwners         *AppResourceOwners
-	AppUsageControls          *AppUsageControls
-	AppEntitlementsProxy      *AppEntitlementsProxy
-	Attributes                *Attributes
-	Auth                      *Auth
-	RequestCatalogManagement  *RequestCatalogManagement
-	Directory                 *Directory
-	PersonalClient            *PersonalClient
-	Roles                     *Roles
-	Policies                  *Policies
-	PolicyValidate            *PolicyValidate
-	AppResourceSearch         *AppResourceSearch
-	AppSearch                 *AppSearch
-	AttributeSearch           *AttributeSearch
-	PersonalClientSearch      *PersonalClientSearch
-	PolicySearch              *PolicySearch
-	RequestCatalogSearch      *RequestCatalogSearch
-	ExportsSearch             *ExportsSearch
-	TaskSearch                *TaskSearch
-	UserSearch                *UserSearch
-	WebhooksSearch            *WebhooksSearch
-	AWSExternalIDSettings     *AWSExternalIDSettings
-	SessionSettings           *SessionSettings
-	SystemLog                 *SystemLog
-	Export                    *Export
-	Task                      *Task
-	TaskActions               *TaskActions
-	User                      *User
-	Webhooks                  *Webhooks
-	WorkflowExecution         *WorkflowExecution
-	WorkflowExecutionSearch   *WorkflowExecutionSearch
-	WorkflowExecutionActions  *WorkflowExecutionActions
-	Workflow                  *Workflow
-	WorkflowSearch            *WorkflowSearch
+	Apps                       *Apps
+	AppAccessRequestsDefaults  *AppAccessRequestsDefaults
+	AppUser                    *AppUser
+	Connector                  *Connector
+	AppEntitlements            *AppEntitlements
+	AppEntitlementSearch       *AppEntitlementSearch
+	AppEntitlementUserBinding  *AppEntitlementUserBinding
+	AppEntitlementOwners       *AppEntitlementOwners
+	AppOwners                  *AppOwners
+	AppReport                  *AppReport
+	AppReportAction            *AppReportAction
+	AppResourceType            *AppResourceType
+	AppResource                *AppResource
+	AppResourceOwners          *AppResourceOwners
+	AppUsageControls           *AppUsageControls
+	AppEntitlementsProxy       *AppEntitlementsProxy
+	Attributes                 *Attributes
+	Auth                       *Auth
+	RequestCatalogManagement   *RequestCatalogManagement
+	Directory                  *Directory
+	PersonalClient             *PersonalClient
+	Roles                      *Roles
+	Policies                   *Policies
+	AccountProvisionPolicyTest *AccountProvisionPolicyTest
+	PolicyValidate             *PolicyValidate
+	AppResourceSearch          *AppResourceSearch
+	AppSearch                  *AppSearch
+	AttributeSearch            *AttributeSearch
+	PersonalClientSearch       *PersonalClientSearch
+	PolicySearch               *PolicySearch
+	RequestCatalogSearch       *RequestCatalogSearch
+	StepUpProvider             *StepUpProvider
+	StepUpTransaction          *StepUpTransaction
+	ExportsSearch              *ExportsSearch
+	TaskSearch                 *TaskSearch
+	UserSearch                 *UserSearch
+	WebhooksSearch             *WebhooksSearch
+	AWSExternalIDSettings      *AWSExternalIDSettings
+	OrgDomain                  *OrgDomain
+	SessionSettings            *SessionSettings
+	SystemLog                  *SystemLog
+	Export                     *Export
+	TaskAudit                  *TaskAudit
+	Task                       *Task
+	TaskActions                *TaskActions
+	User                       *User
+	Webhooks                   *Webhooks
+	WorkflowExecution          *WorkflowExecution
+	WorkflowExecutionSearch    *WorkflowExecutionSearch
+	WorkflowExecutionActions   *WorkflowExecutionActions
+	WorkflowSearch             *WorkflowSearch
+	Workflow                   *Workflow
 
 	sdkConfiguration sdkConfiguration
 }
@@ -208,9 +213,9 @@ func New(opts ...SDKOption) *ConductoroneAPI {
 		sdkConfiguration: sdkConfiguration{
 			Language:          "go",
 			OpenAPIDocVersion: "0.1.0-alpha",
-			SDKVersion:        "1.23.0",
-			GenVersion:        "2.493.34",
-			UserAgent:         "speakeasy-sdk/go 1.23.0 2.493.34 0.1.0-alpha github.com/conductorone/conductorone-sdk-go",
+			SDKVersion:        "1.24.0",
+			GenVersion:        "2.596.2",
+			UserAgent:         "speakeasy-sdk/go 1.24.0 2.596.2 0.1.0-alpha github.com/conductorone/conductorone-sdk-go",
 			ServerDefaults: []map[string]string{
 				{
 					"tenantDomain": "example",
@@ -281,6 +286,8 @@ func New(opts ...SDKOption) *ConductoroneAPI {
 
 	sdk.Policies = newPolicies(sdk.sdkConfiguration)
 
+	sdk.AccountProvisionPolicyTest = newAccountProvisionPolicyTest(sdk.sdkConfiguration)
+
 	sdk.PolicyValidate = newPolicyValidate(sdk.sdkConfiguration)
 
 	sdk.AppResourceSearch = newAppResourceSearch(sdk.sdkConfiguration)
@@ -295,6 +302,10 @@ func New(opts ...SDKOption) *ConductoroneAPI {
 
 	sdk.RequestCatalogSearch = newRequestCatalogSearch(sdk.sdkConfiguration)
 
+	sdk.StepUpProvider = newStepUpProvider(sdk.sdkConfiguration)
+
+	sdk.StepUpTransaction = newStepUpTransaction(sdk.sdkConfiguration)
+
 	sdk.ExportsSearch = newExportsSearch(sdk.sdkConfiguration)
 
 	sdk.TaskSearch = newTaskSearch(sdk.sdkConfiguration)
@@ -305,11 +316,15 @@ func New(opts ...SDKOption) *ConductoroneAPI {
 
 	sdk.AWSExternalIDSettings = newAWSExternalIDSettings(sdk.sdkConfiguration)
 
+	sdk.OrgDomain = newOrgDomain(sdk.sdkConfiguration)
+
 	sdk.SessionSettings = newSessionSettings(sdk.sdkConfiguration)
 
 	sdk.SystemLog = newSystemLog(sdk.sdkConfiguration)
 
 	sdk.Export = newExport(sdk.sdkConfiguration)
+
+	sdk.TaskAudit = newTaskAudit(sdk.sdkConfiguration)
 
 	sdk.Task = newTask(sdk.sdkConfiguration)
 
@@ -325,9 +340,9 @@ func New(opts ...SDKOption) *ConductoroneAPI {
 
 	sdk.WorkflowExecutionActions = newWorkflowExecutionActions(sdk.sdkConfiguration)
 
-	sdk.Workflow = newWorkflow(sdk.sdkConfiguration)
-
 	sdk.WorkflowSearch = newWorkflowSearch(sdk.sdkConfiguration)
+
+	sdk.Workflow = newWorkflow(sdk.sdkConfiguration)
 
 	return sdk
 }

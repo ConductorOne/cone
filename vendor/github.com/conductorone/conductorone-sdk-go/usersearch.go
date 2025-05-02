@@ -29,13 +29,6 @@ func newUserSearch(sdkConfig sdkConfiguration) *UserSearch {
 // Search
 // Search users based on filters specified in the request body.
 func (s *UserSearch) Search(ctx context.Context, request *shared.SearchUsersRequest, opts ...operations.Option) (*operations.C1APIUserV1UserSearchSearchResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "c1.api.user.v1.UserSearch.Search",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -59,6 +52,13 @@ func (s *UserSearch) Search(ctx context.Context, request *shared.SearchUsersRequ
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "c1.api.user.v1.UserSearch.Search",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err

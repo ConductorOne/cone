@@ -19,6 +19,8 @@ const (
 	WorkflowExecutionStateWorkflowExecutionStateCompleteStep WorkflowExecutionState = "WORKFLOW_EXECUTION_STATE_COMPLETE_STEP"
 	WorkflowExecutionStateWorkflowExecutionStateDone         WorkflowExecutionState = "WORKFLOW_EXECUTION_STATE_DONE"
 	WorkflowExecutionStateWorkflowExecutionStateError        WorkflowExecutionState = "WORKFLOW_EXECUTION_STATE_ERROR"
+	WorkflowExecutionStateWorkflowExecutionStateTerminate    WorkflowExecutionState = "WORKFLOW_EXECUTION_STATE_TERMINATE"
+	WorkflowExecutionStateWorkflowExecutionStateWaiting      WorkflowExecutionState = "WORKFLOW_EXECUTION_STATE_WAITING"
 )
 
 func (e WorkflowExecutionState) ToPointer() *WorkflowExecutionState {
@@ -31,9 +33,14 @@ type WorkflowExecution struct {
 	WorkflowContext *WorkflowContext `json:"context,omitempty"`
 	CompletedAt     *time.Time       `json:"completedAt,omitempty"`
 	CreatedAt       *time.Time       `json:"createdAt,omitempty"`
-	DeletedAt       *time.Time       `json:"deletedAt,omitempty"`
+	// The currentVersion field.
+	CurrentVersion *int       `json:"currentVersion,omitempty"`
+	DeletedAt      *time.Time `json:"deletedAt,omitempty"`
+	Duration       *string    `json:"duration,omitempty"`
 	// The id field.
 	ID *int64 `integer:"string" json:"id,omitempty"`
+	// The isDraft field.
+	IsDraft *bool `json:"isDraft,omitempty"`
 	// The state field.
 	State     *WorkflowExecutionState `json:"state,omitempty"`
 	UpdatedAt *time.Time              `json:"updatedAt,omitempty"`
@@ -73,6 +80,13 @@ func (o *WorkflowExecution) GetCreatedAt() *time.Time {
 	return o.CreatedAt
 }
 
+func (o *WorkflowExecution) GetCurrentVersion() *int {
+	if o == nil {
+		return nil
+	}
+	return o.CurrentVersion
+}
+
 func (o *WorkflowExecution) GetDeletedAt() *time.Time {
 	if o == nil {
 		return nil
@@ -80,11 +94,25 @@ func (o *WorkflowExecution) GetDeletedAt() *time.Time {
 	return o.DeletedAt
 }
 
+func (o *WorkflowExecution) GetDuration() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Duration
+}
+
 func (o *WorkflowExecution) GetID() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.ID
+}
+
+func (o *WorkflowExecution) GetIsDraft() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.IsDraft
 }
 
 func (o *WorkflowExecution) GetState() *WorkflowExecutionState {

@@ -12,12 +12,20 @@ type WorkflowInput struct {
 	// The WorkflowContext message.
 	WorkflowContext *WorkflowContext `json:"context,omitempty"`
 	CreatedAt       *time.Time       `json:"createdAt,omitempty"`
+	// The currentVersion field.
+	CurrentVersion *int64 `integer:"string" json:"currentVersion,omitempty"`
 	// The description field.
 	Description *string `json:"description,omitempty"`
 	// The displayName field.
 	DisplayName *string `json:"displayName,omitempty"`
+	// The draftTriggers field.
+	DraftTriggers []WorkflowTrigger `json:"draftTriggers,omitempty"`
+	// The draftWorkflowSteps field.
+	DraftWorkflowSteps []WorkflowStep `json:"draftWorkflowSteps,omitempty"`
 	// The enabled field.
-	Enabled        *bool      `json:"enabled,omitempty"`
+	Enabled *bool `json:"enabled,omitempty"`
+	// The isDraft field.
+	IsDraft        *bool      `json:"isDraft,omitempty"`
 	LastExecutedAt *time.Time `json:"lastExecutedAt,omitempty"`
 	// The triggers field.
 	Triggers []WorkflowTrigger `json:"triggers,omitempty"`
@@ -50,6 +58,13 @@ func (o *WorkflowInput) GetCreatedAt() *time.Time {
 	return o.CreatedAt
 }
 
+func (o *WorkflowInput) GetCurrentVersion() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.CurrentVersion
+}
+
 func (o *WorkflowInput) GetDescription() *string {
 	if o == nil {
 		return nil
@@ -64,11 +79,32 @@ func (o *WorkflowInput) GetDisplayName() *string {
 	return o.DisplayName
 }
 
+func (o *WorkflowInput) GetDraftTriggers() []WorkflowTrigger {
+	if o == nil {
+		return nil
+	}
+	return o.DraftTriggers
+}
+
+func (o *WorkflowInput) GetDraftWorkflowSteps() []WorkflowStep {
+	if o == nil {
+		return nil
+	}
+	return o.DraftWorkflowSteps
+}
+
 func (o *WorkflowInput) GetEnabled() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.Enabled
+}
+
+func (o *WorkflowInput) GetIsDraft() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.IsDraft
 }
 
 func (o *WorkflowInput) GetLastExecutedAt() *time.Time {

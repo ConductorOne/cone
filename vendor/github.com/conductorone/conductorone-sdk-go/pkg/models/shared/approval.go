@@ -14,7 +14,10 @@ package shared
 //   - expression
 //   - webhook
 //   - resourceOwners
+//   - agent
 type Approval struct {
+	// The agent to assign the task to.
+	AgentApproval *AgentApproval `json:"agent,omitempty"`
 	// The AppGroupApproval object provides the configuration for setting a group as the approvers of an approval policy step.
 	AppGroupApproval *AppGroupApproval `json:"group,omitempty"`
 	// App owner approval provides the configuration for an approval step when the app owner is the target.
@@ -35,6 +38,8 @@ type Approval struct {
 	WebhookApproval *WebhookApproval `json:"webhook,omitempty"`
 	// Configuration to allow reassignment by reviewers during this step.
 	AllowReassignment *bool `json:"allowReassignment,omitempty"`
+	// List of users for whom this step can be reassigned.
+	AllowedReassignees []string `json:"allowedReassignees,omitempty"`
 	// A field indicating whether this step is assigned.
 	Assigned *bool `json:"assigned,omitempty"`
 	// Configuration to require a reason when approving this step.
@@ -43,6 +48,16 @@ type Approval struct {
 	RequireDenialReason *bool `json:"requireDenialReason,omitempty"`
 	// Configuration to require a reason when reassigning this step.
 	RequireReassignmentReason *bool `json:"requireReassignmentReason,omitempty"`
+	// The ID of a step-up authentication provider that will be required for approvals on this step.
+	//  If set, approvers must complete the step-up authentication flow before they can approve.
+	RequiresStepUpProviderID *string `json:"requiresStepUpProviderId,omitempty"`
+}
+
+func (o *Approval) GetAgentApproval() *AgentApproval {
+	if o == nil {
+		return nil
+	}
+	return o.AgentApproval
 }
 
 func (o *Approval) GetAppGroupApproval() *AppGroupApproval {
@@ -115,6 +130,13 @@ func (o *Approval) GetAllowReassignment() *bool {
 	return o.AllowReassignment
 }
 
+func (o *Approval) GetAllowedReassignees() []string {
+	if o == nil {
+		return nil
+	}
+	return o.AllowedReassignees
+}
+
 func (o *Approval) GetAssigned() *bool {
 	if o == nil {
 		return nil
@@ -141,4 +163,11 @@ func (o *Approval) GetRequireReassignmentReason() *bool {
 		return nil
 	}
 	return o.RequireReassignmentReason
+}
+
+func (o *Approval) GetRequiresStepUpProviderID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.RequiresStepUpProviderID
 }

@@ -23,7 +23,7 @@ type CreatePolicyRequest struct {
 	// The description of the new policy.
 	Description *string `json:"description,omitempty"`
 	// The display name of the new policy.
-	DisplayName *string `json:"displayName,omitempty"`
+	DisplayName string `json:"displayName"`
 	// The map of policy type to policy steps. The key is the stringified version of the enum. See other policies for examples.
 	PolicySteps map[string]PolicyStepsInput `json:"policySteps,omitempty"`
 	// The enum of the policy type.
@@ -43,9 +43,9 @@ func (o *CreatePolicyRequest) GetDescription() *string {
 	return o.Description
 }
 
-func (o *CreatePolicyRequest) GetDisplayName() *string {
+func (o *CreatePolicyRequest) GetDisplayName() string {
 	if o == nil {
-		return nil
+		return ""
 	}
 	return o.DisplayName
 }

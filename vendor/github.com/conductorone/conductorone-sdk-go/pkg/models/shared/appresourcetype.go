@@ -16,7 +16,9 @@ type AppResourceType struct {
 	// The display name of the app resource type.
 	DisplayName *string `json:"displayName,omitempty"`
 	// The unique ID for the app resource type.
-	ID        *string    `json:"id,omitempty"`
+	ID *string `json:"id,omitempty"`
+	// Associated trait ids
+	TraitIds  []string   `json:"traitIds,omitempty"`
 	UpdatedAt *time.Time `json:"updatedAt,omitempty"`
 }
 
@@ -64,6 +66,13 @@ func (o *AppResourceType) GetID() *string {
 		return nil
 	}
 	return o.ID
+}
+
+func (o *AppResourceType) GetTraitIds() []string {
+	if o == nil {
+		return nil
+	}
+	return o.TraitIds
 }
 
 func (o *AppResourceType) GetUpdatedAt() *time.Time {

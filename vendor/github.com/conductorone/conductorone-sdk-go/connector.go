@@ -28,13 +28,6 @@ func newConnector(sdkConfig sdkConfiguration) *Connector {
 // Create
 // Create a configured connector.
 func (s *Connector) Create(ctx context.Context, request operations.C1APIAppV1ConnectorServiceCreateRequest, opts ...operations.Option) (*operations.C1APIAppV1ConnectorServiceCreateResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "c1.api.app.v1.ConnectorService.Create",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -58,6 +51,13 @@ func (s *Connector) Create(ctx context.Context, request operations.C1APIAppV1Con
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "c1.api.app.v1.ConnectorService.Create",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "ConnectorServiceCreateRequest", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -236,13 +236,6 @@ func (s *Connector) Create(ctx context.Context, request operations.C1APIAppV1Con
 // CreateDelegated - Create Delegated
 // Create a connector that is pending a connector config.
 func (s *Connector) CreateDelegated(ctx context.Context, request operations.C1APIAppV1ConnectorServiceCreateDelegatedRequest, opts ...operations.Option) (*operations.C1APIAppV1ConnectorServiceCreateDelegatedResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "c1.api.app.v1.ConnectorService.CreateDelegated",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -266,6 +259,13 @@ func (s *Connector) CreateDelegated(ctx context.Context, request operations.C1AP
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "c1.api.app.v1.ConnectorService.CreateDelegated",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "ConnectorServiceCreateDelegatedRequest", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -444,13 +444,6 @@ func (s *Connector) CreateDelegated(ctx context.Context, request operations.C1AP
 // Delete
 // Delete a connector.
 func (s *Connector) Delete(ctx context.Context, request operations.C1APIAppV1ConnectorServiceDeleteRequest, opts ...operations.Option) (*operations.C1APIAppV1ConnectorServiceDeleteResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "c1.api.app.v1.ConnectorService.Delete",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -474,6 +467,13 @@ func (s *Connector) Delete(ctx context.Context, request operations.C1APIAppV1Con
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "c1.api.app.v1.ConnectorService.Delete",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "ConnectorServiceDeleteRequest", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -652,13 +652,6 @@ func (s *Connector) Delete(ctx context.Context, request operations.C1APIAppV1Con
 // ForceSync - Force Sync
 // Invokes the c1.api.app.v1.ConnectorService.ForceSync method.
 func (s *Connector) ForceSync(ctx context.Context, request operations.C1APIAppV1ConnectorServiceForceSyncRequest, opts ...operations.Option) (*operations.C1APIAppV1ConnectorServiceForceSyncResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "c1.api.app.v1.ConnectorService.ForceSync",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -682,6 +675,13 @@ func (s *Connector) ForceSync(ctx context.Context, request operations.C1APIAppV1
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "c1.api.app.v1.ConnectorService.ForceSync",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "ForceSyncRequest", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -860,13 +860,6 @@ func (s *Connector) ForceSync(ctx context.Context, request operations.C1APIAppV1
 // Get
 // Get a connector.
 func (s *Connector) Get(ctx context.Context, request operations.C1APIAppV1ConnectorServiceGetRequest, opts ...operations.Option) (*operations.C1APIAppV1ConnectorServiceGetResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "c1.api.app.v1.ConnectorService.Get",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -888,6 +881,14 @@ func (s *Connector) Get(ctx context.Context, request operations.C1APIAppV1Connec
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/api/v1/apps/{app_id}/connectors/{id}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "c1.api.app.v1.ConnectorService.Get",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -1060,13 +1061,6 @@ func (s *Connector) Get(ctx context.Context, request operations.C1APIAppV1Connec
 // GetCredentials - Get Credentials
 // Get credentials for a connector.
 func (s *Connector) GetCredentials(ctx context.Context, request operations.C1APIAppV1ConnectorServiceGetCredentialsRequest, opts ...operations.Option) (*operations.C1APIAppV1ConnectorServiceGetCredentialsResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "c1.api.app.v1.ConnectorService.GetCredentials",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -1088,6 +1082,14 @@ func (s *Connector) GetCredentials(ctx context.Context, request operations.C1API
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/api/v1/apps/{app_id}/connectors/{connector_id}/credentials/{id}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "c1.api.app.v1.ConnectorService.GetCredentials",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -1260,13 +1262,6 @@ func (s *Connector) GetCredentials(ctx context.Context, request operations.C1API
 // List
 // List connectors for an app.
 func (s *Connector) List(ctx context.Context, request operations.C1APIAppV1ConnectorServiceListRequest, opts ...operations.Option) (*operations.C1APIAppV1ConnectorServiceListResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "c1.api.app.v1.ConnectorService.List",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -1288,6 +1283,14 @@ func (s *Connector) List(ctx context.Context, request operations.C1APIAppV1Conne
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/api/v1/apps/{app_id}/connectors", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "c1.api.app.v1.ConnectorService.List",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -1464,13 +1467,6 @@ func (s *Connector) List(ctx context.Context, request operations.C1APIAppV1Conne
 // RevokeCredential - Revoke Credential
 // Revoke credentials for a connector.
 func (s *Connector) RevokeCredential(ctx context.Context, request operations.C1APIAppV1ConnectorServiceRevokeCredentialRequest, opts ...operations.Option) (*operations.C1APIAppV1ConnectorServiceRevokeCredentialResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "c1.api.app.v1.ConnectorService.RevokeCredential",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -1494,6 +1490,13 @@ func (s *Connector) RevokeCredential(ctx context.Context, request operations.C1A
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "c1.api.app.v1.ConnectorService.RevokeCredential",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "ConnectorServiceRevokeCredentialRequest", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -1672,13 +1675,6 @@ func (s *Connector) RevokeCredential(ctx context.Context, request operations.C1A
 // RotateCredential - Rotate Credential
 // Rotate credentials for a connector.
 func (s *Connector) RotateCredential(ctx context.Context, request operations.C1APIAppV1ConnectorServiceRotateCredentialRequest, opts ...operations.Option) (*operations.C1APIAppV1ConnectorServiceRotateCredentialResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "c1.api.app.v1.ConnectorService.RotateCredential",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -1702,6 +1698,13 @@ func (s *Connector) RotateCredential(ctx context.Context, request operations.C1A
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "c1.api.app.v1.ConnectorService.RotateCredential",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "ConnectorServiceRotateCredentialRequest", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -1880,13 +1883,6 @@ func (s *Connector) RotateCredential(ctx context.Context, request operations.C1A
 // Update
 // Update a connector.
 func (s *Connector) Update(ctx context.Context, request operations.C1APIAppV1ConnectorServiceUpdateRequest, opts ...operations.Option) (*operations.C1APIAppV1ConnectorServiceUpdateResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "c1.api.app.v1.ConnectorService.Update",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -1910,6 +1906,13 @@ func (s *Connector) Update(ctx context.Context, request operations.C1APIAppV1Con
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "c1.api.app.v1.ConnectorService.Update",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "ConnectorServiceUpdateRequest", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -2088,13 +2091,6 @@ func (s *Connector) Update(ctx context.Context, request operations.C1APIAppV1Con
 // UpdateDelegated - Update Delegated
 // Update a delegated connector.
 func (s *Connector) UpdateDelegated(ctx context.Context, request operations.C1APIAppV1ConnectorServiceUpdateDelegatedRequest, opts ...operations.Option) (*operations.C1APIAppV1ConnectorServiceUpdateDelegatedResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "c1.api.app.v1.ConnectorService.UpdateDelegated",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -2118,6 +2114,13 @@ func (s *Connector) UpdateDelegated(ctx context.Context, request operations.C1AP
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "c1.api.app.v1.ConnectorService.UpdateDelegated",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "ConnectorServiceUpdateDelegatedRequest", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err

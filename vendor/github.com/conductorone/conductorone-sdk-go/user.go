@@ -29,13 +29,6 @@ func newUser(sdkConfig sdkConfiguration) *User {
 // Get
 // Get a user by ID.
 func (s *User) Get(ctx context.Context, request operations.C1APIUserV1UserServiceGetRequest, opts ...operations.Option) (*operations.C1APIUserV1UserServiceGetResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "c1.api.user.v1.UserService.Get",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -57,6 +50,14 @@ func (s *User) Get(ctx context.Context, request operations.C1APIUserV1UserServic
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/api/v1/users/{id}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "c1.api.user.v1.UserService.Get",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -229,13 +230,6 @@ func (s *User) Get(ctx context.Context, request operations.C1APIUserV1UserServic
 // List
 // List users.
 func (s *User) List(ctx context.Context, request operations.C1APIUserV1UserServiceListRequest, opts ...operations.Option) (*operations.C1APIUserV1UserServiceListResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "c1.api.user.v1.UserService.List",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -257,6 +251,14 @@ func (s *User) List(ctx context.Context, request operations.C1APIUserV1UserServi
 	opURL, err := url.JoinPath(baseURL, "/api/v1/users")
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "c1.api.user.v1.UserService.List",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout

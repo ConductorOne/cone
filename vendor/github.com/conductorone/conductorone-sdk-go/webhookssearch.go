@@ -29,13 +29,6 @@ func newWebhooksSearch(sdkConfig sdkConfiguration) *WebhooksSearch {
 // Search
 // Invokes the c1.api.webhooks.v1.WebhooksSearch.Search method.
 func (s *WebhooksSearch) Search(ctx context.Context, request *shared.WebhooksSearchRequest, opts ...operations.Option) (*operations.C1APIWebhooksV1WebhooksSearchSearchResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "c1.api.webhooks.v1.WebhooksSearch.Search",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -59,6 +52,13 @@ func (s *WebhooksSearch) Search(ctx context.Context, request *shared.WebhooksSea
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "c1.api.webhooks.v1.WebhooksSearch.Search",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err

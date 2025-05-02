@@ -29,13 +29,6 @@ func newRoles(sdkConfig sdkConfiguration) *Roles {
 // Get
 // Get a role by id.
 func (s *Roles) Get(ctx context.Context, request operations.C1APIIamV1RolesGetRequest, opts ...operations.Option) (*operations.C1APIIamV1RolesGetResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "c1.api.iam.v1.Roles.Get",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -57,6 +50,14 @@ func (s *Roles) Get(ctx context.Context, request operations.C1APIIamV1RolesGetRe
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/api/v1/iam/roles/{role_id}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "c1.api.iam.v1.Roles.Get",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -229,13 +230,6 @@ func (s *Roles) Get(ctx context.Context, request operations.C1APIIamV1RolesGetRe
 // List
 // List all roles for the current user.
 func (s *Roles) List(ctx context.Context, request operations.C1APIIamV1RolesListRequest, opts ...operations.Option) (*operations.C1APIIamV1RolesListResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "c1.api.iam.v1.Roles.List",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -257,6 +251,14 @@ func (s *Roles) List(ctx context.Context, request operations.C1APIIamV1RolesList
 	opURL, err := url.JoinPath(baseURL, "/api/v1/iam/roles")
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "c1.api.iam.v1.Roles.List",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -433,13 +435,6 @@ func (s *Roles) List(ctx context.Context, request operations.C1APIIamV1RolesList
 // Update
 // Update a role by passing a Role object.
 func (s *Roles) Update(ctx context.Context, request operations.C1APIIamV1RolesUpdateRequest, opts ...operations.Option) (*operations.C1APIIamV1RolesUpdateResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "c1.api.iam.v1.Roles.Update",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -463,6 +458,13 @@ func (s *Roles) Update(ctx context.Context, request operations.C1APIIamV1RolesUp
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "c1.api.iam.v1.Roles.Update",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "UpdateRoleRequest", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err

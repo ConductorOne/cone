@@ -29,13 +29,6 @@ func newPersonalClientSearch(sdkConfig sdkConfiguration) *PersonalClientSearch {
 // Search - NOTE: Searches personal clients for all users
 // Invokes the c1.api.iam.v1.PersonalClientSearchService.Search method.
 func (s *PersonalClientSearch) Search(ctx context.Context, request *shared.PersonalClientSearchServiceSearchRequest, opts ...operations.Option) (*operations.C1APIIamV1PersonalClientSearchServiceSearchResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "c1.api.iam.v1.PersonalClientSearchService.Search",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -59,6 +52,13 @@ func (s *PersonalClientSearch) Search(ctx context.Context, request *shared.Perso
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "c1.api.iam.v1.PersonalClientSearchService.Search",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err

@@ -28,13 +28,6 @@ func newAppAccessRequestsDefaults(sdkConfig sdkConfiguration) *AppAccessRequests
 // CancelAppAccessRequestsDefaults - Cancel App Access Requests Defaults
 // Invokes the c1.api.app.v1.AppAccessRequestsDefaultsService.CancelAppAccessRequestsDefaults method.
 func (s *AppAccessRequestsDefaults) CancelAppAccessRequestsDefaults(ctx context.Context, request operations.C1APIAppV1AppAccessRequestsDefaultsServiceCancelAppAccessRequestsDefaultsRequest, opts ...operations.Option) (*operations.C1APIAppV1AppAccessRequestsDefaultsServiceCancelAppAccessRequestsDefaultsResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "c1.api.app.v1.AppAccessRequestsDefaultsService.CancelAppAccessRequestsDefaults",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -58,6 +51,13 @@ func (s *AppAccessRequestsDefaults) CancelAppAccessRequestsDefaults(ctx context.
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "c1.api.app.v1.AppAccessRequestsDefaultsService.CancelAppAccessRequestsDefaults",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "CancelAccessRequestDefaultsRequest", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -236,13 +236,6 @@ func (s *AppAccessRequestsDefaults) CancelAppAccessRequestsDefaults(ctx context.
 // CreateAppAccessRequestsDefaults - Create App Access Requests Defaults
 // Invokes the c1.api.app.v1.AppAccessRequestsDefaultsService.CreateAppAccessRequestsDefaults method.
 func (s *AppAccessRequestsDefaults) CreateAppAccessRequestsDefaults(ctx context.Context, request operations.C1APIAppV1AppAccessRequestsDefaultsServiceCreateAppAccessRequestsDefaultsRequest, opts ...operations.Option) (*operations.C1APIAppV1AppAccessRequestsDefaultsServiceCreateAppAccessRequestsDefaultsResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "c1.api.app.v1.AppAccessRequestsDefaultsService.CreateAppAccessRequestsDefaults",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -266,6 +259,13 @@ func (s *AppAccessRequestsDefaults) CreateAppAccessRequestsDefaults(ctx context.
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "c1.api.app.v1.AppAccessRequestsDefaultsService.CreateAppAccessRequestsDefaults",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "AppAccessRequestDefaults", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -444,13 +444,6 @@ func (s *AppAccessRequestsDefaults) CreateAppAccessRequestsDefaults(ctx context.
 // GetAppAccessRequestsDefaults - Get App Access Requests Defaults
 // Invokes the c1.api.app.v1.AppAccessRequestsDefaultsService.GetAppAccessRequestsDefaults method.
 func (s *AppAccessRequestsDefaults) GetAppAccessRequestsDefaults(ctx context.Context, request operations.C1APIAppV1AppAccessRequestsDefaultsServiceGetAppAccessRequestsDefaultsRequest, opts ...operations.Option) (*operations.C1APIAppV1AppAccessRequestsDefaultsServiceGetAppAccessRequestsDefaultsResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "c1.api.app.v1.AppAccessRequestsDefaultsService.GetAppAccessRequestsDefaults",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -472,6 +465,14 @@ func (s *AppAccessRequestsDefaults) GetAppAccessRequestsDefaults(ctx context.Con
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/api/v1/apps/{app_id}/access_request_defaults", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "c1.api.app.v1.AppAccessRequestsDefaultsService.GetAppAccessRequestsDefaults",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout

@@ -29,13 +29,6 @@ func newAppResourceSearch(sdkConfig sdkConfiguration) *AppResourceSearch {
 // SearchAppResourceTypes - Search App Resource Types
 // Search app resources based on filters specified in the request body.
 func (s *AppResourceSearch) SearchAppResourceTypes(ctx context.Context, request *shared.SearchAppResourceTypesRequest, opts ...operations.Option) (*operations.C1APIAppV1AppResourceSearchSearchAppResourceTypesResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "c1.api.app.v1.AppResourceSearch.SearchAppResourceTypes",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -59,6 +52,13 @@ func (s *AppResourceSearch) SearchAppResourceTypes(ctx context.Context, request 
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "c1.api.app.v1.AppResourceSearch.SearchAppResourceTypes",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err

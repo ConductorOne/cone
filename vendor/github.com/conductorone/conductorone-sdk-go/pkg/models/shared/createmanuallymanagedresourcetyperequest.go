@@ -12,6 +12,7 @@ const (
 	ResourceTypeProject ResourceType = "PROJECT"
 	ResourceTypeCatalog ResourceType = "CATALOG"
 	ResourceTypeCustom  ResourceType = "CUSTOM"
+	ResourceTypeVault   ResourceType = "VAULT"
 )
 
 func (e ResourceType) ToPointer() *ResourceType {
@@ -20,22 +21,22 @@ func (e ResourceType) ToPointer() *ResourceType {
 
 // The CreateManuallyManagedResourceTypeRequest message.
 type CreateManuallyManagedResourceTypeRequest struct {
-	// The name field.
-	Name *string `json:"name,omitempty"`
+	// The displayName field.
+	DisplayName string `json:"displayName"`
 	// The resourceType field.
-	ResourceType *ResourceType `json:"resourceType,omitempty"`
+	ResourceType ResourceType `json:"resourceType"`
 }
 
-func (o *CreateManuallyManagedResourceTypeRequest) GetName() *string {
+func (o *CreateManuallyManagedResourceTypeRequest) GetDisplayName() string {
 	if o == nil {
-		return nil
+		return ""
 	}
-	return o.Name
+	return o.DisplayName
 }
 
-func (o *CreateManuallyManagedResourceTypeRequest) GetResourceType() *ResourceType {
+func (o *CreateManuallyManagedResourceTypeRequest) GetResourceType() ResourceType {
 	if o == nil {
-		return nil
+		return ResourceType("")
 	}
 	return o.ResourceType
 }

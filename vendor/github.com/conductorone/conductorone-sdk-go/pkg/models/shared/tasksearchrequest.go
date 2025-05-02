@@ -99,6 +99,7 @@ const (
 	StepApprovalTypesStepApprovalTypeExpression        StepApprovalTypes = "STEP_APPROVAL_TYPE_EXPRESSION"
 	StepApprovalTypesStepApprovalTypeWebhook           StepApprovalTypes = "STEP_APPROVAL_TYPE_WEBHOOK"
 	StepApprovalTypesStepApprovalTypeResourceOwners    StepApprovalTypes = "STEP_APPROVAL_TYPE_RESOURCE_OWNERS"
+	StepApprovalTypesStepApprovalTypeAgent             StepApprovalTypes = "STEP_APPROVAL_TYPE_AGENT"
 )
 
 func (e StepApprovalTypes) ToPointer() *StepApprovalTypes {
@@ -129,6 +130,8 @@ func (e *StepApprovalTypes) UnmarshalJSON(data []byte) error {
 	case "STEP_APPROVAL_TYPE_WEBHOOK":
 		fallthrough
 	case "STEP_APPROVAL_TYPE_RESOURCE_OWNERS":
+		fallthrough
+	case "STEP_APPROVAL_TYPE_AGENT":
 		*e = StepApprovalTypes(v)
 		return nil
 	default:

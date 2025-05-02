@@ -2,15 +2,60 @@
 
 package shared
 
+import (
+	"github.com/conductorone/conductorone-sdk-go/pkg/utils"
+)
+
+// SearchWorkflowExecutionsResponseExpanded - Contains an arbitrary serialized message along with a @type that describes the type of the serialized message.
+type SearchWorkflowExecutionsResponseExpanded struct {
+	// The type of the serialized message.
+	AtType               *string        `json:"@type,omitempty"`
+	AdditionalProperties map[string]any `additionalProperties:"true" json:"-"`
+}
+
+func (s SearchWorkflowExecutionsResponseExpanded) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SearchWorkflowExecutionsResponseExpanded) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SearchWorkflowExecutionsResponseExpanded) GetAtType() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AtType
+}
+
+func (o *SearchWorkflowExecutionsResponseExpanded) GetAdditionalProperties() map[string]any {
+	if o == nil {
+		return nil
+	}
+	return o.AdditionalProperties
+}
+
 // The SearchWorkflowExecutionsResponse message.
 type SearchWorkflowExecutionsResponse struct {
+	// The expanded field.
+	Expanded []SearchWorkflowExecutionsResponseExpanded `json:"expanded,omitempty"`
 	// The list field.
-	List []WorkflowExecution `json:"list,omitempty"`
+	List []WorkflowExecutionView `json:"list,omitempty"`
 	// The nextPageToken field.
 	NextPageToken *string `json:"nextPageToken,omitempty"`
 }
 
-func (o *SearchWorkflowExecutionsResponse) GetList() []WorkflowExecution {
+func (o *SearchWorkflowExecutionsResponse) GetExpanded() []SearchWorkflowExecutionsResponseExpanded {
+	if o == nil {
+		return nil
+	}
+	return o.Expanded
+}
+
+func (o *SearchWorkflowExecutionsResponse) GetList() []WorkflowExecutionView {
 	if o == nil {
 		return nil
 	}

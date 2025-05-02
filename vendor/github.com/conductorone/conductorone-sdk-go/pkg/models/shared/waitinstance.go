@@ -29,11 +29,14 @@ func (e WaitInstanceState) ToPointer() *WaitInstanceState {
 // This message contains a oneof named outcome. Only a single field of the following list may be set at a time:
 //   - succeeded
 //   - timedOut
+//   - skipped
 type WaitInstance struct {
 	// The ConditionSucceeded message.
 	ConditionSucceeded *ConditionSucceeded `json:"succeeded,omitempty"`
 	// The ConditionTimedOut message.
 	ConditionTimedOut *ConditionTimedOut `json:"timedOut,omitempty"`
+	// The SkippedAction object describes the outcome of a policy step that has been skipped.
+	SkippedAction *SkippedAction `json:"skipped,omitempty"`
 	// Used by the policy engine to describe an instantiated condition to wait on.
 	WaitConditionInstance *WaitConditionInstance `json:"condition,omitempty"`
 	// The comment to post on first failed check.
@@ -72,6 +75,13 @@ func (o *WaitInstance) GetConditionTimedOut() *ConditionTimedOut {
 		return nil
 	}
 	return o.ConditionTimedOut
+}
+
+func (o *WaitInstance) GetSkippedAction() *SkippedAction {
+	if o == nil {
+		return nil
+	}
+	return o.SkippedAction
 }
 
 func (o *WaitInstance) GetWaitConditionInstance() *WaitConditionInstance {

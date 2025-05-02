@@ -73,6 +73,10 @@ func main() {
 <details open>
 <summary>Available methods</summary>
 
+### [AccountProvisionPolicyTest](docs/sdks/accountprovisionpolicytest/README.md)
+
+* [Test](docs/sdks/accountprovisionpolicytest/README.md#test) - Test
+
 ### [AppAccessRequestsDefaults](docs/sdks/appaccessrequestsdefaults/README.md)
 
 * [CancelAppAccessRequestsDefaults](docs/sdks/appaccessrequestsdefaults/README.md#cancelappaccessrequestsdefaults) - Cancel App Access Requests Defaults
@@ -88,22 +92,30 @@ func main() {
 
 ### [AppEntitlements](docs/sdks/appentitlements/README.md)
 
+* [AddAutomationExclusion](docs/sdks/appentitlements/README.md#addautomationexclusion) - Add Automation Exclusion
 * [AddManuallyManagedMembers](docs/sdks/appentitlements/README.md#addmanuallymanagedmembers) - Add Manually Managed Members
 * [Create](docs/sdks/appentitlements/README.md#create) - Create
+* [CreateAutomation](docs/sdks/appentitlements/README.md#createautomation) - Create Automation
 * [Delete](docs/sdks/appentitlements/README.md#delete) - Delete
+* [DeleteAutomation](docs/sdks/appentitlements/README.md#deleteautomation) - Delete Automation
 * [Get](docs/sdks/appentitlements/README.md#get) - Get
+* [GetAutomation](docs/sdks/appentitlements/README.md#getautomation) - Get Automation
 * [List](docs/sdks/appentitlements/README.md#list) - List
+* [ListAutomationExclusions](docs/sdks/appentitlements/README.md#listautomationexclusions) - List Automation Exclusions
 * [ListForAppResource](docs/sdks/appentitlements/README.md#listforappresource) - List For App Resource
 * [ListForAppUser](docs/sdks/appentitlements/README.md#listforappuser) - List For App User
 * [~~ListUsers~~](docs/sdks/appentitlements/README.md#listusers) - List Users :warning: **Deprecated**
+* [RemoveAutomationExclusion](docs/sdks/appentitlements/README.md#removeautomationexclusion) - Remove Automation Exclusion
 * [RemoveEntitlementMembership](docs/sdks/appentitlements/README.md#removeentitlementmembership) - Remove Entitlement Membership
 * [Update](docs/sdks/appentitlements/README.md#update) - Update
+* [UpdateAutomation](docs/sdks/appentitlements/README.md#updateautomation) - Update Automation
 
 ### [AppEntitlementSearch](docs/sdks/appentitlementsearch/README.md)
 
 * [Search](docs/sdks/appentitlementsearch/README.md#search) - Search
 * [SearchAppEntitlementsForAppUser](docs/sdks/appentitlementsearch/README.md#searchappentitlementsforappuser) - Search App Entitlements For App User
 * [SearchAppEntitlementsWithExpired](docs/sdks/appentitlementsearch/README.md#searchappentitlementswithexpired) - Search App Entitlements With Expired
+* [SearchGrants](docs/sdks/appentitlementsearch/README.md#searchgrants) - Search Grants
 
 ### [AppEntitlementsProxy](docs/sdks/appentitlementsproxy/README.md)
 
@@ -114,8 +126,10 @@ func main() {
 ### [AppEntitlementUserBinding](docs/sdks/appentitlementuserbinding/README.md)
 
 * [ListAppUsersForIdentityWithGrant](docs/sdks/appentitlementuserbinding/README.md#listappusersforidentitywithgrant) - List App Users For Identity With Grant
+* [RemoveGrantDuration](docs/sdks/appentitlementuserbinding/README.md#removegrantduration) - Remove Grant Duration
 * [SearchGrantFeed](docs/sdks/appentitlementuserbinding/README.md#searchgrantfeed) - Search Grant Feed
 * [SearchPastGrants](docs/sdks/appentitlementuserbinding/README.md#searchpastgrants) - Search Past Grants
+* [UpdateGrantDuration](docs/sdks/appentitlementuserbinding/README.md#updategrantduration) - Update Grant Duration
 
 ### [AppOwners](docs/sdks/appowners/README.md)
 
@@ -186,8 +200,14 @@ func main() {
 ### [Attributes](docs/sdks/attributes/README.md)
 
 * [CreateAttributeValue](docs/sdks/attributes/README.md#createattributevalue) - Create Attribute Value
+* [CreateComplianceFrameworkAttributeValue](docs/sdks/attributes/README.md#createcomplianceframeworkattributevalue) - Create Compliance Framework Attribute Value
+* [CreateRiskLevelAttributeValue](docs/sdks/attributes/README.md#createrisklevelattributevalue) - Create Risk Level Attribute Value
 * [DeleteAttributeValue](docs/sdks/attributes/README.md#deleteattributevalue) - Delete Attribute Value
+* [DeleteComplianceFrameworkAttributeValue](docs/sdks/attributes/README.md#deletecomplianceframeworkattributevalue) - Delete Compliance Framework Attribute Value
+* [DeleteRiskLevelAttributeValue](docs/sdks/attributes/README.md#deleterisklevelattributevalue) - Delete Risk Level Attribute Value
 * [GetAttributeValue](docs/sdks/attributes/README.md#getattributevalue) - Get Attribute Value
+* [GetComplianceFrameworkAttributeValue](docs/sdks/attributes/README.md#getcomplianceframeworkattributevalue) - Get Compliance Framework Attribute Value
+* [GetRiskLevelAttributeValue](docs/sdks/attributes/README.md#getrisklevelattributevalue) - Get Risk Level Attribute Value
 * [ListAttributeTypes](docs/sdks/attributes/README.md#listattributetypes) - List Attribute Types
 * [ListAttributeValues](docs/sdks/attributes/README.md#listattributevalues) - List Attribute Values
 
@@ -238,6 +258,11 @@ func main() {
 
 * [Search](docs/sdks/exportssearch/README.md#search) - Search
 
+### [OrgDomain](docs/sdks/orgdomain/README.md)
+
+* [List](docs/sdks/orgdomain/README.md#list) - List
+* [Update](docs/sdks/orgdomain/README.md#update) - Update
+
 ### [PersonalClient](docs/sdks/personalclient/README.md)
 
 * [Create](docs/sdks/personalclient/README.md#create) - Create
@@ -271,7 +296,9 @@ func main() {
 * [AddAccessEntitlements](docs/sdks/requestcatalogmanagement/README.md#addaccessentitlements) - Add Access Entitlements
 * [AddAppEntitlements](docs/sdks/requestcatalogmanagement/README.md#addappentitlements) - Add App Entitlements
 * [Create](docs/sdks/requestcatalogmanagement/README.md#create) - Create
+* [CreateBundleAutomation](docs/sdks/requestcatalogmanagement/README.md#createbundleautomation) - Create Bundle Automation
 * [Delete](docs/sdks/requestcatalogmanagement/README.md#delete) - Delete
+* [DeleteBundleAutomation](docs/sdks/requestcatalogmanagement/README.md#deletebundleautomation) - Delete Bundle Automation
 * [ForceRunBundleAutomation](docs/sdks/requestcatalogmanagement/README.md#forcerunbundleautomation) - Force Run Bundle Automation
 * [Get](docs/sdks/requestcatalogmanagement/README.md#get) - Get
 * [GetBundleAutomation](docs/sdks/requestcatalogmanagement/README.md#getbundleautomation) - Get Bundle Automation
@@ -299,6 +326,22 @@ func main() {
 * [TestSourceIP](docs/sdks/sessionsettings/README.md#testsourceip) - Test Source Ip
 * [Update](docs/sdks/sessionsettings/README.md#update) - Update
 
+### [StepUpProvider](docs/sdks/stepupprovider/README.md)
+
+* [Create](docs/sdks/stepupprovider/README.md#create) - Create
+* [Delete](docs/sdks/stepupprovider/README.md#delete) - Delete
+* [Get](docs/sdks/stepupprovider/README.md#get) - Get
+* [List](docs/sdks/stepupprovider/README.md#list) - List
+* [Search](docs/sdks/stepupprovider/README.md#search) - Search
+* [Test](docs/sdks/stepupprovider/README.md#test) - Test
+* [Update](docs/sdks/stepupprovider/README.md#update) - Update
+* [UpdateSecret](docs/sdks/stepupprovider/README.md#updatesecret) - Update Secret
+
+### [StepUpTransaction](docs/sdks/stepuptransaction/README.md)
+
+* [Get](docs/sdks/stepuptransaction/README.md#get) - Get
+* [Search](docs/sdks/stepuptransaction/README.md#search) - Search
+
 ### [SystemLog](docs/sdks/systemlog/README.md)
 
 * [ListEvents](docs/sdks/systemlog/README.md#listevents) - List Events
@@ -313,6 +356,7 @@ func main() {
 ### [TaskActions](docs/sdks/taskactions/README.md)
 
 * [Approve](docs/sdks/taskactions/README.md#approve) - Approve
+* [ApproveWithStepUp](docs/sdks/taskactions/README.md#approvewithstepup) - Approve With Step Up
 * [Comment](docs/sdks/taskactions/README.md#comment) - Comment
 * [Deny](docs/sdks/taskactions/README.md#deny) - Deny
 * [EscalateToEmergencyAccess](docs/sdks/taskactions/README.md#escalatetoemergencyaccess) - Escalate To Emergency Access
@@ -320,6 +364,11 @@ func main() {
 * [ProcessNow](docs/sdks/taskactions/README.md#processnow) - Process Now
 * [Reassign](docs/sdks/taskactions/README.md#reassign) - Reassign
 * [Restart](docs/sdks/taskactions/README.md#restart) - Restart
+* [SkipStep](docs/sdks/taskactions/README.md#skipstep) - Skip Step
+
+### [TaskAudit](docs/sdks/taskaudit/README.md)
+
+* [List](docs/sdks/taskaudit/README.md#list) - List
 
 ### [TaskSearch](docs/sdks/tasksearch/README.md)
 
@@ -371,6 +420,7 @@ func main() {
 
 ### [WorkflowSearch](docs/sdks/workflowsearch/README.md)
 
+* [SearchWorkflowTemplateVersions](docs/sdks/workflowsearch/README.md#searchworkflowtemplateversions) - Search Workflow Template Versions
 * [SearchWorkflows](docs/sdks/workflowsearch/README.md#searchworkflows) - Search Workflows
 
 </details>

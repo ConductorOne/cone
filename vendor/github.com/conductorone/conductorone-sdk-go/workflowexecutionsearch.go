@@ -29,13 +29,6 @@ func newWorkflowExecutionSearch(sdkConfig sdkConfiguration) *WorkflowExecutionSe
 // SearchWorkflowExecutions - Search Workflow Executions
 // Invokes the c1.api.workflows.v1beta.WorkflowExecutionSearchService.SearchWorkflowExecutions method.
 func (s *WorkflowExecutionSearch) SearchWorkflowExecutions(ctx context.Context, request *shared.SearchWorkflowExecutionsRequest, opts ...operations.Option) (*operations.C1APIWorkflowsV1betaWorkflowExecutionSearchServiceSearchWorkflowExecutionsResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "c1.api.workflows.v1beta.WorkflowExecutionSearchService.SearchWorkflowExecutions",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -59,6 +52,13 @@ func (s *WorkflowExecutionSearch) SearchWorkflowExecutions(ctx context.Context, 
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "c1.api.workflows.v1beta.WorkflowExecutionSearchService.SearchWorkflowExecutions",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err

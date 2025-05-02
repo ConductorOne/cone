@@ -29,13 +29,6 @@ func newAppUser(sdkConfig sdkConfiguration) *AppUser {
 // List
 // Invokes the c1.api.app.v1.AppUserService.List method.
 func (s *AppUser) List(ctx context.Context, request operations.C1APIAppV1AppUserServiceListRequest, opts ...operations.Option) (*operations.C1APIAppV1AppUserServiceListResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "c1.api.app.v1.AppUserService.List",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -59,6 +52,14 @@ func (s *AppUser) List(ctx context.Context, request operations.C1APIAppV1AppUser
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "c1.api.app.v1.AppUserService.List",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
+
 	timeout := o.Timeout
 	if timeout == nil {
 		timeout = s.sdkConfiguration.Timeout
@@ -76,6 +77,10 @@ func (s *AppUser) List(ctx context.Context, request operations.C1APIAppV1AppUser
 	}
 	req.Header.Set("Accept", "application/json")
 	req.Header.Set("User-Agent", s.sdkConfiguration.UserAgent)
+
+	if err := utils.PopulateQueryParams(ctx, req, request, nil); err != nil {
+		return nil, fmt.Errorf("error populating query params: %w", err)
+	}
 
 	if err := utils.PopulateSecurity(ctx, req, s.sdkConfiguration.Security); err != nil {
 		return nil, err
@@ -229,13 +234,6 @@ func (s *AppUser) List(ctx context.Context, request operations.C1APIAppV1AppUser
 // ListAppUserCredentials - List App User Credentials
 // Invokes the c1.api.app.v1.AppUserService.ListAppUserCredentials method.
 func (s *AppUser) ListAppUserCredentials(ctx context.Context, request operations.C1APIAppV1AppUserServiceListAppUserCredentialsRequest, opts ...operations.Option) (*operations.C1APIAppV1AppUserServiceListAppUserCredentialsResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "c1.api.app.v1.AppUserService.ListAppUserCredentials",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -259,6 +257,14 @@ func (s *AppUser) ListAppUserCredentials(ctx context.Context, request operations
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "c1.api.app.v1.AppUserService.ListAppUserCredentials",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
+
 	timeout := o.Timeout
 	if timeout == nil {
 		timeout = s.sdkConfiguration.Timeout
@@ -276,6 +282,10 @@ func (s *AppUser) ListAppUserCredentials(ctx context.Context, request operations
 	}
 	req.Header.Set("Accept", "application/json")
 	req.Header.Set("User-Agent", s.sdkConfiguration.UserAgent)
+
+	if err := utils.PopulateQueryParams(ctx, req, request, nil); err != nil {
+		return nil, fmt.Errorf("error populating query params: %w", err)
+	}
 
 	if err := utils.PopulateSecurity(ctx, req, s.sdkConfiguration.Security); err != nil {
 		return nil, err
@@ -429,13 +439,6 @@ func (s *AppUser) ListAppUserCredentials(ctx context.Context, request operations
 // ListAppUsersForUser - List App Users For User
 // Invokes the c1.api.app.v1.AppUserService.ListAppUsersForUser method.
 func (s *AppUser) ListAppUsersForUser(ctx context.Context, request operations.C1APIAppV1AppUserServiceListAppUsersForUserRequest, opts ...operations.Option) (*operations.C1APIAppV1AppUserServiceListAppUsersForUserResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "c1.api.app.v1.AppUserService.ListAppUsersForUser",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -459,6 +462,14 @@ func (s *AppUser) ListAppUsersForUser(ctx context.Context, request operations.C1
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "c1.api.app.v1.AppUserService.ListAppUsersForUser",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
+
 	timeout := o.Timeout
 	if timeout == nil {
 		timeout = s.sdkConfiguration.Timeout
@@ -476,6 +487,10 @@ func (s *AppUser) ListAppUsersForUser(ctx context.Context, request operations.C1
 	}
 	req.Header.Set("Accept", "application/json")
 	req.Header.Set("User-Agent", s.sdkConfiguration.UserAgent)
+
+	if err := utils.PopulateQueryParams(ctx, req, request, nil); err != nil {
+		return nil, fmt.Errorf("error populating query params: %w", err)
+	}
 
 	if err := utils.PopulateSecurity(ctx, req, s.sdkConfiguration.Security); err != nil {
 		return nil, err
@@ -629,13 +644,6 @@ func (s *AppUser) ListAppUsersForUser(ctx context.Context, request operations.C1
 // Search
 // Search app users based on filters specified in the request body.
 func (s *AppUser) Search(ctx context.Context, request *shared.AppUserServiceSearchRequest, opts ...operations.Option) (*operations.C1APIAppV1AppUserServiceSearchResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "c1.api.app.v1.AppUserService.Search",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -659,6 +667,13 @@ func (s *AppUser) Search(ctx context.Context, request *shared.AppUserServiceSear
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "c1.api.app.v1.AppUserService.Search",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -839,13 +854,6 @@ func (s *AppUser) Search(ctx context.Context, request *shared.AppUserServiceSear
 //
 //	Currently, only the appUserType, and identityUserId fields can be updated.
 func (s *AppUser) Update(ctx context.Context, request operations.C1APIAppV1AppUserServiceUpdateRequest, opts ...operations.Option) (*operations.C1APIAppV1AppUserServiceUpdateResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "c1.api.app.v1.AppUserService.Update",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -869,6 +877,13 @@ func (s *AppUser) Update(ctx context.Context, request operations.C1APIAppV1AppUs
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "c1.api.app.v1.AppUserService.Update",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "AppUserServiceUpdateRequest", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err

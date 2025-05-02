@@ -2,6 +2,19 @@
 
 package shared
 
+// CreateAppRequestIdentityMatching - Define the app user identity matching strategy for this app.
+type CreateAppRequestIdentityMatching string
+
+const (
+	CreateAppRequestIdentityMatchingAppUserIdentityMatchingUnspecified CreateAppRequestIdentityMatching = "APP_USER_IDENTITY_MATCHING_UNSPECIFIED"
+	CreateAppRequestIdentityMatchingAppUserIdentityMatchingStrict      CreateAppRequestIdentityMatching = "APP_USER_IDENTITY_MATCHING_STRICT"
+	CreateAppRequestIdentityMatchingAppUserIdentityMatchingDisplayName CreateAppRequestIdentityMatching = "APP_USER_IDENTITY_MATCHING_DISPLAY_NAME"
+)
+
+func (e CreateAppRequestIdentityMatching) ToPointer() *CreateAppRequestIdentityMatching {
+	return &e
+}
+
 // The CreateAppRequest message is used to create a new app.
 type CreateAppRequest struct {
 	// Creates the app with this certify policy.
@@ -9,9 +22,11 @@ type CreateAppRequest struct {
 	// Creates the app with this description.
 	Description *string `json:"description,omitempty"`
 	// Creates the app with this display name.
-	DisplayName *string `json:"displayName,omitempty"`
+	DisplayName string `json:"displayName"`
 	// Creates the app with this grant policy.
 	GrantPolicyID *string `json:"grantPolicyId,omitempty"`
+	// Define the app user identity matching strategy for this app.
+	IdentityMatching *CreateAppRequestIdentityMatching `json:"identityMatching,omitempty"`
 	// Creates the app with this monthly cost per seat.
 	MonthlyCostUsd *int `json:"monthlyCostUsd,omitempty"`
 	// Creates the app with this array of owners.
@@ -36,9 +51,9 @@ func (o *CreateAppRequest) GetDescription() *string {
 	return o.Description
 }
 
-func (o *CreateAppRequest) GetDisplayName() *string {
+func (o *CreateAppRequest) GetDisplayName() string {
 	if o == nil {
-		return nil
+		return ""
 	}
 	return o.DisplayName
 }
@@ -48,6 +63,13 @@ func (o *CreateAppRequest) GetGrantPolicyID() *string {
 		return nil
 	}
 	return o.GrantPolicyID
+}
+
+func (o *CreateAppRequest) GetIdentityMatching() *CreateAppRequestIdentityMatching {
+	if o == nil {
+		return nil
+	}
+	return o.IdentityMatching
 }
 
 func (o *CreateAppRequest) GetMonthlyCostUsd() *int {

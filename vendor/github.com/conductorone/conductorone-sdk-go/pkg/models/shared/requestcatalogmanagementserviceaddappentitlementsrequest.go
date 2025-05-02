@@ -5,7 +5,7 @@ package shared
 // The RequestCatalogManagementServiceAddAppEntitlementsRequest object is used to add app requestable app entitlements to a request catalog.
 type RequestCatalogManagementServiceAddAppEntitlementsRequest struct {
 	// List of entitlements to add to the request catalog.
-	AppEntitlements []AppEntitlementRef `json:"appEntitlements,omitempty"`
+	AppEntitlements []AppEntitlementRef `json:"appEntitlements"`
 	// Whether or not to create requests for newly added entitlements for users in the catalog.
 	//  By default, this is false and no requests are created.
 	CreateRequests *bool `json:"createRequests,omitempty"`

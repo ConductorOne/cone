@@ -7,19 +7,19 @@ import (
 	"time"
 )
 
-// Outcome - The outcome of the certification.
-type Outcome string
+// TaskTypeCertifyOutcome - The outcome of the certification.
+type TaskTypeCertifyOutcome string
 
 const (
-	OutcomeCertifyOutcomeUnspecified  Outcome = "CERTIFY_OUTCOME_UNSPECIFIED"
-	OutcomeCertifyOutcomeCertified    Outcome = "CERTIFY_OUTCOME_CERTIFIED"
-	OutcomeCertifyOutcomeDecertified  Outcome = "CERTIFY_OUTCOME_DECERTIFIED"
-	OutcomeCertifyOutcomeError        Outcome = "CERTIFY_OUTCOME_ERROR"
-	OutcomeCertifyOutcomeCancelled    Outcome = "CERTIFY_OUTCOME_CANCELLED"
-	OutcomeCertifyOutcomeWaitTimedOut Outcome = "CERTIFY_OUTCOME_WAIT_TIMED_OUT"
+	TaskTypeCertifyOutcomeCertifyOutcomeUnspecified  TaskTypeCertifyOutcome = "CERTIFY_OUTCOME_UNSPECIFIED"
+	TaskTypeCertifyOutcomeCertifyOutcomeCertified    TaskTypeCertifyOutcome = "CERTIFY_OUTCOME_CERTIFIED"
+	TaskTypeCertifyOutcomeCertifyOutcomeDecertified  TaskTypeCertifyOutcome = "CERTIFY_OUTCOME_DECERTIFIED"
+	TaskTypeCertifyOutcomeCertifyOutcomeError        TaskTypeCertifyOutcome = "CERTIFY_OUTCOME_ERROR"
+	TaskTypeCertifyOutcomeCertifyOutcomeCancelled    TaskTypeCertifyOutcome = "CERTIFY_OUTCOME_CANCELLED"
+	TaskTypeCertifyOutcomeCertifyOutcomeWaitTimedOut TaskTypeCertifyOutcome = "CERTIFY_OUTCOME_WAIT_TIMED_OUT"
 )
 
-func (e Outcome) ToPointer() *Outcome {
+func (e TaskTypeCertifyOutcome) ToPointer() *TaskTypeCertifyOutcome {
 	return &e
 }
 
@@ -38,8 +38,8 @@ type TaskTypeCertify struct {
 	// The ID of the user.
 	IdentityUserID *string `json:"identityUserId,omitempty"`
 	// The outcome of the certification.
-	Outcome     *Outcome   `json:"outcome,omitempty"`
-	OutcomeTime *time.Time `json:"outcomeTime,omitempty"`
+	Outcome     *TaskTypeCertifyOutcome `json:"outcome,omitempty"`
+	OutcomeTime *time.Time              `json:"outcomeTime,omitempty"`
 }
 
 func (t TaskTypeCertify) MarshalJSON() ([]byte, error) {
@@ -95,7 +95,7 @@ func (o *TaskTypeCertify) GetIdentityUserID() *string {
 	return o.IdentityUserID
 }
 
-func (o *TaskTypeCertify) GetOutcome() *Outcome {
+func (o *TaskTypeCertify) GetOutcome() *TaskTypeCertifyOutcome {
 	if o == nil {
 		return nil
 	}

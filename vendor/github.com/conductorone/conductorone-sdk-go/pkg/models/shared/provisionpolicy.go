@@ -11,8 +11,14 @@ package shared
 //   - webhook
 //   - multiStep
 //   - externalTicket
+//   - unconfigured
 type ProvisionPolicy struct {
 	// Indicates that a connector should perform the provisioning. This object has no fields.
+	//
+	// This message contains a oneof named provision_type. Only a single field of the following list may be set at a time:
+	//   - defaultBehavior
+	//   - account
+	//
 	ConnectorProvision *ConnectorProvision `json:"connector,omitempty"`
 	// This provision step indicates that we should delegate provisioning to the configuration of another app entitlement. This app entitlement does not have to be one from the same app, but MUST be configured as a proxy binding leading into this entitlement.
 	DelegatedProvision *DelegatedProvision `json:"delegated,omitempty"`
@@ -22,6 +28,8 @@ type ProvisionPolicy struct {
 	ManualProvision *ManualProvision `json:"manual,omitempty"`
 	// MultiStep indicates that this provision step has multiple steps to process.
 	MultiStep *MultiStep `json:"multiStep,omitempty"`
+	// The UnconfiguredProvision message.
+	UnconfiguredProvision *UnconfiguredProvision `json:"unconfigured,omitempty"`
 	// This provision step indicates that a webhook should be called to provision this entitlement.
 	WebhookProvision *WebhookProvision `json:"webhook,omitempty"`
 }
@@ -59,6 +67,13 @@ func (o *ProvisionPolicy) GetMultiStep() *MultiStep {
 		return nil
 	}
 	return o.MultiStep
+}
+
+func (o *ProvisionPolicy) GetUnconfiguredProvision() *UnconfiguredProvision {
+	if o == nil {
+		return nil
+	}
+	return o.UnconfiguredProvision
 }
 
 func (o *ProvisionPolicy) GetWebhookProvision() *WebhookProvision {

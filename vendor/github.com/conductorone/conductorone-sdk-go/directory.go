@@ -29,13 +29,6 @@ func newDirectory(sdkConfig sdkConfiguration) *Directory {
 // Create
 // Create a directory.
 func (s *Directory) Create(ctx context.Context, request *shared.DirectoryServiceCreateRequest, opts ...operations.Option) (*operations.C1APIDirectoryV1DirectoryServiceCreateResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "c1.api.directory.v1.DirectoryService.Create",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -59,6 +52,13 @@ func (s *Directory) Create(ctx context.Context, request *shared.DirectoryService
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "c1.api.directory.v1.DirectoryService.Create",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -237,13 +237,6 @@ func (s *Directory) Create(ctx context.Context, request *shared.DirectoryService
 // Delete
 // Delete a directory by app_id.
 func (s *Directory) Delete(ctx context.Context, request operations.C1APIDirectoryV1DirectoryServiceDeleteRequest, opts ...operations.Option) (*operations.C1APIDirectoryV1DirectoryServiceDeleteResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "c1.api.directory.v1.DirectoryService.Delete",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -267,6 +260,13 @@ func (s *Directory) Delete(ctx context.Context, request operations.C1APIDirector
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "c1.api.directory.v1.DirectoryService.Delete",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "DirectoryServiceDeleteRequest", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -445,13 +445,6 @@ func (s *Directory) Delete(ctx context.Context, request operations.C1APIDirector
 // Get
 // Get a directory by app_id.
 func (s *Directory) Get(ctx context.Context, request operations.C1APIDirectoryV1DirectoryServiceGetRequest, opts ...operations.Option) (*operations.C1APIDirectoryV1DirectoryServiceGetResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "c1.api.directory.v1.DirectoryService.Get",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -473,6 +466,14 @@ func (s *Directory) Get(ctx context.Context, request operations.C1APIDirectoryV1
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/api/v1/directories/{app_id}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "c1.api.directory.v1.DirectoryService.Get",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -645,13 +646,6 @@ func (s *Directory) Get(ctx context.Context, request operations.C1APIDirectoryV1
 // List
 // List directories.
 func (s *Directory) List(ctx context.Context, request operations.C1APIDirectoryV1DirectoryServiceListRequest, opts ...operations.Option) (*operations.C1APIDirectoryV1DirectoryServiceListResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "c1.api.directory.v1.DirectoryService.List",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -673,6 +667,14 @@ func (s *Directory) List(ctx context.Context, request operations.C1APIDirectoryV
 	opURL, err := url.JoinPath(baseURL, "/api/v1/directories")
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "c1.api.directory.v1.DirectoryService.List",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout

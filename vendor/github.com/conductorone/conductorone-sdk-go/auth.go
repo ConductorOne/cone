@@ -29,13 +29,6 @@ func newAuth(sdkConfig sdkConfiguration) *Auth {
 // Introspect
 // Introspect returns the current user's principle_id, user_id and a list of roles, permissions, and enabled features.
 func (s *Auth) Introspect(ctx context.Context, opts ...operations.Option) (*operations.C1APIAuthV1AuthIntrospectResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "c1.api.auth.v1.Auth.Introspect",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -57,6 +50,14 @@ func (s *Auth) Introspect(ctx context.Context, opts ...operations.Option) (*oper
 	opURL, err := url.JoinPath(baseURL, "/api/v1/auth/introspect")
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "c1.api.auth.v1.Auth.Introspect",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout

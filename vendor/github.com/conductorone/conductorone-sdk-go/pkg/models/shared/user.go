@@ -35,6 +35,21 @@ func (e UserStatus) ToPointer() *UserStatus {
 	return &e
 }
 
+// Type - The type of the user.
+type Type string
+
+const (
+	TypeUserTypeUnspecified Type = "USER_TYPE_UNSPECIFIED"
+	TypeUserTypeSystem      Type = "USER_TYPE_SYSTEM"
+	TypeUserTypeHuman       Type = "USER_TYPE_HUMAN"
+	TypeUserTypeService     Type = "USER_TYPE_SERVICE"
+	TypeUserTypeAgent       Type = "USER_TYPE_AGENT"
+)
+
+func (e Type) ToPointer() *Type {
+	return &e
+}
+
 // The User object provides all of the details for an user, as well as some configuration.
 type User struct {
 	CreatedAt *time.Time `json:"createdAt,omitempty"`
@@ -55,8 +70,14 @@ type User struct {
 	DisplayName *string `json:"displayName,omitempty"`
 	// This is the user's email.
 	Email *string `json:"email,omitempty"`
+	// A list of source data for the email attribute.
+	EmailSources []UserAttributeMappingSource `json:"emailSources,omitempty"`
 	// This is a list of all of the user's emails from app users.
 	Emails []string `json:"emails,omitempty"`
+	// A list of source data for the employee IDs attribute.
+	EmployeeIDSources []UserAttributeMappingSource `json:"employeeIdSources,omitempty"`
+	// This is a list of all of the user's employee IDs from app users.
+	EmployeeIds []string `json:"employeeIds,omitempty"`
 	// The users employment status.
 	EmploymentStatus *string `json:"employmentStatus,omitempty"`
 	// A list of objects mapped based on employmentStatus attribute mappings configured in the system.
@@ -76,11 +97,13 @@ type User struct {
 	// A list of objects mapped based on managerId attribute mappings configured in the system.
 	ManagerSources []UserAttributeMappingSource `json:"managerSources,omitempty"`
 	Profile        map[string]any               `json:"profile,omitempty"`
-	// A list of unique identifiers that maps to ConductorOne’s user roles let you assign users permissions tailored to the work they do in the software.
+	// A list of unique identifiers that maps to ConductorOne's user roles let you assign users permissions tailored to the work they do in the software.
 	RoleIds []string `json:"roleIds,omitempty"`
 	// The status of the user in the system.
-	Status    *UserStatus `json:"status,omitempty"`
-	UpdatedAt *time.Time  `json:"updatedAt,omitempty"`
+	Status *UserStatus `json:"status,omitempty"`
+	// The type of the user.
+	Type      *Type      `json:"type,omitempty"`
+	UpdatedAt *time.Time `json:"updatedAt,omitempty"`
 	// This is the user's primary username. Typically sourced from the primary directory.
 	Username *string `json:"username,omitempty"`
 	// A list of source data for the usernames attribute.
@@ -170,11 +193,32 @@ func (o *User) GetEmail() *string {
 	return o.Email
 }
 
+func (o *User) GetEmailSources() []UserAttributeMappingSource {
+	if o == nil {
+		return nil
+	}
+	return o.EmailSources
+}
+
 func (o *User) GetEmails() []string {
 	if o == nil {
 		return nil
 	}
 	return o.Emails
+}
+
+func (o *User) GetEmployeeIDSources() []UserAttributeMappingSource {
+	if o == nil {
+		return nil
+	}
+	return o.EmployeeIDSources
+}
+
+func (o *User) GetEmployeeIds() []string {
+	if o == nil {
+		return nil
+	}
+	return o.EmployeeIds
 }
 
 func (o *User) GetEmploymentStatus() *string {
@@ -259,6 +303,13 @@ func (o *User) GetStatus() *UserStatus {
 		return nil
 	}
 	return o.Status
+}
+
+func (o *User) GetType() *Type {
+	if o == nil {
+		return nil
+	}
+	return o.Type
 }
 
 func (o *User) GetUpdatedAt() *time.Time {

@@ -28,13 +28,6 @@ func newWorkflowExecutionActions(sdkConfig sdkConfiguration) *WorkflowExecutionA
 // TerminateWorkflow - Terminate Workflow
 // Invokes the c1.api.workflows.v1beta.WorkflowExecutionActionsService.TerminateWorkflow method.
 func (s *WorkflowExecutionActions) TerminateWorkflow(ctx context.Context, request operations.C1APIWorkflowsV1betaWorkflowExecutionActionsServiceTerminateWorkflowRequest, opts ...operations.Option) (*operations.C1APIWorkflowsV1betaWorkflowExecutionActionsServiceTerminateWorkflowResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "c1.api.workflows.v1beta.WorkflowExecutionActionsService.TerminateWorkflow",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -58,6 +51,13 @@ func (s *WorkflowExecutionActions) TerminateWorkflow(ctx context.Context, reques
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "c1.api.workflows.v1beta.WorkflowExecutionActionsService.TerminateWorkflow",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "TerminateWorkflowRequest", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err

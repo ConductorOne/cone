@@ -29,13 +29,6 @@ func newTask(sdkConfig sdkConfiguration) *Task {
 // CreateGrantTask - Create Grant Task
 // Create a grant task
 func (s *Task) CreateGrantTask(ctx context.Context, request *shared.TaskServiceCreateGrantRequest, opts ...operations.Option) (*operations.C1APITaskV1TaskServiceCreateGrantTaskResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "c1.api.task.v1.TaskService.CreateGrantTask",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -59,6 +52,13 @@ func (s *Task) CreateGrantTask(ctx context.Context, request *shared.TaskServiceC
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "c1.api.task.v1.TaskService.CreateGrantTask",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -237,13 +237,6 @@ func (s *Task) CreateGrantTask(ctx context.Context, request *shared.TaskServiceC
 // CreateOffboardingTask - Create Offboarding Task
 // Invokes the c1.api.task.v1.TaskService.CreateOffboardingTask method.
 func (s *Task) CreateOffboardingTask(ctx context.Context, request *shared.TaskServiceCreateOffboardingRequest, opts ...operations.Option) (*operations.C1APITaskV1TaskServiceCreateOffboardingTaskResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "c1.api.task.v1.TaskService.CreateOffboardingTask",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -267,6 +260,13 @@ func (s *Task) CreateOffboardingTask(ctx context.Context, request *shared.TaskSe
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "c1.api.task.v1.TaskService.CreateOffboardingTask",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -445,13 +445,6 @@ func (s *Task) CreateOffboardingTask(ctx context.Context, request *shared.TaskSe
 // CreateRevokeTask - Create Revoke Task
 // Create a revoke task
 func (s *Task) CreateRevokeTask(ctx context.Context, request *shared.TaskServiceCreateRevokeRequest, opts ...operations.Option) (*operations.C1APITaskV1TaskServiceCreateRevokeTaskResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "c1.api.task.v1.TaskService.CreateRevokeTask",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -475,6 +468,13 @@ func (s *Task) CreateRevokeTask(ctx context.Context, request *shared.TaskService
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "c1.api.task.v1.TaskService.CreateRevokeTask",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -653,13 +653,6 @@ func (s *Task) CreateRevokeTask(ctx context.Context, request *shared.TaskService
 // Get
 // Get a task by ID
 func (s *Task) Get(ctx context.Context, request operations.C1APITaskV1TaskServiceGetRequest, opts ...operations.Option) (*operations.C1APITaskV1TaskServiceGetResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "c1.api.task.v1.TaskService.Get",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -681,6 +674,14 @@ func (s *Task) Get(ctx context.Context, request operations.C1APITaskV1TaskServic
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/api/v1/tasks/{id}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "c1.api.task.v1.TaskService.Get",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout

@@ -7,7 +7,9 @@ type CreateManuallyManagedAppResourceRequest struct {
 	// The description field.
 	Description *string `json:"description,omitempty"`
 	// The displayName field.
-	DisplayName *string `json:"displayName,omitempty"`
+	DisplayName string `json:"displayName"`
+	// If supplied, it's implied that the resource is created before sync and needs to be merged with connector resource.
+	MatchBatonID *string `json:"matchBatonId,omitempty"`
 	// The resourceOwnerUserIds field.
 	ResourceOwnerUserIds []string `json:"resourceOwnerUserIds,omitempty"`
 }
@@ -19,11 +21,18 @@ func (o *CreateManuallyManagedAppResourceRequest) GetDescription() *string {
 	return o.Description
 }
 
-func (o *CreateManuallyManagedAppResourceRequest) GetDisplayName() *string {
+func (o *CreateManuallyManagedAppResourceRequest) GetDisplayName() string {
+	if o == nil {
+		return ""
+	}
+	return o.DisplayName
+}
+
+func (o *CreateManuallyManagedAppResourceRequest) GetMatchBatonID() *string {
 	if o == nil {
 		return nil
 	}
-	return o.DisplayName
+	return o.MatchBatonID
 }
 
 func (o *CreateManuallyManagedAppResourceRequest) GetResourceOwnerUserIds() []string {

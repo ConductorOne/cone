@@ -29,13 +29,6 @@ func newWebhooks(sdkConfig sdkConfiguration) *Webhooks {
 // Create
 // Invokes the c1.api.webhooks.v1.WebhooksService.Create method.
 func (s *Webhooks) Create(ctx context.Context, request *shared.WebhooksServiceCreateRequest, opts ...operations.Option) (*operations.C1APIWebhooksV1WebhooksServiceCreateResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "c1.api.webhooks.v1.WebhooksService.Create",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -59,6 +52,13 @@ func (s *Webhooks) Create(ctx context.Context, request *shared.WebhooksServiceCr
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "c1.api.webhooks.v1.WebhooksService.Create",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -237,13 +237,6 @@ func (s *Webhooks) Create(ctx context.Context, request *shared.WebhooksServiceCr
 // Delete
 // Invokes the c1.api.webhooks.v1.WebhooksService.Delete method.
 func (s *Webhooks) Delete(ctx context.Context, request operations.C1APIWebhooksV1WebhooksServiceDeleteRequest, opts ...operations.Option) (*operations.C1APIWebhooksV1WebhooksServiceDeleteResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "c1.api.webhooks.v1.WebhooksService.Delete",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -267,6 +260,13 @@ func (s *Webhooks) Delete(ctx context.Context, request operations.C1APIWebhooksV
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "c1.api.webhooks.v1.WebhooksService.Delete",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "WebhooksServiceDeleteRequest", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -445,13 +445,6 @@ func (s *Webhooks) Delete(ctx context.Context, request operations.C1APIWebhooksV
 // Get
 // Invokes the c1.api.webhooks.v1.WebhooksService.Get method.
 func (s *Webhooks) Get(ctx context.Context, request operations.C1APIWebhooksV1WebhooksServiceGetRequest, opts ...operations.Option) (*operations.C1APIWebhooksV1WebhooksServiceGetResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "c1.api.webhooks.v1.WebhooksService.Get",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -473,6 +466,14 @@ func (s *Webhooks) Get(ctx context.Context, request operations.C1APIWebhooksV1We
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/api/v1/webhooks/{id}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "c1.api.webhooks.v1.WebhooksService.Get",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -645,13 +646,6 @@ func (s *Webhooks) Get(ctx context.Context, request operations.C1APIWebhooksV1We
 // List
 // Invokes the c1.api.webhooks.v1.WebhooksService.List method.
 func (s *Webhooks) List(ctx context.Context, request operations.C1APIWebhooksV1WebhooksServiceListRequest, opts ...operations.Option) (*operations.C1APIWebhooksV1WebhooksServiceListResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "c1.api.webhooks.v1.WebhooksService.List",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -673,6 +667,14 @@ func (s *Webhooks) List(ctx context.Context, request operations.C1APIWebhooksV1W
 	opURL, err := url.JoinPath(baseURL, "/api/v1/webhooks")
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "c1.api.webhooks.v1.WebhooksService.List",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -849,13 +851,6 @@ func (s *Webhooks) List(ctx context.Context, request operations.C1APIWebhooksV1W
 // Test
 // Invokes the c1.api.webhooks.v1.WebhooksService.Test method.
 func (s *Webhooks) Test(ctx context.Context, request operations.C1APIWebhooksV1WebhooksServiceTestRequest, opts ...operations.Option) (*operations.C1APIWebhooksV1WebhooksServiceTestResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "c1.api.webhooks.v1.WebhooksService.Test",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -879,6 +874,13 @@ func (s *Webhooks) Test(ctx context.Context, request operations.C1APIWebhooksV1W
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "c1.api.webhooks.v1.WebhooksService.Test",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "WebhooksServiceTestRequest", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -1057,13 +1059,6 @@ func (s *Webhooks) Test(ctx context.Context, request operations.C1APIWebhooksV1W
 // Update
 // Invokes the c1.api.webhooks.v1.WebhooksService.Update method.
 func (s *Webhooks) Update(ctx context.Context, request operations.C1APIWebhooksV1WebhooksServiceUpdateRequest, opts ...operations.Option) (*operations.C1APIWebhooksV1WebhooksServiceUpdateResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "c1.api.webhooks.v1.WebhooksService.Update",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -1087,6 +1082,13 @@ func (s *Webhooks) Update(ctx context.Context, request operations.C1APIWebhooksV
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "c1.api.webhooks.v1.WebhooksService.Update",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "WebhooksServiceUpdateRequest", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err

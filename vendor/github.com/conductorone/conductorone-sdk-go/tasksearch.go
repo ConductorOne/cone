@@ -29,13 +29,6 @@ func newTaskSearch(sdkConfig sdkConfiguration) *TaskSearch {
 // Search
 // Search tasks based on filters specified in the request body.
 func (s *TaskSearch) Search(ctx context.Context, request *shared.TaskSearchRequest, opts ...operations.Option) (*operations.C1APITaskV1TaskSearchServiceSearchResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "c1.api.task.v1.TaskSearchService.Search",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -59,6 +52,13 @@ func (s *TaskSearch) Search(ctx context.Context, request *shared.TaskSearchReque
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "c1.api.task.v1.TaskSearchService.Search",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err

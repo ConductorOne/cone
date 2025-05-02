@@ -32,13 +32,6 @@ func newSystemLog(sdkConfig sdkConfiguration) *SystemLog {
 //	This endpoint should be used to synchorize the
 //	system log events to external systems.
 func (s *SystemLog) ListEvents(ctx context.Context, request *shared.SystemLogServiceListEventsRequest, opts ...operations.Option) (*operations.C1APISystemlogV1SystemLogServiceListEventsResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "c1.api.systemlog.v1.SystemLogService.ListEvents",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -62,6 +55,13 @@ func (s *SystemLog) ListEvents(ctx context.Context, request *shared.SystemLogSer
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "c1.api.systemlog.v1.SystemLogService.ListEvents",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err

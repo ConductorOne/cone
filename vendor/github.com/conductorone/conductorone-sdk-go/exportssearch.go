@@ -29,13 +29,6 @@ func newExportsSearch(sdkConfig sdkConfiguration) *ExportsSearch {
 // Search
 // Invokes the c1.api.systemlog.v1.ExportsSearchService.Search method.
 func (s *ExportsSearch) Search(ctx context.Context, request *shared.ExportsSearchServiceSearchRequest, opts ...operations.Option) (*operations.C1APISystemlogV1ExportsSearchServiceSearchResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "c1.api.systemlog.v1.ExportsSearchService.Search",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -59,6 +52,13 @@ func (s *ExportsSearch) Search(ctx context.Context, request *shared.ExportsSearc
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "c1.api.systemlog.v1.ExportsSearchService.Search",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err

@@ -35,6 +35,7 @@ type CreateAppEntitlementRequest struct {
 	//   - webhook
 	//   - multiStep
 	//   - externalTicket
+	//   - unconfigured
 	//
 	ProvisionPolicy *ProvisionPolicyInput `json:"provisionPolicy,omitempty"`
 	// The alias field.
@@ -52,7 +53,7 @@ type CreateAppEntitlementRequest struct {
 	// The description field.
 	Description *string `json:"description,omitempty"`
 	// The displayName field.
-	DisplayName   *string                                   `json:"displayName,omitempty"`
+	DisplayName   string                                    `json:"displayName"`
 	DurationGrant *string                                   `json:"durationGrant,omitempty"`
 	DurationUnset *CreateAppEntitlementRequestDurationUnset `json:"durationUnset,omitempty"`
 	// The emergencyGrantEnabled field.
@@ -61,6 +62,8 @@ type CreateAppEntitlementRequest struct {
 	EmergencyGrantPolicyID *string `json:"emergencyGrantPolicyId,omitempty"`
 	// The grantPolicyId field.
 	GrantPolicyID *string `json:"grantPolicyId,omitempty"`
+	// If supplied, it's implied that the entitlement is created before sync and needs to be merged with connector entitlement.
+	MatchBatonID *string `json:"matchBatonId,omitempty"`
 	// The overrideAccessRequestsDefaults field.
 	OverrideAccessRequestsDefaults *bool `json:"overrideAccessRequestsDefaults,omitempty"`
 	// The purpose field.
@@ -136,9 +139,9 @@ func (o *CreateAppEntitlementRequest) GetDescription() *string {
 	return o.Description
 }
 
-func (o *CreateAppEntitlementRequest) GetDisplayName() *string {
+func (o *CreateAppEntitlementRequest) GetDisplayName() string {
 	if o == nil {
-		return nil
+		return ""
 	}
 	return o.DisplayName
 }
@@ -176,6 +179,13 @@ func (o *CreateAppEntitlementRequest) GetGrantPolicyID() *string {
 		return nil
 	}
 	return o.GrantPolicyID
+}
+
+func (o *CreateAppEntitlementRequest) GetMatchBatonID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.MatchBatonID
 }
 
 func (o *CreateAppEntitlementRequest) GetOverrideAccessRequestsDefaults() *bool {

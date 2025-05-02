@@ -29,6 +29,7 @@ func (e ProvisionInstanceState) ToPointer() *ProvisionInstanceState {
 //   - cancelled
 //   - errored
 //   - reassignedByError
+//   - skipped
 type ProvisionInstance struct {
 	// The outcome of a provision instance that is cancelled.
 	CancelledAction *CancelledAction `json:"cancelled,omitempty"`
@@ -40,10 +41,20 @@ type ProvisionInstance struct {
 	Provision *Provision `json:"provision,omitempty"`
 	// The ReassignedByErrorAction object describes the outcome of a policy step that has been reassigned because it had an error provisioning.
 	ReassignedByErrorAction *ReassignedByErrorAction `json:"reassignedByError,omitempty"`
+	// The SkippedAction object describes the outcome of a policy step that has been skipped.
+	SkippedAction *SkippedAction `json:"skipped,omitempty"`
+	// This indicates the external ticket id for this step.
+	ExternalTicketID *string `json:"externalTicketId,omitempty"`
+	// This indicates the external ticket provisioner config id for this step.
+	ExternalTicketProvisionerConfigID *string `json:"externalTicketProvisionerConfigId,omitempty"`
 	// This indicates the notification id for this step.
 	NotificationID *string `json:"notificationId,omitempty"`
 	// This property indicates the current state of this step.
 	State *ProvisionInstanceState `json:"state,omitempty"`
+	// This indicates the webhook id for this step.
+	WebhookID *string `json:"webhookId,omitempty"`
+	// This indicates the webhook instance id for this step.
+	WebhookInstanceID *string `json:"webhookInstanceId,omitempty"`
 }
 
 func (o *ProvisionInstance) GetCancelledAction() *CancelledAction {
@@ -81,6 +92,27 @@ func (o *ProvisionInstance) GetReassignedByErrorAction() *ReassignedByErrorActio
 	return o.ReassignedByErrorAction
 }
 
+func (o *ProvisionInstance) GetSkippedAction() *SkippedAction {
+	if o == nil {
+		return nil
+	}
+	return o.SkippedAction
+}
+
+func (o *ProvisionInstance) GetExternalTicketID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ExternalTicketID
+}
+
+func (o *ProvisionInstance) GetExternalTicketProvisionerConfigID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ExternalTicketProvisionerConfigID
+}
+
 func (o *ProvisionInstance) GetNotificationID() *string {
 	if o == nil {
 		return nil
@@ -93,4 +125,18 @@ func (o *ProvisionInstance) GetState() *ProvisionInstanceState {
 		return nil
 	}
 	return o.State
+}
+
+func (o *ProvisionInstance) GetWebhookID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.WebhookID
+}
+
+func (o *ProvisionInstance) GetWebhookInstanceID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.WebhookInstanceID
 }

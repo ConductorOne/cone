@@ -8,6 +8,8 @@ type SearchAppResourceTypesRequest struct {
 	AppIds []string `json:"appIds,omitempty"`
 	// A list of app user IDs to restrict the search by.
 	AppUserIds []string `json:"appUserIds,omitempty"`
+	// Exact match on display name
+	DisplayName *string `json:"displayName,omitempty"`
 	// A list of resource type IDs to exclude from the search.
 	ExcludeResourceTypeIds []string `json:"excludeResourceTypeIds,omitempty"`
 	// A list of resource type trait IDs to exclude from the search.
@@ -36,6 +38,13 @@ func (o *SearchAppResourceTypesRequest) GetAppUserIds() []string {
 		return nil
 	}
 	return o.AppUserIds
+}
+
+func (o *SearchAppResourceTypesRequest) GetDisplayName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.DisplayName
 }
 
 func (o *SearchAppResourceTypesRequest) GetExcludeResourceTypeIds() []string {

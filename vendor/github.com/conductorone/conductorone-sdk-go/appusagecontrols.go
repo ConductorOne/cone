@@ -28,13 +28,6 @@ func newAppUsageControls(sdkConfig sdkConfiguration) *AppUsageControls {
 // Get
 // Get usage controls, as an AppUsageControls object which describes some peripheral configuration, for an app.
 func (s *AppUsageControls) Get(ctx context.Context, request operations.C1APIAppV1AppUsageControlsServiceGetRequest, opts ...operations.Option) (*operations.C1APIAppV1AppUsageControlsServiceGetResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "c1.api.app.v1.AppUsageControlsService.Get",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -56,6 +49,14 @@ func (s *AppUsageControls) Get(ctx context.Context, request operations.C1APIAppV
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/api/v1/apps/{app_id}/usage_controls", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "c1.api.app.v1.AppUsageControlsService.Get",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -228,13 +229,6 @@ func (s *AppUsageControls) Get(ctx context.Context, request operations.C1APIAppV
 // Update
 // Update usage controls for an app.
 func (s *AppUsageControls) Update(ctx context.Context, request operations.C1APIAppV1AppUsageControlsServiceUpdateRequest, opts ...operations.Option) (*operations.C1APIAppV1AppUsageControlsServiceUpdateResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "c1.api.app.v1.AppUsageControlsService.Update",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -258,6 +252,13 @@ func (s *AppUsageControls) Update(ctx context.Context, request operations.C1APIA
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "c1.api.app.v1.AppUsageControlsService.Update",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "UpdateAppUsageControlsRequest", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err

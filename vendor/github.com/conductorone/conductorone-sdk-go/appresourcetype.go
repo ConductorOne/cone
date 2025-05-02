@@ -28,13 +28,6 @@ func newAppResourceType(sdkConfig sdkConfiguration) *AppResourceType {
 // CreateManuallyManagedResourceType - Create Manually Managed Resource Type
 // Invokes the c1.api.app.v1.AppResourceTypeService.CreateManuallyManagedResourceType method.
 func (s *AppResourceType) CreateManuallyManagedResourceType(ctx context.Context, request operations.C1APIAppV1AppResourceTypeServiceCreateManuallyManagedResourceTypeRequest, opts ...operations.Option) (*operations.C1APIAppV1AppResourceTypeServiceCreateManuallyManagedResourceTypeResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "c1.api.app.v1.AppResourceTypeService.CreateManuallyManagedResourceType",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -58,6 +51,13 @@ func (s *AppResourceType) CreateManuallyManagedResourceType(ctx context.Context,
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "c1.api.app.v1.AppResourceTypeService.CreateManuallyManagedResourceType",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "CreateManuallyManagedResourceTypeRequest", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -236,13 +236,6 @@ func (s *AppResourceType) CreateManuallyManagedResourceType(ctx context.Context,
 // DeleteManuallyManagedResourceType - Delete Manually Managed Resource Type
 // Invokes the c1.api.app.v1.AppResourceTypeService.DeleteManuallyManagedResourceType method.
 func (s *AppResourceType) DeleteManuallyManagedResourceType(ctx context.Context, request operations.C1APIAppV1AppResourceTypeServiceDeleteManuallyManagedResourceTypeRequest, opts ...operations.Option) (*operations.C1APIAppV1AppResourceTypeServiceDeleteManuallyManagedResourceTypeResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "c1.api.app.v1.AppResourceTypeService.DeleteManuallyManagedResourceType",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -266,6 +259,13 @@ func (s *AppResourceType) DeleteManuallyManagedResourceType(ctx context.Context,
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "c1.api.app.v1.AppResourceTypeService.DeleteManuallyManagedResourceType",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "DeleteManuallyManagedResourceTypeRequest", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -444,13 +444,6 @@ func (s *AppResourceType) DeleteManuallyManagedResourceType(ctx context.Context,
 // Get
 // Get an app resource type.
 func (s *AppResourceType) Get(ctx context.Context, request operations.C1APIAppV1AppResourceTypeServiceGetRequest, opts ...operations.Option) (*operations.C1APIAppV1AppResourceTypeServiceGetResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "c1.api.app.v1.AppResourceTypeService.Get",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -472,6 +465,14 @@ func (s *AppResourceType) Get(ctx context.Context, request operations.C1APIAppV1
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/api/v1/apps/{app_id}/resource_types/{id}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "c1.api.app.v1.AppResourceTypeService.Get",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -644,13 +645,6 @@ func (s *AppResourceType) Get(ctx context.Context, request operations.C1APIAppV1
 // List
 // List app resource types.
 func (s *AppResourceType) List(ctx context.Context, request operations.C1APIAppV1AppResourceTypeServiceListRequest, opts ...operations.Option) (*operations.C1APIAppV1AppResourceTypeServiceListResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "c1.api.app.v1.AppResourceTypeService.List",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -672,6 +666,14 @@ func (s *AppResourceType) List(ctx context.Context, request operations.C1APIAppV
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/api/v1/apps/{app_id}/resource_types", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "c1.api.app.v1.AppResourceTypeService.List",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -848,13 +850,6 @@ func (s *AppResourceType) List(ctx context.Context, request operations.C1APIAppV
 // UpdateManuallyManagedResourceType - Update Manually Managed Resource Type
 // Invokes the c1.api.app.v1.AppResourceTypeService.UpdateManuallyManagedResourceType method.
 func (s *AppResourceType) UpdateManuallyManagedResourceType(ctx context.Context, request operations.C1APIAppV1AppResourceTypeServiceUpdateManuallyManagedResourceTypeRequest, opts ...operations.Option) (*operations.C1APIAppV1AppResourceTypeServiceUpdateManuallyManagedResourceTypeResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "c1.api.app.v1.AppResourceTypeService.UpdateManuallyManagedResourceType",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -878,6 +873,13 @@ func (s *AppResourceType) UpdateManuallyManagedResourceType(ctx context.Context,
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "c1.api.app.v1.AppResourceTypeService.UpdateManuallyManagedResourceType",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "UpdateManuallyManagedResourceTypeRequest", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err

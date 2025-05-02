@@ -6,6 +6,8 @@ package shared
 type AppResourceTypeInput struct {
 	// The display name of the app resource type.
 	DisplayName *string `json:"displayName,omitempty"`
+	// Associated trait ids
+	TraitIds []string `json:"traitIds,omitempty"`
 }
 
 func (o *AppResourceTypeInput) GetDisplayName() *string {
@@ -13,4 +15,11 @@ func (o *AppResourceTypeInput) GetDisplayName() *string {
 		return nil
 	}
 	return o.DisplayName
+}
+
+func (o *AppResourceTypeInput) GetTraitIds() []string {
+	if o == nil {
+		return nil
+	}
+	return o.TraitIds
 }

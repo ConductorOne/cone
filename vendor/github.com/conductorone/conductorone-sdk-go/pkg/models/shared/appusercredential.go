@@ -20,6 +20,7 @@ type AppUserCredential struct {
 	AppUserID *string    `json:"appUserId,omitempty"`
 	CreatedAt *time.Time `json:"createdAt,omitempty"`
 	DeletedAt *time.Time `json:"deletedAt,omitempty"`
+	ExpiresAt *time.Time `json:"expiresAt,omitempty"`
 	// A unique identifier of the credential.
 	ID        *string    `json:"id,omitempty"`
 	UpdatedAt *time.Time `json:"updatedAt,omitempty"`
@@ -69,6 +70,13 @@ func (o *AppUserCredential) GetDeletedAt() *time.Time {
 		return nil
 	}
 	return o.DeletedAt
+}
+
+func (o *AppUserCredential) GetExpiresAt() *time.Time {
+	if o == nil {
+		return nil
+	}
+	return o.ExpiresAt
 }
 
 func (o *AppUserCredential) GetID() *string {

@@ -29,13 +29,6 @@ func newPolicySearch(sdkConfig sdkConfiguration) *PolicySearch {
 // Search
 // Search policies based on filters specified in the request body.
 func (s *PolicySearch) Search(ctx context.Context, request *shared.SearchPoliciesRequest, opts ...operations.Option) (*operations.C1APIPolicyV1PolicySearchSearchResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "c1.api.policy.v1.PolicySearch.Search",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -59,6 +52,13 @@ func (s *PolicySearch) Search(ctx context.Context, request *shared.SearchPolicie
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "c1.api.policy.v1.PolicySearch.Search",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err

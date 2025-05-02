@@ -7,6 +7,35 @@ import (
 	"fmt"
 )
 
+type AppUserDomains string
+
+const (
+	AppUserDomainsAppUserDomainUnspecified AppUserDomains = "APP_USER_DOMAIN_UNSPECIFIED"
+	AppUserDomainsAppUserDomainExternal    AppUserDomains = "APP_USER_DOMAIN_EXTERNAL"
+	AppUserDomainsAppUserDomainTrusted     AppUserDomains = "APP_USER_DOMAIN_TRUSTED"
+)
+
+func (e AppUserDomains) ToPointer() *AppUserDomains {
+	return &e
+}
+func (e *AppUserDomains) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "APP_USER_DOMAIN_UNSPECIFIED":
+		fallthrough
+	case "APP_USER_DOMAIN_EXTERNAL":
+		fallthrough
+	case "APP_USER_DOMAIN_TRUSTED":
+		*e = AppUserDomains(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for AppUserDomains: %v", v)
+	}
+}
+
 type AppUserStatuses string
 
 const (
@@ -77,6 +106,8 @@ type AppUserServiceSearchRequest struct {
 	AppUserExpandMask *AppUserExpandMask `json:"expandMask,omitempty"`
 	// The app ID to restrict the search to.
 	AppID *string `json:"appId,omitempty"`
+	// A list of account domains to restrict the search to.
+	AppUserDomains []AppUserDomains `json:"appUserDomains,omitempty"`
 	// A list of app user IDs to restrict the search to.
 	AppUserIds []string `json:"appUserIds,omitempty"`
 	// A list of app user status details to restrict the search to.
@@ -111,6 +142,13 @@ func (o *AppUserServiceSearchRequest) GetAppID() *string {
 		return nil
 	}
 	return o.AppID
+}
+
+func (o *AppUserServiceSearchRequest) GetAppUserDomains() []AppUserDomains {
+	if o == nil {
+		return nil
+	}
+	return o.AppUserDomains
 }
 
 func (o *AppUserServiceSearchRequest) GetAppUserIds() []string {

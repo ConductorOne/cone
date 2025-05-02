@@ -38,8 +38,21 @@ type AppEntitlement struct {
 	//   - webhook
 	//   - multiStep
 	//   - externalTicket
+	//   - unconfigured
 	//
-	ProvisionPolicy *ProvisionPolicy `json:"provisionerPolicy,omitempty"`
+	ProvisionPolicy *ProvisionPolicy `json:"deprovisionerPolicy,omitempty"`
+	// ProvisionPolicy is a oneOf that indicates how a provision step should be processed.
+	//
+	// This message contains a oneof named typ. Only a single field of the following list may be set at a time:
+	//   - connector
+	//   - manual
+	//   - delegated
+	//   - webhook
+	//   - multiStep
+	//   - externalTicket
+	//   - unconfigured
+	//
+	ProvisionPolicy1 *ProvisionPolicy `json:"provisionerPolicy,omitempty"`
 	// The alias of the app entitlement used by Cone. Also exact-match queryable.
 	Alias *string `json:"alias,omitempty"`
 	// The ID of the app that is associated with the app entitlement.
@@ -76,6 +89,8 @@ type AppEntitlement struct {
 	IsAutomationEnabled *bool `json:"isAutomationEnabled,omitempty"`
 	// Flag to indicate if the app entitlement is manually managed.
 	IsManuallyManaged *bool `json:"isManuallyManaged,omitempty"`
+	// The matchBatonId field.
+	MatchBatonID *string `json:"matchBatonId,omitempty"`
 	// Flag to indicate if the app-level access request settings have been overridden for the entitlement
 	OverrideAccessRequestsDefaults *bool `json:"overrideAccessRequestsDefaults,omitempty"`
 	// The purpose field.
@@ -84,7 +99,7 @@ type AppEntitlement struct {
 	RevokePolicyID *string `json:"revokePolicyId,omitempty"`
 	// The riskLevelValueId field.
 	RiskLevelValueID *string `json:"riskLevelValueId,omitempty"`
-	// The slug is displayed as an oval next to the name in the frontend of C1, it tells you what permission the entitlement grants. See https://www.conductorone.com/docs/product/manage-access/entitlements/
+	// The slug is displayed as an oval next to the name in the frontend of C1, it tells you what permission the entitlement grants. See https://www.conductorone.com/docs/product/admin/entitlements/
 	Slug *string `json:"slug,omitempty"`
 	// Map to tell us which connector the entitlement came from.
 	SourceConnectorIds map[string]string `json:"sourceConnectorIds,omitempty"`
@@ -110,6 +125,13 @@ func (o *AppEntitlement) GetProvisionPolicy() *ProvisionPolicy {
 		return nil
 	}
 	return o.ProvisionPolicy
+}
+
+func (o *AppEntitlement) GetProvisionPolicy1() *ProvisionPolicy {
+	if o == nil {
+		return nil
+	}
+	return o.ProvisionPolicy1
 }
 
 func (o *AppEntitlement) GetAlias() *string {
@@ -252,6 +274,13 @@ func (o *AppEntitlement) GetIsManuallyManaged() *bool {
 	return o.IsManuallyManaged
 }
 
+func (o *AppEntitlement) GetMatchBatonID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.MatchBatonID
+}
+
 func (o *AppEntitlement) GetOverrideAccessRequestsDefaults() *bool {
 	if o == nil {
 		return nil
@@ -330,8 +359,21 @@ type AppEntitlementInput struct {
 	//   - webhook
 	//   - multiStep
 	//   - externalTicket
+	//   - unconfigured
 	//
-	ProvisionPolicy *ProvisionPolicyInput `json:"provisionerPolicy,omitempty"`
+	ProvisionPolicy *ProvisionPolicyInput `json:"deprovisionerPolicy,omitempty"`
+	// ProvisionPolicy is a oneOf that indicates how a provision step should be processed.
+	//
+	// This message contains a oneof named typ. Only a single field of the following list may be set at a time:
+	//   - connector
+	//   - manual
+	//   - delegated
+	//   - webhook
+	//   - multiStep
+	//   - externalTicket
+	//   - unconfigured
+	//
+	ProvisionPolicy1 *ProvisionPolicyInput `json:"provisionerPolicy,omitempty"`
 	// The alias of the app entitlement used by Cone. Also exact-match queryable.
 	Alias *string `json:"alias,omitempty"`
 	// The ID of the app that is associated with the app entitlement.
@@ -360,6 +402,8 @@ type AppEntitlementInput struct {
 	GrantPolicyID *string `json:"grantPolicyId,omitempty"`
 	// Flag to indicate if the app entitlement is manually managed.
 	IsManuallyManaged *bool `json:"isManuallyManaged,omitempty"`
+	// The matchBatonId field.
+	MatchBatonID *string `json:"matchBatonId,omitempty"`
 	// Flag to indicate if the app-level access request settings have been overridden for the entitlement
 	OverrideAccessRequestsDefaults *bool `json:"overrideAccessRequestsDefaults,omitempty"`
 	// The purpose field.
@@ -368,7 +412,7 @@ type AppEntitlementInput struct {
 	RevokePolicyID *string `json:"revokePolicyId,omitempty"`
 	// The riskLevelValueId field.
 	RiskLevelValueID *string `json:"riskLevelValueId,omitempty"`
-	// The slug is displayed as an oval next to the name in the frontend of C1, it tells you what permission the entitlement grants. See https://www.conductorone.com/docs/product/manage-access/entitlements/
+	// The slug is displayed as an oval next to the name in the frontend of C1, it tells you what permission the entitlement grants. See https://www.conductorone.com/docs/product/admin/entitlements/
 	Slug *string `json:"slug,omitempty"`
 	// Map to tell us which connector the entitlement came from.
 	SourceConnectorIds map[string]string `json:"sourceConnectorIds,omitempty"`
@@ -380,6 +424,13 @@ func (o *AppEntitlementInput) GetProvisionPolicy() *ProvisionPolicyInput {
 		return nil
 	}
 	return o.ProvisionPolicy
+}
+
+func (o *AppEntitlementInput) GetProvisionPolicy1() *ProvisionPolicyInput {
+	if o == nil {
+		return nil
+	}
+	return o.ProvisionPolicy1
 }
 
 func (o *AppEntitlementInput) GetAlias() *string {
@@ -485,6 +536,13 @@ func (o *AppEntitlementInput) GetIsManuallyManaged() *bool {
 		return nil
 	}
 	return o.IsManuallyManaged
+}
+
+func (o *AppEntitlementInput) GetMatchBatonID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.MatchBatonID
 }
 
 func (o *AppEntitlementInput) GetOverrideAccessRequestsDefaults() *bool {

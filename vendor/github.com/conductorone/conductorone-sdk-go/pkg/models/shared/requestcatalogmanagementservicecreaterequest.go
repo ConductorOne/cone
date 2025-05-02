@@ -2,6 +2,46 @@
 
 package shared
 
+// RequestCatalogManagementServiceCreateRequestEnrollmentBehavior - Defines how to handle the request policies of the entitlements in the catalog during enrollment.
+type RequestCatalogManagementServiceCreateRequestEnrollmentBehavior string
+
+const (
+	RequestCatalogManagementServiceCreateRequestEnrollmentBehaviorRequestCatalogEnrollmentBehaviorUnspecified                     RequestCatalogManagementServiceCreateRequestEnrollmentBehavior = "REQUEST_CATALOG_ENROLLMENT_BEHAVIOR_UNSPECIFIED"
+	RequestCatalogManagementServiceCreateRequestEnrollmentBehaviorRequestCatalogEnrollmentBehaviorBypassEntitlementRequestPolicy  RequestCatalogManagementServiceCreateRequestEnrollmentBehavior = "REQUEST_CATALOG_ENROLLMENT_BEHAVIOR_BYPASS_ENTITLEMENT_REQUEST_POLICY"
+	RequestCatalogManagementServiceCreateRequestEnrollmentBehaviorRequestCatalogEnrollmentBehaviorEnforceEntitlementRequestPolicy RequestCatalogManagementServiceCreateRequestEnrollmentBehavior = "REQUEST_CATALOG_ENROLLMENT_BEHAVIOR_ENFORCE_ENTITLEMENT_REQUEST_POLICY"
+)
+
+func (e RequestCatalogManagementServiceCreateRequestEnrollmentBehavior) ToPointer() *RequestCatalogManagementServiceCreateRequestEnrollmentBehavior {
+	return &e
+}
+
+// RequestCatalogManagementServiceCreateRequestUnenrollmentBehavior - Defines how to handle the revocation of the entitlements in the catalog during unenrollment.
+type RequestCatalogManagementServiceCreateRequestUnenrollmentBehavior string
+
+const (
+	RequestCatalogManagementServiceCreateRequestUnenrollmentBehaviorRequestCatalogUnenrollmentBehaviorUnspecified       RequestCatalogManagementServiceCreateRequestUnenrollmentBehavior = "REQUEST_CATALOG_UNENROLLMENT_BEHAVIOR_UNSPECIFIED"
+	RequestCatalogManagementServiceCreateRequestUnenrollmentBehaviorRequestCatalogUnenrollmentBehaviorLeaveAccessAsIs   RequestCatalogManagementServiceCreateRequestUnenrollmentBehavior = "REQUEST_CATALOG_UNENROLLMENT_BEHAVIOR_LEAVE_ACCESS_AS_IS"
+	RequestCatalogManagementServiceCreateRequestUnenrollmentBehaviorRequestCatalogUnenrollmentBehaviorRevokeAll         RequestCatalogManagementServiceCreateRequestUnenrollmentBehavior = "REQUEST_CATALOG_UNENROLLMENT_BEHAVIOR_REVOKE_ALL"
+	RequestCatalogManagementServiceCreateRequestUnenrollmentBehaviorRequestCatalogUnenrollmentBehaviorRevokeUnjustified RequestCatalogManagementServiceCreateRequestUnenrollmentBehavior = "REQUEST_CATALOG_UNENROLLMENT_BEHAVIOR_REVOKE_UNJUSTIFIED"
+)
+
+func (e RequestCatalogManagementServiceCreateRequestUnenrollmentBehavior) ToPointer() *RequestCatalogManagementServiceCreateRequestUnenrollmentBehavior {
+	return &e
+}
+
+// RequestCatalogManagementServiceCreateRequestUnenrollmentEntitlementBehavior - Defines how to handle the revoke policies of the entitlements in the catalog during unenrollment.
+type RequestCatalogManagementServiceCreateRequestUnenrollmentEntitlementBehavior string
+
+const (
+	RequestCatalogManagementServiceCreateRequestUnenrollmentEntitlementBehaviorRequestCatalogUnenrollmentEntitlementBehaviorUnspecified RequestCatalogManagementServiceCreateRequestUnenrollmentEntitlementBehavior = "REQUEST_CATALOG_UNENROLLMENT_ENTITLEMENT_BEHAVIOR_UNSPECIFIED"
+	RequestCatalogManagementServiceCreateRequestUnenrollmentEntitlementBehaviorRequestCatalogUnenrollmentEntitlementBehaviorBypass      RequestCatalogManagementServiceCreateRequestUnenrollmentEntitlementBehavior = "REQUEST_CATALOG_UNENROLLMENT_ENTITLEMENT_BEHAVIOR_BYPASS"
+	RequestCatalogManagementServiceCreateRequestUnenrollmentEntitlementBehaviorRequestCatalogUnenrollmentEntitlementBehaviorEnforce     RequestCatalogManagementServiceCreateRequestUnenrollmentEntitlementBehavior = "REQUEST_CATALOG_UNENROLLMENT_ENTITLEMENT_BEHAVIOR_ENFORCE"
+)
+
+func (e RequestCatalogManagementServiceCreateRequestUnenrollmentEntitlementBehavior) ToPointer() *RequestCatalogManagementServiceCreateRequestUnenrollmentEntitlementBehavior {
+	return &e
+}
+
 // RequestCatalogManagementServiceCreateRequest - Create a request catalog.
 type RequestCatalogManagementServiceCreateRequest struct {
 	// The RequestCatalogExpandMask includes the paths in the catalog view to expand in the return value of this call.
@@ -9,11 +49,17 @@ type RequestCatalogManagementServiceCreateRequest struct {
 	// The description of the new request catalog.
 	Description *string `json:"description,omitempty"`
 	// The display name of the new request catalog.
-	DisplayName *string `json:"displayName,omitempty"`
+	DisplayName string `json:"displayName"`
+	// Defines how to handle the request policies of the entitlements in the catalog during enrollment.
+	EnrollmentBehavior *RequestCatalogManagementServiceCreateRequestEnrollmentBehavior `json:"enrollmentBehavior,omitempty"`
 	// Whether or not the new catalog should be created as published.
 	Published *bool `json:"published,omitempty"`
 	// Whether all the entitlements in the catalog can be requests at once. Your tenant must have the bundles feature to use this.
 	RequestBundle *bool `json:"requestBundle,omitempty"`
+	// Defines how to handle the revocation of the entitlements in the catalog during unenrollment.
+	UnenrollmentBehavior *RequestCatalogManagementServiceCreateRequestUnenrollmentBehavior `json:"unenrollmentBehavior,omitempty"`
+	// Defines how to handle the revoke policies of the entitlements in the catalog during unenrollment.
+	UnenrollmentEntitlementBehavior *RequestCatalogManagementServiceCreateRequestUnenrollmentEntitlementBehavior `json:"unenrollmentEntitlementBehavior,omitempty"`
 	// Whether or not the new catalog is visible to everyone by default.
 	VisibleToEveryone *bool `json:"visibleToEveryone,omitempty"`
 }
@@ -32,11 +78,18 @@ func (o *RequestCatalogManagementServiceCreateRequest) GetDescription() *string 
 	return o.Description
 }
 
-func (o *RequestCatalogManagementServiceCreateRequest) GetDisplayName() *string {
+func (o *RequestCatalogManagementServiceCreateRequest) GetDisplayName() string {
+	if o == nil {
+		return ""
+	}
+	return o.DisplayName
+}
+
+func (o *RequestCatalogManagementServiceCreateRequest) GetEnrollmentBehavior() *RequestCatalogManagementServiceCreateRequestEnrollmentBehavior {
 	if o == nil {
 		return nil
 	}
-	return o.DisplayName
+	return o.EnrollmentBehavior
 }
 
 func (o *RequestCatalogManagementServiceCreateRequest) GetPublished() *bool {
@@ -51,6 +104,20 @@ func (o *RequestCatalogManagementServiceCreateRequest) GetRequestBundle() *bool 
 		return nil
 	}
 	return o.RequestBundle
+}
+
+func (o *RequestCatalogManagementServiceCreateRequest) GetUnenrollmentBehavior() *RequestCatalogManagementServiceCreateRequestUnenrollmentBehavior {
+	if o == nil {
+		return nil
+	}
+	return o.UnenrollmentBehavior
+}
+
+func (o *RequestCatalogManagementServiceCreateRequest) GetUnenrollmentEntitlementBehavior() *RequestCatalogManagementServiceCreateRequestUnenrollmentEntitlementBehavior {
+	if o == nil {
+		return nil
+	}
+	return o.UnenrollmentEntitlementBehavior
 }
 
 func (o *RequestCatalogManagementServiceCreateRequest) GetVisibleToEveryone() *bool {

@@ -29,13 +29,6 @@ func newExport(sdkConfig sdkConfiguration) *Export {
 // Create
 // Create a system log export.
 func (s *Export) Create(ctx context.Context, request *shared.ExportServiceCreateRequest, opts ...operations.Option) (*operations.C1APISystemlogV1ExportServiceCreateResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "c1.api.systemlog.v1.ExportService.Create",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -59,6 +52,13 @@ func (s *Export) Create(ctx context.Context, request *shared.ExportServiceCreate
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "c1.api.systemlog.v1.ExportService.Create",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -237,13 +237,6 @@ func (s *Export) Create(ctx context.Context, request *shared.ExportServiceCreate
 // Delete
 // Delete a policy by ID.
 func (s *Export) Delete(ctx context.Context, request operations.C1APISystemlogV1ExportServiceDeleteRequest, opts ...operations.Option) (*operations.C1APISystemlogV1ExportServiceDeleteResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "c1.api.systemlog.v1.ExportService.Delete",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -267,6 +260,13 @@ func (s *Export) Delete(ctx context.Context, request operations.C1APISystemlogV1
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "c1.api.systemlog.v1.ExportService.Delete",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "ExportServiceDeleteRequest", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -445,13 +445,6 @@ func (s *Export) Delete(ctx context.Context, request operations.C1APISystemlogV1
 // Get
 // Get a system log export by ID
 func (s *Export) Get(ctx context.Context, request operations.C1APISystemlogV1ExportServiceGetRequest, opts ...operations.Option) (*operations.C1APISystemlogV1ExportServiceGetResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "c1.api.systemlog.v1.ExportService.Get",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -473,6 +466,14 @@ func (s *Export) Get(ctx context.Context, request operations.C1APISystemlogV1Exp
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/api/v1/systemlog/exports/{export_id}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "c1.api.systemlog.v1.ExportService.Get",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -645,13 +646,6 @@ func (s *Export) Get(ctx context.Context, request operations.C1APISystemlogV1Exp
 // List
 // List Exports.
 func (s *Export) List(ctx context.Context, request operations.C1APISystemlogV1ExportServiceListRequest, opts ...operations.Option) (*operations.C1APISystemlogV1ExportServiceListResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "c1.api.systemlog.v1.ExportService.List",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -673,6 +667,14 @@ func (s *Export) List(ctx context.Context, request operations.C1APISystemlogV1Ex
 	opURL, err := url.JoinPath(baseURL, "/api/v1/systemlog/exports")
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "c1.api.systemlog.v1.ExportService.List",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -849,13 +851,6 @@ func (s *Export) List(ctx context.Context, request operations.C1APISystemlogV1Ex
 // ListEvents - List Events
 // Invokes the c1.api.systemlog.v1.ExportService.ListEvents method.
 func (s *Export) ListEvents(ctx context.Context, request operations.C1APISystemlogV1ExportServiceListEventsRequest, opts ...operations.Option) (*operations.C1APISystemlogV1ExportServiceListEventsResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "c1.api.systemlog.v1.ExportService.ListEvents",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -879,6 +874,13 @@ func (s *Export) ListEvents(ctx context.Context, request operations.C1APISysteml
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "c1.api.systemlog.v1.ExportService.ListEvents",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "ExportServiceListEventsRequest", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -1057,13 +1059,6 @@ func (s *Export) ListEvents(ctx context.Context, request operations.C1APISysteml
 // Update
 // Update a system log export by providing a policy object and an update mask.
 func (s *Export) Update(ctx context.Context, request operations.C1APISystemlogV1ExportServiceUpdateRequest, opts ...operations.Option) (*operations.C1APISystemlogV1ExportServiceUpdateResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "c1.api.systemlog.v1.ExportService.Update",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -1087,6 +1082,13 @@ func (s *Export) Update(ctx context.Context, request operations.C1APISystemlogV1
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "c1.api.systemlog.v1.ExportService.Update",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "ExportServiceUpdateRequest", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err

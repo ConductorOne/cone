@@ -29,13 +29,6 @@ func newAttributeSearch(sdkConfig sdkConfiguration) *AttributeSearch {
 // SearchAttributeValues - Search Attribute Values
 // Search attributes based on filters specified in the request body.
 func (s *AttributeSearch) SearchAttributeValues(ctx context.Context, request *shared.SearchAttributeValuesRequest, opts ...operations.Option) (*operations.C1APIAttributeV1AttributeSearchSearchAttributeValuesResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "c1.api.attribute.v1.AttributeSearch.SearchAttributeValues",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -59,6 +52,13 @@ func (s *AttributeSearch) SearchAttributeValues(ctx context.Context, request *sh
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "c1.api.attribute.v1.AttributeSearch.SearchAttributeValues",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err

@@ -28,13 +28,6 @@ func newAppResourceOwners(sdkConfig sdkConfiguration) *AppResourceOwners {
 // Add
 // Invokes the c1.api.app.v1.AppResourceOwners.Add method.
 func (s *AppResourceOwners) Add(ctx context.Context, request operations.C1APIAppV1AppResourceOwnersAddRequest, opts ...operations.Option) (*operations.C1APIAppV1AppResourceOwnersAddResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "c1.api.app.v1.AppResourceOwners.Add",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -58,6 +51,13 @@ func (s *AppResourceOwners) Add(ctx context.Context, request operations.C1APIApp
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "c1.api.app.v1.AppResourceOwners.Add",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "AddAppResourceOwnerRequest", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -236,13 +236,6 @@ func (s *AppResourceOwners) Add(ctx context.Context, request operations.C1APIApp
 // List
 // List all owners of an app resource.
 func (s *AppResourceOwners) List(ctx context.Context, request operations.C1APIAppV1AppResourceOwnersListRequest, opts ...operations.Option) (*operations.C1APIAppV1AppResourceOwnersListResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "c1.api.app.v1.AppResourceOwners.List",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -264,6 +257,14 @@ func (s *AppResourceOwners) List(ctx context.Context, request operations.C1APIAp
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/api/v1/apps/{app_id}/resource_types/{resource_type_id}/resource/{resource_id}/owners", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "c1.api.app.v1.AppResourceOwners.List",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -440,13 +441,6 @@ func (s *AppResourceOwners) List(ctx context.Context, request operations.C1APIAp
 // Remove
 // Invokes the c1.api.app.v1.AppResourceOwners.Remove method.
 func (s *AppResourceOwners) Remove(ctx context.Context, request operations.C1APIAppV1AppResourceOwnersRemoveRequest, opts ...operations.Option) (*operations.C1APIAppV1AppResourceOwnersRemoveResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "c1.api.app.v1.AppResourceOwners.Remove",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -470,6 +464,13 @@ func (s *AppResourceOwners) Remove(ctx context.Context, request operations.C1API
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "c1.api.app.v1.AppResourceOwners.Remove",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "RemoveAppResourceOwnerRequest", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err

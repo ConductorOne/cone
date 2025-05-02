@@ -29,13 +29,6 @@ func newPolicyValidate(sdkConfig sdkConfiguration) *PolicyValidate {
 // ValidateCEL - Validate Cel
 // Validate policies
 func (s *PolicyValidate) ValidateCEL(ctx context.Context, request *shared.ValidatePolicyCELRequest, opts ...operations.Option) (*operations.C1APIPolicyV1PolicyValidateValidateCELResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "c1.api.policy.v1.PolicyValidate.ValidateCEL",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -59,6 +52,13 @@ func (s *PolicyValidate) ValidateCEL(ctx context.Context, request *shared.Valida
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "c1.api.policy.v1.PolicyValidate.ValidateCEL",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err

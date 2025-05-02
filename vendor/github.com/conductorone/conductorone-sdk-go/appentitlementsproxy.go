@@ -28,13 +28,6 @@ func newAppEntitlementsProxy(sdkConfig sdkConfiguration) *AppEntitlementsProxy {
 // Create
 // Invokes the c1.api.app.v1.AppEntitlementsProxy.Create method.
 func (s *AppEntitlementsProxy) Create(ctx context.Context, request operations.C1APIAppV1AppEntitlementsProxyCreateRequest, opts ...operations.Option) (*operations.C1APIAppV1AppEntitlementsProxyCreateResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "c1.api.app.v1.AppEntitlementsProxy.Create",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -58,6 +51,13 @@ func (s *AppEntitlementsProxy) Create(ctx context.Context, request operations.C1
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "c1.api.app.v1.AppEntitlementsProxy.Create",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "CreateAppEntitlementProxyRequest", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -236,13 +236,6 @@ func (s *AppEntitlementsProxy) Create(ctx context.Context, request operations.C1
 // Delete
 // Invokes the c1.api.app.v1.AppEntitlementsProxy.Delete method.
 func (s *AppEntitlementsProxy) Delete(ctx context.Context, request operations.C1APIAppV1AppEntitlementsProxyDeleteRequest, opts ...operations.Option) (*operations.C1APIAppV1AppEntitlementsProxyDeleteResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "c1.api.app.v1.AppEntitlementsProxy.Delete",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -266,6 +259,13 @@ func (s *AppEntitlementsProxy) Delete(ctx context.Context, request operations.C1
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "c1.api.app.v1.AppEntitlementsProxy.Delete",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "DeleteAppEntitlementProxyRequest", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -444,13 +444,6 @@ func (s *AppEntitlementsProxy) Delete(ctx context.Context, request operations.C1
 // Get
 // Invokes the c1.api.app.v1.AppEntitlementsProxy.Get method.
 func (s *AppEntitlementsProxy) Get(ctx context.Context, request operations.C1APIAppV1AppEntitlementsProxyGetRequest, opts ...operations.Option) (*operations.C1APIAppV1AppEntitlementsProxyGetResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "c1.api.app.v1.AppEntitlementsProxy.Get",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -472,6 +465,14 @@ func (s *AppEntitlementsProxy) Get(ctx context.Context, request operations.C1API
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/api/v1/apps/{src_app_id}/{src_app_entitlement_id}/bindings/{dst_app_id}/{dst_app_entitlement_id}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "c1.api.app.v1.AppEntitlementsProxy.Get",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout

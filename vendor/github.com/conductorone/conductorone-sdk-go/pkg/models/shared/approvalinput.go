@@ -14,7 +14,10 @@ package shared
 //   - expression
 //   - webhook
 //   - resourceOwners
+//   - agent
 type ApprovalInput struct {
+	// The agent to assign the task to.
+	AgentApproval *AgentApproval `json:"agent,omitempty"`
 	// The AppGroupApproval object provides the configuration for setting a group as the approvers of an approval policy step.
 	AppGroupApproval *AppGroupApproval `json:"group,omitempty"`
 	// App owner approval provides the configuration for an approval step when the app owner is the target.
@@ -22,27 +25,37 @@ type ApprovalInput struct {
 	// The entitlement owner approval allows configuration of the approval step when the target approvers are the entitlement owners.
 	EntitlementOwnerApproval *EntitlementOwnerApproval `json:"entitlementOwners,omitempty"`
 	// The ExpressionApproval message.
-	ExpressionApproval *ExpressionApproval `json:"expression,omitempty"`
+	ExpressionApproval *ExpressionApprovalInput `json:"expression,omitempty"`
 	// The manager approval object provides configuration options for approval when the target of the approval is the manager of the user in the task.
 	ManagerApproval *ManagerApprovalInput `json:"manager,omitempty"`
 	// The resource owner approval allows configuration of the approval step when the target approvers are the resource owners.
 	ResourceOwnerApproval *ResourceOwnerApproval `json:"resourceOwners,omitempty"`
 	// The self approval object describes the configuration of a policy step that needs to be approved by the target of the request.
-	SelfApproval *SelfApproval `json:"self,omitempty"`
+	SelfApproval *SelfApprovalInput `json:"self,omitempty"`
 	// The user approval object describes the approval configuration of a policy step that needs to be approved by a specific list of users.
 	UserApproval *UserApproval `json:"users,omitempty"`
 	// The WebhookApproval message.
 	WebhookApproval *WebhookApproval `json:"webhook,omitempty"`
 	// Configuration to allow reassignment by reviewers during this step.
 	AllowReassignment *bool `json:"allowReassignment,omitempty"`
-	// A field indicating whether this step is assigned.
-	Assigned *bool `json:"assigned,omitempty"`
+	// List of users for whom this step can be reassigned.
+	AllowedReassignees []string `json:"allowedReassignees,omitempty"`
 	// Configuration to require a reason when approving this step.
 	RequireApprovalReason *bool `json:"requireApprovalReason,omitempty"`
 	// Configuration to require a reason when denying this step.
 	RequireDenialReason *bool `json:"requireDenialReason,omitempty"`
 	// Configuration to require a reason when reassigning this step.
 	RequireReassignmentReason *bool `json:"requireReassignmentReason,omitempty"`
+	// The ID of a step-up authentication provider that will be required for approvals on this step.
+	//  If set, approvers must complete the step-up authentication flow before they can approve.
+	RequiresStepUpProviderID *string `json:"requiresStepUpProviderId,omitempty"`
+}
+
+func (o *ApprovalInput) GetAgentApproval() *AgentApproval {
+	if o == nil {
+		return nil
+	}
+	return o.AgentApproval
 }
 
 func (o *ApprovalInput) GetAppGroupApproval() *AppGroupApproval {
@@ -66,7 +79,7 @@ func (o *ApprovalInput) GetEntitlementOwnerApproval() *EntitlementOwnerApproval 
 	return o.EntitlementOwnerApproval
 }
 
-func (o *ApprovalInput) GetExpressionApproval() *ExpressionApproval {
+func (o *ApprovalInput) GetExpressionApproval() *ExpressionApprovalInput {
 	if o == nil {
 		return nil
 	}
@@ -87,7 +100,7 @@ func (o *ApprovalInput) GetResourceOwnerApproval() *ResourceOwnerApproval {
 	return o.ResourceOwnerApproval
 }
 
-func (o *ApprovalInput) GetSelfApproval() *SelfApproval {
+func (o *ApprovalInput) GetSelfApproval() *SelfApprovalInput {
 	if o == nil {
 		return nil
 	}
@@ -115,11 +128,11 @@ func (o *ApprovalInput) GetAllowReassignment() *bool {
 	return o.AllowReassignment
 }
 
-func (o *ApprovalInput) GetAssigned() *bool {
+func (o *ApprovalInput) GetAllowedReassignees() []string {
 	if o == nil {
 		return nil
 	}
-	return o.Assigned
+	return o.AllowedReassignees
 }
 
 func (o *ApprovalInput) GetRequireApprovalReason() *bool {
@@ -141,4 +154,11 @@ func (o *ApprovalInput) GetRequireReassignmentReason() *bool {
 		return nil
 	}
 	return o.RequireReassignmentReason
+}
+
+func (o *ApprovalInput) GetRequiresStepUpProviderID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.RequiresStepUpProviderID
 }

@@ -29,13 +29,6 @@ func newPolicies(sdkConfig sdkConfiguration) *Policies {
 // Create
 // Create a policy.
 func (s *Policies) Create(ctx context.Context, request *shared.CreatePolicyRequest, opts ...operations.Option) (*operations.C1APIPolicyV1PoliciesCreateResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "c1.api.policy.v1.Policies.Create",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -59,6 +52,13 @@ func (s *Policies) Create(ctx context.Context, request *shared.CreatePolicyReque
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "c1.api.policy.v1.Policies.Create",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -237,13 +237,6 @@ func (s *Policies) Create(ctx context.Context, request *shared.CreatePolicyReque
 // Delete
 // Delete a policy by ID.
 func (s *Policies) Delete(ctx context.Context, request operations.C1APIPolicyV1PoliciesDeleteRequest, opts ...operations.Option) (*operations.C1APIPolicyV1PoliciesDeleteResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "c1.api.policy.v1.Policies.Delete",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -267,6 +260,13 @@ func (s *Policies) Delete(ctx context.Context, request operations.C1APIPolicyV1P
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "c1.api.policy.v1.Policies.Delete",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "DeletePolicyRequest", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -445,13 +445,6 @@ func (s *Policies) Delete(ctx context.Context, request operations.C1APIPolicyV1P
 // Get
 // Get a policy by ID.
 func (s *Policies) Get(ctx context.Context, request operations.C1APIPolicyV1PoliciesGetRequest, opts ...operations.Option) (*operations.C1APIPolicyV1PoliciesGetResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "c1.api.policy.v1.Policies.Get",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -473,6 +466,14 @@ func (s *Policies) Get(ctx context.Context, request operations.C1APIPolicyV1Poli
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/api/v1/policies/{id}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "c1.api.policy.v1.Policies.Get",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -645,13 +646,6 @@ func (s *Policies) Get(ctx context.Context, request operations.C1APIPolicyV1Poli
 // List
 // List policies.
 func (s *Policies) List(ctx context.Context, request operations.C1APIPolicyV1PoliciesListRequest, opts ...operations.Option) (*operations.C1APIPolicyV1PoliciesListResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "c1.api.policy.v1.Policies.List",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -673,6 +667,14 @@ func (s *Policies) List(ctx context.Context, request operations.C1APIPolicyV1Pol
 	opURL, err := url.JoinPath(baseURL, "/api/v1/policies")
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "c1.api.policy.v1.Policies.List",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -849,13 +851,6 @@ func (s *Policies) List(ctx context.Context, request operations.C1APIPolicyV1Pol
 // Update
 // Update a policy by providing a policy object and an update mask.
 func (s *Policies) Update(ctx context.Context, request operations.C1APIPolicyV1PoliciesUpdateRequest, opts ...operations.Option) (*operations.C1APIPolicyV1PoliciesUpdateResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "c1.api.policy.v1.Policies.Update",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -879,6 +874,13 @@ func (s *Policies) Update(ctx context.Context, request operations.C1APIPolicyV1P
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "c1.api.policy.v1.Policies.Update",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "UpdatePolicyRequest", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err

@@ -14,6 +14,7 @@ const (
 	MembershipTypeAppEntitlementMembershipTypeMember      MembershipType = "APP_ENTITLEMENT_MEMBERSHIP_TYPE_MEMBER"
 	MembershipTypeAppEntitlementMembershipTypeOwner       MembershipType = "APP_ENTITLEMENT_MEMBERSHIP_TYPE_OWNER"
 	MembershipTypeAppEntitlementMembershipTypeExclusion   MembershipType = "APP_ENTITLEMENT_MEMBERSHIP_TYPE_EXCLUSION"
+	MembershipTypeAppEntitlementMembershipTypeAdmin       MembershipType = "APP_ENTITLEMENT_MEMBERSHIP_TYPE_ADMIN"
 )
 
 func (e MembershipType) ToPointer() *MembershipType {
@@ -32,6 +33,8 @@ func (e *MembershipType) UnmarshalJSON(data []byte) error {
 	case "APP_ENTITLEMENT_MEMBERSHIP_TYPE_OWNER":
 		fallthrough
 	case "APP_ENTITLEMENT_MEMBERSHIP_TYPE_EXCLUSION":
+		fallthrough
+	case "APP_ENTITLEMENT_MEMBERSHIP_TYPE_ADMIN":
 		*e = MembershipType(v)
 		return nil
 	default:
@@ -83,6 +86,8 @@ type AppEntitlementSearchServiceSearchRequest struct {
 	ResourceTypeIds []string `json:"resourceTypeIds,omitempty"`
 	// Search for app entitlements with these risk levels.
 	RiskLevelIds []string `json:"riskLevelIds,omitempty"`
+	// The sourceConnectorId field.
+	SourceConnectorID *string `json:"sourceConnectorId,omitempty"`
 }
 
 func (o *AppEntitlementSearchServiceSearchRequest) GetAppEntitlementExpandMask() *AppEntitlementExpandMask {
@@ -230,4 +235,11 @@ func (o *AppEntitlementSearchServiceSearchRequest) GetRiskLevelIds() []string {
 		return nil
 	}
 	return o.RiskLevelIds
+}
+
+func (o *AppEntitlementSearchServiceSearchRequest) GetSourceConnectorID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SourceConnectorID
 }

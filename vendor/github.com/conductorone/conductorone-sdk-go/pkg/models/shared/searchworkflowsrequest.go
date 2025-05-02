@@ -10,6 +10,8 @@ type SearchWorkflowsRequest struct {
 	PageToken *string `json:"pageToken,omitempty"`
 	// The query field.
 	Query *string `json:"query,omitempty"`
+	// The refs field.
+	Refs []*WorkflowTemplateRef `json:"refs,omitempty"`
 }
 
 func (o *SearchWorkflowsRequest) GetPageSize() *int {
@@ -31,4 +33,11 @@ func (o *SearchWorkflowsRequest) GetQuery() *string {
 		return nil
 	}
 	return o.Query
+}
+
+func (o *SearchWorkflowsRequest) GetRefs() []*WorkflowTemplateRef {
+	if o == nil {
+		return nil
+	}
+	return o.Refs
 }

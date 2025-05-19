@@ -18,8 +18,16 @@ type Token struct {
 func tokenCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "token",
-		Short: "",
-		RunE:  tokenRun,
+		Short: "Get a ConductorOne API access token",
+		Long: `Get a ConductorOne API access token using your client credentials.
+This command is useful for:
+- Debugging authentication issues
+- Getting a token to use with other tools
+- Verifying your credentials are working correctly
+
+The token is obtained using OAuth2 client credentials flow and can be used to make API calls to ConductorOne.
+Use --raw flag to get just the bearer token without any formatting.`,
+		RunE: tokenRun,
 	}
 	addRawTokenFlag(cmd)
 	return cmd

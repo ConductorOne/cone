@@ -21,9 +21,9 @@ import (
 const durationErrorMessage = "grant duration must be less than or equal to max provision time"
 const durationInputTip = "We accept a sequence of decimal numbers, each with optional fraction and a unit suffix," +
 	"such as \"12h\", \"1w2d\" or \"2h45m\". Valid units are (m)inutes, (h)ours, (d)ays, (w)eeks."
-const justificationWarningMessage = "Please provide a justification when requesting access to an entitlement."
+const justificationWarningMessage = "please provide a justification when requesting access to an entitlement"
 const justificationInputTip = "You can add a justification using -j or --justification"
-const appUserMultipleUsersWarningMessage = "This app has multiple users. Please select any one. "
+const appUserMultipleUsersWarningMessage = "this app has multiple users. Please select any one. "
 
 func getCmd() *cobra.Command {
 	cmd := &cobra.Command{

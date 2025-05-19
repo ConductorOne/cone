@@ -189,7 +189,7 @@ func IsAWSPermissionSet(entitlement *shared.AppEntitlement, resourceType *shared
 	return false
 }
 
-// CreateAWSSSOProfile creates an AWS SSO profile for a permission set
+// CreateAWSSSOProfile creates an AWS SSO profile for a permission set.
 func CreateAWSSSOProfile(entitlement *shared.AppEntitlement, resource *shared.AppResource) error {
 	if entitlement == nil || resource == nil {
 		return errors.New("entitlement and resource are required")
@@ -215,7 +215,7 @@ func CreateAWSSSOProfile(entitlement *shared.AppEntitlement, resource *shared.Ap
 
 	// Get AWS account name from resource display name
 	accountName := "aws"
-	if resource != nil && resource.DisplayName != nil {
+	if resource.DisplayName != nil {
 		accountName = strings.ToLower(strings.ReplaceAll(*resource.DisplayName, " ", "-"))
 	}
 

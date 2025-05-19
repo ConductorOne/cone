@@ -96,6 +96,7 @@ type C1Client interface {
 	ListAppUserCredentials(ctx context.Context, appID string, appUserID string) ([]shared.AppUserCredential, error)
 	ListPolicies(ctx context.Context) ([]shared.Policy, error)
 	ListEntitlements(ctx context.Context, appId string) ([]shared.AppEntitlement, error)
+	UpdateEntitlement(ctx context.Context, appID, entitlementID string, req *shared.UpdateAppEntitlementRequest) error
 }
 
 func (c *client) BaseURL() string {

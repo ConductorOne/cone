@@ -10,6 +10,7 @@ import (
 
 	"github.com/conductorone/conductorone-sdk-go/pkg/models/operations"
 	"github.com/conductorone/conductorone-sdk-go/pkg/models/shared"
+	"github.com/pterm/pterm"
 	"github.com/spf13/viper"
 )
 
@@ -244,7 +245,8 @@ func CreateAWSSSOProfile(entitlement *shared.AppEntitlement, resource *shared.Ap
 	// Check if profile already exists
 	configStr := string(configContent)
 	if strings.Contains(configStr, fmt.Sprintf("[profile %s]", profileName)) {
-		return fmt.Errorf("AWS profile '%s' already exists", profileName)
+		pterm.Info.Printf("AWS profile '%s' already exists\n", profileName)
+		return nil
 	}
 
 	// Check if SSO session already exists
@@ -279,5 +281,6 @@ sso_registration_scopes = sso:account:access
 		return fmt.Errorf("failed to write AWS config file: %w", err)
 	}
 
+	pterm.Success.Printf("Successfully created AWS SSO profile for entitlement %s\n", *entitlement.DisplayName)
 	return nil
 }

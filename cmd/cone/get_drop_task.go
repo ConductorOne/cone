@@ -282,6 +282,80 @@ func printExtraTaskDetails(ctx context.Context, v *viper.Viper, c client.C1Clien
 	return nil
 }
 
+// createAWSSSOProfileIfNeeded checks if the entitlement is an AWS permission set and creates the profile if needed.
+func createAWSSSOProfileIfNeeded(ctx context.Context, c client.C1Client, task *shared.Task, outputManager output.Manager) error {
+	if task.TaskType.TaskTypeGrant == nil {
+		return nil
+	}
+
+	appID := *task.TaskType.TaskTypeGrant.AppID
+	entitlementID := *task.TaskType.TaskTypeGrant.AppEntitlementID
+
+	// Get the entitlement details
+	entitlement, err := c.GetEntitlement(ctx, appID, entitlementID)
+	if err != nil {
+		return fmt.Errorf("failed to get entitlement details: %w", err)
+	}
+
+	// Get the resource type
+	resourceType, err := c.GetResourceType(ctx, appID, *entitlement.AppResourceTypeID)
+	if err != nil {
+		return fmt.Errorf("failed to get resource type: %w", err)
+	}
+
+	// Check if this is an AWS permission set
+	if client.IsAWSPermissionSet(entitlement, resourceType) {
+		// Get the resource details
+		resource, err := c.GetResource(ctx, appID, *entitlement.AppResourceTypeID, *entitlement.AppResourceID)
+		if err != nil {
+			return fmt.Errorf("failed to get resource details: %w", err)
+		}
+
+		if err := client.CreateAWSSSOProfile(entitlement, resource); err != nil {
+			return fmt.Errorf("failed to create AWS SSO profile: %w", err)
+		}
+	}
+	return nil
+}
+
+// handleWaitBehavior manages the waiting state for task completion.
+func handleWaitBehavior(ctx context.Context, c client.C1Client, task *shared.Task, outputManager output.Manager) error {
+	spinner, _ := pterm.DefaultSpinner.Start("Waiting for task to complete...")
+	defer spinner.Stop()
+
+	for {
+		updatedTask, err := c.GetTask(ctx, *task.ID)
+		if err != nil {
+			return err
+		}
+
+		if *updatedTask.TaskView.Task.State == shared.TaskStateTaskStateClosed {
+			if updatedTask.TaskView.Task.TaskType.TaskTypeGrant != nil {
+				taskOutcome := updatedTask.TaskView.Task.TaskType.TaskTypeGrant.Outcome
+				if taskOutcome == nil {
+					return fmt.Errorf("task closed but no outcome provided")
+				}
+
+				if *taskOutcome == shared.TaskTypeGrantOutcomeGrantOutcomeGranted {
+					spinner.Success("Entitlement granted successfully.")
+				} else if *taskOutcome == shared.TaskTypeGrantOutcomeGrantOutcomeDenied {
+					spinner.Fail("Entitlement request was denied.")
+					return fmt.Errorf("entitlement request was denied")
+				} else {
+					spinner.Fail(fmt.Sprintf("Task completed with unexpected outcome: %s", *taskOutcome))
+					return fmt.Errorf("task completed with unexpected outcome: %s", *taskOutcome)
+				}
+			}
+			break
+		}
+
+		time.Sleep(2 * time.Second)
+	}
+
+	return nil
+}
+
+// runTask executes the task and handles the response.
 func runTask(
 	cmd *cobra.Command,
 	args []string,
@@ -304,50 +378,20 @@ func runTask(
 		return err
 	}
 
-	userID := client.StringFromPtr(resp.UserID)
-
-	forceCreate := v.GetBool(forceFlag)
-	if !forceCreate {
-		grants, err := c.GetGrantsForIdentity(ctx, appId, entitlementId, userID)
-		if err != nil {
-			return err
-		}
-		grantCount := 0
-		for _, grant := range grants {
-			// We only want to check if user has a grant
-			if client.StringFromPtr(grant.AppEntitlementID) != "" {
-				grantCount++
-			}
-		}
-
-		// If this is get, and they have grants, just exit
-		if cmd.Name() == getCmd().Name() && grantCount > 0 {
-			pterm.Println("You already have access to this entitlement. Use --force to override this check.")
-			return nil
-		}
-
-		if cmd.Name() == dropCmd().Name() && grantCount == 0 {
-			pterm.Println("You do not have existing grants to drop for this entitlement. Use --force to override this check.")
-			return nil
-		}
-	}
-
 	task, err := run(c, ctx, appId, entitlementId, client.StringFromPtr(resp.UserID), justification)
 	if err != nil {
 		return err
-	}
-
-	if v.GetBool(extraDetailsFlag) {
-		err = printExtraTaskDetails(ctx, v, c, appId, entitlementId)
-		if err != nil {
-			return err
-		}
 	}
 
 	outputManager := output.NewManager(ctx, v)
 	taskResp := Task{task: task, client: c}
 	err = outputManager.Output(ctx, &taskResp, output.WithTransposeTable())
 	if err != nil {
+		return err
+	}
+
+	// Create AWS SSO profile immediately after task creation
+	if err := createAWSSSOProfileIfNeeded(ctx, c, task, outputManager); err != nil {
 		return err
 	}
 
@@ -486,84 +530,6 @@ func getEntitlementDetails(ctx context.Context, c client.C1Client, v *viper.Vipe
 		appId = client.StringFromPtr(optionToEntitlementMap[selectedOption].AppID)
 	}
 	return entitlementId, appId, nil
-}
-
-// handleWaitBehavior manages the waiting state for task completion and handles AWS-specific post-grant actions.
-// When a grant task is successful, it checks if the entitlement is an AWS permission set.
-// If it is, it attempts to create an AWS SSO profile for the user.
-func handleWaitBehavior(ctx context.Context, c client.C1Client, task *shared.Task, outputManager output.Manager) error {
-	spinner, _ := pterm.DefaultSpinner.Start("Waiting for ticket to close.")
-	var taskItem *shared.Task
-	for {
-		select {
-		case <-ctx.Done():
-			return ctx.Err()
-		case <-time.After(1 * time.Second):
-		}
-		task, err := c.GetTask(ctx, client.StringFromPtr(task.ID))
-		if err != nil {
-			return err
-		}
-
-		taskItem = task.TaskView.Task
-		taskResp := Task{task: taskItem, client: c}
-		err = outputManager.Output(ctx, &taskResp, output.WithTransposeTable())
-		if err != nil {
-			return err
-		}
-
-		if *taskItem.State == shared.TaskStateTaskStateClosed {
-			break
-		}
-	}
-	if taskItem.TaskType.TaskTypeGrant != nil {
-		taskOutcome := taskItem.TaskType.TaskTypeGrant.Outcome
-		if *taskOutcome == shared.TaskTypeGrantOutcomeGrantOutcomeGranted {
-			spinner.Success("Entitlement granted successfully.")
-
-			appID := *taskItem.TaskType.TaskTypeGrant.AppID
-			entitlementID := *taskItem.TaskType.TaskTypeGrant.AppEntitlementID
-			entitlement, err := c.GetEntitlement(ctx, appID, entitlementID)
-			if err != nil {
-				return err
-			}
-
-			resourceType, err := c.GetResourceType(ctx, appID, *entitlement.AppResourceTypeID)
-			if err != nil {
-				return err
-			}
-
-			// Check if this is an AWS permission set entitlement
-			// If it is, create an AWS SSO profile for the user
-			if client.IsAWSPermissionSet(entitlement, resourceType) {
-				resource, err := c.GetResource(ctx, appID, *entitlement.AppResourceTypeID, *entitlement.AppResourceID)
-				if err != nil {
-					return err
-				}
-
-				// Attempt to create the AWS SSO profile
-				// This will use the AWS SSO URL configured via 'cone config-aws set-sso-url'
-				if err := client.CreateAWSSSOProfile(entitlement, resource); err != nil {
-					spinner.Warning(fmt.Sprintf("Failed to create AWS SSO profile: %v", err))
-				} else {
-					spinner.Success(fmt.Sprintf("Successfully created AWS SSO profile for entitlement %s", *entitlement.DisplayName))
-				}
-			}
-		} else {
-			spinner.Fail(fmt.Sprintf("Failed to grant entitlement %s", string(*taskOutcome)))
-			return fmt.Errorf("failed to grant entitlement %s", string(*taskOutcome))
-		}
-	}
-	if taskItem.TaskType.TaskTypeRevoke != nil {
-		taskOutcome := taskItem.TaskType.TaskTypeRevoke.Outcome
-		if *taskOutcome == shared.TaskTypeRevokeOutcomeRevokeOutcomeRevoked {
-			spinner.Success("Entitlement revoked successfully.")
-		} else {
-			spinner.Fail(fmt.Sprintf("Failed to revoke entitlement %s", string(*taskOutcome)))
-			return fmt.Errorf("failed to revoke entitlement %s", string(*taskOutcome))
-		}
-	}
-	return nil
 }
 
 var processStateToString = map[shared.Processing]string{

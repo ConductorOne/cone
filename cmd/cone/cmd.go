@@ -63,11 +63,6 @@ func rootCmd() *cobra.Command {
 
 	cmd.AddCommand(getCmd())
 	cmd.AddCommand(dropCmd())
-	cmd.AddCommand(approveTasksCmd())
-	cmd.AddCommand(denyTasksCmd())
-	cmd.AddCommand(getTasksCmd())
-	cmd.AddCommand(tasksCommentCmd())
-	cmd.AddCommand(escalateTasksCmd())
 	cmd.AddCommand(configAwsCmd())
 	cmd.AddCommand(whoAmICmd())
 	cmd.AddCommand(getUserCmd())

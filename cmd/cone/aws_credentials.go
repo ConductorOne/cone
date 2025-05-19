@@ -13,32 +13,33 @@ import (
 
 	"github.com/conductorone/conductorone-sdk-go/pkg/models/shared"
 	"github.com/conductorone/cone/pkg/client"
+	"github.com/pterm/pterm"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
 
-// AWSCredentials represents the structure of AWS temporary credentials
-// that will be output in JSON format
+// AWSCredentials represents the structure of AWS temporary credentials.
+// that will be output in JSON format.
 type AWSCredentials struct {
 	Version         int    `json:"Version"`
-	AccessKeyId     string `json:"AccessKeyId"`
+	AccessKeyID     string `json:"AccessKeyId"`
 	SecretAccessKey string `json:"SecretAccessKey"`
 	SessionToken    string `json:"SessionToken"`
 	Expiration      string `json:"Expiration"`
 }
 
-// RoleCredentialsResponse represents the response from AWS SSO get-role-credentials API
+// RoleCredentialsResponse represents the response from AWS SSO get-role-credentials API.
 type RoleCredentialsResponse struct {
 	RoleCredentials struct {
-		AccessKeyId     string `json:"accessKeyId"`
+		AccessKeyID     string `json:"accessKeyId"`
 		SecretAccessKey string `json:"secretAccessKey"`
 		SessionToken    string `json:"sessionToken"`
 		Expiration      int64  `json:"expiration"`
 	} `json:"roleCredentials"`
 }
 
-// awsCredentialsCmd creates the cobra command for getting AWS credentials
-// Usage: cone aws-credentials <profile-name>
+// awsCredentialsCmd creates the cobra command for getting AWS credentials.
+// Usage: cone aws-credentials <profile-name>.
 func awsCredentialsCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "aws-credentials <profile-name>",
@@ -48,8 +49,8 @@ func awsCredentialsCmd() *cobra.Command {
 	return cmd
 }
 
-// awsCredentialsRun is the main function that handles getting AWS credentials
-// It verifies access, reads AWS config, and retrieves temporary credentials
+// awsCredentialsRun is the main function that handles getting AWS credentials.
+// It verifies access, reads AWS config, and retrieves temporary credentials.
 func awsCredentialsRun(cmd *cobra.Command, args []string) error {
 	ctx, _, _, err := cmdContext(cmd)
 	if err != nil {
@@ -107,7 +108,7 @@ func awsCredentialsRun(cmd *cobra.Command, args []string) error {
 
 	output := AWSCredentials{
 		Version:         1,
-		AccessKeyId:     creds.AccessKeyId,
+		AccessKeyID:     creds.AccessKeyID,
 		SecretAccessKey: creds.SecretAccessKey,
 		SessionToken:    creds.SessionToken,
 		Expiration:      creds.Expiration,
@@ -118,12 +119,12 @@ func awsCredentialsRun(cmd *cobra.Command, args []string) error {
 		return fmt.Errorf("failed to marshal credentials: %w", err)
 	}
 
-	fmt.Println(string(jsonOutput))
+	pterm.Println(string(jsonOutput))
 	return nil
 }
 
-// extractProfileConfig extracts the configuration section for a specific AWS profile
-// from the AWS config file
+// extractProfileConfig extracts the configuration section for a specific AWS profile.
+// from the AWS config file.
 func extractProfileConfig(config, profileSection string) string {
 	lines := strings.Split(config, "\n")
 	var profileLines []string
@@ -145,8 +146,8 @@ func extractProfileConfig(config, profileSection string) string {
 	return strings.Join(profileLines, "\n")
 }
 
-// extractConeSSOAccountID extracts the AWS account ID from the profile configuration
-// This is used to identify which AWS account to get credentials for
+// extractConeSSOAccountID extracts the AWS account ID from the profile configuration.
+// This is used to identify which AWS account to get credentials for.
 func extractConeSSOAccountID(profileConfig string) string {
 	for _, line := range strings.Split(profileConfig, "\n") {
 		if strings.HasPrefix(line, "cone_sso_account_id") {
@@ -159,8 +160,8 @@ func extractConeSSOAccountID(profileConfig string) string {
 	return ""
 }
 
-// extractConeSSORoleName extracts the AWS role name from the profile configuration
-// This is the role that will be assumed when getting credentials
+// extractConeSSORoleName extracts the AWS role name from the profile configuration.
+// This is the role that will be assumed when getting credentials.
 func extractConeSSORoleName(profileConfig string) string {
 	for _, line := range strings.Split(profileConfig, "\n") {
 		if strings.HasPrefix(line, "cone_sso_role_name") {
@@ -173,8 +174,8 @@ func extractConeSSORoleName(profileConfig string) string {
 	return ""
 }
 
-// extractConeSSOStartURL extracts the AWS SSO start URL from the profile configuration
-// This is the URL used to initiate the SSO login process
+// extractConeSSOStartURL extracts the AWS SSO start URL from the profile configuration.
+// This is the URL used to initiate the SSO login process.
 func extractConeSSOStartURL(profileConfig string) string {
 	for _, line := range strings.Split(profileConfig, "\n") {
 		if strings.HasPrefix(line, "cone_sso_start_url") {
@@ -187,8 +188,8 @@ func extractConeSSOStartURL(profileConfig string) string {
 	return ""
 }
 
-// extractConeSSORegion extracts the AWS region from the profile configuration
-// Defaults to us-east-1 if not specified
+// extractConeSSORegion extracts the AWS region from the profile configuration.
+// Defaults to us-east-1 if not specified.
 func extractConeSSORegion(profileConfig string) string {
 	for _, line := range strings.Split(profileConfig, "\n") {
 		if strings.HasPrefix(line, "cone_sso_region") {
@@ -201,8 +202,8 @@ func extractConeSSORegion(profileConfig string) string {
 	return "us-east-1" // Default region
 }
 
-// getSSOToken retrieves a valid SSO token from the AWS SSO cache
-// It looks for a token that matches the given start URL and hasn't expired
+// getSSOToken retrieves a valid SSO token from the AWS SSO cache.
+// It looks for a token that matches the given start URL and hasn't expired.
 func getSSOToken(ssoStartURL string) (string, error) {
 	cacheDir := filepath.Join(os.Getenv("HOME"), ".aws", "sso", "cache")
 	files, err := os.ReadDir(cacheDir)
@@ -235,8 +236,8 @@ func getSSOToken(ssoStartURL string) (string, error) {
 	return "", fmt.Errorf("no valid SSO token found for %s", ssoStartURL)
 }
 
-// getTemporaryCredentials retrieves temporary AWS credentials using AWS SSO
-// It handles the SSO login process if needed and returns the credentials
+// getTemporaryCredentials retrieves temporary AWS credentials using AWS SSO.
+// It handles the SSO login process if needed and returns the credentials.
 func getTemporaryCredentials(accountID, roleName string) (*AWSCredentials, error) {
 	ssoStartURL := viper.GetString("aws_sso_start_url")
 	if ssoStartURL == "" {
@@ -283,7 +284,7 @@ func getTemporaryCredentials(accountID, roleName string) (*AWSCredentials, error
 
 	creds := &AWSCredentials{
 		Version:         1,
-		AccessKeyId:     response.RoleCredentials.AccessKeyId,
+		AccessKeyID:     response.RoleCredentials.AccessKeyID,
 		SecretAccessKey: response.RoleCredentials.SecretAccessKey,
 		SessionToken:    response.RoleCredentials.SessionToken,
 		Expiration:      time.UnixMilli(response.RoleCredentials.Expiration).Format(time.RFC3339),
@@ -292,8 +293,8 @@ func getTemporaryCredentials(accountID, roleName string) (*AWSCredentials, error
 	return creds, nil
 }
 
-// checkC1Access verifies if the user has access to the requested AWS profile
-// by checking their grants in ConductorOne
+// checkC1Access verifies if the user has access to the requested AWS profile.
+// by checking their grants in ConductorOne.
 func checkC1Access(ctx context.Context, profileName string) (bool, error) {
 	cmd := &cobra.Command{}
 	cmd.SetContext(ctx)
@@ -340,8 +341,8 @@ func checkC1Access(ctx context.Context, profileName string) (bool, error) {
 	return false, nil
 }
 
-// verifySSOSession checks if the AWS SSO session is properly configured
-// in the AWS config file
+// verifySSOSession checks if the AWS SSO session is properly configured.
+// in the AWS config file.
 func verifySSOSession(ssoStartURL, ssoRegion string) error {
 	awsConfigDir := filepath.Join(os.Getenv("HOME"), ".aws")
 	configPath := filepath.Join(awsConfigDir, "config")

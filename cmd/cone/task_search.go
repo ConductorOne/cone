@@ -13,8 +13,21 @@ import (
 func searchTasksCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "search",
-		Short: "Search for tasks using various filters",
-		RunE:  searchTasksRun,
+		Short: "Search for tasks in ConductorOne",
+		Long: `Search for tasks in ConductorOne using various filters.
+This command allows you to:
+- Search by task type (grant, revoke, certify)
+- Filter by task state (open, closed)
+- Filter by app, entitlement, resource, or user
+- Search for specific access reviews
+- Include deleted tasks
+
+The search results will show:
+- Task type and state
+- Related apps, entitlements, and resources
+- Assignees and subjects
+- Creation and update timestamps`,
+		RunE: searchTasksRun,
 	}
 
 	addAccessReviewIDsFlag(cmd)

@@ -488,6 +488,9 @@ func getEntitlementDetails(ctx context.Context, c client.C1Client, v *viper.Vipe
 	return entitlementId, appId, nil
 }
 
+// handleWaitBehavior manages the waiting state for task completion and handles AWS-specific post-grant actions
+// When a grant task is successful, it checks if the entitlement is an AWS permission set
+// If it is, it attempts to create an AWS SSO profile for the user
 func handleWaitBehavior(ctx context.Context, c client.C1Client, task *shared.Task, outputManager output.Manager) error {
 	spinner, _ := pterm.DefaultSpinner.Start("Waiting for ticket to close.")
 	var taskItem *shared.Task
@@ -517,6 +520,35 @@ func handleWaitBehavior(ctx context.Context, c client.C1Client, task *shared.Tas
 		taskOutcome := taskItem.TaskType.TaskTypeGrant.Outcome
 		if *taskOutcome == shared.TaskTypeGrantOutcomeGrantOutcomeGranted {
 			spinner.Success("Entitlement granted successfully.")
+
+			appID := *taskItem.TaskType.TaskTypeGrant.AppID
+			entitlementID := *taskItem.TaskType.TaskTypeGrant.AppEntitlementID
+			entitlement, err := c.GetEntitlement(ctx, appID, entitlementID)
+			if err != nil {
+				return nil
+			}
+
+			resourceType, err := c.GetResourceType(ctx, appID, *entitlement.AppResourceTypeID)
+			if err != nil {
+				return nil
+			}
+
+			// Check if this is an AWS permission set entitlement
+			// If it is, create an AWS SSO profile for the user
+			if client.IsAWSPermissionSet(entitlement, resourceType) {
+				resource, err := c.GetResource(ctx, appID, *entitlement.AppResourceTypeID, *entitlement.AppResourceID)
+				if err != nil {
+					return nil
+				}
+
+				// Attempt to create the AWS SSO profile
+				// This will use the AWS SSO URL configured via 'cone config-aws set-sso-url'
+				if err := client.CreateAWSSSOProfile(entitlement, resource); err != nil {
+					spinner.Warning(fmt.Sprintf("Failed to create AWS SSO profile: %v", err))
+				} else {
+					spinner.Success(fmt.Sprintf("Successfully created AWS SSO profile for entitlement %s", *entitlement.DisplayName))
+				}
+			}
 		} else {
 			spinner.Fail(fmt.Sprintf("Failed to grant entitlement %s", string(*taskOutcome)))
 			return fmt.Errorf("failed to grant entitlement %s", string(*taskOutcome))
@@ -525,7 +557,7 @@ func handleWaitBehavior(ctx context.Context, c client.C1Client, task *shared.Tas
 	if taskItem.TaskType.TaskTypeRevoke != nil {
 		taskOutcome := taskItem.TaskType.TaskTypeRevoke.Outcome
 		if *taskOutcome == shared.TaskTypeRevokeOutcomeRevokeOutcomeRevoked {
-			spinner.Success("Entitlement revoked succesfully.")
+			spinner.Success("Entitlement revoked successfully.")
 		} else {
 			spinner.Fail(fmt.Sprintf("Failed to revoke entitlement %s", string(*taskOutcome)))
 			return fmt.Errorf("failed to revoke entitlement %s", string(*taskOutcome))

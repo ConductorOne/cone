@@ -11,8 +11,20 @@ import (
 func searchEntitlementsCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "search",
-		Short: "",
-		RunE:  searchEntitlementsRun,
+		Short: "Search for entitlements in ConductorOne",
+		Long: `Search for entitlements in ConductorOne using various filters.
+This command allows you to:
+- Search by entitlement name or alias
+- Filter by app name
+- Show only granted or not granted entitlements
+- Include deleted entitlements
+
+The search results will show:
+- Whether you have access to each entitlement
+- The entitlement's alias and display name
+- The app it belongs to
+- The resource type and resource name`,
+		RunE: searchEntitlementsRun,
 	}
 	addEntitlementAliasFlag(cmd)
 	addQueryFlag(cmd)
@@ -29,37 +41,85 @@ func searchEntitlementsRun(cmd *cobra.Command, args []string) error {
 	if err != nil {
 		return err
 	}
-	if err := validateArgLenth(0, args, cmd); err != nil {
-		return err
-	}
 
 	query := v.GetString(queryFlag)
 	alias := v.GetString(entitlementAliasFlag)
-	grantedStatus := client.GrantedStatusAll
-	if v.GetBool(grantedFlag) {
-		grantedStatus = client.GrantedStatusGranted
-	} else if v.GetBool(notGrantedFlag) {
-		grantedStatus = client.GrantedStatusNotGranted
+	if len(args) == 1 {
+		alias = args[0]
 	}
 
-	// TODO(morgabra) 2-phase search: Accept a positional arg:
-	// 1. Test if it's a direct alias
-	// 2. Use it as a query
-	entitlements, err := c.SearchEntitlements(ctx, &client.SearchEntitlementsFilter{
-		Query:                    query,
-		EntitlementAlias:         alias,
-		GrantedStatus:            grantedStatus,
-		AppDisplayName:           v.GetString(appDisplayNameFlag),
-		IncludeDeleted:           v.GetBool(includeDeletedFlag),
-		AppEntitlementExpandMask: shared.AppEntitlementExpandMask{Paths: []string{"app_id", "app_resource_type_id", "app_resource_id"}},
-	})
-	if err != nil {
-		return err
+	grantedStatus := shared.GrantedStatusAll
+	if v.GetBool(grantedFlag) {
+		grantedStatus = shared.GrantedStatusGranted
+	} else if v.GetBool(notGrantedFlag) {
+		grantedStatus = shared.GrantedStatusNotGranted
 	}
+
+	// Phase 1: Try exact alias match first if an alias is provided
+	var entitlements []*client.EntitlementWithBindings
+	if alias != "" {
+		exactMatchEntitlements, err := c.SearchEntitlements(ctx, &client.SearchEntitlementsFilter{
+			EntitlementAlias:         alias,
+			GrantedStatus:            grantedStatus,
+			AppDisplayName:           v.GetString(appDisplayNameFlag),
+			IncludeDeleted:           v.GetBool(includeDeletedFlag),
+			AppEntitlementExpandMask: shared.AppEntitlementExpandMask{Paths: []string{"app_id", "app_resource_type_id", "app_resource_id"}},
+		})
+		if err != nil {
+			return err
+		}
+		entitlements = exactMatchEntitlements
+	}
+
+	// Phase 2: If no exact matches found and we have a query, try query search
+	if len(entitlements) == 0 && query != "" {
+		queryEntitlements, err := c.SearchEntitlements(ctx, &client.SearchEntitlementsFilter{
+			Query:                    query,
+			GrantedStatus:            grantedStatus,
+			AppDisplayName:           v.GetString(appDisplayNameFlag),
+			IncludeDeleted:           v.GetBool(includeDeletedFlag),
+			AppEntitlementExpandMask: shared.AppEntitlementExpandMask{Paths: []string{"app_id", "app_resource_type_id", "app_resource_id"}},
+		})
+		if err != nil {
+			return err
+		}
+		entitlements = queryEntitlements
+	}
+
+	// If still no results and we have both alias and query, try combined search
+	if len(entitlements) == 0 && alias != "" && query != "" {
+		combinedEntitlements, err := c.SearchEntitlements(ctx, &client.SearchEntitlementsFilter{
+			Query:                    query,
+			EntitlementAlias:         alias,
+			GrantedStatus:            grantedStatus,
+			AppDisplayName:           v.GetString(appDisplayNameFlag),
+			IncludeDeleted:           v.GetBool(includeDeletedFlag),
+			AppEntitlementExpandMask: shared.AppEntitlementExpandMask{Paths: []string{"app_id", "app_resource_type_id", "app_resource_id"}},
+		})
+		if err != nil {
+			return err
+		}
+		entitlements = combinedEntitlements
+	}
+
+	// If no alias or query provided, show all entitlements
+	if len(entitlements) == 0 && alias == "" && query == "" {
+		allEntitlements, err := c.SearchEntitlements(ctx, &client.SearchEntitlementsFilter{
+			GrantedStatus:            grantedStatus,
+			AppDisplayName:           v.GetString(appDisplayNameFlag),
+			IncludeDeleted:           v.GetBool(includeDeletedFlag),
+			AppEntitlementExpandMask: shared.AppEntitlementExpandMask{Paths: []string{"app_id", "app_resource_type_id", "app_resource_id"}},
+		})
+		if err != nil {
+			return err
+		}
+		entitlements = allEntitlements
+	}
+
+	outputManager := output.NewManager(ctx, v)
 	resp := &ExpandedEntitlementsResponse{
 		Entitlements: entitlements,
 	}
-	outputManager := output.NewManager(ctx, v)
 	err = outputManager.Output(ctx, resp)
 	if err != nil {
 		return err

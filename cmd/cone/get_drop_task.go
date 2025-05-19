@@ -488,9 +488,9 @@ func getEntitlementDetails(ctx context.Context, c client.C1Client, v *viper.Vipe
 	return entitlementId, appId, nil
 }
 
-// handleWaitBehavior manages the waiting state for task completion and handles AWS-specific post-grant actions
-// When a grant task is successful, it checks if the entitlement is an AWS permission set
-// If it is, it attempts to create an AWS SSO profile for the user
+// handleWaitBehavior manages the waiting state for task completion and handles AWS-specific post-grant actions.
+// When a grant task is successful, it checks if the entitlement is an AWS permission set.
+// If it is, it attempts to create an AWS SSO profile for the user.
 func handleWaitBehavior(ctx context.Context, c client.C1Client, task *shared.Task, outputManager output.Manager) error {
 	spinner, _ := pterm.DefaultSpinner.Start("Waiting for ticket to close.")
 	var taskItem *shared.Task
@@ -525,12 +525,12 @@ func handleWaitBehavior(ctx context.Context, c client.C1Client, task *shared.Tas
 			entitlementID := *taskItem.TaskType.TaskTypeGrant.AppEntitlementID
 			entitlement, err := c.GetEntitlement(ctx, appID, entitlementID)
 			if err != nil {
-				return nil
+				return err
 			}
 
 			resourceType, err := c.GetResourceType(ctx, appID, *entitlement.AppResourceTypeID)
 			if err != nil {
-				return nil
+				return err
 			}
 
 			// Check if this is an AWS permission set entitlement
@@ -538,7 +538,7 @@ func handleWaitBehavior(ctx context.Context, c client.C1Client, task *shared.Tas
 			if client.IsAWSPermissionSet(entitlement, resourceType) {
 				resource, err := c.GetResource(ctx, appID, *entitlement.AppResourceTypeID, *entitlement.AppResourceID)
 				if err != nil {
-					return nil
+					return err
 				}
 
 				// Attempt to create the AWS SSO profile

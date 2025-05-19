@@ -15,7 +15,7 @@ import (
 	"github.com/spf13/viper"
 )
 
-// Stats tracks the progress of alias generation
+// Stats tracks the progress of alias generation.
 type Stats struct {
 	Total     int
 	Processed int
@@ -25,7 +25,7 @@ type Stats struct {
 	Errors    []string
 }
 
-// Generic entitlement words that should be replaced with resource names
+// Generic entitlement words that should be replaced with resource names.
 var genericEntitlementWords = []string{
 	"member",
 	"assignment",
@@ -34,7 +34,7 @@ var genericEntitlementWords = []string{
 	"group",
 }
 
-// Words to remove from display names
+// Words to remove from display names.
 var wordsToRemove = []string{
 	"Role member", "role member", "RoleMember", "roleMember",
 	"Group member", "group member", "GroupMember", "groupMember",
@@ -49,7 +49,7 @@ var wordsToRemove = []string{
 // 3. Converting to lowercase
 // 4. Replacing spaces with hyphens
 // 5. Removing invalid characters
-// 6. Ensuring proper length and format
+// 6. Ensuring proper length and format.
 func cleanText(text string) string {
 	// Remove anything in parentheses
 	text = regexp.MustCompile(`\s*\([^)]*\)`).ReplaceAllString(text, "")
@@ -89,7 +89,7 @@ func cleanText(text string) string {
 	return text
 }
 
-// isGenericEntitlement checks if an entitlement name is too generic to be useful
+// isGenericEntitlement checks if an entitlement name is too generic to be useful.
 func isGenericEntitlement(name string) bool {
 	name = strings.ToLower(strings.TrimSpace(name))
 	for _, word := range genericEntitlementWords {
@@ -100,7 +100,7 @@ func isGenericEntitlement(name string) bool {
 	return false
 }
 
-// getResourceName extracts and cleans the resource name from an entitlement
+// getResourceName extracts and cleans the resource name from an entitlement.
 func getResourceName(e *client.EntitlementWithBindings) string {
 	if appResource := client.GetExpanded[shared.AppResource](e, client.ExpandedAppResource); appResource != nil && appResource.DisplayName != nil {
 		return cleanText(*appResource.DisplayName)
@@ -112,7 +112,7 @@ func getResourceName(e *client.EntitlementWithBindings) string {
 	return "resource" // Final fallback
 }
 
-// generateAliasRun is the main function that handles alias generation
+// generateAliasRun is the main function that handles alias generation.
 func generateAliasRun(cmd *cobra.Command, args []string) error {
 	ctx, c, v, err := cmdContext(cmd)
 	if err != nil {
@@ -133,7 +133,7 @@ func generateAliasRun(cmd *cobra.Command, args []string) error {
 		return fmt.Errorf("failed to search entitlements: %w", err)
 	}
 	if len(entitlements) == 0 {
-		fmt.Println("No requestable entitlements found.")
+		pterm.Warning.Println("No requestable entitlements found.")
 		return nil
 	}
 
@@ -144,7 +144,7 @@ func generateAliasRun(cmd *cobra.Command, args []string) error {
 	}
 	flags := getCommandFlags(v)
 
-	fmt.Printf("Processing %d entitlements...\n", stats.Total)
+	pterm.Info.Printf("Processing %d entitlements...\n", stats.Total)
 
 	processedEntitlements := make(map[string]bool)
 	for i, e := range entitlements {
@@ -156,7 +156,7 @@ func generateAliasRun(cmd *cobra.Command, args []string) error {
 
 		// Show progress every 10 items
 		if (i+1)%10 == 0 {
-			fmt.Printf("Processed %d/%d entitlements...\n", i+1, stats.Total)
+			pterm.Info.Printf("Processed %d/%d entitlements...\n", i+1, stats.Total)
 		}
 	}
 
@@ -166,7 +166,7 @@ func generateAliasRun(cmd *cobra.Command, args []string) error {
 	return nil
 }
 
-// CommandFlags holds all the command line flags
+// CommandFlags holds all the command line flags.
 type CommandFlags struct {
 	ResourceTypes  []string
 	EntitlementIDs []string
@@ -179,7 +179,7 @@ type CommandFlags struct {
 	DryRun         bool
 }
 
-// getCommandFlags extracts all command line flags
+// getCommandFlags extracts all command line flags.
 func getCommandFlags(v *viper.Viper) CommandFlags {
 	return CommandFlags{
 		ResourceTypes:  v.GetStringSlice("resource-type"),
@@ -194,7 +194,7 @@ func getCommandFlags(v *viper.Viper) CommandFlags {
 	}
 }
 
-// processEntitlement handles the processing of a single entitlement
+// processEntitlement handles the processing of a single entitlement.
 func processEntitlement(ctx context.Context, c client.C1Client, e *client.EntitlementWithBindings, flags CommandFlags, stats *Stats, processedEntitlements map[string]bool) error {
 	ent := e.Entitlement
 	if ent.DisplayName == nil || ent.AppID == nil || ent.ID == nil {
@@ -319,7 +319,7 @@ func processEntitlement(ctx context.Context, c client.C1Client, e *client.Entitl
 			UpdateMask: stringPtr("alias"),
 		}
 		if err := c.UpdateEntitlement(ctx, *ent.AppID, *ent.ID, req); err != nil {
-			return fmt.Errorf("failed to update %s: %v", *ent.DisplayName, err)
+			return fmt.Errorf("failed to update %s: %w", *ent.DisplayName, err)
 		}
 	}
 	stats.Updated++
@@ -328,10 +328,10 @@ func processEntitlement(ctx context.Context, c client.C1Client, e *client.Entitl
 	return nil
 }
 
-// verifyAdminPermissions checks if the user has admin permissions
+// verifyAdminPermissions checks if the user has admin permissions.
 func verifyAdminPermissions(ctx context.Context, c client.C1Client) error {
 	// Prompt the user
-	fmt.Print("Are you a super admin or app admin? (yes/no): ")
+	pterm.Info.Print("Are you a super admin or app admin? (yes/no): ")
 	reader := bufio.NewReader(os.Stdin)
 	answer, _ := reader.ReadString('\n')
 	answer = strings.TrimSpace(strings.ToLower(answer))
@@ -351,23 +351,24 @@ func verifyAdminPermissions(ctx context.Context, c client.C1Client) error {
 	return nil
 }
 
-// printSummary prints the final summary of the alias generation process
+// printSummary prints the final summary of the alias generation process.
 func printSummary(stats *Stats) {
-	fmt.Printf("\nSummary:\n")
-	fmt.Printf("Total entitlements: %d\n", stats.Total)
-	fmt.Printf("Processed: %d\n", stats.Processed)
-	fmt.Printf("Skipped: %d\n", stats.Skipped)
-	fmt.Printf("Updated: %d\n", stats.Updated)
-	fmt.Printf("Failed: %d\n", stats.Failed)
+	pterm.Info.Printf("\nSummary:\n")
+	pterm.Info.Printf("Total entitlements: %d\n", stats.Total)
+	pterm.Info.Printf("Processed: %d\n", stats.Processed)
+	pterm.Info.Printf("Skipped: %d\n", stats.Skipped)
+	pterm.Info.Printf("Updated: %d\n", stats.Updated)
+	pterm.Info.Printf("Failed: %d\n", stats.Failed)
+
 	if len(stats.Errors) > 0 {
-		fmt.Printf("\nErrors:\n")
+		pterm.Error.Printf("\nErrors:\n")
 		for _, err := range stats.Errors {
-			fmt.Printf("- %s\n", err)
+			pterm.Error.Printf("- %s\n", err)
 		}
 	}
 }
 
-// Helper functions
+// Helper functions.
 func contains(slice []string, str string) bool {
 	for _, s := range slice {
 		if s == str {
@@ -379,7 +380,7 @@ func contains(slice []string, str string) bool {
 
 func stringPtr(s string) *string { return &s }
 
-// generateAliasCmd creates the cobra command for alias generation
+// generateAliasCmd creates the cobra command for alias generation.
 func generateAliasCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "generate-alias",
@@ -442,7 +443,7 @@ Filtering options:
 	return cmd
 }
 
-// generateAlias generates an alias using the given format and values
+// generateAlias generates an alias using the given format and values.
 func generateAlias(format, separator string, values map[string]string) string {
 	// Replace placeholders with values
 	result := format
@@ -454,7 +455,7 @@ func generateAlias(format, separator string, values map[string]string) string {
 	return result
 }
 
-// checkAdminPermissions checks if the user has admin permissions
+// checkAdminPermissions checks if the user has admin permissions.
 func checkAdminPermissions(ctx context.Context, c client.C1Client) (bool, error) {
 	// Get user's identity
 	userIntro, err := c.AuthIntrospect(ctx)

@@ -99,6 +99,43 @@ func getCredentials(v *viper.Viper) (string, string, error) {
 	return clientId, clientSecret, nil
 }
 
+// showAWSConfigCmd creates the command for displaying all AWS configuration settings.
+func showAWSConfigCmd() *cobra.Command {
+	cmd := &cobra.Command{
+		Use:   "show",
+		Short: "Show all AWS configuration settings",
+		RunE: func(cmd *cobra.Command, args []string) error {
+			// Get SSO start URL
+			ssoStartURL := viper.GetString("aws_sso_start_url")
+			if ssoStartURL == "" {
+				pterm.Warning.Println("AWS SSO start URL is not set")
+			} else {
+				pterm.Info.Printf("AWS SSO start URL: %s\n", ssoStartURL)
+			}
+
+			// Get integration mode
+			integrationMode := viper.GetString("aws_integration_mode")
+			if integrationMode == "" {
+				integrationMode = "cone" // Default to cone if not set
+			}
+			pterm.Info.Printf("AWS integration mode: %s\n", integrationMode)
+
+			// Show default behavior
+			pterm.Println("\nDefault behavior:")
+			if integrationMode == "cone" {
+				pterm.Println("- AWS profiles will be created automatically")
+				pterm.Println("- Uses Cone's credential process for authentication")
+			} else {
+				pterm.Println("- No AWS profiles will be created")
+				pterm.Println("- Uses AWS CLI's native SSO integration")
+			}
+
+			return nil
+		},
+	}
+	return cmd
+}
+
 // configAwsCmd creates the main AWS configuration command.
 func configAwsCmd() *cobra.Command {
 	cmd := &cobra.Command{
@@ -107,6 +144,9 @@ func configAwsCmd() *cobra.Command {
 	}
 	cmd.AddCommand(setAWSSSOStartURLCmd())
 	cmd.AddCommand(getAWSSSOStartURLCmd())
+	cmd.AddCommand(setAWSIntegrationModeCmd())
+	cmd.AddCommand(getAWSIntegrationModeCmd())
+	cmd.AddCommand(showAWSConfigCmd())
 	return cmd
 }
 
@@ -143,6 +183,47 @@ func getAWSSSOStartURLCmd() *cobra.Command {
 				return nil
 			}
 			pterm.Info.Printf("AWS SSO start URL: %s\n", url)
+			return nil
+		},
+	}
+	return cmd
+}
+
+// setAWSIntegrationModeCmd creates the command for setting the AWS integration mode.
+func setAWSIntegrationModeCmd() *cobra.Command {
+	cmd := &cobra.Command{
+		Use:   "set-integration-mode <mode>",
+		Short: "Set the AWS integration mode (cone|native)",
+		RunE: func(cmd *cobra.Command, args []string) error {
+			if len(args) != 1 {
+				return fmt.Errorf("must provide a mode (cone|native)")
+			}
+			mode := strings.ToLower(args[0])
+			if mode != "cone" && mode != "native" {
+				return fmt.Errorf("mode must be either 'cone' or 'native'")
+			}
+			viper.Set("aws_integration_mode", mode)
+			if err := viper.WriteConfig(); err != nil {
+				return err
+			}
+			pterm.Info.Printf("AWS integration mode set to: %s\n", mode)
+			return nil
+		},
+	}
+	return cmd
+}
+
+// getAWSIntegrationModeCmd creates the command for retrieving the current AWS integration mode.
+func getAWSIntegrationModeCmd() *cobra.Command {
+	cmd := &cobra.Command{
+		Use:   "get-integration-mode",
+		Short: "Get the current AWS integration mode",
+		RunE: func(cmd *cobra.Command, args []string) error {
+			mode := viper.GetString("aws_integration_mode")
+			if mode == "" {
+				mode = "cone" // Default to cone if not set
+			}
+			pterm.Info.Printf("AWS integration mode: %s\n", mode)
 			return nil
 		},
 	}

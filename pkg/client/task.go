@@ -196,6 +196,17 @@ func CreateAWSSSOProfile(entitlement *shared.AppEntitlement, resource *shared.Ap
 		return errors.New("entitlement and resource are required")
 	}
 
+	// Check integration mode
+	integrationMode := viper.GetString("aws_integration_mode")
+	if integrationMode == "" {
+		integrationMode = "cone" // Default to cone if not set
+	}
+
+	if integrationMode == "native" {
+		// In native mode, we don't create profiles
+		return nil
+	}
+
 	// Get AWS account ID and permission set ARN from sourceConnectorIds
 	var accountID, permissionSetARN string
 	for _, value := range entitlement.SourceConnectorIds {

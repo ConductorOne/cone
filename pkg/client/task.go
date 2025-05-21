@@ -199,7 +199,7 @@ func CreateAWSSSOProfile(entitlement *shared.AppEntitlement, resource *shared.Ap
 	// Check integration mode
 	integrationMode := viper.GetString("aws_integration_mode")
 	if integrationMode == "" {
-		integrationMode = "cone" // Default to cone if not set
+		integrationMode = "native" // Default to native if not set
 	}
 
 	if integrationMode == "native" {

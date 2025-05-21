@@ -105,6 +105,23 @@ func showAWSConfigCmd() *cobra.Command {
 		Use:   "show",
 		Short: "Show all AWS configuration settings",
 		RunE: func(cmd *cobra.Command, args []string) error {
+			raw, _ := cmd.Flags().GetBool("raw")
+			if raw {
+				// Get the config file path
+				configFile := viper.ConfigFileUsed()
+				if configFile == "" {
+					return fmt.Errorf("no config file found")
+				}
+
+				// Read and print the raw YAML content
+				content, err := os.ReadFile(configFile)
+				if err != nil {
+					return fmt.Errorf("error reading config file: %w", err)
+				}
+				fmt.Println(string(content))
+				return nil
+			}
+
 			// Get SSO start URL
 			ssoStartURL := viper.GetString("aws_sso_start_url")
 			if ssoStartURL == "" {
@@ -116,7 +133,7 @@ func showAWSConfigCmd() *cobra.Command {
 			// Get integration mode
 			integrationMode := viper.GetString("aws_integration_mode")
 			if integrationMode == "" {
-				integrationMode = "cone" // Default to cone if not set
+				integrationMode = "native" // Default to native if not set
 			}
 			pterm.Info.Printf("AWS integration mode: %s\n", integrationMode)
 
@@ -133,6 +150,9 @@ func showAWSConfigCmd() *cobra.Command {
 			return nil
 		},
 	}
+
+	// Add the raw flag
+	cmd.Flags().Bool("raw", false, "Show raw YAML content of the config file")
 	return cmd
 }
 
@@ -221,7 +241,7 @@ func getAWSIntegrationModeCmd() *cobra.Command {
 		RunE: func(cmd *cobra.Command, args []string) error {
 			mode := viper.GetString("aws_integration_mode")
 			if mode == "" {
-				mode = "cone" // Default to cone if not set
+				mode = "native" // Default to native if not set
 			}
 			pterm.Info.Printf("AWS integration mode: %s\n", mode)
 			return nil

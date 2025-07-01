@@ -13,7 +13,6 @@ import (
 	"github.com/conductorone/conductorone-sdk-go/pkg/models/shared"
 	"github.com/pterm/pterm"
 	"github.com/spf13/cobra"
-	"github.com/spf13/viper"
 	"gopkg.in/square/go-jose.v2"
 
 	"github.com/conductorone/cone/pkg/client"
@@ -25,7 +24,7 @@ func decryptCredentialCmd() *cobra.Command {
 		Short: "Attempts to decrypt a credential",
 		RunE:  decryptCredentialRun,
 	}
-
+	addShowEncryptedFlag(cmd)
 	return cmd
 }
 
@@ -37,7 +36,7 @@ func thumbprint(jwk jose.JSONWebKey) string {
 	return hex.EncodeToString(tp)
 }
 
-func decodeCredential(ctx context.Context, v *viper.Viper, cred shared.AppUserCredential) (*v2.PlaintextData, error) {
+func decodeCredential(ctx context.Context, privateJWK *jose.JSONWebKey, cred shared.AppUserCredential) (*v2.PlaintextData, error) {
 	// so, we store the ciphertext as []byte, but json serialization of this will be base64 encoded, so let's just require that as our input.
 	credentialDec, err := base64.StdEncoding.DecodeString(*cred.EncryptedData.EncryptedBytes)
 	if err != nil {
@@ -55,15 +54,6 @@ func decodeCredential(ctx context.Context, v *viper.Viper, cred shared.AppUserCr
 		EncryptedBytes: credentialDec,
 	}
 
-	// Get our secret key and dig out the private jwk, this is silly.
-	_, clientSecret, err := getCredentials(v)
-	if err != nil {
-		return nil, fmt.Errorf("failed to get credentials: %w", err)
-	}
-	privateJWK, err := client.ParseSecret([]byte(clientSecret))
-	if err != nil {
-		return nil, fmt.Errorf("failed to parse secret: %w", err)
-	}
 	privateKeyBytes, err := privateJWK.MarshalJSON()
 	if err != nil {
 		return nil, fmt.Errorf("failed to marshal private jwk: %w", err)
@@ -134,22 +124,65 @@ func decryptCredentialRun(cmd *cobra.Command, args []string) error {
 		}
 	}
 
-	pterm.Printf("Found %d credentials\n", len(allCreds))
-	pterm.Printf("========================================\n")
-	for i, cred := range allCreds {
+	// Get our secret key and dig out the private jwk, this is silly.
+	_, clientSecret, err := getCredentials(v)
+	if err != nil {
+		return fmt.Errorf("failed to get credentials: %w", err)
+	}
+	privateJWK, err := client.ParseSecret([]byte(clientSecret))
+	if err != nil {
+		return fmt.Errorf("failed to parse secret: %w", err)
+	}
+
+	thumb := thumbprint(privateJWK.Public())
+
+	goodCreds := make([]shared.AppUserCredential, 0, len(allCreds))
+	badCreds := make([]shared.AppUserCredential, 0, len(allCreds))
+
+	for _, cred := range allCreds {
+		keyID := *cred.EncryptedData.KeyID
+		// MJP might need new case to handle updated keyID for multi-recipient
+		switch keyID {
+		case thumb:
+			goodCreds = append(goodCreds, cred)
+		default:
+			badCreds = append(badCreds, cred)
+		}
+	}
+
+	pterm.Printf("Found %d credential(s)\n", len(allCreds))
+	pterm.Printf("%d credential(s) successfully decrypted\n", len(goodCreds))
+	if len(badCreds) > 0 {
+		pterm.Printf("%d credential(s) could not be decrypted\n", len(badCreds))
+		if !v.GetBool(showEncryptedFlag) {
+			pterm.Printf("Use the --%s flag to see the encrypted credentials\n", showEncryptedFlag)
+		}
+	}
+
+	printCred := func(cred *shared.AppUserCredential) {
 		pterm.Printf("========================================\n")
-		pterm.Printf("Credential #%d\n", i+1)
+		// MJP This number is totally made up... Do we still want it?
+		// pterm.Printf("Credential #%d\n", i+1)
 		pterm.Printf("App Display Name: %s\n", *appMap[*cred.AppID].DisplayName)
 		pterm.Printf("App ID: %s\n", *cred.AppID)
 		pterm.Printf("App User ID: %s\n", *cred.AppUserID)
-		plaintext, err := decodeCredential(ctx, v, cred)
+		plaintext, err := decodeCredential(ctx, privateJWK, *cred)
 		if err != nil {
 			pterm.Printf("Failed to decode credential: %s\n", err.Error())
 			pterm.Printf("========================================\n")
-			continue
+		} else {
+			pterm.Printf("Decrypted Credential: %s\n", plaintext.Bytes)
+			pterm.Printf("========================================\n")
 		}
-		pterm.Printf("Decrypted Credential: %s\n", plaintext.Bytes)
-		pterm.Printf("========================================\n")
+	}
+
+	for i := range goodCreds {
+		printCred(&goodCreds[i])
+	}
+	if v.GetBool(showEncryptedFlag) {
+		for i := range badCreds {
+			printCred(&badCreds[i])
+		}
 	}
 
 	return nil

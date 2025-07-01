@@ -3,6 +3,7 @@ package pterm
 import (
 	"fmt"
 	"sort"
+	"strings"
 
 	"atomicgo.dev/cursor"
 	"atomicgo.dev/keyboard"
@@ -32,16 +33,18 @@ var (
 
 // InteractiveMultiselectPrinter is a printer for interactive multiselect menus.
 type InteractiveMultiselectPrinter struct {
-	DefaultText    string
-	TextStyle      *Style
-	Options        []string
-	OptionStyle    *Style
-	DefaultOptions []string
-	MaxHeight      int
-	Selector       string
-	SelectorStyle  *Style
-	Filter         bool
-	Checkmark      *Checkmark
+	DefaultText         string
+	TextStyle           *Style
+	Options             []string
+	OptionStyle         *Style
+	DefaultOptions      []string
+	MaxHeight           int
+	Selector            string
+	SelectorStyle       *Style
+	Filter              bool
+	Checkmark           *Checkmark
+	OnInterruptFunc     func()
+	ShowSelectedOptions bool
 
 	selectedOption        int
 	selectedOptions       []int
@@ -52,7 +55,10 @@ type InteractiveMultiselectPrinter struct {
 	displayedOptionsStart int
 	displayedOptionsEnd   int
 
-	KeySelect  keys.KeyCode
+	// KeySelect is the select key. It cannot be keys.Space when Filter is enabled.
+	KeySelect keys.KeyCode
+
+	// KeyConfirm is the confirm key. It cannot be keys.Space when Filter is enabled.
 	KeyConfirm keys.KeyCode
 }
 
@@ -81,18 +87,20 @@ func (p InteractiveMultiselectPrinter) WithMaxHeight(maxHeight int) *Interactive
 }
 
 // WithFilter sets the Filter option
-func (p InteractiveMultiselectPrinter) WithFilter(filter bool) *InteractiveMultiselectPrinter {
-	p.Filter = filter
+func (p InteractiveMultiselectPrinter) WithFilter(b ...bool) *InteractiveMultiselectPrinter {
+	p.Filter = internal.WithBoolean(b)
 	return &p
 }
 
 // WithKeySelect sets the confirm key
+// It cannot be keys.Space when Filter is enabled.
 func (p InteractiveMultiselectPrinter) WithKeySelect(keySelect keys.KeyCode) *InteractiveMultiselectPrinter {
 	p.KeySelect = keySelect
 	return &p
 }
 
 // WithKeyConfirm sets the confirm key
+// It cannot be keys.Space when Filter is enabled.
 func (p InteractiveMultiselectPrinter) WithKeyConfirm(keyConfirm keys.KeyCode) *InteractiveMultiselectPrinter {
 	p.KeyConfirm = keyConfirm
 	return &p
@@ -104,11 +112,23 @@ func (p InteractiveMultiselectPrinter) WithCheckmark(checkmark *Checkmark) *Inte
 	return &p
 }
 
+// WithOnInterruptFunc sets the function to execute on exit of the input reader
+func (p InteractiveMultiselectPrinter) WithOnInterruptFunc(exitFunc func()) *InteractiveMultiselectPrinter {
+	p.OnInterruptFunc = exitFunc
+	return &p
+}
+
+// WithShowSelectedOptions shows the selected options at the bottom if the menu
+func (p InteractiveMultiselectPrinter) WithShowSelectedOptions(b ...bool) *InteractiveMultiselectPrinter {
+	p.ShowSelectedOptions = internal.WithBoolean(b)
+	return &p
+}
+
 // Show shows the interactive multiselect menu and returns the selected entry.
 func (p *InteractiveMultiselectPrinter) Show(text ...string) ([]string, error) {
 	// should be the first defer statement to make sure it is executed last
 	// and all the needed cleanup can be done before
-	cancel, exit := internal.NewCancelationSignal()
+	cancel, exit := internal.NewCancelationSignal(p.OnInterruptFunc)
 	defer exit()
 
 	if len(text) == 0 || Sprint(text[0]) == "" {
@@ -194,7 +214,7 @@ func (p *InteractiveMultiselectPrinter) Show(text ...string) ([]string, error) {
 			}
 		case keys.Backspace:
 			// Remove last character from fuzzy search string
-			if len(p.fuzzySearchString) > 0 {
+			if p.fuzzySearchString != "" {
 				// Handle UTF-8 characters
 				p.fuzzySearchString = string([]rune(p.fuzzySearchString)[:len([]rune(p.fuzzySearchString))-1])
 			}
@@ -228,7 +248,7 @@ func (p *InteractiveMultiselectPrinter) Show(text ...string) ([]string, error) {
 				p.selectedOptions = append(p.selectedOptions, i)
 			}
 			area.Update(p.renderSelectMenu())
-		case keys.Up:
+		case keys.Up, keys.CtrlP:
 			if len(p.fuzzySearchMatches) == 0 {
 				return false, nil
 			}
@@ -251,7 +271,7 @@ func (p *InteractiveMultiselectPrinter) Show(text ...string) ([]string, error) {
 			}
 
 			area.Update(p.renderSelectMenu())
-		case keys.Down:
+		case keys.Down, keys.CtrlN:
 			if len(p.fuzzySearchMatches) == 0 {
 				return false, nil
 			}
@@ -326,8 +346,8 @@ func (p *InteractiveMultiselectPrinter) selectOption(optionText string) {
 }
 
 func (p *InteractiveMultiselectPrinter) renderSelectMenu() string {
-	var content string
-	content += Sprintf("%s: %s\n", p.text, p.fuzzySearchString)
+	var content strings.Builder
+	content.WriteString(Sprintf("%s: %s\n", p.text, p.fuzzySearchString))
 
 	// find options that match fuzzy search string
 	rankedResults := fuzzy.RankFindFold(p.fuzzySearchString, p.Options)
@@ -359,19 +379,29 @@ func (p *InteractiveMultiselectPrinter) renderSelectMenu() string {
 			checkmark = fmt.Sprintf("[%s]", p.Checkmark.Unchecked)
 		}
 		if i == p.selectedOption {
-			content += Sprintf("%s %s %s\n", p.renderSelector(), checkmark, option)
+			content.WriteString(Sprintf("%s %s %s\n", p.renderSelector(), checkmark, option))
 		} else {
-			content += Sprintf("  %s %s\n", checkmark, option)
+			content.WriteString(Sprintf("  %s %s\n", checkmark, option))
 		}
 	}
 
 	help := fmt.Sprintf("%s: %s | %s: %s | left: %s | right: %s", p.KeySelect, Bold.Sprint("select"), p.KeyConfirm, Bold.Sprint("confirm"), Bold.Sprint("none"), Bold.Sprint("all"))
 	if p.Filter {
-		help += fmt.Sprintf("| type to %s", Bold.Sprint("filter"))
+		help += fmt.Sprintf(" | type to %s", Bold.Sprint("filter"))
 	}
-	content += ThemeDefault.SecondaryStyle.Sprintfln(help)
+	content.WriteString(ThemeDefault.SecondaryStyle.Sprintfln(help))
 
-	return content
+	// Optionally, add selected options to the menu
+	if p.ShowSelectedOptions && len(p.selectedOptions) > 0 {
+		selected := make([]string, len(p.selectedOptions))
+		for i, optIdx := range p.selectedOptions {
+			selected[i] = p.Options[optIdx]
+		}
+
+		content.WriteString(ThemeDefault.SecondaryStyle.Sprint("Selected: ") + Green(strings.Join(selected, Gray(", "))) + "\n")
+	}
+
+	return content.String()
 }
 
 func (p InteractiveMultiselectPrinter) renderFinishedMenu() string {

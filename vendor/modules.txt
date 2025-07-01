@@ -20,7 +20,7 @@ filippo.io/age/internal/stream
 ## explicit; go 1.20
 filippo.io/edwards25519
 filippo.io/edwards25519/field
-# github.com/conductorone/baton-sdk v0.3.16
+# github.com/conductorone/baton-sdk v0.3.17
 ## explicit; go 1.23.4
 github.com/conductorone/baton-sdk/pb/c1/config/v1
 github.com/conductorone/baton-sdk/pb/c1/connector/v2

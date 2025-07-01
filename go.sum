@@ -28,8 +28,8 @@ github.com/benbjohnson/clock v1.1.0/go.mod h1:J11/hYXuz8f4ySSvYwY0FKfm+ezbsZBKZx
 github.com/census-instrumentation/opencensus-proto v0.2.1/go.mod h1:f6KPmirojxKA12rnyqOA5BBL4O983OfeGPqjHWSTneU=
 github.com/client9/misspell v0.3.4/go.mod h1:qj6jICC3Q7zFZvVWo7KLAzC3yx5G7kyvSDkc90ppPyw=
 github.com/cncf/udpa/go v0.0.0-20191209042840-269d4d468f6f/go.mod h1:M8M6+tZqaGXZJjfX53e64911xZQV5JYwmTeXPW+k8Sc=
-github.com/conductorone/baton-sdk v0.3.16 h1:zECItpIEgHuILlsQ8n4yo5B2dEArW2Evho4qKgDtn5Q=
-github.com/conductorone/baton-sdk v0.3.16/go.mod h1:lWZHgu025Rsgs5jvBrhilGti0zWF2+YfaFY/bWOS/g0=
+github.com/conductorone/baton-sdk v0.3.17 h1:aJNr4T2xr7rDa4P2nwKEHjJngI5JcNgfBZZ9aeeliHc=
+github.com/conductorone/baton-sdk v0.3.17/go.mod h1:lWZHgu025Rsgs5jvBrhilGti0zWF2+YfaFY/bWOS/g0=
 github.com/conductorone/conductorone-sdk-go v1.25.0 h1:xJ+xWCBggsvnFdsOeptXgawBk5ZMsbz/z7y4ICKbgKs=
 github.com/conductorone/conductorone-sdk-go v1.25.0/go.mod h1:66y99789QEPNjg/PKn0Ljt2eqHJ4fYTZHtgEIhiLngo=
 github.com/containerd/console v1.0.3/go.mod h1:7LqA/THxQ86k76b8c/EMSiaJ3h1eZkMkXar0TQ1gf3U=

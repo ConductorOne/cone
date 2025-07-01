@@ -1,6 +1,6 @@
 module github.com/conductorone/cone
 
-go 1.23.4
+go 1.24.2
 
 require (
 	go.uber.org/zap v1.27.0
@@ -10,7 +10,7 @@ require (
 )
 
 require (
-	github.com/conductorone/baton-sdk v0.3.16
+	github.com/conductorone/baton-sdk v0.3.17
 	github.com/conductorone/conductorone-sdk-go v1.25.0
 	github.com/pterm/pterm v0.12.81
 	github.com/toqueteos/webbrowser v1.2.0

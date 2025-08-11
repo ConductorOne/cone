@@ -51,12 +51,20 @@ func runApproveTasks(cmd *cobra.Command, args []string) error {
 		switch {
 		case taskResp.TaskView.Task.TaskType.TaskTypeGrant != nil:
 			// Handle grant task
-			appID = *taskResp.TaskView.Task.TaskType.TaskTypeGrant.AppID
-			entitlementID = *taskResp.TaskView.Task.TaskType.TaskTypeGrant.AppEntitlementID
+			grantTask := taskResp.TaskView.Task.TaskType.TaskTypeGrant
+			if grantTask.AppID == nil || grantTask.AppEntitlementID == nil {
+				return nil, fmt.Errorf("grant task is missing required AppID or AppEntitlementID")
+			}
+			appID = *grantTask.AppID
+			entitlementID = *grantTask.AppEntitlementID
 		case taskResp.TaskView.Task.TaskType.TaskTypeRevoke != nil:
 			// Handle revoke task
-			appID = *taskResp.TaskView.Task.TaskType.TaskTypeRevoke.AppID
-			entitlementID = *taskResp.TaskView.Task.TaskType.TaskTypeRevoke.AppEntitlementID
+			revokeTask := taskResp.TaskView.Task.TaskType.TaskTypeRevoke
+			if revokeTask.AppID == nil || revokeTask.AppEntitlementID == nil {
+				return nil, fmt.Errorf("revoke task is missing required AppID or AppEntitlementID")
+			}
+			appID = *revokeTask.AppID
+			entitlementID = *revokeTask.AppEntitlementID
 		default:
 			return nil, fmt.Errorf("unsupported task type")
 		}
@@ -78,6 +86,12 @@ func runApproveTasks(cmd *cobra.Command, args []string) error {
 		}
 		pterm.Success.Println("Task approved successfully")
 
+		// Check for nil pointers before dereferencing
+		if entitlement.AppResourceTypeID == nil {
+			pterm.Warning.Println("Entitlement AppResourceTypeID is nil, skipping AWS SSO profile creation")
+			return approveResp.TaskView.Task, nil
+		}
+
 		resourceType, err := c.GetResourceType(ctx, appID, *entitlement.AppResourceTypeID)
 		if err != nil {
 			pterm.Warning.Printf("Failed to get resource type details: %v\n", err)
@@ -87,6 +101,12 @@ func runApproveTasks(cmd *cobra.Command, args []string) error {
 
 		if client.IsAWSPermissionSet(entitlement, resourceType) {
 			pterm.Info.Println("Detected AWS permission set, getting resource details...")
+			
+			if entitlement.AppResourceID == nil {
+				pterm.Warning.Println("Entitlement AppResourceID is nil, cannot create AWS SSO profile")
+				return approveResp.TaskView.Task, nil
+			}
+			
 			resource, err := c.GetResource(ctx, appID, *entitlement.AppResourceTypeID, *entitlement.AppResourceID)
 			if err != nil {
 				pterm.Warning.Printf("Failed to get resource details: %v\n", err)

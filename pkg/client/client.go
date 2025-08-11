@@ -63,7 +63,7 @@ type C1Client interface {
 	GetUser(ctx context.Context, userID string) (*shared.User, error)
 	GetEntitlement(ctx context.Context, appID string, entitlementID string) (*shared.AppEntitlement, error)
 	SearchEntitlements(ctx context.Context, filter *SearchEntitlementsFilter) ([]*EntitlementWithBindings, error)
-	GetResource(ctx context.Context, appID string, resourceID string, resourceTypeID string) (*shared.AppResource, error)
+	GetResource(ctx context.Context, appID string, resourceTypeID string, resourceID string) (*shared.AppResource, error)
 	GetResourceType(ctx context.Context, appID string, resourceTypeID string) (*shared.AppResourceType, error)
 	GetApp(ctx context.Context, appID string) (*shared.App, error)
 	GetTask(ctx context.Context, taskId string) (*shared.TaskServiceGetResponse, error)

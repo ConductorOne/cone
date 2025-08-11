@@ -223,7 +223,11 @@ func CreateAWSSSOProfile(entitlement *shared.AppEntitlement, resource *shared.Ap
 	}
 
 	// Extract role name from entitlement display name (everything before first space)
-	roleName := strings.Split(*entitlement.DisplayName, " ")[0]
+	if entitlement.DisplayName == nil {
+		return errors.New("entitlement DisplayName is nil, cannot create AWS SSO profile")
+	}
+	displayName := *entitlement.DisplayName // Store safely after nil check
+	roleName := strings.Split(displayName, " ")[0]
 
 	// Get AWS account name from resource display name
 	accountName := "aws"
@@ -292,6 +296,6 @@ sso_registration_scopes = sso:account:access
 		return fmt.Errorf("failed to write AWS config file: %w", err)
 	}
 
-	pterm.Success.Printf("Successfully created AWS SSO profile for entitlement %s\n", *entitlement.DisplayName)
+	pterm.Success.Printf("Successfully created AWS SSO profile for entitlement %s\n", displayName)
 	return nil
 }

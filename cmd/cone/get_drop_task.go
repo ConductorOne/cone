@@ -288,13 +288,25 @@ func createAWSSSOProfileIfNeeded(ctx context.Context, c client.C1Client, task *s
 		return nil
 	}
 
-	appID := *task.TaskType.TaskTypeGrant.AppID
-	entitlementID := *task.TaskType.TaskTypeGrant.AppEntitlementID
+	grantTask := task.TaskType.TaskTypeGrant
+	if grantTask.AppID == nil || grantTask.AppEntitlementID == nil {
+		// Skip if required fields are missing - not an error for this function
+		return nil
+	}
+
+	appID := *grantTask.AppID
+	entitlementID := *grantTask.AppEntitlementID
 
 	// Get the entitlement details
 	entitlement, err := c.GetEntitlement(ctx, appID, entitlementID)
 	if err != nil {
 		return fmt.Errorf("failed to get entitlement details: %w", err)
+	}
+
+	// Check for nil pointers before dereferencing
+	if entitlement.AppResourceTypeID == nil {
+		// Not an error condition, just skip AWS SSO profile creation
+		return nil
 	}
 
 	// Get the resource type
@@ -305,6 +317,10 @@ func createAWSSSOProfileIfNeeded(ctx context.Context, c client.C1Client, task *s
 
 	// Check if this is an AWS permission set
 	if client.IsAWSPermissionSet(entitlement, resourceType) {
+		if entitlement.AppResourceID == nil {
+			return fmt.Errorf("entitlement AppResourceID is nil, cannot create AWS SSO profile")
+		}
+		
 		// Get the resource details
 		resource, err := c.GetResource(ctx, appID, *entitlement.AppResourceTypeID, *entitlement.AppResourceID)
 		if err != nil {
@@ -320,13 +336,34 @@ func createAWSSSOProfileIfNeeded(ctx context.Context, c client.C1Client, task *s
 
 // handleWaitBehavior manages the waiting state for task completion.
 func handleWaitBehavior(ctx context.Context, c client.C1Client, task *shared.Task, outputManager output.Manager) error {
+	// Validate input parameters
+	if task == nil || task.ID == nil {
+		return fmt.Errorf("task or task ID is nil")
+	}
+
 	spinner, _ := pterm.DefaultSpinner.Start("Waiting for task to complete...")
 	defer spinner.Stop()
 
 	for {
+		select {
+		case <-ctx.Done():
+			return ctx.Err()
+		case <-time.After(2 * time.Second):
+			// Continue with polling
+		}
+
 		updatedTask, err := c.GetTask(ctx, *task.ID)
 		if err != nil {
 			return err
+		}
+
+		// Check for nil pointers before dereferencing
+		if updatedTask.TaskView == nil || updatedTask.TaskView.Task == nil {
+			return fmt.Errorf("received incomplete task response")
+		}
+
+		if updatedTask.TaskView.Task.State == nil {
+			return fmt.Errorf("task state is nil")
 		}
 
 		if *updatedTask.TaskView.Task.State == shared.TaskStateTaskStateClosed {
@@ -348,8 +385,6 @@ func handleWaitBehavior(ctx context.Context, c client.C1Client, task *shared.Tas
 			}
 			break
 		}
-
-		time.Sleep(2 * time.Second)
 	}
 
 	return nil

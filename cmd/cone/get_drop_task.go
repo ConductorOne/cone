@@ -411,7 +411,7 @@ func runTask(
 		// Check if this is a duplicate grant error and force flag is not set
 		errorMsg := err.Error()
 		force := v.GetBool(forceFlag)
-		if !force && (strings.Contains(strings.ToLower(errorMsg), "already granted") || 
+		if !force && (strings.Contains(strings.ToLower(errorMsg), "already granted") ||
 			strings.Contains(strings.ToLower(errorMsg), "already exists") ||
 			strings.Contains(strings.ToLower(errorMsg), "duplicate")) {
 			return fmt.Errorf("%s. Use --force flag to override this check", err.Error())
@@ -616,7 +616,7 @@ func multipleEntitlmentsFoundError(alias string, query string) error {
 func showDetailedEntitlementInfo(ctx context.Context, c client.C1Client, appID string, entitlementID string, v *viper.Viper) error {
 	// Skip detailed output for JSON formats to avoid mixing plain text with structured output
 	outputFormat := v.GetString("output")
-	if outputFormat == "json" || outputFormat == "json-pretty" {
+	if outputFormat == output.JSON || outputFormat == output.JSONPretty {
 		return nil
 	}
 

@@ -42,7 +42,7 @@ func runApproveTasks(cmd *cobra.Command, args []string) error {
 	return runApproveDeny(cmd, args, func(c client.C1Client, ctx context.Context, taskId string, comment string, policyId string, v *viper.Viper) (*shared.Task, error) {
 		// Only show info message for non-JSON output to avoid corrupting structured output
 		outputFormat := v.GetString("output")
-		if outputFormat != "json" && outputFormat != "json-pretty" {
+		if outputFormat != output.JSON && outputFormat != output.JSONPretty {
 			pterm.Info.Printf("Starting task approval process for task %s\n", taskId)
 		}
 
@@ -51,7 +51,7 @@ func runApproveTasks(cmd *cobra.Command, args []string) error {
 			return nil, err
 		}
 		// Only show debug message for non-JSON output to avoid corrupting structured output
-		if outputFormat != "json" && outputFormat != "json-pretty" {
+		if outputFormat != output.JSON && outputFormat != output.JSONPretty {
 			pterm.Debug.Printf("Got task details: %+v\n", taskResp.TaskView.Task)
 		}
 

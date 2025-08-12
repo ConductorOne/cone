@@ -12,6 +12,8 @@ import (
 	"github.com/conductorone/conductorone-sdk-go/pkg/models/shared"
 	"github.com/pterm/pterm"
 	"github.com/spf13/viper"
+
+	"github.com/conductorone/cone/pkg/output"
 )
 
 const nativeIntegrationMode = "native"
@@ -264,7 +266,7 @@ func CreateAWSSSOProfile(entitlement *shared.AppEntitlement, resource *shared.Ap
 	if strings.Contains(configStr, fmt.Sprintf("[profile %s]", profileName)) {
 		// Only show info message for non-JSON output to avoid corrupting structured output
 		outputFormat := viper.GetString("output")
-		if outputFormat != "json" && outputFormat != "json-pretty" {
+		if outputFormat != output.JSON && outputFormat != output.JSONPretty {
 			pterm.Info.Printf("AWS profile '%s' already exists\n", profileName)
 		}
 		return nil
@@ -304,7 +306,7 @@ sso_registration_scopes = sso:account:access
 
 	// Only show success message for non-JSON output to avoid corrupting structured output
 	outputFormat := viper.GetString("output")
-	if outputFormat != "json" && outputFormat != "json-pretty" {
+	if outputFormat != output.JSON && outputFormat != output.JSONPretty {
 		pterm.Success.Printf("Successfully created AWS SSO profile for entitlement %s\n", displayName)
 	}
 	return nil

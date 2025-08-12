@@ -101,7 +101,7 @@ func awsCredentialsRun(cmd *cobra.Command, args []string) error {
 		return fmt.Errorf("SSO session verification failed: %w", err)
 	}
 
-	creds, err := getTemporaryCredentials(accountID, roleName)
+	creds, err := getTemporaryCredentials(accountID, roleName, ssoRegion)
 	if err != nil {
 		return fmt.Errorf("failed to get temporary credentials: %w", err)
 	}
@@ -238,7 +238,7 @@ func getSSOToken(ssoStartURL string) (string, error) {
 
 // getTemporaryCredentials retrieves temporary AWS credentials using AWS SSO.
 // It handles the SSO login process if needed and returns the credentials.
-func getTemporaryCredentials(accountID, roleName string) (*AWSCredentials, error) {
+func getTemporaryCredentials(accountID, roleName, ssoRegion string) (*AWSCredentials, error) {
 	ssoStartURL := viper.GetString("aws_sso_start_url")
 	if ssoStartURL == "" {
 		return nil, fmt.Errorf("missing AWS SSO URL. Please run 'cone config-aws set-sso-url <url>' first")
@@ -260,7 +260,7 @@ func getTemporaryCredentials(accountID, roleName string) (*AWSCredentials, error
 		"--access-token", token,
 		"--account-id", accountID,
 		"--role-name", roleName,
-		"--region", "us-east-1",
+		"--region", ssoRegion,
 		"--output", "json")
 
 	var stdout, stderr bytes.Buffer

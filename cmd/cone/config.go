@@ -182,7 +182,7 @@ func setAWSSSOStartURLCmd() *cobra.Command {
 			}
 			url := args[0]
 			viper.Set("aws_sso_start_url", url)
-			if err := viper.SafeWriteConfig(); err != nil {
+			if err := viper.WriteConfig(); err != nil {
 				return err
 			}
 			pterm.Info.Printf("AWS SSO start URL set to: %s\n", url)
@@ -224,7 +224,7 @@ func setAWSIntegrationModeCmd() *cobra.Command {
 				return fmt.Errorf("mode must be either 'cone' or 'native'")
 			}
 			viper.Set("aws_integration_mode", mode)
-			if err := viper.SafeWriteConfig(); err != nil {
+			if err := viper.WriteConfig(); err != nil {
 				return err
 			}
 			pterm.Info.Printf("AWS integration mode set to: %s\n", mode)

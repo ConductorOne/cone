@@ -411,7 +411,7 @@ func runTask(
 
 	// Show detailed app and entitlement information if requested
 	if v.GetBool(extraDetailsFlag) {
-		err = showDetailedEntitlementInfo(ctx, c, appId, entitlementId)
+		err = showDetailedEntitlementInfo(ctx, c, appId, entitlementId, v)
 		if err != nil {
 			pterm.Warning.Printf("Failed to show detailed entitlement information: %v\n", err)
 		}
@@ -604,7 +604,13 @@ func multipleEntitlmentsFoundError(alias string, query string) error {
 }
 
 // showDetailedEntitlementInfo displays detailed information about the app and entitlement.
-func showDetailedEntitlementInfo(ctx context.Context, c client.C1Client, appID string, entitlementID string) error {
+func showDetailedEntitlementInfo(ctx context.Context, c client.C1Client, appID string, entitlementID string, v *viper.Viper) error {
+	// Skip detailed output for JSON formats to avoid mixing plain text with structured output
+	outputFormat := v.GetString("output")
+	if outputFormat == "json" || outputFormat == "json-pretty" {
+		return nil
+	}
+
 	pterm.DefaultSection.Println("Entitlement Details")
 
 	// Get app details

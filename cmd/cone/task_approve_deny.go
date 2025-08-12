@@ -7,6 +7,7 @@ import (
 
 	"github.com/pterm/pterm"
 	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 
 	"github.com/conductorone/conductorone-sdk-go/pkg/models/shared"
 	"github.com/conductorone/cone/pkg/client"
@@ -38,14 +39,21 @@ func denyTasksCmd() *cobra.Command {
 }
 
 func runApproveTasks(cmd *cobra.Command, args []string) error {
-	return runApproveDeny(cmd, args, func(c client.C1Client, ctx context.Context, taskId string, comment string, policyId string) (*shared.Task, error) {
-		pterm.Info.Printf("Starting task approval process for task %s\n", taskId)
+	return runApproveDeny(cmd, args, func(c client.C1Client, ctx context.Context, taskId string, comment string, policyId string, v *viper.Viper) (*shared.Task, error) {
+		// Only show info message for non-JSON output to avoid corrupting structured output
+		outputFormat := v.GetString("output")
+		if outputFormat != "json" && outputFormat != "json-pretty" {
+			pterm.Info.Printf("Starting task approval process for task %s\n", taskId)
+		}
 
 		taskResp, err := c.GetTask(ctx, taskId)
 		if err != nil {
 			return nil, err
 		}
-		pterm.Debug.Printf("Got task details: %+v\n", taskResp.TaskView.Task)
+		// Only show debug message for non-JSON output to avoid corrupting structured output
+		if outputFormat != "json" && outputFormat != "json-pretty" {
+			pterm.Debug.Printf("Got task details: %+v\n", taskResp.TaskView.Task)
+		}
 
 		var appID, entitlementID string
 		switch {
@@ -127,7 +135,7 @@ func runApproveTasks(cmd *cobra.Command, args []string) error {
 }
 
 func runDenyTasks(cmd *cobra.Command, args []string) error {
-	return runApproveDeny(cmd, args, func(c client.C1Client, ctx context.Context, taskId string, comment string, policyId string) (*shared.Task, error) {
+	return runApproveDeny(cmd, args, func(c client.C1Client, ctx context.Context, taskId string, comment string, policyId string, v *viper.Viper) (*shared.Task, error) {
 		approveResp, err := c.DenyTask(ctx, taskId, comment, policyId)
 		if err != nil {
 			return nil, err
@@ -139,7 +147,7 @@ func runDenyTasks(cmd *cobra.Command, args []string) error {
 func runApproveDeny(
 	cmd *cobra.Command,
 	args []string,
-	run func(c client.C1Client, ctx context.Context, taskId string, comment string, policyId string) (*shared.Task, error),
+	run func(c client.C1Client, ctx context.Context, taskId string, comment string, policyId string, v *viper.Viper) (*shared.Task, error),
 ) error {
 	ctx, c, v, err := cmdContext(cmd)
 	if err != nil {
@@ -162,7 +170,7 @@ func runApproveDeny(
 		return errors.New("task does not have a current policy step id and cannot be approved or denied")
 	}
 
-	task, err := run(c, ctx, taskId, comment, client.StringFromPtr(taskResp.TaskView.Task.PolicyInstance.PolicyStepInstance.ID))
+	task, err := run(c, ctx, taskId, comment, client.StringFromPtr(taskResp.TaskView.Task.PolicyInstance.PolicyStepInstance.ID), v)
 	if err != nil {
 		return err
 	}

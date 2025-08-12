@@ -262,7 +262,11 @@ func CreateAWSSSOProfile(entitlement *shared.AppEntitlement, resource *shared.Ap
 	// Check if profile already exists
 	configStr := string(configContent)
 	if strings.Contains(configStr, fmt.Sprintf("[profile %s]", profileName)) {
-		pterm.Info.Printf("AWS profile '%s' already exists\n", profileName)
+		// Only show info message for non-JSON output to avoid corrupting structured output
+		outputFormat := viper.GetString("output")
+		if outputFormat != "json" && outputFormat != "json-pretty" {
+			pterm.Info.Printf("AWS profile '%s' already exists\n", profileName)
+		}
 		return nil
 	}
 
@@ -298,6 +302,10 @@ sso_registration_scopes = sso:account:access
 		return fmt.Errorf("failed to write AWS config file: %w", err)
 	}
 
-	pterm.Success.Printf("Successfully created AWS SSO profile for entitlement %s\n", displayName)
+	// Only show success message for non-JSON output to avoid corrupting structured output
+	outputFormat := viper.GetString("output")
+	if outputFormat != "json" && outputFormat != "json-pretty" {
+		pterm.Success.Printf("Successfully created AWS SSO profile for entitlement %s\n", displayName)
+	}
 	return nil
 }

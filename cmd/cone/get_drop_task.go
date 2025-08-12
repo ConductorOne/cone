@@ -348,6 +348,10 @@ func handleWaitBehavior(ctx context.Context, c client.C1Client, task *shared.Tas
 				switch *taskOutcome {
 				case shared.TaskTypeGrantOutcomeGrantOutcomeGranted:
 					spinner.Success("Entitlement granted successfully.")
+					// Create AWS SSO profile now that grant is successful
+					if err := createAWSSSOProfileIfNeeded(ctx, c, updatedTask.TaskView.Task, outputManager); err != nil {
+						pterm.Warning.Printf("Failed to create AWS SSO profile: %v\n", err)
+					}
 				case shared.TaskTypeGrantOutcomeGrantOutcomeDenied:
 					spinner.Fail("Entitlement request was denied.")
 					return fmt.Errorf("entitlement request was denied")
@@ -404,6 +408,14 @@ func runTask(
 
 	task, err := run(c, ctx, appId, entitlementId, client.StringFromPtr(resp.UserID), justification)
 	if err != nil {
+		// Check if this is a duplicate grant error and force flag is not set
+		errorMsg := err.Error()
+		force := v.GetBool(forceFlag)
+		if !force && (strings.Contains(strings.ToLower(errorMsg), "already granted") || 
+			strings.Contains(strings.ToLower(errorMsg), "already exists") ||
+			strings.Contains(strings.ToLower(errorMsg), "duplicate")) {
+			return fmt.Errorf("%s. Use --force flag to override this check", err.Error())
+		}
 		return err
 	}
 
@@ -423,10 +435,7 @@ func runTask(
 		return err
 	}
 
-	// Create AWS SSO profile immediately after task creation
-	if err := createAWSSSOProfileIfNeeded(ctx, c, task, outputManager); err != nil {
-		pterm.Warning.Printf("Failed to create AWS SSO profile: %v\n", err)
-	}
+	// Note: AWS SSO profile creation moved to handleWaitBehavior to occur only after successful grant completion
 
 	if wait, _ := cmd.Flags().GetBool("wait"); wait {
 		err = handleWaitBehavior(ctx, c, task, outputManager)

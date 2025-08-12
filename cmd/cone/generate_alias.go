@@ -508,7 +508,7 @@ func checkAdminPermissions(ctx context.Context, c client.C1Client) (bool, error)
 
 		// Check if user is an admin for this app
 		for _, appUser := range appUsers {
-			if appUser.IdentityUserID != nil && *appUser.IdentityUserID == *userIntro.UserID {
+			if appUser.IdentityUserID != nil && userIntro.UserID != nil && *appUser.IdentityUserID == *userIntro.UserID {
 				// Check if user has admin role in their profile
 				if profile, ok := appUser.Profile["roles"]; ok {
 					if roles, ok := profile.([]interface{}); ok {

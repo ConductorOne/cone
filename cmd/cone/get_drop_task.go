@@ -408,6 +408,15 @@ func runTask(
 	}
 
 	outputManager := output.NewManager(ctx, v)
+
+	// Show detailed app and entitlement information if requested
+	if v.GetBool(extraDetailsFlag) {
+		err = showDetailedEntitlementInfo(ctx, c, appId, entitlementId)
+		if err != nil {
+			pterm.Warning.Printf("Failed to show detailed entitlement information: %v\n", err)
+		}
+	}
+
 	taskResp := Task{task: task, client: c}
 	err = outputManager.Output(ctx, &taskResp, output.WithTransposeTable())
 	if err != nil {
@@ -416,7 +425,7 @@ func runTask(
 
 	// Create AWS SSO profile immediately after task creation
 	if err := createAWSSSOProfileIfNeeded(ctx, c, task, outputManager); err != nil {
-		return err
+		pterm.Warning.Printf("Failed to create AWS SSO profile: %v\n", err)
 	}
 
 	if wait, _ := cmd.Flags().GetBool("wait"); wait {
@@ -592,4 +601,59 @@ func multipleEntitlmentsFoundError(alias string, query string) error {
 		return fmt.Errorf("multiple entitlements found with query %s, please specify an entitlement id and app id", query)
 	}
 	return fmt.Errorf("multiple entitlements found, please specify an entitlement id and app id")
+}
+
+// showDetailedEntitlementInfo displays detailed information about the app and entitlement.
+func showDetailedEntitlementInfo(ctx context.Context, c client.C1Client, appID string, entitlementID string) error {
+	pterm.DefaultSection.Println("Entitlement Details")
+
+	// Get app details
+	app, err := c.GetApp(ctx, appID)
+	if err != nil {
+		return fmt.Errorf("failed to get app details: %w", err)
+	}
+
+	// Get entitlement details
+	entitlement, err := c.GetEntitlement(ctx, appID, entitlementID)
+	if err != nil {
+		return fmt.Errorf("failed to get entitlement details: %w", err)
+	}
+
+	// Display app information
+	pterm.DefaultBasicText.Printf("App: %s\n", client.StringFromPtr(app.DisplayName))
+	if app.Description != nil && *app.Description != "" {
+		pterm.DefaultBasicText.Printf("App Description: %s\n", client.StringFromPtr(app.Description))
+	}
+
+	// Display entitlement information
+	pterm.DefaultBasicText.Printf("Entitlement: %s\n", client.StringFromPtr(entitlement.DisplayName))
+	if entitlement.Description != nil && *entitlement.Description != "" {
+		pterm.DefaultBasicText.Printf("Entitlement Description: %s\n", client.StringFromPtr(entitlement.Description))
+	}
+
+	// Show resource type and resource information if available
+	if entitlement.AppResourceTypeID != nil {
+		resourceType, err := c.GetResourceType(ctx, appID, *entitlement.AppResourceTypeID)
+		if err == nil {
+			pterm.DefaultBasicText.Printf("Resource Type: %s\n", client.StringFromPtr(resourceType.DisplayName))
+
+			if entitlement.AppResourceID != nil {
+				resource, err := c.GetResource(ctx, appID, *entitlement.AppResourceTypeID, *entitlement.AppResourceID)
+				if err == nil {
+					pterm.DefaultBasicText.Printf("Resource: %s\n", client.StringFromPtr(resource.DisplayName))
+					if resource.Description != nil && *resource.Description != "" {
+						pterm.DefaultBasicText.Printf("Resource Description: %s\n", client.StringFromPtr(resource.Description))
+					}
+				}
+			}
+		}
+	}
+
+	// Show duration information if available
+	if entitlement.DurationGrant != nil && *entitlement.DurationGrant != "" {
+		pterm.DefaultBasicText.Printf("Max Grant Duration: %s\n", *entitlement.DurationGrant)
+	}
+
+	pterm.Println() // Add spacing before task output
+	return nil
 }

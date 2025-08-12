@@ -120,7 +120,7 @@ func generateAliasRun(cmd *cobra.Command, args []string) error {
 	}
 
 	// Verify admin permissions
-	if err := verifyAdminPermissions(ctx, c); err != nil {
+	if err := verifyAdminPermissions(ctx, c, v); err != nil {
 		return err
 	}
 
@@ -329,7 +329,21 @@ func processEntitlement(ctx context.Context, c client.C1Client, e *client.Entitl
 }
 
 // verifyAdminPermissions checks if the user has admin permissions.
-func verifyAdminPermissions(ctx context.Context, c client.C1Client) error {
+func verifyAdminPermissions(ctx context.Context, c client.C1Client, v *viper.Viper) error {
+	// In non-interactive mode, skip user prompt and check permissions directly
+	if v.GetBool(nonInteractiveFlag) {
+		// Just check actual permissions without prompting
+		isAdmin, err := checkAdminPermissions(ctx, c)
+		if err != nil {
+			return fmt.Errorf("failed to check admin permissions: %w", err)
+		}
+		if !isAdmin {
+			return fmt.Errorf("you do not have super admin or app admin permissions. Use --help for more information")
+		}
+		return nil
+	}
+
+	// Interactive mode: prompt user first, then check permissions
 	// Prompt the user
 	pterm.Info.Print("Are you a super admin or app admin? (yes/no): ")
 	reader := bufio.NewReader(os.Stdin)

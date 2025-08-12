@@ -223,10 +223,16 @@ func (c *client) ListEntitlements(ctx context.Context, appId string) ([]shared.A
 }
 
 func (c *client) UpdateEntitlement(ctx context.Context, appID, entitlementID string, req *shared.UpdateAppEntitlementRequest) error {
-	_, err := c.sdk.AppEntitlements.Update(ctx, operations.C1APIAppV1AppEntitlementsUpdateRequest{
+	resp, err := c.sdk.AppEntitlements.Update(ctx, operations.C1APIAppV1AppEntitlementsUpdateRequest{
 		AppID:                       appID,
 		ID:                          entitlementID,
 		UpdateAppEntitlementRequest: req,
 	})
-	return err
+	if err != nil {
+		return err
+	}
+	if err := NewHTTPError(resp.RawResponse); err != nil {
+		return err
+	}
+	return nil
 }

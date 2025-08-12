@@ -296,7 +296,17 @@ func getTemporaryCredentials(accountID, roleName string) (*AWSCredentials, error
 // checkC1Access verifies if the user has access to the requested AWS profile.
 // by checking their grants in ConductorOne.
 func checkC1Access(ctx context.Context, profileName string) (bool, error) {
-	cmd := &cobra.Command{}
+	// Create a temporary command with the necessary flags for cmdContext
+	cmd := &cobra.Command{
+		Use: "temp",
+	}
+	cmd.PersistentFlags().StringP("profile", "p", "default", "The config profile to use.")
+	cmd.PersistentFlags().BoolP("non-interactive", "i", false, "Disable prompts.")
+	cmd.PersistentFlags().String("client-id", "", "Client ID")
+	cmd.PersistentFlags().String("client-secret", "", "Client secret")
+	cmd.PersistentFlags().String("api-endpoint", "", "Override the API endpoint")
+	cmd.PersistentFlags().StringP("output", "o", "table", "Output format. Valid values: table, json, json-pretty, wide.")
+	cmd.PersistentFlags().Bool("debug", false, "Enable debug logging")
 	cmd.SetContext(ctx)
 	_, c1Client, _, err := cmdContext(cmd)
 	if err != nil {

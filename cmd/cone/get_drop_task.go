@@ -355,6 +355,22 @@ func handleWaitBehavior(ctx context.Context, c client.C1Client, task *shared.Tas
 					spinner.Fail(fmt.Sprintf("Task completed with unexpected outcome: %s", *taskOutcome))
 					return fmt.Errorf("task completed with unexpected outcome: %s", *taskOutcome)
 				}
+			} else if updatedTask.TaskView.Task.TaskType.TaskTypeRevoke != nil {
+				taskOutcome := updatedTask.TaskView.Task.TaskType.TaskTypeRevoke.Outcome
+				if taskOutcome == nil {
+					return fmt.Errorf("task closed but no outcome provided")
+				}
+
+				switch *taskOutcome {
+				case shared.TaskTypeRevokeOutcomeRevokeOutcomeRevoked:
+					spinner.Success("Entitlement revoked successfully.")
+				case shared.TaskTypeRevokeOutcomeRevokeOutcomeDenied:
+					spinner.Fail("Entitlement revoke request was denied.")
+					return fmt.Errorf("entitlement revoke request was denied")
+				default:
+					spinner.Fail(fmt.Sprintf("Task completed with unexpected outcome: %s", *taskOutcome))
+					return fmt.Errorf("task completed with unexpected outcome: %s", *taskOutcome)
+				}
 			}
 			break
 		}

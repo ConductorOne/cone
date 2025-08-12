@@ -101,12 +101,12 @@ func runApproveTasks(cmd *cobra.Command, args []string) error {
 
 		if client.IsAWSPermissionSet(entitlement, resourceType) {
 			pterm.Info.Println("Detected AWS permission set, getting resource details...")
-			
+
 			if entitlement.AppResourceID == nil {
 				pterm.Warning.Println("Entitlement AppResourceID is nil, cannot create AWS SSO profile")
 				return approveResp.TaskView.Task, nil
 			}
-			
+
 			resource, err := c.GetResource(ctx, appID, *entitlement.AppResourceTypeID, *entitlement.AppResourceID)
 			if err != nil {
 				pterm.Warning.Printf("Failed to get resource details: %v\n", err)

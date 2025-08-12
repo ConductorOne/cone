@@ -14,6 +14,8 @@ import (
 	"github.com/spf13/viper"
 )
 
+const nativeIntegrationMode = "native"
+
 func (c *client) GetTask(ctx context.Context, taskId string) (*shared.TaskServiceGetResponse, error) {
 	resp, err := c.sdk.Task.Get(ctx, operations.C1APITaskV1TaskServiceGetRequest{ID: taskId})
 	if err != nil {
@@ -199,10 +201,10 @@ func CreateAWSSSOProfile(entitlement *shared.AppEntitlement, resource *shared.Ap
 	// Check integration mode
 	integrationMode := viper.GetString("aws_integration_mode")
 	if integrationMode == "" {
-		integrationMode = "native" // Default to native if not set
+		integrationMode = nativeIntegrationMode // Default to native if not set
 	}
 
-	if integrationMode == "native" {
+	if integrationMode == nativeIntegrationMode {
 		// In native mode, we don't create profiles
 		return nil
 	}

@@ -13,7 +13,8 @@ import (
 )
 
 const (
-	envPrefix = "cone"
+	envPrefix             = "cone"
+	nativeIntegrationMode = "native"
 )
 
 func defaultConfigPath() string {
@@ -118,7 +119,7 @@ func showAWSConfigCmd() *cobra.Command {
 				if err != nil {
 					return fmt.Errorf("error reading config file: %w", err)
 				}
-				fmt.Println(string(content))
+				pterm.Println(string(content))
 				return nil
 			}
 
@@ -133,7 +134,7 @@ func showAWSConfigCmd() *cobra.Command {
 			// Get integration mode
 			integrationMode := viper.GetString("aws_integration_mode")
 			if integrationMode == "" {
-				integrationMode = "native" // Default to native if not set
+				integrationMode = nativeIntegrationMode // Default to native if not set
 			}
 			pterm.Info.Printf("AWS integration mode: %s\n", integrationMode)
 

@@ -254,34 +254,6 @@ func runDrop(cmd *cobra.Command, args []string) error {
 	})
 }
 
-func printExtraTaskDetails(ctx context.Context, v *viper.Viper, c client.C1Client, appId string, entitlementId string) error {
-	outputManager := output.NewManager(ctx, v)
-
-	appVal, err := c.GetApp(ctx, appId)
-	if err != nil {
-		return err
-	}
-
-	entitlementVal, err := c.GetEntitlement(ctx, appId, entitlementId)
-	if err != nil {
-		return err
-	}
-
-	app := App{app: appVal, client: c}
-	err = outputManager.Output(ctx, &app, output.WithTransposeTable())
-	if err != nil {
-		return err
-	}
-
-	entitlement := Entitlement{entitlement: entitlementVal, client: c}
-	err = outputManager.Output(ctx, &entitlement, output.WithTransposeTable())
-	if err != nil {
-		return err
-	}
-
-	return nil
-}
-
 // createAWSSSOProfileIfNeeded checks if the entitlement is an AWS permission set and creates the profile if needed.
 func createAWSSSOProfileIfNeeded(ctx context.Context, c client.C1Client, task *shared.Task, outputManager output.Manager) error {
 	if task.TaskType.TaskTypeGrant == nil {
@@ -320,7 +292,7 @@ func createAWSSSOProfileIfNeeded(ctx context.Context, c client.C1Client, task *s
 		if entitlement.AppResourceID == nil {
 			return fmt.Errorf("entitlement AppResourceID is nil, cannot create AWS SSO profile")
 		}
-		
+
 		// Get the resource details
 		resource, err := c.GetResource(ctx, appID, *entitlement.AppResourceTypeID, *entitlement.AppResourceID)
 		if err != nil {
@@ -342,7 +314,7 @@ func handleWaitBehavior(ctx context.Context, c client.C1Client, task *shared.Tas
 	}
 
 	spinner, _ := pterm.DefaultSpinner.Start("Waiting for task to complete...")
-	defer spinner.Stop()
+	defer func() { _ = spinner.Stop() }()
 
 	for {
 		select {
@@ -373,12 +345,13 @@ func handleWaitBehavior(ctx context.Context, c client.C1Client, task *shared.Tas
 					return fmt.Errorf("task closed but no outcome provided")
 				}
 
-				if *taskOutcome == shared.TaskTypeGrantOutcomeGrantOutcomeGranted {
+				switch *taskOutcome {
+				case shared.TaskTypeGrantOutcomeGrantOutcomeGranted:
 					spinner.Success("Entitlement granted successfully.")
-				} else if *taskOutcome == shared.TaskTypeGrantOutcomeGrantOutcomeDenied {
+				case shared.TaskTypeGrantOutcomeGrantOutcomeDenied:
 					spinner.Fail("Entitlement request was denied.")
 					return fmt.Errorf("entitlement request was denied")
-				} else {
+				default:
 					spinner.Fail(fmt.Sprintf("Task completed with unexpected outcome: %s", *taskOutcome))
 					return fmt.Errorf("task completed with unexpected outcome: %s", *taskOutcome)
 				}

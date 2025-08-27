@@ -2,11 +2,6 @@
 
 package shared
 
-import (
-	"encoding/json"
-	"fmt"
-)
-
 type ExcludeTypes string
 
 const (
@@ -20,27 +15,6 @@ const (
 func (e ExcludeTypes) ToPointer() *ExcludeTypes {
 	return &e
 }
-func (e *ExcludeTypes) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "USER_TYPE_UNSPECIFIED":
-		fallthrough
-	case "USER_TYPE_SYSTEM":
-		fallthrough
-	case "USER_TYPE_HUMAN":
-		fallthrough
-	case "USER_TYPE_SERVICE":
-		fallthrough
-	case "USER_TYPE_AGENT":
-		*e = ExcludeTypes(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for ExcludeTypes: %v", v)
-	}
-}
 
 type UserStatuses string
 
@@ -53,25 +27,6 @@ const (
 
 func (e UserStatuses) ToPointer() *UserStatuses {
 	return &e
-}
-func (e *UserStatuses) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "UNKNOWN":
-		fallthrough
-	case "ENABLED":
-		fallthrough
-	case "DISABLED":
-		fallthrough
-	case "DELETED":
-		*e = UserStatuses(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for UserStatuses: %v", v)
-	}
 }
 
 // SearchUsersRequest - Search for users based on some filters.

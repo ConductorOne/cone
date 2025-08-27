@@ -2,11 +2,6 @@
 
 package shared
 
-import (
-	"encoding/json"
-	"fmt"
-)
-
 type MembershipType string
 
 const (
@@ -19,27 +14,6 @@ const (
 
 func (e MembershipType) ToPointer() *MembershipType {
 	return &e
-}
-func (e *MembershipType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "APP_ENTITLEMENT_MEMBERSHIP_TYPE_UNSPECIFIED":
-		fallthrough
-	case "APP_ENTITLEMENT_MEMBERSHIP_TYPE_MEMBER":
-		fallthrough
-	case "APP_ENTITLEMENT_MEMBERSHIP_TYPE_OWNER":
-		fallthrough
-	case "APP_ENTITLEMENT_MEMBERSHIP_TYPE_EXCLUSION":
-		fallthrough
-	case "APP_ENTITLEMENT_MEMBERSHIP_TYPE_ADMIN":
-		*e = MembershipType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for MembershipType: %v", v)
-	}
 }
 
 // AppEntitlementSearchServiceSearchRequest - Search app entitlements by a variety of filters.
@@ -56,12 +30,18 @@ type AppEntitlementSearchServiceSearchRequest struct {
 	AppUserIds []string `json:"appUserIds,omitempty"`
 	// Search for app entitlements that are part of these compliace frameworks.
 	ComplianceFrameworkIds []string `json:"complianceFrameworkIds,omitempty"`
+	// The displayName field.
+	DisplayName *string `json:"displayName,omitempty"`
 	// Exclude app entitlements from the results that are in these app IDs.
 	ExcludeAppIds []string `json:"excludeAppIds,omitempty"`
 	// Exclude app entitlements from the results that these app users have granted.
 	ExcludeAppUserIds []string `json:"excludeAppUserIds,omitempty"`
+	// The excludeImmutable field.
+	ExcludeImmutable *bool `json:"excludeImmutable,omitempty"`
 	// The excludeResourceTypeIds field.
 	ExcludeResourceTypeIds []string `json:"excludeResourceTypeIds,omitempty"`
+	// The excludedEntitlementRefs field.
+	ExcludedEntitlementRefs []AppEntitlementRef `json:"excludedEntitlementRefs,omitempty"`
 	// Include deleted app entitlements, this includes app entitlements that have a deleted parent object (app, app resource, app resource type)
 	IncludeDeleted *bool `json:"includeDeleted,omitempty"`
 	// The isAutomated field.
@@ -74,6 +54,8 @@ type AppEntitlementSearchServiceSearchRequest struct {
 	PageSize *int `json:"pageSize,omitempty"`
 	// The pageToken field.
 	PageToken *string `json:"pageToken,omitempty"`
+	// Search for app entitlements that use any of these policies.
+	PolicyRefs []PolicyRef `json:"policyRefs,omitempty"`
 	// Query the app entitlements with a fuzzy search on display name and description.
 	Query *string `json:"query,omitempty"`
 	// The refs field.
@@ -132,6 +114,13 @@ func (o *AppEntitlementSearchServiceSearchRequest) GetComplianceFrameworkIds() [
 	return o.ComplianceFrameworkIds
 }
 
+func (o *AppEntitlementSearchServiceSearchRequest) GetDisplayName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.DisplayName
+}
+
 func (o *AppEntitlementSearchServiceSearchRequest) GetExcludeAppIds() []string {
 	if o == nil {
 		return nil
@@ -146,11 +135,25 @@ func (o *AppEntitlementSearchServiceSearchRequest) GetExcludeAppUserIds() []stri
 	return o.ExcludeAppUserIds
 }
 
+func (o *AppEntitlementSearchServiceSearchRequest) GetExcludeImmutable() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.ExcludeImmutable
+}
+
 func (o *AppEntitlementSearchServiceSearchRequest) GetExcludeResourceTypeIds() []string {
 	if o == nil {
 		return nil
 	}
 	return o.ExcludeResourceTypeIds
+}
+
+func (o *AppEntitlementSearchServiceSearchRequest) GetExcludedEntitlementRefs() []AppEntitlementRef {
+	if o == nil {
+		return nil
+	}
+	return o.ExcludedEntitlementRefs
 }
 
 func (o *AppEntitlementSearchServiceSearchRequest) GetIncludeDeleted() *bool {
@@ -193,6 +196,13 @@ func (o *AppEntitlementSearchServiceSearchRequest) GetPageToken() *string {
 		return nil
 	}
 	return o.PageToken
+}
+
+func (o *AppEntitlementSearchServiceSearchRequest) GetPolicyRefs() []PolicyRef {
+	if o == nil {
+		return nil
+	}
+	return o.PolicyRefs
 }
 
 func (o *AppEntitlementSearchServiceSearchRequest) GetQuery() *string {

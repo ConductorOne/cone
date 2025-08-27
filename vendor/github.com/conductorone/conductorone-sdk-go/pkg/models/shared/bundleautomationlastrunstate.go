@@ -11,10 +11,11 @@ import (
 type BundleAutomationLastRunStateStatus string
 
 const (
-	BundleAutomationLastRunStateStatusBundleAutomationRunStatusUnspecified BundleAutomationLastRunStateStatus = "BUNDLE_AUTOMATION_RUN_STATUS_UNSPECIFIED"
-	BundleAutomationLastRunStateStatusBundleAutomationRunStatusSuccess     BundleAutomationLastRunStateStatus = "BUNDLE_AUTOMATION_RUN_STATUS_SUCCESS"
-	BundleAutomationLastRunStateStatusBundleAutomationRunStatusFailure     BundleAutomationLastRunStateStatus = "BUNDLE_AUTOMATION_RUN_STATUS_FAILURE"
-	BundleAutomationLastRunStateStatusBundleAutomationRunStatusInProgress  BundleAutomationLastRunStateStatus = "BUNDLE_AUTOMATION_RUN_STATUS_IN_PROGRESS"
+	BundleAutomationLastRunStateStatusBundleAutomationRunStatusUnspecified        BundleAutomationLastRunStateStatus = "BUNDLE_AUTOMATION_RUN_STATUS_UNSPECIFIED"
+	BundleAutomationLastRunStateStatusBundleAutomationRunStatusSuccess            BundleAutomationLastRunStateStatus = "BUNDLE_AUTOMATION_RUN_STATUS_SUCCESS"
+	BundleAutomationLastRunStateStatusBundleAutomationRunStatusFailure            BundleAutomationLastRunStateStatus = "BUNDLE_AUTOMATION_RUN_STATUS_FAILURE"
+	BundleAutomationLastRunStateStatusBundleAutomationRunStatusInProgress         BundleAutomationLastRunStateStatus = "BUNDLE_AUTOMATION_RUN_STATUS_IN_PROGRESS"
+	BundleAutomationLastRunStateStatusBundleAutomationRunStatusWaitingForApproval BundleAutomationLastRunStateStatus = "BUNDLE_AUTOMATION_RUN_STATUS_WAITING_FOR_APPROVAL"
 )
 
 func (e BundleAutomationLastRunStateStatus) ToPointer() *BundleAutomationLastRunStateStatus {

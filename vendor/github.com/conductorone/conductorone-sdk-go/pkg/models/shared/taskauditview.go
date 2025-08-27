@@ -97,6 +97,10 @@ func (e Source) ToPointer() *Source {
 //   - externalTicketProvisionStepResolved
 //   - stepSkipped
 //   - reassignmentListError
+//   - slaEscalation
+//   - policyChanged
+//   - formInstanceChange
+//   - grantDurationUpdated
 type TaskAuditView struct {
 	// The TaskAuditAccessRequestOutcome message.
 	TaskAuditAccessRequestOutcome *TaskAuditAccessRequestOutcome `json:"accessRequestOutcome,omitempty"`
@@ -140,6 +144,10 @@ type TaskAuditView struct {
 	TaskAuditExternalTicketTriggered *TaskAuditExternalTicketTriggered `json:"externalTicketTriggered,omitempty"`
 	// The TaskAuditFinishedConnectorActions message.
 	TaskAuditFinishedConnectorActions *TaskAuditFinishedConnectorActions `json:"connectorActionsEnd,omitempty"`
+	// The TaskAuditFormInstanceChange message.
+	TaskAuditFormInstanceChange *TaskAuditFormInstanceChange `json:"formInstanceChange,omitempty"`
+	// The TaskAuditGrantDurationUpdated message.
+	TaskAuditGrantDurationUpdated *TaskAuditGrantDurationUpdated `json:"grantDurationUpdated,omitempty"`
 	// The TaskAuditGrantOutcome message.
 	TaskAuditGrantOutcome *TaskAuditGrantOutcome `json:"grantOutcome,omitempty"`
 	// The TaskAuditHardReset message.
@@ -150,6 +158,8 @@ type TaskAuditView struct {
 	TaskAuditNewTask *TaskAuditNewTask `json:"taskCreated,omitempty"`
 	// The TaskAuditPolicyApprovalReassigned message.
 	TaskAuditPolicyApprovalReassigned *TaskAuditPolicyApprovalReassigned `json:"approvalReassigned,omitempty"`
+	// The TaskAuditPolicyChanged message.
+	TaskAuditPolicyChanged *TaskAuditPolicyChanged `json:"policyChanged,omitempty"`
 	// The TaskAuditPolicyEvaluationStep message.
 	TaskAuditPolicyEvaluationStep *TaskAuditPolicyEvaluationStep `json:"policyEvaluationStep,omitempty"`
 	// The TaskAuditPolicyProvisionError message.
@@ -164,6 +174,8 @@ type TaskAuditView struct {
 	TaskAuditRestart *TaskAuditRestart `json:"taskRestarted,omitempty"`
 	// The TaskAuditRevokeOutcome message.
 	TaskAuditRevokeOutcome *TaskAuditRevokeOutcome `json:"revokeOutcome,omitempty"`
+	// The TaskAuditSLAEscalation message.
+	TaskAuditSLAEscalation *TaskAuditSLAEscalation `json:"slaEscalation,omitempty"`
 	// The TaskAuditStartedConnectorActions message.
 	TaskAuditStartedConnectorActions *TaskAuditStartedConnectorActions `json:"connectorActionsStart,omitempty"`
 	// The TaskAuditStateChange message.
@@ -207,6 +219,8 @@ type TaskAuditView struct {
 	ID *string `json:"id,omitempty"`
 	// The source field.
 	Source *Source `json:"source,omitempty"`
+	// The ticketId field.
+	TicketID *string `json:"ticketId,omitempty"`
 	// The userId field.
 	UserID *string `json:"userId,omitempty"`
 	// The workflowStep field.
@@ -350,6 +364,20 @@ func (o *TaskAuditView) GetTaskAuditFinishedConnectorActions() *TaskAuditFinishe
 	return o.TaskAuditFinishedConnectorActions
 }
 
+func (o *TaskAuditView) GetTaskAuditFormInstanceChange() *TaskAuditFormInstanceChange {
+	if o == nil {
+		return nil
+	}
+	return o.TaskAuditFormInstanceChange
+}
+
+func (o *TaskAuditView) GetTaskAuditGrantDurationUpdated() *TaskAuditGrantDurationUpdated {
+	if o == nil {
+		return nil
+	}
+	return o.TaskAuditGrantDurationUpdated
+}
+
 func (o *TaskAuditView) GetTaskAuditGrantOutcome() *TaskAuditGrantOutcome {
 	if o == nil {
 		return nil
@@ -383,6 +411,13 @@ func (o *TaskAuditView) GetTaskAuditPolicyApprovalReassigned() *TaskAuditPolicyA
 		return nil
 	}
 	return o.TaskAuditPolicyApprovalReassigned
+}
+
+func (o *TaskAuditView) GetTaskAuditPolicyChanged() *TaskAuditPolicyChanged {
+	if o == nil {
+		return nil
+	}
+	return o.TaskAuditPolicyChanged
 }
 
 func (o *TaskAuditView) GetTaskAuditPolicyEvaluationStep() *TaskAuditPolicyEvaluationStep {
@@ -432,6 +467,13 @@ func (o *TaskAuditView) GetTaskAuditRevokeOutcome() *TaskAuditRevokeOutcome {
 		return nil
 	}
 	return o.TaskAuditRevokeOutcome
+}
+
+func (o *TaskAuditView) GetTaskAuditSLAEscalation() *TaskAuditSLAEscalation {
+	if o == nil {
+		return nil
+	}
+	return o.TaskAuditSLAEscalation
 }
 
 func (o *TaskAuditView) GetTaskAuditStartedConnectorActions() *TaskAuditStartedConnectorActions {
@@ -586,6 +628,13 @@ func (o *TaskAuditView) GetSource() *Source {
 		return nil
 	}
 	return o.Source
+}
+
+func (o *TaskAuditView) GetTicketID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.TicketID
 }
 
 func (o *TaskAuditView) GetUserID() *string {

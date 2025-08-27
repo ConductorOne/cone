@@ -11,6 +11,8 @@ type SetBundleAutomationRequest struct {
 	BundleAutomationRuleEntitlement *BundleAutomationRuleEntitlement `json:"entitlements,omitempty"`
 	// The createTasks field.
 	CreateTasks *bool `json:"createTasks,omitempty"`
+	// The disableCircuitBreaker field.
+	DisableCircuitBreaker *bool `json:"disableCircuitBreaker,omitempty"`
 	// The enabled field.
 	Enabled *bool `json:"enabled,omitempty"`
 }
@@ -27,6 +29,13 @@ func (o *SetBundleAutomationRequest) GetCreateTasks() *bool {
 		return nil
 	}
 	return o.CreateTasks
+}
+
+func (o *SetBundleAutomationRequest) GetDisableCircuitBreaker() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.DisableCircuitBreaker
 }
 
 func (o *SetBundleAutomationRequest) GetEnabled() *bool {

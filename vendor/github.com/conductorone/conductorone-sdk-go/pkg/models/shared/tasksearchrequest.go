@@ -3,8 +3,6 @@
 package shared
 
 import (
-	"encoding/json"
-	"fmt"
 	"github.com/conductorone/conductorone-sdk-go/pkg/utils"
 	"time"
 )
@@ -20,25 +18,6 @@ const (
 
 func (e AccountTypes) ToPointer() *AccountTypes {
 	return &e
-}
-func (e *AccountTypes) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "APP_USER_TYPE_UNSPECIFIED":
-		fallthrough
-	case "APP_USER_TYPE_USER":
-		fallthrough
-	case "APP_USER_TYPE_SERVICE_ACCOUNT":
-		fallthrough
-	case "APP_USER_TYPE_SYSTEM_ACCOUNT":
-		*e = AccountTypes(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for AccountTypes: %v", v)
-	}
 }
 
 // CurrentStep - Search tasks that have this type of step as the current step.
@@ -105,39 +84,6 @@ const (
 func (e StepApprovalTypes) ToPointer() *StepApprovalTypes {
 	return &e
 }
-func (e *StepApprovalTypes) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "STEP_APPROVAL_TYPE_UNSPECIFIED":
-		fallthrough
-	case "STEP_APPROVAL_TYPE_USERS":
-		fallthrough
-	case "STEP_APPROVAL_TYPE_MANAGER":
-		fallthrough
-	case "STEP_APPROVAL_TYPE_APP_OWNERS":
-		fallthrough
-	case "STEP_APPROVAL_TYPE_GROUP":
-		fallthrough
-	case "STEP_APPROVAL_TYPE_SELF":
-		fallthrough
-	case "STEP_APPROVAL_TYPE_ENTITLEMENT_OWNERS":
-		fallthrough
-	case "STEP_APPROVAL_TYPE_EXPRESSION":
-		fallthrough
-	case "STEP_APPROVAL_TYPE_WEBHOOK":
-		fallthrough
-	case "STEP_APPROVAL_TYPE_RESOURCE_OWNERS":
-		fallthrough
-	case "STEP_APPROVAL_TYPE_AGENT":
-		*e = StepApprovalTypes(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for StepApprovalTypes: %v", v)
-	}
-}
 
 type TaskStates string
 
@@ -149,23 +95,6 @@ const (
 
 func (e TaskStates) ToPointer() *TaskStates {
 	return &e
-}
-func (e *TaskStates) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "TASK_STATE_UNSPECIFIED":
-		fallthrough
-	case "TASK_STATE_OPEN":
-		fallthrough
-	case "TASK_STATE_CLOSED":
-		*e = TaskStates(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for TaskStates: %v", v)
-	}
 }
 
 // TaskSearchRequest - Search for tasks based on a plethora filters.
@@ -190,6 +119,8 @@ type TaskSearchRequest struct {
 	AppUserSubjectIds []string `json:"appUserSubjectIds,omitempty"`
 	// Search tasks that have any of these apps as targets.
 	ApplicationIds []string `json:"applicationIds,omitempty"`
+	// Search tasks that are currently assigned to this user, or that are closed and were previously approved by this user.
+	AssignedOrStepApproverUserID *string `json:"assignedOrStepApproverUserId,omitempty"`
 	// Search tasks by  List of UserIDs which are currently assigned these Tasks
 	AssigneesInIds []string   `json:"assigneesInIds,omitempty"`
 	CreatedAfter   *time.Time `json:"createdAfter,omitempty"`
@@ -211,6 +142,8 @@ type TaskSearchRequest struct {
 	OlderThanDuration *string  `json:"olderThanDuration,omitempty"`
 	// Search tasks that were created by any of the users in this array.
 	OpenerIds []string `json:"openerIds,omitempty"`
+	// Search tasks that were opened by this user, or that the user is the subject of.
+	OpenerOrSubjectUserID *string `json:"openerOrSubjectUserId,omitempty"`
 	// The pageSize where 0 <= pageSize <= 100. Values < 10 will be set to 10. A value of 0 returns the default page size (currently 25)
 	PageSize *int `json:"pageSize,omitempty"`
 	// The pageToken field.
@@ -316,6 +249,13 @@ func (o *TaskSearchRequest) GetApplicationIds() []string {
 	return o.ApplicationIds
 }
 
+func (o *TaskSearchRequest) GetAssignedOrStepApproverUserID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AssignedOrStepApproverUserID
+}
+
 func (o *TaskSearchRequest) GetAssigneesInIds() []string {
 	if o == nil {
 		return nil
@@ -398,6 +338,13 @@ func (o *TaskSearchRequest) GetOpenerIds() []string {
 		return nil
 	}
 	return o.OpenerIds
+}
+
+func (o *TaskSearchRequest) GetOpenerOrSubjectUserID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.OpenerOrSubjectUserID
 }
 
 func (o *TaskSearchRequest) GetPageSize() *int {

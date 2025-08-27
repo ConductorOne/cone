@@ -11,7 +11,7 @@ require (
 
 require (
 	github.com/conductorone/baton-sdk v0.3.17
-	github.com/conductorone/conductorone-sdk-go v1.25.0
+	github.com/conductorone/conductorone-sdk-go v1.26.0
 	github.com/pterm/pterm v0.12.81
 	github.com/toqueteos/webbrowser v1.2.0
 	github.com/xhit/go-str2duration/v2 v2.1.0
@@ -35,6 +35,7 @@ require (
 	github.com/rivo/uniseg v0.4.7 // indirect
 	github.com/sagikazarmark/locafero v0.9.0 // indirect
 	github.com/sourcegraph/conc v0.3.0 // indirect
+	github.com/spyzhov/ajson v0.9.6 // indirect
 	github.com/xo/terminfo v0.0.0-20220910002029-abceb7e1c41e // indirect
 	go.uber.org/multierr v1.11.0 // indirect
 	golang.org/x/crypto v0.39.0 // indirect

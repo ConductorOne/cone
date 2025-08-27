@@ -10,12 +10,12 @@ import (
 type C1APIPolicyV1PolicyValidateValidateCELResponse struct {
 	// HTTP response content type for this operation
 	ContentType string
+	// Successful response
+	EditorValidateResponse *shared.EditorValidateResponse
 	// HTTP response status code for this operation
 	StatusCode int
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
-	// Successful response
-	ValidatePolicyCELResponse *shared.ValidatePolicyCELResponse
 }
 
 func (o *C1APIPolicyV1PolicyValidateValidateCELResponse) GetContentType() string {
@@ -23,6 +23,13 @@ func (o *C1APIPolicyV1PolicyValidateValidateCELResponse) GetContentType() string
 		return ""
 	}
 	return o.ContentType
+}
+
+func (o *C1APIPolicyV1PolicyValidateValidateCELResponse) GetEditorValidateResponse() *shared.EditorValidateResponse {
+	if o == nil {
+		return nil
+	}
+	return o.EditorValidateResponse
 }
 
 func (o *C1APIPolicyV1PolicyValidateValidateCELResponse) GetStatusCode() int {
@@ -37,11 +44,4 @@ func (o *C1APIPolicyV1PolicyValidateValidateCELResponse) GetRawResponse() *http.
 		return nil
 	}
 	return o.RawResponse
-}
-
-func (o *C1APIPolicyV1PolicyValidateValidateCELResponse) GetValidatePolicyCELResponse() *shared.ValidatePolicyCELResponse {
-	if o == nil {
-		return nil
-	}
-	return o.ValidatePolicyCELResponse
 }

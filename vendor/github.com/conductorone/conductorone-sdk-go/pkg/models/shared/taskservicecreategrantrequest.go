@@ -20,7 +20,8 @@ type TaskServiceCreateGrantRequest struct {
 	EmergencyAccess *bool   `json:"emergencyAccess,omitempty"`
 	GrantDuration   *string `json:"grantDuration,omitempty"`
 	// The ID of the user associated with the app user we are granting access for. This field cannot be set if appUserID is also set.
-	IdentityUserID *string `json:"identityUserId,omitempty"`
+	IdentityUserID *string        `json:"identityUserId,omitempty"`
+	RequestData    map[string]any `json:"requestData,omitempty"`
 }
 
 func (o *TaskServiceCreateGrantRequest) GetTaskExpandMask() *TaskExpandMask {
@@ -84,4 +85,11 @@ func (o *TaskServiceCreateGrantRequest) GetIdentityUserID() *string {
 		return nil
 	}
 	return o.IdentityUserID
+}
+
+func (o *TaskServiceCreateGrantRequest) GetRequestData() map[string]any {
+	if o == nil {
+		return nil
+	}
+	return o.RequestData
 }

@@ -15,6 +15,7 @@ ConductorOne API: The ConductorOne API is a HTTP API for managing ConductorOne r
   * [Available Resources and Operations](#available-resources-and-operations)
   * [Error Handling](#error-handling)
   * [SDK Example Usage with Custom Server/Tenant](#sdk-example-usage-with-custom-servertenant)
+  * [Pagination](#pagination)
   * [Retries](#retries)
 
 <!-- End Table of Contents [toc] -->
@@ -24,7 +25,7 @@ ConductorOne API: The ConductorOne API is a HTTP API for managing ConductorOne r
 
 To add the SDK as a dependency to your project:
 ```bash
-go get github.com/ConductorOne/conductorone-sdk-go
+go get github.com/conductorone/conductorone-sdk-go
 ```
 <!-- End SDK Installation [installation] -->
 
@@ -73,6 +74,13 @@ func main() {
 <details open>
 <summary>Available methods</summary>
 
+### [AccessConflict](docs/sdks/accessconflict/README.md)
+
+* [CreateMonitor](docs/sdks/accessconflict/README.md#createmonitor) - Create Monitor
+* [DeleteMonitor](docs/sdks/accessconflict/README.md#deletemonitor) - Delete Monitor
+* [GetMonitor](docs/sdks/accessconflict/README.md#getmonitor) - Get Monitor
+* [UpdateMonitor](docs/sdks/accessconflict/README.md#updatemonitor) - Update Monitor
+
 ### [AccountProvisionPolicyTest](docs/sdks/accountprovisionpolicytest/README.md)
 
 * [Test](docs/sdks/accountprovisionpolicytest/README.md#test) - Test
@@ -82,6 +90,12 @@ func main() {
 * [CancelAppAccessRequestsDefaults](docs/sdks/appaccessrequestsdefaults/README.md#cancelappaccessrequestsdefaults) - Cancel App Access Requests Defaults
 * [CreateAppAccessRequestsDefaults](docs/sdks/appaccessrequestsdefaults/README.md#createappaccessrequestsdefaults) - Create App Access Requests Defaults
 * [GetAppAccessRequestsDefaults](docs/sdks/appaccessrequestsdefaults/README.md#getappaccessrequestsdefaults) - Get App Access Requests Defaults
+
+### [AppEntitlementMonitorBinding](docs/sdks/appentitlementmonitorbinding/README.md)
+
+* [CreateAppEntitlementMonitorBinding](docs/sdks/appentitlementmonitorbinding/README.md#createappentitlementmonitorbinding) - Create App Entitlement Monitor Binding
+* [DeleteAppEntitlementMonitorBinding](docs/sdks/appentitlementmonitorbinding/README.md#deleteappentitlementmonitorbinding) - Delete App Entitlement Monitor Binding
+* [GetAppEntitlementMonitorBinding](docs/sdks/appentitlementmonitorbinding/README.md#getappentitlementmonitorbinding) - Get App Entitlement Monitor Binding
 
 ### [AppEntitlementOwners](docs/sdks/appentitlementowners/README.md)
 
@@ -163,6 +177,7 @@ func main() {
 ### [AppResourceSearch](docs/sdks/appresourcesearch/README.md)
 
 * [SearchAppResourceTypes](docs/sdks/appresourcesearch/README.md#searchappresourcetypes) - Search App Resource Types
+* [SearchAppResources](docs/sdks/appresourcesearch/README.md#searchappresources) - Search App Resources
 
 ### [AppResourceType](docs/sdks/appresourcetype/README.md)
 
@@ -219,6 +234,33 @@ func main() {
 
 * [Introspect](docs/sdks/auth/README.md#introspect) - Introspect
 
+### [Automation](docs/sdks/automation/README.md)
+
+* [CreateAutomation](docs/sdks/automation/README.md#createautomation) - Create Automation
+* [DeleteAutomation](docs/sdks/automation/README.md#deleteautomation) - Delete Automation
+* [ExecuteAutomation](docs/sdks/automation/README.md#executeautomation) - Execute Automation
+* [GetAutomation](docs/sdks/automation/README.md#getautomation) - Get Automation
+* [ListAutomations](docs/sdks/automation/README.md#listautomations) - List Automations
+* [UpdateAutomation](docs/sdks/automation/README.md#updateautomation) - Update Automation
+
+### [AutomationExecution](docs/sdks/automationexecution/README.md)
+
+* [GetAutomationExecution](docs/sdks/automationexecution/README.md#getautomationexecution) - Get Automation Execution
+* [ListAutomationExecutions](docs/sdks/automationexecution/README.md#listautomationexecutions) - List Automation Executions
+
+### [AutomationExecutionActions](docs/sdks/automationexecutionactions/README.md)
+
+* [TerminateAutomation](docs/sdks/automationexecutionactions/README.md#terminateautomation) - Terminate Automation
+
+### [AutomationExecutionSearch](docs/sdks/automationexecutionsearch/README.md)
+
+* [SearchAutomationExecutions](docs/sdks/automationexecutionsearch/README.md#searchautomationexecutions) - Search Automation Executions
+
+### [AutomationSearch](docs/sdks/automationsearch/README.md)
+
+* [SearchAutomationTemplateVersions](docs/sdks/automationsearch/README.md#searchautomationtemplateversions) - Search Automation Template Versions
+* [SearchAutomations](docs/sdks/automationsearch/README.md#searchautomations) - Search Automations
+
 ### [AWSExternalIDSettings](docs/sdks/awsexternalidsettings/README.md)
 
 * [Get](docs/sdks/awsexternalidsettings/README.md#get) - Get
@@ -233,10 +275,13 @@ func main() {
 * [Get](docs/sdks/connector/README.md#get) - Get
 * [GetCredentials](docs/sdks/connector/README.md#getcredentials) - Get Credentials
 * [List](docs/sdks/connector/README.md#list) - List
+* [PauseSync](docs/sdks/connector/README.md#pausesync) - Pause Sync
+* [ResumeSync](docs/sdks/connector/README.md#resumesync) - Resume Sync
 * [RevokeCredential](docs/sdks/connector/README.md#revokecredential) - Revoke Credential
 * [RotateCredential](docs/sdks/connector/README.md#rotatecredential) - Rotate Credential
 * [Update](docs/sdks/connector/README.md#update) - Update
 * [UpdateDelegated](docs/sdks/connector/README.md#updatedelegated) - Update Delegated
+* [ValidateHTTPConnectorConfig](docs/sdks/connector/README.md#validatehttpconnectorconfig) - Validate Http Connector Config
 
 ### [Directory](docs/sdks/directory/README.md)
 
@@ -257,6 +302,24 @@ func main() {
 ### [ExportsSearch](docs/sdks/exportssearch/README.md)
 
 * [Search](docs/sdks/exportssearch/README.md#search) - Search
+
+### [Functions](docs/sdks/functions/README.md)
+
+* [Commit](docs/sdks/functions/README.md#commit) - Commit
+* [CreateFunction](docs/sdks/functions/README.md#createfunction) - Create Function
+* [CreateTag](docs/sdks/functions/README.md#createtag) - Create Tag
+* [DeleteFunction](docs/sdks/functions/README.md#deletefunction) - Delete Function
+* [GetCommit](docs/sdks/functions/README.md#getcommit) - Get Commit
+* [GetFunction](docs/sdks/functions/README.md#getfunction) - Get Function
+* [Invoke](docs/sdks/functions/README.md#invoke) - Invoke
+* [ListCommits](docs/sdks/functions/README.md#listcommits) - List Commits
+* [ListFunctions](docs/sdks/functions/README.md#listfunctions) - List Functions
+* [ListTags](docs/sdks/functions/README.md#listtags) - List Tags
+* [UpdateFunction](docs/sdks/functions/README.md#updatefunction) - Update Function
+
+### [FunctionsSearch](docs/sdks/functionssearch/README.md)
+
+* [Search](docs/sdks/functionssearch/README.md#search) - Search
 
 ### [OrgDomain](docs/sdks/orgdomain/README.md)
 
@@ -303,12 +366,15 @@ func main() {
 * [Get](docs/sdks/requestcatalogmanagement/README.md#get) - Get
 * [GetBundleAutomation](docs/sdks/requestcatalogmanagement/README.md#getbundleautomation) - Get Bundle Automation
 * [List](docs/sdks/requestcatalogmanagement/README.md#list) - List
+* [ListAllEntitlementIdsPerApp](docs/sdks/requestcatalogmanagement/README.md#listallentitlementidsperapp) - List All Entitlement Ids Per App
 * [ListEntitlementsForAccess](docs/sdks/requestcatalogmanagement/README.md#listentitlementsforaccess) - List Entitlements For Access
 * [ListEntitlementsPerCatalog](docs/sdks/requestcatalogmanagement/README.md#listentitlementspercatalog) - List Entitlements Per Catalog
 * [RemoveAccessEntitlements](docs/sdks/requestcatalogmanagement/README.md#removeaccessentitlements) - Remove Access Entitlements
 * [RemoveAppEntitlements](docs/sdks/requestcatalogmanagement/README.md#removeappentitlements) - Remove App Entitlements
+* [ResumePausedBundleAutomation](docs/sdks/requestcatalogmanagement/README.md#resumepausedbundleautomation) - Resume Paused Bundle Automation
 * [SetBundleAutomation](docs/sdks/requestcatalogmanagement/README.md#setbundleautomation) - Set Bundle Automation
 * [Update](docs/sdks/requestcatalogmanagement/README.md#update) - Update
+* [UpdateAppEntitlements](docs/sdks/requestcatalogmanagement/README.md#updateappentitlements) - Update App Entitlements
 
 ### [RequestCatalogSearch](docs/sdks/requestcatalogsearch/README.md)
 
@@ -357,6 +423,7 @@ func main() {
 
 * [Approve](docs/sdks/taskactions/README.md#approve) - Approve
 * [ApproveWithStepUp](docs/sdks/taskactions/README.md#approvewithstepup) - Approve With Step Up
+* [Close](docs/sdks/taskactions/README.md#close) - Close
 * [Comment](docs/sdks/taskactions/README.md#comment) - Comment
 * [Deny](docs/sdks/taskactions/README.md#deny) - Deny
 * [EscalateToEmergencyAccess](docs/sdks/taskactions/README.md#escalatetoemergencyaccess) - Escalate To Emergency Access
@@ -365,6 +432,8 @@ func main() {
 * [Reassign](docs/sdks/taskactions/README.md#reassign) - Reassign
 * [Restart](docs/sdks/taskactions/README.md#restart) - Restart
 * [SkipStep](docs/sdks/taskactions/README.md#skipstep) - Skip Step
+* [UpdateGrantDuration](docs/sdks/taskactions/README.md#updategrantduration) - Update Grant Duration
+* [UpdateRequestData](docs/sdks/taskactions/README.md#updaterequestdata) - Update Request Data
 
 ### [TaskAudit](docs/sdks/taskaudit/README.md)
 
@@ -395,33 +464,6 @@ func main() {
 ### [WebhooksSearch](docs/sdks/webhookssearch/README.md)
 
 * [Search](docs/sdks/webhookssearch/README.md#search) - Search
-
-### [Workflow](docs/sdks/workflow/README.md)
-
-* [CreateWorkflow](docs/sdks/workflow/README.md#createworkflow) - Create Workflow
-* [DeleteWorkflow](docs/sdks/workflow/README.md#deleteworkflow) - Delete Workflow
-* [ExecuteWorkflow](docs/sdks/workflow/README.md#executeworkflow) - Execute Workflow
-* [GetWorkflow](docs/sdks/workflow/README.md#getworkflow) - Get Workflow
-* [ListWorkflows](docs/sdks/workflow/README.md#listworkflows) - List Workflows
-* [UpdateWorkflow](docs/sdks/workflow/README.md#updateworkflow) - Update Workflow
-
-### [WorkflowExecution](docs/sdks/workflowexecution/README.md)
-
-* [GetWorkflowExecution](docs/sdks/workflowexecution/README.md#getworkflowexecution) - Get Workflow Execution
-* [ListWorkflowExecutions](docs/sdks/workflowexecution/README.md#listworkflowexecutions) - List Workflow Executions
-
-### [WorkflowExecutionActions](docs/sdks/workflowexecutionactions/README.md)
-
-* [TerminateWorkflow](docs/sdks/workflowexecutionactions/README.md#terminateworkflow) - Terminate Workflow
-
-### [WorkflowExecutionSearch](docs/sdks/workflowexecutionsearch/README.md)
-
-* [SearchWorkflowExecutions](docs/sdks/workflowexecutionsearch/README.md#searchworkflowexecutions) - Search Workflow Executions
-
-### [WorkflowSearch](docs/sdks/workflowsearch/README.md)
-
-* [SearchWorkflowTemplateVersions](docs/sdks/workflowsearch/README.md#searchworkflowtemplateversions) - Search Workflow Template Versions
-* [SearchWorkflows](docs/sdks/workflowsearch/README.md#searchworkflows) - Search Workflows
 
 </details>
 <!-- End Available Resources and Operations [operations] -->
@@ -529,6 +571,58 @@ func main() {
 
 <!-- No Authentication [security] -->
 
+<!-- Start Pagination [pagination] -->
+## Pagination
+
+Some of the endpoints in this SDK support pagination. To use pagination, you make your SDK calls as usual, but the
+returned response object will have a `Next` method that can be called to pull down the next group of results. If the
+return value of `Next` is `nil`, then there are no more pages to be fetched.
+
+Here's an example of one such pagination call:
+```go
+package main
+
+import (
+	"context"
+	conductoronesdkgo "github.com/conductorone/conductorone-sdk-go"
+	"github.com/conductorone/conductorone-sdk-go/pkg/models/shared"
+	"log"
+)
+
+func main() {
+	ctx := context.Background()
+
+	s := conductoronesdkgo.New(
+		conductoronesdkgo.WithSecurity(shared.Security{
+			BearerAuth: "<YOUR_BEARER_TOKEN_HERE>",
+			Oauth:      "<YOUR_OAUTH_HERE>",
+		}),
+	)
+
+	res, err := s.AppEntitlementSearch.Search(ctx, nil)
+	if err != nil {
+		log.Fatal(err)
+	}
+	if res.AppEntitlementSearchServiceSearchResponse != nil {
+		for {
+			// handle items
+
+			res, err = res.Next()
+
+			if err != nil {
+				// handle error
+			}
+
+			if res == nil {
+				break
+			}
+		}
+	}
+}
+
+```
+<!-- End Pagination [pagination] -->
+
 <!-- Start Retries [retries] -->
 ## Retries
 
@@ -557,7 +651,7 @@ func main() {
 		}),
 	)
 
-	res, err := s.Apps.Create(ctx, nil, operations.WithRetries(
+	res, err := s.AccessConflict.CreateMonitor(ctx, nil, operations.WithRetries(
 		retry.Config{
 			Strategy: "backoff",
 			Backoff: &retry.BackoffStrategy{
@@ -571,7 +665,7 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	if res.CreateAppResponse != nil {
+	if res.ConflictMonitor != nil {
 		// handle response
 	}
 }
@@ -611,11 +705,11 @@ func main() {
 		}),
 	)
 
-	res, err := s.Apps.Create(ctx, nil)
+	res, err := s.AccessConflict.CreateMonitor(ctx, nil)
 	if err != nil {
 		log.Fatal(err)
 	}
-	if res.CreateAppResponse != nil {
+	if res.ConflictMonitor != nil {
 		// handle response
 	}
 }

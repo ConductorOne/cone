@@ -2,11 +2,6 @@
 
 package shared
 
-import (
-	"encoding/json"
-	"fmt"
-)
-
 type PolicyTypes string
 
 const (
@@ -20,29 +15,6 @@ const (
 
 func (e PolicyTypes) ToPointer() *PolicyTypes {
 	return &e
-}
-func (e *PolicyTypes) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "POLICY_TYPE_UNSPECIFIED":
-		fallthrough
-	case "POLICY_TYPE_GRANT":
-		fallthrough
-	case "POLICY_TYPE_REVOKE":
-		fallthrough
-	case "POLICY_TYPE_CERTIFY":
-		fallthrough
-	case "POLICY_TYPE_ACCESS_REQUEST":
-		fallthrough
-	case "POLICY_TYPE_PROVISION":
-		*e = PolicyTypes(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for PolicyTypes: %v", v)
-	}
 }
 
 // SearchPoliciesRequest - Search Policies by a few properties.

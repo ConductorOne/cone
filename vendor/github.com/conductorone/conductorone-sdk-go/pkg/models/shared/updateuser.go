@@ -4,7 +4,7 @@ package shared
 
 // UserStatusEnum - The userStatusEnum field.
 // This field is part of the `user_status` oneof.
-// See the documentation for `c1.api.workflows.v1beta.UpdateUser` for more details.
+// See the documentation for `c1.api.automations.v1.UpdateUser` for more details.
 type UserStatusEnum string
 
 const (
@@ -30,17 +30,19 @@ func (e UserStatusEnum) ToPointer() *UserStatusEnum {
 type UpdateUser struct {
 	// A reference to a user.
 	UserRef *UserRef `json:"userRef,omitempty"`
+	// If true, the step will use the subject user of the automation as the subject.
+	UseSubjectUser *bool `json:"useSubjectUser,omitempty"`
 	// The userIdCel field.
 	// This field is part of the `user` oneof.
-	// See the documentation for `c1.api.workflows.v1beta.UpdateUser` for more details.
+	// See the documentation for `c1.api.automations.v1.UpdateUser` for more details.
 	UserIDCel *string `json:"userIdCel,omitempty"`
 	// The userStatusCel field.
 	// This field is part of the `user_status` oneof.
-	// See the documentation for `c1.api.workflows.v1beta.UpdateUser` for more details.
+	// See the documentation for `c1.api.automations.v1.UpdateUser` for more details.
 	UserStatusCel *string `json:"userStatusCel,omitempty"`
 	// The userStatusEnum field.
 	// This field is part of the `user_status` oneof.
-	// See the documentation for `c1.api.workflows.v1beta.UpdateUser` for more details.
+	// See the documentation for `c1.api.automations.v1.UpdateUser` for more details.
 	UserStatusEnum *UserStatusEnum `json:"userStatusEnum,omitempty"`
 }
 
@@ -49,6 +51,13 @@ func (o *UpdateUser) GetUserRef() *UserRef {
 		return nil
 	}
 	return o.UserRef
+}
+
+func (o *UpdateUser) GetUseSubjectUser() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.UseSubjectUser
 }
 
 func (o *UpdateUser) GetUserIDCel() *string {

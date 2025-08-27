@@ -11,7 +11,7 @@ type C1APIPolicyV1PolicySearchSearchResponse struct {
 	// HTTP response content type for this operation
 	ContentType string
 	// Successful response
-	ListPolicyResponse *shared.ListPolicyResponse
+	SearchPoliciesResponse *shared.SearchPoliciesResponse
 	// HTTP response status code for this operation
 	StatusCode int
 	// Raw HTTP response; suitable for custom response parsing
@@ -25,11 +25,11 @@ func (o *C1APIPolicyV1PolicySearchSearchResponse) GetContentType() string {
 	return o.ContentType
 }
 
-func (o *C1APIPolicyV1PolicySearchSearchResponse) GetListPolicyResponse() *shared.ListPolicyResponse {
+func (o *C1APIPolicyV1PolicySearchSearchResponse) GetSearchPoliciesResponse() *shared.SearchPoliciesResponse {
 	if o == nil {
 		return nil
 	}
-	return o.ListPolicyResponse
+	return o.SearchPoliciesResponse
 }
 
 func (o *C1APIPolicyV1PolicySearchSearchResponse) GetStatusCode() int {

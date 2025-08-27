@@ -18,12 +18,14 @@ type ReassignAction struct {
 	UserRef1 *UserRef `json:"subjectUserRef,omitempty"`
 	// The assigneeUserIdCel field.
 	// This field is part of the `assignee_user_identifier` oneof.
-	// See the documentation for `c1.api.workflows.v1beta.ReassignAction` for more details.
+	// See the documentation for `c1.api.automations.v1.ReassignAction` for more details.
 	AssigneeUserIDCel *string `json:"assigneeUserIdCel,omitempty"`
 	// The subjectUserIdCel field.
 	// This field is part of the `subject_user_identifier` oneof.
-	// See the documentation for `c1.api.workflows.v1beta.ReassignAction` for more details.
+	// See the documentation for `c1.api.automations.v1.ReassignAction` for more details.
 	SubjectUserIDCel *string `json:"subjectUserIdCel,omitempty"`
+	// If true, the step will use the subject user of the automation as the subject.
+	UseSubjectUser *bool `json:"useSubjectUser,omitempty"`
 }
 
 func (o *ReassignAction) GetUserRef() *UserRef {
@@ -52,4 +54,11 @@ func (o *ReassignAction) GetSubjectUserIDCel() *string {
 		return nil
 	}
 	return o.SubjectUserIDCel
+}
+
+func (o *ReassignAction) GetUseSubjectUser() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.UseSubjectUser
 }

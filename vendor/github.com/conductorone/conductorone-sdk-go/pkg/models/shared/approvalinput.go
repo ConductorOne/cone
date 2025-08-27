@@ -24,6 +24,13 @@ type ApprovalInput struct {
 	AppOwnerApproval *AppOwnerApproval `json:"appOwners,omitempty"`
 	// The entitlement owner approval allows configuration of the approval step when the target approvers are the entitlement owners.
 	EntitlementOwnerApproval *EntitlementOwnerApproval `json:"entitlementOwners,omitempty"`
+	// The Escalation message.
+	//
+	// This message contains a oneof named escalation_policy. Only a single field of the following list may be set at a time:
+	//   - replacePolicy
+	//   - reassignToApprovers
+	//
+	Escalation *Escalation `json:"escalation,omitempty"`
 	// The ExpressionApproval message.
 	ExpressionApproval *ExpressionApprovalInput `json:"expression,omitempty"`
 	// The manager approval object provides configuration options for approval when the target of the approval is the manager of the user in the task.
@@ -36,10 +43,14 @@ type ApprovalInput struct {
 	UserApproval *UserApproval `json:"users,omitempty"`
 	// The WebhookApproval message.
 	WebhookApproval *WebhookApproval `json:"webhook,omitempty"`
+	// Whether ticket delegation is allowed for this step.
+	AllowDelegation *bool `json:"allowDelegation,omitempty"`
 	// Configuration to allow reassignment by reviewers during this step.
 	AllowReassignment *bool `json:"allowReassignment,omitempty"`
 	// List of users for whom this step can be reassigned.
 	AllowedReassignees []string `json:"allowedReassignees,omitempty"`
+	// Whether escalation is enabled for this step.
+	EscalationEnabled *bool `json:"escalationEnabled,omitempty"`
 	// Configuration to require a reason when approving this step.
 	RequireApprovalReason *bool `json:"requireApprovalReason,omitempty"`
 	// Configuration to require a reason when denying this step.
@@ -77,6 +88,13 @@ func (o *ApprovalInput) GetEntitlementOwnerApproval() *EntitlementOwnerApproval 
 		return nil
 	}
 	return o.EntitlementOwnerApproval
+}
+
+func (o *ApprovalInput) GetEscalation() *Escalation {
+	if o == nil {
+		return nil
+	}
+	return o.Escalation
 }
 
 func (o *ApprovalInput) GetExpressionApproval() *ExpressionApprovalInput {
@@ -121,6 +139,13 @@ func (o *ApprovalInput) GetWebhookApproval() *WebhookApproval {
 	return o.WebhookApproval
 }
 
+func (o *ApprovalInput) GetAllowDelegation() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.AllowDelegation
+}
+
 func (o *ApprovalInput) GetAllowReassignment() *bool {
 	if o == nil {
 		return nil
@@ -133,6 +158,13 @@ func (o *ApprovalInput) GetAllowedReassignees() []string {
 		return nil
 	}
 	return o.AllowedReassignees
+}
+
+func (o *ApprovalInput) GetEscalationEnabled() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.EscalationEnabled
 }
 
 func (o *ApprovalInput) GetRequireApprovalReason() *bool {

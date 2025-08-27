@@ -4,22 +4,13 @@ package shared
 
 // The UserProfileChangeTrigger message.
 type UserProfileChangeTrigger struct {
-	// The profileAttributeCel field.
-	ProfileAttributeCel *string `json:"profileAttributeCel,omitempty"`
-	// The profileAttributeKey field.
-	ProfileAttributeKey *string `json:"profileAttributeKey,omitempty"`
+	// The condition field.
+	Condition *string `json:"condition,omitempty"`
 }
 
-func (o *UserProfileChangeTrigger) GetProfileAttributeCel() *string {
+func (o *UserProfileChangeTrigger) GetCondition() *string {
 	if o == nil {
 		return nil
 	}
-	return o.ProfileAttributeCel
-}
-
-func (o *UserProfileChangeTrigger) GetProfileAttributeKey() *string {
-	if o == nil {
-		return nil
-	}
-	return o.ProfileAttributeKey
+	return o.Condition
 }

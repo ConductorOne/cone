@@ -2,125 +2,65 @@
 
 package shared
 
-import (
-	"github.com/conductorone/conductorone-sdk-go/pkg/utils"
-	"time"
-)
-
-// ActionType - The actionType field.
-type ActionType string
+type TaskTypes string
 
 const (
-	ActionTypeTaskActionTypeUnspecified                              ActionType = "TASK_ACTION_TYPE_UNSPECIFIED"
-	ActionTypeTaskActionTypeClose                                    ActionType = "TASK_ACTION_TYPE_CLOSE"
-	ActionTypeTaskActionTypeApprove                                  ActionType = "TASK_ACTION_TYPE_APPROVE"
-	ActionTypeTaskActionTypeDeny                                     ActionType = "TASK_ACTION_TYPE_DENY"
-	ActionTypeTaskActionTypeComment                                  ActionType = "TASK_ACTION_TYPE_COMMENT"
-	ActionTypeTaskActionTypeDelete                                   ActionType = "TASK_ACTION_TYPE_DELETE"
-	ActionTypeTaskActionTypeReassign                                 ActionType = "TASK_ACTION_TYPE_REASSIGN"
-	ActionTypeTaskActionTypeRestart                                  ActionType = "TASK_ACTION_TYPE_RESTART"
-	ActionTypeTaskActionTypeSendReminder                             ActionType = "TASK_ACTION_TYPE_SEND_REMINDER"
-	ActionTypeTaskActionTypeProvisionComplete                        ActionType = "TASK_ACTION_TYPE_PROVISION_COMPLETE"
-	ActionTypeTaskActionTypeProvisionCancelled                       ActionType = "TASK_ACTION_TYPE_PROVISION_CANCELLED"
-	ActionTypeTaskActionTypeProvisionErrored                         ActionType = "TASK_ACTION_TYPE_PROVISION_ERRORED"
-	ActionTypeTaskActionTypeRollbackSkipped                          ActionType = "TASK_ACTION_TYPE_ROLLBACK_SKIPPED"
-	ActionTypeTaskActionTypeProvisionAppUserTargetCreated            ActionType = "TASK_ACTION_TYPE_PROVISION_APP_USER_TARGET_CREATED"
-	ActionTypeTaskActionTypeHardReset                                ActionType = "TASK_ACTION_TYPE_HARD_RESET"
-	ActionTypeTaskActionTypeEscalateToEmergencyAccess                ActionType = "TASK_ACTION_TYPE_ESCALATE_TO_EMERGENCY_ACCESS"
-	ActionTypeTaskActionTypeChangePolicy                             ActionType = "TASK_ACTION_TYPE_CHANGE_POLICY"
-	ActionTypeTaskActionTypeRecalculateDenialFromBasePolicyDecisions ActionType = "TASK_ACTION_TYPE_RECALCULATE_DENIAL_FROM_BASE_POLICY_DECISIONS"
-	ActionTypeTaskActionTypeSetInsightsAndRecommendation             ActionType = "TASK_ACTION_TYPE_SET_INSIGHTS_AND_RECOMMENDATION"
-	ActionTypeTaskActionTypeSetAnalysisID                            ActionType = "TASK_ACTION_TYPE_SET_ANALYSIS_ID"
-	ActionTypeTaskActionTypeRecalculateApproversList                 ActionType = "TASK_ACTION_TYPE_RECALCULATE_APPROVERS_LIST"
-	ActionTypeTaskActionTypeProcessNow                               ActionType = "TASK_ACTION_TYPE_PROCESS_NOW"
-	ActionTypeTaskActionTypeApproveWithStepUp                        ActionType = "TASK_ACTION_TYPE_APPROVE_WITH_STEP_UP"
-	ActionTypeTaskActionTypeSkipStep                                 ActionType = "TASK_ACTION_TYPE_SKIP_STEP"
+	TaskTypesTaskTypeUnspecified TaskTypes = "TASK_TYPE_UNSPECIFIED"
+	TaskTypesTaskTypeRequest     TaskTypes = "TASK_TYPE_REQUEST"
+	TaskTypesTaskTypeRevoke      TaskTypes = "TASK_TYPE_REVOKE"
+	TaskTypesTaskTypeReview      TaskTypes = "TASK_TYPE_REVIEW"
 )
 
-func (e ActionType) ToPointer() *ActionType {
+func (e TaskTypes) ToPointer() *TaskTypes {
 	return &e
 }
 
 // The TaskAction message.
+//
+// This message contains a oneof named action. Only a single field of the following list may be set at a time:
+//   - close
+//   - reassign
 type TaskAction struct {
-	// The actionType field.
-	ActionType *ActionType `json:"actionType,omitempty"`
-	// The bulkActionId field.
-	BulkActionID *string    `json:"bulkActionId,omitempty"`
-	CreatedAt    *time.Time `json:"createdAt,omitempty"`
-	DeletedAt    *time.Time `json:"deletedAt,omitempty"`
-	// The id field.
-	ID *string `json:"id,omitempty"`
-	// The policyStepId field.
-	PolicyStepID *string    `json:"policyStepId,omitempty"`
-	UpdatedAt    *time.Time `json:"updatedAt,omitempty"`
-	// The userId field.
-	UserID *string `json:"userId,omitempty"`
+	// The CloseAction message.
+	//
+	// This message contains a oneof named user_identifier. Only a single field of the following list may be set at a time:
+	//   - userIdCel
+	//   - userRef
+	//
+	CloseAction *CloseAction `json:"close,omitempty"`
+	// The ReassignAction message.
+	//
+	// This message contains a oneof named assignee_user_identifier. Only a single field of the following list may be set at a time:
+	//   - assigneeUserIdCel
+	//   - assigneeUserRef
+	//
+	//
+	// This message contains a oneof named subject_user_identifier. Only a single field of the following list may be set at a time:
+	//   - subjectUserIdCel
+	//   - subjectUserRef
+	//
+	ReassignAction *ReassignAction `json:"reassign,omitempty"`
+	// The taskTypes field.
+	TaskTypes []TaskTypes `json:"taskTypes,omitempty"`
 }
 
-func (t TaskAction) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(t, "", false)
-}
-
-func (t *TaskAction) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &t, "", false, false); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (o *TaskAction) GetActionType() *ActionType {
+func (o *TaskAction) GetCloseAction() *CloseAction {
 	if o == nil {
 		return nil
 	}
-	return o.ActionType
+	return o.CloseAction
 }
 
-func (o *TaskAction) GetBulkActionID() *string {
+func (o *TaskAction) GetReassignAction() *ReassignAction {
 	if o == nil {
 		return nil
 	}
-	return o.BulkActionID
+	return o.ReassignAction
 }
 
-func (o *TaskAction) GetCreatedAt() *time.Time {
+func (o *TaskAction) GetTaskTypes() []TaskTypes {
 	if o == nil {
 		return nil
 	}
-	return o.CreatedAt
-}
-
-func (o *TaskAction) GetDeletedAt() *time.Time {
-	if o == nil {
-		return nil
-	}
-	return o.DeletedAt
-}
-
-func (o *TaskAction) GetID() *string {
-	if o == nil {
-		return nil
-	}
-	return o.ID
-}
-
-func (o *TaskAction) GetPolicyStepID() *string {
-	if o == nil {
-		return nil
-	}
-	return o.PolicyStepID
-}
-
-func (o *TaskAction) GetUpdatedAt() *time.Time {
-	if o == nil {
-		return nil
-	}
-	return o.UpdatedAt
-}
-
-func (o *TaskAction) GetUserID() *string {
-	if o == nil {
-		return nil
-	}
-	return o.UserID
+	return o.TaskTypes
 }

@@ -2,43 +2,128 @@
 
 package shared
 
+import (
+	"github.com/conductorone/conductorone-sdk-go/pkg/utils"
+	"time"
+)
+
+// ActionType - The actionType field.
+type ActionType string
+
+const (
+	ActionTypeTaskActionTypeUnspecified                              ActionType = "TASK_ACTION_TYPE_UNSPECIFIED"
+	ActionTypeTaskActionTypeClose                                    ActionType = "TASK_ACTION_TYPE_CLOSE"
+	ActionTypeTaskActionTypeApprove                                  ActionType = "TASK_ACTION_TYPE_APPROVE"
+	ActionTypeTaskActionTypeDeny                                     ActionType = "TASK_ACTION_TYPE_DENY"
+	ActionTypeTaskActionTypeComment                                  ActionType = "TASK_ACTION_TYPE_COMMENT"
+	ActionTypeTaskActionTypeDelete                                   ActionType = "TASK_ACTION_TYPE_DELETE"
+	ActionTypeTaskActionTypeReassign                                 ActionType = "TASK_ACTION_TYPE_REASSIGN"
+	ActionTypeTaskActionTypeRestart                                  ActionType = "TASK_ACTION_TYPE_RESTART"
+	ActionTypeTaskActionTypeSendReminder                             ActionType = "TASK_ACTION_TYPE_SEND_REMINDER"
+	ActionTypeTaskActionTypeProvisionComplete                        ActionType = "TASK_ACTION_TYPE_PROVISION_COMPLETE"
+	ActionTypeTaskActionTypeProvisionCancelled                       ActionType = "TASK_ACTION_TYPE_PROVISION_CANCELLED"
+	ActionTypeTaskActionTypeProvisionErrored                         ActionType = "TASK_ACTION_TYPE_PROVISION_ERRORED"
+	ActionTypeTaskActionTypeRollbackSkipped                          ActionType = "TASK_ACTION_TYPE_ROLLBACK_SKIPPED"
+	ActionTypeTaskActionTypeProvisionAppUserTargetCreated            ActionType = "TASK_ACTION_TYPE_PROVISION_APP_USER_TARGET_CREATED"
+	ActionTypeTaskActionTypeHardReset                                ActionType = "TASK_ACTION_TYPE_HARD_RESET"
+	ActionTypeTaskActionTypeEscalateToEmergencyAccess                ActionType = "TASK_ACTION_TYPE_ESCALATE_TO_EMERGENCY_ACCESS"
+	ActionTypeTaskActionTypeChangePolicy                             ActionType = "TASK_ACTION_TYPE_CHANGE_POLICY"
+	ActionTypeTaskActionTypeRecalculateDenialFromBasePolicyDecisions ActionType = "TASK_ACTION_TYPE_RECALCULATE_DENIAL_FROM_BASE_POLICY_DECISIONS"
+	ActionTypeTaskActionTypeSetInsightsAndRecommendation             ActionType = "TASK_ACTION_TYPE_SET_INSIGHTS_AND_RECOMMENDATION"
+	ActionTypeTaskActionTypeSetAnalysisID                            ActionType = "TASK_ACTION_TYPE_SET_ANALYSIS_ID"
+	ActionTypeTaskActionTypeRecalculateApproversList                 ActionType = "TASK_ACTION_TYPE_RECALCULATE_APPROVERS_LIST"
+	ActionTypeTaskActionTypeProcessNow                               ActionType = "TASK_ACTION_TYPE_PROCESS_NOW"
+	ActionTypeTaskActionTypeApproveWithStepUp                        ActionType = "TASK_ACTION_TYPE_APPROVE_WITH_STEP_UP"
+	ActionTypeTaskActionTypeSkipStep                                 ActionType = "TASK_ACTION_TYPE_SKIP_STEP"
+	ActionTypeTaskActionTypeRollbackCancelled                        ActionType = "TASK_ACTION_TYPE_ROLLBACK_CANCELLED"
+	ActionTypeTaskActionTypeUpdateRequestData                        ActionType = "TASK_ACTION_TYPE_UPDATE_REQUEST_DATA"
+	ActionTypeTaskActionTypeUpdateGrantDuration                      ActionType = "TASK_ACTION_TYPE_UPDATE_GRANT_DURATION"
+)
+
+func (e ActionType) ToPointer() *ActionType {
+	return &e
+}
+
 // TaskAction1 - The TaskAction message.
-//
-// This message contains a oneof named action. Only a single field of the following list may be set at a time:
-//   - close
-//   - reassign
 type TaskAction1 struct {
-	// The CloseAction message.
-	//
-	// This message contains a oneof named user_identifier. Only a single field of the following list may be set at a time:
-	//   - userIdCel
-	//   - userRef
-	//
-	CloseAction *CloseAction `json:"close,omitempty"`
-	// The ReassignAction message.
-	//
-	// This message contains a oneof named assignee_user_identifier. Only a single field of the following list may be set at a time:
-	//   - assigneeUserIdCel
-	//   - assigneeUserRef
-	//
-	//
-	// This message contains a oneof named subject_user_identifier. Only a single field of the following list may be set at a time:
-	//   - subjectUserIdCel
-	//   - subjectUserRef
-	//
-	ReassignAction *ReassignAction `json:"reassign,omitempty"`
+	// The actionType field.
+	ActionType *ActionType `json:"actionType,omitempty"`
+	// The bulkActionId field.
+	BulkActionID *string    `json:"bulkActionId,omitempty"`
+	CreatedAt    *time.Time `json:"createdAt,omitempty"`
+	DeletedAt    *time.Time `json:"deletedAt,omitempty"`
+	// The id field.
+	ID *string `json:"id,omitempty"`
+	// The policyStepId field.
+	PolicyStepID *string    `json:"policyStepId,omitempty"`
+	UpdatedAt    *time.Time `json:"updatedAt,omitempty"`
+	// The userId field.
+	UserID *string `json:"userId,omitempty"`
 }
 
-func (o *TaskAction1) GetCloseAction() *CloseAction {
+func (t TaskAction1) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(t, "", false)
+}
+
+func (t *TaskAction1) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &t, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *TaskAction1) GetActionType() *ActionType {
 	if o == nil {
 		return nil
 	}
-	return o.CloseAction
+	return o.ActionType
 }
 
-func (o *TaskAction1) GetReassignAction() *ReassignAction {
+func (o *TaskAction1) GetBulkActionID() *string {
 	if o == nil {
 		return nil
 	}
-	return o.ReassignAction
+	return o.BulkActionID
+}
+
+func (o *TaskAction1) GetCreatedAt() *time.Time {
+	if o == nil {
+		return nil
+	}
+	return o.CreatedAt
+}
+
+func (o *TaskAction1) GetDeletedAt() *time.Time {
+	if o == nil {
+		return nil
+	}
+	return o.DeletedAt
+}
+
+func (o *TaskAction1) GetID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ID
+}
+
+func (o *TaskAction1) GetPolicyStepID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.PolicyStepID
+}
+
+func (o *TaskAction1) GetUpdatedAt() *time.Time {
+	if o == nil {
+		return nil
+	}
+	return o.UpdatedAt
+}
+
+func (o *TaskAction1) GetUserID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.UserID
 }

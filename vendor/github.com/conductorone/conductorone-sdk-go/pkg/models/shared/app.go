@@ -33,7 +33,9 @@ type App struct {
 	// The connectorVersion field.
 	ConnectorVersion *int64     `json:"connectorVersion,omitempty"`
 	CreatedAt        *time.Time `json:"createdAt,omitempty"`
-	DeletedAt        *time.Time `json:"deletedAt,omitempty"`
+	// The ID for the default request catalog for this app.
+	DefaultRequestCatalogID *string    `json:"defaultRequestCatalogId,omitempty"`
+	DeletedAt               *time.Time `json:"deletedAt,omitempty"`
 	// The app's description.
 	Description *string `json:"description,omitempty"`
 	// The app's display name.
@@ -47,6 +49,8 @@ type App struct {
 	ID *string `json:"id,omitempty"`
 	// The identityMatching field.
 	IdentityMatching *IdentityMatching `json:"identityMatching,omitempty"`
+	// If you add instructions here, they will be shown to users in the access request form when requesting access for this app.
+	Instructions *string `json:"instructions,omitempty"`
 	// Specifies if the app is a directory.
 	IsDirectory *bool `json:"isDirectory,omitempty"`
 	// The isManuallyManaged field.
@@ -119,6 +123,13 @@ func (o *App) GetCreatedAt() *time.Time {
 	return o.CreatedAt
 }
 
+func (o *App) GetDefaultRequestCatalogID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.DefaultRequestCatalogID
+}
+
 func (o *App) GetDeletedAt() *time.Time {
 	if o == nil {
 		return nil
@@ -173,6 +184,13 @@ func (o *App) GetIdentityMatching() *IdentityMatching {
 		return nil
 	}
 	return o.IdentityMatching
+}
+
+func (o *App) GetInstructions() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Instructions
 }
 
 func (o *App) GetIsDirectory() *bool {
@@ -244,6 +262,8 @@ type AppInput struct {
 	CertifyPolicyID *string `json:"certifyPolicyId,omitempty"`
 	// The connectorVersion field.
 	ConnectorVersion *int64 `json:"connectorVersion,omitempty"`
+	// The ID for the default request catalog for this app.
+	DefaultRequestCatalogID *string `json:"defaultRequestCatalogId,omitempty"`
 	// The app's description.
 	Description *string `json:"description,omitempty"`
 	// The app's display name.
@@ -254,6 +274,8 @@ type AppInput struct {
 	IconURL *string `json:"iconUrl,omitempty"`
 	// The identityMatching field.
 	IdentityMatching *IdentityMatching `json:"identityMatching,omitempty"`
+	// If you add instructions here, they will be shown to users in the access request form when requesting access for this app.
+	Instructions *string `json:"instructions,omitempty"`
 	// The isManuallyManaged field.
 	IsManuallyManaged *bool `json:"isManuallyManaged,omitempty"`
 	// The cost of an app per-seat, so that total cost can be calculated by the grant count.
@@ -276,6 +298,13 @@ func (o *AppInput) GetConnectorVersion() *int64 {
 		return nil
 	}
 	return o.ConnectorVersion
+}
+
+func (o *AppInput) GetDefaultRequestCatalogID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.DefaultRequestCatalogID
 }
 
 func (o *AppInput) GetDescription() *string {
@@ -311,6 +340,13 @@ func (o *AppInput) GetIdentityMatching() *IdentityMatching {
 		return nil
 	}
 	return o.IdentityMatching
+}
+
+func (o *AppInput) GetInstructions() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Instructions
 }
 
 func (o *AppInput) GetIsManuallyManaged() *bool {

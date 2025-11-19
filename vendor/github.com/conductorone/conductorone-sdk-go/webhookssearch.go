@@ -6,6 +6,7 @@ import (
 	"bytes"
 	"context"
 	"fmt"
+	"github.com/conductorone/conductorone-sdk-go/internal/config"
 	"github.com/conductorone/conductorone-sdk-go/internal/hooks"
 	"github.com/conductorone/conductorone-sdk-go/pkg/models/operations"
 	"github.com/conductorone/conductorone-sdk-go/pkg/models/sdkerrors"
@@ -17,12 +18,16 @@ import (
 )
 
 type WebhooksSearch struct {
-	sdkConfiguration sdkConfiguration
+	rootSDK          *ConductoroneAPI
+	sdkConfiguration config.SDKConfiguration
+	hooks            *hooks.Hooks
 }
 
-func newWebhooksSearch(sdkConfig sdkConfiguration) *WebhooksSearch {
+func newWebhooksSearch(rootSDK *ConductoroneAPI, sdkConfig config.SDKConfiguration, hooks *hooks.Hooks) *WebhooksSearch {
 	return &WebhooksSearch{
+		rootSDK:          rootSDK,
 		sdkConfiguration: sdkConfig,
+		hooks:            hooks,
 	}
 }
 
@@ -53,11 +58,13 @@ func (s *WebhooksSearch) Search(ctx context.Context, request *shared.WebhooksSea
 	}
 
 	hookCtx := hooks.HookContext{
-		BaseURL:        baseURL,
-		Context:        ctx,
-		OperationID:    "c1.api.webhooks.v1.WebhooksSearch.Search",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
+		SDK:              s.rootSDK,
+		SDKConfiguration: s.sdkConfiguration,
+		BaseURL:          baseURL,
+		Context:          ctx,
+		OperationID:      "c1.api.webhooks.v1.WebhooksSearch.Search",
+		OAuth2Scopes:     []string{},
+		SecuritySource:   s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
 	if err != nil {
@@ -113,15 +120,17 @@ func (s *WebhooksSearch) Search(ctx context.Context, request *shared.WebhooksSea
 				"504",
 			},
 		}, func() (*http.Response, error) {
-			if req.Body != nil {
+			if req.Body != nil && req.Body != http.NoBody && req.GetBody != nil {
 				copyBody, err := req.GetBody()
+
 				if err != nil {
 					return nil, err
 				}
+
 				req.Body = copyBody
 			}
 
-			req, err = s.sdkConfiguration.Hooks.BeforeRequest(hooks.BeforeRequestContext{HookContext: hookCtx}, req)
+			req, err = s.hooks.BeforeRequest(hooks.BeforeRequestContext{HookContext: hookCtx}, req)
 			if err != nil {
 				if retry.IsPermanentError(err) || retry.IsTemporaryError(err) {
 					return nil, err
@@ -138,7 +147,7 @@ func (s *WebhooksSearch) Search(ctx context.Context, request *shared.WebhooksSea
 					err = fmt.Errorf("error sending request: no response")
 				}
 
-				_, err = s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, nil, err)
+				_, err = s.hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, nil, err)
 			}
 			return httpRes, err
 		})
@@ -146,13 +155,13 @@ func (s *WebhooksSearch) Search(ctx context.Context, request *shared.WebhooksSea
 		if err != nil {
 			return nil, err
 		} else {
-			httpRes, err = s.sdkConfiguration.Hooks.AfterSuccess(hooks.AfterSuccessContext{HookContext: hookCtx}, httpRes)
+			httpRes, err = s.hooks.AfterSuccess(hooks.AfterSuccessContext{HookContext: hookCtx}, httpRes)
 			if err != nil {
 				return nil, err
 			}
 		}
 	} else {
-		req, err = s.sdkConfiguration.Hooks.BeforeRequest(hooks.BeforeRequestContext{HookContext: hookCtx}, req)
+		req, err = s.hooks.BeforeRequest(hooks.BeforeRequestContext{HookContext: hookCtx}, req)
 		if err != nil {
 			return nil, err
 		}
@@ -165,17 +174,17 @@ func (s *WebhooksSearch) Search(ctx context.Context, request *shared.WebhooksSea
 				err = fmt.Errorf("error sending request: no response")
 			}
 
-			_, err = s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, nil, err)
+			_, err = s.hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, nil, err)
 			return nil, err
 		} else if utils.MatchStatusCodes([]string{"4XX", "5XX"}, httpRes.StatusCode) {
-			_httpRes, err := s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, httpRes, nil)
+			_httpRes, err := s.hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, httpRes, nil)
 			if err != nil {
 				return nil, err
 			} else if _httpRes != nil {
 				httpRes = _httpRes
 			}
 		} else {
-			httpRes, err = s.sdkConfiguration.Hooks.AfterSuccess(hooks.AfterSuccessContext{HookContext: hookCtx}, httpRes)
+			httpRes, err = s.hooks.AfterSuccess(hooks.AfterSuccessContext{HookContext: hookCtx}, httpRes)
 			if err != nil {
 				return nil, err
 			}

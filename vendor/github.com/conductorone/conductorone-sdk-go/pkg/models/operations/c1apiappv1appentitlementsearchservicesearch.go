@@ -16,6 +16,8 @@ type C1APIAppV1AppEntitlementSearchServiceSearchResponse struct {
 	StatusCode int
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
+
+	Next func() (*C1APIAppV1AppEntitlementSearchServiceSearchResponse, error)
 }
 
 func (o *C1APIAppV1AppEntitlementSearchServiceSearchResponse) GetAppEntitlementSearchServiceSearchResponse() *shared.AppEntitlementSearchServiceSearchResponse {

@@ -2,14 +2,62 @@
 
 package shared
 
+// AgentFailureAction - The action to take if the agent fails to approve, deny, or reassign the task.
+type AgentFailureAction string
+
+const (
+	AgentFailureActionApprovalAgentFailureActionUnspecified           AgentFailureAction = "APPROVAL_AGENT_FAILURE_ACTION_UNSPECIFIED"
+	AgentFailureActionApprovalAgentFailureActionReassignToUsers       AgentFailureAction = "APPROVAL_AGENT_FAILURE_ACTION_REASSIGN_TO_USERS"
+	AgentFailureActionApprovalAgentFailureActionReassignToSuperAdmins AgentFailureAction = "APPROVAL_AGENT_FAILURE_ACTION_REASSIGN_TO_SUPER_ADMINS"
+	AgentFailureActionApprovalAgentFailureActionSkipPolicyStep        AgentFailureAction = "APPROVAL_AGENT_FAILURE_ACTION_SKIP_POLICY_STEP"
+)
+
+func (e AgentFailureAction) ToPointer() *AgentFailureAction {
+	return &e
+}
+
+// AgentMode - The mode of the agent, full control, change policy only, or comment only.
+type AgentMode string
+
+const (
+	AgentModeApprovalAgentModeUnspecified      AgentMode = "APPROVAL_AGENT_MODE_UNSPECIFIED"
+	AgentModeApprovalAgentModeFullControl      AgentMode = "APPROVAL_AGENT_MODE_FULL_CONTROL"
+	AgentModeApprovalAgentModeChangePolicyOnly AgentMode = "APPROVAL_AGENT_MODE_CHANGE_POLICY_ONLY"
+	AgentModeApprovalAgentModeCommentOnly      AgentMode = "APPROVAL_AGENT_MODE_COMMENT_ONLY"
+)
+
+func (e AgentMode) ToPointer() *AgentMode {
+	return &e
+}
+
 // AgentApproval - The agent to assign the task to.
 type AgentApproval struct {
+	// The action to take if the agent fails to approve, deny, or reassign the task.
+	AgentFailureAction *AgentFailureAction `json:"agentFailureAction,omitempty"`
+	// The mode of the agent, full control, change policy only, or comment only.
+	AgentMode *AgentMode `json:"agentMode,omitempty"`
 	// The agent user ID to assign the task to.
 	AgentUserID *string `json:"agentUserId,omitempty"`
 	// Instructions for the agent.
 	Instructions *string `json:"instructions,omitempty"`
-	// The policyIds field.
+	// The allow list of policy IDs to re-route the task to.
 	PolicyIds []string `json:"policyIds,omitempty"`
+	// The users to reassign the task to if the agent failure action is reassign to users.
+	ReassignToUserIds []string `json:"reassignToUserIds,omitempty"`
+}
+
+func (o *AgentApproval) GetAgentFailureAction() *AgentFailureAction {
+	if o == nil {
+		return nil
+	}
+	return o.AgentFailureAction
+}
+
+func (o *AgentApproval) GetAgentMode() *AgentMode {
+	if o == nil {
+		return nil
+	}
+	return o.AgentMode
 }
 
 func (o *AgentApproval) GetAgentUserID() *string {
@@ -31,4 +79,11 @@ func (o *AgentApproval) GetPolicyIds() []string {
 		return nil
 	}
 	return o.PolicyIds
+}
+
+func (o *AgentApproval) GetReassignToUserIds() []string {
+	if o == nil {
+		return nil
+	}
+	return o.ReassignToUserIds
 }

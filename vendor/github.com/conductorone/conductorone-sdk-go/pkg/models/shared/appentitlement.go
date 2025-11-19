@@ -95,6 +95,8 @@ type AppEntitlement struct {
 	OverrideAccessRequestsDefaults *bool `json:"overrideAccessRequestsDefaults,omitempty"`
 	// The purpose field.
 	Purpose *Purpose `json:"purpose,omitempty"`
+	// The ID of the request schema associated with this app entitlement.
+	RequestSchemaID *string `json:"requestSchemaId,omitempty"`
 	// The ID of the policy that will be used for revoke tickets related to the app entitlement
 	RevokePolicyID *string `json:"revokePolicyId,omitempty"`
 	// The riskLevelValueId field.
@@ -295,6 +297,13 @@ func (o *AppEntitlement) GetPurpose() *Purpose {
 	return o.Purpose
 }
 
+func (o *AppEntitlement) GetRequestSchemaID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.RequestSchemaID
+}
+
 func (o *AppEntitlement) GetRevokePolicyID() *string {
 	if o == nil {
 		return nil
@@ -408,6 +417,8 @@ type AppEntitlementInput struct {
 	OverrideAccessRequestsDefaults *bool `json:"overrideAccessRequestsDefaults,omitempty"`
 	// The purpose field.
 	Purpose *Purpose `json:"purpose,omitempty"`
+	// The ID of the request schema associated with this app entitlement.
+	RequestSchemaID *string `json:"requestSchemaId,omitempty"`
 	// The ID of the policy that will be used for revoke tickets related to the app entitlement
 	RevokePolicyID *string `json:"revokePolicyId,omitempty"`
 	// The riskLevelValueId field.
@@ -557,6 +568,13 @@ func (o *AppEntitlementInput) GetPurpose() *Purpose {
 		return nil
 	}
 	return o.Purpose
+}
+
+func (o *AppEntitlementInput) GetRequestSchemaID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.RequestSchemaID
 }
 
 func (o *AppEntitlementInput) GetRevokePolicyID() *string {

@@ -26,9 +26,10 @@ github.com/conductorone/baton-sdk/pb/c1/config/v1
 github.com/conductorone/baton-sdk/pb/c1/connector/v2
 github.com/conductorone/baton-sdk/pkg/crypto/providers
 github.com/conductorone/baton-sdk/pkg/crypto/providers/jwk
-# github.com/conductorone/conductorone-sdk-go v1.25.0
+# github.com/conductorone/conductorone-sdk-go v1.26.0
 ## explicit; go 1.21
 github.com/conductorone/conductorone-sdk-go
+github.com/conductorone/conductorone-sdk-go/internal/config
 github.com/conductorone/conductorone-sdk-go/internal/hooks
 github.com/conductorone/conductorone-sdk-go/pkg/models/operations
 github.com/conductorone/conductorone-sdk-go/pkg/models/sdkerrors
@@ -127,6 +128,10 @@ github.com/spf13/viper/internal/encoding/json
 github.com/spf13/viper/internal/encoding/toml
 github.com/spf13/viper/internal/encoding/yaml
 github.com/spf13/viper/internal/features
+# github.com/spyzhov/ajson v0.9.6
+## explicit; go 1.16
+github.com/spyzhov/ajson
+github.com/spyzhov/ajson/internal
 # github.com/subosito/gotenv v1.6.0
 ## explicit; go 1.18
 github.com/subosito/gotenv

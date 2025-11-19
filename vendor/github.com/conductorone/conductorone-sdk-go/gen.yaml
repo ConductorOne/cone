@@ -3,6 +3,7 @@ generation:
   sdkClassName: conductorone-api
   usageSnippets:
     optionalPropertyRendering: withExample
+    sdkInitStyle: constructor
   fixes:
     nameResolutionFeb2025: false
     parameterOrderingFeb2024: false
@@ -12,10 +13,15 @@ generation:
   auth:
     oAuth2ClientCredentialsEnabled: false
     oAuth2PasswordEnabled: false
+  tests:
+    generateTests: true
+    generateNewTests: false
+    skipResponseBodyAssertions: false
 go:
-  version: 1.24.0
+  version: 1.25.0
   additionalDependencies: {}
   allowUnknownFieldsInWeakUnions: false
+  baseErrorName: ConductoroneAPIError
   clientServerStatusCodesAsErrors: true
   defaultErrorName: SDKError
   flattenGlobalSecurity: true
@@ -30,6 +36,8 @@ go:
   inputModelSuffix: input
   maxMethodParams: 0
   methodArguments: require-security-and-request
+  modulePath: ""
   outputModelSuffix: output
   packageName: github.com/conductorone/conductorone-sdk-go
   responseFormat: envelope
+  sdkPackageName: ""

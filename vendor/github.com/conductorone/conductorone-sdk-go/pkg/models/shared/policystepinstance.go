@@ -23,6 +23,7 @@ func (e PolicyStepInstanceState) ToPointer() *PolicyStepInstanceState {
 //   - accept
 //   - reject
 //   - wait
+//   - form
 type PolicyStepInstance struct {
 	// This policy step indicates that a ticket should have an approved outcome. This is a terminal approval state and is used to explicitly define the end of approval steps.
 	//  The instance is just a marker for it being copied into an active policy.
@@ -38,6 +39,15 @@ type PolicyStepInstance struct {
 	//   - skipped
 	//
 	ApprovalInstance *ApprovalInstance `json:"approval,omitempty"`
+	// The FormInstance message.
+	//
+	// This message contains a oneof named outcome. Only a single field of the following list may be set at a time:
+	//   - completed
+	//   - restarted
+	//   - reassigned
+	//   - skipped
+	//
+	FormInstance *FormInstance `json:"form,omitempty"`
 	// A provision instance describes the specific configuration of an executing provision policy step including actions taken and notification id.
 	//
 	// This message contains a oneof named outcome. Only a single field of the following list may be set at a time:
@@ -83,6 +93,13 @@ func (o *PolicyStepInstance) GetApprovalInstance() *ApprovalInstance {
 		return nil
 	}
 	return o.ApprovalInstance
+}
+
+func (o *PolicyStepInstance) GetFormInstance() *FormInstance {
+	if o == nil {
+		return nil
+	}
+	return o.FormInstance
 }
 
 func (o *PolicyStepInstance) GetProvisionInstance() *ProvisionInstance {

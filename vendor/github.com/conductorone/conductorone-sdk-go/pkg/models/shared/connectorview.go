@@ -8,6 +8,8 @@ type ConnectorView struct {
 	Connector *Connector `json:"connector,omitempty"`
 	// JSONPATH expression indicating the location of the App object in the expanded array.
 	AppPath *string `json:"appPath,omitempty"`
+	// JSONPATH expression indicating the location of the ConnectorCapabilities object in the expanded array.
+	CapabilitiesPath *string `json:"capabilitiesPath,omitempty"`
 	// JSONPATH expression indicating the location of the User object in the expanded array. This is the user that is a direct target of the ticket without a specific relationship to a potentially non-existent app user.
 	UsersPath *string `json:"usersPath,omitempty"`
 }
@@ -24,6 +26,13 @@ func (o *ConnectorView) GetAppPath() *string {
 		return nil
 	}
 	return o.AppPath
+}
+
+func (o *ConnectorView) GetCapabilitiesPath() *string {
+	if o == nil {
+		return nil
+	}
+	return o.CapabilitiesPath
 }
 
 func (o *ConnectorView) GetUsersPath() *string {

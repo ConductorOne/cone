@@ -5,10 +5,10 @@ package shared
 // The TaskAuditActionSubmitted message.
 type TaskAuditActionSubmitted struct {
 	// The TaskAction message.
-	TaskAction *TaskAction `json:"action,omitempty"`
+	TaskAction *TaskAction1 `json:"action,omitempty"`
 }
 
-func (o *TaskAuditActionSubmitted) GetTaskAction() *TaskAction {
+func (o *TaskAuditActionSubmitted) GetTaskAction() *TaskAction1 {
 	if o == nil {
 		return nil
 	}

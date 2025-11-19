@@ -22,12 +22,12 @@ func (c *client) ListPolicies(ctx context.Context) ([]shared.Policy, error) {
 			return nil, err
 		}
 
-		policies = append(policies, resp.ListPolicyResponse.List...)
+		policies = append(policies, resp.SearchPoliciesResponse.List...)
 
-		if resp.ListPolicyResponse.NextPageToken == nil || *resp.ListPolicyResponse.NextPageToken == "" {
+		if resp.SearchPoliciesResponse.NextPageToken == nil || *resp.SearchPoliciesResponse.NextPageToken == "" {
 			break
 		}
-		pageToken = *resp.ListPolicyResponse.NextPageToken
+		pageToken = *resp.SearchPoliciesResponse.NextPageToken
 	}
 
 	return policies, nil

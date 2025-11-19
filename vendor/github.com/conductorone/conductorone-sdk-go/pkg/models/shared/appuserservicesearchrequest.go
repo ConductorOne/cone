@@ -2,11 +2,6 @@
 
 package shared
 
-import (
-	"encoding/json"
-	"fmt"
-)
-
 type AppUserDomains string
 
 const (
@@ -17,23 +12,6 @@ const (
 
 func (e AppUserDomains) ToPointer() *AppUserDomains {
 	return &e
-}
-func (e *AppUserDomains) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "APP_USER_DOMAIN_UNSPECIFIED":
-		fallthrough
-	case "APP_USER_DOMAIN_EXTERNAL":
-		fallthrough
-	case "APP_USER_DOMAIN_TRUSTED":
-		*e = AppUserDomains(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for AppUserDomains: %v", v)
-	}
 }
 
 type AppUserStatuses string
@@ -48,25 +26,6 @@ const (
 func (e AppUserStatuses) ToPointer() *AppUserStatuses {
 	return &e
 }
-func (e *AppUserStatuses) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "STATUS_UNSPECIFIED":
-		fallthrough
-	case "STATUS_ENABLED":
-		fallthrough
-	case "STATUS_DISABLED":
-		fallthrough
-	case "STATUS_DELETED":
-		*e = AppUserStatuses(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for AppUserStatuses: %v", v)
-	}
-}
 
 type AppUserTypes string
 
@@ -79,25 +38,6 @@ const (
 
 func (e AppUserTypes) ToPointer() *AppUserTypes {
 	return &e
-}
-func (e *AppUserTypes) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "APP_USER_TYPE_UNSPECIFIED":
-		fallthrough
-	case "APP_USER_TYPE_USER":
-		fallthrough
-	case "APP_USER_TYPE_SERVICE_ACCOUNT":
-		fallthrough
-	case "APP_USER_TYPE_SYSTEM_ACCOUNT":
-		*e = AppUserTypes(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for AppUserTypes: %v", v)
-	}
 }
 
 // AppUserServiceSearchRequest - Search App users based on filters specified in the request body

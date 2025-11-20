@@ -164,6 +164,7 @@ func (d DurationValidator) IsValid(txt string) (time.Duration, bool) {
 func (d DurationValidator) Prompt(isFirstRun bool) {
 	if isFirstRun {
 		pterm.Info.Println(durationInputTip)
+		return
 	}
 	pterm.Error.Println(durationErrorMessage)
 }

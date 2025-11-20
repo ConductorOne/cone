@@ -2,7 +2,7 @@
   "source": ["./dist/macos-amd64_darwin_amd64_v1/cone"],
   "bundle_id": "com.conductorone.cone",
   "apple_id": {
-    "username" : "justin.gallardo@conductorone.com"
+    "username" : "justin.gallardo@insulator.one"
   },
   "sign": {
     "application_identity": "Developer ID Application: Justin Gallardo (858DKH55XL)"

@@ -47,8 +47,8 @@ linters-settings:
       - name: var-naming
         arguments: [["ID", "URL", "HTTP", "API"], []]
 
-  tenv:
-    all: true
+  usetesting:
+    allow: []
 
   varcheck:
     exported-fields: false # this appears to improperly detect exported variables as unused when they are used from a package with the same name
@@ -88,7 +88,7 @@ linters:
     - nosprintfhostport # Checks for misuse of Sprintf to construct a host with port in a URL.
     - predeclared # find code that shadows one of Go's predeclared identifiers
     - revive # Fast, configurable, extensible, flexible, and beautiful linter for Go. Drop-in replacement of golint.
-    - tenv # tenv is analyzer that detects using os.Setenv instead of t.Setenv since Go1.17
+    - usetesting # usetesting is analyzer that detects using os.Setenv instead of t.Setenv since Go1.17
     - tparallel # tparallel detects inappropriate usage of t.Parallel() method in your Go test codes
     - unconvert # Remove unnecessary type conversions
     - usestdlibvars # detect the possibility to use variables/constants from the Go standard library

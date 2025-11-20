@@ -44,3 +44,37 @@ func validateArgLenth(expectedCount int, args []string, cmd *cobra.Command) erro
 
 	return fmt.Errorf("expected %d arguments, got %d\n%s", expectedCount, len(args), cmd.UsageString())
 }
+
+func rootCmd() *cobra.Command {
+	cmd := &cobra.Command{
+		Use:           "cone",
+		Short:         "Cone interacts with the ConductorOne API to manage access to entitlements.",
+		SilenceUsage:  true,
+		SilenceErrors: true,
+	}
+
+	cmd.PersistentFlags().StringP("profile", "p", "default", "The config profile to use.")
+	cmd.PersistentFlags().BoolP("non-interactive", "i", false, "Disable prompts.")
+	cmd.PersistentFlags().String("client-id", "", "Client ID")
+	cmd.PersistentFlags().String("client-secret", "", "Client secret")
+	cmd.PersistentFlags().String("api-endpoint", "", "Override the API endpoint")
+	cmd.PersistentFlags().StringP("output", "o", "table", "Output format. Valid values: table, json, json-pretty, wide.")
+	cmd.PersistentFlags().Bool("debug", false, "Enable debug logging")
+
+	cmd.AddCommand(getCmd())
+	cmd.AddCommand(dropCmd())
+	cmd.AddCommand(configAwsCmd())
+	cmd.AddCommand(whoAmICmd())
+	cmd.AddCommand(getUserCmd())
+	cmd.AddCommand(searchEntitlementsCmd())
+	cmd.AddCommand(tasksCmd())
+	cmd.AddCommand(loginCmd())
+	cmd.AddCommand(hasCmd())
+	cmd.AddCommand(tokenCmd())
+	cmd.AddCommand(terraformCmd())
+	cmd.AddCommand(decryptCredentialCmd())
+	cmd.AddCommand(awsCredentialsCmd())
+	cmd.AddCommand(generateAliasCmd())
+
+	return cmd
+}

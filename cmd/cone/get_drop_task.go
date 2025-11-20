@@ -21,9 +21,9 @@ import (
 const durationErrorMessage = "grant duration must be less than or equal to max provision time"
 const durationInputTip = "We accept a sequence of decimal numbers, each with optional fraction and a unit suffix," +
 	"such as \"12h\", \"1w2d\" or \"2h45m\". Valid units are (m)inutes, (h)ours, (d)ays, (w)eeks."
-const justificationWarningMessage = "Please provide a justification when requesting access to an entitlement."
+const justificationWarningMessage = "please provide a justification when requesting access to an entitlement"
 const justificationInputTip = "You can add a justification using -j or --justification"
-const appUserMultipleUsersWarningMessage = "This app has multiple users. Please select any one. "
+const appUserMultipleUsersWarningMessage = "this app has multiple users. Please select any one. "
 
 func getCmd() *cobra.Command {
 	cmd := &cobra.Command{
@@ -254,34 +254,136 @@ func runDrop(cmd *cobra.Command, args []string) error {
 	})
 }
 
-func printExtraTaskDetails(ctx context.Context, v *viper.Viper, c client.C1Client, appId string, entitlementId string) error {
-	outputManager := output.NewManager(ctx, v)
-
-	appVal, err := c.GetApp(ctx, appId)
-	if err != nil {
-		return err
+// createAWSSSOProfileIfNeeded checks if the entitlement is an AWS permission set and creates the profile if needed.
+func createAWSSSOProfileIfNeeded(ctx context.Context, c client.C1Client, task *shared.Task, outputManager output.Manager) error {
+	if task.TaskType.TaskTypeGrant == nil {
+		return nil
 	}
 
-	entitlementVal, err := c.GetEntitlement(ctx, appId, entitlementId)
-	if err != nil {
-		return err
+	grantTask := task.TaskType.TaskTypeGrant
+	if grantTask.AppID == nil || grantTask.AppEntitlementID == nil {
+		// Skip if required fields are missing - not an error for this function
+		return nil
 	}
 
-	app := App{app: appVal, client: c}
-	err = outputManager.Output(ctx, &app, output.WithTransposeTable())
+	appID := *grantTask.AppID
+	entitlementID := *grantTask.AppEntitlementID
+
+	// Get the entitlement details
+	entitlement, err := c.GetEntitlement(ctx, appID, entitlementID)
 	if err != nil {
-		return err
+		return fmt.Errorf("failed to get entitlement details: %w", err)
 	}
 
-	entitlement := Entitlement{entitlement: entitlementVal, client: c}
-	err = outputManager.Output(ctx, &entitlement, output.WithTransposeTable())
+	// Check for nil pointers before dereferencing
+	if entitlement.AppResourceTypeID == nil {
+		// Not an error condition, just skip AWS SSO profile creation
+		return nil
+	}
+
+	// Get the resource type
+	resourceType, err := c.GetResourceType(ctx, appID, *entitlement.AppResourceTypeID)
 	if err != nil {
-		return err
+		return fmt.Errorf("failed to get resource type: %w", err)
+	}
+
+	// Check if this is an AWS permission set
+	if client.IsAWSPermissionSet(entitlement, resourceType) {
+		if entitlement.AppResourceID == nil {
+			return fmt.Errorf("entitlement AppResourceID is nil, cannot create AWS SSO profile")
+		}
+
+		// Get the resource details
+		resource, err := c.GetResource(ctx, appID, *entitlement.AppResourceTypeID, *entitlement.AppResourceID)
+		if err != nil {
+			return fmt.Errorf("failed to get resource details: %w", err)
+		}
+
+		if err := client.CreateAWSSSOProfile(entitlement, resource); err != nil {
+			return fmt.Errorf("failed to create AWS SSO profile: %w", err)
+		}
+	}
+	return nil
+}
+
+// handleWaitBehavior manages the waiting state for task completion.
+func handleWaitBehavior(ctx context.Context, c client.C1Client, task *shared.Task, outputManager output.Manager) error {
+	// Validate input parameters
+	if task == nil || task.ID == nil {
+		return fmt.Errorf("task or task ID is nil")
+	}
+
+	spinner, _ := pterm.DefaultSpinner.Start("Waiting for task to complete...")
+	defer func() { _ = spinner.Stop() }()
+
+	for {
+		select {
+		case <-ctx.Done():
+			return ctx.Err()
+		case <-time.After(2 * time.Second):
+			// Continue with polling
+		}
+
+		updatedTask, err := c.GetTask(ctx, *task.ID)
+		if err != nil {
+			return err
+		}
+
+		// Check for nil pointers before dereferencing
+		if updatedTask.TaskView == nil || updatedTask.TaskView.Task == nil {
+			return fmt.Errorf("received incomplete task response")
+		}
+
+		if updatedTask.TaskView.Task.State == nil {
+			return fmt.Errorf("task state is nil")
+		}
+
+		if *updatedTask.TaskView.Task.State == shared.TaskStateTaskStateClosed {
+			if updatedTask.TaskView.Task.TaskType.TaskTypeGrant != nil {
+				taskOutcome := updatedTask.TaskView.Task.TaskType.TaskTypeGrant.Outcome
+				if taskOutcome == nil {
+					return fmt.Errorf("task closed but no outcome provided")
+				}
+
+				switch *taskOutcome {
+				case shared.TaskTypeGrantOutcomeGrantOutcomeGranted:
+					spinner.Success("Entitlement granted successfully.")
+					// Create AWS SSO profile now that grant is successful
+					if err := createAWSSSOProfileIfNeeded(ctx, c, updatedTask.TaskView.Task, outputManager); err != nil {
+						pterm.Warning.Printf("Failed to create AWS SSO profile: %v\n", err)
+					}
+				case shared.TaskTypeGrantOutcomeGrantOutcomeDenied:
+					spinner.Fail("Entitlement request was denied.")
+					return fmt.Errorf("entitlement request was denied")
+				default:
+					spinner.Fail(fmt.Sprintf("Task completed with unexpected outcome: %s", *taskOutcome))
+					return fmt.Errorf("task completed with unexpected outcome: %s", *taskOutcome)
+				}
+			} else if updatedTask.TaskView.Task.TaskType.TaskTypeRevoke != nil {
+				taskOutcome := updatedTask.TaskView.Task.TaskType.TaskTypeRevoke.Outcome
+				if taskOutcome == nil {
+					return fmt.Errorf("task closed but no outcome provided")
+				}
+
+				switch *taskOutcome {
+				case shared.TaskTypeRevokeOutcomeRevokeOutcomeRevoked:
+					spinner.Success("Entitlement revoked successfully.")
+				case shared.TaskTypeRevokeOutcomeRevokeOutcomeDenied:
+					spinner.Fail("Entitlement revoke request was denied.")
+					return fmt.Errorf("entitlement revoke request was denied")
+				default:
+					spinner.Fail(fmt.Sprintf("Task completed with unexpected outcome: %s", *taskOutcome))
+					return fmt.Errorf("task completed with unexpected outcome: %s", *taskOutcome)
+				}
+			}
+			break
+		}
 	}
 
 	return nil
 }
 
+// runTask executes the task and handles the response.
 func runTask(
 	cmd *cobra.Command,
 	args []string,
@@ -304,52 +406,36 @@ func runTask(
 		return err
 	}
 
-	userID := client.StringFromPtr(resp.UserID)
-
-	forceCreate := v.GetBool(forceFlag)
-	if !forceCreate {
-		grants, err := c.GetGrantsForIdentity(ctx, appId, entitlementId, userID)
-		if err != nil {
-			return err
-		}
-		grantCount := 0
-		for _, grant := range grants {
-			// We only want to check if user has a grant
-			if client.StringFromPtr(grant.AppEntitlementID) != "" {
-				grantCount++
-			}
-		}
-
-		// If this is get, and they have grants, just exit
-		if cmd.Name() == getCmd().Name() && grantCount > 0 {
-			pterm.Println("You already have access to this entitlement. Use --force to override this check.")
-			return nil
-		}
-
-		if cmd.Name() == dropCmd().Name() && grantCount == 0 {
-			pterm.Println("You do not have existing grants to drop for this entitlement. Use --force to override this check.")
-			return nil
-		}
-	}
-
 	task, err := run(c, ctx, appId, entitlementId, client.StringFromPtr(resp.UserID), justification)
 	if err != nil {
+		// Check if this is a duplicate grant error and force flag is not set
+		errorMsg := err.Error()
+		force := v.GetBool(forceFlag)
+		if !force && (strings.Contains(strings.ToLower(errorMsg), "already granted") ||
+			strings.Contains(strings.ToLower(errorMsg), "already exists") ||
+			strings.Contains(strings.ToLower(errorMsg), "duplicate")) {
+			return fmt.Errorf("%s. Use --force flag to override this check", err.Error())
+		}
 		return err
 	}
 
+	outputManager := output.NewManager(ctx, v)
+
+	// Show detailed app and entitlement information if requested
 	if v.GetBool(extraDetailsFlag) {
-		err = printExtraTaskDetails(ctx, v, c, appId, entitlementId)
+		err = showDetailedEntitlementInfo(ctx, c, appId, entitlementId, v)
 		if err != nil {
-			return err
+			pterm.Warning.Printf("Failed to show detailed entitlement information: %v\n", err)
 		}
 	}
 
-	outputManager := output.NewManager(ctx, v)
 	taskResp := Task{task: task, client: c}
 	err = outputManager.Output(ctx, &taskResp, output.WithTransposeTable())
 	if err != nil {
 		return err
 	}
+
+	// Note: AWS SSO profile creation moved to handleWaitBehavior to occur only after successful grant completion
 
 	if wait, _ := cmd.Flags().GetBool("wait"); wait {
 		err = handleWaitBehavior(ctx, c, task, outputManager)
@@ -488,52 +574,6 @@ func getEntitlementDetails(ctx context.Context, c client.C1Client, v *viper.Vipe
 	return entitlementId, appId, nil
 }
 
-func handleWaitBehavior(ctx context.Context, c client.C1Client, task *shared.Task, outputManager output.Manager) error {
-	spinner, _ := pterm.DefaultSpinner.Start("Waiting for ticket to close.")
-	var taskItem *shared.Task
-	for {
-		select {
-		case <-ctx.Done():
-			return ctx.Err()
-		case <-time.After(1 * time.Second):
-		}
-		task, err := c.GetTask(ctx, client.StringFromPtr(task.ID))
-		if err != nil {
-			return err
-		}
-
-		taskItem = task.TaskView.Task
-		taskResp := Task{task: taskItem, client: c}
-		err = outputManager.Output(ctx, &taskResp, output.WithTransposeTable())
-		if err != nil {
-			return err
-		}
-
-		if *taskItem.State == shared.TaskStateTaskStateClosed {
-			break
-		}
-	}
-	if taskItem.TaskType.TaskTypeGrant != nil {
-		taskOutcome := taskItem.TaskType.TaskTypeGrant.Outcome
-		if *taskOutcome == shared.TaskTypeGrantOutcomeGrantOutcomeGranted {
-			spinner.Success("Entitlement granted successfully.")
-		} else {
-			spinner.Fail(fmt.Sprintf("Failed to grant entitlement %s", string(*taskOutcome)))
-			return fmt.Errorf("failed to grant entitlement %s", string(*taskOutcome))
-		}
-	}
-	if taskItem.TaskType.TaskTypeRevoke != nil {
-		taskOutcome := taskItem.TaskType.TaskTypeRevoke.Outcome
-		if *taskOutcome == shared.TaskTypeRevokeOutcomeRevokeOutcomeRevoked {
-			spinner.Success("Entitlement revoked succesfully.")
-		} else {
-			spinner.Fail(fmt.Sprintf("Failed to revoke entitlement %s", string(*taskOutcome)))
-			return fmt.Errorf("failed to revoke entitlement %s", string(*taskOutcome))
-		}
-	}
-	return nil
-}
-
 var processStateToString = map[shared.Processing]string{
 	"TASK_PROCESSING_TYPE_UNSPECIFIED": "Unknown Processing",
 	"TASK_PROCESSING_TYPE_PROCESSING":  "Processing",
@@ -570,4 +610,65 @@ func multipleEntitlmentsFoundError(alias string, query string) error {
 		return fmt.Errorf("multiple entitlements found with query %s, please specify an entitlement id and app id", query)
 	}
 	return fmt.Errorf("multiple entitlements found, please specify an entitlement id and app id")
+}
+
+// showDetailedEntitlementInfo displays detailed information about the app and entitlement.
+func showDetailedEntitlementInfo(ctx context.Context, c client.C1Client, appID string, entitlementID string, v *viper.Viper) error {
+	// Skip detailed output for JSON formats to avoid mixing plain text with structured output
+	outputFormat := v.GetString("output")
+	if outputFormat == output.JSON || outputFormat == output.JSONPretty {
+		return nil
+	}
+
+	pterm.DefaultSection.Println("Entitlement Details")
+
+	// Get app details
+	app, err := c.GetApp(ctx, appID)
+	if err != nil {
+		return fmt.Errorf("failed to get app details: %w", err)
+	}
+
+	// Get entitlement details
+	entitlement, err := c.GetEntitlement(ctx, appID, entitlementID)
+	if err != nil {
+		return fmt.Errorf("failed to get entitlement details: %w", err)
+	}
+
+	// Display app information
+	pterm.DefaultBasicText.Printf("App: %s\n", client.StringFromPtr(app.DisplayName))
+	if app.Description != nil && *app.Description != "" {
+		pterm.DefaultBasicText.Printf("App Description: %s\n", client.StringFromPtr(app.Description))
+	}
+
+	// Display entitlement information
+	pterm.DefaultBasicText.Printf("Entitlement: %s\n", client.StringFromPtr(entitlement.DisplayName))
+	if entitlement.Description != nil && *entitlement.Description != "" {
+		pterm.DefaultBasicText.Printf("Entitlement Description: %s\n", client.StringFromPtr(entitlement.Description))
+	}
+
+	// Show resource type and resource information if available
+	if entitlement.AppResourceTypeID != nil {
+		resourceType, err := c.GetResourceType(ctx, appID, *entitlement.AppResourceTypeID)
+		if err == nil {
+			pterm.DefaultBasicText.Printf("Resource Type: %s\n", client.StringFromPtr(resourceType.DisplayName))
+
+			if entitlement.AppResourceID != nil {
+				resource, err := c.GetResource(ctx, appID, *entitlement.AppResourceTypeID, *entitlement.AppResourceID)
+				if err == nil {
+					pterm.DefaultBasicText.Printf("Resource: %s\n", client.StringFromPtr(resource.DisplayName))
+					if resource.Description != nil && *resource.Description != "" {
+						pterm.DefaultBasicText.Printf("Resource Description: %s\n", client.StringFromPtr(resource.Description))
+					}
+				}
+			}
+		}
+	}
+
+	// Show duration information if available
+	if entitlement.DurationGrant != nil && *entitlement.DurationGrant != "" {
+		pterm.DefaultBasicText.Printf("Max Grant Duration: %s\n", *entitlement.DurationGrant)
+	}
+
+	pterm.Println() // Add spacing before task output
+	return nil
 }

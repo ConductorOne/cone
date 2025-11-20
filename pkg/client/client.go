@@ -63,7 +63,7 @@ type C1Client interface {
 	GetUser(ctx context.Context, userID string) (*shared.User, error)
 	GetEntitlement(ctx context.Context, appID string, entitlementID string) (*shared.AppEntitlement, error)
 	SearchEntitlements(ctx context.Context, filter *SearchEntitlementsFilter) ([]*EntitlementWithBindings, error)
-	GetResource(ctx context.Context, appID string, resourceID string, resourceTypeID string) (*shared.AppResource, error)
+	GetResource(ctx context.Context, appID string, resourceTypeID string, resourceID string) (*shared.AppResource, error)
 	GetResourceType(ctx context.Context, appID string, resourceTypeID string) (*shared.AppResourceType, error)
 	GetApp(ctx context.Context, appID string) (*shared.App, error)
 	GetTask(ctx context.Context, taskId string) (*shared.TaskServiceGetResponse, error)
@@ -96,6 +96,7 @@ type C1Client interface {
 	ListAppUserCredentials(ctx context.Context, appID string, appUserID string) ([]shared.AppUserCredential, error)
 	ListPolicies(ctx context.Context) ([]shared.Policy, error)
 	ListEntitlements(ctx context.Context, appId string) ([]shared.AppEntitlement, error)
+	UpdateEntitlement(ctx context.Context, appID, entitlementID string, req *shared.UpdateAppEntitlementRequest) error
 }
 
 func (c *client) BaseURL() string {

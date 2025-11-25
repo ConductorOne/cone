@@ -71,7 +71,6 @@ func runCli(ctx context.Context) int {
 	cliCmd.AddCommand(loginCmd())
 	cliCmd.AddCommand(hasCmd())
 	cliCmd.AddCommand(tokenCmd())
-	cliCmd.AddCommand(terraformCmd())
 	cliCmd.AddCommand(decryptCredentialCmd())
 
 	err = cliCmd.ExecuteContext(ctx)

@@ -76,6 +76,7 @@ type C1Client interface {
 		justification string,
 		duration string,
 		emergencyAccess bool,
+		requestData map[string]any,
 	) (*shared.TaskServiceCreateGrantResponse, error)
 	CreateRevokeTask(
 		ctx context.Context,

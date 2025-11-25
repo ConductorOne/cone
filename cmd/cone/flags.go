@@ -21,6 +21,7 @@ const (
 	rawTokenFlag         = "raw"
 	appDisplayNameFlag   = "app"
 	showEncryptedFlag    = "show-encrypted"
+	formDataFlag         = "form-data"
 )
 
 func addWaitFlag(cmd *cobra.Command) {
@@ -82,4 +83,8 @@ func addAppDisplayNameFlag(cmd *cobra.Command) {
 
 func addShowEncryptedFlag(cmd *cobra.Command) {
 	cmd.Flags().Bool(showEncryptedFlag, false, "Show credentials we could not decrypt.")
+}
+
+func addFormDataFlag(cmd *cobra.Command) {
+	cmd.Flags().String(formDataFlag, "", "Form field data as comma-separated key=value pairs (e.g., 'field1=value1,field2=value2'). Required fields will be prompted interactively if not provided.")
 }

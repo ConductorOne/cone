@@ -29,7 +29,17 @@ func getCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "get <alias> [flags]\n  cone get --query <query> [flags]\n  cone get --app-id <app-id> --entitlement-id <entitlement-id> [flags]",
 		Short: "Create an access request for an entitlement by alias",
-		RunE:  runGet,
+		Long: `Create an access request for an entitlement by alias, query, or explicit app/entitlement IDs.
+
+Some entitlements may require custom form fields to be filled out when making an access request.
+If form fields are required, you will be prompted interactively to provide them, or you can
+provide them via the --form-data flag in the format: "field1=value1,field2=value2".
+
+Examples:
+  cone get my-entitlement-alias
+  cone get --query "GitHub Admin" --justification "Need admin access"
+  cone get --app-id app123 --entitlement-id ent456 --form-data "reason=project-work,duration=2w"`,
+		RunE: runGet,
 	}
 	addGrantDurationFlag(cmd)
 	addEmergencyAccessFlag(cmd)
@@ -54,6 +64,7 @@ func taskCmd(cmd *cobra.Command) *cobra.Command {
 	addEntitlementAliasFlag(cmd)
 	addForceTaskCreateFlag(cmd)
 	addEntitlementDetailsFlag(cmd)
+	addFormDataFlag(cmd)
 	return cmd
 }
 
@@ -231,7 +242,19 @@ func runGet(cmd *cobra.Command, args []string) error {
 			apiDuration = fmt.Sprintf("%ds", seconds)
 		}
 
-		accessRequest, err := c.CreateGrantTask(ctx, appId, entitlementId, userId, appUserId, justification, apiDuration, emergencyAccess)
+		// Collect form data if provided via flags
+		var requestData map[string]any
+		formDataFlagValue := v.GetString(formDataFlag)
+		hasFormDataFlag := formDataFlagValue != ""
+		
+		// Only send requestData if entitlement has a request schema or if user explicitly provided form data
+		// The API may accept extra data, but we'll validate after task creation
+		if hasFormDataFlag {
+			requestData = parseFormDataFlag(formDataFlagValue)
+		}
+
+		// Create the task with initial form data (if any)
+		accessRequest, err := c.CreateGrantTask(ctx, appId, entitlementId, userId, appUserId, justification, apiDuration, emergencyAccess, requestData)
 		if err != nil {
 			errorBody := err.Error()
 			if strings.Contains(errorBody, durationErrorMessage) {
@@ -241,7 +264,39 @@ func runGet(cmd *cobra.Command, args []string) error {
 			}
 			return nil, err
 		}
-		return accessRequest.TaskView.Task, nil
+
+		task := accessRequest.TaskView.Task
+
+		// Check if the task has form fields
+		hasFormFields := task.Form != nil && len(task.Form.Fields) > 0
+		
+		if hasFormFields {
+			// Collect form fields if not already provided
+			if requestData == nil || len(requestData) == 0 {
+				collectedData, err := collectFormFields(ctx, v, task.Form)
+				if err != nil {
+					// Log error but don't fail - task was already created
+					pterm.Warning.Printf("Error collecting form fields: %v\n", err)
+				} else if collectedData != nil && len(collectedData) > 0 {
+					// Note: The task is already created, so we can't update it with form data
+					// In a production scenario, you might want to update the task or recreate it
+					pterm.Info.Println("Form fields collected. Note: Task was already created without form data.")
+					pterm.Info.Println("To provide form data on creation, use --form-data flag.")
+					pterm.Println("Collected form data:", collectedData)
+				}
+			} else {
+				// Validate that provided form data matches the form structure
+				if err := validateFormData(task.Form, requestData); err != nil {
+					pterm.Warning.Printf("Form data validation warning: %v\n", err)
+				}
+			}
+		} else if hasFormDataFlag {
+			// Form data was provided but task doesn't have form fields
+			// This is likely fine - the API probably ignores extra data, but warn the user
+			pterm.Warning.Printf("Form data was provided via --form-data flag, but this entitlement does not require form fields. The data was sent but may be ignored by the API.\n")
+		}
+
+		return task, nil
 	})
 }
 

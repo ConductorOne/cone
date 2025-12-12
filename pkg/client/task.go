@@ -29,6 +29,7 @@ func (c *client) CreateGrantTask(
 	justification string,
 	duration string,
 	emergencyAccess bool,
+	requestData map[string]any,
 ) (*shared.TaskServiceCreateGrantResponse, error) {
 	req := shared.TaskServiceCreateGrantRequest{
 		AppEntitlementID: appEntitlementId,
@@ -40,6 +41,9 @@ func (c *client) CreateGrantTask(
 	}
 	if duration != "" {
 		req.GrantDuration = &duration
+	}
+	if len(requestData) > 0 {
+		req.RequestData = requestData
 	}
 	resp, err := c.sdk.Task.CreateGrantTask(ctx, &req)
 	if err != nil {
@@ -147,6 +151,25 @@ func (c *client) DenyTask(ctx context.Context, taskId string, comment string, po
 func (c *client) EscalateTask(ctx context.Context, taskID string) (*shared.TaskServiceActionResponse, error) {
 	resp, err := c.sdk.TaskActions.EscalateToEmergencyAccess(ctx, operations.C1APITaskV1TaskActionsServiceEscalateToEmergencyAccessRequest{
 		TaskActionsServiceEscalateToEmergencyAccessRequest: &shared.TaskActionsServiceEscalateToEmergencyAccessRequest{},
+		TaskID: taskID,
+	})
+	if err != nil {
+		return nil, err
+	}
+
+	if err := NewHTTPError(resp.RawResponse); err != nil {
+		return nil, err
+	}
+	return resp.TaskServiceActionResponse, nil
+}
+
+func (c *client) UpdateTaskRequestData(ctx context.Context, taskID string, requestData map[string]any) (*shared.TaskServiceActionResponse, error) {
+	req := shared.TaskActionsServiceUpdateRequestDataRequest{}
+	if len(requestData) > 0 {
+		req.Data = requestData
+	}
+	resp, err := c.sdk.TaskActions.UpdateRequestData(ctx, operations.C1APITaskV1TaskActionsServiceUpdateRequestDataRequest{
+		TaskActionsServiceUpdateRequestDataRequest: &req,
 		TaskID: taskID,
 	})
 	if err != nil {

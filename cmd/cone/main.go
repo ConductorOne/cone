@@ -8,8 +8,10 @@ import (
 	"syscall"
 
 	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 
 	"github.com/conductorone/cone/pkg/client"
+	"github.com/conductorone/cone/pkg/logging"
 )
 
 var version = "dev"
@@ -54,12 +56,18 @@ func runCli(ctx context.Context) int {
 	cliCmd.PersistentFlags().String("client-secret", "", "Client secret")
 	cliCmd.PersistentFlags().String("api-endpoint", "", "Override the API endpoint")
 	cliCmd.PersistentFlags().StringP("output", "o", "table", "Output format. Valid values: table, json, json-pretty, wide.")
-	cliCmd.PersistentFlags().Bool("debug", false, "Enable debug logging")
+	cliCmd.PersistentFlags().Bool("debug", false, "Enable HTTP debug logging")
+	cliCmd.PersistentFlags().String("log-level", "", "Set log level (debug, info, warn, error)")
 
 	err := initConfig(cliCmd)
 	if err != nil {
 		fmt.Fprintln(os.Stderr, err.Error())
 		return 1
+	}
+
+	// Initialize logging based on --log-level flag
+	if logLevel := viper.GetString("log-level"); logLevel != "" {
+		logging.Init(logging.Level(logLevel))
 	}
 
 	cliCmd.AddCommand(getCmd())

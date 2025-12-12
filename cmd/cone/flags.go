@@ -86,5 +86,5 @@ func addShowEncryptedFlag(cmd *cobra.Command) {
 }
 
 func addFormDataFlag(cmd *cobra.Command) {
-	cmd.Flags().String(formDataFlag, "", "Form field data as comma-separated key=value pairs (e.g., 'field1=value1,field2=value2'). Required fields will be prompted interactively if not provided.")
+	cmd.Flags().String(formDataFlag, "", `Form field data as JSON (e.g., '{"field1":"value1","field2":"value2"}'). Required fields will be prompted interactively if not provided.`)
 }

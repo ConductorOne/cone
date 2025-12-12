@@ -15,6 +15,7 @@ import (
 	"github.com/conductorone/conductorone-sdk-go/pkg/models/shared"
 
 	"github.com/conductorone/cone/pkg/client"
+	"github.com/conductorone/cone/pkg/logging"
 	"github.com/conductorone/cone/pkg/output"
 )
 
@@ -33,12 +34,12 @@ func getCmd() *cobra.Command {
 
 Some entitlements may require custom form fields to be filled out when making an access request.
 If form fields are required, you will be prompted interactively to provide them, or you can
-provide them via the --form-data flag in the format: "field1=value1,field2=value2".
+provide them via the --form-data flag as JSON.
 
 Examples:
   cone get my-entitlement-alias
   cone get --query "GitHub Admin" --justification "Need admin access"
-  cone get --app-id app123 --entitlement-id ent456 --form-data "reason=project-work,duration=2w"`,
+  cone get --app-id app123 --entitlement-id ent456 --form-data '{"reason":"project-work","duration":"2w"}'`,
 		RunE: runGet,
 	}
 	addGrantDurationFlag(cmd)
@@ -245,12 +246,14 @@ func runGet(cmd *cobra.Command, args []string) error {
 		// Collect form data if provided via flags
 		var requestData map[string]any
 		formDataFlagValue := v.GetString(formDataFlag)
-		hasFormDataFlag := formDataFlagValue != ""
-		
-		// Only send requestData if entitlement has a request schema or if user explicitly provided form data
-		// The API may accept extra data, but we'll validate after task creation
-		if hasFormDataFlag {
-			requestData = parseFormDataFlag(formDataFlagValue)
+
+		// Only send requestData if user explicitly provided form data
+		if formDataFlagValue != "" {
+			var err error
+			requestData, err = parseFormDataFlag(formDataFlagValue)
+			if err != nil {
+				return nil, err
+			}
 		}
 
 		// Create the task with initial form data (if any)
@@ -269,20 +272,21 @@ func runGet(cmd *cobra.Command, args []string) error {
 
 		// Check if the task has form fields
 		hasFormFields := task.Form != nil && len(task.Form.Fields) > 0
-		
+
 		if hasFormFields {
 			// Collect form fields if not already provided
 			if requestData == nil || len(requestData) == 0 {
 				collectedData, err := collectFormFields(ctx, v, task.Form)
 				if err != nil {
-					// Log error but don't fail - task was already created
-					pterm.Warning.Printf("Error collecting form fields: %v\n", err)
-				} else if collectedData != nil && len(collectedData) > 0 {
-					// Note: The task is already created, so we can't update it with form data
-					// In a production scenario, you might want to update the task or recreate it
-					pterm.Info.Println("Form fields collected. Note: Task was already created without form data.")
-					pterm.Info.Println("To provide form data on creation, use --form-data flag.")
-					pterm.Println("Collected form data:", collectedData)
+					return nil, fmt.Errorf("error collecting form fields: %w", err)
+				}
+				if collectedData != nil && len(collectedData) > 0 {
+					// Update the task with the collected form data
+					taskID := client.StringFromPtr(task.ID)
+					_, err := c.UpdateTaskRequestData(ctx, taskID, collectedData)
+					if err != nil {
+						return nil, fmt.Errorf("error updating task with form data: %w", err)
+					}
 				}
 			} else {
 				// Validate that provided form data matches the form structure
@@ -290,10 +294,10 @@ func runGet(cmd *cobra.Command, args []string) error {
 					pterm.Warning.Printf("Form data validation warning: %v\n", err)
 				}
 			}
-		} else if hasFormDataFlag {
+		} else if formDataFlagValue != "" {
 			// Form data was provided but task doesn't have form fields
-			// This is likely fine - the API probably ignores extra data, but warn the user
-			pterm.Warning.Printf("Form data was provided via --form-data flag, but this entitlement does not require form fields. The data was sent but may be ignored by the API.\n")
+			// The data was already sent on task creation and will be ignored by the API
+			logging.Debugf("Form data was provided via --form-data flag, but this entitlement does not require form fields. The data was sent but may be ignored by the API.")
 		}
 
 		return task, nil

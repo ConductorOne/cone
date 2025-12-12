@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"strconv"
 	"strings"
@@ -27,7 +28,10 @@ func collectFormFields(ctx context.Context, v *viper.Viper, form *shared.FormInp
 
 	// Collect form data from command-line flags if provided
 	formDataFlagValue := v.GetString(formDataFlag)
-	formDataMap := parseFormDataFlag(formDataFlagValue)
+	formDataMap, err := parseFormDataFlag(formDataFlagValue)
+	if err != nil {
+		return nil, err
+	}
 
 	for _, field := range form.Fields {
 		fieldName := client.StringFromPtr(field.Name)
@@ -131,6 +135,12 @@ func collectStringField(ctx context.Context, field *shared.StringField, displayN
 
 // collectBoolField collects a boolean field value.
 func collectBoolField(ctx context.Context, field *shared.BoolField, displayName, description string) (bool, error) {
+	select {
+	case <-ctx.Done():
+		return false, ctx.Err()
+	default:
+	}
+
 	if description != "" {
 		pterm.Info.Println(description)
 	}
@@ -171,6 +181,12 @@ func collectInt64Field(ctx context.Context, field *shared.Int64Field, displayNam
 
 // collectStringSliceField collects a string slice field value.
 func collectStringSliceField(ctx context.Context, field *shared.StringSliceField, displayName, description string) ([]string, error) {
+	select {
+	case <-ctx.Done():
+		return nil, ctx.Err()
+	default:
+	}
+
 	if description != "" {
 		pterm.Info.Println(description)
 	}
@@ -222,27 +238,19 @@ func getFieldDefaultValue(field shared.Field) any {
 	}
 }
 
-// parseFormDataFlag parses the --form-data flag value.
-// Expected format: "field1=value1,field2=value2" or JSON object.
-func parseFormDataFlag(formDataFlag string) map[string]any {
+// parseFormDataFlag parses the --form-data flag value as JSON.
+// Expected format: '{"field1":"value1","field2":"value2"}'
+func parseFormDataFlag(formDataFlag string) (map[string]any, error) {
 	if formDataFlag == "" {
-		return nil
+		return nil, nil
 	}
 
 	result := make(map[string]any)
-
-	// Try parsing as comma-separated key=value pairs
-	pairs := strings.Split(formDataFlag, ",")
-	for _, pair := range pairs {
-		parts := strings.SplitN(strings.TrimSpace(pair), "=", 2)
-		if len(parts) == 2 {
-			key := strings.TrimSpace(parts[0])
-			value := strings.TrimSpace(parts[1])
-			result[key] = value
-		}
+	if err := json.Unmarshal([]byte(formDataFlag), &result); err != nil {
+		return nil, fmt.Errorf("invalid JSON in --form-data flag: %w", err)
 	}
 
-	return result
+	return result, nil
 }
 
 // StringFieldValidator validates string field input.
@@ -311,10 +319,7 @@ type Int64FieldValidator struct {
 
 func (v Int64FieldValidator) IsValid(txt string) (int64, bool) {
 	if txt == "" {
-		// Allow empty if there's a default value
-		if v.field.DefaultValue != nil {
-			return *v.field.DefaultValue, true
-		}
+		// Empty is invalid - default values are handled by passing them as initial value
 		return 0, false
 	}
 
@@ -373,6 +378,41 @@ func getFormFromTask(task *shared.Task) *shared.FormInput {
 	return task.Form
 }
 
+// isFieldRequired checks if a field is required based on its validation rules.
+func isFieldRequired(field shared.Field) bool {
+	switch {
+	case field.StringField != nil:
+		rules := field.StringField.StringRules
+		if rules == nil {
+			return false
+		}
+		// Field is required if IgnoreEmpty is not explicitly true and MinLen >= 1
+		ignoreEmpty := rules.IgnoreEmpty != nil && *rules.IgnoreEmpty
+		if ignoreEmpty {
+			return false
+		}
+		if rules.MinLen != nil {
+			minLen, err := strconv.Atoi(*rules.MinLen)
+			if err == nil && minLen >= 1 {
+				return true
+			}
+		}
+		return false
+	case field.Int64Field != nil:
+		// Int64 fields don't have an IgnoreEmpty concept in the same way
+		// Consider required if there are validation rules but no default
+		return field.Int64Field.Int64Rules != nil && field.Int64Field.DefaultValue == nil
+	case field.BoolField != nil:
+		// Bool fields typically have a default (false), so rarely required
+		return false
+	case field.StringSliceField != nil:
+		// String slice fields - check if there are rules requiring items
+		return false
+	default:
+		return false
+	}
+}
+
 // validateFormData validates that all required form fields are present.
 func validateFormData(form *shared.FormInput, requestData map[string]any) error {
 	if form == nil {
@@ -385,17 +425,35 @@ func validateFormData(form *shared.FormInput, requestData map[string]any) error 
 			continue
 		}
 
-		// Check if field is required (this is a simplified check)
-		// In practice, you'd check field rules for required status
-		_, hasValue := requestData[fieldName]
+		displayName := client.StringFromPtr(field.DisplayName)
+		if displayName == "" {
+			displayName = fieldName
+		}
+
+		// Check if field is required
+		if !isFieldRequired(field) {
+			continue
+		}
+
+		// Check if value was provided
+		val, hasValue := requestData[fieldName]
 		if !hasValue {
 			// Check if there's a default value
 			if getFieldDefaultValue(field) == nil {
-				displayName := client.StringFromPtr(field.DisplayName)
-				if displayName == "" {
-					displayName = fieldName
-				}
 				return fmt.Errorf("required field '%s' is missing", displayName)
+			}
+			continue
+		}
+
+		// Check if value is empty
+		switch v := val.(type) {
+		case string:
+			if v == "" {
+				return fmt.Errorf("required field '%s' cannot be empty", displayName)
+			}
+		case []string:
+			if len(v) == 0 {
+				return fmt.Errorf("required field '%s' cannot be empty", displayName)
 			}
 		}
 	}

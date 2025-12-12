@@ -162,3 +162,20 @@ func (c *client) EscalateTask(ctx context.Context, taskID string) (*shared.TaskS
 	}
 	return resp.TaskServiceActionResponse, nil
 }
+
+func (c *client) UpdateTaskRequestData(ctx context.Context, taskID string, requestData map[string]any) (*shared.TaskServiceActionResponse, error) {
+	resp, err := c.sdk.TaskActions.UpdateRequestData(ctx, operations.C1APITaskV1TaskActionsServiceUpdateRequestDataRequest{
+		TaskActionsServiceUpdateRequestDataRequest: &shared.TaskActionsServiceUpdateRequestDataRequest{
+			Data: requestData,
+		},
+		TaskID: taskID,
+	})
+	if err != nil {
+		return nil, err
+	}
+
+	if err := NewHTTPError(resp.RawResponse); err != nil {
+		return nil, err
+	}
+	return resp.TaskServiceActionResponse, nil
+}

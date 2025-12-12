@@ -12,7 +12,7 @@ var (
 	once   sync.Once
 )
 
-// Level represents log levels
+// Level represents log levels.
 type Level string
 
 const (
@@ -77,42 +77,42 @@ func newLogger(level Level) *zap.SugaredLogger {
 	return zapLogger.Sugar()
 }
 
-// Debug logs a debug message
+// Debug logs a debug message.
 func Debug(args ...interface{}) {
 	Get().Debug(args...)
 }
 
-// Debugf logs a formatted debug message
+// Debugf logs a formatted debug message.
 func Debugf(template string, args ...interface{}) {
 	Get().Debugf(template, args...)
 }
 
-// Info logs an info message
+// Info logs an info message.
 func Info(args ...interface{}) {
 	Get().Info(args...)
 }
 
-// Infof logs a formatted info message
+// Infof logs a formatted info message.
 func Infof(template string, args ...interface{}) {
 	Get().Infof(template, args...)
 }
 
-// Warn logs a warning message
+// Warn logs a warning message.
 func Warn(args ...interface{}) {
 	Get().Warn(args...)
 }
 
-// Warnf logs a formatted warning message
+// Warnf logs a formatted warning message.
 func Warnf(template string, args ...interface{}) {
 	Get().Warnf(template, args...)
 }
 
-// Error logs an error message
+// Error logs an error message.
 func Error(args ...interface{}) {
 	Get().Error(args...)
 }
 
-// Errorf logs a formatted error message
+// Errorf logs a formatted error message.
 func Errorf(template string, args ...interface{}) {
 	Get().Errorf(template, args...)
 }

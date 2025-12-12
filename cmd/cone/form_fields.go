@@ -243,8 +243,11 @@ func getFieldDefaultValue(field shared.Field) any {
 		return *field.BoolField.DefaultValue
 	case field.Int64Field != nil && field.Int64Field.DefaultValue != nil:
 		return *field.Int64Field.DefaultValue
-	case field.StringSliceField != nil && len(field.StringSliceField.DefaultValues) > 0:
-		return field.StringSliceField.DefaultValues
+	case field.StringSliceField != nil:
+		if len(field.StringSliceField.DefaultValues) > 0 {
+			return field.StringSliceField.DefaultValues
+		}
+		return nil
 	default:
 		return nil
 	}

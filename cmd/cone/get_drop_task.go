@@ -271,11 +271,14 @@ func runGet(cmd *cobra.Command, args []string) error {
 		task := accessRequest.TaskView.Task
 
 		// Check if the task has form fields
-		hasFormFields := task.Form != nil && len(task.Form.Fields) > 0
+		hasFormFields := task.Form != nil
+		if hasFormFields {
+			hasFormFields = len(task.Form.Fields) > 0
+		}
 
 		if hasFormFields {
 			// Collect form fields if not already provided
-			if requestData == nil || len(requestData) == 0 {
+			if len(requestData) == 0 {
 				collectedData, err := collectFormFields(ctx, v, task.Form)
 				if err != nil {
 					return nil, fmt.Errorf("error collecting form fields: %w", err)

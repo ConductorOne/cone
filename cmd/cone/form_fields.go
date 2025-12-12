@@ -251,7 +251,7 @@ func getFieldDefaultValue(field shared.Field) any {
 }
 
 // parseFormDataFlag parses the --form-data flag value as JSON.
-// Expected format: '{"field1":"value1","field2":"value2"}'
+// Expected format: '{"field1":"value1","field2":"value2"}'.
 func parseFormDataFlag(formDataFlag string) (map[string]any, error) {
 	if formDataFlag == "" {
 		return nil, nil
@@ -381,15 +381,6 @@ func (v Int64FieldValidator) Prompt(isFirstRun bool) {
 	}
 }
 
-// getFormFromTask retrieves the form definition from a task.
-// This is used when the form is only available after task creation.
-func getFormFromTask(task *shared.Task) *shared.FormInput {
-	if task == nil {
-		return nil
-	}
-	return task.Form
-}
-
 // isFieldRequired checks if a field is required based on its validation rules.
 func isFieldRequired(field shared.Field) bool {
 	switch {
@@ -472,4 +463,3 @@ func validateFormData(form *shared.FormInput, requestData map[string]any) error 
 
 	return nil
 }
-

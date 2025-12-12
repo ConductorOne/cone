@@ -42,7 +42,7 @@ func (c *client) CreateGrantTask(
 	if duration != "" {
 		req.GrantDuration = &duration
 	}
-	if requestData != nil && len(requestData) > 0 {
+	if len(requestData) > 0 {
 		req.RequestData = requestData
 	}
 	resp, err := c.sdk.Task.CreateGrantTask(ctx, &req)
@@ -165,12 +165,12 @@ func (c *client) EscalateTask(ctx context.Context, taskID string) (*shared.TaskS
 
 func (c *client) UpdateTaskRequestData(ctx context.Context, taskID string, requestData map[string]any) (*shared.TaskServiceActionResponse, error) {
 	req := shared.TaskActionsServiceUpdateRequestDataRequest{}
-	if requestData != nil && len(requestData) > 0 {
+	if len(requestData) > 0 {
 		req.Data = requestData
 	}
 	resp, err := c.sdk.TaskActions.UpdateRequestData(ctx, operations.C1APITaskV1TaskActionsServiceUpdateRequestDataRequest{
 		TaskActionsServiceUpdateRequestDataRequest: &req,
-		TaskID:                                     taskID,
+		TaskID: taskID,
 	})
 	if err != nil {
 		return nil, err

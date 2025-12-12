@@ -280,7 +280,7 @@ func runGet(cmd *cobra.Command, args []string) error {
 				if err != nil {
 					return nil, fmt.Errorf("error collecting form fields: %w", err)
 				}
-				if collectedData != nil && len(collectedData) > 0 {
+				if len(collectedData) > 0 {
 					// Update the task with the collected form data
 					taskID := client.StringFromPtr(task.ID)
 					_, err := c.UpdateTaskRequestData(ctx, taskID, collectedData)

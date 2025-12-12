@@ -13,6 +13,7 @@ import (
 	"github.com/conductorone/conductorone-sdk-go/pkg/models/shared"
 
 	"github.com/conductorone/cone/pkg/client"
+	"github.com/conductorone/cone/pkg/logging"
 	"github.com/conductorone/cone/pkg/output"
 )
 
@@ -108,7 +109,9 @@ func collectFieldValue(ctx context.Context, field shared.Field, displayName, des
 	case field.StringSliceField != nil:
 		return collectStringSliceField(ctx, field.StringSliceField, displayName, description)
 	default:
-		return nil, fmt.Errorf("unsupported field type for field: %s", displayName)
+		// Unknown field type - warn and skip to avoid breaking on new field types
+		logging.Warnf("Skipping field '%s': unsupported field type. You may need to update cone to handle this field.", displayName)
+		return nil, nil
 	}
 }
 
@@ -179,7 +182,8 @@ func collectInt64Field(ctx context.Context, field *shared.Int64Field, displayNam
 	return value, nil
 }
 
-// collectStringSliceField collects a string slice field value.
+// collectStringSliceField collects a string slice field value using a multi-entry loop.
+// User enters one value per line, empty line finishes input.
 func collectStringSliceField(ctx context.Context, field *shared.StringSliceField, displayName, description string) ([]string, error) {
 	select {
 	case <-ctx.Done():
@@ -191,32 +195,40 @@ func collectStringSliceField(ctx context.Context, field *shared.StringSliceField
 		pterm.Info.Println(description)
 	}
 
-	prompt := fmt.Sprintf("Enter values for '%s' (comma-separated)", displayName)
 	if len(field.DefaultValues) > 0 {
-		prompt = fmt.Sprintf("Enter values for '%s' (comma-separated, default: %s)", displayName, strings.Join(field.DefaultValues, ", "))
+		pterm.Info.Printf("Default values for '%s': %s\n", displayName, strings.Join(field.DefaultValues, ", "))
+		pterm.Info.Println("Press enter with no input to use defaults, or enter new values below.")
 	}
 
+	pterm.Info.Printf("Enter values for '%s' (one per line, empty line to finish):\n", displayName)
+
+	var result []string
 	userInput := pterm.DefaultInteractiveTextInput.WithMultiLine(false)
-	input, err := userInput.Show(prompt)
-	if err != nil {
-		return nil, err
+
+	for {
+		select {
+		case <-ctx.Done():
+			return nil, ctx.Err()
+		default:
+		}
+
+		input, err := userInput.Show(fmt.Sprintf("  [%d]", len(result)+1))
+		if err != nil {
+			return nil, err
+		}
+
+		trimmed := strings.TrimSpace(input)
+		if trimmed == "" {
+			// Empty line ends input
+			break
+		}
+
+		result = append(result, trimmed)
 	}
 
-	if input == "" {
-		if len(field.DefaultValues) > 0 {
-			return field.DefaultValues, nil
-		}
-		return []string{}, nil
-	}
-
-	// Split by comma and trim whitespace
-	values := strings.Split(input, ",")
-	result := make([]string, 0, len(values))
-	for _, v := range values {
-		trimmed := strings.TrimSpace(v)
-		if trimmed != "" {
-			result = append(result, trimmed)
-		}
+	// If no values entered and defaults exist, use defaults
+	if len(result) == 0 && len(field.DefaultValues) > 0 {
+		return field.DefaultValues, nil
 	}
 
 	return result, nil

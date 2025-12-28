@@ -19,8 +19,8 @@ The connector subcommands help you:
 	}
 
 	cmd.AddCommand(connectorBuildCmd())
-	// TODO: Add connectorInitCmd() in Tier 2
-	// TODO: Add connectorDevCmd() in Tier 2
+	cmd.AddCommand(connectorInitCmd())
+	// TODO: Add connectorDevCmd() in Tier 2 feature [10]
 
 	return cmd
 }

@@ -13,25 +13,25 @@ type C1APIAppV1ConnectorServiceUpdateRequest struct {
 	ID                            string                                `pathParam:"style=simple,explode=false,name=id"`
 }
 
-func (o *C1APIAppV1ConnectorServiceUpdateRequest) GetConnectorServiceUpdateRequest() *shared.ConnectorServiceUpdateRequest {
-	if o == nil {
+func (c *C1APIAppV1ConnectorServiceUpdateRequest) GetConnectorServiceUpdateRequest() *shared.ConnectorServiceUpdateRequest {
+	if c == nil {
 		return nil
 	}
-	return o.ConnectorServiceUpdateRequest
+	return c.ConnectorServiceUpdateRequest
 }
 
-func (o *C1APIAppV1ConnectorServiceUpdateRequest) GetAppID() string {
-	if o == nil {
+func (c *C1APIAppV1ConnectorServiceUpdateRequest) GetAppID() string {
+	if c == nil {
 		return ""
 	}
-	return o.AppID
+	return c.AppID
 }
 
-func (o *C1APIAppV1ConnectorServiceUpdateRequest) GetID() string {
-	if o == nil {
+func (c *C1APIAppV1ConnectorServiceUpdateRequest) GetID() string {
+	if c == nil {
 		return ""
 	}
-	return o.ID
+	return c.ID
 }
 
 type C1APIAppV1ConnectorServiceUpdateResponse struct {
@@ -45,30 +45,30 @@ type C1APIAppV1ConnectorServiceUpdateResponse struct {
 	RawResponse *http.Response
 }
 
-func (o *C1APIAppV1ConnectorServiceUpdateResponse) GetConnectorServiceUpdateResponse() *shared.ConnectorServiceUpdateResponse {
-	if o == nil {
+func (c *C1APIAppV1ConnectorServiceUpdateResponse) GetConnectorServiceUpdateResponse() *shared.ConnectorServiceUpdateResponse {
+	if c == nil {
 		return nil
 	}
-	return o.ConnectorServiceUpdateResponse
+	return c.ConnectorServiceUpdateResponse
 }
 
-func (o *C1APIAppV1ConnectorServiceUpdateResponse) GetContentType() string {
-	if o == nil {
+func (c *C1APIAppV1ConnectorServiceUpdateResponse) GetContentType() string {
+	if c == nil {
 		return ""
 	}
-	return o.ContentType
+	return c.ContentType
 }
 
-func (o *C1APIAppV1ConnectorServiceUpdateResponse) GetStatusCode() int {
-	if o == nil {
+func (c *C1APIAppV1ConnectorServiceUpdateResponse) GetStatusCode() int {
+	if c == nil {
 		return 0
 	}
-	return o.StatusCode
+	return c.StatusCode
 }
 
-func (o *C1APIAppV1ConnectorServiceUpdateResponse) GetRawResponse() *http.Response {
-	if o == nil {
+func (c *C1APIAppV1ConnectorServiceUpdateResponse) GetRawResponse() *http.Response {
+	if c == nil {
 		return nil
 	}
-	return o.RawResponse
+	return c.RawResponse
 }

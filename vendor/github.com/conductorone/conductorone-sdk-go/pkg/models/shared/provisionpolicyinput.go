@@ -12,7 +12,10 @@ package shared
 //   - multiStep
 //   - externalTicket
 //   - unconfigured
+//   - action
 type ProvisionPolicyInput struct {
+	// This provision step indicates that account lifecycle action should be called to provision this entitlement.
+	ActionProvision *ActionProvision `json:"action,omitempty"`
 	// Indicates that a connector should perform the provisioning. This object has no fields.
 	//
 	// This message contains a oneof named provision_type. Only a single field of the following list may be set at a time:
@@ -35,51 +38,58 @@ type ProvisionPolicyInput struct {
 	WebhookProvision *WebhookProvision `json:"webhook,omitempty"`
 }
 
-func (o *ProvisionPolicyInput) GetConnectorProvision() *ConnectorProvision {
-	if o == nil {
+func (p *ProvisionPolicyInput) GetActionProvision() *ActionProvision {
+	if p == nil {
 		return nil
 	}
-	return o.ConnectorProvision
+	return p.ActionProvision
 }
 
-func (o *ProvisionPolicyInput) GetDelegatedProvision() *DelegatedProvision {
-	if o == nil {
+func (p *ProvisionPolicyInput) GetConnectorProvision() *ConnectorProvision {
+	if p == nil {
 		return nil
 	}
-	return o.DelegatedProvision
+	return p.ConnectorProvision
 }
 
-func (o *ProvisionPolicyInput) GetExternalTicketProvision() *ExternalTicketProvision {
-	if o == nil {
+func (p *ProvisionPolicyInput) GetDelegatedProvision() *DelegatedProvision {
+	if p == nil {
 		return nil
 	}
-	return o.ExternalTicketProvision
+	return p.DelegatedProvision
 }
 
-func (o *ProvisionPolicyInput) GetManualProvision() *ManualProvision {
-	if o == nil {
+func (p *ProvisionPolicyInput) GetExternalTicketProvision() *ExternalTicketProvision {
+	if p == nil {
 		return nil
 	}
-	return o.ManualProvision
+	return p.ExternalTicketProvision
 }
 
-func (o *ProvisionPolicyInput) GetMultiStep() *MultiStep {
-	if o == nil {
+func (p *ProvisionPolicyInput) GetManualProvision() *ManualProvision {
+	if p == nil {
 		return nil
 	}
-	return o.MultiStep
+	return p.ManualProvision
 }
 
-func (o *ProvisionPolicyInput) GetUnconfiguredProvision() *UnconfiguredProvision {
-	if o == nil {
+func (p *ProvisionPolicyInput) GetMultiStep() *MultiStep {
+	if p == nil {
 		return nil
 	}
-	return o.UnconfiguredProvision
+	return p.MultiStep
 }
 
-func (o *ProvisionPolicyInput) GetWebhookProvision() *WebhookProvision {
-	if o == nil {
+func (p *ProvisionPolicyInput) GetUnconfiguredProvision() *UnconfiguredProvision {
+	if p == nil {
 		return nil
 	}
-	return o.WebhookProvision
+	return p.UnconfiguredProvision
+}
+
+func (p *ProvisionPolicyInput) GetWebhookProvision() *WebhookProvision {
+	if p == nil {
+		return nil
+	}
+	return p.WebhookProvision
 }

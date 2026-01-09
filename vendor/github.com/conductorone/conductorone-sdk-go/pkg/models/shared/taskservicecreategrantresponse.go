@@ -18,24 +18,24 @@ func (t TaskServiceCreateGrantResponseExpanded) MarshalJSON() ([]byte, error) {
 }
 
 func (t *TaskServiceCreateGrantResponseExpanded) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &t, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &t, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *TaskServiceCreateGrantResponseExpanded) GetAtType() *string {
-	if o == nil {
+func (t *TaskServiceCreateGrantResponseExpanded) GetAtType() *string {
+	if t == nil {
 		return nil
 	}
-	return o.AtType
+	return t.AtType
 }
 
-func (o *TaskServiceCreateGrantResponseExpanded) GetAdditionalProperties() map[string]any {
-	if o == nil {
+func (t *TaskServiceCreateGrantResponseExpanded) GetAdditionalProperties() map[string]any {
+	if t == nil {
 		return nil
 	}
-	return o.AdditionalProperties
+	return t.AdditionalProperties
 }
 
 // The TaskServiceCreateGrantResponse returns a task view which has a task including JSONPATHs to the expanded items in the expanded array.
@@ -46,16 +46,16 @@ type TaskServiceCreateGrantResponse struct {
 	Expanded []TaskServiceCreateGrantResponseExpanded `json:"expanded,omitempty"`
 }
 
-func (o *TaskServiceCreateGrantResponse) GetTaskView() *TaskView {
-	if o == nil {
+func (t *TaskServiceCreateGrantResponse) GetTaskView() *TaskView {
+	if t == nil {
 		return nil
 	}
-	return o.TaskView
+	return t.TaskView
 }
 
-func (o *TaskServiceCreateGrantResponse) GetExpanded() []TaskServiceCreateGrantResponseExpanded {
-	if o == nil {
+func (t *TaskServiceCreateGrantResponse) GetExpanded() []TaskServiceCreateGrantResponseExpanded {
+	if t == nil {
 		return nil
 	}
-	return o.Expanded
+	return t.Expanded
 }

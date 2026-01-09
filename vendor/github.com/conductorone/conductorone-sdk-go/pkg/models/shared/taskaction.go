@@ -15,6 +15,41 @@ func (e TaskTypes) ToPointer() *TaskTypes {
 	return &e
 }
 
+// IsExact returns true if the value matches a known enum value, false otherwise.
+func (e *TaskTypes) IsExact() bool {
+	if e != nil {
+		switch *e {
+		case "TASK_TYPE_UNSPECIFIED", "TASK_TYPE_REQUEST", "TASK_TYPE_REVOKE", "TASK_TYPE_REVIEW":
+			return true
+		}
+	}
+	return false
+}
+
+// TaskUserRelation - The taskUserRelation field.
+type TaskUserRelation string
+
+const (
+	TaskUserRelationTaskUserRelationUnspecified TaskUserRelation = "TASK_USER_RELATION_UNSPECIFIED"
+	TaskUserRelationTaskUserRelationAssignee    TaskUserRelation = "TASK_USER_RELATION_ASSIGNEE"
+	TaskUserRelationTaskUserRelationSubject     TaskUserRelation = "TASK_USER_RELATION_SUBJECT"
+)
+
+func (e TaskUserRelation) ToPointer() *TaskUserRelation {
+	return &e
+}
+
+// IsExact returns true if the value matches a known enum value, false otherwise.
+func (e *TaskUserRelation) IsExact() bool {
+	if e != nil {
+		switch *e {
+		case "TASK_USER_RELATION_UNSPECIFIED", "TASK_USER_RELATION_ASSIGNEE", "TASK_USER_RELATION_SUBJECT":
+			return true
+		}
+	}
+	return false
+}
+
 // The TaskAction message.
 //
 // This message contains a oneof named action. Only a single field of the following list may be set at a time:
@@ -42,25 +77,34 @@ type TaskAction struct {
 	ReassignAction *ReassignAction `json:"reassign,omitempty"`
 	// The taskTypes field.
 	TaskTypes []TaskTypes `json:"taskTypes,omitempty"`
+	// The taskUserRelation field.
+	TaskUserRelation *TaskUserRelation `json:"taskUserRelation,omitempty"`
 }
 
-func (o *TaskAction) GetCloseAction() *CloseAction {
-	if o == nil {
+func (t *TaskAction) GetCloseAction() *CloseAction {
+	if t == nil {
 		return nil
 	}
-	return o.CloseAction
+	return t.CloseAction
 }
 
-func (o *TaskAction) GetReassignAction() *ReassignAction {
-	if o == nil {
+func (t *TaskAction) GetReassignAction() *ReassignAction {
+	if t == nil {
 		return nil
 	}
-	return o.ReassignAction
+	return t.ReassignAction
 }
 
-func (o *TaskAction) GetTaskTypes() []TaskTypes {
-	if o == nil {
+func (t *TaskAction) GetTaskTypes() []TaskTypes {
+	if t == nil {
 		return nil
 	}
-	return o.TaskTypes
+	return t.TaskTypes
+}
+
+func (t *TaskAction) GetTaskUserRelation() *TaskUserRelation {
+	if t == nil {
+		return nil
+	}
+	return t.TaskUserRelation
 }

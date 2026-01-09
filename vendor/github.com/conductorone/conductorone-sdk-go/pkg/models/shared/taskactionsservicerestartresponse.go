@@ -18,24 +18,24 @@ func (t TaskActionsServiceRestartResponseExpanded) MarshalJSON() ([]byte, error)
 }
 
 func (t *TaskActionsServiceRestartResponseExpanded) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &t, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &t, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *TaskActionsServiceRestartResponseExpanded) GetAtType() *string {
-	if o == nil {
+func (t *TaskActionsServiceRestartResponseExpanded) GetAtType() *string {
+	if t == nil {
 		return nil
 	}
-	return o.AtType
+	return t.AtType
 }
 
-func (o *TaskActionsServiceRestartResponseExpanded) GetAdditionalProperties() map[string]any {
-	if o == nil {
+func (t *TaskActionsServiceRestartResponseExpanded) GetAdditionalProperties() map[string]any {
+	if t == nil {
 		return nil
 	}
-	return o.AdditionalProperties
+	return t.AdditionalProperties
 }
 
 // The TaskActionsServiceRestartResponse message.
@@ -48,23 +48,23 @@ type TaskActionsServiceRestartResponse struct {
 	TicketActionID *string `json:"ticketActionId,omitempty"`
 }
 
-func (o *TaskActionsServiceRestartResponse) GetTaskView() *TaskView {
-	if o == nil {
+func (t *TaskActionsServiceRestartResponse) GetTaskView() *TaskView {
+	if t == nil {
 		return nil
 	}
-	return o.TaskView
+	return t.TaskView
 }
 
-func (o *TaskActionsServiceRestartResponse) GetExpanded() []TaskActionsServiceRestartResponseExpanded {
-	if o == nil {
+func (t *TaskActionsServiceRestartResponse) GetExpanded() []TaskActionsServiceRestartResponseExpanded {
+	if t == nil {
 		return nil
 	}
-	return o.Expanded
+	return t.Expanded
 }
 
-func (o *TaskActionsServiceRestartResponse) GetTicketActionID() *string {
-	if o == nil {
+func (t *TaskActionsServiceRestartResponse) GetTicketActionID() *string {
+	if t == nil {
 		return nil
 	}
-	return o.TicketActionID
+	return t.TicketActionID
 }

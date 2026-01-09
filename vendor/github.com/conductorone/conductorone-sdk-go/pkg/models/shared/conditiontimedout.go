@@ -17,15 +17,15 @@ func (c ConditionTimedOut) MarshalJSON() ([]byte, error) {
 }
 
 func (c *ConditionTimedOut) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &c, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &c, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *ConditionTimedOut) GetTimedOutAt() *time.Time {
-	if o == nil {
+func (c *ConditionTimedOut) GetTimedOutAt() *time.Time {
+	if c == nil {
 		return nil
 	}
-	return o.TimedOutAt
+	return c.TimedOutAt
 }

@@ -18,24 +18,24 @@ func (t TaskServiceCreateOffboardingResponseExpanded) MarshalJSON() ([]byte, err
 }
 
 func (t *TaskServiceCreateOffboardingResponseExpanded) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &t, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &t, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *TaskServiceCreateOffboardingResponseExpanded) GetAtType() *string {
-	if o == nil {
+func (t *TaskServiceCreateOffboardingResponseExpanded) GetAtType() *string {
+	if t == nil {
 		return nil
 	}
-	return o.AtType
+	return t.AtType
 }
 
-func (o *TaskServiceCreateOffboardingResponseExpanded) GetAdditionalProperties() map[string]any {
-	if o == nil {
+func (t *TaskServiceCreateOffboardingResponseExpanded) GetAdditionalProperties() map[string]any {
+	if t == nil {
 		return nil
 	}
-	return o.AdditionalProperties
+	return t.AdditionalProperties
 }
 
 // The TaskServiceCreateOffboardingResponse message.
@@ -46,16 +46,16 @@ type TaskServiceCreateOffboardingResponse struct {
 	Expanded []TaskServiceCreateOffboardingResponseExpanded `json:"expanded,omitempty"`
 }
 
-func (o *TaskServiceCreateOffboardingResponse) GetTaskView() *TaskView {
-	if o == nil {
+func (t *TaskServiceCreateOffboardingResponse) GetTaskView() *TaskView {
+	if t == nil {
 		return nil
 	}
-	return o.TaskView
+	return t.TaskView
 }
 
-func (o *TaskServiceCreateOffboardingResponse) GetExpanded() []TaskServiceCreateOffboardingResponseExpanded {
-	if o == nil {
+func (t *TaskServiceCreateOffboardingResponse) GetExpanded() []TaskServiceCreateOffboardingResponseExpanded {
+	if t == nil {
 		return nil
 	}
-	return o.Expanded
+	return t.Expanded
 }

@@ -13,30 +13,30 @@ type PayloadWorkflowStep struct {
 	WorkflowID *string `json:"workflowId,omitempty"`
 }
 
-func (o *PayloadWorkflowStep) GetContext() map[string]any {
-	if o == nil {
+func (p *PayloadWorkflowStep) GetContext() map[string]any {
+	if p == nil {
 		return nil
 	}
-	return o.Context
+	return p.Context
 }
 
-func (o *PayloadWorkflowStep) GetWorkflowExecutionID() *int64 {
-	if o == nil {
+func (p *PayloadWorkflowStep) GetWorkflowExecutionID() *int64 {
+	if p == nil {
 		return nil
 	}
-	return o.WorkflowExecutionID
+	return p.WorkflowExecutionID
 }
 
-func (o *PayloadWorkflowStep) GetWorkflowExecutionStepID() *string {
-	if o == nil {
+func (p *PayloadWorkflowStep) GetWorkflowExecutionStepID() *string {
+	if p == nil {
 		return nil
 	}
-	return o.WorkflowExecutionStepID
+	return p.WorkflowExecutionStepID
 }
 
-func (o *PayloadWorkflowStep) GetWorkflowID() *string {
-	if o == nil {
+func (p *PayloadWorkflowStep) GetWorkflowID() *string {
+	if p == nil {
 		return nil
 	}
-	return o.WorkflowID
+	return p.WorkflowID
 }

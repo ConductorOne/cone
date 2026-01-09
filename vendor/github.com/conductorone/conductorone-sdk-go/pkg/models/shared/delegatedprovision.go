@@ -12,23 +12,23 @@ type DelegatedProvision struct {
 	Implicit *bool `json:"implicit,omitempty"`
 }
 
-func (o *DelegatedProvision) GetAppID() *string {
-	if o == nil {
+func (d *DelegatedProvision) GetAppID() *string {
+	if d == nil {
 		return nil
 	}
-	return o.AppID
+	return d.AppID
 }
 
-func (o *DelegatedProvision) GetEntitlementID() *string {
-	if o == nil {
+func (d *DelegatedProvision) GetEntitlementID() *string {
+	if d == nil {
 		return nil
 	}
-	return o.EntitlementID
+	return d.EntitlementID
 }
 
-func (o *DelegatedProvision) GetImplicit() *bool {
-	if o == nil {
+func (d *DelegatedProvision) GetImplicit() *bool {
+	if d == nil {
 		return nil
 	}
-	return o.Implicit
+	return d.Implicit
 }

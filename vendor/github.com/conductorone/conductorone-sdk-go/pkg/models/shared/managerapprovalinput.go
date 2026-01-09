@@ -10,25 +10,34 @@ type ManagerApprovalInput struct {
 	Fallback *bool `json:"fallback,omitempty"`
 	// Configuration to specific which users to fallback to if fallback is enabled and no manager is found.
 	FallbackUserIds []string `json:"fallbackUserIds,omitempty"`
+	// Configuration to require distinct approvers across approval steps of a rule.
+	RequireDistinctApprovers *bool `json:"requireDistinctApprovers,omitempty"`
 }
 
-func (o *ManagerApprovalInput) GetAllowSelfApproval() *bool {
-	if o == nil {
+func (m *ManagerApprovalInput) GetAllowSelfApproval() *bool {
+	if m == nil {
 		return nil
 	}
-	return o.AllowSelfApproval
+	return m.AllowSelfApproval
 }
 
-func (o *ManagerApprovalInput) GetFallback() *bool {
-	if o == nil {
+func (m *ManagerApprovalInput) GetFallback() *bool {
+	if m == nil {
 		return nil
 	}
-	return o.Fallback
+	return m.Fallback
 }
 
-func (o *ManagerApprovalInput) GetFallbackUserIds() []string {
-	if o == nil {
+func (m *ManagerApprovalInput) GetFallbackUserIds() []string {
+	if m == nil {
 		return nil
 	}
-	return o.FallbackUserIds
+	return m.FallbackUserIds
+}
+
+func (m *ManagerApprovalInput) GetRequireDistinctApprovers() *bool {
+	if m == nil {
+		return nil
+	}
+	return m.RequireDistinctApprovers
 }

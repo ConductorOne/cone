@@ -10,16 +10,16 @@ type ResponseWorkflowStep struct {
 	Version *string `json:"version,omitempty"`
 }
 
-func (o *ResponseWorkflowStep) GetContext() map[string]any {
-	if o == nil {
+func (r *ResponseWorkflowStep) GetContext() map[string]any {
+	if r == nil {
 		return nil
 	}
-	return o.Context
+	return r.Context
 }
 
-func (o *ResponseWorkflowStep) GetVersion() *string {
-	if o == nil {
+func (r *ResponseWorkflowStep) GetVersion() *string {
+	if r == nil {
 		return nil
 	}
-	return o.Version
+	return r.Version
 }

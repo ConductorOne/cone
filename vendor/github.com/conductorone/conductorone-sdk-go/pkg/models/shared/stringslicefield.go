@@ -6,12 +6,20 @@ package shared
 //
 // This message contains a oneof named view. Only a single field of the following list may be set at a time:
 //   - chipsField
+//   - pickerField
 //
 // This message contains a oneof named _rules. Only a single field of the following list may be set at a time:
 //   - rules
 type StringSliceField struct {
 	// The ChipsField message.
 	ChipsField *ChipsField `json:"chipsField,omitempty"`
+	// The PickerField message.
+	//
+	// This message contains a oneof named type. Only a single field of the following list may be set at a time:
+	//   - appUserPicker
+	//   - resourcePicker
+	//
+	PickerField *PickerField `json:"pickerField,omitempty"`
 	// RepeatedRules describe the constraints applied to `repeated` values
 	RepeatedRules *RepeatedRules `json:"rules,omitempty"`
 	// The defaultValues field.
@@ -20,30 +28,37 @@ type StringSliceField struct {
 	Placeholder *string `json:"placeholder,omitempty"`
 }
 
-func (o *StringSliceField) GetChipsField() *ChipsField {
-	if o == nil {
+func (s *StringSliceField) GetChipsField() *ChipsField {
+	if s == nil {
 		return nil
 	}
-	return o.ChipsField
+	return s.ChipsField
 }
 
-func (o *StringSliceField) GetRepeatedRules() *RepeatedRules {
-	if o == nil {
+func (s *StringSliceField) GetPickerField() *PickerField {
+	if s == nil {
 		return nil
 	}
-	return o.RepeatedRules
+	return s.PickerField
 }
 
-func (o *StringSliceField) GetDefaultValues() []string {
-	if o == nil {
+func (s *StringSliceField) GetRepeatedRules() *RepeatedRules {
+	if s == nil {
 		return nil
 	}
-	return o.DefaultValues
+	return s.RepeatedRules
 }
 
-func (o *StringSliceField) GetPlaceholder() *string {
-	if o == nil {
+func (s *StringSliceField) GetDefaultValues() []string {
+	if s == nil {
 		return nil
 	}
-	return o.Placeholder
+	return s.DefaultValues
+}
+
+func (s *StringSliceField) GetPlaceholder() *string {
+	if s == nil {
+		return nil
+	}
+	return s.Placeholder
 }

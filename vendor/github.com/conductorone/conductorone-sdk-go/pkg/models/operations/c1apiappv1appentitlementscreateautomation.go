@@ -13,25 +13,25 @@ type C1APIAppV1AppEntitlementsCreateAutomationRequest struct {
 	AppID                   string                          `pathParam:"style=simple,explode=false,name=app_id"`
 }
 
-func (o *C1APIAppV1AppEntitlementsCreateAutomationRequest) GetCreateAutomationRequest() *shared.CreateAutomationRequest {
-	if o == nil {
+func (c *C1APIAppV1AppEntitlementsCreateAutomationRequest) GetCreateAutomationRequest() *shared.CreateAutomationRequest {
+	if c == nil {
 		return nil
 	}
-	return o.CreateAutomationRequest
+	return c.CreateAutomationRequest
 }
 
-func (o *C1APIAppV1AppEntitlementsCreateAutomationRequest) GetAppEntitlementID() string {
-	if o == nil {
+func (c *C1APIAppV1AppEntitlementsCreateAutomationRequest) GetAppEntitlementID() string {
+	if c == nil {
 		return ""
 	}
-	return o.AppEntitlementID
+	return c.AppEntitlementID
 }
 
-func (o *C1APIAppV1AppEntitlementsCreateAutomationRequest) GetAppID() string {
-	if o == nil {
+func (c *C1APIAppV1AppEntitlementsCreateAutomationRequest) GetAppID() string {
+	if c == nil {
 		return ""
 	}
-	return o.AppID
+	return c.AppID
 }
 
 type C1APIAppV1AppEntitlementsCreateAutomationResponse struct {
@@ -45,30 +45,30 @@ type C1APIAppV1AppEntitlementsCreateAutomationResponse struct {
 	RawResponse *http.Response
 }
 
-func (o *C1APIAppV1AppEntitlementsCreateAutomationResponse) GetContentType() string {
-	if o == nil {
+func (c *C1APIAppV1AppEntitlementsCreateAutomationResponse) GetContentType() string {
+	if c == nil {
 		return ""
 	}
-	return o.ContentType
+	return c.ContentType
 }
 
-func (o *C1APIAppV1AppEntitlementsCreateAutomationResponse) GetCreateAutomationResponse() *shared.CreateAutomationResponse {
-	if o == nil {
+func (c *C1APIAppV1AppEntitlementsCreateAutomationResponse) GetCreateAutomationResponse() *shared.CreateAutomationResponse {
+	if c == nil {
 		return nil
 	}
-	return o.CreateAutomationResponse
+	return c.CreateAutomationResponse
 }
 
-func (o *C1APIAppV1AppEntitlementsCreateAutomationResponse) GetStatusCode() int {
-	if o == nil {
+func (c *C1APIAppV1AppEntitlementsCreateAutomationResponse) GetStatusCode() int {
+	if c == nil {
 		return 0
 	}
-	return o.StatusCode
+	return c.StatusCode
 }
 
-func (o *C1APIAppV1AppEntitlementsCreateAutomationResponse) GetRawResponse() *http.Response {
-	if o == nil {
+func (c *C1APIAppV1AppEntitlementsCreateAutomationResponse) GetRawResponse() *http.Response {
+	if c == nil {
 		return nil
 	}
-	return o.RawResponse
+	return c.RawResponse
 }

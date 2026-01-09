@@ -18,30 +18,30 @@ type C1APIAppV1AppUserServiceSearchResponse struct {
 	RawResponse *http.Response
 }
 
-func (o *C1APIAppV1AppUserServiceSearchResponse) GetAppUserServiceSearchResponse() *shared.AppUserServiceSearchResponse {
-	if o == nil {
+func (c *C1APIAppV1AppUserServiceSearchResponse) GetAppUserServiceSearchResponse() *shared.AppUserServiceSearchResponse {
+	if c == nil {
 		return nil
 	}
-	return o.AppUserServiceSearchResponse
+	return c.AppUserServiceSearchResponse
 }
 
-func (o *C1APIAppV1AppUserServiceSearchResponse) GetContentType() string {
-	if o == nil {
+func (c *C1APIAppV1AppUserServiceSearchResponse) GetContentType() string {
+	if c == nil {
 		return ""
 	}
-	return o.ContentType
+	return c.ContentType
 }
 
-func (o *C1APIAppV1AppUserServiceSearchResponse) GetStatusCode() int {
-	if o == nil {
+func (c *C1APIAppV1AppUserServiceSearchResponse) GetStatusCode() int {
+	if c == nil {
 		return 0
 	}
-	return o.StatusCode
+	return c.StatusCode
 }
 
-func (o *C1APIAppV1AppUserServiceSearchResponse) GetRawResponse() *http.Response {
-	if o == nil {
+func (c *C1APIAppV1AppUserServiceSearchResponse) GetRawResponse() *http.Response {
+	if c == nil {
 		return nil
 	}
-	return o.RawResponse
+	return c.RawResponse
 }

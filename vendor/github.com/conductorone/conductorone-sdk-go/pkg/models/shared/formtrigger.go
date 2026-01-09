@@ -8,9 +8,9 @@ type FormTrigger struct {
 	Form *FormInput `json:"form,omitempty"`
 }
 
-func (o *FormTrigger) GetForm() *FormInput {
-	if o == nil {
+func (f *FormTrigger) GetForm() *FormInput {
+	if f == nil {
 		return nil
 	}
-	return o.Form
+	return f.Form
 }

@@ -16,6 +16,17 @@ func (e AppUserStatusStatus) ToPointer() *AppUserStatusStatus {
 	return &e
 }
 
+// IsExact returns true if the value matches a known enum value, false otherwise.
+func (e *AppUserStatusStatus) IsExact() bool {
+	if e != nil {
+		switch *e {
+		case "STATUS_UNSPECIFIED", "STATUS_ENABLED", "STATUS_DISABLED", "STATUS_DELETED":
+			return true
+		}
+	}
+	return false
+}
+
 // AppUserStatus - The satus of the applicaiton user.
 type AppUserStatus struct {
 	// The details of applicaiton user status.
@@ -24,16 +35,16 @@ type AppUserStatus struct {
 	Status *AppUserStatusStatus `json:"status,omitempty"`
 }
 
-func (o *AppUserStatus) GetDetails() *string {
-	if o == nil {
+func (a *AppUserStatus) GetDetails() *string {
+	if a == nil {
 		return nil
 	}
-	return o.Details
+	return a.Details
 }
 
-func (o *AppUserStatus) GetStatus() *AppUserStatusStatus {
-	if o == nil {
+func (a *AppUserStatus) GetStatus() *AppUserStatusStatus {
+	if a == nil {
 		return nil
 	}
-	return o.Status
+	return a.Status
 }

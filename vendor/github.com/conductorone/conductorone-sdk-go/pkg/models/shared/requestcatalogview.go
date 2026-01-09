@@ -14,30 +14,30 @@ type RequestCatalogView struct {
 	MemberCount *int64 `integer:"string" json:"memberCount,omitempty"`
 }
 
-func (o *RequestCatalogView) GetRequestCatalog() *RequestCatalog {
-	if o == nil {
+func (r *RequestCatalogView) GetRequestCatalog() *RequestCatalog {
+	if r == nil {
 		return nil
 	}
-	return o.RequestCatalog
+	return r.RequestCatalog
 }
 
-func (o *RequestCatalogView) GetAccessEntitlementsPath() *string {
-	if o == nil {
+func (r *RequestCatalogView) GetAccessEntitlementsPath() *string {
+	if r == nil {
 		return nil
 	}
-	return o.AccessEntitlementsPath
+	return r.AccessEntitlementsPath
 }
 
-func (o *RequestCatalogView) GetCreatedByUserPath() *string {
-	if o == nil {
+func (r *RequestCatalogView) GetCreatedByUserPath() *string {
+	if r == nil {
 		return nil
 	}
-	return o.CreatedByUserPath
+	return r.CreatedByUserPath
 }
 
-func (o *RequestCatalogView) GetMemberCount() *int64 {
-	if o == nil {
+func (r *RequestCatalogView) GetMemberCount() *int64 {
+	if r == nil {
 		return nil
 	}
-	return o.MemberCount
+	return r.MemberCount
 }

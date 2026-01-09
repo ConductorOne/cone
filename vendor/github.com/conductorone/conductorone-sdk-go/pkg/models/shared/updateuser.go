@@ -18,6 +18,17 @@ func (e UserStatusEnum) ToPointer() *UserStatusEnum {
 	return &e
 }
 
+// IsExact returns true if the value matches a known enum value, false otherwise.
+func (e *UserStatusEnum) IsExact() bool {
+	if e != nil {
+		switch *e {
+		case "UNKNOWN", "ENABLED", "DISABLED", "DELETED":
+			return true
+		}
+	}
+	return false
+}
+
 // The UpdateUser message.
 //
 // This message contains a oneof named user. Only a single field of the following list may be set at a time:
@@ -46,37 +57,37 @@ type UpdateUser struct {
 	UserStatusEnum *UserStatusEnum `json:"userStatusEnum,omitempty"`
 }
 
-func (o *UpdateUser) GetUserRef() *UserRef {
-	if o == nil {
+func (u *UpdateUser) GetUserRef() *UserRef {
+	if u == nil {
 		return nil
 	}
-	return o.UserRef
+	return u.UserRef
 }
 
-func (o *UpdateUser) GetUseSubjectUser() *bool {
-	if o == nil {
+func (u *UpdateUser) GetUseSubjectUser() *bool {
+	if u == nil {
 		return nil
 	}
-	return o.UseSubjectUser
+	return u.UseSubjectUser
 }
 
-func (o *UpdateUser) GetUserIDCel() *string {
-	if o == nil {
+func (u *UpdateUser) GetUserIDCel() *string {
+	if u == nil {
 		return nil
 	}
-	return o.UserIDCel
+	return u.UserIDCel
 }
 
-func (o *UpdateUser) GetUserStatusCel() *string {
-	if o == nil {
+func (u *UpdateUser) GetUserStatusCel() *string {
+	if u == nil {
 		return nil
 	}
-	return o.UserStatusCel
+	return u.UserStatusCel
 }
 
-func (o *UpdateUser) GetUserStatusEnum() *UserStatusEnum {
-	if o == nil {
+func (u *UpdateUser) GetUserStatusEnum() *UserStatusEnum {
+	if u == nil {
 		return nil
 	}
-	return o.UserStatusEnum
+	return u.UserStatusEnum
 }

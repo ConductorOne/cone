@@ -15,6 +15,17 @@ func (e GrantFilterType) ToPointer() *GrantFilterType {
 	return &e
 }
 
+// IsExact returns true if the value matches a known enum value, false otherwise.
+func (e *GrantFilterType) IsExact() bool {
+	if e != nil {
+		switch *e {
+		case "GRANT_FILTER_TYPE_UNSPECIFIED", "GRANT_FILTER_TYPE_PERMANENT", "GRANT_FILTER_TYPE_TEMPORARY":
+			return true
+		}
+	}
+	return false
+}
+
 // GrantJustificationType - The grantJustificationType field.
 type GrantJustificationType string
 
@@ -27,6 +38,17 @@ const (
 
 func (e GrantJustificationType) ToPointer() *GrantJustificationType {
 	return &e
+}
+
+// IsExact returns true if the value matches a known enum value, false otherwise.
+func (e *GrantJustificationType) IsExact() bool {
+	if e != nil {
+		switch *e {
+		case "GRANT_JUSTIFICATION_TYPE_UNSPECIFIED", "GRANT_JUSTIFICATION_TYPE_ALL", "GRANT_JUSTIFICATION_TYPE_CONDUCTOR_ONE", "GRANT_JUSTIFICATION_TYPE_DIRECT":
+			return true
+		}
+	}
+	return false
 }
 
 // GrantSourceFilter - The grantSourceFilter field.
@@ -42,6 +64,17 @@ func (e GrantSourceFilter) ToPointer() *GrantSourceFilter {
 	return &e
 }
 
+// IsExact returns true if the value matches a known enum value, false otherwise.
+func (e *GrantSourceFilter) IsExact() bool {
+	if e != nil {
+		switch *e {
+		case "GRANT_SOURCE_FILTER_UNSPECIFIED", "GRANT_SOURCE_FILTER_DIRECT", "GRANT_SOURCE_FILTER_INHERITED":
+			return true
+		}
+	}
+	return false
+}
+
 // The GrantFilter message.
 type GrantFilter struct {
 	// The grantFilterType field.
@@ -52,23 +85,23 @@ type GrantFilter struct {
 	GrantSourceFilter *GrantSourceFilter `json:"grantSourceFilter,omitempty"`
 }
 
-func (o *GrantFilter) GetGrantFilterType() *GrantFilterType {
-	if o == nil {
+func (g *GrantFilter) GetGrantFilterType() *GrantFilterType {
+	if g == nil {
 		return nil
 	}
-	return o.GrantFilterType
+	return g.GrantFilterType
 }
 
-func (o *GrantFilter) GetGrantJustificationType() *GrantJustificationType {
-	if o == nil {
+func (g *GrantFilter) GetGrantJustificationType() *GrantJustificationType {
+	if g == nil {
 		return nil
 	}
-	return o.GrantJustificationType
+	return g.GrantJustificationType
 }
 
-func (o *GrantFilter) GetGrantSourceFilter() *GrantSourceFilter {
-	if o == nil {
+func (g *GrantFilter) GetGrantSourceFilter() *GrantSourceFilter {
+	if g == nil {
 		return nil
 	}
-	return o.GrantSourceFilter
+	return g.GrantSourceFilter
 }

@@ -2,6 +2,11 @@
 
 package shared
 
+import (
+	"github.com/conductorone/conductorone-sdk-go/pkg/utils"
+	"time"
+)
+
 // ApprovalInstanceState - The state of the approval instance
 type ApprovalInstanceState string
 
@@ -15,6 +20,17 @@ const (
 
 func (e ApprovalInstanceState) ToPointer() *ApprovalInstanceState {
 	return &e
+}
+
+// IsExact returns true if the value matches a known enum value, false otherwise.
+func (e *ApprovalInstanceState) IsExact() bool {
+	if e != nil {
+		switch *e {
+		case "APPROVAL_INSTANCE_STATE_UNSPECIFIED", "APPROVAL_INSTANCE_STATE_INIT", "APPROVAL_INSTANCE_STATE_SENDING_NOTIFICATIONS", "APPROVAL_INSTANCE_STATE_WAITING", "APPROVAL_INSTANCE_STATE_DONE":
+			return true
+		}
+	}
+	return false
 }
 
 // ApprovalInstance - The approval instance object describes the way a policy step should be approved as well as its outcomes and state.
@@ -51,6 +67,8 @@ type ApprovalInstance struct {
 	// This message contains a oneof named escalation_policy. Only a single field of the following list may be set at a time:
 	//   - replacePolicy
 	//   - reassignToApprovers
+	//   - cancelTicket
+	//   - skipStep
 	//
 	EscalationInstance *EscalationInstance `json:"escalationInstance,omitempty"`
 	// The ReassignedAction object describes the outcome of a policy step that has been reassigned.
@@ -61,69 +79,88 @@ type ApprovalInstance struct {
 	RestartAction *RestartAction `json:"restarted,omitempty"`
 	// The SkippedAction object describes the outcome of a policy step that has been skipped.
 	SkippedAction *SkippedAction `json:"skipped,omitempty"`
+	AssignedAt    *time.Time     `json:"assignedAt,omitempty"`
 	// The state of the approval instance
 	State *ApprovalInstanceState `json:"state,omitempty"`
 }
 
-func (o *ApprovalInstance) GetApproval() *Approval {
-	if o == nil {
-		return nil
-	}
-	return o.Approval
+func (a ApprovalInstance) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(a, "", false)
 }
 
-func (o *ApprovalInstance) GetApprovedAction() *ApprovedAction {
-	if o == nil {
-		return nil
+func (a *ApprovalInstance) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &a, "", false, nil); err != nil {
+		return err
 	}
-	return o.ApprovedAction
+	return nil
 }
 
-func (o *ApprovalInstance) GetDeniedAction() *DeniedAction {
-	if o == nil {
+func (a *ApprovalInstance) GetApproval() *Approval {
+	if a == nil {
 		return nil
 	}
-	return o.DeniedAction
+	return a.Approval
 }
 
-func (o *ApprovalInstance) GetEscalationInstance() *EscalationInstance {
-	if o == nil {
+func (a *ApprovalInstance) GetApprovedAction() *ApprovedAction {
+	if a == nil {
 		return nil
 	}
-	return o.EscalationInstance
+	return a.ApprovedAction
 }
 
-func (o *ApprovalInstance) GetReassignedAction() *ReassignedAction {
-	if o == nil {
+func (a *ApprovalInstance) GetDeniedAction() *DeniedAction {
+	if a == nil {
 		return nil
 	}
-	return o.ReassignedAction
+	return a.DeniedAction
 }
 
-func (o *ApprovalInstance) GetReassignedByErrorAction() *ReassignedByErrorAction {
-	if o == nil {
+func (a *ApprovalInstance) GetEscalationInstance() *EscalationInstance {
+	if a == nil {
 		return nil
 	}
-	return o.ReassignedByErrorAction
+	return a.EscalationInstance
 }
 
-func (o *ApprovalInstance) GetRestartAction() *RestartAction {
-	if o == nil {
+func (a *ApprovalInstance) GetReassignedAction() *ReassignedAction {
+	if a == nil {
 		return nil
 	}
-	return o.RestartAction
+	return a.ReassignedAction
 }
 
-func (o *ApprovalInstance) GetSkippedAction() *SkippedAction {
-	if o == nil {
+func (a *ApprovalInstance) GetReassignedByErrorAction() *ReassignedByErrorAction {
+	if a == nil {
 		return nil
 	}
-	return o.SkippedAction
+	return a.ReassignedByErrorAction
 }
 
-func (o *ApprovalInstance) GetState() *ApprovalInstanceState {
-	if o == nil {
+func (a *ApprovalInstance) GetRestartAction() *RestartAction {
+	if a == nil {
 		return nil
 	}
-	return o.State
+	return a.RestartAction
+}
+
+func (a *ApprovalInstance) GetSkippedAction() *SkippedAction {
+	if a == nil {
+		return nil
+	}
+	return a.SkippedAction
+}
+
+func (a *ApprovalInstance) GetAssignedAt() *time.Time {
+	if a == nil {
+		return nil
+	}
+	return a.AssignedAt
+}
+
+func (a *ApprovalInstance) GetState() *ApprovalInstanceState {
+	if a == nil {
+		return nil
+	}
+	return a.State
 }

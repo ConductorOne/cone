@@ -18,24 +18,24 @@ func (g GetAppEntitlementProxyResponseExpanded) MarshalJSON() ([]byte, error) {
 }
 
 func (g *GetAppEntitlementProxyResponseExpanded) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &g, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &g, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *GetAppEntitlementProxyResponseExpanded) GetAtType() *string {
-	if o == nil {
+func (g *GetAppEntitlementProxyResponseExpanded) GetAtType() *string {
+	if g == nil {
 		return nil
 	}
-	return o.AtType
+	return g.AtType
 }
 
-func (o *GetAppEntitlementProxyResponseExpanded) GetAdditionalProperties() map[string]any {
-	if o == nil {
+func (g *GetAppEntitlementProxyResponseExpanded) GetAdditionalProperties() map[string]any {
+	if g == nil {
 		return nil
 	}
-	return o.AdditionalProperties
+	return g.AdditionalProperties
 }
 
 // The GetAppEntitlementProxyResponse message.
@@ -46,16 +46,16 @@ type GetAppEntitlementProxyResponse struct {
 	Expanded []GetAppEntitlementProxyResponseExpanded `json:"expanded,omitempty"`
 }
 
-func (o *GetAppEntitlementProxyResponse) GetAppEntitlementProxyView() *AppEntitlementProxyView {
-	if o == nil {
+func (g *GetAppEntitlementProxyResponse) GetAppEntitlementProxyView() *AppEntitlementProxyView {
+	if g == nil {
 		return nil
 	}
-	return o.AppEntitlementProxyView
+	return g.AppEntitlementProxyView
 }
 
-func (o *GetAppEntitlementProxyResponse) GetExpanded() []GetAppEntitlementProxyResponseExpanded {
-	if o == nil {
+func (g *GetAppEntitlementProxyResponse) GetExpanded() []GetAppEntitlementProxyResponseExpanded {
+	if g == nil {
 		return nil
 	}
-	return o.Expanded
+	return g.Expanded
 }

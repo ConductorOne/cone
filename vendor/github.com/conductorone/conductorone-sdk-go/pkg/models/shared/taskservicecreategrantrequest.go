@@ -24,72 +24,72 @@ type TaskServiceCreateGrantRequest struct {
 	RequestData    map[string]any `json:"requestData,omitempty"`
 }
 
-func (o *TaskServiceCreateGrantRequest) GetTaskExpandMask() *TaskExpandMask {
-	if o == nil {
+func (t *TaskServiceCreateGrantRequest) GetTaskExpandMask() *TaskExpandMask {
+	if t == nil {
 		return nil
 	}
-	return o.TaskExpandMask
+	return t.TaskExpandMask
 }
 
-func (o *TaskServiceCreateGrantRequest) GetTaskGrantSource() *TaskGrantSource {
-	if o == nil {
+func (t *TaskServiceCreateGrantRequest) GetTaskGrantSource() *TaskGrantSource {
+	if t == nil {
 		return nil
 	}
-	return o.TaskGrantSource
+	return t.TaskGrantSource
 }
 
-func (o *TaskServiceCreateGrantRequest) GetAppEntitlementID() string {
-	if o == nil {
+func (t *TaskServiceCreateGrantRequest) GetAppEntitlementID() string {
+	if t == nil {
 		return ""
 	}
-	return o.AppEntitlementID
+	return t.AppEntitlementID
 }
 
-func (o *TaskServiceCreateGrantRequest) GetAppID() string {
-	if o == nil {
+func (t *TaskServiceCreateGrantRequest) GetAppID() string {
+	if t == nil {
 		return ""
 	}
-	return o.AppID
+	return t.AppID
 }
 
-func (o *TaskServiceCreateGrantRequest) GetAppUserID() *string {
-	if o == nil {
+func (t *TaskServiceCreateGrantRequest) GetAppUserID() *string {
+	if t == nil {
 		return nil
 	}
-	return o.AppUserID
+	return t.AppUserID
 }
 
-func (o *TaskServiceCreateGrantRequest) GetDescription() *string {
-	if o == nil {
+func (t *TaskServiceCreateGrantRequest) GetDescription() *string {
+	if t == nil {
 		return nil
 	}
-	return o.Description
+	return t.Description
 }
 
-func (o *TaskServiceCreateGrantRequest) GetEmergencyAccess() *bool {
-	if o == nil {
+func (t *TaskServiceCreateGrantRequest) GetEmergencyAccess() *bool {
+	if t == nil {
 		return nil
 	}
-	return o.EmergencyAccess
+	return t.EmergencyAccess
 }
 
-func (o *TaskServiceCreateGrantRequest) GetGrantDuration() *string {
-	if o == nil {
+func (t *TaskServiceCreateGrantRequest) GetGrantDuration() *string {
+	if t == nil {
 		return nil
 	}
-	return o.GrantDuration
+	return t.GrantDuration
 }
 
-func (o *TaskServiceCreateGrantRequest) GetIdentityUserID() *string {
-	if o == nil {
+func (t *TaskServiceCreateGrantRequest) GetIdentityUserID() *string {
+	if t == nil {
 		return nil
 	}
-	return o.IdentityUserID
+	return t.IdentityUserID
 }
 
-func (o *TaskServiceCreateGrantRequest) GetRequestData() map[string]any {
-	if o == nil {
+func (t *TaskServiceCreateGrantRequest) GetRequestData() map[string]any {
+	if t == nil {
 		return nil
 	}
-	return o.RequestData
+	return t.RequestData
 }

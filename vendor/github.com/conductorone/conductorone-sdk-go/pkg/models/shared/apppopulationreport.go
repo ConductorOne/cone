@@ -21,6 +21,17 @@ func (e AppPopulationReportState) ToPointer() *AppPopulationReportState {
 	return &e
 }
 
+// IsExact returns true if the value matches a known enum value, false otherwise.
+func (e *AppPopulationReportState) IsExact() bool {
+	if e != nil {
+		switch *e {
+		case "REPORT_STATE_UNSPECIFIED", "REPORT_STATE_PENDING", "REPORT_STATE_OK", "REPORT_STATE_ERROR":
+			return true
+		}
+	}
+	return false
+}
+
 // The AppPopulationReport is a generated report for a specific app that gives details about the app's users. These details include what groups, roles, and other entitlements the users have access to.
 type AppPopulationReport struct {
 	// The appId is the Id of the app which the report is generated for.
@@ -41,50 +52,50 @@ func (a AppPopulationReport) MarshalJSON() ([]byte, error) {
 }
 
 func (a *AppPopulationReport) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &a, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &a, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *AppPopulationReport) GetAppID() *string {
-	if o == nil {
+func (a *AppPopulationReport) GetAppID() *string {
+	if a == nil {
 		return nil
 	}
-	return o.AppID
+	return a.AppID
 }
 
-func (o *AppPopulationReport) GetCreatedAt() *time.Time {
-	if o == nil {
+func (a *AppPopulationReport) GetCreatedAt() *time.Time {
+	if a == nil {
 		return nil
 	}
-	return o.CreatedAt
+	return a.CreatedAt
 }
 
-func (o *AppPopulationReport) GetDownloadURL() *string {
-	if o == nil {
+func (a *AppPopulationReport) GetDownloadURL() *string {
+	if a == nil {
 		return nil
 	}
-	return o.DownloadURL
+	return a.DownloadURL
 }
 
-func (o *AppPopulationReport) GetHashes() map[string]string {
-	if o == nil {
+func (a *AppPopulationReport) GetHashes() map[string]string {
+	if a == nil {
 		return nil
 	}
-	return o.Hashes
+	return a.Hashes
 }
 
-func (o *AppPopulationReport) GetID() *string {
-	if o == nil {
+func (a *AppPopulationReport) GetID() *string {
+	if a == nil {
 		return nil
 	}
-	return o.ID
+	return a.ID
 }
 
-func (o *AppPopulationReport) GetState() *AppPopulationReportState {
-	if o == nil {
+func (a *AppPopulationReport) GetState() *AppPopulationReportState {
+	if a == nil {
 		return nil
 	}
-	return o.State
+	return a.State
 }

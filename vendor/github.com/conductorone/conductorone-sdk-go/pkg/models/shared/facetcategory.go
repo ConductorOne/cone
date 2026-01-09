@@ -20,37 +20,37 @@ type FacetCategory struct {
 	Param *string `json:"param,omitempty"`
 }
 
-func (o *FacetCategory) GetFacetRangeItem() *FacetRangeItem {
-	if o == nil {
+func (f *FacetCategory) GetFacetRangeItem() *FacetRangeItem {
+	if f == nil {
 		return nil
 	}
-	return o.FacetRangeItem
+	return f.FacetRangeItem
 }
 
-func (o *FacetCategory) GetFacetValueItem() *FacetValueItem {
-	if o == nil {
+func (f *FacetCategory) GetFacetValueItem() *FacetValueItem {
+	if f == nil {
 		return nil
 	}
-	return o.FacetValueItem
+	return f.FacetValueItem
 }
 
-func (o *FacetCategory) GetDisplayName() *string {
-	if o == nil {
+func (f *FacetCategory) GetDisplayName() *string {
+	if f == nil {
 		return nil
 	}
-	return o.DisplayName
+	return f.DisplayName
 }
 
-func (o *FacetCategory) GetIconURL() *string {
-	if o == nil {
+func (f *FacetCategory) GetIconURL() *string {
+	if f == nil {
 		return nil
 	}
-	return o.IconURL
+	return f.IconURL
 }
 
-func (o *FacetCategory) GetParam() *string {
-	if o == nil {
+func (f *FacetCategory) GetParam() *string {
+	if f == nil {
 		return nil
 	}
-	return o.Param
+	return f.Param
 }

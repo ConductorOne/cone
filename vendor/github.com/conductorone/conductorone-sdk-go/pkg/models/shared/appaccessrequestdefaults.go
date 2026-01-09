@@ -5,21 +5,32 @@ package shared
 type DurationUnset struct {
 }
 
-// State - The last applied state of the app access request defaults.
-type State string
+// AppAccessRequestDefaultsState - The last applied state of the app access request defaults.
+type AppAccessRequestDefaultsState string
 
 const (
-	StateAppAccessRequestDefaultsLastApplyStateUnspecified   State = "APP_ACCESS_REQUEST_DEFAULTS_LAST_APPLY_STATE_UNSPECIFIED"
-	StateAppAccessRequestDefaultsLastApplyStateRunning       State = "APP_ACCESS_REQUEST_DEFAULTS_LAST_APPLY_STATE_RUNNING"
-	StateAppAccessRequestDefaultsLastApplyStateSuccess       State = "APP_ACCESS_REQUEST_DEFAULTS_LAST_APPLY_STATE_SUCCESS"
-	StateAppAccessRequestDefaultsLastApplyStateFailed        State = "APP_ACCESS_REQUEST_DEFAULTS_LAST_APPLY_STATE_FAILED"
-	StateAppAccessRequestDefaultsLastApplyStateCanceling     State = "APP_ACCESS_REQUEST_DEFAULTS_LAST_APPLY_STATE_CANCELING"
-	StateAppAccessRequestDefaultsLastApplyStateCancelSuccess State = "APP_ACCESS_REQUEST_DEFAULTS_LAST_APPLY_STATE_CANCEL_SUCCESS"
-	StateAppAccessRequestDefaultsLastApplyStateCancelError   State = "APP_ACCESS_REQUEST_DEFAULTS_LAST_APPLY_STATE_CANCEL_ERROR"
+	AppAccessRequestDefaultsStateAppAccessRequestDefaultsLastApplyStateUnspecified   AppAccessRequestDefaultsState = "APP_ACCESS_REQUEST_DEFAULTS_LAST_APPLY_STATE_UNSPECIFIED"
+	AppAccessRequestDefaultsStateAppAccessRequestDefaultsLastApplyStateRunning       AppAccessRequestDefaultsState = "APP_ACCESS_REQUEST_DEFAULTS_LAST_APPLY_STATE_RUNNING"
+	AppAccessRequestDefaultsStateAppAccessRequestDefaultsLastApplyStateSuccess       AppAccessRequestDefaultsState = "APP_ACCESS_REQUEST_DEFAULTS_LAST_APPLY_STATE_SUCCESS"
+	AppAccessRequestDefaultsStateAppAccessRequestDefaultsLastApplyStateFailed        AppAccessRequestDefaultsState = "APP_ACCESS_REQUEST_DEFAULTS_LAST_APPLY_STATE_FAILED"
+	AppAccessRequestDefaultsStateAppAccessRequestDefaultsLastApplyStateCanceling     AppAccessRequestDefaultsState = "APP_ACCESS_REQUEST_DEFAULTS_LAST_APPLY_STATE_CANCELING"
+	AppAccessRequestDefaultsStateAppAccessRequestDefaultsLastApplyStateCancelSuccess AppAccessRequestDefaultsState = "APP_ACCESS_REQUEST_DEFAULTS_LAST_APPLY_STATE_CANCEL_SUCCESS"
+	AppAccessRequestDefaultsStateAppAccessRequestDefaultsLastApplyStateCancelError   AppAccessRequestDefaultsState = "APP_ACCESS_REQUEST_DEFAULTS_LAST_APPLY_STATE_CANCEL_ERROR"
 )
 
-func (e State) ToPointer() *State {
+func (e AppAccessRequestDefaultsState) ToPointer() *AppAccessRequestDefaultsState {
 	return &e
+}
+
+// IsExact returns true if the value matches a known enum value, false otherwise.
+func (e *AppAccessRequestDefaultsState) IsExact() bool {
+	if e != nil {
+		switch *e {
+		case "APP_ACCESS_REQUEST_DEFAULTS_LAST_APPLY_STATE_UNSPECIFIED", "APP_ACCESS_REQUEST_DEFAULTS_LAST_APPLY_STATE_RUNNING", "APP_ACCESS_REQUEST_DEFAULTS_LAST_APPLY_STATE_SUCCESS", "APP_ACCESS_REQUEST_DEFAULTS_LAST_APPLY_STATE_FAILED", "APP_ACCESS_REQUEST_DEFAULTS_LAST_APPLY_STATE_CANCELING", "APP_ACCESS_REQUEST_DEFAULTS_LAST_APPLY_STATE_CANCEL_SUCCESS", "APP_ACCESS_REQUEST_DEFAULTS_LAST_APPLY_STATE_CANCEL_ERROR":
+			return true
+		}
+	}
+	return false
 }
 
 // The AppAccessRequestDefaults message.
@@ -45,77 +56,77 @@ type AppAccessRequestDefaults struct {
 	// The app resource type ids for which the app access request defaults are applied.
 	ResourceTypeIds []string `json:"resourceTypeIds,omitempty"`
 	// The last applied state of the app access request defaults.
-	State *State `json:"state,omitempty"`
+	State *AppAccessRequestDefaultsState `json:"state,omitempty"`
 }
 
-func (o *AppAccessRequestDefaults) GetAppID() *string {
-	if o == nil {
+func (a *AppAccessRequestDefaults) GetAppID() *string {
+	if a == nil {
 		return nil
 	}
-	return o.AppID
+	return a.AppID
 }
 
-func (o *AppAccessRequestDefaults) GetCatalogIds() []string {
-	if o == nil {
+func (a *AppAccessRequestDefaults) GetCatalogIds() []string {
+	if a == nil {
 		return nil
 	}
-	return o.CatalogIds
+	return a.CatalogIds
 }
 
-func (o *AppAccessRequestDefaults) GetDefaultsEnabled() *bool {
-	if o == nil {
+func (a *AppAccessRequestDefaults) GetDefaultsEnabled() *bool {
+	if a == nil {
 		return nil
 	}
-	return o.DefaultsEnabled
+	return a.DefaultsEnabled
 }
 
-func (o *AppAccessRequestDefaults) GetDurationGrant() *string {
-	if o == nil {
+func (a *AppAccessRequestDefaults) GetDurationGrant() *string {
+	if a == nil {
 		return nil
 	}
-	return o.DurationGrant
+	return a.DurationGrant
 }
 
-func (o *AppAccessRequestDefaults) GetDurationUnset() *DurationUnset {
-	if o == nil {
+func (a *AppAccessRequestDefaults) GetDurationUnset() *DurationUnset {
+	if a == nil {
 		return nil
 	}
-	return o.DurationUnset
+	return a.DurationUnset
 }
 
-func (o *AppAccessRequestDefaults) GetEmergencyGrantEnabled() *bool {
-	if o == nil {
+func (a *AppAccessRequestDefaults) GetEmergencyGrantEnabled() *bool {
+	if a == nil {
 		return nil
 	}
-	return o.EmergencyGrantEnabled
+	return a.EmergencyGrantEnabled
 }
 
-func (o *AppAccessRequestDefaults) GetEmergencyGrantPolicyID() *string {
-	if o == nil {
+func (a *AppAccessRequestDefaults) GetEmergencyGrantPolicyID() *string {
+	if a == nil {
 		return nil
 	}
-	return o.EmergencyGrantPolicyID
+	return a.EmergencyGrantPolicyID
 }
 
-func (o *AppAccessRequestDefaults) GetRequestPolicyID() *string {
-	if o == nil {
+func (a *AppAccessRequestDefaults) GetRequestPolicyID() *string {
+	if a == nil {
 		return nil
 	}
-	return o.RequestPolicyID
+	return a.RequestPolicyID
 }
 
-func (o *AppAccessRequestDefaults) GetResourceTypeIds() []string {
-	if o == nil {
+func (a *AppAccessRequestDefaults) GetResourceTypeIds() []string {
+	if a == nil {
 		return nil
 	}
-	return o.ResourceTypeIds
+	return a.ResourceTypeIds
 }
 
-func (o *AppAccessRequestDefaults) GetState() *State {
-	if o == nil {
+func (a *AppAccessRequestDefaults) GetState() *AppAccessRequestDefaultsState {
+	if a == nil {
 		return nil
 	}
-	return o.State
+	return a.State
 }
 
 // AppAccessRequestDefaults1 - The AppAccessRequestDefaults message.
@@ -139,68 +150,68 @@ type AppAccessRequestDefaults1 struct {
 	// The app resource type ids for which the app access request defaults are applied.
 	ResourceTypeIds []string `json:"resourceTypeIds,omitempty"`
 	// The last applied state of the app access request defaults.
-	State *State `json:"state,omitempty"`
+	State *AppAccessRequestDefaultsState `json:"state,omitempty"`
 }
 
-func (o *AppAccessRequestDefaults1) GetCatalogIds() []string {
-	if o == nil {
+func (a *AppAccessRequestDefaults1) GetCatalogIds() []string {
+	if a == nil {
 		return nil
 	}
-	return o.CatalogIds
+	return a.CatalogIds
 }
 
-func (o *AppAccessRequestDefaults1) GetDefaultsEnabled() *bool {
-	if o == nil {
+func (a *AppAccessRequestDefaults1) GetDefaultsEnabled() *bool {
+	if a == nil {
 		return nil
 	}
-	return o.DefaultsEnabled
+	return a.DefaultsEnabled
 }
 
-func (o *AppAccessRequestDefaults1) GetDurationGrant() *string {
-	if o == nil {
+func (a *AppAccessRequestDefaults1) GetDurationGrant() *string {
+	if a == nil {
 		return nil
 	}
-	return o.DurationGrant
+	return a.DurationGrant
 }
 
-func (o *AppAccessRequestDefaults1) GetDurationUnset() *DurationUnset {
-	if o == nil {
+func (a *AppAccessRequestDefaults1) GetDurationUnset() *DurationUnset {
+	if a == nil {
 		return nil
 	}
-	return o.DurationUnset
+	return a.DurationUnset
 }
 
-func (o *AppAccessRequestDefaults1) GetEmergencyGrantEnabled() *bool {
-	if o == nil {
+func (a *AppAccessRequestDefaults1) GetEmergencyGrantEnabled() *bool {
+	if a == nil {
 		return nil
 	}
-	return o.EmergencyGrantEnabled
+	return a.EmergencyGrantEnabled
 }
 
-func (o *AppAccessRequestDefaults1) GetEmergencyGrantPolicyID() *string {
-	if o == nil {
+func (a *AppAccessRequestDefaults1) GetEmergencyGrantPolicyID() *string {
+	if a == nil {
 		return nil
 	}
-	return o.EmergencyGrantPolicyID
+	return a.EmergencyGrantPolicyID
 }
 
-func (o *AppAccessRequestDefaults1) GetRequestPolicyID() *string {
-	if o == nil {
+func (a *AppAccessRequestDefaults1) GetRequestPolicyID() *string {
+	if a == nil {
 		return nil
 	}
-	return o.RequestPolicyID
+	return a.RequestPolicyID
 }
 
-func (o *AppAccessRequestDefaults1) GetResourceTypeIds() []string {
-	if o == nil {
+func (a *AppAccessRequestDefaults1) GetResourceTypeIds() []string {
+	if a == nil {
 		return nil
 	}
-	return o.ResourceTypeIds
+	return a.ResourceTypeIds
 }
 
-func (o *AppAccessRequestDefaults1) GetState() *State {
-	if o == nil {
+func (a *AppAccessRequestDefaults1) GetState() *AppAccessRequestDefaultsState {
+	if a == nil {
 		return nil
 	}
-	return o.State
+	return a.State
 }

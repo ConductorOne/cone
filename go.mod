@@ -11,7 +11,7 @@ require (
 
 require (
 	github.com/conductorone/baton-sdk v0.3.17
-	github.com/conductorone/conductorone-sdk-go v1.26.0
+	github.com/conductorone/conductorone-sdk-go v1.27.0
 	github.com/pterm/pterm v0.12.81
 	github.com/toqueteos/webbrowser v1.2.0
 	github.com/xhit/go-str2duration/v2 v2.1.0

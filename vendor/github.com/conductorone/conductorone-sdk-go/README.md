@@ -81,6 +81,21 @@ func main() {
 * [GetMonitor](docs/sdks/accessconflict/README.md#getmonitor) - Get Monitor
 * [UpdateMonitor](docs/sdks/accessconflict/README.md#updatemonitor) - Update Monitor
 
+### [AccessReview](docs/sdks/accessreview/README.md)
+
+* [Create](docs/sdks/accessreview/README.md#create) - Create
+* [Delete](docs/sdks/accessreview/README.md#delete) - Delete
+* [Get](docs/sdks/accessreview/README.md#get) - Get
+* [List](docs/sdks/accessreview/README.md#list) - List
+* [Update](docs/sdks/accessreview/README.md#update) - Update
+
+### [AccessReviewTemplate](docs/sdks/accessreviewtemplate/README.md)
+
+* [Create](docs/sdks/accessreviewtemplate/README.md#create) - Create
+* [Delete](docs/sdks/accessreviewtemplate/README.md#delete) - Delete
+* [Get](docs/sdks/accessreviewtemplate/README.md#get) - Get
+* [Update](docs/sdks/accessreviewtemplate/README.md#update) - Update
+
 ### [AccountProvisionPolicyTest](docs/sdks/accountprovisionpolicytest/README.md)
 
 * [Test](docs/sdks/accountprovisionpolicytest/README.md#test) - Test
@@ -100,7 +115,9 @@ func main() {
 ### [AppEntitlementOwners](docs/sdks/appentitlementowners/README.md)
 
 * [Add](docs/sdks/appentitlementowners/README.md#add) - Add
+* [Delete](docs/sdks/appentitlementowners/README.md#delete) - Delete
 * [List](docs/sdks/appentitlementowners/README.md#list) - List
+* [ListOwnerIDs](docs/sdks/appentitlementowners/README.md#listownerids) - List Owner I Ds
 * [Remove](docs/sdks/appentitlementowners/README.md#remove) - Remove
 * [Set](docs/sdks/appentitlementowners/README.md#set) - Set
 
@@ -148,7 +165,9 @@ func main() {
 ### [AppOwners](docs/sdks/appowners/README.md)
 
 * [Add](docs/sdks/appowners/README.md#add) - Add
+* [Delete](docs/sdks/appowners/README.md#delete) - Delete
 * [List](docs/sdks/appowners/README.md#list) - List
+* [ListOwnerIDs](docs/sdks/appowners/README.md#listownerids) - List Owner I Ds
 * [Remove](docs/sdks/appowners/README.md#remove) - Remove
 * [Set](docs/sdks/appowners/README.md#set) - Set
 
@@ -171,8 +190,11 @@ func main() {
 ### [AppResourceOwners](docs/sdks/appresourceowners/README.md)
 
 * [Add](docs/sdks/appresourceowners/README.md#add) - Add
+* [Delete](docs/sdks/appresourceowners/README.md#delete) - Delete
 * [List](docs/sdks/appresourceowners/README.md#list) - List
+* [ListOwnerIDs](docs/sdks/appresourceowners/README.md#listownerids) - List Owner I Ds
 * [Remove](docs/sdks/appresourceowners/README.md#remove) - Remove
+* [Set](docs/sdks/appresourceowners/README.md#set) - Set
 
 ### [AppResourceSearch](docs/sdks/appresourcesearch/README.md)
 
@@ -225,6 +247,8 @@ func main() {
 * [GetRiskLevelAttributeValue](docs/sdks/attributes/README.md#getrisklevelattributevalue) - Get Risk Level Attribute Value
 * [ListAttributeTypes](docs/sdks/attributes/README.md#listattributetypes) - List Attribute Types
 * [ListAttributeValues](docs/sdks/attributes/README.md#listattributevalues) - List Attribute Values
+* [ListComplianceFrameworks](docs/sdks/attributes/README.md#listcomplianceframeworks) - List Compliance Frameworks
+* [ListRiskLevels](docs/sdks/attributes/README.md#listrisklevels) - List Risk Levels
 
 ### [AttributeSearch](docs/sdks/attributesearch/README.md)
 
@@ -265,14 +289,15 @@ func main() {
 
 * [Get](docs/sdks/awsexternalidsettings/README.md#get) - Get
 
-
 ### [Connector](docs/sdks/connector/README.md)
 
+* [ConfirmSyncValid](docs/sdks/connector/README.md#confirmsyncvalid) - Confirm Sync Valid
 * [Create](docs/sdks/connector/README.md#create) - Create
 * [CreateDelegated](docs/sdks/connector/README.md#createdelegated) - Create Delegated
 * [Delete](docs/sdks/connector/README.md#delete) - Delete
 * [ForceSync](docs/sdks/connector/README.md#forcesync) - Force Sync
 * [Get](docs/sdks/connector/README.md#get) - Get
+* [GetConnectorSyncDownloadURL](docs/sdks/connector/README.md#getconnectorsyncdownloadurl) - Get Connector Sync Download Url
 * [GetCredentials](docs/sdks/connector/README.md#getcredentials) - Get Credentials
 * [List](docs/sdks/connector/README.md#list) - List
 * [PauseSync](docs/sdks/connector/README.md#pausesync) - Pause Sync
@@ -283,12 +308,17 @@ func main() {
 * [UpdateDelegated](docs/sdks/connector/README.md#updatedelegated) - Update Delegated
 * [ValidateHTTPConnectorConfig](docs/sdks/connector/README.md#validatehttpconnectorconfig) - Validate Http Connector Config
 
+### [ConnectorCatalog](docs/sdks/connectorcatalog/README.md)
+
+* [ConfigurationSchema](docs/sdks/connectorcatalog/README.md#configurationschema) - Configuration Schema
+
 ### [Directory](docs/sdks/directory/README.md)
 
 * [Create](docs/sdks/directory/README.md#create) - Create
 * [Delete](docs/sdks/directory/README.md#delete) - Delete
 * [Get](docs/sdks/directory/README.md#get) - Get
 * [List](docs/sdks/directory/README.md#list) - List
+* [Update](docs/sdks/directory/README.md#update) - Update
 
 ### [Export](docs/sdks/export/README.md)
 
@@ -305,17 +335,21 @@ func main() {
 
 ### [Functions](docs/sdks/functions/README.md)
 
-* [Commit](docs/sdks/functions/README.md#commit) - Commit
 * [CreateFunction](docs/sdks/functions/README.md#createfunction) - Create Function
 * [CreateTag](docs/sdks/functions/README.md#createtag) - Create Tag
 * [DeleteFunction](docs/sdks/functions/README.md#deletefunction) - Delete Function
-* [GetCommit](docs/sdks/functions/README.md#getcommit) - Get Commit
 * [GetFunction](docs/sdks/functions/README.md#getfunction) - Get Function
+* [GetFunctionSecretEncryptionKey](docs/sdks/functions/README.md#getfunctionsecretencryptionkey) - Get Function Secret Encryption Key
 * [Invoke](docs/sdks/functions/README.md#invoke) - Invoke
 * [ListCommits](docs/sdks/functions/README.md#listcommits) - List Commits
 * [ListFunctions](docs/sdks/functions/README.md#listfunctions) - List Functions
 * [ListTags](docs/sdks/functions/README.md#listtags) - List Tags
 * [UpdateFunction](docs/sdks/functions/README.md#updatefunction) - Update Function
+
+### [FunctionsInvocation](docs/sdks/functionsinvocation/README.md)
+
+* [Get](docs/sdks/functionsinvocation/README.md#get) - Get
+* [List](docs/sdks/functionsinvocation/README.md#list) - List
 
 ### [FunctionsSearch](docs/sdks/functionssearch/README.md)
 
@@ -360,11 +394,14 @@ func main() {
 * [AddAppEntitlements](docs/sdks/requestcatalogmanagement/README.md#addappentitlements) - Add App Entitlements
 * [Create](docs/sdks/requestcatalogmanagement/README.md#create) - Create
 * [CreateBundleAutomation](docs/sdks/requestcatalogmanagement/README.md#createbundleautomation) - Create Bundle Automation
+* [CreateRequestableEntry](docs/sdks/requestcatalogmanagement/README.md#createrequestableentry) - Create Requestable Entry
 * [Delete](docs/sdks/requestcatalogmanagement/README.md#delete) - Delete
 * [DeleteBundleAutomation](docs/sdks/requestcatalogmanagement/README.md#deletebundleautomation) - Delete Bundle Automation
+* [DeleteRequestableEntry](docs/sdks/requestcatalogmanagement/README.md#deleterequestableentry) - Delete Requestable Entry
 * [ForceRunBundleAutomation](docs/sdks/requestcatalogmanagement/README.md#forcerunbundleautomation) - Force Run Bundle Automation
 * [Get](docs/sdks/requestcatalogmanagement/README.md#get) - Get
 * [GetBundleAutomation](docs/sdks/requestcatalogmanagement/README.md#getbundleautomation) - Get Bundle Automation
+* [GetRequestableEntry](docs/sdks/requestcatalogmanagement/README.md#getrequestableentry) - Get Requestable Entry
 * [List](docs/sdks/requestcatalogmanagement/README.md#list) - List
 * [ListAllEntitlementIdsPerApp](docs/sdks/requestcatalogmanagement/README.md#listallentitlementidsperapp) - List All Entitlement Ids Per App
 * [ListEntitlementsForAccess](docs/sdks/requestcatalogmanagement/README.md#listentitlementsforaccess) - List Entitlements For Access
@@ -379,6 +416,16 @@ func main() {
 ### [RequestCatalogSearch](docs/sdks/requestcatalogsearch/README.md)
 
 * [SearchEntitlements](docs/sdks/requestcatalogsearch/README.md#searchentitlements) - Search Entitlements
+
+### [RequestSchema](docs/sdks/requestschema/README.md)
+
+* [Create](docs/sdks/requestschema/README.md#create) - Create
+* [CreateEntitlementBinding](docs/sdks/requestschema/README.md#createentitlementbinding) - Create Entitlement Binding
+* [Delete](docs/sdks/requestschema/README.md#delete) - Delete
+* [FindBindingForAppEntitlement](docs/sdks/requestschema/README.md#findbindingforappentitlement) - Find Binding For App Entitlement
+* [Get](docs/sdks/requestschema/README.md#get) - Get
+* [RemoveEntitlementBinding](docs/sdks/requestschema/README.md#removeentitlementbinding) - Remove Entitlement Binding
+* [Update](docs/sdks/requestschema/README.md#update) - Update
 
 ### [Roles](docs/sdks/roles/README.md)
 
@@ -446,11 +493,20 @@ func main() {
 ### [User](docs/sdks/user/README.md)
 
 * [Get](docs/sdks/user/README.md#get) - Get
+* [GetUserProfileTypes](docs/sdks/user/README.md#getuserprofiletypes) - Get User Profile Types
 * [List](docs/sdks/user/README.md#list) - List
+* [SetExpiringUserDelegationBindingByAdmin](docs/sdks/user/README.md#setexpiringuserdelegationbindingbyadmin) - Set Expiring User Delegation Binding By Admin
 
 ### [UserSearch](docs/sdks/usersearch/README.md)
 
 * [Search](docs/sdks/usersearch/README.md#search) - Search
+
+### [Vault](docs/sdks/vault/README.md)
+
+* [Create](docs/sdks/vault/README.md#create) - Create
+* [Delete](docs/sdks/vault/README.md#delete) - Delete
+* [Get](docs/sdks/vault/README.md#get) - Get
+* [Update](docs/sdks/vault/README.md#update) - Update
 
 ### [Webhooks](docs/sdks/webhooks/README.md)
 
@@ -651,7 +707,7 @@ func main() {
 		}),
 	)
 
-	res, err := s.AccessConflict.CreateMonitor(ctx, nil, operations.WithRetries(
+	res, err := s.AccessReview.Create(ctx, nil, operations.WithRetries(
 		retry.Config{
 			Strategy: "backoff",
 			Backoff: &retry.BackoffStrategy{
@@ -665,7 +721,7 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	if res.ConflictMonitor != nil {
+	if res.AccessReviewServiceCreateResponse != nil {
 		// handle response
 	}
 }
@@ -705,11 +761,11 @@ func main() {
 		}),
 	)
 
-	res, err := s.AccessConflict.CreateMonitor(ctx, nil)
+	res, err := s.AccessReview.Create(ctx, nil)
 	if err != nil {
 		log.Fatal(err)
 	}
-	if res.ConflictMonitor != nil {
+	if res.AccessReviewServiceCreateResponse != nil {
 		// handle response
 	}
 }

@@ -18,24 +18,24 @@ func (c CreateAppEntitlementResponseExpanded) MarshalJSON() ([]byte, error) {
 }
 
 func (c *CreateAppEntitlementResponseExpanded) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &c, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &c, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *CreateAppEntitlementResponseExpanded) GetAtType() *string {
-	if o == nil {
+func (c *CreateAppEntitlementResponseExpanded) GetAtType() *string {
+	if c == nil {
 		return nil
 	}
-	return o.AtType
+	return c.AtType
 }
 
-func (o *CreateAppEntitlementResponseExpanded) GetAdditionalProperties() map[string]any {
-	if o == nil {
+func (c *CreateAppEntitlementResponseExpanded) GetAdditionalProperties() map[string]any {
+	if c == nil {
 		return nil
 	}
-	return o.AdditionalProperties
+	return c.AdditionalProperties
 }
 
 // The CreateAppEntitlementResponse message.
@@ -46,16 +46,16 @@ type CreateAppEntitlementResponse struct {
 	Expanded []CreateAppEntitlementResponseExpanded `json:"expanded,omitempty"`
 }
 
-func (o *CreateAppEntitlementResponse) GetAppEntitlementView() *AppEntitlementView {
-	if o == nil {
+func (c *CreateAppEntitlementResponse) GetAppEntitlementView() *AppEntitlementView {
+	if c == nil {
 		return nil
 	}
-	return o.AppEntitlementView
+	return c.AppEntitlementView
 }
 
-func (o *CreateAppEntitlementResponse) GetExpanded() []CreateAppEntitlementResponseExpanded {
-	if o == nil {
+func (c *CreateAppEntitlementResponse) GetExpanded() []CreateAppEntitlementResponseExpanded {
+	if c == nil {
 		return nil
 	}
-	return o.Expanded
+	return c.Expanded
 }

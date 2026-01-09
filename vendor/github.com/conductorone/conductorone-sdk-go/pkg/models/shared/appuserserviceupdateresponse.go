@@ -18,24 +18,24 @@ func (a AppUserServiceUpdateResponseExpanded) MarshalJSON() ([]byte, error) {
 }
 
 func (a *AppUserServiceUpdateResponseExpanded) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &a, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &a, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *AppUserServiceUpdateResponseExpanded) GetAtType() *string {
-	if o == nil {
+func (a *AppUserServiceUpdateResponseExpanded) GetAtType() *string {
+	if a == nil {
 		return nil
 	}
-	return o.AtType
+	return a.AtType
 }
 
-func (o *AppUserServiceUpdateResponseExpanded) GetAdditionalProperties() map[string]any {
-	if o == nil {
+func (a *AppUserServiceUpdateResponseExpanded) GetAdditionalProperties() map[string]any {
+	if a == nil {
 		return nil
 	}
-	return o.AdditionalProperties
+	return a.AdditionalProperties
 }
 
 // The AppUserServiceUpdateResponse message.
@@ -46,16 +46,16 @@ type AppUserServiceUpdateResponse struct {
 	Expanded []AppUserServiceUpdateResponseExpanded `json:"expanded,omitempty"`
 }
 
-func (o *AppUserServiceUpdateResponse) GetAppUserView() *AppUserView {
-	if o == nil {
+func (a *AppUserServiceUpdateResponse) GetAppUserView() *AppUserView {
+	if a == nil {
 		return nil
 	}
-	return o.AppUserView
+	return a.AppUserView
 }
 
-func (o *AppUserServiceUpdateResponse) GetExpanded() []AppUserServiceUpdateResponseExpanded {
-	if o == nil {
+func (a *AppUserServiceUpdateResponse) GetExpanded() []AppUserServiceUpdateResponseExpanded {
+	if a == nil {
 		return nil
 	}
-	return o.Expanded
+	return a.Expanded
 }

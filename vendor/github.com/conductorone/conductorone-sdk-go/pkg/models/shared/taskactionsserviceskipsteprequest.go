@@ -12,23 +12,23 @@ type TaskActionsServiceSkipStepRequest struct {
 	PolicyStepID string `json:"policyStepId"`
 }
 
-func (o *TaskActionsServiceSkipStepRequest) GetTaskExpandMask() *TaskExpandMask {
-	if o == nil {
+func (t *TaskActionsServiceSkipStepRequest) GetTaskExpandMask() *TaskExpandMask {
+	if t == nil {
 		return nil
 	}
-	return o.TaskExpandMask
+	return t.TaskExpandMask
 }
 
-func (o *TaskActionsServiceSkipStepRequest) GetComment() *string {
-	if o == nil {
+func (t *TaskActionsServiceSkipStepRequest) GetComment() *string {
+	if t == nil {
 		return nil
 	}
-	return o.Comment
+	return t.Comment
 }
 
-func (o *TaskActionsServiceSkipStepRequest) GetPolicyStepID() string {
-	if o == nil {
+func (t *TaskActionsServiceSkipStepRequest) GetPolicyStepID() string {
+	if t == nil {
 		return ""
 	}
-	return o.PolicyStepID
+	return t.PolicyStepID
 }

@@ -6,11 +6,20 @@ package shared
 type AppOwnerApproval struct {
 	// Configuration that allows a user to self approve if they are an app owner during this approval step.
 	AllowSelfApproval *bool `json:"allowSelfApproval,omitempty"`
+	// Configuration to require distinct approvers across approval steps of a rule.
+	RequireDistinctApprovers *bool `json:"requireDistinctApprovers,omitempty"`
 }
 
-func (o *AppOwnerApproval) GetAllowSelfApproval() *bool {
-	if o == nil {
+func (a *AppOwnerApproval) GetAllowSelfApproval() *bool {
+	if a == nil {
 		return nil
 	}
-	return o.AllowSelfApproval
+	return a.AllowSelfApproval
+}
+
+func (a *AppOwnerApproval) GetRequireDistinctApprovers() *bool {
+	if a == nil {
+		return nil
+	}
+	return a.RequireDistinctApprovers
 }

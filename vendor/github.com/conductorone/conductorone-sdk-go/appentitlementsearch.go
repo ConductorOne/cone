@@ -17,6 +17,7 @@ import (
 	"net/http"
 	"net/url"
 	"strconv"
+	"strings"
 )
 
 type AppEntitlementSearch struct {
@@ -65,7 +66,7 @@ func (s *AppEntitlementSearch) Search(ctx context.Context, request *shared.AppEn
 		BaseURL:          baseURL,
 		Context:          ctx,
 		OperationID:      "c1.api.app.v1.AppEntitlementSearchService.Search",
-		OAuth2Scopes:     []string{},
+		OAuth2Scopes:     nil,
 		SecuritySource:   s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
@@ -230,6 +231,9 @@ func (s *AppEntitlementSearch) Search(ctx context.Context, request *shared.AppEn
 				return nil, nil
 			}
 			nCVal = val.(string)
+			if strings.TrimSpace(nCVal) == "" {
+				return nil, nil
+			}
 		}
 
 		return s.Search(
@@ -344,7 +348,7 @@ func (s *AppEntitlementSearch) SearchAppEntitlementsForAppUser(ctx context.Conte
 		BaseURL:          baseURL,
 		Context:          ctx,
 		OperationID:      "c1.api.app.v1.AppEntitlementSearchService.SearchAppEntitlementsForAppUser",
-		OAuth2Scopes:     []string{},
+		OAuth2Scopes:     nil,
 		SecuritySource:   s.sdkConfiguration.Security,
 	}
 
@@ -366,7 +370,7 @@ func (s *AppEntitlementSearch) SearchAppEntitlementsForAppUser(ctx context.Conte
 	req.Header.Set("Accept", "application/json")
 	req.Header.Set("User-Agent", s.sdkConfiguration.UserAgent)
 
-	if err := utils.PopulateQueryParams(ctx, req, request, nil); err != nil {
+	if err := utils.PopulateQueryParams(ctx, req, request, nil, nil); err != nil {
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
@@ -553,7 +557,7 @@ func (s *AppEntitlementSearch) SearchAppEntitlementsWithExpired(ctx context.Cont
 		BaseURL:          baseURL,
 		Context:          ctx,
 		OperationID:      "c1.api.app.v1.AppEntitlementSearchService.SearchAppEntitlementsWithExpired",
-		OAuth2Scopes:     []string{},
+		OAuth2Scopes:     nil,
 		SecuritySource:   s.sdkConfiguration.Security,
 	}
 
@@ -575,7 +579,7 @@ func (s *AppEntitlementSearch) SearchAppEntitlementsWithExpired(ctx context.Cont
 	req.Header.Set("Accept", "application/json")
 	req.Header.Set("User-Agent", s.sdkConfiguration.UserAgent)
 
-	if err := utils.PopulateQueryParams(ctx, req, request, nil); err != nil {
+	if err := utils.PopulateQueryParams(ctx, req, request, nil, nil); err != nil {
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
@@ -762,7 +766,7 @@ func (s *AppEntitlementSearch) SearchGrants(ctx context.Context, request *shared
 		BaseURL:          baseURL,
 		Context:          ctx,
 		OperationID:      "c1.api.app.v1.AppEntitlementSearchService.SearchGrants",
-		OAuth2Scopes:     []string{},
+		OAuth2Scopes:     nil,
 		SecuritySource:   s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)

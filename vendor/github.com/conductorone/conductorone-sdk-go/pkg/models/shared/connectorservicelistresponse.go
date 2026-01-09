@@ -18,24 +18,24 @@ func (c ConnectorServiceListResponseExpanded) MarshalJSON() ([]byte, error) {
 }
 
 func (c *ConnectorServiceListResponseExpanded) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &c, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &c, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *ConnectorServiceListResponseExpanded) GetAtType() *string {
-	if o == nil {
+func (c *ConnectorServiceListResponseExpanded) GetAtType() *string {
+	if c == nil {
 		return nil
 	}
-	return o.AtType
+	return c.AtType
 }
 
-func (o *ConnectorServiceListResponseExpanded) GetAdditionalProperties() map[string]any {
-	if o == nil {
+func (c *ConnectorServiceListResponseExpanded) GetAdditionalProperties() map[string]any {
+	if c == nil {
 		return nil
 	}
-	return o.AdditionalProperties
+	return c.AdditionalProperties
 }
 
 // The ConnectorServiceListResponse message contains a list of results and a nextPageToken if applicable
@@ -48,23 +48,23 @@ type ConnectorServiceListResponse struct {
 	NextPageToken *string `json:"nextPageToken,omitempty"`
 }
 
-func (o *ConnectorServiceListResponse) GetExpanded() []ConnectorServiceListResponseExpanded {
-	if o == nil {
+func (c *ConnectorServiceListResponse) GetExpanded() []ConnectorServiceListResponseExpanded {
+	if c == nil {
 		return nil
 	}
-	return o.Expanded
+	return c.Expanded
 }
 
-func (o *ConnectorServiceListResponse) GetList() []ConnectorView {
-	if o == nil {
+func (c *ConnectorServiceListResponse) GetList() []ConnectorView {
+	if c == nil {
 		return nil
 	}
-	return o.List
+	return c.List
 }
 
-func (o *ConnectorServiceListResponse) GetNextPageToken() *string {
-	if o == nil {
+func (c *ConnectorServiceListResponse) GetNextPageToken() *string {
+	if c == nil {
 		return nil
 	}
-	return o.NextPageToken
+	return c.NextPageToken
 }

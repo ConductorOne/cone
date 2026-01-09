@@ -63,7 +63,7 @@ func (s *AppEntitlementUserBinding) ListAppUsersForIdentityWithGrant(ctx context
 		BaseURL:          baseURL,
 		Context:          ctx,
 		OperationID:      "c1.api.app.v1.AppEntitlementUserBindingService.ListAppUsersForIdentityWithGrant",
-		OAuth2Scopes:     []string{},
+		OAuth2Scopes:     nil,
 		SecuritySource:   s.sdkConfiguration.Security,
 	}
 
@@ -268,7 +268,7 @@ func (s *AppEntitlementUserBinding) RemoveGrantDuration(ctx context.Context, req
 		BaseURL:          baseURL,
 		Context:          ctx,
 		OperationID:      "c1.api.app.v1.AppEntitlementUserBindingService.RemoveGrantDuration",
-		OAuth2Scopes:     []string{},
+		OAuth2Scopes:     nil,
 		SecuritySource:   s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "RemoveGrantDurationRequest", "json", `request:"mediaType=application/json"`)
@@ -480,7 +480,7 @@ func (s *AppEntitlementUserBinding) SearchGrantFeed(ctx context.Context, request
 		BaseURL:          baseURL,
 		Context:          ctx,
 		OperationID:      "c1.api.app.v1.AppEntitlementUserBindingService.SearchGrantFeed",
-		OAuth2Scopes:     []string{},
+		OAuth2Scopes:     nil,
 		SecuritySource:   s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
@@ -692,7 +692,7 @@ func (s *AppEntitlementUserBinding) SearchPastGrants(ctx context.Context, reques
 		BaseURL:          baseURL,
 		Context:          ctx,
 		OperationID:      "c1.api.app.v1.AppEntitlementUserBindingService.SearchPastGrants",
-		OAuth2Scopes:     []string{},
+		OAuth2Scopes:     nil,
 		SecuritySource:   s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
@@ -904,7 +904,7 @@ func (s *AppEntitlementUserBinding) UpdateGrantDuration(ctx context.Context, req
 		BaseURL:          baseURL,
 		Context:          ctx,
 		OperationID:      "c1.api.app.v1.AppEntitlementUserBindingService.UpdateGrantDuration",
-		OAuth2Scopes:     []string{},
+		OAuth2Scopes:     nil,
 		SecuritySource:   s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "UpdateGrantDurationRequest", "json", `request:"mediaType=application/json"`)

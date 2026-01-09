@@ -25,43 +25,43 @@ func (f FunctionCommit) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FunctionCommit) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &f, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &f, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *FunctionCommit) GetAuthor() *string {
-	if o == nil {
+func (f *FunctionCommit) GetAuthor() *string {
+	if f == nil {
 		return nil
 	}
-	return o.Author
+	return f.Author
 }
 
-func (o *FunctionCommit) GetCreatedAt() *time.Time {
-	if o == nil {
+func (f *FunctionCommit) GetCreatedAt() *time.Time {
+	if f == nil {
 		return nil
 	}
-	return o.CreatedAt
+	return f.CreatedAt
 }
 
-func (o *FunctionCommit) GetFunctionID() *string {
-	if o == nil {
+func (f *FunctionCommit) GetFunctionID() *string {
+	if f == nil {
 		return nil
 	}
-	return o.FunctionID
+	return f.FunctionID
 }
 
-func (o *FunctionCommit) GetID() *string {
-	if o == nil {
+func (f *FunctionCommit) GetID() *string {
+	if f == nil {
 		return nil
 	}
-	return o.ID
+	return f.ID
 }
 
-func (o *FunctionCommit) GetMessage() *string {
-	if o == nil {
+func (f *FunctionCommit) GetMessage() *string {
+	if f == nil {
 		return nil
 	}
-	return o.Message
+	return f.Message
 }

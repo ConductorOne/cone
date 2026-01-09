@@ -20,6 +20,17 @@ func (e BundleAutomationCircuitBreakerState) ToPointer() *BundleAutomationCircui
 	return &e
 }
 
+// IsExact returns true if the value matches a known enum value, false otherwise.
+func (e *BundleAutomationCircuitBreakerState) IsExact() bool {
+	if e != nil {
+		switch *e {
+		case "CIRCUIT_BREAKER_STATE_UNSPECIFIED", "CIRCUIT_BREAKER_STATE_TRIGGERED", "CIRCUIT_BREAKER_STATE_BYPASS":
+			return true
+		}
+	}
+	return false
+}
+
 // The BundleAutomationCircuitBreaker message.
 type BundleAutomationCircuitBreaker struct {
 	// A reference to a user.
@@ -36,36 +47,36 @@ func (b BundleAutomationCircuitBreaker) MarshalJSON() ([]byte, error) {
 }
 
 func (b *BundleAutomationCircuitBreaker) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &b, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &b, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *BundleAutomationCircuitBreaker) GetUserRef() *UserRef {
-	if o == nil {
+func (b *BundleAutomationCircuitBreaker) GetUserRef() *UserRef {
+	if b == nil {
 		return nil
 	}
-	return o.UserRef
+	return b.UserRef
 }
 
-func (o *BundleAutomationCircuitBreaker) GetRemovedMembersThresholdPercentage() *int64 {
-	if o == nil {
+func (b *BundleAutomationCircuitBreaker) GetRemovedMembersThresholdPercentage() *int64 {
+	if b == nil {
 		return nil
 	}
-	return o.RemovedMembersThresholdPercentage
+	return b.RemovedMembersThresholdPercentage
 }
 
-func (o *BundleAutomationCircuitBreaker) GetState() *BundleAutomationCircuitBreakerState {
-	if o == nil {
+func (b *BundleAutomationCircuitBreaker) GetState() *BundleAutomationCircuitBreakerState {
+	if b == nil {
 		return nil
 	}
-	return o.State
+	return b.State
 }
 
-func (o *BundleAutomationCircuitBreaker) GetUpdatedAt() *time.Time {
-	if o == nil {
+func (b *BundleAutomationCircuitBreaker) GetUpdatedAt() *time.Time {
+	if b == nil {
 		return nil
 	}
-	return o.UpdatedAt
+	return b.UpdatedAt
 }

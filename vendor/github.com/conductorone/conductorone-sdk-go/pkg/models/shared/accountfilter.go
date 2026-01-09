@@ -16,15 +16,26 @@ func (e AccountType) ToPointer() *AccountType {
 	return &e
 }
 
+// IsExact returns true if the value matches a known enum value, false otherwise.
+func (e *AccountType) IsExact() bool {
+	if e != nil {
+		switch *e {
+		case "APP_USER_TYPE_UNSPECIFIED", "APP_USER_TYPE_USER", "APP_USER_TYPE_SERVICE_ACCOUNT", "APP_USER_TYPE_SYSTEM_ACCOUNT":
+			return true
+		}
+	}
+	return false
+}
+
 // The AccountFilter message.
 type AccountFilter struct {
 	// The accountType field.
 	AccountType *AccountType `json:"accountType,omitempty"`
 }
 
-func (o *AccountFilter) GetAccountType() *AccountType {
-	if o == nil {
+func (a *AccountFilter) GetAccountType() *AccountType {
+	if a == nil {
 		return nil
 	}
-	return o.AccountType
+	return a.AccountType
 }

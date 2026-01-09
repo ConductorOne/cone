@@ -18,24 +18,24 @@ func (u UserServiceListResponseExpanded) MarshalJSON() ([]byte, error) {
 }
 
 func (u *UserServiceListResponseExpanded) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &u, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &u, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *UserServiceListResponseExpanded) GetAtType() *string {
-	if o == nil {
+func (u *UserServiceListResponseExpanded) GetAtType() *string {
+	if u == nil {
 		return nil
 	}
-	return o.AtType
+	return u.AtType
 }
 
-func (o *UserServiceListResponseExpanded) GetAdditionalProperties() map[string]any {
-	if o == nil {
+func (u *UserServiceListResponseExpanded) GetAdditionalProperties() map[string]any {
+	if u == nil {
 		return nil
 	}
-	return o.AdditionalProperties
+	return u.AdditionalProperties
 }
 
 // The UserServiceListResponse message contains a list of results and a nextPageToken if applicable.
@@ -50,23 +50,23 @@ type UserServiceListResponse struct {
 	NextPageToken *string `json:"nextPageToken,omitempty"`
 }
 
-func (o *UserServiceListResponse) GetExpanded() []UserServiceListResponseExpanded {
-	if o == nil {
+func (u *UserServiceListResponse) GetExpanded() []UserServiceListResponseExpanded {
+	if u == nil {
 		return nil
 	}
-	return o.Expanded
+	return u.Expanded
 }
 
-func (o *UserServiceListResponse) GetList() []UserView {
-	if o == nil {
+func (u *UserServiceListResponse) GetList() []UserView {
+	if u == nil {
 		return nil
 	}
-	return o.List
+	return u.List
 }
 
-func (o *UserServiceListResponse) GetNextPageToken() *string {
-	if o == nil {
+func (u *UserServiceListResponse) GetNextPageToken() *string {
+	if u == nil {
 		return nil
 	}
-	return o.NextPageToken
+	return u.NextPageToken
 }

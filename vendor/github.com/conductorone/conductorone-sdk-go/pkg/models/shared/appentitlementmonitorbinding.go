@@ -20,6 +20,17 @@ func (e EntitlementGroup) ToPointer() *EntitlementGroup {
 	return &e
 }
 
+// IsExact returns true if the value matches a known enum value, false otherwise.
+func (e *EntitlementGroup) IsExact() bool {
+	if e != nil {
+		switch *e {
+		case "ENTITLEMENT_GROUP_UNSPECIFIED", "ENTITLEMENT_GROUP_A", "ENTITLEMENT_GROUP_B":
+			return true
+		}
+	}
+	return false
+}
+
 // The AppEntitlementMonitorBinding message.
 type AppEntitlementMonitorBinding struct {
 	// The appEntitlementId field.
@@ -40,57 +51,57 @@ func (a AppEntitlementMonitorBinding) MarshalJSON() ([]byte, error) {
 }
 
 func (a *AppEntitlementMonitorBinding) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &a, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &a, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *AppEntitlementMonitorBinding) GetAppEntitlementID() *string {
-	if o == nil {
+func (a *AppEntitlementMonitorBinding) GetAppEntitlementID() *string {
+	if a == nil {
 		return nil
 	}
-	return o.AppEntitlementID
+	return a.AppEntitlementID
 }
 
-func (o *AppEntitlementMonitorBinding) GetAppID() *string {
-	if o == nil {
+func (a *AppEntitlementMonitorBinding) GetAppID() *string {
+	if a == nil {
 		return nil
 	}
-	return o.AppID
+	return a.AppID
 }
 
-func (o *AppEntitlementMonitorBinding) GetCreatedAt() *time.Time {
-	if o == nil {
+func (a *AppEntitlementMonitorBinding) GetCreatedAt() *time.Time {
+	if a == nil {
 		return nil
 	}
-	return o.CreatedAt
+	return a.CreatedAt
 }
 
-func (o *AppEntitlementMonitorBinding) GetDeletedAt() *time.Time {
-	if o == nil {
+func (a *AppEntitlementMonitorBinding) GetDeletedAt() *time.Time {
+	if a == nil {
 		return nil
 	}
-	return o.DeletedAt
+	return a.DeletedAt
 }
 
-func (o *AppEntitlementMonitorBinding) GetEntitlementGroup() *EntitlementGroup {
-	if o == nil {
+func (a *AppEntitlementMonitorBinding) GetEntitlementGroup() *EntitlementGroup {
+	if a == nil {
 		return nil
 	}
-	return o.EntitlementGroup
+	return a.EntitlementGroup
 }
 
-func (o *AppEntitlementMonitorBinding) GetMonitorID() *string {
-	if o == nil {
+func (a *AppEntitlementMonitorBinding) GetMonitorID() *string {
+	if a == nil {
 		return nil
 	}
-	return o.MonitorID
+	return a.MonitorID
 }
 
-func (o *AppEntitlementMonitorBinding) GetUpdatedAt() *time.Time {
-	if o == nil {
+func (a *AppEntitlementMonitorBinding) GetUpdatedAt() *time.Time {
+	if a == nil {
 		return nil
 	}
-	return o.UpdatedAt
+	return a.UpdatedAt
 }

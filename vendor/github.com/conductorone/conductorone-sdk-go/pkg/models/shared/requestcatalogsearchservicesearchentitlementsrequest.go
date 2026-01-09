@@ -16,6 +16,17 @@ func (e GrantedStatus) ToPointer() *GrantedStatus {
 	return &e
 }
 
+// IsExact returns true if the value matches a known enum value, false otherwise.
+func (e *GrantedStatus) IsExact() bool {
+	if e != nil {
+		switch *e {
+		case "UNSPECIFIED", "ALL", "GRANTED", "NOT_GRANTED":
+			return true
+		}
+	}
+	return false
+}
+
 // The RequestCatalogSearchServiceSearchEntitlementsRequest searches entitlements, but only ones that are available to you through the open catalogs.
 type RequestCatalogSearchServiceSearchEntitlementsRequest struct {
 	// The app entitlement expand mask allows the user to get additional information when getting responses containing app entitlement views.
@@ -36,58 +47,58 @@ type RequestCatalogSearchServiceSearchEntitlementsRequest struct {
 	Query *string `json:"query,omitempty"`
 }
 
-func (o *RequestCatalogSearchServiceSearchEntitlementsRequest) GetAppEntitlementExpandMask() *AppEntitlementExpandMask {
-	if o == nil {
+func (r *RequestCatalogSearchServiceSearchEntitlementsRequest) GetAppEntitlementExpandMask() *AppEntitlementExpandMask {
+	if r == nil {
 		return nil
 	}
-	return o.AppEntitlementExpandMask
+	return r.AppEntitlementExpandMask
 }
 
-func (o *RequestCatalogSearchServiceSearchEntitlementsRequest) GetAppDisplayName() *string {
-	if o == nil {
+func (r *RequestCatalogSearchServiceSearchEntitlementsRequest) GetAppDisplayName() *string {
+	if r == nil {
 		return nil
 	}
-	return o.AppDisplayName
+	return r.AppDisplayName
 }
 
-func (o *RequestCatalogSearchServiceSearchEntitlementsRequest) GetEntitlementAlias() *string {
-	if o == nil {
+func (r *RequestCatalogSearchServiceSearchEntitlementsRequest) GetEntitlementAlias() *string {
+	if r == nil {
 		return nil
 	}
-	return o.EntitlementAlias
+	return r.EntitlementAlias
 }
 
-func (o *RequestCatalogSearchServiceSearchEntitlementsRequest) GetGrantedStatus() *GrantedStatus {
-	if o == nil {
+func (r *RequestCatalogSearchServiceSearchEntitlementsRequest) GetGrantedStatus() *GrantedStatus {
+	if r == nil {
 		return nil
 	}
-	return o.GrantedStatus
+	return r.GrantedStatus
 }
 
-func (o *RequestCatalogSearchServiceSearchEntitlementsRequest) GetIncludeDeleted() *bool {
-	if o == nil {
+func (r *RequestCatalogSearchServiceSearchEntitlementsRequest) GetIncludeDeleted() *bool {
+	if r == nil {
 		return nil
 	}
-	return o.IncludeDeleted
+	return r.IncludeDeleted
 }
 
-func (o *RequestCatalogSearchServiceSearchEntitlementsRequest) GetPageSize() *int {
-	if o == nil {
+func (r *RequestCatalogSearchServiceSearchEntitlementsRequest) GetPageSize() *int {
+	if r == nil {
 		return nil
 	}
-	return o.PageSize
+	return r.PageSize
 }
 
-func (o *RequestCatalogSearchServiceSearchEntitlementsRequest) GetPageToken() *string {
-	if o == nil {
+func (r *RequestCatalogSearchServiceSearchEntitlementsRequest) GetPageToken() *string {
+	if r == nil {
 		return nil
 	}
-	return o.PageToken
+	return r.PageToken
 }
 
-func (o *RequestCatalogSearchServiceSearchEntitlementsRequest) GetQuery() *string {
-	if o == nil {
+func (r *RequestCatalogSearchServiceSearchEntitlementsRequest) GetQuery() *string {
+	if r == nil {
 		return nil
 	}
-	return o.Query
+	return r.Query
 }

@@ -10,16 +10,16 @@ type TaskActionsServiceHardResetRequest struct {
 	Comment *string `json:"comment,omitempty"`
 }
 
-func (o *TaskActionsServiceHardResetRequest) GetTaskExpandMask() *TaskExpandMask {
-	if o == nil {
+func (t *TaskActionsServiceHardResetRequest) GetTaskExpandMask() *TaskExpandMask {
+	if t == nil {
 		return nil
 	}
-	return o.TaskExpandMask
+	return t.TaskExpandMask
 }
 
-func (o *TaskActionsServiceHardResetRequest) GetComment() *string {
-	if o == nil {
+func (t *TaskActionsServiceHardResetRequest) GetComment() *string {
+	if t == nil {
 		return nil
 	}
-	return o.Comment
+	return t.Comment
 }

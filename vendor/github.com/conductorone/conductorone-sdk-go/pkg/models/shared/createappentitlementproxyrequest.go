@@ -8,9 +8,9 @@ type CreateAppEntitlementProxyRequest struct {
 	AppEntitlementProxyExpandMask *AppEntitlementProxyExpandMask `json:"expandMask,omitempty"`
 }
 
-func (o *CreateAppEntitlementProxyRequest) GetAppEntitlementProxyExpandMask() *AppEntitlementProxyExpandMask {
-	if o == nil {
+func (c *CreateAppEntitlementProxyRequest) GetAppEntitlementProxyExpandMask() *AppEntitlementProxyExpandMask {
+	if c == nil {
 		return nil
 	}
-	return o.AppEntitlementProxyExpandMask
+	return c.AppEntitlementProxyExpandMask
 }

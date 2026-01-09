@@ -26,72 +26,72 @@ type CreateAutomationRequestInput struct {
 	Triggers []AutomationTrigger `json:"triggers,omitempty"`
 }
 
-func (o *CreateAutomationRequestInput) GetAutomationContext() *AutomationContext {
-	if o == nil {
+func (c *CreateAutomationRequestInput) GetAutomationContext() *AutomationContext {
+	if c == nil {
 		return nil
 	}
-	return o.AutomationContext
+	return c.AutomationContext
 }
 
-func (o *CreateAutomationRequestInput) GetAppID() *string {
-	if o == nil {
+func (c *CreateAutomationRequestInput) GetAppID() *string {
+	if c == nil {
 		return nil
 	}
-	return o.AppID
+	return c.AppID
 }
 
-func (o *CreateAutomationRequestInput) GetAutomationSteps() []AutomationStep {
-	if o == nil {
+func (c *CreateAutomationRequestInput) GetAutomationSteps() []AutomationStep {
+	if c == nil {
 		return nil
 	}
-	return o.AutomationSteps
+	return c.AutomationSteps
 }
 
-func (o *CreateAutomationRequestInput) GetDescription() *string {
-	if o == nil {
+func (c *CreateAutomationRequestInput) GetDescription() *string {
+	if c == nil {
 		return nil
 	}
-	return o.Description
+	return c.Description
 }
 
-func (o *CreateAutomationRequestInput) GetDisplayName() *string {
-	if o == nil {
+func (c *CreateAutomationRequestInput) GetDisplayName() *string {
+	if c == nil {
 		return nil
 	}
-	return o.DisplayName
+	return c.DisplayName
 }
 
-func (o *CreateAutomationRequestInput) GetDraftAutomationSteps() []AutomationStep {
-	if o == nil {
+func (c *CreateAutomationRequestInput) GetDraftAutomationSteps() []AutomationStep {
+	if c == nil {
 		return nil
 	}
-	return o.DraftAutomationSteps
+	return c.DraftAutomationSteps
 }
 
-func (o *CreateAutomationRequestInput) GetDraftTriggers() []AutomationTrigger {
-	if o == nil {
+func (c *CreateAutomationRequestInput) GetDraftTriggers() []AutomationTrigger {
+	if c == nil {
 		return nil
 	}
-	return o.DraftTriggers
+	return c.DraftTriggers
 }
 
-func (o *CreateAutomationRequestInput) GetEnabled() *bool {
-	if o == nil {
+func (c *CreateAutomationRequestInput) GetEnabled() *bool {
+	if c == nil {
 		return nil
 	}
-	return o.Enabled
+	return c.Enabled
 }
 
-func (o *CreateAutomationRequestInput) GetIsDraft() *bool {
-	if o == nil {
+func (c *CreateAutomationRequestInput) GetIsDraft() *bool {
+	if c == nil {
 		return nil
 	}
-	return o.IsDraft
+	return c.IsDraft
 }
 
-func (o *CreateAutomationRequestInput) GetTriggers() []AutomationTrigger {
-	if o == nil {
+func (c *CreateAutomationRequestInput) GetTriggers() []AutomationTrigger {
+	if c == nil {
 		return nil
 	}
-	return o.Triggers
+	return c.Triggers
 }

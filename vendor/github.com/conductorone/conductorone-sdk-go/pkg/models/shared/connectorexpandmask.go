@@ -8,9 +8,9 @@ type ConnectorExpandMask struct {
 	Paths []string `json:"paths,omitempty"`
 }
 
-func (o *ConnectorExpandMask) GetPaths() []string {
-	if o == nil {
+func (c *ConnectorExpandMask) GetPaths() []string {
+	if c == nil {
 		return nil
 	}
-	return o.Paths
+	return c.Paths
 }

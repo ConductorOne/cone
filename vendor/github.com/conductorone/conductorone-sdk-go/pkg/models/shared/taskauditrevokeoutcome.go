@@ -18,15 +18,26 @@ func (e TaskAuditRevokeOutcomeOutcome) ToPointer() *TaskAuditRevokeOutcomeOutcom
 	return &e
 }
 
+// IsExact returns true if the value matches a known enum value, false otherwise.
+func (e *TaskAuditRevokeOutcomeOutcome) IsExact() bool {
+	if e != nil {
+		switch *e {
+		case "REVOKE_OUTCOME_UNSPECIFIED", "REVOKE_OUTCOME_REVOKED", "REVOKE_OUTCOME_DENIED", "REVOKE_OUTCOME_ERROR", "REVOKE_OUTCOME_CANCELLED", "REVOKE_OUTCOME_WAIT_TIMED_OUT":
+			return true
+		}
+	}
+	return false
+}
+
 // The TaskAuditRevokeOutcome message.
 type TaskAuditRevokeOutcome struct {
 	// The outcome field.
 	Outcome *TaskAuditRevokeOutcomeOutcome `json:"outcome,omitempty"`
 }
 
-func (o *TaskAuditRevokeOutcome) GetOutcome() *TaskAuditRevokeOutcomeOutcome {
-	if o == nil {
+func (t *TaskAuditRevokeOutcome) GetOutcome() *TaskAuditRevokeOutcomeOutcome {
+	if t == nil {
 		return nil
 	}
-	return o.Outcome
+	return t.Outcome
 }

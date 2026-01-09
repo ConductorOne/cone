@@ -16,32 +16,34 @@ type C1APIWebhooksV1WebhooksSearchSearchResponse struct {
 	RawResponse *http.Response
 	// Successful response
 	WebhooksSearchResponse *shared.WebhooksSearchResponse
+
+	Next func() (*C1APIWebhooksV1WebhooksSearchSearchResponse, error)
 }
 
-func (o *C1APIWebhooksV1WebhooksSearchSearchResponse) GetContentType() string {
-	if o == nil {
+func (c *C1APIWebhooksV1WebhooksSearchSearchResponse) GetContentType() string {
+	if c == nil {
 		return ""
 	}
-	return o.ContentType
+	return c.ContentType
 }
 
-func (o *C1APIWebhooksV1WebhooksSearchSearchResponse) GetStatusCode() int {
-	if o == nil {
+func (c *C1APIWebhooksV1WebhooksSearchSearchResponse) GetStatusCode() int {
+	if c == nil {
 		return 0
 	}
-	return o.StatusCode
+	return c.StatusCode
 }
 
-func (o *C1APIWebhooksV1WebhooksSearchSearchResponse) GetRawResponse() *http.Response {
-	if o == nil {
+func (c *C1APIWebhooksV1WebhooksSearchSearchResponse) GetRawResponse() *http.Response {
+	if c == nil {
 		return nil
 	}
-	return o.RawResponse
+	return c.RawResponse
 }
 
-func (o *C1APIWebhooksV1WebhooksSearchSearchResponse) GetWebhooksSearchResponse() *shared.WebhooksSearchResponse {
-	if o == nil {
+func (c *C1APIWebhooksV1WebhooksSearchSearchResponse) GetWebhooksSearchResponse() *shared.WebhooksSearchResponse {
+	if c == nil {
 		return nil
 	}
-	return o.WebhooksSearchResponse
+	return c.WebhooksSearchResponse
 }

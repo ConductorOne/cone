@@ -10,9 +10,9 @@ import (
 // The ConflictMonitor message.
 type ConflictMonitor struct {
 	// The NotificationConfig message.
-	NotificationConfig *NotificationConfig `json:"notificationConfig,omitempty"`
-	CreatedAt          *time.Time          `json:"createdAt,omitempty"`
-	DeletedAt          *time.Time          `json:"deletedAt,omitempty"`
+	NotificationConfig *NotificationConfig1 `json:"notificationConfig,omitempty"`
+	CreatedAt          *time.Time           `json:"createdAt,omitempty"`
+	DeletedAt          *time.Time           `json:"deletedAt,omitempty"`
 	// The description field.
 	Description *string `json:"description,omitempty"`
 	// The displayName field.
@@ -33,78 +33,78 @@ func (c ConflictMonitor) MarshalJSON() ([]byte, error) {
 }
 
 func (c *ConflictMonitor) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &c, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &c, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *ConflictMonitor) GetNotificationConfig() *NotificationConfig {
-	if o == nil {
+func (c *ConflictMonitor) GetNotificationConfig() *NotificationConfig1 {
+	if c == nil {
 		return nil
 	}
-	return o.NotificationConfig
+	return c.NotificationConfig
 }
 
-func (o *ConflictMonitor) GetCreatedAt() *time.Time {
-	if o == nil {
+func (c *ConflictMonitor) GetCreatedAt() *time.Time {
+	if c == nil {
 		return nil
 	}
-	return o.CreatedAt
+	return c.CreatedAt
 }
 
-func (o *ConflictMonitor) GetDeletedAt() *time.Time {
-	if o == nil {
+func (c *ConflictMonitor) GetDeletedAt() *time.Time {
+	if c == nil {
 		return nil
 	}
-	return o.DeletedAt
+	return c.DeletedAt
 }
 
-func (o *ConflictMonitor) GetDescription() *string {
-	if o == nil {
+func (c *ConflictMonitor) GetDescription() *string {
+	if c == nil {
 		return nil
 	}
-	return o.Description
+	return c.Description
 }
 
-func (o *ConflictMonitor) GetDisplayName() *string {
-	if o == nil {
+func (c *ConflictMonitor) GetDisplayName() *string {
+	if c == nil {
 		return nil
 	}
-	return o.DisplayName
+	return c.DisplayName
 }
 
-func (o *ConflictMonitor) GetEnabled() *bool {
-	if o == nil {
+func (c *ConflictMonitor) GetEnabled() *bool {
+	if c == nil {
 		return nil
 	}
-	return o.Enabled
+	return c.Enabled
 }
 
-func (o *ConflictMonitor) GetEntitlementSetAID() *string {
-	if o == nil {
+func (c *ConflictMonitor) GetEntitlementSetAID() *string {
+	if c == nil {
 		return nil
 	}
-	return o.EntitlementSetAID
+	return c.EntitlementSetAID
 }
 
-func (o *ConflictMonitor) GetEntitlementSetBID() *string {
-	if o == nil {
+func (c *ConflictMonitor) GetEntitlementSetBID() *string {
+	if c == nil {
 		return nil
 	}
-	return o.EntitlementSetBID
+	return c.EntitlementSetBID
 }
 
-func (o *ConflictMonitor) GetID() *string {
-	if o == nil {
+func (c *ConflictMonitor) GetID() *string {
+	if c == nil {
 		return nil
 	}
-	return o.ID
+	return c.ID
 }
 
-func (o *ConflictMonitor) GetUpdatedAt() *time.Time {
-	if o == nil {
+func (c *ConflictMonitor) GetUpdatedAt() *time.Time {
+	if c == nil {
 		return nil
 	}
-	return o.UpdatedAt
+	return c.UpdatedAt
 }

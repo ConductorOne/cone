@@ -2,112 +2,202 @@
 
 package shared
 
-// Field - A field is a single input meant to collect a piece of data from a user
+// The Field message.
 //
-// This message contains a oneof named type. Only a single field of the following list may be set at a time:
-//   - stringField
-//   - boolField
-//   - stringSliceField
-//   - int64Field
+// This message contains a oneof named field. Only a single field of the following list may be set at a time:
+//   - str
+//   - select
+//   - random
+//   - import
+//   - oauth2
+//   - readOnly
+//   - options
+//   - checkbox
+//   - secret
+//   - strList
+//   - text
+//   - keyValue
+//   - stringMap
 type Field struct {
-	// The BoolField message.
-	//
-	// This message contains a oneof named view. Only a single field of the following list may be set at a time:
-	//   - checkboxField
-	//
-	//
-	// This message contains a oneof named _rules. Only a single field of the following list may be set at a time:
-	//   - rules
-	//
-	BoolField *BoolField `json:"boolField,omitempty"`
-	// The Int64Field message.
-	//
-	// This message contains a oneof named view. Only a single field of the following list may be set at a time:
-	//   - numberField
-	//
-	//
-	// This message contains a oneof named _default_value. Only a single field of the following list may be set at a time:
-	//   - defaultValue
-	//
-	//
-	// This message contains a oneof named _rules. Only a single field of the following list may be set at a time:
-	//   - rules
-	//
-	Int64Field *Int64Field `json:"int64Field,omitempty"`
+	// The CheckboxField message.
+	CheckboxField *CheckboxField1 `json:"checkbox,omitempty"`
+	// The ImportField message.
+	ImportField *ImportField `json:"import,omitempty"`
+	// The KeyValueField message.
+	KeyValueField *KeyValueField `json:"keyValue,omitempty"`
+	// The OAuth2Field message.
+	OAuth2Field *OAuth2Field `json:"oauth2,omitempty"`
+	// The OptionsField message.
+	OptionsField *OptionsField `json:"options,omitempty"`
+	// The RandomStringField message.
+	RandomStringField *RandomStringField `json:"random,omitempty"`
+	// The ReadOnlyField message.
+	ReadOnlyField *ReadOnlyField `json:"readOnly,omitempty"`
+	// The RotatableSecretField message.
+	RotatableSecretField *RotatableSecretField `json:"secret,omitempty"`
+	// The SelectField message.
+	SelectField *SelectField `json:"select,omitempty"`
 	// The StringField message.
-	//
-	// This message contains a oneof named view. Only a single field of the following list may be set at a time:
-	//   - textField
-	//   - passwordField
-	//
-	//
-	// This message contains a oneof named _rules. Only a single field of the following list may be set at a time:
-	//   - rules
-	//
-	StringField *StringField `json:"stringField,omitempty"`
-	// The StringSliceField message.
-	//
-	// This message contains a oneof named view. Only a single field of the following list may be set at a time:
-	//   - chipsField
-	//
-	//
-	// This message contains a oneof named _rules. Only a single field of the following list may be set at a time:
-	//   - rules
-	//
-	StringSliceField *StringSliceField `json:"stringSliceField,omitempty"`
-	// The description field.
-	Description *string `json:"description,omitempty"`
-	// The displayName field.
+	StringField *StringField `json:"str,omitempty"`
+	// The StringListField message.
+	StringListField *StringListField `json:"strList,omitempty"`
+	// The StringMapField message.
+	StringMapField *StringMapField `json:"stringMap,omitempty"`
+	// The TextField message.
+	TextField *TextField `json:"text,omitempty"`
+	// Optional. Additional placeholder text for the field
+	//  In cases where a single placeholder is not enough to describe the field
+	AdditionalPlaceholder *string `json:"additionalPlaceholder,omitempty"`
+	// The dependsOnFields field.
+	DependsOnFields []string `json:"dependsOnFields,omitempty"`
+	// Human-readable label for this Field
 	DisplayName *string `json:"displayName,omitempty"`
-	// The name field.
+	// empty or https URL
+	HelpURL *string `json:"helpUrl,omitempty"`
+	// Must not start with `C1_` and match [a-zA-Z0-9_]{2,64}.  Must be unique within a connector.
 	Name *string `json:"name,omitempty"`
+	// The placeholder field.
+	Placeholder *string `json:"placeholder,omitempty"`
+	// The postCreate field.
+	PostCreate *bool `json:"postCreate,omitempty"`
 }
 
-func (o *Field) GetBoolField() *BoolField {
-	if o == nil {
+func (f *Field) GetCheckboxField() *CheckboxField1 {
+	if f == nil {
 		return nil
 	}
-	return o.BoolField
+	return f.CheckboxField
 }
 
-func (o *Field) GetInt64Field() *Int64Field {
-	if o == nil {
+func (f *Field) GetImportField() *ImportField {
+	if f == nil {
 		return nil
 	}
-	return o.Int64Field
+	return f.ImportField
 }
 
-func (o *Field) GetStringField() *StringField {
-	if o == nil {
+func (f *Field) GetKeyValueField() *KeyValueField {
+	if f == nil {
 		return nil
 	}
-	return o.StringField
+	return f.KeyValueField
 }
 
-func (o *Field) GetStringSliceField() *StringSliceField {
-	if o == nil {
+func (f *Field) GetOAuth2Field() *OAuth2Field {
+	if f == nil {
 		return nil
 	}
-	return o.StringSliceField
+	return f.OAuth2Field
 }
 
-func (o *Field) GetDescription() *string {
-	if o == nil {
+func (f *Field) GetOptionsField() *OptionsField {
+	if f == nil {
 		return nil
 	}
-	return o.Description
+	return f.OptionsField
 }
 
-func (o *Field) GetDisplayName() *string {
-	if o == nil {
+func (f *Field) GetRandomStringField() *RandomStringField {
+	if f == nil {
 		return nil
 	}
-	return o.DisplayName
+	return f.RandomStringField
 }
 
-func (o *Field) GetName() *string {
-	if o == nil {
+func (f *Field) GetReadOnlyField() *ReadOnlyField {
+	if f == nil {
 		return nil
 	}
-	return o.Name
+	return f.ReadOnlyField
+}
+
+func (f *Field) GetRotatableSecretField() *RotatableSecretField {
+	if f == nil {
+		return nil
+	}
+	return f.RotatableSecretField
+}
+
+func (f *Field) GetSelectField() *SelectField {
+	if f == nil {
+		return nil
+	}
+	return f.SelectField
+}
+
+func (f *Field) GetStringField() *StringField {
+	if f == nil {
+		return nil
+	}
+	return f.StringField
+}
+
+func (f *Field) GetStringListField() *StringListField {
+	if f == nil {
+		return nil
+	}
+	return f.StringListField
+}
+
+func (f *Field) GetStringMapField() *StringMapField {
+	if f == nil {
+		return nil
+	}
+	return f.StringMapField
+}
+
+func (f *Field) GetTextField() *TextField {
+	if f == nil {
+		return nil
+	}
+	return f.TextField
+}
+
+func (f *Field) GetAdditionalPlaceholder() *string {
+	if f == nil {
+		return nil
+	}
+	return f.AdditionalPlaceholder
+}
+
+func (f *Field) GetDependsOnFields() []string {
+	if f == nil {
+		return nil
+	}
+	return f.DependsOnFields
+}
+
+func (f *Field) GetDisplayName() *string {
+	if f == nil {
+		return nil
+	}
+	return f.DisplayName
+}
+
+func (f *Field) GetHelpURL() *string {
+	if f == nil {
+		return nil
+	}
+	return f.HelpURL
+}
+
+func (f *Field) GetName() *string {
+	if f == nil {
+		return nil
+	}
+	return f.Name
+}
+
+func (f *Field) GetPlaceholder() *string {
+	if f == nil {
+		return nil
+	}
+	return f.Placeholder
+}
+
+func (f *Field) GetPostCreate() *bool {
+	if f == nil {
+		return nil
+	}
+	return f.PostCreate
 }

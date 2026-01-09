@@ -14,30 +14,63 @@ func (e AppUserDomains) ToPointer() *AppUserDomains {
 	return &e
 }
 
-type AppUserStatuses string
+// IsExact returns true if the value matches a known enum value, false otherwise.
+func (e *AppUserDomains) IsExact() bool {
+	if e != nil {
+		switch *e {
+		case "APP_USER_DOMAIN_UNSPECIFIED", "APP_USER_DOMAIN_EXTERNAL", "APP_USER_DOMAIN_TRUSTED":
+			return true
+		}
+	}
+	return false
+}
+
+type AppUserServiceSearchRequestAppUserStatuses string
 
 const (
-	AppUserStatusesStatusUnspecified AppUserStatuses = "STATUS_UNSPECIFIED"
-	AppUserStatusesStatusEnabled     AppUserStatuses = "STATUS_ENABLED"
-	AppUserStatusesStatusDisabled    AppUserStatuses = "STATUS_DISABLED"
-	AppUserStatusesStatusDeleted     AppUserStatuses = "STATUS_DELETED"
+	AppUserServiceSearchRequestAppUserStatusesStatusUnspecified AppUserServiceSearchRequestAppUserStatuses = "STATUS_UNSPECIFIED"
+	AppUserServiceSearchRequestAppUserStatusesStatusEnabled     AppUserServiceSearchRequestAppUserStatuses = "STATUS_ENABLED"
+	AppUserServiceSearchRequestAppUserStatusesStatusDisabled    AppUserServiceSearchRequestAppUserStatuses = "STATUS_DISABLED"
+	AppUserServiceSearchRequestAppUserStatusesStatusDeleted     AppUserServiceSearchRequestAppUserStatuses = "STATUS_DELETED"
 )
 
-func (e AppUserStatuses) ToPointer() *AppUserStatuses {
+func (e AppUserServiceSearchRequestAppUserStatuses) ToPointer() *AppUserServiceSearchRequestAppUserStatuses {
 	return &e
 }
 
-type AppUserTypes string
+// IsExact returns true if the value matches a known enum value, false otherwise.
+func (e *AppUserServiceSearchRequestAppUserStatuses) IsExact() bool {
+	if e != nil {
+		switch *e {
+		case "STATUS_UNSPECIFIED", "STATUS_ENABLED", "STATUS_DISABLED", "STATUS_DELETED":
+			return true
+		}
+	}
+	return false
+}
+
+type AppUserServiceSearchRequestAppUserTypes string
 
 const (
-	AppUserTypesAppUserTypeUnspecified    AppUserTypes = "APP_USER_TYPE_UNSPECIFIED"
-	AppUserTypesAppUserTypeUser           AppUserTypes = "APP_USER_TYPE_USER"
-	AppUserTypesAppUserTypeServiceAccount AppUserTypes = "APP_USER_TYPE_SERVICE_ACCOUNT"
-	AppUserTypesAppUserTypeSystemAccount  AppUserTypes = "APP_USER_TYPE_SYSTEM_ACCOUNT"
+	AppUserServiceSearchRequestAppUserTypesAppUserTypeUnspecified    AppUserServiceSearchRequestAppUserTypes = "APP_USER_TYPE_UNSPECIFIED"
+	AppUserServiceSearchRequestAppUserTypesAppUserTypeUser           AppUserServiceSearchRequestAppUserTypes = "APP_USER_TYPE_USER"
+	AppUserServiceSearchRequestAppUserTypesAppUserTypeServiceAccount AppUserServiceSearchRequestAppUserTypes = "APP_USER_TYPE_SERVICE_ACCOUNT"
+	AppUserServiceSearchRequestAppUserTypesAppUserTypeSystemAccount  AppUserServiceSearchRequestAppUserTypes = "APP_USER_TYPE_SYSTEM_ACCOUNT"
 )
 
-func (e AppUserTypes) ToPointer() *AppUserTypes {
+func (e AppUserServiceSearchRequestAppUserTypes) ToPointer() *AppUserServiceSearchRequestAppUserTypes {
 	return &e
+}
+
+// IsExact returns true if the value matches a known enum value, false otherwise.
+func (e *AppUserServiceSearchRequestAppUserTypes) IsExact() bool {
+	if e != nil {
+		switch *e {
+		case "APP_USER_TYPE_UNSPECIFIED", "APP_USER_TYPE_USER", "APP_USER_TYPE_SERVICE_ACCOUNT", "APP_USER_TYPE_SYSTEM_ACCOUNT":
+			return true
+		}
+	}
+	return false
 }
 
 // AppUserServiceSearchRequest - Search App users based on filters specified in the request body
@@ -53,9 +86,9 @@ type AppUserServiceSearchRequest struct {
 	// A list of app user status details to restrict the search to.
 	AppUserStatusDetails []string `json:"appUserStatusDetails,omitempty"`
 	// A list of app user statuses to restrict the search to.
-	AppUserStatuses []AppUserStatuses `json:"appUserStatuses,omitempty"`
+	AppUserStatuses []AppUserServiceSearchRequestAppUserStatuses `json:"appUserStatuses,omitempty"`
 	// A list of app user types to restrict the search to.
-	AppUserTypes []AppUserTypes `json:"appUserTypes,omitempty"`
+	AppUserTypes []AppUserServiceSearchRequestAppUserTypes `json:"appUserTypes,omitempty"`
 	// A list of app user IDs to remove from the results.
 	ExcludeAppUserIds []string `json:"excludeAppUserIds,omitempty"`
 	// The pageSize where 0 <= pageSize <= 100. Values < 10 will be set to 10. A value of 0 returns the default page size (currently 25)
@@ -70,93 +103,93 @@ type AppUserServiceSearchRequest struct {
 	UserIds []string `json:"userIds,omitempty"`
 }
 
-func (o *AppUserServiceSearchRequest) GetAppUserExpandMask() *AppUserExpandMask {
-	if o == nil {
+func (a *AppUserServiceSearchRequest) GetAppUserExpandMask() *AppUserExpandMask {
+	if a == nil {
 		return nil
 	}
-	return o.AppUserExpandMask
+	return a.AppUserExpandMask
 }
 
-func (o *AppUserServiceSearchRequest) GetAppID() *string {
-	if o == nil {
+func (a *AppUserServiceSearchRequest) GetAppID() *string {
+	if a == nil {
 		return nil
 	}
-	return o.AppID
+	return a.AppID
 }
 
-func (o *AppUserServiceSearchRequest) GetAppUserDomains() []AppUserDomains {
-	if o == nil {
+func (a *AppUserServiceSearchRequest) GetAppUserDomains() []AppUserDomains {
+	if a == nil {
 		return nil
 	}
-	return o.AppUserDomains
+	return a.AppUserDomains
 }
 
-func (o *AppUserServiceSearchRequest) GetAppUserIds() []string {
-	if o == nil {
+func (a *AppUserServiceSearchRequest) GetAppUserIds() []string {
+	if a == nil {
 		return nil
 	}
-	return o.AppUserIds
+	return a.AppUserIds
 }
 
-func (o *AppUserServiceSearchRequest) GetAppUserStatusDetails() []string {
-	if o == nil {
+func (a *AppUserServiceSearchRequest) GetAppUserStatusDetails() []string {
+	if a == nil {
 		return nil
 	}
-	return o.AppUserStatusDetails
+	return a.AppUserStatusDetails
 }
 
-func (o *AppUserServiceSearchRequest) GetAppUserStatuses() []AppUserStatuses {
-	if o == nil {
+func (a *AppUserServiceSearchRequest) GetAppUserStatuses() []AppUserServiceSearchRequestAppUserStatuses {
+	if a == nil {
 		return nil
 	}
-	return o.AppUserStatuses
+	return a.AppUserStatuses
 }
 
-func (o *AppUserServiceSearchRequest) GetAppUserTypes() []AppUserTypes {
-	if o == nil {
+func (a *AppUserServiceSearchRequest) GetAppUserTypes() []AppUserServiceSearchRequestAppUserTypes {
+	if a == nil {
 		return nil
 	}
-	return o.AppUserTypes
+	return a.AppUserTypes
 }
 
-func (o *AppUserServiceSearchRequest) GetExcludeAppUserIds() []string {
-	if o == nil {
+func (a *AppUserServiceSearchRequest) GetExcludeAppUserIds() []string {
+	if a == nil {
 		return nil
 	}
-	return o.ExcludeAppUserIds
+	return a.ExcludeAppUserIds
 }
 
-func (o *AppUserServiceSearchRequest) GetPageSize() *int {
-	if o == nil {
+func (a *AppUserServiceSearchRequest) GetPageSize() *int {
+	if a == nil {
 		return nil
 	}
-	return o.PageSize
+	return a.PageSize
 }
 
-func (o *AppUserServiceSearchRequest) GetPageToken() *string {
-	if o == nil {
+func (a *AppUserServiceSearchRequest) GetPageToken() *string {
+	if a == nil {
 		return nil
 	}
-	return o.PageToken
+	return a.PageToken
 }
 
-func (o *AppUserServiceSearchRequest) GetQuery() *string {
-	if o == nil {
+func (a *AppUserServiceSearchRequest) GetQuery() *string {
+	if a == nil {
 		return nil
 	}
-	return o.Query
+	return a.Query
 }
 
-func (o *AppUserServiceSearchRequest) GetRefs() []AppUserRef {
-	if o == nil {
+func (a *AppUserServiceSearchRequest) GetRefs() []AppUserRef {
+	if a == nil {
 		return nil
 	}
-	return o.Refs
+	return a.Refs
 }
 
-func (o *AppUserServiceSearchRequest) GetUserIds() []string {
-	if o == nil {
+func (a *AppUserServiceSearchRequest) GetUserIds() []string {
+	if a == nil {
 		return nil
 	}
-	return o.UserIds
+	return a.UserIds
 }

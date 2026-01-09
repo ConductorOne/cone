@@ -19,22 +19,22 @@ func (d DeniedAction) MarshalJSON() ([]byte, error) {
 }
 
 func (d *DeniedAction) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &d, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &d, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *DeniedAction) GetDeniedAt() *time.Time {
-	if o == nil {
+func (d *DeniedAction) GetDeniedAt() *time.Time {
+	if d == nil {
 		return nil
 	}
-	return o.DeniedAt
+	return d.DeniedAt
 }
 
-func (o *DeniedAction) GetUserID() *string {
-	if o == nil {
+func (d *DeniedAction) GetUserID() *string {
+	if d == nil {
 		return nil
 	}
-	return o.UserID
+	return d.UserID
 }

@@ -18,24 +18,24 @@ func (t TaskActionsServiceDenyResponseExpanded) MarshalJSON() ([]byte, error) {
 }
 
 func (t *TaskActionsServiceDenyResponseExpanded) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &t, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &t, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *TaskActionsServiceDenyResponseExpanded) GetAtType() *string {
-	if o == nil {
+func (t *TaskActionsServiceDenyResponseExpanded) GetAtType() *string {
+	if t == nil {
 		return nil
 	}
-	return o.AtType
+	return t.AtType
 }
 
-func (o *TaskActionsServiceDenyResponseExpanded) GetAdditionalProperties() map[string]any {
-	if o == nil {
+func (t *TaskActionsServiceDenyResponseExpanded) GetAdditionalProperties() map[string]any {
+	if t == nil {
 		return nil
 	}
-	return o.AdditionalProperties
+	return t.AdditionalProperties
 }
 
 // The TaskActionsServiceDenyResponse returns a task view with paths indicating the location of expanded items in the array.
@@ -48,23 +48,23 @@ type TaskActionsServiceDenyResponse struct {
 	TicketActionID *string `json:"ticketActionId,omitempty"`
 }
 
-func (o *TaskActionsServiceDenyResponse) GetTaskView() *TaskView {
-	if o == nil {
+func (t *TaskActionsServiceDenyResponse) GetTaskView() *TaskView {
+	if t == nil {
 		return nil
 	}
-	return o.TaskView
+	return t.TaskView
 }
 
-func (o *TaskActionsServiceDenyResponse) GetExpanded() []TaskActionsServiceDenyResponseExpanded {
-	if o == nil {
+func (t *TaskActionsServiceDenyResponse) GetExpanded() []TaskActionsServiceDenyResponseExpanded {
+	if t == nil {
 		return nil
 	}
-	return o.Expanded
+	return t.Expanded
 }
 
-func (o *TaskActionsServiceDenyResponse) GetTicketActionID() *string {
-	if o == nil {
+func (t *TaskActionsServiceDenyResponse) GetTicketActionID() *string {
+	if t == nil {
 		return nil
 	}
-	return o.TicketActionID
+	return t.TicketActionID
 }

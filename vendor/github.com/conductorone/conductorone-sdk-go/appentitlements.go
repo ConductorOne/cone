@@ -62,7 +62,7 @@ func (s *AppEntitlements) AddAutomationExclusion(ctx context.Context, request op
 		BaseURL:          baseURL,
 		Context:          ctx,
 		OperationID:      "c1.api.app.v1.AppEntitlements.AddAutomationExclusion",
-		OAuth2Scopes:     []string{},
+		OAuth2Scopes:     nil,
 		SecuritySource:   s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "AddAutomationExclusionRequest", "json", `request:"mediaType=application/json"`)
@@ -274,7 +274,7 @@ func (s *AppEntitlements) AddManuallyManagedMembers(ctx context.Context, request
 		BaseURL:          baseURL,
 		Context:          ctx,
 		OperationID:      "c1.api.app.v1.AppEntitlements.AddManuallyManagedMembers",
-		OAuth2Scopes:     []string{},
+		OAuth2Scopes:     nil,
 		SecuritySource:   s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "AddManuallyManagedUsersRequest", "json", `request:"mediaType=application/json"`)
@@ -486,7 +486,7 @@ func (s *AppEntitlements) Create(ctx context.Context, request operations.C1APIAp
 		BaseURL:          baseURL,
 		Context:          ctx,
 		OperationID:      "c1.api.app.v1.AppEntitlements.Create",
-		OAuth2Scopes:     []string{},
+		OAuth2Scopes:     nil,
 		SecuritySource:   s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "CreateAppEntitlementRequest", "json", `request:"mediaType=application/json"`)
@@ -698,7 +698,7 @@ func (s *AppEntitlements) CreateAutomation(ctx context.Context, request operatio
 		BaseURL:          baseURL,
 		Context:          ctx,
 		OperationID:      "c1.api.app.v1.AppEntitlements.CreateAutomation",
-		OAuth2Scopes:     []string{},
+		OAuth2Scopes:     nil,
 		SecuritySource:   s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "CreateAutomationRequest", "json", `request:"mediaType=application/json"`)
@@ -910,7 +910,7 @@ func (s *AppEntitlements) Delete(ctx context.Context, request operations.C1APIAp
 		BaseURL:          baseURL,
 		Context:          ctx,
 		OperationID:      "c1.api.app.v1.AppEntitlements.Delete",
-		OAuth2Scopes:     []string{},
+		OAuth2Scopes:     nil,
 		SecuritySource:   s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "DeleteAppEntitlementRequest", "json", `request:"mediaType=application/json"`)
@@ -1122,7 +1122,7 @@ func (s *AppEntitlements) DeleteAutomation(ctx context.Context, request operatio
 		BaseURL:          baseURL,
 		Context:          ctx,
 		OperationID:      "c1.api.app.v1.AppEntitlements.DeleteAutomation",
-		OAuth2Scopes:     []string{},
+		OAuth2Scopes:     nil,
 		SecuritySource:   s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "DeleteAutomationRequest", "json", `request:"mediaType=application/json"`)
@@ -1334,7 +1334,7 @@ func (s *AppEntitlements) Get(ctx context.Context, request operations.C1APIAppV1
 		BaseURL:          baseURL,
 		Context:          ctx,
 		OperationID:      "c1.api.app.v1.AppEntitlements.Get",
-		OAuth2Scopes:     []string{},
+		OAuth2Scopes:     nil,
 		SecuritySource:   s.sdkConfiguration.Security,
 	}
 
@@ -1539,7 +1539,7 @@ func (s *AppEntitlements) GetAutomation(ctx context.Context, request operations.
 		BaseURL:          baseURL,
 		Context:          ctx,
 		OperationID:      "c1.api.app.v1.AppEntitlements.GetAutomation",
-		OAuth2Scopes:     []string{},
+		OAuth2Scopes:     nil,
 		SecuritySource:   s.sdkConfiguration.Security,
 	}
 
@@ -1744,7 +1744,7 @@ func (s *AppEntitlements) List(ctx context.Context, request operations.C1APIAppV
 		BaseURL:          baseURL,
 		Context:          ctx,
 		OperationID:      "c1.api.app.v1.AppEntitlements.List",
-		OAuth2Scopes:     []string{},
+		OAuth2Scopes:     nil,
 		SecuritySource:   s.sdkConfiguration.Security,
 	}
 
@@ -1766,7 +1766,7 @@ func (s *AppEntitlements) List(ctx context.Context, request operations.C1APIAppV
 	req.Header.Set("Accept", "application/json")
 	req.Header.Set("User-Agent", s.sdkConfiguration.UserAgent)
 
-	if err := utils.PopulateQueryParams(ctx, req, request, nil); err != nil {
+	if err := utils.PopulateQueryParams(ctx, req, request, nil, nil); err != nil {
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
@@ -1953,7 +1953,7 @@ func (s *AppEntitlements) ListAutomationExclusions(ctx context.Context, request 
 		BaseURL:          baseURL,
 		Context:          ctx,
 		OperationID:      "c1.api.app.v1.AppEntitlements.ListAutomationExclusions",
-		OAuth2Scopes:     []string{},
+		OAuth2Scopes:     nil,
 		SecuritySource:   s.sdkConfiguration.Security,
 	}
 
@@ -2158,7 +2158,7 @@ func (s *AppEntitlements) ListForAppResource(ctx context.Context, request operat
 		BaseURL:          baseURL,
 		Context:          ctx,
 		OperationID:      "c1.api.app.v1.AppEntitlements.ListForAppResource",
-		OAuth2Scopes:     []string{},
+		OAuth2Scopes:     nil,
 		SecuritySource:   s.sdkConfiguration.Security,
 	}
 
@@ -2180,7 +2180,7 @@ func (s *AppEntitlements) ListForAppResource(ctx context.Context, request operat
 	req.Header.Set("Accept", "application/json")
 	req.Header.Set("User-Agent", s.sdkConfiguration.UserAgent)
 
-	if err := utils.PopulateQueryParams(ctx, req, request, nil); err != nil {
+	if err := utils.PopulateQueryParams(ctx, req, request, nil, nil); err != nil {
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
@@ -2367,7 +2367,7 @@ func (s *AppEntitlements) ListForAppUser(ctx context.Context, request operations
 		BaseURL:          baseURL,
 		Context:          ctx,
 		OperationID:      "c1.api.app.v1.AppEntitlements.ListForAppUser",
-		OAuth2Scopes:     []string{},
+		OAuth2Scopes:     nil,
 		SecuritySource:   s.sdkConfiguration.Security,
 	}
 
@@ -2389,7 +2389,7 @@ func (s *AppEntitlements) ListForAppUser(ctx context.Context, request operations
 	req.Header.Set("Accept", "application/json")
 	req.Header.Set("User-Agent", s.sdkConfiguration.UserAgent)
 
-	if err := utils.PopulateQueryParams(ctx, req, request, nil); err != nil {
+	if err := utils.PopulateQueryParams(ctx, req, request, nil, nil); err != nil {
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
@@ -2578,7 +2578,7 @@ func (s *AppEntitlements) ListUsers(ctx context.Context, request operations.C1AP
 		BaseURL:          baseURL,
 		Context:          ctx,
 		OperationID:      "c1.api.app.v1.AppEntitlements.ListUsers",
-		OAuth2Scopes:     []string{},
+		OAuth2Scopes:     nil,
 		SecuritySource:   s.sdkConfiguration.Security,
 	}
 
@@ -2600,7 +2600,7 @@ func (s *AppEntitlements) ListUsers(ctx context.Context, request operations.C1AP
 	req.Header.Set("Accept", "application/json")
 	req.Header.Set("User-Agent", s.sdkConfiguration.UserAgent)
 
-	if err := utils.PopulateQueryParams(ctx, req, request, nil); err != nil {
+	if err := utils.PopulateQueryParams(ctx, req, request, nil, nil); err != nil {
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
@@ -2787,7 +2787,7 @@ func (s *AppEntitlements) RemoveAutomationExclusion(ctx context.Context, request
 		BaseURL:          baseURL,
 		Context:          ctx,
 		OperationID:      "c1.api.app.v1.AppEntitlements.RemoveAutomationExclusion",
-		OAuth2Scopes:     []string{},
+		OAuth2Scopes:     nil,
 		SecuritySource:   s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "RemoveAutomationExclusionRequest", "json", `request:"mediaType=application/json"`)
@@ -2999,7 +2999,7 @@ func (s *AppEntitlements) RemoveEntitlementMembership(ctx context.Context, reque
 		BaseURL:          baseURL,
 		Context:          ctx,
 		OperationID:      "c1.api.app.v1.AppEntitlements.RemoveEntitlementMembership",
-		OAuth2Scopes:     []string{},
+		OAuth2Scopes:     nil,
 		SecuritySource:   s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "RemoveEntitlementMembershipRequest", "json", `request:"mediaType=application/json"`)
@@ -3211,7 +3211,7 @@ func (s *AppEntitlements) Update(ctx context.Context, request operations.C1APIAp
 		BaseURL:          baseURL,
 		Context:          ctx,
 		OperationID:      "c1.api.app.v1.AppEntitlements.Update",
-		OAuth2Scopes:     []string{},
+		OAuth2Scopes:     nil,
 		SecuritySource:   s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "UpdateAppEntitlementRequest", "json", `request:"mediaType=application/json"`)
@@ -3423,7 +3423,7 @@ func (s *AppEntitlements) UpdateAutomation(ctx context.Context, request operatio
 		BaseURL:          baseURL,
 		Context:          ctx,
 		OperationID:      "c1.api.app.v1.AppEntitlements.UpdateAutomation",
-		OAuth2Scopes:     []string{},
+		OAuth2Scopes:     nil,
 		SecuritySource:   s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "AppEntitlementServiceUpdateAutomationRequest", "json", `request:"mediaType=application/json"`)

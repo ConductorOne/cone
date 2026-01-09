@@ -8,9 +8,9 @@ type FacetValueItem struct {
 	Values []FacetValue `json:"values,omitempty"`
 }
 
-func (o *FacetValueItem) GetValues() []FacetValue {
-	if o == nil {
+func (f *FacetValueItem) GetValues() []FacetValue {
+	if f == nil {
 		return nil
 	}
-	return o.Values
+	return f.Values
 }

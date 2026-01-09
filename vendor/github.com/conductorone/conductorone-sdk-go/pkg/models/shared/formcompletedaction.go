@@ -19,22 +19,22 @@ func (f FormCompletedAction) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FormCompletedAction) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &f, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &f, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *FormCompletedAction) GetCompletedAt() *time.Time {
-	if o == nil {
+func (f *FormCompletedAction) GetCompletedAt() *time.Time {
+	if f == nil {
 		return nil
 	}
-	return o.CompletedAt
+	return f.CompletedAt
 }
 
-func (o *FormCompletedAction) GetUserID() *string {
-	if o == nil {
+func (f *FormCompletedAction) GetUserID() *string {
+	if f == nil {
 		return nil
 	}
-	return o.UserID
+	return f.UserID
 }

@@ -18,24 +18,24 @@ func (t TaskAuditSuccessResultAnnotations) MarshalJSON() ([]byte, error) {
 }
 
 func (t *TaskAuditSuccessResultAnnotations) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &t, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &t, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *TaskAuditSuccessResultAnnotations) GetAtType() *string {
-	if o == nil {
+func (t *TaskAuditSuccessResultAnnotations) GetAtType() *string {
+	if t == nil {
 		return nil
 	}
-	return o.AtType
+	return t.AtType
 }
 
-func (o *TaskAuditSuccessResultAnnotations) GetAdditionalProperties() map[string]any {
-	if o == nil {
+func (t *TaskAuditSuccessResultAnnotations) GetAdditionalProperties() map[string]any {
+	if t == nil {
 		return nil
 	}
-	return o.AdditionalProperties
+	return t.AdditionalProperties
 }
 
 // The TaskAuditSuccessResult message.
@@ -44,9 +44,9 @@ type TaskAuditSuccessResult struct {
 	Annotations []TaskAuditSuccessResultAnnotations `json:"annotations,omitempty"`
 }
 
-func (o *TaskAuditSuccessResult) GetAnnotations() []TaskAuditSuccessResultAnnotations {
-	if o == nil {
+func (t *TaskAuditSuccessResult) GetAnnotations() []TaskAuditSuccessResultAnnotations {
+	if t == nil {
 		return nil
 	}
-	return o.Annotations
+	return t.Annotations
 }

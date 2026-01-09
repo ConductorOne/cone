@@ -9,16 +9,16 @@ type TaskActionsServiceUpdateRequestDataRequest struct {
 	Data           map[string]any  `json:"data,omitempty"`
 }
 
-func (o *TaskActionsServiceUpdateRequestDataRequest) GetTaskExpandMask() *TaskExpandMask {
-	if o == nil {
+func (t *TaskActionsServiceUpdateRequestDataRequest) GetTaskExpandMask() *TaskExpandMask {
+	if t == nil {
 		return nil
 	}
-	return o.TaskExpandMask
+	return t.TaskExpandMask
 }
 
-func (o *TaskActionsServiceUpdateRequestDataRequest) GetData() map[string]any {
-	if o == nil {
+func (t *TaskActionsServiceUpdateRequestDataRequest) GetData() map[string]any {
+	if t == nil {
 		return nil
 	}
-	return o.Data
+	return t.Data
 }

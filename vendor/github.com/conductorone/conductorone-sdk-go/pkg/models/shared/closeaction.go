@@ -18,23 +18,23 @@ type CloseAction struct {
 	UserIDCel *string `json:"userIdCel,omitempty"`
 }
 
-func (o *CloseAction) GetUserRef() *UserRef {
-	if o == nil {
+func (c *CloseAction) GetUserRef() *UserRef {
+	if c == nil {
 		return nil
 	}
-	return o.UserRef
+	return c.UserRef
 }
 
-func (o *CloseAction) GetUseSubjectUser() *bool {
-	if o == nil {
+func (c *CloseAction) GetUseSubjectUser() *bool {
+	if c == nil {
 		return nil
 	}
-	return o.UseSubjectUser
+	return c.UseSubjectUser
 }
 
-func (o *CloseAction) GetUserIDCel() *string {
-	if o == nil {
+func (c *CloseAction) GetUserIDCel() *string {
+	if c == nil {
 		return nil
 	}
-	return o.UserIDCel
+	return c.UserIDCel
 }

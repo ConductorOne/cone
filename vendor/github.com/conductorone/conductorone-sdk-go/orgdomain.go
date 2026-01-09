@@ -63,7 +63,7 @@ func (s *OrgDomain) List(ctx context.Context, request operations.C1APISettingsV1
 		BaseURL:          baseURL,
 		Context:          ctx,
 		OperationID:      "c1.api.settings.v1.OrgDomainService.List",
-		OAuth2Scopes:     []string{},
+		OAuth2Scopes:     nil,
 		SecuritySource:   s.sdkConfiguration.Security,
 	}
 
@@ -85,7 +85,7 @@ func (s *OrgDomain) List(ctx context.Context, request operations.C1APISettingsV1
 	req.Header.Set("Accept", "application/json")
 	req.Header.Set("User-Agent", s.sdkConfiguration.UserAgent)
 
-	if err := utils.PopulateQueryParams(ctx, req, request, nil); err != nil {
+	if err := utils.PopulateQueryParams(ctx, req, request, nil, nil); err != nil {
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
@@ -272,7 +272,7 @@ func (s *OrgDomain) Update(ctx context.Context, request *shared.UpdateOrgDomainR
 		BaseURL:          baseURL,
 		Context:          ctx,
 		OperationID:      "c1.api.settings.v1.OrgDomainService.Update",
-		OAuth2Scopes:     []string{},
+		OAuth2Scopes:     nil,
 		SecuritySource:   s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)

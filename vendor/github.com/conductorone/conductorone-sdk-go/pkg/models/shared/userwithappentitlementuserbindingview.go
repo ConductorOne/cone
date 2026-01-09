@@ -14,30 +14,30 @@ type UserWithAppEntitlementUserBindingView struct {
 	AppUserID *string `json:"appUserId,omitempty"`
 }
 
-func (o *UserWithAppEntitlementUserBindingView) GetUser() *User {
-	if o == nil {
+func (u *UserWithAppEntitlementUserBindingView) GetUser() *User {
+	if u == nil {
 		return nil
 	}
-	return o.User
+	return u.User
 }
 
-func (o *UserWithAppEntitlementUserBindingView) GetAppEntitlementID() *string {
-	if o == nil {
+func (u *UserWithAppEntitlementUserBindingView) GetAppEntitlementID() *string {
+	if u == nil {
 		return nil
 	}
-	return o.AppEntitlementID
+	return u.AppEntitlementID
 }
 
-func (o *UserWithAppEntitlementUserBindingView) GetAppID() *string {
-	if o == nil {
+func (u *UserWithAppEntitlementUserBindingView) GetAppID() *string {
+	if u == nil {
 		return nil
 	}
-	return o.AppID
+	return u.AppID
 }
 
-func (o *UserWithAppEntitlementUserBindingView) GetAppUserID() *string {
-	if o == nil {
+func (u *UserWithAppEntitlementUserBindingView) GetAppUserID() *string {
+	if u == nil {
 		return nil
 	}
-	return o.AppUserID
+	return u.AppUserID
 }

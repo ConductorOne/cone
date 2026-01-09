@@ -15,6 +15,17 @@ func (e DeleteAppEntitlementMonitorBindingRequestEntitlementGroup) ToPointer() *
 	return &e
 }
 
+// IsExact returns true if the value matches a known enum value, false otherwise.
+func (e *DeleteAppEntitlementMonitorBindingRequestEntitlementGroup) IsExact() bool {
+	if e != nil {
+		switch *e {
+		case "ENTITLEMENT_GROUP_UNSPECIFIED", "ENTITLEMENT_GROUP_A", "ENTITLEMENT_GROUP_B":
+			return true
+		}
+	}
+	return false
+}
+
 // The DeleteAppEntitlementMonitorBindingRequest message.
 type DeleteAppEntitlementMonitorBindingRequest struct {
 	// The appEntitlementId field.
@@ -27,30 +38,30 @@ type DeleteAppEntitlementMonitorBindingRequest struct {
 	MonitorID *string `json:"monitorId,omitempty"`
 }
 
-func (o *DeleteAppEntitlementMonitorBindingRequest) GetAppEntitlementID() *string {
-	if o == nil {
+func (d *DeleteAppEntitlementMonitorBindingRequest) GetAppEntitlementID() *string {
+	if d == nil {
 		return nil
 	}
-	return o.AppEntitlementID
+	return d.AppEntitlementID
 }
 
-func (o *DeleteAppEntitlementMonitorBindingRequest) GetAppID() *string {
-	if o == nil {
+func (d *DeleteAppEntitlementMonitorBindingRequest) GetAppID() *string {
+	if d == nil {
 		return nil
 	}
-	return o.AppID
+	return d.AppID
 }
 
-func (o *DeleteAppEntitlementMonitorBindingRequest) GetEntitlementGroup() *DeleteAppEntitlementMonitorBindingRequestEntitlementGroup {
-	if o == nil {
+func (d *DeleteAppEntitlementMonitorBindingRequest) GetEntitlementGroup() *DeleteAppEntitlementMonitorBindingRequestEntitlementGroup {
+	if d == nil {
 		return nil
 	}
-	return o.EntitlementGroup
+	return d.EntitlementGroup
 }
 
-func (o *DeleteAppEntitlementMonitorBindingRequest) GetMonitorID() *string {
-	if o == nil {
+func (d *DeleteAppEntitlementMonitorBindingRequest) GetMonitorID() *string {
+	if d == nil {
 		return nil
 	}
-	return o.MonitorID
+	return d.MonitorID
 }

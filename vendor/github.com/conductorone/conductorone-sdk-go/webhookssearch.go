@@ -13,8 +13,11 @@ import (
 	"github.com/conductorone/conductorone-sdk-go/pkg/models/shared"
 	"github.com/conductorone/conductorone-sdk-go/pkg/retry"
 	"github.com/conductorone/conductorone-sdk-go/pkg/utils"
+	"github.com/spyzhov/ajson"
 	"net/http"
 	"net/url"
+	"strconv"
+	"strings"
 )
 
 type WebhooksSearch struct {
@@ -63,7 +66,7 @@ func (s *WebhooksSearch) Search(ctx context.Context, request *shared.WebhooksSea
 		BaseURL:          baseURL,
 		Context:          ctx,
 		OperationID:      "c1.api.webhooks.v1.WebhooksSearch.Search",
-		OAuth2Scopes:     []string{},
+		OAuth2Scopes:     nil,
 		SecuritySource:   s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
@@ -195,6 +198,54 @@ func (s *WebhooksSearch) Search(ctx context.Context, request *shared.WebhooksSea
 		StatusCode:  httpRes.StatusCode,
 		ContentType: httpRes.Header.Get("Content-Type"),
 		RawResponse: httpRes,
+	}
+	res.Next = func() (*operations.C1APIWebhooksV1WebhooksSearchSearchResponse, error) {
+		rawBody, err := utils.ConsumeRawBody(httpRes)
+		if err != nil {
+			return nil, err
+		}
+
+		b, err := ajson.Unmarshal(rawBody)
+		if err != nil {
+			return nil, err
+		}
+		nC, err := ajson.Eval(b, "$.nextPageToken")
+		if err != nil {
+			return nil, err
+		}
+		var nCVal string
+
+		if nC.IsNumeric() {
+			numVal, err := nC.GetNumeric()
+			if err != nil {
+				return nil, err
+			}
+			// GetNumeric returns as float64 so convert to the appropriate type.
+			nCVal = strconv.FormatFloat(numVal, 'f', 0, 64)
+		} else {
+			val, err := nC.Value()
+			if err != nil {
+				return nil, err
+			}
+			if val == nil {
+				return nil, nil
+			}
+			nCVal = val.(string)
+			if strings.TrimSpace(nCVal) == "" {
+				return nil, nil
+			}
+		}
+
+		return s.Search(
+			ctx,
+			&shared.WebhooksSearchRequest{
+				PageSize:  request.PageSize,
+				PageToken: &nCVal,
+				Query:     request.Query,
+				Refs:      request.Refs,
+			},
+			opts...,
+		)
 	}
 
 	switch {

@@ -13,25 +13,25 @@ type C1APIAppV1AppResourceServiceCreateManuallyManagedAppResourceRequest struct 
 	AppResourceTypeID                       string                                          `pathParam:"style=simple,explode=false,name=app_resource_type_id"`
 }
 
-func (o *C1APIAppV1AppResourceServiceCreateManuallyManagedAppResourceRequest) GetCreateManuallyManagedAppResourceRequest() *shared.CreateManuallyManagedAppResourceRequest {
-	if o == nil {
+func (c *C1APIAppV1AppResourceServiceCreateManuallyManagedAppResourceRequest) GetCreateManuallyManagedAppResourceRequest() *shared.CreateManuallyManagedAppResourceRequest {
+	if c == nil {
 		return nil
 	}
-	return o.CreateManuallyManagedAppResourceRequest
+	return c.CreateManuallyManagedAppResourceRequest
 }
 
-func (o *C1APIAppV1AppResourceServiceCreateManuallyManagedAppResourceRequest) GetAppID() string {
-	if o == nil {
+func (c *C1APIAppV1AppResourceServiceCreateManuallyManagedAppResourceRequest) GetAppID() string {
+	if c == nil {
 		return ""
 	}
-	return o.AppID
+	return c.AppID
 }
 
-func (o *C1APIAppV1AppResourceServiceCreateManuallyManagedAppResourceRequest) GetAppResourceTypeID() string {
-	if o == nil {
+func (c *C1APIAppV1AppResourceServiceCreateManuallyManagedAppResourceRequest) GetAppResourceTypeID() string {
+	if c == nil {
 		return ""
 	}
-	return o.AppResourceTypeID
+	return c.AppResourceTypeID
 }
 
 type C1APIAppV1AppResourceServiceCreateManuallyManagedAppResourceResponse struct {
@@ -45,30 +45,30 @@ type C1APIAppV1AppResourceServiceCreateManuallyManagedAppResourceResponse struct
 	RawResponse *http.Response
 }
 
-func (o *C1APIAppV1AppResourceServiceCreateManuallyManagedAppResourceResponse) GetContentType() string {
-	if o == nil {
+func (c *C1APIAppV1AppResourceServiceCreateManuallyManagedAppResourceResponse) GetContentType() string {
+	if c == nil {
 		return ""
 	}
-	return o.ContentType
+	return c.ContentType
 }
 
-func (o *C1APIAppV1AppResourceServiceCreateManuallyManagedAppResourceResponse) GetCreateManuallyManagedAppResourceResponse() *shared.CreateManuallyManagedAppResourceResponse {
-	if o == nil {
+func (c *C1APIAppV1AppResourceServiceCreateManuallyManagedAppResourceResponse) GetCreateManuallyManagedAppResourceResponse() *shared.CreateManuallyManagedAppResourceResponse {
+	if c == nil {
 		return nil
 	}
-	return o.CreateManuallyManagedAppResourceResponse
+	return c.CreateManuallyManagedAppResourceResponse
 }
 
-func (o *C1APIAppV1AppResourceServiceCreateManuallyManagedAppResourceResponse) GetStatusCode() int {
-	if o == nil {
+func (c *C1APIAppV1AppResourceServiceCreateManuallyManagedAppResourceResponse) GetStatusCode() int {
+	if c == nil {
 		return 0
 	}
-	return o.StatusCode
+	return c.StatusCode
 }
 
-func (o *C1APIAppV1AppResourceServiceCreateManuallyManagedAppResourceResponse) GetRawResponse() *http.Response {
-	if o == nil {
+func (c *C1APIAppV1AppResourceServiceCreateManuallyManagedAppResourceResponse) GetRawResponse() *http.Response {
+	if c == nil {
 		return nil
 	}
-	return o.RawResponse
+	return c.RawResponse
 }

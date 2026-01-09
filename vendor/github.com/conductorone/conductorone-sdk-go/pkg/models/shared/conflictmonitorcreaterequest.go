@@ -5,30 +5,30 @@ package shared
 // The ConflictMonitorCreateRequest message.
 type ConflictMonitorCreateRequest struct {
 	// The NotificationConfig message.
-	NotificationConfig *NotificationConfig `json:"notificationConfig,omitempty"`
+	NotificationConfig *NotificationConfig1 `json:"notificationConfig,omitempty"`
 	// The description field.
 	Description *string `json:"description,omitempty"`
 	// The displayName field.
 	DisplayName string `json:"displayName"`
 }
 
-func (o *ConflictMonitorCreateRequest) GetNotificationConfig() *NotificationConfig {
-	if o == nil {
+func (c *ConflictMonitorCreateRequest) GetNotificationConfig() *NotificationConfig1 {
+	if c == nil {
 		return nil
 	}
-	return o.NotificationConfig
+	return c.NotificationConfig
 }
 
-func (o *ConflictMonitorCreateRequest) GetDescription() *string {
-	if o == nil {
+func (c *ConflictMonitorCreateRequest) GetDescription() *string {
+	if c == nil {
 		return nil
 	}
-	return o.Description
+	return c.Description
 }
 
-func (o *ConflictMonitorCreateRequest) GetDisplayName() string {
-	if o == nil {
+func (c *ConflictMonitorCreateRequest) GetDisplayName() string {
+	if c == nil {
 		return ""
 	}
-	return o.DisplayName
+	return c.DisplayName
 }

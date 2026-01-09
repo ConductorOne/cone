@@ -8,9 +8,9 @@ type TaskActionsServiceProcessNowRequest struct {
 	TaskExpandMask *TaskExpandMask `json:"expandMask,omitempty"`
 }
 
-func (o *TaskActionsServiceProcessNowRequest) GetTaskExpandMask() *TaskExpandMask {
-	if o == nil {
+func (t *TaskActionsServiceProcessNowRequest) GetTaskExpandMask() *TaskExpandMask {
+	if t == nil {
 		return nil
 	}
-	return o.TaskExpandMask
+	return t.TaskExpandMask
 }

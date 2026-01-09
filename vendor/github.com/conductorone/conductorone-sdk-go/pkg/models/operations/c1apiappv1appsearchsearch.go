@@ -16,32 +16,34 @@ type C1APIAppV1AppSearchSearchResponse struct {
 	StatusCode int
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
+
+	Next func() (*C1APIAppV1AppSearchSearchResponse, error)
 }
 
-func (o *C1APIAppV1AppSearchSearchResponse) GetContentType() string {
-	if o == nil {
+func (c *C1APIAppV1AppSearchSearchResponse) GetContentType() string {
+	if c == nil {
 		return ""
 	}
-	return o.ContentType
+	return c.ContentType
 }
 
-func (o *C1APIAppV1AppSearchSearchResponse) GetSearchAppsResponse() *shared.SearchAppsResponse {
-	if o == nil {
+func (c *C1APIAppV1AppSearchSearchResponse) GetSearchAppsResponse() *shared.SearchAppsResponse {
+	if c == nil {
 		return nil
 	}
-	return o.SearchAppsResponse
+	return c.SearchAppsResponse
 }
 
-func (o *C1APIAppV1AppSearchSearchResponse) GetStatusCode() int {
-	if o == nil {
+func (c *C1APIAppV1AppSearchSearchResponse) GetStatusCode() int {
+	if c == nil {
 		return 0
 	}
-	return o.StatusCode
+	return c.StatusCode
 }
 
-func (o *C1APIAppV1AppSearchSearchResponse) GetRawResponse() *http.Response {
-	if o == nil {
+func (c *C1APIAppV1AppSearchSearchResponse) GetRawResponse() *http.Response {
+	if c == nil {
 		return nil
 	}
-	return o.RawResponse
+	return c.RawResponse
 }

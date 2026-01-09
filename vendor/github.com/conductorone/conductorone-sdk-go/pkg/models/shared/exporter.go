@@ -21,6 +21,17 @@ func (e ExporterState) ToPointer() *ExporterState {
 	return &e
 }
 
+// IsExact returns true if the value matches a known enum value, false otherwise.
+func (e *ExporterState) IsExact() bool {
+	if e != nil {
+		switch *e {
+		case "EXPORT_STATE_UNSPECIFIED", "EXPORT_STATE_EXPORTING", "EXPORT_STATE_WAITING", "EXPORT_STATE_ERROR":
+			return true
+		}
+	}
+	return false
+}
+
 // The Exporter message.
 //
 // This message contains a oneof named export_to. Only a single field of the following list may be set at a time:
@@ -46,64 +57,64 @@ func (e Exporter) MarshalJSON() ([]byte, error) {
 }
 
 func (e *Exporter) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &e, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &e, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *Exporter) GetExportToDatasource() *ExportToDatasource {
-	if o == nil {
+func (e *Exporter) GetExportToDatasource() *ExportToDatasource {
+	if e == nil {
 		return nil
 	}
-	return o.ExportToDatasource
+	return e.ExportToDatasource
 }
 
-func (o *Exporter) GetCreatedAt() *time.Time {
-	if o == nil {
+func (e *Exporter) GetCreatedAt() *time.Time {
+	if e == nil {
 		return nil
 	}
-	return o.CreatedAt
+	return e.CreatedAt
 }
 
-func (o *Exporter) GetDeletedAt() *time.Time {
-	if o == nil {
+func (e *Exporter) GetDeletedAt() *time.Time {
+	if e == nil {
 		return nil
 	}
-	return o.DeletedAt
+	return e.DeletedAt
 }
 
-func (o *Exporter) GetDisplayName() *string {
-	if o == nil {
+func (e *Exporter) GetDisplayName() *string {
+	if e == nil {
 		return nil
 	}
-	return o.DisplayName
+	return e.DisplayName
 }
 
-func (o *Exporter) GetExportID() *string {
-	if o == nil {
+func (e *Exporter) GetExportID() *string {
+	if e == nil {
 		return nil
 	}
-	return o.ExportID
+	return e.ExportID
 }
 
-func (o *Exporter) GetState() *ExporterState {
-	if o == nil {
+func (e *Exporter) GetState() *ExporterState {
+	if e == nil {
 		return nil
 	}
-	return o.State
+	return e.State
 }
 
-func (o *Exporter) GetUpdatedAt() *time.Time {
-	if o == nil {
+func (e *Exporter) GetUpdatedAt() *time.Time {
+	if e == nil {
 		return nil
 	}
-	return o.UpdatedAt
+	return e.UpdatedAt
 }
 
-func (o *Exporter) GetWatermarkEventID() *string {
-	if o == nil {
+func (e *Exporter) GetWatermarkEventID() *string {
+	if e == nil {
 		return nil
 	}
-	return o.WatermarkEventID
+	return e.WatermarkEventID
 }

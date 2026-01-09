@@ -22,6 +22,17 @@ func (e BundleAutomationLastRunStateStatus) ToPointer() *BundleAutomationLastRun
 	return &e
 }
 
+// IsExact returns true if the value matches a known enum value, false otherwise.
+func (e *BundleAutomationLastRunStateStatus) IsExact() bool {
+	if e != nil {
+		switch *e {
+		case "BUNDLE_AUTOMATION_RUN_STATUS_UNSPECIFIED", "BUNDLE_AUTOMATION_RUN_STATUS_SUCCESS", "BUNDLE_AUTOMATION_RUN_STATUS_FAILURE", "BUNDLE_AUTOMATION_RUN_STATUS_IN_PROGRESS", "BUNDLE_AUTOMATION_RUN_STATUS_WAITING_FOR_APPROVAL":
+			return true
+		}
+	}
+	return false
+}
+
 // The BundleAutomationLastRunState message.
 type BundleAutomationLastRunState struct {
 	// The errorMessage field.
@@ -36,29 +47,29 @@ func (b BundleAutomationLastRunState) MarshalJSON() ([]byte, error) {
 }
 
 func (b *BundleAutomationLastRunState) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &b, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &b, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *BundleAutomationLastRunState) GetErrorMessage() *string {
-	if o == nil {
+func (b *BundleAutomationLastRunState) GetErrorMessage() *string {
+	if b == nil {
 		return nil
 	}
-	return o.ErrorMessage
+	return b.ErrorMessage
 }
 
-func (o *BundleAutomationLastRunState) GetLastRunAt() *time.Time {
-	if o == nil {
+func (b *BundleAutomationLastRunState) GetLastRunAt() *time.Time {
+	if b == nil {
 		return nil
 	}
-	return o.LastRunAt
+	return b.LastRunAt
 }
 
-func (o *BundleAutomationLastRunState) GetStatus() *BundleAutomationLastRunStateStatus {
-	if o == nil {
+func (b *BundleAutomationLastRunState) GetStatus() *BundleAutomationLastRunStateStatus {
+	if b == nil {
 		return nil
 	}
-	return o.Status
+	return b.Status
 }

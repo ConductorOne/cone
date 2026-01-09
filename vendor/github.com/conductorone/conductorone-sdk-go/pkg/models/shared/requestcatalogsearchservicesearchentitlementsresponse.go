@@ -18,24 +18,24 @@ func (r RequestCatalogSearchServiceSearchEntitlementsResponseExpanded) MarshalJS
 }
 
 func (r *RequestCatalogSearchServiceSearchEntitlementsResponseExpanded) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &r, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &r, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *RequestCatalogSearchServiceSearchEntitlementsResponseExpanded) GetAtType() *string {
-	if o == nil {
+func (r *RequestCatalogSearchServiceSearchEntitlementsResponseExpanded) GetAtType() *string {
+	if r == nil {
 		return nil
 	}
-	return o.AtType
+	return r.AtType
 }
 
-func (o *RequestCatalogSearchServiceSearchEntitlementsResponseExpanded) GetAdditionalProperties() map[string]any {
-	if o == nil {
+func (r *RequestCatalogSearchServiceSearchEntitlementsResponseExpanded) GetAdditionalProperties() map[string]any {
+	if r == nil {
 		return nil
 	}
-	return o.AdditionalProperties
+	return r.AdditionalProperties
 }
 
 // The RequestCatalogSearchServiceSearchEntitlementsResponse message contains a list of results and a nextPageToken if applicable.
@@ -50,23 +50,23 @@ type RequestCatalogSearchServiceSearchEntitlementsResponse struct {
 	NextPageToken *string `json:"nextPageToken,omitempty"`
 }
 
-func (o *RequestCatalogSearchServiceSearchEntitlementsResponse) GetExpanded() []RequestCatalogSearchServiceSearchEntitlementsResponseExpanded {
-	if o == nil {
+func (r *RequestCatalogSearchServiceSearchEntitlementsResponse) GetExpanded() []RequestCatalogSearchServiceSearchEntitlementsResponseExpanded {
+	if r == nil {
 		return nil
 	}
-	return o.Expanded
+	return r.Expanded
 }
 
-func (o *RequestCatalogSearchServiceSearchEntitlementsResponse) GetList() []AppEntitlementWithUserBindings {
-	if o == nil {
+func (r *RequestCatalogSearchServiceSearchEntitlementsResponse) GetList() []AppEntitlementWithUserBindings {
+	if r == nil {
 		return nil
 	}
-	return o.List
+	return r.List
 }
 
-func (o *RequestCatalogSearchServiceSearchEntitlementsResponse) GetNextPageToken() *string {
-	if o == nil {
+func (r *RequestCatalogSearchServiceSearchEntitlementsResponse) GetNextPageToken() *string {
+	if r == nil {
 		return nil
 	}
-	return o.NextPageToken
+	return r.NextPageToken
 }

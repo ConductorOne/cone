@@ -23,6 +23,17 @@ func (e TaskTypeGrantOutcome) ToPointer() *TaskTypeGrantOutcome {
 	return &e
 }
 
+// IsExact returns true if the value matches a known enum value, false otherwise.
+func (e *TaskTypeGrantOutcome) IsExact() bool {
+	if e != nil {
+		switch *e {
+		case "GRANT_OUTCOME_UNSPECIFIED", "GRANT_OUTCOME_GRANTED", "GRANT_OUTCOME_DENIED", "GRANT_OUTCOME_ERROR", "GRANT_OUTCOME_CANCELLED", "GRANT_OUTCOME_WAIT_TIMED_OUT":
+			return true
+		}
+	}
+	return false
+}
+
 // The TaskTypeGrant message indicates that a task is a grant task and all related details.
 type TaskTypeGrant struct {
 	// The TaskGrantSource message tracks which external URL was the source of the specificed grant ticket.
@@ -46,64 +57,64 @@ func (t TaskTypeGrant) MarshalJSON() ([]byte, error) {
 }
 
 func (t *TaskTypeGrant) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &t, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &t, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *TaskTypeGrant) GetTaskGrantSource() *TaskGrantSource {
-	if o == nil {
+func (t *TaskTypeGrant) GetTaskGrantSource() *TaskGrantSource {
+	if t == nil {
 		return nil
 	}
-	return o.TaskGrantSource
+	return t.TaskGrantSource
 }
 
-func (o *TaskTypeGrant) GetAppEntitlementID() *string {
-	if o == nil {
+func (t *TaskTypeGrant) GetAppEntitlementID() *string {
+	if t == nil {
 		return nil
 	}
-	return o.AppEntitlementID
+	return t.AppEntitlementID
 }
 
-func (o *TaskTypeGrant) GetAppID() *string {
-	if o == nil {
+func (t *TaskTypeGrant) GetAppID() *string {
+	if t == nil {
 		return nil
 	}
-	return o.AppID
+	return t.AppID
 }
 
-func (o *TaskTypeGrant) GetAppUserID() *string {
-	if o == nil {
+func (t *TaskTypeGrant) GetAppUserID() *string {
+	if t == nil {
 		return nil
 	}
-	return o.AppUserID
+	return t.AppUserID
 }
 
-func (o *TaskTypeGrant) GetGrantDuration() *string {
-	if o == nil {
+func (t *TaskTypeGrant) GetGrantDuration() *string {
+	if t == nil {
 		return nil
 	}
-	return o.GrantDuration
+	return t.GrantDuration
 }
 
-func (o *TaskTypeGrant) GetIdentityUserID() *string {
-	if o == nil {
+func (t *TaskTypeGrant) GetIdentityUserID() *string {
+	if t == nil {
 		return nil
 	}
-	return o.IdentityUserID
+	return t.IdentityUserID
 }
 
-func (o *TaskTypeGrant) GetOutcome() *TaskTypeGrantOutcome {
-	if o == nil {
+func (t *TaskTypeGrant) GetOutcome() *TaskTypeGrantOutcome {
+	if t == nil {
 		return nil
 	}
-	return o.Outcome
+	return t.Outcome
 }
 
-func (o *TaskTypeGrant) GetOutcomeTime() *time.Time {
-	if o == nil {
+func (t *TaskTypeGrant) GetOutcomeTime() *time.Time {
+	if t == nil {
 		return nil
 	}
-	return o.OutcomeTime
+	return t.OutcomeTime
 }

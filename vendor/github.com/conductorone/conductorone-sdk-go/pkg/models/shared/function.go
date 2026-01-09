@@ -19,6 +19,17 @@ func (e FunctionType) ToPointer() *FunctionType {
 	return &e
 }
 
+// IsExact returns true if the value matches a known enum value, false otherwise.
+func (e *FunctionType) IsExact() bool {
+	if e != nil {
+		switch *e {
+		case "FUNCTION_TYPE_UNSPECIFIED", "FUNCTION_TYPE_ANY":
+			return true
+		}
+	}
+	return false
+}
+
 // Function represents a customer-provided code extension in the API
 type Function struct {
 	CreatedAt *time.Time `json:"createdAt,omitempty"`
@@ -27,6 +38,8 @@ type Function struct {
 	Description *string `json:"description,omitempty"`
 	// The displayName field.
 	DisplayName *string `json:"displayName,omitempty"`
+	// The encryptedValues field.
+	EncryptedValues map[string]string `json:"encryptedValues,omitempty"`
 	// The functionType field.
 	FunctionType *FunctionType `json:"functionType,omitempty"`
 	// The head field.
@@ -35,9 +48,18 @@ type Function struct {
 	ID *string `json:"id,omitempty"`
 	// The isDraft field.
 	IsDraft *bool `json:"isDraft,omitempty"`
+	// The outboundNetworkAllowlist field.
+	OutboundNetworkAllowlist []string `json:"outboundNetworkAllowlist,omitempty"`
 	// The publishedCommitId field.
-	PublishedCommitID *string    `json:"publishedCommitId,omitempty"`
-	UpdatedAt         *time.Time `json:"updatedAt,omitempty"`
+	PublishedCommitID *string `json:"publishedCommitId,omitempty"`
+	// Scoped role IDs define the permissions granted to this function when calling
+	//  ConductorOne APIs. These are role IDs (not service roles) that get resolved
+	//  to their service roles at authentication time.
+	//
+	//  Currently only the "Read-Only Administrator" role (system:viewer) is supported.
+	//  The role ID can be obtained from the roles API.
+	ScopedRoleIds []string   `json:"scopedRoleIds,omitempty"`
+	UpdatedAt     *time.Time `json:"updatedAt,omitempty"`
 }
 
 func (f Function) MarshalJSON() ([]byte, error) {
@@ -45,80 +67,101 @@ func (f Function) MarshalJSON() ([]byte, error) {
 }
 
 func (f *Function) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &f, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &f, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *Function) GetCreatedAt() *time.Time {
-	if o == nil {
+func (f *Function) GetCreatedAt() *time.Time {
+	if f == nil {
 		return nil
 	}
-	return o.CreatedAt
+	return f.CreatedAt
 }
 
-func (o *Function) GetDeletedAt() *time.Time {
-	if o == nil {
+func (f *Function) GetDeletedAt() *time.Time {
+	if f == nil {
 		return nil
 	}
-	return o.DeletedAt
+	return f.DeletedAt
 }
 
-func (o *Function) GetDescription() *string {
-	if o == nil {
+func (f *Function) GetDescription() *string {
+	if f == nil {
 		return nil
 	}
-	return o.Description
+	return f.Description
 }
 
-func (o *Function) GetDisplayName() *string {
-	if o == nil {
+func (f *Function) GetDisplayName() *string {
+	if f == nil {
 		return nil
 	}
-	return o.DisplayName
+	return f.DisplayName
 }
 
-func (o *Function) GetFunctionType() *FunctionType {
-	if o == nil {
+func (f *Function) GetEncryptedValues() map[string]string {
+	if f == nil {
 		return nil
 	}
-	return o.FunctionType
+	return f.EncryptedValues
 }
 
-func (o *Function) GetHead() *string {
-	if o == nil {
+func (f *Function) GetFunctionType() *FunctionType {
+	if f == nil {
 		return nil
 	}
-	return o.Head
+	return f.FunctionType
 }
 
-func (o *Function) GetID() *string {
-	if o == nil {
+func (f *Function) GetHead() *string {
+	if f == nil {
 		return nil
 	}
-	return o.ID
+	return f.Head
 }
 
-func (o *Function) GetIsDraft() *bool {
-	if o == nil {
+func (f *Function) GetID() *string {
+	if f == nil {
 		return nil
 	}
-	return o.IsDraft
+	return f.ID
 }
 
-func (o *Function) GetPublishedCommitID() *string {
-	if o == nil {
+func (f *Function) GetIsDraft() *bool {
+	if f == nil {
 		return nil
 	}
-	return o.PublishedCommitID
+	return f.IsDraft
 }
 
-func (o *Function) GetUpdatedAt() *time.Time {
-	if o == nil {
+func (f *Function) GetOutboundNetworkAllowlist() []string {
+	if f == nil {
 		return nil
 	}
-	return o.UpdatedAt
+	return f.OutboundNetworkAllowlist
+}
+
+func (f *Function) GetPublishedCommitID() *string {
+	if f == nil {
+		return nil
+	}
+	return f.PublishedCommitID
+}
+
+func (f *Function) GetScopedRoleIds() []string {
+	if f == nil {
+		return nil
+	}
+	return f.ScopedRoleIds
+}
+
+func (f *Function) GetUpdatedAt() *time.Time {
+	if f == nil {
+		return nil
+	}
+	return f.UpdatedAt
 }
 
 // FunctionInput - Function represents a customer-provided code extension in the API
@@ -127,6 +170,8 @@ type FunctionInput struct {
 	Description *string `json:"description,omitempty"`
 	// The displayName field.
 	DisplayName *string `json:"displayName,omitempty"`
+	// The encryptedValues field.
+	EncryptedValues map[string]string `json:"encryptedValues,omitempty"`
 	// The functionType field.
 	FunctionType *FunctionType `json:"functionType,omitempty"`
 	// The head field.
@@ -135,55 +180,85 @@ type FunctionInput struct {
 	ID *string `json:"id,omitempty"`
 	// The isDraft field.
 	IsDraft *bool `json:"isDraft,omitempty"`
+	// The outboundNetworkAllowlist field.
+	OutboundNetworkAllowlist []string `json:"outboundNetworkAllowlist,omitempty"`
 	// The publishedCommitId field.
 	PublishedCommitID *string `json:"publishedCommitId,omitempty"`
+	// Scoped role IDs define the permissions granted to this function when calling
+	//  ConductorOne APIs. These are role IDs (not service roles) that get resolved
+	//  to their service roles at authentication time.
+	//
+	//  Currently only the "Read-Only Administrator" role (system:viewer) is supported.
+	//  The role ID can be obtained from the roles API.
+	ScopedRoleIds []string `json:"scopedRoleIds,omitempty"`
 }
 
-func (o *FunctionInput) GetDescription() *string {
-	if o == nil {
+func (f *FunctionInput) GetDescription() *string {
+	if f == nil {
 		return nil
 	}
-	return o.Description
+	return f.Description
 }
 
-func (o *FunctionInput) GetDisplayName() *string {
-	if o == nil {
+func (f *FunctionInput) GetDisplayName() *string {
+	if f == nil {
 		return nil
 	}
-	return o.DisplayName
+	return f.DisplayName
 }
 
-func (o *FunctionInput) GetFunctionType() *FunctionType {
-	if o == nil {
+func (f *FunctionInput) GetEncryptedValues() map[string]string {
+	if f == nil {
 		return nil
 	}
-	return o.FunctionType
+	return f.EncryptedValues
 }
 
-func (o *FunctionInput) GetHead() *string {
-	if o == nil {
+func (f *FunctionInput) GetFunctionType() *FunctionType {
+	if f == nil {
 		return nil
 	}
-	return o.Head
+	return f.FunctionType
 }
 
-func (o *FunctionInput) GetID() *string {
-	if o == nil {
+func (f *FunctionInput) GetHead() *string {
+	if f == nil {
 		return nil
 	}
-	return o.ID
+	return f.Head
 }
 
-func (o *FunctionInput) GetIsDraft() *bool {
-	if o == nil {
+func (f *FunctionInput) GetID() *string {
+	if f == nil {
 		return nil
 	}
-	return o.IsDraft
+	return f.ID
 }
 
-func (o *FunctionInput) GetPublishedCommitID() *string {
-	if o == nil {
+func (f *FunctionInput) GetIsDraft() *bool {
+	if f == nil {
 		return nil
 	}
-	return o.PublishedCommitID
+	return f.IsDraft
+}
+
+func (f *FunctionInput) GetOutboundNetworkAllowlist() []string {
+	if f == nil {
+		return nil
+	}
+	return f.OutboundNetworkAllowlist
+}
+
+func (f *FunctionInput) GetPublishedCommitID() *string {
+	if f == nil {
+		return nil
+	}
+	return f.PublishedCommitID
+}
+
+func (f *FunctionInput) GetScopedRoleIds() []string {
+	if f == nil {
+		return nil
+	}
+	return f.ScopedRoleIds
 }

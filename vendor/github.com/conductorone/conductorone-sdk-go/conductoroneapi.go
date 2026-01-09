@@ -2,7 +2,7 @@
 
 package conductoronesdkgo
 
-// Generated from OpenAPI doc version 0.1.0-alpha and generator version 2.687.1
+// Generated from OpenAPI doc version 0.1.0-alpha and generator version 2.792.0
 
 import (
 	"context"
@@ -51,6 +51,8 @@ func Pointer[T any](v T) *T { return &v }
 // ConductoroneAPI - ConductorOne API: The ConductorOne API is a HTTP API for managing ConductorOne resources.
 type ConductoroneAPI struct {
 	SDKVersion                   string
+	AccessReview                 *AccessReview
+	AccessReviewTemplate         *AccessReviewTemplate
 	AccessConflict               *AccessConflict
 	AppEntitlementMonitorBinding *AppEntitlementMonitorBinding
 	Apps                         *Apps
@@ -77,13 +79,16 @@ type ConductoroneAPI struct {
 	AutomationSearch             *AutomationSearch
 	Automation                   *Automation
 	RequestCatalogManagement     *RequestCatalogManagement
+	ConnectorCatalog             *ConnectorCatalog
 	Directory                    *Directory
 	Functions                    *Functions
+	FunctionsInvocation          *FunctionsInvocation
 	PersonalClient               *PersonalClient
 	Roles                        *Roles
 	Policies                     *Policies
 	AccountProvisionPolicyTest   *AccountProvisionPolicyTest
 	PolicyValidate               *PolicyValidate
+	RequestSchema                *RequestSchema
 	AppResourceSearch            *AppResourceSearch
 	AppSearch                    *AppSearch
 	AttributeSearch              *AttributeSearch
@@ -106,6 +111,7 @@ type ConductoroneAPI struct {
 	Task                         *Task
 	TaskActions                  *TaskActions
 	User                         *User
+	Vault                        *Vault
 	Webhooks                     *Webhooks
 
 	sdkConfiguration config.SDKConfiguration
@@ -195,9 +201,9 @@ func WithTimeout(timeout time.Duration) SDKOption {
 // New creates a new instance of the SDK with the provided options
 func New(opts ...SDKOption) *ConductoroneAPI {
 	sdk := &ConductoroneAPI{
-		SDKVersion: "1.25.0",
+		SDKVersion: "1.26.0",
 		sdkConfiguration: config.SDKConfiguration{
-			UserAgent:  "speakeasy-sdk/go 1.25.0 2.687.1 0.1.0-alpha github.com/conductorone/conductorone-sdk-go",
+			UserAgent:  "speakeasy-sdk/go 1.26.0 2.792.0 0.1.0-alpha github.com/conductorone/conductorone-sdk-go",
 			ServerList: ServerList,
 			ServerVariables: []map[string]string{
 				{
@@ -223,6 +229,8 @@ func New(opts ...SDKOption) *ConductoroneAPI {
 		sdk.sdkConfiguration.ServerURL = serverURL
 	}
 
+	sdk.AccessReview = newAccessReview(sdk, sdk.sdkConfiguration, sdk.hooks)
+	sdk.AccessReviewTemplate = newAccessReviewTemplate(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.AccessConflict = newAccessConflict(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.AppEntitlementMonitorBinding = newAppEntitlementMonitorBinding(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.Apps = newApps(sdk, sdk.sdkConfiguration, sdk.hooks)
@@ -249,13 +257,16 @@ func New(opts ...SDKOption) *ConductoroneAPI {
 	sdk.AutomationSearch = newAutomationSearch(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.Automation = newAutomation(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.RequestCatalogManagement = newRequestCatalogManagement(sdk, sdk.sdkConfiguration, sdk.hooks)
+	sdk.ConnectorCatalog = newConnectorCatalog(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.Directory = newDirectory(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.Functions = newFunctions(sdk, sdk.sdkConfiguration, sdk.hooks)
+	sdk.FunctionsInvocation = newFunctionsInvocation(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.PersonalClient = newPersonalClient(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.Roles = newRoles(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.Policies = newPolicies(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.AccountProvisionPolicyTest = newAccountProvisionPolicyTest(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.PolicyValidate = newPolicyValidate(sdk, sdk.sdkConfiguration, sdk.hooks)
+	sdk.RequestSchema = newRequestSchema(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.AppResourceSearch = newAppResourceSearch(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.AppSearch = newAppSearch(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.AttributeSearch = newAttributeSearch(sdk, sdk.sdkConfiguration, sdk.hooks)
@@ -278,6 +289,7 @@ func New(opts ...SDKOption) *ConductoroneAPI {
 	sdk.Task = newTask(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.TaskActions = newTaskActions(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.User = newUser(sdk, sdk.sdkConfiguration, sdk.hooks)
+	sdk.Vault = newVault(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.Webhooks = newWebhooks(sdk, sdk.sdkConfiguration, sdk.hooks)
 
 	return sdk

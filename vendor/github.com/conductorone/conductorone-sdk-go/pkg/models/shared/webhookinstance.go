@@ -25,6 +25,17 @@ func (e WebhookInstanceState) ToPointer() *WebhookInstanceState {
 	return &e
 }
 
+// IsExact returns true if the value matches a known enum value, false otherwise.
+func (e *WebhookInstanceState) IsExact() bool {
+	if e != nil {
+		switch *e {
+		case "WEBHOOK_STATE_UNSPECIFIED", "WEBHOOK_STATE_PENDING", "WEBHOOK_STATE_RUNNING", "WEBHOOK_STATE_ERROR", "WEBHOOK_STATE_WAITING_CALLBACK", "WEBHOOK_STATE_PROCESS_RESPONSE", "WEBHOOK_STATE_SUCCESS", "WEBHOOK_STATE_FATAL_ERROR":
+			return true
+		}
+	}
+	return false
+}
+
 // The WebhookInstance message.
 type WebhookInstance struct {
 	// The WebhookSource message.
@@ -59,85 +70,85 @@ func (w WebhookInstance) MarshalJSON() ([]byte, error) {
 }
 
 func (w *WebhookInstance) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &w, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &w, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *WebhookInstance) GetWebhookSource() *WebhookSource {
-	if o == nil {
+func (w *WebhookInstance) GetWebhookSource() *WebhookSource {
+	if w == nil {
 		return nil
 	}
-	return o.WebhookSource
+	return w.WebhookSource
 }
 
-func (o *WebhookInstance) GetWebhookSpec() *WebhookSpec {
-	if o == nil {
+func (w *WebhookInstance) GetWebhookSpec() *WebhookSpec {
+	if w == nil {
 		return nil
 	}
-	return o.WebhookSpec
+	return w.WebhookSpec
 }
 
-func (o *WebhookInstance) GetAttempts() *int {
-	if o == nil {
+func (w *WebhookInstance) GetAttempts() *int {
+	if w == nil {
 		return nil
 	}
-	return o.Attempts
+	return w.Attempts
 }
 
-func (o *WebhookInstance) GetCompletedAt() *time.Time {
-	if o == nil {
+func (w *WebhookInstance) GetCompletedAt() *time.Time {
+	if w == nil {
 		return nil
 	}
-	return o.CompletedAt
+	return w.CompletedAt
 }
 
-func (o *WebhookInstance) GetCreatedAt() *time.Time {
-	if o == nil {
+func (w *WebhookInstance) GetCreatedAt() *time.Time {
+	if w == nil {
 		return nil
 	}
-	return o.CreatedAt
+	return w.CreatedAt
 }
 
-func (o *WebhookInstance) GetExpiresAt() *time.Time {
-	if o == nil {
+func (w *WebhookInstance) GetExpiresAt() *time.Time {
+	if w == nil {
 		return nil
 	}
-	return o.ExpiresAt
+	return w.ExpiresAt
 }
 
-func (o *WebhookInstance) GetID() *string {
-	if o == nil {
+func (w *WebhookInstance) GetID() *string {
+	if w == nil {
 		return nil
 	}
-	return o.ID
+	return w.ID
 }
 
-func (o *WebhookInstance) GetLastAttemptedAt() *time.Time {
-	if o == nil {
+func (w *WebhookInstance) GetLastAttemptedAt() *time.Time {
+	if w == nil {
 		return nil
 	}
-	return o.LastAttemptedAt
+	return w.LastAttemptedAt
 }
 
-func (o *WebhookInstance) GetState() *WebhookInstanceState {
-	if o == nil {
+func (w *WebhookInstance) GetState() *WebhookInstanceState {
+	if w == nil {
 		return nil
 	}
-	return o.State
+	return w.State
 }
 
-func (o *WebhookInstance) GetUpdatedAt() *time.Time {
-	if o == nil {
+func (w *WebhookInstance) GetUpdatedAt() *time.Time {
+	if w == nil {
 		return nil
 	}
-	return o.UpdatedAt
+	return w.UpdatedAt
 }
 
-func (o *WebhookInstance) GetWebhookID() *string {
-	if o == nil {
+func (w *WebhookInstance) GetWebhookID() *string {
+	if w == nil {
 		return nil
 	}
-	return o.WebhookID
+	return w.WebhookID
 }

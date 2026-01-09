@@ -18,24 +18,24 @@ func (p PayloadProvisionStepExpanded) MarshalJSON() ([]byte, error) {
 }
 
 func (p *PayloadProvisionStepExpanded) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &p, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &p, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *PayloadProvisionStepExpanded) GetAtType() *string {
-	if o == nil {
+func (p *PayloadProvisionStepExpanded) GetAtType() *string {
+	if p == nil {
 		return nil
 	}
-	return o.AtType
+	return p.AtType
 }
 
-func (o *PayloadProvisionStepExpanded) GetAdditionalProperties() map[string]any {
-	if o == nil {
+func (p *PayloadProvisionStepExpanded) GetAdditionalProperties() map[string]any {
+	if p == nil {
 		return nil
 	}
-	return o.AdditionalProperties
+	return p.AdditionalProperties
 }
 
 // The PayloadProvisionStep message.
@@ -46,16 +46,16 @@ type PayloadProvisionStep struct {
 	Expanded []PayloadProvisionStepExpanded `json:"expanded,omitempty"`
 }
 
-func (o *PayloadProvisionStep) GetTaskView() *TaskView {
-	if o == nil {
+func (p *PayloadProvisionStep) GetTaskView() *TaskView {
+	if p == nil {
 		return nil
 	}
-	return o.TaskView
+	return p.TaskView
 }
 
-func (o *PayloadProvisionStep) GetExpanded() []PayloadProvisionStepExpanded {
-	if o == nil {
+func (p *PayloadProvisionStep) GetExpanded() []PayloadProvisionStepExpanded {
+	if p == nil {
 		return nil
 	}
-	return o.Expanded
+	return p.Expanded
 }

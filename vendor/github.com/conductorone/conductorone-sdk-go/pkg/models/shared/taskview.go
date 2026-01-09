@@ -10,6 +10,8 @@ type TaskView struct {
 	AccessReviewPath *string `json:"accessReviewPath,omitempty"`
 	// JSONPATH expression indicating the location of the App object in the expanded array
 	AppPath *string `json:"appPath,omitempty"`
+	// JSONPATH expression indicating the location of the AppUser last usage timestamp in the expanded array
+	AppUserLastUsagePath *string `json:"appUserLastUsagePath,omitempty"`
 	// JSONPATH expression indicating the location of the AppUser object in the expanded array
 	AppUserPath *string `json:"appUserPath,omitempty"`
 	// JSONPATH expression indicating the location of the object of the User that created the ticket in the expanded array
@@ -26,72 +28,79 @@ type TaskView struct {
 	UserPath *string `json:"userPath,omitempty"`
 }
 
-func (o *TaskView) GetTask() *Task {
-	if o == nil {
+func (t *TaskView) GetTask() *Task {
+	if t == nil {
 		return nil
 	}
-	return o.Task
+	return t.Task
 }
 
-func (o *TaskView) GetAccessReviewPath() *string {
-	if o == nil {
+func (t *TaskView) GetAccessReviewPath() *string {
+	if t == nil {
 		return nil
 	}
-	return o.AccessReviewPath
+	return t.AccessReviewPath
 }
 
-func (o *TaskView) GetAppPath() *string {
-	if o == nil {
+func (t *TaskView) GetAppPath() *string {
+	if t == nil {
 		return nil
 	}
-	return o.AppPath
+	return t.AppPath
 }
 
-func (o *TaskView) GetAppUserPath() *string {
-	if o == nil {
+func (t *TaskView) GetAppUserLastUsagePath() *string {
+	if t == nil {
 		return nil
 	}
-	return o.AppUserPath
+	return t.AppUserLastUsagePath
 }
 
-func (o *TaskView) GetCreatedByUserPath() *string {
-	if o == nil {
+func (t *TaskView) GetAppUserPath() *string {
+	if t == nil {
 		return nil
 	}
-	return o.CreatedByUserPath
+	return t.AppUserPath
 }
 
-func (o *TaskView) GetEntitlementsPath() *string {
-	if o == nil {
+func (t *TaskView) GetCreatedByUserPath() *string {
+	if t == nil {
 		return nil
 	}
-	return o.EntitlementsPath
+	return t.CreatedByUserPath
 }
 
-func (o *TaskView) GetIdentityUserPath() *string {
-	if o == nil {
+func (t *TaskView) GetEntitlementsPath() *string {
+	if t == nil {
 		return nil
 	}
-	return o.IdentityUserPath
+	return t.EntitlementsPath
 }
 
-func (o *TaskView) GetInsightsPath() *string {
-	if o == nil {
+func (t *TaskView) GetIdentityUserPath() *string {
+	if t == nil {
 		return nil
 	}
-	return o.InsightsPath
+	return t.IdentityUserPath
 }
 
-func (o *TaskView) GetStepApproversPath() *string {
-	if o == nil {
+func (t *TaskView) GetInsightsPath() *string {
+	if t == nil {
 		return nil
 	}
-	return o.StepApproversPath
+	return t.InsightsPath
 }
 
-func (o *TaskView) GetUserPath() *string {
-	if o == nil {
+func (t *TaskView) GetStepApproversPath() *string {
+	if t == nil {
 		return nil
 	}
-	return o.UserPath
+	return t.StepApproversPath
+}
+
+func (t *TaskView) GetUserPath() *string {
+	if t == nil {
+		return nil
+	}
+	return t.UserPath
 }

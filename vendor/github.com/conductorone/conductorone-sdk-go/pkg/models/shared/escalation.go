@@ -7,41 +7,61 @@ package shared
 // This message contains a oneof named escalation_policy. Only a single field of the following list may be set at a time:
 //   - replacePolicy
 //   - reassignToApprovers
+//   - cancelTicket
+//   - skipStep
 type Escalation struct {
+	// The CancelTicket message.
+	CancelTicket *CancelTicket `json:"cancelTicket,omitempty"`
 	// The ReassignToApprovers message.
 	ReassignToApprovers *ReassignToApprovers `json:"reassignToApprovers,omitempty"`
 	// The ReplacePolicy message.
 	ReplacePolicy *ReplacePolicy `json:"replacePolicy,omitempty"`
+	// The SkipStep message.
+	SkipStep *SkipStep `json:"skipStep,omitempty"`
 	// The escalationComment field.
 	EscalationComment *string `json:"escalationComment,omitempty"`
 	// The expiration field.
 	Expiration *int64 `integer:"string" json:"expiration,omitempty"`
 }
 
-func (o *Escalation) GetReassignToApprovers() *ReassignToApprovers {
-	if o == nil {
+func (e *Escalation) GetCancelTicket() *CancelTicket {
+	if e == nil {
 		return nil
 	}
-	return o.ReassignToApprovers
+	return e.CancelTicket
 }
 
-func (o *Escalation) GetReplacePolicy() *ReplacePolicy {
-	if o == nil {
+func (e *Escalation) GetReassignToApprovers() *ReassignToApprovers {
+	if e == nil {
 		return nil
 	}
-	return o.ReplacePolicy
+	return e.ReassignToApprovers
 }
 
-func (o *Escalation) GetEscalationComment() *string {
-	if o == nil {
+func (e *Escalation) GetReplacePolicy() *ReplacePolicy {
+	if e == nil {
 		return nil
 	}
-	return o.EscalationComment
+	return e.ReplacePolicy
 }
 
-func (o *Escalation) GetExpiration() *int64 {
-	if o == nil {
+func (e *Escalation) GetSkipStep() *SkipStep {
+	if e == nil {
 		return nil
 	}
-	return o.Expiration
+	return e.SkipStep
+}
+
+func (e *Escalation) GetEscalationComment() *string {
+	if e == nil {
+		return nil
+	}
+	return e.EscalationComment
+}
+
+func (e *Escalation) GetExpiration() *int64 {
+	if e == nil {
+		return nil
+	}
+	return e.Expiration
 }

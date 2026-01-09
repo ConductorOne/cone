@@ -23,36 +23,36 @@ func (a ApprovedAction) MarshalJSON() ([]byte, error) {
 }
 
 func (a *ApprovedAction) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &a, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &a, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *ApprovedAction) GetApprovedAt() *time.Time {
-	if o == nil {
+func (a *ApprovedAction) GetApprovedAt() *time.Time {
+	if a == nil {
 		return nil
 	}
-	return o.ApprovedAt
+	return a.ApprovedAt
 }
 
-func (o *ApprovedAction) GetEntitlements() []AppEntitlementReference {
-	if o == nil {
+func (a *ApprovedAction) GetEntitlements() []AppEntitlementReference {
+	if a == nil {
 		return nil
 	}
-	return o.Entitlements
+	return a.Entitlements
 }
 
-func (o *ApprovedAction) GetStepUpTransactionID() *string {
-	if o == nil {
+func (a *ApprovedAction) GetStepUpTransactionID() *string {
+	if a == nil {
 		return nil
 	}
-	return o.StepUpTransactionID
+	return a.StepUpTransactionID
 }
 
-func (o *ApprovedAction) GetUserID() *string {
-	if o == nil {
+func (a *ApprovedAction) GetUserID() *string {
+	if a == nil {
 		return nil
 	}
-	return o.UserID
+	return a.UserID
 }

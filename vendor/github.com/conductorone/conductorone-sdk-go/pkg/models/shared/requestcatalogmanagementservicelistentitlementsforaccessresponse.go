@@ -18,24 +18,24 @@ func (r RequestCatalogManagementServiceListEntitlementsForAccessResponseExpanded
 }
 
 func (r *RequestCatalogManagementServiceListEntitlementsForAccessResponseExpanded) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &r, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &r, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *RequestCatalogManagementServiceListEntitlementsForAccessResponseExpanded) GetAtType() *string {
-	if o == nil {
+func (r *RequestCatalogManagementServiceListEntitlementsForAccessResponseExpanded) GetAtType() *string {
+	if r == nil {
 		return nil
 	}
-	return o.AtType
+	return r.AtType
 }
 
-func (o *RequestCatalogManagementServiceListEntitlementsForAccessResponseExpanded) GetAdditionalProperties() map[string]any {
-	if o == nil {
+func (r *RequestCatalogManagementServiceListEntitlementsForAccessResponseExpanded) GetAdditionalProperties() map[string]any {
+	if r == nil {
 		return nil
 	}
-	return o.AdditionalProperties
+	return r.AdditionalProperties
 }
 
 // The RequestCatalogManagementServiceListEntitlementsForAccessResponse message contains a list of results and a nextPageToken if applicable.
@@ -50,23 +50,23 @@ type RequestCatalogManagementServiceListEntitlementsForAccessResponse struct {
 	NextPageToken *string `json:"nextPageToken,omitempty"`
 }
 
-func (o *RequestCatalogManagementServiceListEntitlementsForAccessResponse) GetExpanded() []RequestCatalogManagementServiceListEntitlementsForAccessResponseExpanded {
-	if o == nil {
+func (r *RequestCatalogManagementServiceListEntitlementsForAccessResponse) GetExpanded() []RequestCatalogManagementServiceListEntitlementsForAccessResponseExpanded {
+	if r == nil {
 		return nil
 	}
-	return o.Expanded
+	return r.Expanded
 }
 
-func (o *RequestCatalogManagementServiceListEntitlementsForAccessResponse) GetList() []AppEntitlementView {
-	if o == nil {
+func (r *RequestCatalogManagementServiceListEntitlementsForAccessResponse) GetList() []AppEntitlementView {
+	if r == nil {
 		return nil
 	}
-	return o.List
+	return r.List
 }
 
-func (o *RequestCatalogManagementServiceListEntitlementsForAccessResponse) GetNextPageToken() *string {
-	if o == nil {
+func (r *RequestCatalogManagementServiceListEntitlementsForAccessResponse) GetNextPageToken() *string {
+	if r == nil {
 		return nil
 	}
-	return o.NextPageToken
+	return r.NextPageToken
 }

@@ -12,23 +12,23 @@ type TaskActionsServiceRestartRequest struct {
 	PolicyStepID *string `json:"policyStepId,omitempty"`
 }
 
-func (o *TaskActionsServiceRestartRequest) GetTaskExpandMask() *TaskExpandMask {
-	if o == nil {
+func (t *TaskActionsServiceRestartRequest) GetTaskExpandMask() *TaskExpandMask {
+	if t == nil {
 		return nil
 	}
-	return o.TaskExpandMask
+	return t.TaskExpandMask
 }
 
-func (o *TaskActionsServiceRestartRequest) GetComment() *string {
-	if o == nil {
+func (t *TaskActionsServiceRestartRequest) GetComment() *string {
+	if t == nil {
 		return nil
 	}
-	return o.Comment
+	return t.Comment
 }
 
-func (o *TaskActionsServiceRestartRequest) GetPolicyStepID() *string {
-	if o == nil {
+func (t *TaskActionsServiceRestartRequest) GetPolicyStepID() *string {
+	if t == nil {
 		return nil
 	}
-	return o.PolicyStepID
+	return t.PolicyStepID
 }

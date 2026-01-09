@@ -15,15 +15,26 @@ func (e PreviousState) ToPointer() *PreviousState {
 	return &e
 }
 
+// IsExact returns true if the value matches a known enum value, false otherwise.
+func (e *PreviousState) IsExact() bool {
+	if e != nil {
+		switch *e {
+		case "TASK_STATE_UNSPECIFIED", "TASK_STATE_OPEN", "TASK_STATE_CLOSED":
+			return true
+		}
+	}
+	return false
+}
+
 // The TaskAuditStateChange message.
 type TaskAuditStateChange struct {
 	// The previousState field.
 	PreviousState *PreviousState `json:"previousState,omitempty"`
 }
 
-func (o *TaskAuditStateChange) GetPreviousState() *PreviousState {
-	if o == nil {
+func (t *TaskAuditStateChange) GetPreviousState() *PreviousState {
+	if t == nil {
 		return nil
 	}
-	return o.PreviousState
+	return t.PreviousState
 }

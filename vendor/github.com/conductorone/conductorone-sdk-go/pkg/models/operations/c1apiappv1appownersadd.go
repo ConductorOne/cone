@@ -13,25 +13,25 @@ type C1APIAppV1AppOwnersAddRequest struct {
 	UserID             string                     `pathParam:"style=simple,explode=false,name=user_id"`
 }
 
-func (o *C1APIAppV1AppOwnersAddRequest) GetAddAppOwnerRequest() *shared.AddAppOwnerRequest {
-	if o == nil {
+func (c *C1APIAppV1AppOwnersAddRequest) GetAddAppOwnerRequest() *shared.AddAppOwnerRequest {
+	if c == nil {
 		return nil
 	}
-	return o.AddAppOwnerRequest
+	return c.AddAppOwnerRequest
 }
 
-func (o *C1APIAppV1AppOwnersAddRequest) GetAppID() string {
-	if o == nil {
+func (c *C1APIAppV1AppOwnersAddRequest) GetAppID() string {
+	if c == nil {
 		return ""
 	}
-	return o.AppID
+	return c.AppID
 }
 
-func (o *C1APIAppV1AppOwnersAddRequest) GetUserID() string {
-	if o == nil {
+func (c *C1APIAppV1AppOwnersAddRequest) GetUserID() string {
+	if c == nil {
 		return ""
 	}
-	return o.UserID
+	return c.UserID
 }
 
 type C1APIAppV1AppOwnersAddResponse struct {
@@ -45,30 +45,30 @@ type C1APIAppV1AppOwnersAddResponse struct {
 	RawResponse *http.Response
 }
 
-func (o *C1APIAppV1AppOwnersAddResponse) GetAddAppOwnerResponse() *shared.AddAppOwnerResponse {
-	if o == nil {
+func (c *C1APIAppV1AppOwnersAddResponse) GetAddAppOwnerResponse() *shared.AddAppOwnerResponse {
+	if c == nil {
 		return nil
 	}
-	return o.AddAppOwnerResponse
+	return c.AddAppOwnerResponse
 }
 
-func (o *C1APIAppV1AppOwnersAddResponse) GetContentType() string {
-	if o == nil {
+func (c *C1APIAppV1AppOwnersAddResponse) GetContentType() string {
+	if c == nil {
 		return ""
 	}
-	return o.ContentType
+	return c.ContentType
 }
 
-func (o *C1APIAppV1AppOwnersAddResponse) GetStatusCode() int {
-	if o == nil {
+func (c *C1APIAppV1AppOwnersAddResponse) GetStatusCode() int {
+	if c == nil {
 		return 0
 	}
-	return o.StatusCode
+	return c.StatusCode
 }
 
-func (o *C1APIAppV1AppOwnersAddResponse) GetRawResponse() *http.Response {
-	if o == nil {
+func (c *C1APIAppV1AppOwnersAddResponse) GetRawResponse() *http.Response {
+	if c == nil {
 		return nil
 	}
-	return o.RawResponse
+	return c.RawResponse
 }

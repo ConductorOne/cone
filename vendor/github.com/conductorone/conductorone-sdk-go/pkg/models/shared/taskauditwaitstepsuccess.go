@@ -21,29 +21,29 @@ func (t TaskAuditWaitStepSuccess) MarshalJSON() ([]byte, error) {
 }
 
 func (t *TaskAuditWaitStepSuccess) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &t, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &t, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *TaskAuditWaitStepSuccess) GetCondition() *string {
-	if o == nil {
+func (t *TaskAuditWaitStepSuccess) GetCondition() *string {
+	if t == nil {
 		return nil
 	}
-	return o.Condition
+	return t.Condition
 }
 
-func (o *TaskAuditWaitStepSuccess) GetStepID() *string {
-	if o == nil {
+func (t *TaskAuditWaitStepSuccess) GetStepID() *string {
+	if t == nil {
 		return nil
 	}
-	return o.StepID
+	return t.StepID
 }
 
-func (o *TaskAuditWaitStepSuccess) GetSucceededAt() *time.Time {
-	if o == nil {
+func (t *TaskAuditWaitStepSuccess) GetSucceededAt() *time.Time {
+	if t == nil {
 		return nil
 	}
-	return o.SucceededAt
+	return t.SucceededAt
 }

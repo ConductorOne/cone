@@ -21,29 +21,29 @@ func (t TaskAuditComment) MarshalJSON() ([]byte, error) {
 }
 
 func (t *TaskAuditComment) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &t, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &t, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *TaskAuditComment) GetComment() *string {
-	if o == nil {
+func (t *TaskAuditComment) GetComment() *string {
+	if t == nil {
 		return nil
 	}
-	return o.Comment
+	return t.Comment
 }
 
-func (o *TaskAuditComment) GetUpdatedAt() *time.Time {
-	if o == nil {
+func (t *TaskAuditComment) GetUpdatedAt() *time.Time {
+	if t == nil {
 		return nil
 	}
-	return o.UpdatedAt
+	return t.UpdatedAt
 }
 
-func (o *TaskAuditComment) GetUpdatedBy() *string {
-	if o == nil {
+func (t *TaskAuditComment) GetUpdatedBy() *string {
+	if t == nil {
 		return nil
 	}
-	return o.UpdatedBy
+	return t.UpdatedBy
 }

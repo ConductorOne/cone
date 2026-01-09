@@ -12,11 +12,17 @@ import (
 // This message contains a oneof named escalation_policy. Only a single field of the following list may be set at a time:
 //   - replacePolicy
 //   - reassignToApprovers
+//   - cancelTicket
+//   - skipStep
 type EscalationInstance struct {
+	// The CancelTicket message.
+	CancelTicket *CancelTicket `json:"cancelTicket,omitempty"`
 	// The ReassignToApprovers message.
 	ReassignToApprovers *ReassignToApprovers `json:"reassignToApprovers,omitempty"`
 	// The ReplacePolicy message.
 	ReplacePolicy *ReplacePolicy `json:"replacePolicy,omitempty"`
+	// The SkipStep message.
+	SkipStep *SkipStep `json:"skipStep,omitempty"`
 	// The alreadyEscalated field.
 	AlreadyEscalated *bool `json:"alreadyEscalated,omitempty"`
 	// The escalationComment field.
@@ -29,43 +35,57 @@ func (e EscalationInstance) MarshalJSON() ([]byte, error) {
 }
 
 func (e *EscalationInstance) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &e, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &e, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *EscalationInstance) GetReassignToApprovers() *ReassignToApprovers {
-	if o == nil {
+func (e *EscalationInstance) GetCancelTicket() *CancelTicket {
+	if e == nil {
 		return nil
 	}
-	return o.ReassignToApprovers
+	return e.CancelTicket
 }
 
-func (o *EscalationInstance) GetReplacePolicy() *ReplacePolicy {
-	if o == nil {
+func (e *EscalationInstance) GetReassignToApprovers() *ReassignToApprovers {
+	if e == nil {
 		return nil
 	}
-	return o.ReplacePolicy
+	return e.ReassignToApprovers
 }
 
-func (o *EscalationInstance) GetAlreadyEscalated() *bool {
-	if o == nil {
+func (e *EscalationInstance) GetReplacePolicy() *ReplacePolicy {
+	if e == nil {
 		return nil
 	}
-	return o.AlreadyEscalated
+	return e.ReplacePolicy
 }
 
-func (o *EscalationInstance) GetEscalationComment() *string {
-	if o == nil {
+func (e *EscalationInstance) GetSkipStep() *SkipStep {
+	if e == nil {
 		return nil
 	}
-	return o.EscalationComment
+	return e.SkipStep
 }
 
-func (o *EscalationInstance) GetExpiresAt() *time.Time {
-	if o == nil {
+func (e *EscalationInstance) GetAlreadyEscalated() *bool {
+	if e == nil {
 		return nil
 	}
-	return o.ExpiresAt
+	return e.AlreadyEscalated
+}
+
+func (e *EscalationInstance) GetEscalationComment() *string {
+	if e == nil {
+		return nil
+	}
+	return e.EscalationComment
+}
+
+func (e *EscalationInstance) GetExpiresAt() *time.Time {
+	if e == nil {
+		return nil
+	}
+	return e.ExpiresAt
 }

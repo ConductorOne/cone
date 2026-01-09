@@ -44,6 +44,17 @@ func (e ActionType) ToPointer() *ActionType {
 	return &e
 }
 
+// IsExact returns true if the value matches a known enum value, false otherwise.
+func (e *ActionType) IsExact() bool {
+	if e != nil {
+		switch *e {
+		case "TASK_ACTION_TYPE_UNSPECIFIED", "TASK_ACTION_TYPE_CLOSE", "TASK_ACTION_TYPE_APPROVE", "TASK_ACTION_TYPE_DENY", "TASK_ACTION_TYPE_COMMENT", "TASK_ACTION_TYPE_DELETE", "TASK_ACTION_TYPE_REASSIGN", "TASK_ACTION_TYPE_RESTART", "TASK_ACTION_TYPE_SEND_REMINDER", "TASK_ACTION_TYPE_PROVISION_COMPLETE", "TASK_ACTION_TYPE_PROVISION_CANCELLED", "TASK_ACTION_TYPE_PROVISION_ERRORED", "TASK_ACTION_TYPE_ROLLBACK_SKIPPED", "TASK_ACTION_TYPE_PROVISION_APP_USER_TARGET_CREATED", "TASK_ACTION_TYPE_HARD_RESET", "TASK_ACTION_TYPE_ESCALATE_TO_EMERGENCY_ACCESS", "TASK_ACTION_TYPE_CHANGE_POLICY", "TASK_ACTION_TYPE_RECALCULATE_DENIAL_FROM_BASE_POLICY_DECISIONS", "TASK_ACTION_TYPE_SET_INSIGHTS_AND_RECOMMENDATION", "TASK_ACTION_TYPE_SET_ANALYSIS_ID", "TASK_ACTION_TYPE_RECALCULATE_APPROVERS_LIST", "TASK_ACTION_TYPE_PROCESS_NOW", "TASK_ACTION_TYPE_APPROVE_WITH_STEP_UP", "TASK_ACTION_TYPE_SKIP_STEP", "TASK_ACTION_TYPE_ROLLBACK_CANCELLED", "TASK_ACTION_TYPE_UPDATE_REQUEST_DATA", "TASK_ACTION_TYPE_UPDATE_GRANT_DURATION":
+			return true
+		}
+	}
+	return false
+}
+
 // TaskAction1 - The TaskAction message.
 type TaskAction1 struct {
 	// The actionType field.
@@ -66,64 +77,64 @@ func (t TaskAction1) MarshalJSON() ([]byte, error) {
 }
 
 func (t *TaskAction1) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &t, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &t, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *TaskAction1) GetActionType() *ActionType {
-	if o == nil {
+func (t *TaskAction1) GetActionType() *ActionType {
+	if t == nil {
 		return nil
 	}
-	return o.ActionType
+	return t.ActionType
 }
 
-func (o *TaskAction1) GetBulkActionID() *string {
-	if o == nil {
+func (t *TaskAction1) GetBulkActionID() *string {
+	if t == nil {
 		return nil
 	}
-	return o.BulkActionID
+	return t.BulkActionID
 }
 
-func (o *TaskAction1) GetCreatedAt() *time.Time {
-	if o == nil {
+func (t *TaskAction1) GetCreatedAt() *time.Time {
+	if t == nil {
 		return nil
 	}
-	return o.CreatedAt
+	return t.CreatedAt
 }
 
-func (o *TaskAction1) GetDeletedAt() *time.Time {
-	if o == nil {
+func (t *TaskAction1) GetDeletedAt() *time.Time {
+	if t == nil {
 		return nil
 	}
-	return o.DeletedAt
+	return t.DeletedAt
 }
 
-func (o *TaskAction1) GetID() *string {
-	if o == nil {
+func (t *TaskAction1) GetID() *string {
+	if t == nil {
 		return nil
 	}
-	return o.ID
+	return t.ID
 }
 
-func (o *TaskAction1) GetPolicyStepID() *string {
-	if o == nil {
+func (t *TaskAction1) GetPolicyStepID() *string {
+	if t == nil {
 		return nil
 	}
-	return o.PolicyStepID
+	return t.PolicyStepID
 }
 
-func (o *TaskAction1) GetUpdatedAt() *time.Time {
-	if o == nil {
+func (t *TaskAction1) GetUpdatedAt() *time.Time {
+	if t == nil {
 		return nil
 	}
-	return o.UpdatedAt
+	return t.UpdatedAt
 }
 
-func (o *TaskAction1) GetUserID() *string {
-	if o == nil {
+func (t *TaskAction1) GetUserID() *string {
+	if t == nil {
 		return nil
 	}
-	return o.UserID
+	return t.UserID
 }

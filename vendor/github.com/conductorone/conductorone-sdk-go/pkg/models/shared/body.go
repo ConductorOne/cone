@@ -18,24 +18,24 @@ func (p Payload) MarshalJSON() ([]byte, error) {
 }
 
 func (p *Payload) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &p, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &p, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *Payload) GetAtType() *string {
-	if o == nil {
+func (p *Payload) GetAtType() *string {
+	if p == nil {
 		return nil
 	}
-	return o.AtType
+	return p.AtType
 }
 
-func (o *Payload) GetAdditionalProperties() map[string]any {
-	if o == nil {
+func (p *Payload) GetAdditionalProperties() map[string]any {
+	if p == nil {
 		return nil
 	}
-	return o.AdditionalProperties
+	return p.AdditionalProperties
 }
 
 // The Body message.
@@ -69,37 +69,37 @@ type Body struct {
 	WebhookID *string `json:"webhookId,omitempty"`
 }
 
-func (o *Body) GetCallbackURL() *string {
-	if o == nil {
+func (b *Body) GetCallbackURL() *string {
+	if b == nil {
 		return nil
 	}
-	return o.CallbackURL
+	return b.CallbackURL
 }
 
-func (o *Body) GetEvent() *string {
-	if o == nil {
+func (b *Body) GetEvent() *string {
+	if b == nil {
 		return nil
 	}
-	return o.Event
+	return b.Event
 }
 
-func (o *Body) GetPayload() *Payload {
-	if o == nil {
+func (b *Body) GetPayload() *Payload {
+	if b == nil {
 		return nil
 	}
-	return o.Payload
+	return b.Payload
 }
 
-func (o *Body) GetVersion() *string {
-	if o == nil {
+func (b *Body) GetVersion() *string {
+	if b == nil {
 		return nil
 	}
-	return o.Version
+	return b.Version
 }
 
-func (o *Body) GetWebhookID() *string {
-	if o == nil {
+func (b *Body) GetWebhookID() *string {
+	if b == nil {
 		return nil
 	}
-	return o.WebhookID
+	return b.WebhookID
 }

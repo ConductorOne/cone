@@ -2,15 +2,69 @@
 
 package shared
 
+import (
+	"github.com/conductorone/conductorone-sdk-go/pkg/utils"
+)
+
+// GetAutomationExecutionResponseExpanded - Contains an arbitrary serialized message along with a @type that describes the type of the serialized message.
+type GetAutomationExecutionResponseExpanded struct {
+	// The type of the serialized message.
+	AtType               *string        `json:"@type,omitempty"`
+	AdditionalProperties map[string]any `additionalProperties:"true" json:"-"`
+}
+
+func (g GetAutomationExecutionResponseExpanded) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(g, "", false)
+}
+
+func (g *GetAutomationExecutionResponseExpanded) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &g, "", false, nil); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (g *GetAutomationExecutionResponseExpanded) GetAtType() *string {
+	if g == nil {
+		return nil
+	}
+	return g.AtType
+}
+
+func (g *GetAutomationExecutionResponseExpanded) GetAdditionalProperties() map[string]any {
+	if g == nil {
+		return nil
+	}
+	return g.AdditionalProperties
+}
+
 // The GetAutomationExecutionResponse message.
 type GetAutomationExecutionResponse struct {
 	// The AutomationExecution message.
 	AutomationExecution *AutomationExecution `json:"automationExecution,omitempty"`
+	// The AutomationExecutionView message.
+	AutomationExecutionView *AutomationExecutionView `json:"view,omitempty"`
+	// The expanded field.
+	Expanded []GetAutomationExecutionResponseExpanded `json:"expanded,omitempty"`
 }
 
-func (o *GetAutomationExecutionResponse) GetAutomationExecution() *AutomationExecution {
-	if o == nil {
+func (g *GetAutomationExecutionResponse) GetAutomationExecution() *AutomationExecution {
+	if g == nil {
 		return nil
 	}
-	return o.AutomationExecution
+	return g.AutomationExecution
+}
+
+func (g *GetAutomationExecutionResponse) GetAutomationExecutionView() *AutomationExecutionView {
+	if g == nil {
+		return nil
+	}
+	return g.AutomationExecutionView
+}
+
+func (g *GetAutomationExecutionResponse) GetExpanded() []GetAutomationExecutionResponseExpanded {
+	if g == nil {
+		return nil
+	}
+	return g.Expanded
 }

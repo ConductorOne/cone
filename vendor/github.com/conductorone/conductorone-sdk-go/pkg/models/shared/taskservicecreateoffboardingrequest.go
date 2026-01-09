@@ -12,23 +12,23 @@ type TaskServiceCreateOffboardingRequest struct {
 	SubjectUserID *string `json:"subjectUserId,omitempty"`
 }
 
-func (o *TaskServiceCreateOffboardingRequest) GetTaskExpandMask() *TaskExpandMask {
-	if o == nil {
+func (t *TaskServiceCreateOffboardingRequest) GetTaskExpandMask() *TaskExpandMask {
+	if t == nil {
 		return nil
 	}
-	return o.TaskExpandMask
+	return t.TaskExpandMask
 }
 
-func (o *TaskServiceCreateOffboardingRequest) GetDescription() *string {
-	if o == nil {
+func (t *TaskServiceCreateOffboardingRequest) GetDescription() *string {
+	if t == nil {
 		return nil
 	}
-	return o.Description
+	return t.Description
 }
 
-func (o *TaskServiceCreateOffboardingRequest) GetSubjectUserID() *string {
-	if o == nil {
+func (t *TaskServiceCreateOffboardingRequest) GetSubjectUserID() *string {
+	if t == nil {
 		return nil
 	}
-	return o.SubjectUserID
+	return t.SubjectUserID
 }

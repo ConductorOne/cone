@@ -15,6 +15,17 @@ func (e Format) ToPointer() *Format {
 	return &e
 }
 
+// IsExact returns true if the value matches a known enum value, false otherwise.
+func (e *Format) IsExact() bool {
+	if e != nil {
+		switch *e {
+		case "EXPORT_FORMAT_UNSPECIFIED", "EXPORT_FORMAT_OCSF_JSON_ZSTD", "EXPORT_FORMAT_OCSF_JSON_GZIP":
+			return true
+		}
+	}
+	return false
+}
+
 // The ExportToDatasource message.
 type ExportToDatasource struct {
 	// The datasourceId field.
@@ -25,23 +36,23 @@ type ExportToDatasource struct {
 	Prefix *string `json:"prefix,omitempty"`
 }
 
-func (o *ExportToDatasource) GetDatasourceID() *string {
-	if o == nil {
+func (e *ExportToDatasource) GetDatasourceID() *string {
+	if e == nil {
 		return nil
 	}
-	return o.DatasourceID
+	return e.DatasourceID
 }
 
-func (o *ExportToDatasource) GetFormat() *Format {
-	if o == nil {
+func (e *ExportToDatasource) GetFormat() *Format {
+	if e == nil {
 		return nil
 	}
-	return o.Format
+	return e.Format
 }
 
-func (o *ExportToDatasource) GetPrefix() *string {
-	if o == nil {
+func (e *ExportToDatasource) GetPrefix() *string {
+	if e == nil {
 		return nil
 	}
-	return o.Prefix
+	return e.Prefix
 }

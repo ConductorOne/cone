@@ -18,24 +18,24 @@ func (p PayloadPolicyApprovalStepExpanded) MarshalJSON() ([]byte, error) {
 }
 
 func (p *PayloadPolicyApprovalStepExpanded) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &p, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &p, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *PayloadPolicyApprovalStepExpanded) GetAtType() *string {
-	if o == nil {
+func (p *PayloadPolicyApprovalStepExpanded) GetAtType() *string {
+	if p == nil {
 		return nil
 	}
-	return o.AtType
+	return p.AtType
 }
 
-func (o *PayloadPolicyApprovalStepExpanded) GetAdditionalProperties() map[string]any {
-	if o == nil {
+func (p *PayloadPolicyApprovalStepExpanded) GetAdditionalProperties() map[string]any {
+	if p == nil {
 		return nil
 	}
-	return o.AdditionalProperties
+	return p.AdditionalProperties
 }
 
 // The PayloadPolicyApprovalStep message.
@@ -46,16 +46,16 @@ type PayloadPolicyApprovalStep struct {
 	Expanded []PayloadPolicyApprovalStepExpanded `json:"expanded,omitempty"`
 }
 
-func (o *PayloadPolicyApprovalStep) GetTaskView() *TaskView {
-	if o == nil {
+func (p *PayloadPolicyApprovalStep) GetTaskView() *TaskView {
+	if p == nil {
 		return nil
 	}
-	return o.TaskView
+	return p.TaskView
 }
 
-func (o *PayloadPolicyApprovalStep) GetExpanded() []PayloadPolicyApprovalStepExpanded {
-	if o == nil {
+func (p *PayloadPolicyApprovalStep) GetExpanded() []PayloadPolicyApprovalStepExpanded {
+	if p == nil {
 		return nil
 	}
-	return o.Expanded
+	return p.Expanded
 }

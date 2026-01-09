@@ -13,18 +13,24 @@ generation:
   auth:
     oAuth2ClientCredentialsEnabled: false
     oAuth2PasswordEnabled: false
+    hoistGlobalSecurity: true
+  schemas:
+    allOfMergeStrategy: shallowMerge
+  requestBodyFieldName: ""
+  persistentEdits: {}
   tests:
     generateTests: true
     generateNewTests: false
     skipResponseBodyAssertions: false
 go:
-  version: 1.25.0
+  version: 1.26.0
   additionalDependencies: {}
   allowUnknownFieldsInWeakUnions: false
   baseErrorName: ConductoroneAPIError
   clientServerStatusCodesAsErrors: true
   defaultErrorName: SDKError
   flattenGlobalSecurity: true
+  forwardCompatibleEnumsByDefault: false
   imports:
     option: openapi
     paths:
@@ -33,11 +39,17 @@ go:
       operations: pkg/models/operations
       shared: pkg/models/shared
       webhooks: pkg/models/webhooks
+  includeEmptyObjects: false
+  inferUnionDiscriminators: false
   inputModelSuffix: input
   maxMethodParams: 0
   methodArguments: require-security-and-request
   modulePath: ""
+  multipartArrayFormat: legacy
+  nullableOptionalWrapper: false
   outputModelSuffix: output
   packageName: github.com/conductorone/conductorone-sdk-go
+  respectRequiredFields: false
   responseFormat: envelope
   sdkPackageName: ""
+  unionStrategy: left-to-right

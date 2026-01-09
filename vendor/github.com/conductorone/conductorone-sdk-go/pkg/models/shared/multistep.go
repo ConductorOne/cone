@@ -8,9 +8,9 @@ type MultiStep struct {
 	ProvisionSteps []ProvisionPolicy `json:"provisionSteps,omitempty"`
 }
 
-func (o *MultiStep) GetProvisionSteps() []ProvisionPolicy {
-	if o == nil {
+func (m *MultiStep) GetProvisionSteps() []ProvisionPolicy {
+	if m == nil {
 		return nil
 	}
-	return o.ProvisionSteps
+	return m.ProvisionSteps
 }

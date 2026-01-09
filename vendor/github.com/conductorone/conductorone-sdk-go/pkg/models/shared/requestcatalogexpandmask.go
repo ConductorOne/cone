@@ -8,9 +8,9 @@ type RequestCatalogExpandMask struct {
 	Paths []string `json:"paths,omitempty"`
 }
 
-func (o *RequestCatalogExpandMask) GetPaths() []string {
-	if o == nil {
+func (r *RequestCatalogExpandMask) GetPaths() []string {
+	if r == nil {
 		return nil
 	}
-	return o.Paths
+	return r.Paths
 }

@@ -6,65 +6,65 @@ import (
 	"github.com/conductorone/conductorone-sdk-go/pkg/utils"
 )
 
-// Expanded - Contains an arbitrary serialized message along with a @type that describes the type of the serialized message.
-type Expanded struct {
+// AppEntitlementSearchServiceSearchGrantsResponseExpanded - Contains an arbitrary serialized message along with a @type that describes the type of the serialized message.
+type AppEntitlementSearchServiceSearchGrantsResponseExpanded struct {
 	// The type of the serialized message.
 	AtType               *string        `json:"@type,omitempty"`
 	AdditionalProperties map[string]any `additionalProperties:"true" json:"-"`
 }
 
-func (e Expanded) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(e, "", false)
+func (a AppEntitlementSearchServiceSearchGrantsResponseExpanded) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(a, "", false)
 }
 
-func (e *Expanded) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &e, "", false, false); err != nil {
+func (a *AppEntitlementSearchServiceSearchGrantsResponseExpanded) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &a, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *Expanded) GetAtType() *string {
-	if o == nil {
+func (a *AppEntitlementSearchServiceSearchGrantsResponseExpanded) GetAtType() *string {
+	if a == nil {
 		return nil
 	}
-	return o.AtType
+	return a.AtType
 }
 
-func (o *Expanded) GetAdditionalProperties() map[string]any {
-	if o == nil {
+func (a *AppEntitlementSearchServiceSearchGrantsResponseExpanded) GetAdditionalProperties() map[string]any {
+	if a == nil {
 		return nil
 	}
-	return o.AdditionalProperties
+	return a.AdditionalProperties
 }
 
 // The AppEntitlementSearchServiceSearchGrantsResponse message.
 type AppEntitlementSearchServiceSearchGrantsResponse struct {
 	// The expanded field.
-	Expanded []Expanded `json:"expanded,omitempty"`
+	Expanded []AppEntitlementSearchServiceSearchGrantsResponseExpanded `json:"expanded,omitempty"`
 	// The list field.
 	List []AppEntitlementWithUserBinding `json:"list,omitempty"`
 	// The nextPageToken field.
 	NextPageToken *string `json:"nextPageToken,omitempty"`
 }
 
-func (o *AppEntitlementSearchServiceSearchGrantsResponse) GetExpanded() []Expanded {
-	if o == nil {
+func (a *AppEntitlementSearchServiceSearchGrantsResponse) GetExpanded() []AppEntitlementSearchServiceSearchGrantsResponseExpanded {
+	if a == nil {
 		return nil
 	}
-	return o.Expanded
+	return a.Expanded
 }
 
-func (o *AppEntitlementSearchServiceSearchGrantsResponse) GetList() []AppEntitlementWithUserBinding {
-	if o == nil {
+func (a *AppEntitlementSearchServiceSearchGrantsResponse) GetList() []AppEntitlementWithUserBinding {
+	if a == nil {
 		return nil
 	}
-	return o.List
+	return a.List
 }
 
-func (o *AppEntitlementSearchServiceSearchGrantsResponse) GetNextPageToken() *string {
-	if o == nil {
+func (a *AppEntitlementSearchServiceSearchGrantsResponse) GetNextPageToken() *string {
+	if a == nil {
 		return nil
 	}
-	return o.NextPageToken
+	return a.NextPageToken
 }

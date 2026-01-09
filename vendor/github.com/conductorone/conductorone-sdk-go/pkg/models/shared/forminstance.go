@@ -15,6 +15,17 @@ func (e FormInstanceState) ToPointer() *FormInstanceState {
 	return &e
 }
 
+// IsExact returns true if the value matches a known enum value, false otherwise.
+func (e *FormInstanceState) IsExact() bool {
+	if e != nil {
+		switch *e {
+		case "FORM_INSTANCE_STATE_UNSPECIFIED", "FORM_INSTANCE_STATE_WAITING", "FORM_INSTANCE_STATE_DONE":
+			return true
+		}
+	}
+	return false
+}
+
 // The FormInstance message.
 //
 // This message contains a oneof named outcome. Only a single field of the following list may be set at a time:
@@ -38,51 +49,51 @@ type FormInstance struct {
 	State *FormInstanceState `json:"state,omitempty"`
 }
 
-func (o *FormInstance) GetForm() *FormInput {
-	if o == nil {
+func (f *FormInstance) GetForm() *FormInput {
+	if f == nil {
 		return nil
 	}
-	return o.Form
+	return f.Form
 }
 
-func (o *FormInstance) GetFormCompletedAction() *FormCompletedAction {
-	if o == nil {
+func (f *FormInstance) GetFormCompletedAction() *FormCompletedAction {
+	if f == nil {
 		return nil
 	}
-	return o.FormCompletedAction
+	return f.FormCompletedAction
 }
 
-func (o *FormInstance) GetReassignedAction() *ReassignedAction {
-	if o == nil {
+func (f *FormInstance) GetReassignedAction() *ReassignedAction {
+	if f == nil {
 		return nil
 	}
-	return o.ReassignedAction
+	return f.ReassignedAction
 }
 
-func (o *FormInstance) GetRestartAction() *RestartAction {
-	if o == nil {
+func (f *FormInstance) GetRestartAction() *RestartAction {
+	if f == nil {
 		return nil
 	}
-	return o.RestartAction
+	return f.RestartAction
 }
 
-func (o *FormInstance) GetSkippedAction() *SkippedAction {
-	if o == nil {
+func (f *FormInstance) GetSkippedAction() *SkippedAction {
+	if f == nil {
 		return nil
 	}
-	return o.SkippedAction
+	return f.SkippedAction
 }
 
-func (o *FormInstance) GetData() map[string]any {
-	if o == nil {
+func (f *FormInstance) GetData() map[string]any {
+	if f == nil {
 		return nil
 	}
-	return o.Data
+	return f.Data
 }
 
-func (o *FormInstance) GetState() *FormInstanceState {
-	if o == nil {
+func (f *FormInstance) GetState() *FormInstanceState {
+	if f == nil {
 		return nil
 	}
-	return o.State
+	return f.State
 }

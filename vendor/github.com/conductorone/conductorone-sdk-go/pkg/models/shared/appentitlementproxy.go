@@ -12,8 +12,9 @@ import (
 // This message contains a oneof named _implicit. Only a single field of the following list may be set at a time:
 //   - implicit
 type AppEntitlementProxy struct {
-	CreatedAt *time.Time `json:"createdAt,omitempty"`
-	DeletedAt *time.Time `json:"deletedAt,omitempty"`
+	CreatedAt  *time.Time `json:"createdAt,omitempty"`
+	DeletedAt  *time.Time `json:"deletedAt,omitempty"`
+	DisabledAt *time.Time `json:"disabledAt,omitempty"`
 	// The dstAppEntitlementId field.
 	DstAppEntitlementID *string `json:"dstAppEntitlementId,omitempty"`
 	// The dstAppId field.
@@ -37,71 +38,78 @@ func (a AppEntitlementProxy) MarshalJSON() ([]byte, error) {
 }
 
 func (a *AppEntitlementProxy) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &a, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &a, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *AppEntitlementProxy) GetCreatedAt() *time.Time {
-	if o == nil {
+func (a *AppEntitlementProxy) GetCreatedAt() *time.Time {
+	if a == nil {
 		return nil
 	}
-	return o.CreatedAt
+	return a.CreatedAt
 }
 
-func (o *AppEntitlementProxy) GetDeletedAt() *time.Time {
-	if o == nil {
+func (a *AppEntitlementProxy) GetDeletedAt() *time.Time {
+	if a == nil {
 		return nil
 	}
-	return o.DeletedAt
+	return a.DeletedAt
 }
 
-func (o *AppEntitlementProxy) GetDstAppEntitlementID() *string {
-	if o == nil {
+func (a *AppEntitlementProxy) GetDisabledAt() *time.Time {
+	if a == nil {
 		return nil
 	}
-	return o.DstAppEntitlementID
+	return a.DisabledAt
 }
 
-func (o *AppEntitlementProxy) GetDstAppID() *string {
-	if o == nil {
+func (a *AppEntitlementProxy) GetDstAppEntitlementID() *string {
+	if a == nil {
 		return nil
 	}
-	return o.DstAppID
+	return a.DstAppEntitlementID
 }
 
-func (o *AppEntitlementProxy) GetImplicit() *bool {
-	if o == nil {
+func (a *AppEntitlementProxy) GetDstAppID() *string {
+	if a == nil {
 		return nil
 	}
-	return o.Implicit
+	return a.DstAppID
 }
 
-func (o *AppEntitlementProxy) GetSrcAppEntitlementID() *string {
-	if o == nil {
+func (a *AppEntitlementProxy) GetImplicit() *bool {
+	if a == nil {
 		return nil
 	}
-	return o.SrcAppEntitlementID
+	return a.Implicit
 }
 
-func (o *AppEntitlementProxy) GetSrcAppID() *string {
-	if o == nil {
+func (a *AppEntitlementProxy) GetSrcAppEntitlementID() *string {
+	if a == nil {
 		return nil
 	}
-	return o.SrcAppID
+	return a.SrcAppEntitlementID
 }
 
-func (o *AppEntitlementProxy) GetSystemBuiltin() *bool {
-	if o == nil {
+func (a *AppEntitlementProxy) GetSrcAppID() *string {
+	if a == nil {
 		return nil
 	}
-	return o.SystemBuiltin
+	return a.SrcAppID
 }
 
-func (o *AppEntitlementProxy) GetUpdatedAt() *time.Time {
-	if o == nil {
+func (a *AppEntitlementProxy) GetSystemBuiltin() *bool {
+	if a == nil {
 		return nil
 	}
-	return o.UpdatedAt
+	return a.SystemBuiltin
+}
+
+func (a *AppEntitlementProxy) GetUpdatedAt() *time.Time {
+	if a == nil {
+		return nil
+	}
+	return a.UpdatedAt
 }

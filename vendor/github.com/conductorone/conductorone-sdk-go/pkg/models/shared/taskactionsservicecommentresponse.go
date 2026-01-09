@@ -18,24 +18,24 @@ func (t TaskActionsServiceCommentResponseExpanded) MarshalJSON() ([]byte, error)
 }
 
 func (t *TaskActionsServiceCommentResponseExpanded) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &t, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &t, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *TaskActionsServiceCommentResponseExpanded) GetAtType() *string {
-	if o == nil {
+func (t *TaskActionsServiceCommentResponseExpanded) GetAtType() *string {
+	if t == nil {
 		return nil
 	}
-	return o.AtType
+	return t.AtType
 }
 
-func (o *TaskActionsServiceCommentResponseExpanded) GetAdditionalProperties() map[string]any {
-	if o == nil {
+func (t *TaskActionsServiceCommentResponseExpanded) GetAdditionalProperties() map[string]any {
+	if t == nil {
 		return nil
 	}
-	return o.AdditionalProperties
+	return t.AdditionalProperties
 }
 
 // TaskActionsServiceCommentResponse - Task actions service comment response returns the task view inluding the expanded array of items that are indicated by the expand mask on the request.
@@ -46,16 +46,16 @@ type TaskActionsServiceCommentResponse struct {
 	Expanded []TaskActionsServiceCommentResponseExpanded `json:"expanded,omitempty"`
 }
 
-func (o *TaskActionsServiceCommentResponse) GetTaskView() *TaskView {
-	if o == nil {
+func (t *TaskActionsServiceCommentResponse) GetTaskView() *TaskView {
+	if t == nil {
 		return nil
 	}
-	return o.TaskView
+	return t.TaskView
 }
 
-func (o *TaskActionsServiceCommentResponse) GetExpanded() []TaskActionsServiceCommentResponseExpanded {
-	if o == nil {
+func (t *TaskActionsServiceCommentResponse) GetExpanded() []TaskActionsServiceCommentResponseExpanded {
+	if t == nil {
 		return nil
 	}
-	return o.Expanded
+	return t.Expanded
 }

@@ -18,24 +18,24 @@ func (t TaskServiceCreateRevokeResponseExpanded) MarshalJSON() ([]byte, error) {
 }
 
 func (t *TaskServiceCreateRevokeResponseExpanded) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &t, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &t, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *TaskServiceCreateRevokeResponseExpanded) GetAtType() *string {
-	if o == nil {
+func (t *TaskServiceCreateRevokeResponseExpanded) GetAtType() *string {
+	if t == nil {
 		return nil
 	}
-	return o.AtType
+	return t.AtType
 }
 
-func (o *TaskServiceCreateRevokeResponseExpanded) GetAdditionalProperties() map[string]any {
-	if o == nil {
+func (t *TaskServiceCreateRevokeResponseExpanded) GetAdditionalProperties() map[string]any {
+	if t == nil {
 		return nil
 	}
-	return o.AdditionalProperties
+	return t.AdditionalProperties
 }
 
 // The TaskServiceCreateRevokeResponse returns a task view which has a task including JSONPATHs to the expanded items in the expanded array.
@@ -46,16 +46,16 @@ type TaskServiceCreateRevokeResponse struct {
 	Expanded []TaskServiceCreateRevokeResponseExpanded `json:"expanded,omitempty"`
 }
 
-func (o *TaskServiceCreateRevokeResponse) GetTaskView() *TaskView {
-	if o == nil {
+func (t *TaskServiceCreateRevokeResponse) GetTaskView() *TaskView {
+	if t == nil {
 		return nil
 	}
-	return o.TaskView
+	return t.TaskView
 }
 
-func (o *TaskServiceCreateRevokeResponse) GetExpanded() []TaskServiceCreateRevokeResponseExpanded {
-	if o == nil {
+func (t *TaskServiceCreateRevokeResponse) GetExpanded() []TaskServiceCreateRevokeResponseExpanded {
+	if t == nil {
 		return nil
 	}
-	return o.Expanded
+	return t.Expanded
 }

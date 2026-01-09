@@ -18,24 +18,24 @@ func (c ConnectorServiceCreateRequestConfig) MarshalJSON() ([]byte, error) {
 }
 
 func (c *ConnectorServiceCreateRequestConfig) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &c, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &c, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *ConnectorServiceCreateRequestConfig) GetAtType() *string {
-	if o == nil {
+func (c *ConnectorServiceCreateRequestConfig) GetAtType() *string {
+	if c == nil {
 		return nil
 	}
-	return o.AtType
+	return c.AtType
 }
 
-func (o *ConnectorServiceCreateRequestConfig) GetAdditionalProperties() map[string]any {
-	if o == nil {
+func (c *ConnectorServiceCreateRequestConfig) GetAdditionalProperties() map[string]any {
+	if c == nil {
 		return nil
 	}
-	return o.AdditionalProperties
+	return c.AdditionalProperties
 }
 
 // The ConnectorServiceCreateRequest message.
@@ -52,37 +52,37 @@ type ConnectorServiceCreateRequest struct {
 	UserIds []string `json:"userIds,omitempty"`
 }
 
-func (o *ConnectorServiceCreateRequest) GetConnectorExpandMask() *ConnectorExpandMask {
-	if o == nil {
+func (c *ConnectorServiceCreateRequest) GetConnectorExpandMask() *ConnectorExpandMask {
+	if c == nil {
 		return nil
 	}
-	return o.ConnectorExpandMask
+	return c.ConnectorExpandMask
 }
 
-func (o *ConnectorServiceCreateRequest) GetCatalogID() *string {
-	if o == nil {
+func (c *ConnectorServiceCreateRequest) GetCatalogID() *string {
+	if c == nil {
 		return nil
 	}
-	return o.CatalogID
+	return c.CatalogID
 }
 
-func (o *ConnectorServiceCreateRequest) GetConfig() *ConnectorServiceCreateRequestConfig {
-	if o == nil {
+func (c *ConnectorServiceCreateRequest) GetConfig() *ConnectorServiceCreateRequestConfig {
+	if c == nil {
 		return nil
 	}
-	return o.Config
+	return c.Config
 }
 
-func (o *ConnectorServiceCreateRequest) GetDescription() *string {
-	if o == nil {
+func (c *ConnectorServiceCreateRequest) GetDescription() *string {
+	if c == nil {
 		return nil
 	}
-	return o.Description
+	return c.Description
 }
 
-func (o *ConnectorServiceCreateRequest) GetUserIds() []string {
-	if o == nil {
+func (c *ConnectorServiceCreateRequest) GetUserIds() []string {
+	if c == nil {
 		return nil
 	}
-	return o.UserIds
+	return c.UserIds
 }

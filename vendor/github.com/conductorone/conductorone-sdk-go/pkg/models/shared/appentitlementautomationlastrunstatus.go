@@ -21,6 +21,17 @@ func (e AppEntitlementAutomationLastRunStatusStatus) ToPointer() *AppEntitlement
 	return &e
 }
 
+// IsExact returns true if the value matches a known enum value, false otherwise.
+func (e *AppEntitlementAutomationLastRunStatusStatus) IsExact() bool {
+	if e != nil {
+		switch *e {
+		case "APP_ENTITLEMENT_AUTOMATION_RUN_STATUS_UNSPECIFIED", "APP_ENTITLEMENT_AUTOMATION_RUN_STATUS_SUCCESS", "APP_ENTITLEMENT_AUTOMATION_RUN_STATUS_FAILED", "APP_ENTITLEMENT_AUTOMATION_RUN_STATUS_IN_PROGRESS":
+			return true
+		}
+	}
+	return false
+}
+
 // The AppEntitlementAutomationLastRunStatus message.
 type AppEntitlementAutomationLastRunStatus struct {
 	// The errorMessage field.
@@ -35,29 +46,29 @@ func (a AppEntitlementAutomationLastRunStatus) MarshalJSON() ([]byte, error) {
 }
 
 func (a *AppEntitlementAutomationLastRunStatus) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &a, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &a, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *AppEntitlementAutomationLastRunStatus) GetErrorMessage() *string {
-	if o == nil {
+func (a *AppEntitlementAutomationLastRunStatus) GetErrorMessage() *string {
+	if a == nil {
 		return nil
 	}
-	return o.ErrorMessage
+	return a.ErrorMessage
 }
 
-func (o *AppEntitlementAutomationLastRunStatus) GetLastCompletedAt() *time.Time {
-	if o == nil {
+func (a *AppEntitlementAutomationLastRunStatus) GetLastCompletedAt() *time.Time {
+	if a == nil {
 		return nil
 	}
-	return o.LastCompletedAt
+	return a.LastCompletedAt
 }
 
-func (o *AppEntitlementAutomationLastRunStatus) GetStatus() *AppEntitlementAutomationLastRunStatusStatus {
-	if o == nil {
+func (a *AppEntitlementAutomationLastRunStatus) GetStatus() *AppEntitlementAutomationLastRunStatusStatus {
+	if a == nil {
 		return nil
 	}
-	return o.Status
+	return a.Status
 }

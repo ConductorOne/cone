@@ -6,20 +6,29 @@ package shared
 type UserApproval struct {
 	// Configuration to allow self approval of if the user is specified and also the target of the ticket.
 	AllowSelfApproval *bool `json:"allowSelfApproval,omitempty"`
+	// Configuration to require distinct approvers across approval steps of a rule.
+	RequireDistinctApprovers *bool `json:"requireDistinctApprovers,omitempty"`
 	// Array of users configured for approval.
 	UserIds []string `json:"userIds,omitempty"`
 }
 
-func (o *UserApproval) GetAllowSelfApproval() *bool {
-	if o == nil {
+func (u *UserApproval) GetAllowSelfApproval() *bool {
+	if u == nil {
 		return nil
 	}
-	return o.AllowSelfApproval
+	return u.AllowSelfApproval
 }
 
-func (o *UserApproval) GetUserIds() []string {
-	if o == nil {
+func (u *UserApproval) GetRequireDistinctApprovers() *bool {
+	if u == nil {
 		return nil
 	}
-	return o.UserIds
+	return u.RequireDistinctApprovers
+}
+
+func (u *UserApproval) GetUserIds() []string {
+	if u == nil {
+		return nil
+	}
+	return u.UserIds
 }

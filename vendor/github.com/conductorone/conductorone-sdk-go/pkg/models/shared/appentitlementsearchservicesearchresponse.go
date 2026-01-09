@@ -18,24 +18,24 @@ func (a AppEntitlementSearchServiceSearchResponseExpanded) MarshalJSON() ([]byte
 }
 
 func (a *AppEntitlementSearchServiceSearchResponseExpanded) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &a, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &a, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *AppEntitlementSearchServiceSearchResponseExpanded) GetAtType() *string {
-	if o == nil {
+func (a *AppEntitlementSearchServiceSearchResponseExpanded) GetAtType() *string {
+	if a == nil {
 		return nil
 	}
-	return o.AtType
+	return a.AtType
 }
 
-func (o *AppEntitlementSearchServiceSearchResponseExpanded) GetAdditionalProperties() map[string]any {
-	if o == nil {
+func (a *AppEntitlementSearchServiceSearchResponseExpanded) GetAdditionalProperties() map[string]any {
+	if a == nil {
 		return nil
 	}
-	return o.AdditionalProperties
+	return a.AdditionalProperties
 }
 
 // The AppEntitlementSearchServiceSearchResponse message.
@@ -50,30 +50,30 @@ type AppEntitlementSearchServiceSearchResponse struct {
 	NextPageToken *string `json:"nextPageToken,omitempty"`
 }
 
-func (o *AppEntitlementSearchServiceSearchResponse) GetFacets() *Facets {
-	if o == nil {
+func (a *AppEntitlementSearchServiceSearchResponse) GetFacets() *Facets {
+	if a == nil {
 		return nil
 	}
-	return o.Facets
+	return a.Facets
 }
 
-func (o *AppEntitlementSearchServiceSearchResponse) GetExpanded() []AppEntitlementSearchServiceSearchResponseExpanded {
-	if o == nil {
+func (a *AppEntitlementSearchServiceSearchResponse) GetExpanded() []AppEntitlementSearchServiceSearchResponseExpanded {
+	if a == nil {
 		return nil
 	}
-	return o.Expanded
+	return a.Expanded
 }
 
-func (o *AppEntitlementSearchServiceSearchResponse) GetList() []AppEntitlementView {
-	if o == nil {
+func (a *AppEntitlementSearchServiceSearchResponse) GetList() []AppEntitlementView {
+	if a == nil {
 		return nil
 	}
-	return o.List
+	return a.List
 }
 
-func (o *AppEntitlementSearchServiceSearchResponse) GetNextPageToken() *string {
-	if o == nil {
+func (a *AppEntitlementSearchServiceSearchResponse) GetNextPageToken() *string {
+	if a == nil {
 		return nil
 	}
-	return o.NextPageToken
+	return a.NextPageToken
 }

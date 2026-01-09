@@ -18,24 +18,24 @@ func (d Details) MarshalJSON() ([]byte, error) {
 }
 
 func (d *Details) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &d, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &d, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *Details) GetAtType() *string {
-	if o == nil {
+func (d *Details) GetAtType() *string {
+	if d == nil {
 		return nil
 	}
-	return o.AtType
+	return d.AtType
 }
 
-func (o *Details) GetAdditionalProperties() map[string]any {
-	if o == nil {
+func (d *Details) GetAdditionalProperties() map[string]any {
+	if d == nil {
 		return nil
 	}
-	return o.AdditionalProperties
+	return d.AdditionalProperties
 }
 
 // Status - The `Status` type defines a logical error model that is suitable for
@@ -58,23 +58,23 @@ type Status struct {
 	Message *string `json:"message,omitempty"`
 }
 
-func (o *Status) GetCode() *int {
-	if o == nil {
+func (s *Status) GetCode() *int {
+	if s == nil {
 		return nil
 	}
-	return o.Code
+	return s.Code
 }
 
-func (o *Status) GetDetails() []Details {
-	if o == nil {
+func (s *Status) GetDetails() []Details {
+	if s == nil {
 		return nil
 	}
-	return o.Details
+	return s.Details
 }
 
-func (o *Status) GetMessage() *string {
-	if o == nil {
+func (s *Status) GetMessage() *string {
+	if s == nil {
 		return nil
 	}
-	return o.Message
+	return s.Message
 }

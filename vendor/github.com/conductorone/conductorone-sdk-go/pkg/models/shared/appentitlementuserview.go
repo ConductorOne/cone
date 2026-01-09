@@ -22,36 +22,36 @@ func (a AppEntitlementUserView) MarshalJSON() ([]byte, error) {
 }
 
 func (a *AppEntitlementUserView) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &a, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &a, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *AppEntitlementUserView) GetAppUserView() *AppUserView {
-	if o == nil {
+func (a *AppEntitlementUserView) GetAppUserView() *AppUserView {
+	if a == nil {
 		return nil
 	}
-	return o.AppUserView
+	return a.AppUserView
 }
 
-func (o *AppEntitlementUserView) GetAppEntitlementUserBindingCreatedAt() *time.Time {
-	if o == nil {
+func (a *AppEntitlementUserView) GetAppEntitlementUserBindingCreatedAt() *time.Time {
+	if a == nil {
 		return nil
 	}
-	return o.AppEntitlementUserBindingCreatedAt
+	return a.AppEntitlementUserBindingCreatedAt
 }
 
-func (o *AppEntitlementUserView) GetAppEntitlementUserBindingDeprovisionAt() *time.Time {
-	if o == nil {
+func (a *AppEntitlementUserView) GetAppEntitlementUserBindingDeprovisionAt() *time.Time {
+	if a == nil {
 		return nil
 	}
-	return o.AppEntitlementUserBindingDeprovisionAt
+	return a.AppEntitlementUserBindingDeprovisionAt
 }
 
-func (o *AppEntitlementUserView) GetGrantSources() []AppEntitlementRef {
-	if o == nil {
+func (a *AppEntitlementUserView) GetGrantSources() []AppEntitlementRef {
+	if a == nil {
 		return nil
 	}
-	return o.GrantSources
+	return a.GrantSources
 }

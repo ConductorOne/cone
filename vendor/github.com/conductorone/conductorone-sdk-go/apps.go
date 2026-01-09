@@ -63,7 +63,7 @@ func (s *Apps) Create(ctx context.Context, request *shared.CreateAppRequest, opt
 		BaseURL:          baseURL,
 		Context:          ctx,
 		OperationID:      "c1.api.app.v1.Apps.Create",
-		OAuth2Scopes:     []string{},
+		OAuth2Scopes:     nil,
 		SecuritySource:   s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
@@ -275,7 +275,7 @@ func (s *Apps) Delete(ctx context.Context, request operations.C1APIAppV1AppsDele
 		BaseURL:          baseURL,
 		Context:          ctx,
 		OperationID:      "c1.api.app.v1.Apps.Delete",
-		OAuth2Scopes:     []string{},
+		OAuth2Scopes:     nil,
 		SecuritySource:   s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "DeleteAppRequest", "json", `request:"mediaType=application/json"`)
@@ -487,7 +487,7 @@ func (s *Apps) Get(ctx context.Context, request operations.C1APIAppV1AppsGetRequ
 		BaseURL:          baseURL,
 		Context:          ctx,
 		OperationID:      "c1.api.app.v1.Apps.Get",
-		OAuth2Scopes:     []string{},
+		OAuth2Scopes:     nil,
 		SecuritySource:   s.sdkConfiguration.Security,
 	}
 
@@ -692,7 +692,7 @@ func (s *Apps) List(ctx context.Context, request operations.C1APIAppV1AppsListRe
 		BaseURL:          baseURL,
 		Context:          ctx,
 		OperationID:      "c1.api.app.v1.Apps.List",
-		OAuth2Scopes:     []string{},
+		OAuth2Scopes:     nil,
 		SecuritySource:   s.sdkConfiguration.Security,
 	}
 
@@ -714,7 +714,7 @@ func (s *Apps) List(ctx context.Context, request operations.C1APIAppV1AppsListRe
 	req.Header.Set("Accept", "application/json")
 	req.Header.Set("User-Agent", s.sdkConfiguration.UserAgent)
 
-	if err := utils.PopulateQueryParams(ctx, req, request, nil); err != nil {
+	if err := utils.PopulateQueryParams(ctx, req, request, nil, nil); err != nil {
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
@@ -901,7 +901,7 @@ func (s *Apps) Update(ctx context.Context, request operations.C1APIAppV1AppsUpda
 		BaseURL:          baseURL,
 		Context:          ctx,
 		OperationID:      "c1.api.app.v1.Apps.Update",
-		OAuth2Scopes:     []string{},
+		OAuth2Scopes:     nil,
 		SecuritySource:   s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "UpdateAppRequest", "json", `request:"mediaType=application/json"`)

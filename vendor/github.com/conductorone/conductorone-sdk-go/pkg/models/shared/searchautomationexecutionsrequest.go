@@ -21,6 +21,17 @@ func (e ExecutionStepStates) ToPointer() *ExecutionStepStates {
 	return &e
 }
 
+// IsExact returns true if the value matches a known enum value, false otherwise.
+func (e *ExecutionStepStates) IsExact() bool {
+	if e != nil {
+		switch *e {
+		case "AUTOMATION_EXECUTION_STATE_UNSPECIFIED", "AUTOMATION_EXECUTION_STATE_PENDING", "AUTOMATION_EXECUTION_STATE_CREATING", "AUTOMATION_EXECUTION_STATE_GET_STEP", "AUTOMATION_EXECUTION_STATE_PROCESS_STEP", "AUTOMATION_EXECUTION_STATE_COMPLETE_STEP", "AUTOMATION_EXECUTION_STATE_DONE", "AUTOMATION_EXECUTION_STATE_ERROR", "AUTOMATION_EXECUTION_STATE_TERMINATE", "AUTOMATION_EXECUTION_STATE_WAITING":
+			return true
+		}
+	}
+	return false
+}
+
 // The SearchAutomationExecutionsRequest message.
 type SearchAutomationExecutionsRequest struct {
 	// The AutomationExecutionExpandMask message.
@@ -41,58 +52,58 @@ type SearchAutomationExecutionsRequest struct {
 	Refs []AutomationExecutionRef `json:"refs,omitempty"`
 }
 
-func (o *SearchAutomationExecutionsRequest) GetAutomationExecutionExpandMask() *AutomationExecutionExpandMask {
-	if o == nil {
+func (s *SearchAutomationExecutionsRequest) GetAutomationExecutionExpandMask() *AutomationExecutionExpandMask {
+	if s == nil {
 		return nil
 	}
-	return o.AutomationExecutionExpandMask
+	return s.AutomationExecutionExpandMask
 }
 
-func (o *SearchAutomationExecutionsRequest) GetAutomationTemplateID() *string {
-	if o == nil {
+func (s *SearchAutomationExecutionsRequest) GetAutomationTemplateID() *string {
+	if s == nil {
 		return nil
 	}
-	return o.AutomationTemplateID
+	return s.AutomationTemplateID
 }
 
-func (o *SearchAutomationExecutionsRequest) GetExecutionID() *int64 {
-	if o == nil {
+func (s *SearchAutomationExecutionsRequest) GetExecutionID() *int64 {
+	if s == nil {
 		return nil
 	}
-	return o.ExecutionID
+	return s.ExecutionID
 }
 
-func (o *SearchAutomationExecutionsRequest) GetExecutionStepStates() []ExecutionStepStates {
-	if o == nil {
+func (s *SearchAutomationExecutionsRequest) GetExecutionStepStates() []ExecutionStepStates {
+	if s == nil {
 		return nil
 	}
-	return o.ExecutionStepStates
+	return s.ExecutionStepStates
 }
 
-func (o *SearchAutomationExecutionsRequest) GetPageSize() *int {
-	if o == nil {
+func (s *SearchAutomationExecutionsRequest) GetPageSize() *int {
+	if s == nil {
 		return nil
 	}
-	return o.PageSize
+	return s.PageSize
 }
 
-func (o *SearchAutomationExecutionsRequest) GetPageToken() *string {
-	if o == nil {
+func (s *SearchAutomationExecutionsRequest) GetPageToken() *string {
+	if s == nil {
 		return nil
 	}
-	return o.PageToken
+	return s.PageToken
 }
 
-func (o *SearchAutomationExecutionsRequest) GetQuery() *string {
-	if o == nil {
+func (s *SearchAutomationExecutionsRequest) GetQuery() *string {
+	if s == nil {
 		return nil
 	}
-	return o.Query
+	return s.Query
 }
 
-func (o *SearchAutomationExecutionsRequest) GetRefs() []AutomationExecutionRef {
-	if o == nil {
+func (s *SearchAutomationExecutionsRequest) GetRefs() []AutomationExecutionRef {
+	if s == nil {
 		return nil
 	}
-	return o.Refs
+	return s.Refs
 }

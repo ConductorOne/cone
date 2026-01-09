@@ -18,23 +18,23 @@ type ConnectorCreateAccount struct {
 	UserIDCel *string `json:"userIdCel,omitempty"`
 }
 
-func (o *ConnectorCreateAccount) GetConnectorRef() *ConnectorRef {
-	if o == nil {
+func (c *ConnectorCreateAccount) GetConnectorRef() *ConnectorRef {
+	if c == nil {
 		return nil
 	}
-	return o.ConnectorRef
+	return c.ConnectorRef
 }
 
-func (o *ConnectorCreateAccount) GetUserProperties() *UserProperties {
-	if o == nil {
+func (c *ConnectorCreateAccount) GetUserProperties() *UserProperties {
+	if c == nil {
 		return nil
 	}
-	return o.UserProperties
+	return c.UserProperties
 }
 
-func (o *ConnectorCreateAccount) GetUserIDCel() *string {
-	if o == nil {
+func (c *ConnectorCreateAccount) GetUserIDCel() *string {
+	if c == nil {
 		return nil
 	}
-	return o.UserIDCel
+	return c.UserIDCel
 }

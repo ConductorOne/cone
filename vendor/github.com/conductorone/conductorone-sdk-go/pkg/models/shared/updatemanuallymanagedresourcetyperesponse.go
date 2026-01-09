@@ -18,24 +18,24 @@ func (u UpdateManuallyManagedResourceTypeResponseExpanded) MarshalJSON() ([]byte
 }
 
 func (u *UpdateManuallyManagedResourceTypeResponseExpanded) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &u, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &u, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *UpdateManuallyManagedResourceTypeResponseExpanded) GetAtType() *string {
-	if o == nil {
+func (u *UpdateManuallyManagedResourceTypeResponseExpanded) GetAtType() *string {
+	if u == nil {
 		return nil
 	}
-	return o.AtType
+	return u.AtType
 }
 
-func (o *UpdateManuallyManagedResourceTypeResponseExpanded) GetAdditionalProperties() map[string]any {
-	if o == nil {
+func (u *UpdateManuallyManagedResourceTypeResponseExpanded) GetAdditionalProperties() map[string]any {
+	if u == nil {
 		return nil
 	}
-	return o.AdditionalProperties
+	return u.AdditionalProperties
 }
 
 // The UpdateManuallyManagedResourceTypeResponse message.
@@ -46,16 +46,16 @@ type UpdateManuallyManagedResourceTypeResponse struct {
 	Expanded []UpdateManuallyManagedResourceTypeResponseExpanded `json:"expanded,omitempty"`
 }
 
-func (o *UpdateManuallyManagedResourceTypeResponse) GetAppResourceType() *AppResourceType {
-	if o == nil {
+func (u *UpdateManuallyManagedResourceTypeResponse) GetAppResourceType() *AppResourceType {
+	if u == nil {
 		return nil
 	}
-	return o.AppResourceType
+	return u.AppResourceType
 }
 
-func (o *UpdateManuallyManagedResourceTypeResponse) GetExpanded() []UpdateManuallyManagedResourceTypeResponseExpanded {
-	if o == nil {
+func (u *UpdateManuallyManagedResourceTypeResponse) GetExpanded() []UpdateManuallyManagedResourceTypeResponseExpanded {
+	if u == nil {
 		return nil
 	}
-	return o.Expanded
+	return u.Expanded
 }

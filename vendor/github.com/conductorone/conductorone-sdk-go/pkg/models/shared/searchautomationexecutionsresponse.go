@@ -18,24 +18,24 @@ func (s SearchAutomationExecutionsResponseExpanded) MarshalJSON() ([]byte, error
 }
 
 func (s *SearchAutomationExecutionsResponseExpanded) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &s, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *SearchAutomationExecutionsResponseExpanded) GetAtType() *string {
-	if o == nil {
+func (s *SearchAutomationExecutionsResponseExpanded) GetAtType() *string {
+	if s == nil {
 		return nil
 	}
-	return o.AtType
+	return s.AtType
 }
 
-func (o *SearchAutomationExecutionsResponseExpanded) GetAdditionalProperties() map[string]any {
-	if o == nil {
+func (s *SearchAutomationExecutionsResponseExpanded) GetAdditionalProperties() map[string]any {
+	if s == nil {
 		return nil
 	}
-	return o.AdditionalProperties
+	return s.AdditionalProperties
 }
 
 // The SearchAutomationExecutionsResponse message.
@@ -48,23 +48,23 @@ type SearchAutomationExecutionsResponse struct {
 	NextPageToken *string `json:"nextPageToken,omitempty"`
 }
 
-func (o *SearchAutomationExecutionsResponse) GetExpanded() []SearchAutomationExecutionsResponseExpanded {
-	if o == nil {
+func (s *SearchAutomationExecutionsResponse) GetExpanded() []SearchAutomationExecutionsResponseExpanded {
+	if s == nil {
 		return nil
 	}
-	return o.Expanded
+	return s.Expanded
 }
 
-func (o *SearchAutomationExecutionsResponse) GetList() []AutomationExecutionView {
-	if o == nil {
+func (s *SearchAutomationExecutionsResponse) GetList() []AutomationExecutionView {
+	if s == nil {
 		return nil
 	}
-	return o.List
+	return s.List
 }
 
-func (o *SearchAutomationExecutionsResponse) GetNextPageToken() *string {
-	if o == nil {
+func (s *SearchAutomationExecutionsResponse) GetNextPageToken() *string {
+	if s == nil {
 		return nil
 	}
-	return o.NextPageToken
+	return s.NextPageToken
 }

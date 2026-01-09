@@ -33,78 +33,78 @@ func (r Role) MarshalJSON() ([]byte, error) {
 }
 
 func (r *Role) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &r, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &r, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *Role) GetCreatedAt() *time.Time {
-	if o == nil {
+func (r *Role) GetCreatedAt() *time.Time {
+	if r == nil {
 		return nil
 	}
-	return o.CreatedAt
+	return r.CreatedAt
 }
 
-func (o *Role) GetDeletedAt() *time.Time {
-	if o == nil {
+func (r *Role) GetDeletedAt() *time.Time {
+	if r == nil {
 		return nil
 	}
-	return o.DeletedAt
+	return r.DeletedAt
 }
 
-func (o *Role) GetDisplayName() *string {
-	if o == nil {
+func (r *Role) GetDisplayName() *string {
+	if r == nil {
 		return nil
 	}
-	return o.DisplayName
+	return r.DisplayName
 }
 
-func (o *Role) GetID() *string {
-	if o == nil {
+func (r *Role) GetID() *string {
+	if r == nil {
 		return nil
 	}
-	return o.ID
+	return r.ID
 }
 
-func (o *Role) GetName() *string {
-	if o == nil {
+func (r *Role) GetName() *string {
+	if r == nil {
 		return nil
 	}
-	return o.Name
+	return r.Name
 }
 
-func (o *Role) GetPermissions() []string {
-	if o == nil {
+func (r *Role) GetPermissions() []string {
+	if r == nil {
 		return nil
 	}
-	return o.Permissions
+	return r.Permissions
 }
 
-func (o *Role) GetServiceRoles() []string {
-	if o == nil {
+func (r *Role) GetServiceRoles() []string {
+	if r == nil {
 		return nil
 	}
-	return o.ServiceRoles
+	return r.ServiceRoles
 }
 
-func (o *Role) GetSystemAPIOnly() *bool {
-	if o == nil {
+func (r *Role) GetSystemAPIOnly() *bool {
+	if r == nil {
 		return nil
 	}
-	return o.SystemAPIOnly
+	return r.SystemAPIOnly
 }
 
-func (o *Role) GetSystemBuiltin() *bool {
-	if o == nil {
+func (r *Role) GetSystemBuiltin() *bool {
+	if r == nil {
 		return nil
 	}
-	return o.SystemBuiltin
+	return r.SystemBuiltin
 }
 
-func (o *Role) GetUpdatedAt() *time.Time {
-	if o == nil {
+func (r *Role) GetUpdatedAt() *time.Time {
+	if r == nil {
 		return nil
 	}
-	return o.UpdatedAt
+	return r.UpdatedAt
 }

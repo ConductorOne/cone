@@ -18,30 +18,30 @@ type C1APIAutomationsV1AutomationServiceCreateAutomationResponse struct {
 	RawResponse *http.Response
 }
 
-func (o *C1APIAutomationsV1AutomationServiceCreateAutomationResponse) GetContentType() string {
-	if o == nil {
+func (c *C1APIAutomationsV1AutomationServiceCreateAutomationResponse) GetContentType() string {
+	if c == nil {
 		return ""
 	}
-	return o.ContentType
+	return c.ContentType
 }
 
-func (o *C1APIAutomationsV1AutomationServiceCreateAutomationResponse) GetCreateAutomationResponse() *shared.CreateAutomationResponseInput {
-	if o == nil {
+func (c *C1APIAutomationsV1AutomationServiceCreateAutomationResponse) GetCreateAutomationResponse() *shared.CreateAutomationResponseInput {
+	if c == nil {
 		return nil
 	}
-	return o.CreateAutomationResponse
+	return c.CreateAutomationResponse
 }
 
-func (o *C1APIAutomationsV1AutomationServiceCreateAutomationResponse) GetStatusCode() int {
-	if o == nil {
+func (c *C1APIAutomationsV1AutomationServiceCreateAutomationResponse) GetStatusCode() int {
+	if c == nil {
 		return 0
 	}
-	return o.StatusCode
+	return c.StatusCode
 }
 
-func (o *C1APIAutomationsV1AutomationServiceCreateAutomationResponse) GetRawResponse() *http.Response {
-	if o == nil {
+func (c *C1APIAutomationsV1AutomationServiceCreateAutomationResponse) GetRawResponse() *http.Response {
+	if c == nil {
 		return nil
 	}
-	return o.RawResponse
+	return c.RawResponse
 }

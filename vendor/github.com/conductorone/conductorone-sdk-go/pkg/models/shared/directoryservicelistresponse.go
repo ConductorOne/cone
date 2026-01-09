@@ -18,24 +18,24 @@ func (d DirectoryServiceListResponseExpanded) MarshalJSON() ([]byte, error) {
 }
 
 func (d *DirectoryServiceListResponseExpanded) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &d, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &d, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *DirectoryServiceListResponseExpanded) GetAtType() *string {
-	if o == nil {
+func (d *DirectoryServiceListResponseExpanded) GetAtType() *string {
+	if d == nil {
 		return nil
 	}
-	return o.AtType
+	return d.AtType
 }
 
-func (o *DirectoryServiceListResponseExpanded) GetAdditionalProperties() map[string]any {
-	if o == nil {
+func (d *DirectoryServiceListResponseExpanded) GetAdditionalProperties() map[string]any {
+	if d == nil {
 		return nil
 	}
-	return o.AdditionalProperties
+	return d.AdditionalProperties
 }
 
 // The DirectoryServiceListResponse message contains a list of results and a nextPageToken if applicable.
@@ -50,23 +50,23 @@ type DirectoryServiceListResponse struct {
 	NextPageToken *string `json:"nextPageToken,omitempty"`
 }
 
-func (o *DirectoryServiceListResponse) GetExpanded() []DirectoryServiceListResponseExpanded {
-	if o == nil {
+func (d *DirectoryServiceListResponse) GetExpanded() []DirectoryServiceListResponseExpanded {
+	if d == nil {
 		return nil
 	}
-	return o.Expanded
+	return d.Expanded
 }
 
-func (o *DirectoryServiceListResponse) GetList() []DirectoryView {
-	if o == nil {
+func (d *DirectoryServiceListResponse) GetList() []DirectoryView {
+	if d == nil {
 		return nil
 	}
-	return o.List
+	return d.List
 }
 
-func (o *DirectoryServiceListResponse) GetNextPageToken() *string {
-	if o == nil {
+func (d *DirectoryServiceListResponse) GetNextPageToken() *string {
+	if d == nil {
 		return nil
 	}
-	return o.NextPageToken
+	return d.NextPageToken
 }

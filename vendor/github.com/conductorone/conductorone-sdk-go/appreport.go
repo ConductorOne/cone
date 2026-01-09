@@ -62,7 +62,7 @@ func (s *AppReport) List(ctx context.Context, request operations.C1APIAppV1AppRe
 		BaseURL:          baseURL,
 		Context:          ctx,
 		OperationID:      "c1.api.app.v1.AppReportService.List",
-		OAuth2Scopes:     []string{},
+		OAuth2Scopes:     nil,
 		SecuritySource:   s.sdkConfiguration.Security,
 	}
 
@@ -84,7 +84,7 @@ func (s *AppReport) List(ctx context.Context, request operations.C1APIAppV1AppRe
 	req.Header.Set("Accept", "application/json")
 	req.Header.Set("User-Agent", s.sdkConfiguration.UserAgent)
 
-	if err := utils.PopulateQueryParams(ctx, req, request, nil); err != nil {
+	if err := utils.PopulateQueryParams(ctx, req, request, nil, nil); err != nil {
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 

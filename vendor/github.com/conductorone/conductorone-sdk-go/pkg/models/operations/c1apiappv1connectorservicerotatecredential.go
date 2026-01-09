@@ -7,33 +7,6 @@ import (
 	"net/http"
 )
 
-type C1APIAppV1ConnectorServiceRotateCredentialRequest struct {
-	ConnectorServiceRotateCredentialRequest *shared.ConnectorServiceRotateCredentialRequest `request:"mediaType=application/json"`
-	AppID                                   string                                          `pathParam:"style=simple,explode=false,name=app_id"`
-	ConnectorID                             string                                          `pathParam:"style=simple,explode=false,name=connector_id"`
-}
-
-func (o *C1APIAppV1ConnectorServiceRotateCredentialRequest) GetConnectorServiceRotateCredentialRequest() *shared.ConnectorServiceRotateCredentialRequest {
-	if o == nil {
-		return nil
-	}
-	return o.ConnectorServiceRotateCredentialRequest
-}
-
-func (o *C1APIAppV1ConnectorServiceRotateCredentialRequest) GetAppID() string {
-	if o == nil {
-		return ""
-	}
-	return o.AppID
-}
-
-func (o *C1APIAppV1ConnectorServiceRotateCredentialRequest) GetConnectorID() string {
-	if o == nil {
-		return ""
-	}
-	return o.ConnectorID
-}
-
 type C1APIAppV1ConnectorServiceRotateCredentialResponse struct {
 	// ConnectorServiceRotateCredentialResponse is the response returned by the rotate method.
 	ConnectorServiceRotateCredentialResponse *shared.ConnectorServiceRotateCredentialResponse
@@ -45,30 +18,30 @@ type C1APIAppV1ConnectorServiceRotateCredentialResponse struct {
 	RawResponse *http.Response
 }
 
-func (o *C1APIAppV1ConnectorServiceRotateCredentialResponse) GetConnectorServiceRotateCredentialResponse() *shared.ConnectorServiceRotateCredentialResponse {
-	if o == nil {
+func (c *C1APIAppV1ConnectorServiceRotateCredentialResponse) GetConnectorServiceRotateCredentialResponse() *shared.ConnectorServiceRotateCredentialResponse {
+	if c == nil {
 		return nil
 	}
-	return o.ConnectorServiceRotateCredentialResponse
+	return c.ConnectorServiceRotateCredentialResponse
 }
 
-func (o *C1APIAppV1ConnectorServiceRotateCredentialResponse) GetContentType() string {
-	if o == nil {
+func (c *C1APIAppV1ConnectorServiceRotateCredentialResponse) GetContentType() string {
+	if c == nil {
 		return ""
 	}
-	return o.ContentType
+	return c.ContentType
 }
 
-func (o *C1APIAppV1ConnectorServiceRotateCredentialResponse) GetStatusCode() int {
-	if o == nil {
+func (c *C1APIAppV1ConnectorServiceRotateCredentialResponse) GetStatusCode() int {
+	if c == nil {
 		return 0
 	}
-	return o.StatusCode
+	return c.StatusCode
 }
 
-func (o *C1APIAppV1ConnectorServiceRotateCredentialResponse) GetRawResponse() *http.Response {
-	if o == nil {
+func (c *C1APIAppV1ConnectorServiceRotateCredentialResponse) GetRawResponse() *http.Response {
+	if c == nil {
 		return nil
 	}
-	return o.RawResponse
+	return c.RawResponse
 }

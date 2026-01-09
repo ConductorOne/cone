@@ -15,39 +15,39 @@ type C1APIAppV1AppEntitlementsProxyDeleteRequest struct {
 	SrcAppID                         string                                   `pathParam:"style=simple,explode=false,name=src_app_id"`
 }
 
-func (o *C1APIAppV1AppEntitlementsProxyDeleteRequest) GetDeleteAppEntitlementProxyRequest() *shared.DeleteAppEntitlementProxyRequest {
-	if o == nil {
+func (c *C1APIAppV1AppEntitlementsProxyDeleteRequest) GetDeleteAppEntitlementProxyRequest() *shared.DeleteAppEntitlementProxyRequest {
+	if c == nil {
 		return nil
 	}
-	return o.DeleteAppEntitlementProxyRequest
+	return c.DeleteAppEntitlementProxyRequest
 }
 
-func (o *C1APIAppV1AppEntitlementsProxyDeleteRequest) GetDstAppEntitlementID() string {
-	if o == nil {
+func (c *C1APIAppV1AppEntitlementsProxyDeleteRequest) GetDstAppEntitlementID() string {
+	if c == nil {
 		return ""
 	}
-	return o.DstAppEntitlementID
+	return c.DstAppEntitlementID
 }
 
-func (o *C1APIAppV1AppEntitlementsProxyDeleteRequest) GetDstAppID() string {
-	if o == nil {
+func (c *C1APIAppV1AppEntitlementsProxyDeleteRequest) GetDstAppID() string {
+	if c == nil {
 		return ""
 	}
-	return o.DstAppID
+	return c.DstAppID
 }
 
-func (o *C1APIAppV1AppEntitlementsProxyDeleteRequest) GetSrcAppEntitlementID() string {
-	if o == nil {
+func (c *C1APIAppV1AppEntitlementsProxyDeleteRequest) GetSrcAppEntitlementID() string {
+	if c == nil {
 		return ""
 	}
-	return o.SrcAppEntitlementID
+	return c.SrcAppEntitlementID
 }
 
-func (o *C1APIAppV1AppEntitlementsProxyDeleteRequest) GetSrcAppID() string {
-	if o == nil {
+func (c *C1APIAppV1AppEntitlementsProxyDeleteRequest) GetSrcAppID() string {
+	if c == nil {
 		return ""
 	}
-	return o.SrcAppID
+	return c.SrcAppID
 }
 
 type C1APIAppV1AppEntitlementsProxyDeleteResponse struct {
@@ -61,30 +61,30 @@ type C1APIAppV1AppEntitlementsProxyDeleteResponse struct {
 	RawResponse *http.Response
 }
 
-func (o *C1APIAppV1AppEntitlementsProxyDeleteResponse) GetContentType() string {
-	if o == nil {
+func (c *C1APIAppV1AppEntitlementsProxyDeleteResponse) GetContentType() string {
+	if c == nil {
 		return ""
 	}
-	return o.ContentType
+	return c.ContentType
 }
 
-func (o *C1APIAppV1AppEntitlementsProxyDeleteResponse) GetDeleteAppEntitlementProxyResponse() *shared.DeleteAppEntitlementProxyResponse {
-	if o == nil {
+func (c *C1APIAppV1AppEntitlementsProxyDeleteResponse) GetDeleteAppEntitlementProxyResponse() *shared.DeleteAppEntitlementProxyResponse {
+	if c == nil {
 		return nil
 	}
-	return o.DeleteAppEntitlementProxyResponse
+	return c.DeleteAppEntitlementProxyResponse
 }
 
-func (o *C1APIAppV1AppEntitlementsProxyDeleteResponse) GetStatusCode() int {
-	if o == nil {
+func (c *C1APIAppV1AppEntitlementsProxyDeleteResponse) GetStatusCode() int {
+	if c == nil {
 		return 0
 	}
-	return o.StatusCode
+	return c.StatusCode
 }
 
-func (o *C1APIAppV1AppEntitlementsProxyDeleteResponse) GetRawResponse() *http.Response {
-	if o == nil {
+func (c *C1APIAppV1AppEntitlementsProxyDeleteResponse) GetRawResponse() *http.Response {
+	if c == nil {
 		return nil
 	}
-	return o.RawResponse
+	return c.RawResponse
 }

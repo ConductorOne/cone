@@ -10,16 +10,16 @@ type AppResourceTypeView struct {
 	AppPath *string `json:"appPath,omitempty"`
 }
 
-func (o *AppResourceTypeView) GetAppResourceType() *AppResourceType {
-	if o == nil {
+func (a *AppResourceTypeView) GetAppResourceType() *AppResourceType {
+	if a == nil {
 		return nil
 	}
-	return o.AppResourceType
+	return a.AppResourceType
 }
 
-func (o *AppResourceTypeView) GetAppPath() *string {
-	if o == nil {
+func (a *AppResourceTypeView) GetAppPath() *string {
+	if a == nil {
 		return nil
 	}
-	return o.AppPath
+	return a.AppPath
 }

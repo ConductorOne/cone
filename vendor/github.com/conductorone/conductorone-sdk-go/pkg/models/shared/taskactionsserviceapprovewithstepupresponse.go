@@ -18,24 +18,24 @@ func (t TaskActionsServiceApproveWithStepUpResponseExpanded) MarshalJSON() ([]by
 }
 
 func (t *TaskActionsServiceApproveWithStepUpResponseExpanded) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &t, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &t, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *TaskActionsServiceApproveWithStepUpResponseExpanded) GetAtType() *string {
-	if o == nil {
+func (t *TaskActionsServiceApproveWithStepUpResponseExpanded) GetAtType() *string {
+	if t == nil {
 		return nil
 	}
-	return o.AtType
+	return t.AtType
 }
 
-func (o *TaskActionsServiceApproveWithStepUpResponseExpanded) GetAdditionalProperties() map[string]any {
-	if o == nil {
+func (t *TaskActionsServiceApproveWithStepUpResponseExpanded) GetAdditionalProperties() map[string]any {
+	if t == nil {
 		return nil
 	}
-	return o.AdditionalProperties
+	return t.AdditionalProperties
 }
 
 // TaskActionsServiceApproveWithStepUpResponse is the response for approving a task with step-up authentication
@@ -50,30 +50,30 @@ type TaskActionsServiceApproveWithStepUpResponse struct {
 	TicketActionID *string `json:"ticketActionId,omitempty"`
 }
 
-func (o *TaskActionsServiceApproveWithStepUpResponse) GetTaskView() *TaskView {
-	if o == nil {
+func (t *TaskActionsServiceApproveWithStepUpResponse) GetTaskView() *TaskView {
+	if t == nil {
 		return nil
 	}
-	return o.TaskView
+	return t.TaskView
 }
 
-func (o *TaskActionsServiceApproveWithStepUpResponse) GetExpanded() []TaskActionsServiceApproveWithStepUpResponseExpanded {
-	if o == nil {
+func (t *TaskActionsServiceApproveWithStepUpResponse) GetExpanded() []TaskActionsServiceApproveWithStepUpResponseExpanded {
+	if t == nil {
 		return nil
 	}
-	return o.Expanded
+	return t.Expanded
 }
 
-func (o *TaskActionsServiceApproveWithStepUpResponse) GetRedirectURL() *string {
-	if o == nil {
+func (t *TaskActionsServiceApproveWithStepUpResponse) GetRedirectURL() *string {
+	if t == nil {
 		return nil
 	}
-	return o.RedirectURL
+	return t.RedirectURL
 }
 
-func (o *TaskActionsServiceApproveWithStepUpResponse) GetTicketActionID() *string {
-	if o == nil {
+func (t *TaskActionsServiceApproveWithStepUpResponse) GetTicketActionID() *string {
+	if t == nil {
 		return nil
 	}
-	return o.TicketActionID
+	return t.TicketActionID
 }

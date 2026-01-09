@@ -30,44 +30,44 @@ type CreateStepUpProviderRequest struct {
 	IssuerURL *string `json:"issuerUrl,omitempty"`
 }
 
-func (o *CreateStepUpProviderRequest) GetStepUpMicrosoftSettings() *StepUpMicrosoftSettings {
-	if o == nil {
+func (c *CreateStepUpProviderRequest) GetStepUpMicrosoftSettings() *StepUpMicrosoftSettings {
+	if c == nil {
 		return nil
 	}
-	return o.StepUpMicrosoftSettings
+	return c.StepUpMicrosoftSettings
 }
 
-func (o *CreateStepUpProviderRequest) GetStepUpOAuth2Settings() *StepUpOAuth2Settings {
-	if o == nil {
+func (c *CreateStepUpProviderRequest) GetStepUpOAuth2Settings() *StepUpOAuth2Settings {
+	if c == nil {
 		return nil
 	}
-	return o.StepUpOAuth2Settings
+	return c.StepUpOAuth2Settings
 }
 
-func (o *CreateStepUpProviderRequest) GetClientID() *string {
-	if o == nil {
+func (c *CreateStepUpProviderRequest) GetClientID() *string {
+	if c == nil {
 		return nil
 	}
-	return o.ClientID
+	return c.ClientID
 }
 
-func (o *CreateStepUpProviderRequest) GetClientSecret() *string {
-	if o == nil {
+func (c *CreateStepUpProviderRequest) GetClientSecret() *string {
+	if c == nil {
 		return nil
 	}
-	return o.ClientSecret
+	return c.ClientSecret
 }
 
-func (o *CreateStepUpProviderRequest) GetDisplayName() *string {
-	if o == nil {
+func (c *CreateStepUpProviderRequest) GetDisplayName() *string {
+	if c == nil {
 		return nil
 	}
-	return o.DisplayName
+	return c.DisplayName
 }
 
-func (o *CreateStepUpProviderRequest) GetIssuerURL() *string {
-	if o == nil {
+func (c *CreateStepUpProviderRequest) GetIssuerURL() *string {
+	if c == nil {
 		return nil
 	}
-	return o.IssuerURL
+	return c.IssuerURL
 }

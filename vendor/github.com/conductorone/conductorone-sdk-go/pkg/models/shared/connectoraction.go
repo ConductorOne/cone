@@ -14,23 +14,23 @@ type ConnectorAction struct {
 	ArgsTemplate map[string]any `json:"argsTemplate,omitempty"`
 }
 
-func (o *ConnectorAction) GetConnectorRef() *ConnectorRef {
-	if o == nil {
+func (c *ConnectorAction) GetConnectorRef() *ConnectorRef {
+	if c == nil {
 		return nil
 	}
-	return o.ConnectorRef
+	return c.ConnectorRef
 }
 
-func (o *ConnectorAction) GetActionName() *string {
-	if o == nil {
+func (c *ConnectorAction) GetActionName() *string {
+	if c == nil {
 		return nil
 	}
-	return o.ActionName
+	return c.ActionName
 }
 
-func (o *ConnectorAction) GetArgsTemplate() map[string]any {
-	if o == nil {
+func (c *ConnectorAction) GetArgsTemplate() map[string]any {
+	if c == nil {
 		return nil
 	}
-	return o.ArgsTemplate
+	return c.ArgsTemplate
 }

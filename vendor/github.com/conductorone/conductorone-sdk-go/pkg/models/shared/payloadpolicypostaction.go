@@ -18,24 +18,24 @@ func (p PayloadPolicyPostActionExpanded) MarshalJSON() ([]byte, error) {
 }
 
 func (p *PayloadPolicyPostActionExpanded) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &p, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &p, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *PayloadPolicyPostActionExpanded) GetAtType() *string {
-	if o == nil {
+func (p *PayloadPolicyPostActionExpanded) GetAtType() *string {
+	if p == nil {
 		return nil
 	}
-	return o.AtType
+	return p.AtType
 }
 
-func (o *PayloadPolicyPostActionExpanded) GetAdditionalProperties() map[string]any {
-	if o == nil {
+func (p *PayloadPolicyPostActionExpanded) GetAdditionalProperties() map[string]any {
+	if p == nil {
 		return nil
 	}
-	return o.AdditionalProperties
+	return p.AdditionalProperties
 }
 
 // The PayloadPolicyPostAction message.
@@ -46,16 +46,16 @@ type PayloadPolicyPostAction struct {
 	Expanded []PayloadPolicyPostActionExpanded `json:"expanded,omitempty"`
 }
 
-func (o *PayloadPolicyPostAction) GetTaskView() *TaskView {
-	if o == nil {
+func (p *PayloadPolicyPostAction) GetTaskView() *TaskView {
+	if p == nil {
 		return nil
 	}
-	return o.TaskView
+	return p.TaskView
 }
 
-func (o *PayloadPolicyPostAction) GetExpanded() []PayloadPolicyPostActionExpanded {
-	if o == nil {
+func (p *PayloadPolicyPostAction) GetExpanded() []PayloadPolicyPostActionExpanded {
+	if p == nil {
 		return nil
 	}
-	return o.Expanded
+	return p.Expanded
 }

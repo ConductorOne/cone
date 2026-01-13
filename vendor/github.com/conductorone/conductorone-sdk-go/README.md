@@ -305,6 +305,7 @@ func main() {
 * [RevokeCredential](docs/sdks/connector/README.md#revokecredential) - Revoke Credential
 * [RotateCredential](docs/sdks/connector/README.md#rotatecredential) - Rotate Credential
 * [Update](docs/sdks/connector/README.md#update) - Update
+* [UpdateConnectorSchedule](docs/sdks/connector/README.md#updateconnectorschedule) - Update Connector Schedule
 * [UpdateDelegated](docs/sdks/connector/README.md#updatedelegated) - Update Delegated
 * [ValidateHTTPConnectorConfig](docs/sdks/connector/README.md#validatehttpconnectorconfig) - Validate Http Connector Config
 

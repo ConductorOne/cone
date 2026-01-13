@@ -2,7 +2,7 @@
 
 package conductoronesdkgo
 
-// Generated from OpenAPI doc version 0.1.0-alpha and generator version 2.792.0
+// Generated from OpenAPI doc version 0.1.0-alpha and generator version 2.794.1
 
 import (
 	"context"
@@ -201,9 +201,9 @@ func WithTimeout(timeout time.Duration) SDKOption {
 // New creates a new instance of the SDK with the provided options
 func New(opts ...SDKOption) *ConductoroneAPI {
 	sdk := &ConductoroneAPI{
-		SDKVersion: "1.26.0",
+		SDKVersion: "1.26.1",
 		sdkConfiguration: config.SDKConfiguration{
-			UserAgent:  "speakeasy-sdk/go 1.26.0 2.792.0 0.1.0-alpha github.com/conductorone/conductorone-sdk-go",
+			UserAgent:  "speakeasy-sdk/go 1.26.1 2.794.1 0.1.0-alpha github.com/conductorone/conductorone-sdk-go",
 			ServerList: ServerList,
 			ServerVariables: []map[string]string{
 				{

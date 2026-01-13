@@ -19,22 +19,22 @@ func (c CancelledAction) MarshalJSON() ([]byte, error) {
 }
 
 func (c *CancelledAction) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &c, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &c, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *CancelledAction) GetCancelledAt() *time.Time {
-	if o == nil {
+func (c *CancelledAction) GetCancelledAt() *time.Time {
+	if c == nil {
 		return nil
 	}
-	return o.CancelledAt
+	return c.CancelledAt
 }
 
-func (o *CancelledAction) GetCancelledByUserID() *string {
-	if o == nil {
+func (c *CancelledAction) GetCancelledByUserID() *string {
+	if c == nil {
 		return nil
 	}
-	return o.CancelledByUserID
+	return c.CancelledByUserID
 }

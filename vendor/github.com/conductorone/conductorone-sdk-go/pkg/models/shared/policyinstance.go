@@ -15,6 +15,7 @@ type PolicyInstance struct {
 	//   - reject
 	//   - wait
 	//   - form
+	//   - action
 	//
 	PolicyStepInstance *PolicyStepInstance `json:"current,omitempty"`
 	// An array of steps that were previously processed by the ticket with their outcomes set, in order.
@@ -23,30 +24,30 @@ type PolicyInstance struct {
 	Next []PolicyStep `json:"next,omitempty"`
 }
 
-func (o *PolicyInstance) GetPolicy() *Policy {
-	if o == nil {
+func (p *PolicyInstance) GetPolicy() *Policy {
+	if p == nil {
 		return nil
 	}
-	return o.Policy
+	return p.Policy
 }
 
-func (o *PolicyInstance) GetPolicyStepInstance() *PolicyStepInstance {
-	if o == nil {
+func (p *PolicyInstance) GetPolicyStepInstance() *PolicyStepInstance {
+	if p == nil {
 		return nil
 	}
-	return o.PolicyStepInstance
+	return p.PolicyStepInstance
 }
 
-func (o *PolicyInstance) GetHistory() []PolicyStepInstance {
-	if o == nil {
+func (p *PolicyInstance) GetHistory() []PolicyStepInstance {
+	if p == nil {
 		return nil
 	}
-	return o.History
+	return p.History
 }
 
-func (o *PolicyInstance) GetNext() []PolicyStep {
-	if o == nil {
+func (p *PolicyInstance) GetNext() []PolicyStep {
+	if p == nil {
 		return nil
 	}
-	return o.Next
+	return p.Next
 }

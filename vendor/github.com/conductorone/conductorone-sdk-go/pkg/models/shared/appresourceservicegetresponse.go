@@ -18,24 +18,24 @@ func (a AppResourceServiceGetResponseExpanded) MarshalJSON() ([]byte, error) {
 }
 
 func (a *AppResourceServiceGetResponseExpanded) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &a, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &a, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *AppResourceServiceGetResponseExpanded) GetAtType() *string {
-	if o == nil {
+func (a *AppResourceServiceGetResponseExpanded) GetAtType() *string {
+	if a == nil {
 		return nil
 	}
-	return o.AtType
+	return a.AtType
 }
 
-func (o *AppResourceServiceGetResponseExpanded) GetAdditionalProperties() map[string]any {
-	if o == nil {
+func (a *AppResourceServiceGetResponseExpanded) GetAdditionalProperties() map[string]any {
+	if a == nil {
 		return nil
 	}
-	return o.AdditionalProperties
+	return a.AdditionalProperties
 }
 
 // AppResourceServiceGetResponse - The app resource service get response contains the app resource view and array of expanded items indicated by the request's expand mask.
@@ -46,16 +46,16 @@ type AppResourceServiceGetResponse struct {
 	Expanded []AppResourceServiceGetResponseExpanded `json:"expanded,omitempty"`
 }
 
-func (o *AppResourceServiceGetResponse) GetAppResourceView() *AppResourceView {
-	if o == nil {
+func (a *AppResourceServiceGetResponse) GetAppResourceView() *AppResourceView {
+	if a == nil {
 		return nil
 	}
-	return o.AppResourceView
+	return a.AppResourceView
 }
 
-func (o *AppResourceServiceGetResponse) GetExpanded() []AppResourceServiceGetResponseExpanded {
-	if o == nil {
+func (a *AppResourceServiceGetResponse) GetExpanded() []AppResourceServiceGetResponseExpanded {
+	if a == nil {
 		return nil
 	}
-	return o.Expanded
+	return a.Expanded
 }

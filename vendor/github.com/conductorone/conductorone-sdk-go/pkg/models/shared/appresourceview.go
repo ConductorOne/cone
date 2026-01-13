@@ -20,37 +20,37 @@ type AppResourceView struct {
 	ResourceTypePath *string `json:"resourceTypePath,omitempty"`
 }
 
-func (o *AppResourceView) GetAppResource() *AppResource {
-	if o == nil {
+func (a *AppResourceView) GetAppResource() *AppResource {
+	if a == nil {
 		return nil
 	}
-	return o.AppResource
+	return a.AppResource
 }
 
-func (o *AppResourceView) GetAppPath() *string {
-	if o == nil {
+func (a *AppResourceView) GetAppPath() *string {
+	if a == nil {
 		return nil
 	}
-	return o.AppPath
+	return a.AppPath
 }
 
-func (o *AppResourceView) GetParentResourcePath() *string {
-	if o == nil {
+func (a *AppResourceView) GetParentResourcePath() *string {
+	if a == nil {
 		return nil
 	}
-	return o.ParentResourcePath
+	return a.ParentResourcePath
 }
 
-func (o *AppResourceView) GetParentResourceTypePath() *string {
-	if o == nil {
+func (a *AppResourceView) GetParentResourceTypePath() *string {
+	if a == nil {
 		return nil
 	}
-	return o.ParentResourceTypePath
+	return a.ParentResourceTypePath
 }
 
-func (o *AppResourceView) GetResourceTypePath() *string {
-	if o == nil {
+func (a *AppResourceView) GetResourceTypePath() *string {
+	if a == nil {
 		return nil
 	}
-	return o.ResourceTypePath
+	return a.ResourceTypePath
 }

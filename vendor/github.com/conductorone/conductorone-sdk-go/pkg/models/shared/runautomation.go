@@ -18,23 +18,23 @@ type RunAutomation struct {
 	AutomationTemplateIDCel *string `json:"automationTemplateIdCel,omitempty"`
 }
 
-func (o *RunAutomation) GetAutomationContext() *AutomationContext {
-	if o == nil {
+func (r *RunAutomation) GetAutomationContext() *AutomationContext {
+	if r == nil {
 		return nil
 	}
-	return o.AutomationContext
+	return r.AutomationContext
 }
 
-func (o *RunAutomation) GetAutomationTemplateRef() *AutomationTemplateRef {
-	if o == nil {
+func (r *RunAutomation) GetAutomationTemplateRef() *AutomationTemplateRef {
+	if r == nil {
 		return nil
 	}
-	return o.AutomationTemplateRef
+	return r.AutomationTemplateRef
 }
 
-func (o *RunAutomation) GetAutomationTemplateIDCel() *string {
-	if o == nil {
+func (r *RunAutomation) GetAutomationTemplateIDCel() *string {
+	if r == nil {
 		return nil
 	}
-	return o.AutomationTemplateIDCel
+	return r.AutomationTemplateIDCel
 }

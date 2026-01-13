@@ -18,24 +18,24 @@ func (l ListAppEntitlementsResponseExpanded) MarshalJSON() ([]byte, error) {
 }
 
 func (l *ListAppEntitlementsResponseExpanded) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &l, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &l, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *ListAppEntitlementsResponseExpanded) GetAtType() *string {
-	if o == nil {
+func (l *ListAppEntitlementsResponseExpanded) GetAtType() *string {
+	if l == nil {
 		return nil
 	}
-	return o.AtType
+	return l.AtType
 }
 
-func (o *ListAppEntitlementsResponseExpanded) GetAdditionalProperties() map[string]any {
-	if o == nil {
+func (l *ListAppEntitlementsResponseExpanded) GetAdditionalProperties() map[string]any {
+	if l == nil {
 		return nil
 	}
-	return o.AdditionalProperties
+	return l.AdditionalProperties
 }
 
 // The ListAppEntitlementsResponse message contains a list of results and a nextPageToken if applicable.
@@ -48,23 +48,23 @@ type ListAppEntitlementsResponse struct {
 	NextPageToken *string `json:"nextPageToken,omitempty"`
 }
 
-func (o *ListAppEntitlementsResponse) GetExpanded() []ListAppEntitlementsResponseExpanded {
-	if o == nil {
+func (l *ListAppEntitlementsResponse) GetExpanded() []ListAppEntitlementsResponseExpanded {
+	if l == nil {
 		return nil
 	}
-	return o.Expanded
+	return l.Expanded
 }
 
-func (o *ListAppEntitlementsResponse) GetList() []AppEntitlementView {
-	if o == nil {
+func (l *ListAppEntitlementsResponse) GetList() []AppEntitlementView {
+	if l == nil {
 		return nil
 	}
-	return o.List
+	return l.List
 }
 
-func (o *ListAppEntitlementsResponse) GetNextPageToken() *string {
-	if o == nil {
+func (l *ListAppEntitlementsResponse) GetNextPageToken() *string {
+	if l == nil {
 		return nil
 	}
-	return o.NextPageToken
+	return l.NextPageToken
 }

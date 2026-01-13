@@ -4,22 +4,22 @@ package shared
 
 // The NotificationConfig message.
 type NotificationConfig struct {
-	// The EmailNotifications message.
-	EmailNotifications *EmailNotifications `json:"emailNotifications,omitempty"`
-	// The SlackNotifications message.
-	SlackNotifications *SlackNotifications `json:"slackNotifications,omitempty"`
+	// The sendClose field.
+	SendClose *bool `json:"sendClose,omitempty"`
+	// The sendReminders field.
+	SendReminders *bool `json:"sendReminders,omitempty"`
 }
 
-func (o *NotificationConfig) GetEmailNotifications() *EmailNotifications {
-	if o == nil {
+func (n *NotificationConfig) GetSendClose() *bool {
+	if n == nil {
 		return nil
 	}
-	return o.EmailNotifications
+	return n.SendClose
 }
 
-func (o *NotificationConfig) GetSlackNotifications() *SlackNotifications {
-	if o == nil {
+func (n *NotificationConfig) GetSendReminders() *bool {
+	if n == nil {
 		return nil
 	}
-	return o.SlackNotifications
+	return n.SendReminders
 }

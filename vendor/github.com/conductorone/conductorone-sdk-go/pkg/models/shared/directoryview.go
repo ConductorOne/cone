@@ -5,21 +5,26 @@ package shared
 // DirectoryView - The directory view contains a directory and an app_path which is a JSONPATH set to the location in the expand mask that the expanded app will live if requested by the expander.
 type DirectoryView struct {
 	// This object indicates that an app is also a directory.
+	//
+	// This message contains a oneof named account_filter. Only a single field of the following list may be set at a time:
+	//   - all
+	//   - celExpression
+	//
 	Directory *Directory `json:"directory,omitempty"`
-	// JSONPATH expression indicating the location of the App object in the  array.
+	// JSONPATH expression indicating the location of the App object in the array.
 	AppPath *string `json:"appPath,omitempty"`
 }
 
-func (o *DirectoryView) GetDirectory() *Directory {
-	if o == nil {
+func (d *DirectoryView) GetDirectory() *Directory {
+	if d == nil {
 		return nil
 	}
-	return o.Directory
+	return d.Directory
 }
 
-func (o *DirectoryView) GetAppPath() *string {
-	if o == nil {
+func (d *DirectoryView) GetAppPath() *string {
+	if d == nil {
 		return nil
 	}
-	return o.AppPath
+	return d.AppPath
 }

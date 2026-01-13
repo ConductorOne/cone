@@ -31,64 +31,64 @@ func (a AppUserCredential) MarshalJSON() ([]byte, error) {
 }
 
 func (a *AppUserCredential) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &a, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &a, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *AppUserCredential) GetEncryptedData() *EncryptedData {
-	if o == nil {
+func (a *AppUserCredential) GetEncryptedData() *EncryptedData {
+	if a == nil {
 		return nil
 	}
-	return o.EncryptedData
+	return a.EncryptedData
 }
 
-func (o *AppUserCredential) GetAppID() *string {
-	if o == nil {
+func (a *AppUserCredential) GetAppID() *string {
+	if a == nil {
 		return nil
 	}
-	return o.AppID
+	return a.AppID
 }
 
-func (o *AppUserCredential) GetAppUserID() *string {
-	if o == nil {
+func (a *AppUserCredential) GetAppUserID() *string {
+	if a == nil {
 		return nil
 	}
-	return o.AppUserID
+	return a.AppUserID
 }
 
-func (o *AppUserCredential) GetCreatedAt() *time.Time {
-	if o == nil {
+func (a *AppUserCredential) GetCreatedAt() *time.Time {
+	if a == nil {
 		return nil
 	}
-	return o.CreatedAt
+	return a.CreatedAt
 }
 
-func (o *AppUserCredential) GetDeletedAt() *time.Time {
-	if o == nil {
+func (a *AppUserCredential) GetDeletedAt() *time.Time {
+	if a == nil {
 		return nil
 	}
-	return o.DeletedAt
+	return a.DeletedAt
 }
 
-func (o *AppUserCredential) GetExpiresAt() *time.Time {
-	if o == nil {
+func (a *AppUserCredential) GetExpiresAt() *time.Time {
+	if a == nil {
 		return nil
 	}
-	return o.ExpiresAt
+	return a.ExpiresAt
 }
 
-func (o *AppUserCredential) GetID() *string {
-	if o == nil {
+func (a *AppUserCredential) GetID() *string {
+	if a == nil {
 		return nil
 	}
-	return o.ID
+	return a.ID
 }
 
-func (o *AppUserCredential) GetUpdatedAt() *time.Time {
-	if o == nil {
+func (a *AppUserCredential) GetUpdatedAt() *time.Time {
+	if a == nil {
 		return nil
 	}
-	return o.UpdatedAt
+	return a.UpdatedAt
 }

@@ -15,11 +15,24 @@ const (
 	ProvisionInstanceStateProvisionInstanceStateWebhookWaiting                  ProvisionInstanceState = "PROVISION_INSTANCE_STATE_WEBHOOK_WAITING"
 	ProvisionInstanceStateProvisionInstanceStateExternalTicket                  ProvisionInstanceState = "PROVISION_INSTANCE_STATE_EXTERNAL_TICKET"
 	ProvisionInstanceStateProvisionInstanceStateExternalTicketWaiting           ProvisionInstanceState = "PROVISION_INSTANCE_STATE_EXTERNAL_TICKET_WAITING"
+	ProvisionInstanceStateProvisionInstanceStateAccountLifecycleActions         ProvisionInstanceState = "PROVISION_INSTANCE_STATE_ACCOUNT_LIFECYCLE_ACTIONS"
+	ProvisionInstanceStateProvisionInstanceStateAccountLifecycleActionsWaiting  ProvisionInstanceState = "PROVISION_INSTANCE_STATE_ACCOUNT_LIFECYCLE_ACTIONS_WAITING"
 	ProvisionInstanceStateProvisionInstanceStateDone                            ProvisionInstanceState = "PROVISION_INSTANCE_STATE_DONE"
 )
 
 func (e ProvisionInstanceState) ToPointer() *ProvisionInstanceState {
 	return &e
+}
+
+// IsExact returns true if the value matches a known enum value, false otherwise.
+func (e *ProvisionInstanceState) IsExact() bool {
+	if e != nil {
+		switch *e {
+		case "PROVISION_INSTANCE_STATE_UNSPECIFIED", "PROVISION_INSTANCE_STATE_INIT", "PROVISION_INSTANCE_STATE_CREATE_CONNECTOR_ACTIONS_FOR_TARGET", "PROVISION_INSTANCE_STATE_SENDING_NOTIFICATIONS", "PROVISION_INSTANCE_STATE_WAITING", "PROVISION_INSTANCE_STATE_WEBHOOK", "PROVISION_INSTANCE_STATE_WEBHOOK_WAITING", "PROVISION_INSTANCE_STATE_EXTERNAL_TICKET", "PROVISION_INSTANCE_STATE_EXTERNAL_TICKET_WAITING", "PROVISION_INSTANCE_STATE_ACCOUNT_LIFECYCLE_ACTIONS", "PROVISION_INSTANCE_STATE_ACCOUNT_LIFECYCLE_ACTIONS_WAITING", "PROVISION_INSTANCE_STATE_DONE":
+			return true
+		}
+	}
+	return false
 }
 
 // ProvisionInstance - A provision instance describes the specific configuration of an executing provision policy step including actions taken and notification id.
@@ -43,6 +56,8 @@ type ProvisionInstance struct {
 	ReassignedByErrorAction *ReassignedByErrorAction `json:"reassignedByError,omitempty"`
 	// The SkippedAction object describes the outcome of a policy step that has been skipped.
 	SkippedAction *SkippedAction `json:"skipped,omitempty"`
+	// This indicates the account lifecycle action id for this step.
+	BatonActionInvocationID *string `json:"batonActionInvocationId,omitempty"`
 	// This indicates the external ticket id for this step.
 	ExternalTicketID *string `json:"externalTicketId,omitempty"`
 	// This indicates the external ticket provisioner config id for this step.
@@ -57,86 +72,93 @@ type ProvisionInstance struct {
 	WebhookInstanceID *string `json:"webhookInstanceId,omitempty"`
 }
 
-func (o *ProvisionInstance) GetCancelledAction() *CancelledAction {
-	if o == nil {
+func (p *ProvisionInstance) GetCancelledAction() *CancelledAction {
+	if p == nil {
 		return nil
 	}
-	return o.CancelledAction
+	return p.CancelledAction
 }
 
-func (o *ProvisionInstance) GetCompletedAction() *CompletedAction {
-	if o == nil {
+func (p *ProvisionInstance) GetCompletedAction() *CompletedAction {
+	if p == nil {
 		return nil
 	}
-	return o.CompletedAction
+	return p.CompletedAction
 }
 
-func (o *ProvisionInstance) GetErroredAction() *ErroredAction {
-	if o == nil {
+func (p *ProvisionInstance) GetErroredAction() *ErroredAction {
+	if p == nil {
 		return nil
 	}
-	return o.ErroredAction
+	return p.ErroredAction
 }
 
-func (o *ProvisionInstance) GetProvision() *Provision {
-	if o == nil {
+func (p *ProvisionInstance) GetProvision() *Provision {
+	if p == nil {
 		return nil
 	}
-	return o.Provision
+	return p.Provision
 }
 
-func (o *ProvisionInstance) GetReassignedByErrorAction() *ReassignedByErrorAction {
-	if o == nil {
+func (p *ProvisionInstance) GetReassignedByErrorAction() *ReassignedByErrorAction {
+	if p == nil {
 		return nil
 	}
-	return o.ReassignedByErrorAction
+	return p.ReassignedByErrorAction
 }
 
-func (o *ProvisionInstance) GetSkippedAction() *SkippedAction {
-	if o == nil {
+func (p *ProvisionInstance) GetSkippedAction() *SkippedAction {
+	if p == nil {
 		return nil
 	}
-	return o.SkippedAction
+	return p.SkippedAction
 }
 
-func (o *ProvisionInstance) GetExternalTicketID() *string {
-	if o == nil {
+func (p *ProvisionInstance) GetBatonActionInvocationID() *string {
+	if p == nil {
 		return nil
 	}
-	return o.ExternalTicketID
+	return p.BatonActionInvocationID
 }
 
-func (o *ProvisionInstance) GetExternalTicketProvisionerConfigID() *string {
-	if o == nil {
+func (p *ProvisionInstance) GetExternalTicketID() *string {
+	if p == nil {
 		return nil
 	}
-	return o.ExternalTicketProvisionerConfigID
+	return p.ExternalTicketID
 }
 
-func (o *ProvisionInstance) GetNotificationID() *string {
-	if o == nil {
+func (p *ProvisionInstance) GetExternalTicketProvisionerConfigID() *string {
+	if p == nil {
 		return nil
 	}
-	return o.NotificationID
+	return p.ExternalTicketProvisionerConfigID
 }
 
-func (o *ProvisionInstance) GetState() *ProvisionInstanceState {
-	if o == nil {
+func (p *ProvisionInstance) GetNotificationID() *string {
+	if p == nil {
 		return nil
 	}
-	return o.State
+	return p.NotificationID
 }
 
-func (o *ProvisionInstance) GetWebhookID() *string {
-	if o == nil {
+func (p *ProvisionInstance) GetState() *ProvisionInstanceState {
+	if p == nil {
 		return nil
 	}
-	return o.WebhookID
+	return p.State
 }
 
-func (o *ProvisionInstance) GetWebhookInstanceID() *string {
-	if o == nil {
+func (p *ProvisionInstance) GetWebhookID() *string {
+	if p == nil {
 		return nil
 	}
-	return o.WebhookInstanceID
+	return p.WebhookID
+}
+
+func (p *ProvisionInstance) GetWebhookInstanceID() *string {
+	if p == nil {
+		return nil
+	}
+	return p.WebhookInstanceID
 }

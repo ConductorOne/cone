@@ -9,16 +9,16 @@ type TaskActionsServiceUpdateGrantDurationRequest struct {
 	Duration       string          `json:"duration"`
 }
 
-func (o *TaskActionsServiceUpdateGrantDurationRequest) GetTaskExpandMask() *TaskExpandMask {
-	if o == nil {
+func (t *TaskActionsServiceUpdateGrantDurationRequest) GetTaskExpandMask() *TaskExpandMask {
+	if t == nil {
 		return nil
 	}
-	return o.TaskExpandMask
+	return t.TaskExpandMask
 }
 
-func (o *TaskActionsServiceUpdateGrantDurationRequest) GetDuration() string {
-	if o == nil {
+func (t *TaskActionsServiceUpdateGrantDurationRequest) GetDuration() string {
+	if t == nil {
 		return ""
 	}
-	return o.Duration
+	return t.Duration
 }

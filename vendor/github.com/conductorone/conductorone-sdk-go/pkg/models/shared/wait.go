@@ -6,9 +6,15 @@ package shared
 //
 // This message contains a oneof named until. Only a single field of the following list may be set at a time:
 //   - condition
+//   - duration
+//   - untilTime
 type Wait struct {
 	// The WaitCondition message.
 	WaitCondition *WaitCondition `json:"condition,omitempty"`
+	// The WaitDuration message.
+	WaitDuration *WaitDuration `json:"duration,omitempty"`
+	// Waits until a specific time of the day (UTC)
+	WaitUntilTime *WaitUntilTime `json:"untilTime,omitempty"`
 	// The comment to post on first failed check.
 	CommentOnFirstWait *string `json:"commentOnFirstWait,omitempty"`
 	// The comment to post if we timeout.
@@ -18,37 +24,51 @@ type Wait struct {
 	TimeoutDuration *string `json:"timeoutDuration,omitempty"`
 }
 
-func (o *Wait) GetWaitCondition() *WaitCondition {
-	if o == nil {
+func (w *Wait) GetWaitCondition() *WaitCondition {
+	if w == nil {
 		return nil
 	}
-	return o.WaitCondition
+	return w.WaitCondition
 }
 
-func (o *Wait) GetCommentOnFirstWait() *string {
-	if o == nil {
+func (w *Wait) GetWaitDuration() *WaitDuration {
+	if w == nil {
 		return nil
 	}
-	return o.CommentOnFirstWait
+	return w.WaitDuration
 }
 
-func (o *Wait) GetCommentOnTimeout() *string {
-	if o == nil {
+func (w *Wait) GetWaitUntilTime() *WaitUntilTime {
+	if w == nil {
 		return nil
 	}
-	return o.CommentOnTimeout
+	return w.WaitUntilTime
 }
 
-func (o *Wait) GetName() *string {
-	if o == nil {
+func (w *Wait) GetCommentOnFirstWait() *string {
+	if w == nil {
 		return nil
 	}
-	return o.Name
+	return w.CommentOnFirstWait
 }
 
-func (o *Wait) GetTimeoutDuration() *string {
-	if o == nil {
+func (w *Wait) GetCommentOnTimeout() *string {
+	if w == nil {
 		return nil
 	}
-	return o.TimeoutDuration
+	return w.CommentOnTimeout
+}
+
+func (w *Wait) GetName() *string {
+	if w == nil {
+		return nil
+	}
+	return w.Name
+}
+
+func (w *Wait) GetTimeoutDuration() *string {
+	if w == nil {
+		return nil
+	}
+	return w.TimeoutDuration
 }

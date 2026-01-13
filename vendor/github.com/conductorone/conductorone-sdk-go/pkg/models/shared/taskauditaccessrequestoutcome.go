@@ -17,15 +17,26 @@ func (e Outcome) ToPointer() *Outcome {
 	return &e
 }
 
+// IsExact returns true if the value matches a known enum value, false otherwise.
+func (e *Outcome) IsExact() bool {
+	if e != nil {
+		switch *e {
+		case "ACCESS_REQUEST_OUTCOME_UNSPECIFIED", "ACCESS_REQUEST_OUTCOME_APPROVED", "ACCESS_REQUEST_OUTCOME_DENIED", "ACCESS_REQUEST_OUTCOME_ERROR", "ACCESS_REQUEST_OUTCOME_CANCELLED":
+			return true
+		}
+	}
+	return false
+}
+
 // The TaskAuditAccessRequestOutcome message.
 type TaskAuditAccessRequestOutcome struct {
 	// The outcome field.
 	Outcome *Outcome `json:"outcome,omitempty"`
 }
 
-func (o *TaskAuditAccessRequestOutcome) GetOutcome() *Outcome {
-	if o == nil {
+func (t *TaskAuditAccessRequestOutcome) GetOutcome() *Outcome {
+	if t == nil {
 		return nil
 	}
-	return o.Outcome
+	return t.Outcome
 }

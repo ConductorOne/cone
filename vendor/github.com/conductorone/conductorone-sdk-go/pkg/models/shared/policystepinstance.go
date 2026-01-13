@@ -15,6 +15,17 @@ func (e PolicyStepInstanceState) ToPointer() *PolicyStepInstanceState {
 	return &e
 }
 
+// IsExact returns true if the value matches a known enum value, false otherwise.
+func (e *PolicyStepInstanceState) IsExact() bool {
+	if e != nil {
+		switch *e {
+		case "POLICY_STEP_STATE_UNSPECIFIED", "POLICY_STEP_STATE_ACTIVE", "POLICY_STEP_STATE_DONE":
+			return true
+		}
+	}
+	return false
+}
+
 // PolicyStepInstance - The policy step instance includes a reference to an instance of a policy step that tracks state and has a unique ID.
 //
 // This message contains a oneof named instance. Only a single field of the following list may be set at a time:
@@ -24,10 +35,24 @@ func (e PolicyStepInstanceState) ToPointer() *PolicyStepInstanceState {
 //   - reject
 //   - wait
 //   - form
+//   - action
 type PolicyStepInstance struct {
 	// This policy step indicates that a ticket should have an approved outcome. This is a terminal approval state and is used to explicitly define the end of approval steps.
 	//  The instance is just a marker for it being copied into an active policy.
 	AcceptInstance *AcceptInstance `json:"accept,omitempty"`
+	// The ActionInstance message.
+	//
+	// This message contains a oneof named target_instance. Only a single field of the following list may be set at a time:
+	//   - automation
+	//
+	//
+	// This message contains a oneof named outcome. Only a single field of the following list may be set at a time:
+	//   - success
+	//   - denied
+	//   - error
+	//   - cancelled
+	//
+	ActionInstance *ActionInstance `json:"action,omitempty"`
 	// The approval instance object describes the way a policy step should be approved as well as its outcomes and state.
 	//
 	// This message contains a oneof named outcome. Only a single field of the following list may be set at a time:
@@ -65,6 +90,7 @@ type PolicyStepInstance struct {
 	//
 	// This message contains a oneof named until. Only a single field of the following list may be set at a time:
 	//   - condition
+	//   - untilTime
 	//
 	//
 	// This message contains a oneof named outcome. Only a single field of the following list may be set at a time:
@@ -81,65 +107,72 @@ type PolicyStepInstance struct {
 	State *PolicyStepInstanceState `json:"state,omitempty"`
 }
 
-func (o *PolicyStepInstance) GetAcceptInstance() *AcceptInstance {
-	if o == nil {
+func (p *PolicyStepInstance) GetAcceptInstance() *AcceptInstance {
+	if p == nil {
 		return nil
 	}
-	return o.AcceptInstance
+	return p.AcceptInstance
 }
 
-func (o *PolicyStepInstance) GetApprovalInstance() *ApprovalInstance {
-	if o == nil {
+func (p *PolicyStepInstance) GetActionInstance() *ActionInstance {
+	if p == nil {
 		return nil
 	}
-	return o.ApprovalInstance
+	return p.ActionInstance
 }
 
-func (o *PolicyStepInstance) GetFormInstance() *FormInstance {
-	if o == nil {
+func (p *PolicyStepInstance) GetApprovalInstance() *ApprovalInstance {
+	if p == nil {
 		return nil
 	}
-	return o.FormInstance
+	return p.ApprovalInstance
 }
 
-func (o *PolicyStepInstance) GetProvisionInstance() *ProvisionInstance {
-	if o == nil {
+func (p *PolicyStepInstance) GetFormInstance() *FormInstance {
+	if p == nil {
 		return nil
 	}
-	return o.ProvisionInstance
+	return p.FormInstance
 }
 
-func (o *PolicyStepInstance) GetRejectInstance() *RejectInstance {
-	if o == nil {
+func (p *PolicyStepInstance) GetProvisionInstance() *ProvisionInstance {
+	if p == nil {
 		return nil
 	}
-	return o.RejectInstance
+	return p.ProvisionInstance
 }
 
-func (o *PolicyStepInstance) GetWaitInstance() *WaitInstance {
-	if o == nil {
+func (p *PolicyStepInstance) GetRejectInstance() *RejectInstance {
+	if p == nil {
 		return nil
 	}
-	return o.WaitInstance
+	return p.RejectInstance
 }
 
-func (o *PolicyStepInstance) GetID() *string {
-	if o == nil {
+func (p *PolicyStepInstance) GetWaitInstance() *WaitInstance {
+	if p == nil {
 		return nil
 	}
-	return o.ID
+	return p.WaitInstance
 }
 
-func (o *PolicyStepInstance) GetPolicyGenerationID() *string {
-	if o == nil {
+func (p *PolicyStepInstance) GetID() *string {
+	if p == nil {
 		return nil
 	}
-	return o.PolicyGenerationID
+	return p.ID
 }
 
-func (o *PolicyStepInstance) GetState() *PolicyStepInstanceState {
-	if o == nil {
+func (p *PolicyStepInstance) GetPolicyGenerationID() *string {
+	if p == nil {
 		return nil
 	}
-	return o.State
+	return p.PolicyGenerationID
+}
+
+func (p *PolicyStepInstance) GetState() *PolicyStepInstanceState {
+	if p == nil {
+		return nil
+	}
+	return p.State
 }

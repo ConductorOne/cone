@@ -8,7 +8,15 @@ import (
 )
 
 // Directory - This object indicates that an app is also a directory.
+//
+// This message contains a oneof named account_filter. Only a single field of the following list may be set at a time:
+//   - all
+//   - celExpression
 type Directory struct {
+	// The DirectoryAccountFilterAll message.
+	DirectoryAccountFilterAll *DirectoryAccountFilterAll `json:"all,omitempty"`
+	// The DirectoryAccountFilterCel message.
+	DirectoryAccountFilterCel *DirectoryAccountFilterCel `json:"celExpression,omitempty"`
 	// The ID of the app associated with the directory.
 	AppID     *string    `json:"appId,omitempty"`
 	CreatedAt *time.Time `json:"createdAt,omitempty"`
@@ -21,36 +29,50 @@ func (d Directory) MarshalJSON() ([]byte, error) {
 }
 
 func (d *Directory) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &d, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &d, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *Directory) GetAppID() *string {
-	if o == nil {
+func (d *Directory) GetDirectoryAccountFilterAll() *DirectoryAccountFilterAll {
+	if d == nil {
 		return nil
 	}
-	return o.AppID
+	return d.DirectoryAccountFilterAll
 }
 
-func (o *Directory) GetCreatedAt() *time.Time {
-	if o == nil {
+func (d *Directory) GetDirectoryAccountFilterCel() *DirectoryAccountFilterCel {
+	if d == nil {
 		return nil
 	}
-	return o.CreatedAt
+	return d.DirectoryAccountFilterCel
 }
 
-func (o *Directory) GetDeletedAt() *time.Time {
-	if o == nil {
+func (d *Directory) GetAppID() *string {
+	if d == nil {
 		return nil
 	}
-	return o.DeletedAt
+	return d.AppID
 }
 
-func (o *Directory) GetUpdatedAt() *time.Time {
-	if o == nil {
+func (d *Directory) GetCreatedAt() *time.Time {
+	if d == nil {
 		return nil
 	}
-	return o.UpdatedAt
+	return d.CreatedAt
+}
+
+func (d *Directory) GetDeletedAt() *time.Time {
+	if d == nil {
+		return nil
+	}
+	return d.DeletedAt
+}
+
+func (d *Directory) GetUpdatedAt() *time.Time {
+	if d == nil {
+		return nil
+	}
+	return d.UpdatedAt
 }

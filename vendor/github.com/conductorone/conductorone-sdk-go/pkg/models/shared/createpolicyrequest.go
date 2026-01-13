@@ -18,6 +18,17 @@ func (e PolicyType) ToPointer() *PolicyType {
 	return &e
 }
 
+// IsExact returns true if the value matches a known enum value, false otherwise.
+func (e *PolicyType) IsExact() bool {
+	if e != nil {
+		switch *e {
+		case "POLICY_TYPE_UNSPECIFIED", "POLICY_TYPE_GRANT", "POLICY_TYPE_REVOKE", "POLICY_TYPE_CERTIFY", "POLICY_TYPE_ACCESS_REQUEST", "POLICY_TYPE_PROVISION":
+			return true
+		}
+	}
+	return false
+}
+
 // The CreatePolicyRequest message is used to create a new policy.
 type CreatePolicyRequest struct {
 	// The description of the new policy.
@@ -38,51 +49,51 @@ type CreatePolicyRequest struct {
 	Rules []Rule `json:"rules,omitempty"`
 }
 
-func (o *CreatePolicyRequest) GetDescription() *string {
-	if o == nil {
+func (c *CreatePolicyRequest) GetDescription() *string {
+	if c == nil {
 		return nil
 	}
-	return o.Description
+	return c.Description
 }
 
-func (o *CreatePolicyRequest) GetDisplayName() string {
-	if o == nil {
+func (c *CreatePolicyRequest) GetDisplayName() string {
+	if c == nil {
 		return ""
 	}
-	return o.DisplayName
+	return c.DisplayName
 }
 
-func (o *CreatePolicyRequest) GetPolicySteps() map[string]PolicyStepsInput {
-	if o == nil {
+func (c *CreatePolicyRequest) GetPolicySteps() map[string]PolicyStepsInput {
+	if c == nil {
 		return nil
 	}
-	return o.PolicySteps
+	return c.PolicySteps
 }
 
-func (o *CreatePolicyRequest) GetPolicyType() *PolicyType {
-	if o == nil {
+func (c *CreatePolicyRequest) GetPolicyType() *PolicyType {
+	if c == nil {
 		return nil
 	}
-	return o.PolicyType
+	return c.PolicyType
 }
 
-func (o *CreatePolicyRequest) GetPostActions() []PolicyPostActions {
-	if o == nil {
+func (c *CreatePolicyRequest) GetPostActions() []PolicyPostActions {
+	if c == nil {
 		return nil
 	}
-	return o.PostActions
+	return c.PostActions
 }
 
-func (o *CreatePolicyRequest) GetReassignTasksToDelegates() *bool {
-	if o == nil {
+func (c *CreatePolicyRequest) GetReassignTasksToDelegates() *bool {
+	if c == nil {
 		return nil
 	}
-	return o.ReassignTasksToDelegates
+	return c.ReassignTasksToDelegates
 }
 
-func (o *CreatePolicyRequest) GetRules() []Rule {
-	if o == nil {
+func (c *CreatePolicyRequest) GetRules() []Rule {
+	if c == nil {
 		return nil
 	}
-	return o.Rules
+	return c.Rules
 }

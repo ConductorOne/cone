@@ -22,6 +22,17 @@ func (e ConnectorStatusStatus) ToPointer() *ConnectorStatusStatus {
 	return &e
 }
 
+// IsExact returns true if the value matches a known enum value, false otherwise.
+func (e *ConnectorStatusStatus) IsExact() bool {
+	if e != nil {
+		switch *e {
+		case "SYNC_STATUS_UNSPECIFIED", "SYNC_STATUS_RUNNING", "SYNC_STATUS_DONE", "SYNC_STATUS_ERROR", "SYNC_STATUS_DISABLED":
+			return true
+		}
+	}
+	return false
+}
+
 // ConnectorStatus - The status field on the connector is used to track the status of the connectors sync, and when syncing last started, completed, or caused the connector to update.
 type ConnectorStatus struct {
 	CompletedAt *time.Time `json:"completedAt,omitempty"`
@@ -38,43 +49,43 @@ func (c ConnectorStatus) MarshalJSON() ([]byte, error) {
 }
 
 func (c *ConnectorStatus) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &c, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &c, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *ConnectorStatus) GetCompletedAt() *time.Time {
-	if o == nil {
+func (c *ConnectorStatus) GetCompletedAt() *time.Time {
+	if c == nil {
 		return nil
 	}
-	return o.CompletedAt
+	return c.CompletedAt
 }
 
-func (o *ConnectorStatus) GetLastError() *string {
-	if o == nil {
+func (c *ConnectorStatus) GetLastError() *string {
+	if c == nil {
 		return nil
 	}
-	return o.LastError
+	return c.LastError
 }
 
-func (o *ConnectorStatus) GetStartedAt() *time.Time {
-	if o == nil {
+func (c *ConnectorStatus) GetStartedAt() *time.Time {
+	if c == nil {
 		return nil
 	}
-	return o.StartedAt
+	return c.StartedAt
 }
 
-func (o *ConnectorStatus) GetStatus() *ConnectorStatusStatus {
-	if o == nil {
+func (c *ConnectorStatus) GetStatus() *ConnectorStatusStatus {
+	if c == nil {
 		return nil
 	}
-	return o.Status
+	return c.Status
 }
 
-func (o *ConnectorStatus) GetUpdatedAt() *time.Time {
-	if o == nil {
+func (c *ConnectorStatus) GetUpdatedAt() *time.Time {
+	if c == nil {
 		return nil
 	}
-	return o.UpdatedAt
+	return c.UpdatedAt
 }

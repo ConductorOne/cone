@@ -3,23 +3,45 @@
 package shared
 
 // DirectoryServiceCreateRequest - Uplevel an app into a full directory.
+//
+// This message contains a oneof named account_filter. Only a single field of the following list may be set at a time:
+//   - all
+//   - celExpression
 type DirectoryServiceCreateRequest struct {
+	// The DirectoryAccountFilterAll message.
+	DirectoryAccountFilterAll *DirectoryAccountFilterAll `json:"all,omitempty"`
+	// The DirectoryAccountFilterCel message.
+	DirectoryAccountFilterCel *DirectoryAccountFilterCel `json:"celExpression,omitempty"`
 	// The fields to be included in the directory response.
 	DirectoryExpandMask *DirectoryExpandMask `json:"expandMask,omitempty"`
 	// The AppID to make into a directory, providing identities and more for the C1 app.
 	AppID *string `json:"appId,omitempty"`
 }
 
-func (o *DirectoryServiceCreateRequest) GetDirectoryExpandMask() *DirectoryExpandMask {
-	if o == nil {
+func (d *DirectoryServiceCreateRequest) GetDirectoryAccountFilterAll() *DirectoryAccountFilterAll {
+	if d == nil {
 		return nil
 	}
-	return o.DirectoryExpandMask
+	return d.DirectoryAccountFilterAll
 }
 
-func (o *DirectoryServiceCreateRequest) GetAppID() *string {
-	if o == nil {
+func (d *DirectoryServiceCreateRequest) GetDirectoryAccountFilterCel() *DirectoryAccountFilterCel {
+	if d == nil {
 		return nil
 	}
-	return o.AppID
+	return d.DirectoryAccountFilterCel
+}
+
+func (d *DirectoryServiceCreateRequest) GetDirectoryExpandMask() *DirectoryExpandMask {
+	if d == nil {
+		return nil
+	}
+	return d.DirectoryExpandMask
+}
+
+func (d *DirectoryServiceCreateRequest) GetAppID() *string {
+	if d == nil {
+		return nil
+	}
+	return d.AppID
 }

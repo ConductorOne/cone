@@ -12,18 +12,18 @@ type C1APIWebhooksV1WebhooksServiceTestRequest struct {
 	ID                         string                             `pathParam:"style=simple,explode=false,name=id"`
 }
 
-func (o *C1APIWebhooksV1WebhooksServiceTestRequest) GetWebhooksServiceTestRequest() *shared.WebhooksServiceTestRequest {
-	if o == nil {
+func (c *C1APIWebhooksV1WebhooksServiceTestRequest) GetWebhooksServiceTestRequest() *shared.WebhooksServiceTestRequest {
+	if c == nil {
 		return nil
 	}
-	return o.WebhooksServiceTestRequest
+	return c.WebhooksServiceTestRequest
 }
 
-func (o *C1APIWebhooksV1WebhooksServiceTestRequest) GetID() string {
-	if o == nil {
+func (c *C1APIWebhooksV1WebhooksServiceTestRequest) GetID() string {
+	if c == nil {
 		return ""
 	}
-	return o.ID
+	return c.ID
 }
 
 type C1APIWebhooksV1WebhooksServiceTestResponse struct {
@@ -37,30 +37,30 @@ type C1APIWebhooksV1WebhooksServiceTestResponse struct {
 	WebhooksServiceTestResponse *shared.WebhooksServiceTestResponse
 }
 
-func (o *C1APIWebhooksV1WebhooksServiceTestResponse) GetContentType() string {
-	if o == nil {
+func (c *C1APIWebhooksV1WebhooksServiceTestResponse) GetContentType() string {
+	if c == nil {
 		return ""
 	}
-	return o.ContentType
+	return c.ContentType
 }
 
-func (o *C1APIWebhooksV1WebhooksServiceTestResponse) GetStatusCode() int {
-	if o == nil {
+func (c *C1APIWebhooksV1WebhooksServiceTestResponse) GetStatusCode() int {
+	if c == nil {
 		return 0
 	}
-	return o.StatusCode
+	return c.StatusCode
 }
 
-func (o *C1APIWebhooksV1WebhooksServiceTestResponse) GetRawResponse() *http.Response {
-	if o == nil {
+func (c *C1APIWebhooksV1WebhooksServiceTestResponse) GetRawResponse() *http.Response {
+	if c == nil {
 		return nil
 	}
-	return o.RawResponse
+	return c.RawResponse
 }
 
-func (o *C1APIWebhooksV1WebhooksServiceTestResponse) GetWebhooksServiceTestResponse() *shared.WebhooksServiceTestResponse {
-	if o == nil {
+func (c *C1APIWebhooksV1WebhooksServiceTestResponse) GetWebhooksServiceTestResponse() *shared.WebhooksServiceTestResponse {
+	if c == nil {
 		return nil
 	}
-	return o.WebhooksServiceTestResponse
+	return c.WebhooksServiceTestResponse
 }

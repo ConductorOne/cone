@@ -12,23 +12,23 @@ type NumberField struct {
 	Step *int64 `integer:"string" json:"step,omitempty"`
 }
 
-func (o *NumberField) GetMaxValue() *int64 {
-	if o == nil {
+func (n *NumberField) GetMaxValue() *int64 {
+	if n == nil {
 		return nil
 	}
-	return o.MaxValue
+	return n.MaxValue
 }
 
-func (o *NumberField) GetMinValue() *int64 {
-	if o == nil {
+func (n *NumberField) GetMinValue() *int64 {
+	if n == nil {
 		return nil
 	}
-	return o.MinValue
+	return n.MinValue
 }
 
-func (o *NumberField) GetStep() *int64 {
-	if o == nil {
+func (n *NumberField) GetStep() *int64 {
+	if n == nil {
 		return nil
 	}
-	return o.Step
+	return n.Step
 }

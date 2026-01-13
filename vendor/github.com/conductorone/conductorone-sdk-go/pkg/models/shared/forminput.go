@@ -8,45 +8,54 @@ type FormInput struct {
 	Description *string `json:"description,omitempty"`
 	// The displayName field.
 	DisplayName *string `json:"displayName,omitempty"`
+	// The fieldGroups field.
+	FieldGroups []FieldGroup `json:"fieldGroups,omitempty"`
 	// The fieldRelationships field.
 	FieldRelationships []FieldRelationship `json:"fieldRelationships,omitempty"`
 	// The fields field.
-	Fields []Field `json:"fields,omitempty"`
+	Fields []FieldInput `json:"fields,omitempty"`
 	// The id field.
 	ID *string `json:"id,omitempty"`
 }
 
-func (o *FormInput) GetDescription() *string {
-	if o == nil {
+func (f *FormInput) GetDescription() *string {
+	if f == nil {
 		return nil
 	}
-	return o.Description
+	return f.Description
 }
 
-func (o *FormInput) GetDisplayName() *string {
-	if o == nil {
+func (f *FormInput) GetDisplayName() *string {
+	if f == nil {
 		return nil
 	}
-	return o.DisplayName
+	return f.DisplayName
 }
 
-func (o *FormInput) GetFieldRelationships() []FieldRelationship {
-	if o == nil {
+func (f *FormInput) GetFieldGroups() []FieldGroup {
+	if f == nil {
 		return nil
 	}
-	return o.FieldRelationships
+	return f.FieldGroups
 }
 
-func (o *FormInput) GetFields() []Field {
-	if o == nil {
+func (f *FormInput) GetFieldRelationships() []FieldRelationship {
+	if f == nil {
 		return nil
 	}
-	return o.Fields
+	return f.FieldRelationships
 }
 
-func (o *FormInput) GetID() *string {
-	if o == nil {
+func (f *FormInput) GetFields() []FieldInput {
+	if f == nil {
 		return nil
 	}
-	return o.ID
+	return f.Fields
+}
+
+func (f *FormInput) GetID() *string {
+	if f == nil {
+		return nil
+	}
+	return f.ID
 }

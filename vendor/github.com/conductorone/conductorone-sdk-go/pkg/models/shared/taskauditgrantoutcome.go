@@ -18,15 +18,26 @@ func (e TaskAuditGrantOutcomeOutcome) ToPointer() *TaskAuditGrantOutcomeOutcome 
 	return &e
 }
 
+// IsExact returns true if the value matches a known enum value, false otherwise.
+func (e *TaskAuditGrantOutcomeOutcome) IsExact() bool {
+	if e != nil {
+		switch *e {
+		case "GRANT_OUTCOME_UNSPECIFIED", "GRANT_OUTCOME_GRANTED", "GRANT_OUTCOME_DENIED", "GRANT_OUTCOME_ERROR", "GRANT_OUTCOME_CANCELLED", "GRANT_OUTCOME_WAIT_TIMED_OUT":
+			return true
+		}
+	}
+	return false
+}
+
 // The TaskAuditGrantOutcome message.
 type TaskAuditGrantOutcome struct {
 	// The outcome field.
 	Outcome *TaskAuditGrantOutcomeOutcome `json:"outcome,omitempty"`
 }
 
-func (o *TaskAuditGrantOutcome) GetOutcome() *TaskAuditGrantOutcomeOutcome {
-	if o == nil {
+func (t *TaskAuditGrantOutcome) GetOutcome() *TaskAuditGrantOutcomeOutcome {
+	if t == nil {
 		return nil
 	}
-	return o.Outcome
+	return t.Outcome
 }

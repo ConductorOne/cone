@@ -18,24 +18,24 @@ func (s SearchPastGrantsResponseExpanded) MarshalJSON() ([]byte, error) {
 }
 
 func (s *SearchPastGrantsResponseExpanded) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &s, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *SearchPastGrantsResponseExpanded) GetAtType() *string {
-	if o == nil {
+func (s *SearchPastGrantsResponseExpanded) GetAtType() *string {
+	if s == nil {
 		return nil
 	}
-	return o.AtType
+	return s.AtType
 }
 
-func (o *SearchPastGrantsResponseExpanded) GetAdditionalProperties() map[string]any {
-	if o == nil {
+func (s *SearchPastGrantsResponseExpanded) GetAdditionalProperties() map[string]any {
+	if s == nil {
 		return nil
 	}
-	return o.AdditionalProperties
+	return s.AdditionalProperties
 }
 
 // The SearchPastGrantsResponse message contains a list of past grants and a nextPageToken if applicable.
@@ -50,23 +50,23 @@ type SearchPastGrantsResponse struct {
 	NextPageToken *string `json:"nextPageToken,omitempty"`
 }
 
-func (o *SearchPastGrantsResponse) GetExpanded() []SearchPastGrantsResponseExpanded {
-	if o == nil {
+func (s *SearchPastGrantsResponse) GetExpanded() []SearchPastGrantsResponseExpanded {
+	if s == nil {
 		return nil
 	}
-	return o.Expanded
+	return s.Expanded
 }
 
-func (o *SearchPastGrantsResponse) GetList() []AppEntitlementUserBindingHistoryView {
-	if o == nil {
+func (s *SearchPastGrantsResponse) GetList() []AppEntitlementUserBindingHistoryView {
+	if s == nil {
 		return nil
 	}
-	return o.List
+	return s.List
 }
 
-func (o *SearchPastGrantsResponse) GetNextPageToken() *string {
-	if o == nil {
+func (s *SearchPastGrantsResponse) GetNextPageToken() *string {
+	if s == nil {
 		return nil
 	}
-	return o.NextPageToken
+	return s.NextPageToken
 }

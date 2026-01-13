@@ -20,6 +20,17 @@ func (e TargetedAppUserTypes) ToPointer() *TargetedAppUserTypes {
 	return &e
 }
 
+// IsExact returns true if the value matches a known enum value, false otherwise.
+func (e *TargetedAppUserTypes) IsExact() bool {
+	if e != nil {
+		switch *e {
+		case "APP_USER_TYPE_UNSPECIFIED", "APP_USER_TYPE_USER", "APP_USER_TYPE_SERVICE_ACCOUNT", "APP_USER_TYPE_SYSTEM_ACCOUNT":
+			return true
+		}
+	}
+	return false
+}
+
 // The UsageBasedRevocationTrigger message.
 //
 // This message contains a oneof named cold_start_schedule. Only a single field of the following list may be set at a time:
@@ -52,78 +63,78 @@ func (u UsageBasedRevocationTrigger) MarshalJSON() ([]byte, error) {
 }
 
 func (u *UsageBasedRevocationTrigger) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &u, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &u, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *UsageBasedRevocationTrigger) GetRunDelayed() *RunDelayed {
-	if o == nil {
+func (u *UsageBasedRevocationTrigger) GetRunDelayed() *RunDelayed {
+	if u == nil {
 		return nil
 	}
-	return o.RunDelayed
+	return u.RunDelayed
 }
 
-func (o *UsageBasedRevocationTrigger) GetRunImmediately() *RunImmediately {
-	if o == nil {
+func (u *UsageBasedRevocationTrigger) GetRunImmediately() *RunImmediately {
+	if u == nil {
 		return nil
 	}
-	return o.RunImmediately
+	return u.RunImmediately
 }
 
-func (o *UsageBasedRevocationTrigger) GetAppID() *string {
-	if o == nil {
+func (u *UsageBasedRevocationTrigger) GetAppID() *string {
+	if u == nil {
 		return nil
 	}
-	return o.AppID
+	return u.AppID
 }
 
-func (o *UsageBasedRevocationTrigger) GetEnabledAt() *time.Time {
-	if o == nil {
+func (u *UsageBasedRevocationTrigger) GetEnabledAt() *time.Time {
+	if u == nil {
 		return nil
 	}
-	return o.EnabledAt
+	return u.EnabledAt
 }
 
-func (o *UsageBasedRevocationTrigger) GetExcludedGroupRefs() []AppEntitlementRef {
-	if o == nil {
+func (u *UsageBasedRevocationTrigger) GetExcludedGroupRefs() []AppEntitlementRef {
+	if u == nil {
 		return nil
 	}
-	return o.ExcludedGroupRefs
+	return u.ExcludedGroupRefs
 }
 
-func (o *UsageBasedRevocationTrigger) GetExcludedUserRefs() []UserRef {
-	if o == nil {
+func (u *UsageBasedRevocationTrigger) GetExcludedUserRefs() []UserRef {
+	if u == nil {
 		return nil
 	}
-	return o.ExcludedUserRefs
+	return u.ExcludedUserRefs
 }
 
-func (o *UsageBasedRevocationTrigger) GetIncludeUsersWithNoActivity() *bool {
-	if o == nil {
+func (u *UsageBasedRevocationTrigger) GetIncludeUsersWithNoActivity() *bool {
+	if u == nil {
 		return nil
 	}
-	return o.IncludeUsersWithNoActivity
+	return u.IncludeUsersWithNoActivity
 }
 
-func (o *UsageBasedRevocationTrigger) GetTargetedAppUserTypes() []TargetedAppUserTypes {
-	if o == nil {
+func (u *UsageBasedRevocationTrigger) GetTargetedAppUserTypes() []TargetedAppUserTypes {
+	if u == nil {
 		return nil
 	}
-	return o.TargetedAppUserTypes
+	return u.TargetedAppUserTypes
 }
 
-func (o *UsageBasedRevocationTrigger) GetTargetedEntitlementRefs() []AppEntitlementRef {
-	if o == nil {
+func (u *UsageBasedRevocationTrigger) GetTargetedEntitlementRefs() []AppEntitlementRef {
+	if u == nil {
 		return nil
 	}
-	return o.TargetedEntitlementRefs
+	return u.TargetedEntitlementRefs
 }
 
-func (o *UsageBasedRevocationTrigger) GetUnusedForDays() *int64 {
-	if o == nil {
+func (u *UsageBasedRevocationTrigger) GetUnusedForDays() *int64 {
+	if u == nil {
 		return nil
 	}
-	return o.UnusedForDays
+	return u.UnusedForDays
 }

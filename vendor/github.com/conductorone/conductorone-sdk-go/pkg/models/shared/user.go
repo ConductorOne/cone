@@ -21,33 +21,66 @@ func (e DirectoryStatus) ToPointer() *DirectoryStatus {
 	return &e
 }
 
-// UserStatus - The status of the user in the system.
-type UserStatus string
+// IsExact returns true if the value matches a known enum value, false otherwise.
+func (e *DirectoryStatus) IsExact() bool {
+	if e != nil {
+		switch *e {
+		case "UNKNOWN", "ENABLED", "DISABLED", "DELETED":
+			return true
+		}
+	}
+	return false
+}
+
+// UserSchemasStatus - The status of the user in the system.
+type UserSchemasStatus string
 
 const (
-	UserStatusUnknown  UserStatus = "UNKNOWN"
-	UserStatusEnabled  UserStatus = "ENABLED"
-	UserStatusDisabled UserStatus = "DISABLED"
-	UserStatusDeleted  UserStatus = "DELETED"
+	UserSchemasStatusUnknown  UserSchemasStatus = "UNKNOWN"
+	UserSchemasStatusEnabled  UserSchemasStatus = "ENABLED"
+	UserSchemasStatusDisabled UserSchemasStatus = "DISABLED"
+	UserSchemasStatusDeleted  UserSchemasStatus = "DELETED"
 )
 
-func (e UserStatus) ToPointer() *UserStatus {
+func (e UserSchemasStatus) ToPointer() *UserSchemasStatus {
 	return &e
 }
 
-// Type - The type of the user.
-type Type string
+// IsExact returns true if the value matches a known enum value, false otherwise.
+func (e *UserSchemasStatus) IsExact() bool {
+	if e != nil {
+		switch *e {
+		case "UNKNOWN", "ENABLED", "DISABLED", "DELETED":
+			return true
+		}
+	}
+	return false
+}
+
+// UserType - The type of the user.
+type UserType string
 
 const (
-	TypeUserTypeUnspecified Type = "USER_TYPE_UNSPECIFIED"
-	TypeUserTypeSystem      Type = "USER_TYPE_SYSTEM"
-	TypeUserTypeHuman       Type = "USER_TYPE_HUMAN"
-	TypeUserTypeService     Type = "USER_TYPE_SERVICE"
-	TypeUserTypeAgent       Type = "USER_TYPE_AGENT"
+	UserTypeUserTypeUnspecified UserType = "USER_TYPE_UNSPECIFIED"
+	UserTypeUserTypeSystem      UserType = "USER_TYPE_SYSTEM"
+	UserTypeUserTypeHuman       UserType = "USER_TYPE_HUMAN"
+	UserTypeUserTypeService     UserType = "USER_TYPE_SERVICE"
+	UserTypeUserTypeAgent       UserType = "USER_TYPE_AGENT"
 )
 
-func (e Type) ToPointer() *Type {
+func (e UserType) ToPointer() *UserType {
 	return &e
+}
+
+// IsExact returns true if the value matches a known enum value, false otherwise.
+func (e *UserType) IsExact() bool {
+	if e != nil {
+		switch *e {
+		case "USER_TYPE_UNSPECIFIED", "USER_TYPE_SYSTEM", "USER_TYPE_HUMAN", "USER_TYPE_SERVICE", "USER_TYPE_AGENT":
+			return true
+		}
+	}
+	return false
 }
 
 // The User object provides all of the details for an user, as well as some configuration.
@@ -100,9 +133,9 @@ type User struct {
 	// A list of unique identifiers that maps to ConductorOne's user roles let you assign users permissions tailored to the work they do in the software.
 	RoleIds []string `json:"roleIds,omitempty"`
 	// The status of the user in the system.
-	Status *UserStatus `json:"status,omitempty"`
+	Status *UserSchemasStatus `json:"status,omitempty"`
 	// The type of the user.
-	Type      *Type      `json:"type,omitempty"`
+	Type      *UserType  `json:"type,omitempty"`
 	UpdatedAt *time.Time `json:"updatedAt,omitempty"`
 	// This is the user's primary username. Typically sourced from the primary directory.
 	Username *string `json:"username,omitempty"`
@@ -117,225 +150,225 @@ func (u User) MarshalJSON() ([]byte, error) {
 }
 
 func (u *User) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &u, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &u, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *User) GetCreatedAt() *time.Time {
-	if o == nil {
+func (u *User) GetCreatedAt() *time.Time {
+	if u == nil {
 		return nil
 	}
-	return o.CreatedAt
+	return u.CreatedAt
 }
 
-func (o *User) GetDelegatedUserID() *string {
-	if o == nil {
+func (u *User) GetDelegatedUserID() *string {
+	if u == nil {
 		return nil
 	}
-	return o.DelegatedUserID
+	return u.DelegatedUserID
 }
 
-func (o *User) GetDeletedAt() *time.Time {
-	if o == nil {
+func (u *User) GetDeletedAt() *time.Time {
+	if u == nil {
 		return nil
 	}
-	return o.DeletedAt
+	return u.DeletedAt
 }
 
-func (o *User) GetDepartment() *string {
-	if o == nil {
+func (u *User) GetDepartment() *string {
+	if u == nil {
 		return nil
 	}
-	return o.Department
+	return u.Department
 }
 
-func (o *User) GetDepartmentSources() []UserAttributeMappingSource {
-	if o == nil {
+func (u *User) GetDepartmentSources() []UserAttributeMappingSource {
+	if u == nil {
 		return nil
 	}
-	return o.DepartmentSources
+	return u.DepartmentSources
 }
 
-func (o *User) GetDirectoryIds() []string {
-	if o == nil {
+func (u *User) GetDirectoryIds() []string {
+	if u == nil {
 		return nil
 	}
-	return o.DirectoryIds
+	return u.DirectoryIds
 }
 
-func (o *User) GetDirectoryStatus() *DirectoryStatus {
-	if o == nil {
+func (u *User) GetDirectoryStatus() *DirectoryStatus {
+	if u == nil {
 		return nil
 	}
-	return o.DirectoryStatus
+	return u.DirectoryStatus
 }
 
-func (o *User) GetDirectoryStatusSources() []UserAttributeMappingSource {
-	if o == nil {
+func (u *User) GetDirectoryStatusSources() []UserAttributeMappingSource {
+	if u == nil {
 		return nil
 	}
-	return o.DirectoryStatusSources
+	return u.DirectoryStatusSources
 }
 
-func (o *User) GetDisplayName() *string {
-	if o == nil {
+func (u *User) GetDisplayName() *string {
+	if u == nil {
 		return nil
 	}
-	return o.DisplayName
+	return u.DisplayName
 }
 
-func (o *User) GetEmail() *string {
-	if o == nil {
+func (u *User) GetEmail() *string {
+	if u == nil {
 		return nil
 	}
-	return o.Email
+	return u.Email
 }
 
-func (o *User) GetEmailSources() []UserAttributeMappingSource {
-	if o == nil {
+func (u *User) GetEmailSources() []UserAttributeMappingSource {
+	if u == nil {
 		return nil
 	}
-	return o.EmailSources
+	return u.EmailSources
 }
 
-func (o *User) GetEmails() []string {
-	if o == nil {
+func (u *User) GetEmails() []string {
+	if u == nil {
 		return nil
 	}
-	return o.Emails
+	return u.Emails
 }
 
-func (o *User) GetEmployeeIDSources() []UserAttributeMappingSource {
-	if o == nil {
+func (u *User) GetEmployeeIDSources() []UserAttributeMappingSource {
+	if u == nil {
 		return nil
 	}
-	return o.EmployeeIDSources
+	return u.EmployeeIDSources
 }
 
-func (o *User) GetEmployeeIds() []string {
-	if o == nil {
+func (u *User) GetEmployeeIds() []string {
+	if u == nil {
 		return nil
 	}
-	return o.EmployeeIds
+	return u.EmployeeIds
 }
 
-func (o *User) GetEmploymentStatus() *string {
-	if o == nil {
+func (u *User) GetEmploymentStatus() *string {
+	if u == nil {
 		return nil
 	}
-	return o.EmploymentStatus
+	return u.EmploymentStatus
 }
 
-func (o *User) GetEmploymentStatusSources() []UserAttributeMappingSource {
-	if o == nil {
+func (u *User) GetEmploymentStatusSources() []UserAttributeMappingSource {
+	if u == nil {
 		return nil
 	}
-	return o.EmploymentStatusSources
+	return u.EmploymentStatusSources
 }
 
-func (o *User) GetEmploymentType() *string {
-	if o == nil {
+func (u *User) GetEmploymentType() *string {
+	if u == nil {
 		return nil
 	}
-	return o.EmploymentType
+	return u.EmploymentType
 }
 
-func (o *User) GetEmploymentTypeSources() []UserAttributeMappingSource {
-	if o == nil {
+func (u *User) GetEmploymentTypeSources() []UserAttributeMappingSource {
+	if u == nil {
 		return nil
 	}
-	return o.EmploymentTypeSources
+	return u.EmploymentTypeSources
 }
 
-func (o *User) GetID() *string {
-	if o == nil {
+func (u *User) GetID() *string {
+	if u == nil {
 		return nil
 	}
-	return o.ID
+	return u.ID
 }
 
-func (o *User) GetJobTitle() *string {
-	if o == nil {
+func (u *User) GetJobTitle() *string {
+	if u == nil {
 		return nil
 	}
-	return o.JobTitle
+	return u.JobTitle
 }
 
-func (o *User) GetJobTitleSources() []UserAttributeMappingSource {
-	if o == nil {
+func (u *User) GetJobTitleSources() []UserAttributeMappingSource {
+	if u == nil {
 		return nil
 	}
-	return o.JobTitleSources
+	return u.JobTitleSources
 }
 
-func (o *User) GetManagerIds() []string {
-	if o == nil {
+func (u *User) GetManagerIds() []string {
+	if u == nil {
 		return nil
 	}
-	return o.ManagerIds
+	return u.ManagerIds
 }
 
-func (o *User) GetManagerSources() []UserAttributeMappingSource {
-	if o == nil {
+func (u *User) GetManagerSources() []UserAttributeMappingSource {
+	if u == nil {
 		return nil
 	}
-	return o.ManagerSources
+	return u.ManagerSources
 }
 
-func (o *User) GetProfile() map[string]any {
-	if o == nil {
+func (u *User) GetProfile() map[string]any {
+	if u == nil {
 		return nil
 	}
-	return o.Profile
+	return u.Profile
 }
 
-func (o *User) GetRoleIds() []string {
-	if o == nil {
+func (u *User) GetRoleIds() []string {
+	if u == nil {
 		return nil
 	}
-	return o.RoleIds
+	return u.RoleIds
 }
 
-func (o *User) GetStatus() *UserStatus {
-	if o == nil {
+func (u *User) GetStatus() *UserSchemasStatus {
+	if u == nil {
 		return nil
 	}
-	return o.Status
+	return u.Status
 }
 
-func (o *User) GetType() *Type {
-	if o == nil {
+func (u *User) GetType() *UserType {
+	if u == nil {
 		return nil
 	}
-	return o.Type
+	return u.Type
 }
 
-func (o *User) GetUpdatedAt() *time.Time {
-	if o == nil {
+func (u *User) GetUpdatedAt() *time.Time {
+	if u == nil {
 		return nil
 	}
-	return o.UpdatedAt
+	return u.UpdatedAt
 }
 
-func (o *User) GetUsername() *string {
-	if o == nil {
+func (u *User) GetUsername() *string {
+	if u == nil {
 		return nil
 	}
-	return o.Username
+	return u.Username
 }
 
-func (o *User) GetUsernameSources() []UserAttributeMappingSource {
-	if o == nil {
+func (u *User) GetUsernameSources() []UserAttributeMappingSource {
+	if u == nil {
 		return nil
 	}
-	return o.UsernameSources
+	return u.UsernameSources
 }
 
-func (o *User) GetUsernames() []string {
-	if o == nil {
+func (u *User) GetUsernames() []string {
+	if u == nil {
 		return nil
 	}
-	return o.Usernames
+	return u.Usernames
 }

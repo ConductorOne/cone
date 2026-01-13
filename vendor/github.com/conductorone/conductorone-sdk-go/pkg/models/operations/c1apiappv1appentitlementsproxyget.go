@@ -14,32 +14,32 @@ type C1APIAppV1AppEntitlementsProxyGetRequest struct {
 	SrcAppID            string `pathParam:"style=simple,explode=false,name=src_app_id"`
 }
 
-func (o *C1APIAppV1AppEntitlementsProxyGetRequest) GetDstAppEntitlementID() string {
-	if o == nil {
+func (c *C1APIAppV1AppEntitlementsProxyGetRequest) GetDstAppEntitlementID() string {
+	if c == nil {
 		return ""
 	}
-	return o.DstAppEntitlementID
+	return c.DstAppEntitlementID
 }
 
-func (o *C1APIAppV1AppEntitlementsProxyGetRequest) GetDstAppID() string {
-	if o == nil {
+func (c *C1APIAppV1AppEntitlementsProxyGetRequest) GetDstAppID() string {
+	if c == nil {
 		return ""
 	}
-	return o.DstAppID
+	return c.DstAppID
 }
 
-func (o *C1APIAppV1AppEntitlementsProxyGetRequest) GetSrcAppEntitlementID() string {
-	if o == nil {
+func (c *C1APIAppV1AppEntitlementsProxyGetRequest) GetSrcAppEntitlementID() string {
+	if c == nil {
 		return ""
 	}
-	return o.SrcAppEntitlementID
+	return c.SrcAppEntitlementID
 }
 
-func (o *C1APIAppV1AppEntitlementsProxyGetRequest) GetSrcAppID() string {
-	if o == nil {
+func (c *C1APIAppV1AppEntitlementsProxyGetRequest) GetSrcAppID() string {
+	if c == nil {
 		return ""
 	}
-	return o.SrcAppID
+	return c.SrcAppID
 }
 
 type C1APIAppV1AppEntitlementsProxyGetResponse struct {
@@ -53,30 +53,30 @@ type C1APIAppV1AppEntitlementsProxyGetResponse struct {
 	RawResponse *http.Response
 }
 
-func (o *C1APIAppV1AppEntitlementsProxyGetResponse) GetContentType() string {
-	if o == nil {
+func (c *C1APIAppV1AppEntitlementsProxyGetResponse) GetContentType() string {
+	if c == nil {
 		return ""
 	}
-	return o.ContentType
+	return c.ContentType
 }
 
-func (o *C1APIAppV1AppEntitlementsProxyGetResponse) GetGetAppEntitlementProxyResponse() *shared.GetAppEntitlementProxyResponse {
-	if o == nil {
+func (c *C1APIAppV1AppEntitlementsProxyGetResponse) GetGetAppEntitlementProxyResponse() *shared.GetAppEntitlementProxyResponse {
+	if c == nil {
 		return nil
 	}
-	return o.GetAppEntitlementProxyResponse
+	return c.GetAppEntitlementProxyResponse
 }
 
-func (o *C1APIAppV1AppEntitlementsProxyGetResponse) GetStatusCode() int {
-	if o == nil {
+func (c *C1APIAppV1AppEntitlementsProxyGetResponse) GetStatusCode() int {
+	if c == nil {
 		return 0
 	}
-	return o.StatusCode
+	return c.StatusCode
 }
 
-func (o *C1APIAppV1AppEntitlementsProxyGetResponse) GetRawResponse() *http.Response {
-	if o == nil {
+func (c *C1APIAppV1AppEntitlementsProxyGetResponse) GetRawResponse() *http.Response {
+	if c == nil {
 		return nil
 	}
-	return o.RawResponse
+	return c.RawResponse
 }

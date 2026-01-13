@@ -18,24 +18,24 @@ func (u UserServiceGetResponseExpanded) MarshalJSON() ([]byte, error) {
 }
 
 func (u *UserServiceGetResponseExpanded) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &u, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &u, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *UserServiceGetResponseExpanded) GetAtType() *string {
-	if o == nil {
+func (u *UserServiceGetResponseExpanded) GetAtType() *string {
+	if u == nil {
 		return nil
 	}
-	return o.AtType
+	return u.AtType
 }
 
-func (o *UserServiceGetResponseExpanded) GetAdditionalProperties() map[string]any {
-	if o == nil {
+func (u *UserServiceGetResponseExpanded) GetAdditionalProperties() map[string]any {
+	if u == nil {
 		return nil
 	}
-	return o.AdditionalProperties
+	return u.AdditionalProperties
 }
 
 // The UserServiceGetResponse returns a user view which has a user including JSONPATHs to the expanded items in the expanded array.
@@ -46,16 +46,16 @@ type UserServiceGetResponse struct {
 	Expanded []UserServiceGetResponseExpanded `json:"expanded,omitempty"`
 }
 
-func (o *UserServiceGetResponse) GetUserView() *UserView {
-	if o == nil {
+func (u *UserServiceGetResponse) GetUserView() *UserView {
+	if u == nil {
 		return nil
 	}
-	return o.UserView
+	return u.UserView
 }
 
-func (o *UserServiceGetResponse) GetExpanded() []UserServiceGetResponseExpanded {
-	if o == nil {
+func (u *UserServiceGetResponse) GetExpanded() []UserServiceGetResponseExpanded {
+	if u == nil {
 		return nil
 	}
-	return o.Expanded
+	return u.Expanded
 }

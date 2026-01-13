@@ -10,9 +10,11 @@ type CreateRevokeTasks struct {
 	AppEntitlementRefs []AppEntitlementRef `json:"appEntitlementRefs,omitempty"`
 	// The appEntitlementRefsCel field.
 	AppEntitlementRefsCel *string `json:"appEntitlementRefsCel,omitempty"`
+	// The excludedAppEntitlementRefs field.
+	ExcludedAppEntitlementRefs []AppEntitlementRef `json:"excludedAppEntitlementRefs,omitempty"`
+	// The excludedAppEntitlementRefsCel field.
+	ExcludedAppEntitlementRefsCel *string `json:"excludedAppEntitlementRefsCel,omitempty"`
 	// The revokeAll field.
-	//
-	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
 	RevokeAll *bool `json:"revokeAll,omitempty"`
 	// If true, the step will use the subject user of the automation as the subject.
 	UseSubjectUser *bool `json:"useSubjectUser,omitempty"`
@@ -20,44 +22,58 @@ type CreateRevokeTasks struct {
 	UserIDCel *string `json:"userIdCel,omitempty"`
 }
 
-func (o *CreateRevokeTasks) GetUserRef() *UserRef {
-	if o == nil {
+func (c *CreateRevokeTasks) GetUserRef() *UserRef {
+	if c == nil {
 		return nil
 	}
-	return o.UserRef
+	return c.UserRef
 }
 
-func (o *CreateRevokeTasks) GetAppEntitlementRefs() []AppEntitlementRef {
-	if o == nil {
+func (c *CreateRevokeTasks) GetAppEntitlementRefs() []AppEntitlementRef {
+	if c == nil {
 		return nil
 	}
-	return o.AppEntitlementRefs
+	return c.AppEntitlementRefs
 }
 
-func (o *CreateRevokeTasks) GetAppEntitlementRefsCel() *string {
-	if o == nil {
+func (c *CreateRevokeTasks) GetAppEntitlementRefsCel() *string {
+	if c == nil {
 		return nil
 	}
-	return o.AppEntitlementRefsCel
+	return c.AppEntitlementRefsCel
 }
 
-func (o *CreateRevokeTasks) GetRevokeAll() *bool {
-	if o == nil {
+func (c *CreateRevokeTasks) GetExcludedAppEntitlementRefs() []AppEntitlementRef {
+	if c == nil {
 		return nil
 	}
-	return o.RevokeAll
+	return c.ExcludedAppEntitlementRefs
 }
 
-func (o *CreateRevokeTasks) GetUseSubjectUser() *bool {
-	if o == nil {
+func (c *CreateRevokeTasks) GetExcludedAppEntitlementRefsCel() *string {
+	if c == nil {
 		return nil
 	}
-	return o.UseSubjectUser
+	return c.ExcludedAppEntitlementRefsCel
 }
 
-func (o *CreateRevokeTasks) GetUserIDCel() *string {
-	if o == nil {
+func (c *CreateRevokeTasks) GetRevokeAll() *bool {
+	if c == nil {
 		return nil
 	}
-	return o.UserIDCel
+	return c.RevokeAll
+}
+
+func (c *CreateRevokeTasks) GetUseSubjectUser() *bool {
+	if c == nil {
+		return nil
+	}
+	return c.UseSubjectUser
+}
+
+func (c *CreateRevokeTasks) GetUserIDCel() *string {
+	if c == nil {
+		return nil
+	}
+	return c.UserIDCel
 }

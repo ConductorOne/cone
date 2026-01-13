@@ -16,10 +16,23 @@ const (
 	TriggerTypesTriggerTypeWebhook           TriggerTypes = "TRIGGER_TYPE_WEBHOOK"
 	TriggerTypesTriggerTypeSchedule          TriggerTypes = "TRIGGER_TYPE_SCHEDULE"
 	TriggerTypesTriggerTypeForm              TriggerTypes = "TRIGGER_TYPE_FORM"
+	TriggerTypesTriggerTypeScheduleAppUser   TriggerTypes = "TRIGGER_TYPE_SCHEDULE_APP_USER"
+	TriggerTypesTriggerTypeAccessConflict    TriggerTypes = "TRIGGER_TYPE_ACCESS_CONFLICT"
 )
 
 func (e TriggerTypes) ToPointer() *TriggerTypes {
 	return &e
+}
+
+// IsExact returns true if the value matches a known enum value, false otherwise.
+func (e *TriggerTypes) IsExact() bool {
+	if e != nil {
+		switch *e {
+		case "TRIGGER_TYPE_UNSPECIFIED", "TRIGGER_TYPE_USER_PROFILE_CHANGE", "TRIGGER_TYPE_APP_USER_CREATE", "TRIGGER_TYPE_APP_USER_UPDATE", "TRIGGER_TYPE_UNUSED_ACCESS", "TRIGGER_TYPE_USER_CREATED", "TRIGGER_TYPE_GRANT_FOUND", "TRIGGER_TYPE_GRANT_DELETED", "TRIGGER_TYPE_WEBHOOK", "TRIGGER_TYPE_SCHEDULE", "TRIGGER_TYPE_FORM", "TRIGGER_TYPE_SCHEDULE_APP_USER", "TRIGGER_TYPE_ACCESS_CONFLICT":
+			return true
+		}
+	}
+	return false
 }
 
 // The SearchAutomationsRequest message.
@@ -38,44 +51,44 @@ type SearchAutomationsRequest struct {
 	TriggerTypes []TriggerTypes `json:"triggerTypes,omitempty"`
 }
 
-func (o *SearchAutomationsRequest) GetAppID() *string {
-	if o == nil {
+func (s *SearchAutomationsRequest) GetAppID() *string {
+	if s == nil {
 		return nil
 	}
-	return o.AppID
+	return s.AppID
 }
 
-func (o *SearchAutomationsRequest) GetPageSize() *int {
-	if o == nil {
+func (s *SearchAutomationsRequest) GetPageSize() *int {
+	if s == nil {
 		return nil
 	}
-	return o.PageSize
+	return s.PageSize
 }
 
-func (o *SearchAutomationsRequest) GetPageToken() *string {
-	if o == nil {
+func (s *SearchAutomationsRequest) GetPageToken() *string {
+	if s == nil {
 		return nil
 	}
-	return o.PageToken
+	return s.PageToken
 }
 
-func (o *SearchAutomationsRequest) GetQuery() *string {
-	if o == nil {
+func (s *SearchAutomationsRequest) GetQuery() *string {
+	if s == nil {
 		return nil
 	}
-	return o.Query
+	return s.Query
 }
 
-func (o *SearchAutomationsRequest) GetRefs() []*AutomationTemplateRef {
-	if o == nil {
+func (s *SearchAutomationsRequest) GetRefs() []*AutomationTemplateRef {
+	if s == nil {
 		return nil
 	}
-	return o.Refs
+	return s.Refs
 }
 
-func (o *SearchAutomationsRequest) GetTriggerTypes() []TriggerTypes {
-	if o == nil {
+func (s *SearchAutomationsRequest) GetTriggerTypes() []TriggerTypes {
+	if s == nil {
 		return nil
 	}
-	return o.TriggerTypes
+	return s.TriggerTypes
 }

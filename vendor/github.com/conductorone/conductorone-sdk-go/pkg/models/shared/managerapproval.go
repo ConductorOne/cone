@@ -10,34 +10,61 @@ type ManagerApproval struct {
 	AssignedUserIds []string `json:"assignedUserIds,omitempty"`
 	// Configuration to allow a fallback if no manager is found.
 	Fallback *bool `json:"fallback,omitempty"`
+	// Configuration to specify which groups to fallback to if fallback is enabled and no manager is found.
+	FallbackGroupIds []AppEntitlementReference `json:"fallbackGroupIds,omitempty"`
 	// Configuration to specific which users to fallback to if fallback is enabled and no manager is found.
 	FallbackUserIds []string `json:"fallbackUserIds,omitempty"`
+	// Configuration to enable fallback for group fallback.
+	IsGroupFallbackEnabled *bool `json:"isGroupFallbackEnabled,omitempty"`
+	// Configuration to require distinct approvers across approval steps of a rule.
+	RequireDistinctApprovers *bool `json:"requireDistinctApprovers,omitempty"`
 }
 
-func (o *ManagerApproval) GetAllowSelfApproval() *bool {
-	if o == nil {
+func (m *ManagerApproval) GetAllowSelfApproval() *bool {
+	if m == nil {
 		return nil
 	}
-	return o.AllowSelfApproval
+	return m.AllowSelfApproval
 }
 
-func (o *ManagerApproval) GetAssignedUserIds() []string {
-	if o == nil {
+func (m *ManagerApproval) GetAssignedUserIds() []string {
+	if m == nil {
 		return nil
 	}
-	return o.AssignedUserIds
+	return m.AssignedUserIds
 }
 
-func (o *ManagerApproval) GetFallback() *bool {
-	if o == nil {
+func (m *ManagerApproval) GetFallback() *bool {
+	if m == nil {
 		return nil
 	}
-	return o.Fallback
+	return m.Fallback
 }
 
-func (o *ManagerApproval) GetFallbackUserIds() []string {
-	if o == nil {
+func (m *ManagerApproval) GetFallbackGroupIds() []AppEntitlementReference {
+	if m == nil {
 		return nil
 	}
-	return o.FallbackUserIds
+	return m.FallbackGroupIds
+}
+
+func (m *ManagerApproval) GetFallbackUserIds() []string {
+	if m == nil {
+		return nil
+	}
+	return m.FallbackUserIds
+}
+
+func (m *ManagerApproval) GetIsGroupFallbackEnabled() *bool {
+	if m == nil {
+		return nil
+	}
+	return m.IsGroupFallbackEnabled
+}
+
+func (m *ManagerApproval) GetRequireDistinctApprovers() *bool {
+	if m == nil {
+		return nil
+	}
+	return m.RequireDistinctApprovers
 }

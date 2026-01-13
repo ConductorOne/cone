@@ -11,9 +11,16 @@ package shared
 //   - reject
 //   - wait
 //   - form
+//   - action
 type PolicyStep struct {
 	// This policy step indicates that a ticket should have an approved outcome. This is a terminal approval state and is used to explicitly define the end of approval steps.
 	Accept *Accept `json:"accept,omitempty"`
+	// The Action message.
+	//
+	// This message contains a oneof named target. Only a single field of the following list may be set at a time:
+	//   - automation
+	//
+	Action *Action `json:"action,omitempty"`
 	// The Approval message.
 	//
 	// This message contains a oneof named typ. Only a single field of the following list may be set at a time:
@@ -39,48 +46,57 @@ type PolicyStep struct {
 	//
 	// This message contains a oneof named until. Only a single field of the following list may be set at a time:
 	//   - condition
+	//   - duration
+	//   - untilTime
 	//
 	Wait *Wait `json:"wait,omitempty"`
 }
 
-func (o *PolicyStep) GetAccept() *Accept {
-	if o == nil {
+func (p *PolicyStep) GetAccept() *Accept {
+	if p == nil {
 		return nil
 	}
-	return o.Accept
+	return p.Accept
 }
 
-func (o *PolicyStep) GetApproval() *Approval {
-	if o == nil {
+func (p *PolicyStep) GetAction() *Action {
+	if p == nil {
 		return nil
 	}
-	return o.Approval
+	return p.Action
 }
 
-func (o *PolicyStep) GetForm() *Form {
-	if o == nil {
+func (p *PolicyStep) GetApproval() *Approval {
+	if p == nil {
 		return nil
 	}
-	return o.Form
+	return p.Approval
 }
 
-func (o *PolicyStep) GetProvision() *Provision {
-	if o == nil {
+func (p *PolicyStep) GetForm() *Form {
+	if p == nil {
 		return nil
 	}
-	return o.Provision
+	return p.Form
 }
 
-func (o *PolicyStep) GetReject() *Reject {
-	if o == nil {
+func (p *PolicyStep) GetProvision() *Provision {
+	if p == nil {
 		return nil
 	}
-	return o.Reject
+	return p.Provision
 }
 
-func (o *PolicyStep) GetWait() *Wait {
-	if o == nil {
+func (p *PolicyStep) GetReject() *Reject {
+	if p == nil {
 		return nil
 	}
-	return o.Wait
+	return p.Reject
+}
+
+func (p *PolicyStep) GetWait() *Wait {
+	if p == nil {
+		return nil
+	}
+	return p.Wait
 }

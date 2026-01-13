@@ -10,16 +10,16 @@ type ExportServiceListEventsResponse struct {
 	NextPageToken *string `json:"nextPageToken,omitempty"`
 }
 
-func (o *ExportServiceListEventsResponse) GetList() []map[string]any {
-	if o == nil {
+func (e *ExportServiceListEventsResponse) GetList() []map[string]any {
+	if e == nil {
 		return nil
 	}
-	return o.List
+	return e.List
 }
 
-func (o *ExportServiceListEventsResponse) GetNextPageToken() *string {
-	if o == nil {
+func (e *ExportServiceListEventsResponse) GetNextPageToken() *string {
+	if e == nil {
 		return nil
 	}
-	return o.NextPageToken
+	return e.NextPageToken
 }

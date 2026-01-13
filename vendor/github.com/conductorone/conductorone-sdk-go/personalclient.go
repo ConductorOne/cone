@@ -63,7 +63,7 @@ func (s *PersonalClient) Create(ctx context.Context, request *shared.PersonalCli
 		BaseURL:          baseURL,
 		Context:          ctx,
 		OperationID:      "c1.api.iam.v1.PersonalClientService.Create",
-		OAuth2Scopes:     []string{},
+		OAuth2Scopes:     nil,
 		SecuritySource:   s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
@@ -275,7 +275,7 @@ func (s *PersonalClient) Delete(ctx context.Context, request operations.C1APIIam
 		BaseURL:          baseURL,
 		Context:          ctx,
 		OperationID:      "c1.api.iam.v1.PersonalClientService.Delete",
-		OAuth2Scopes:     []string{},
+		OAuth2Scopes:     nil,
 		SecuritySource:   s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "PersonalClientServiceDeleteRequest", "json", `request:"mediaType=application/json"`)
@@ -487,7 +487,7 @@ func (s *PersonalClient) Get(ctx context.Context, request operations.C1APIIamV1P
 		BaseURL:          baseURL,
 		Context:          ctx,
 		OperationID:      "c1.api.iam.v1.PersonalClientService.Get",
-		OAuth2Scopes:     []string{},
+		OAuth2Scopes:     nil,
 		SecuritySource:   s.sdkConfiguration.Security,
 	}
 
@@ -692,7 +692,7 @@ func (s *PersonalClient) List(ctx context.Context, opts ...operations.Option) (*
 		BaseURL:          baseURL,
 		Context:          ctx,
 		OperationID:      "c1.api.iam.v1.PersonalClientService.List",
-		OAuth2Scopes:     []string{},
+		OAuth2Scopes:     nil,
 		SecuritySource:   s.sdkConfiguration.Security,
 	}
 
@@ -897,7 +897,7 @@ func (s *PersonalClient) Update(ctx context.Context, request operations.C1APIIam
 		BaseURL:          baseURL,
 		Context:          ctx,
 		OperationID:      "c1.api.iam.v1.PersonalClientService.Update",
-		OAuth2Scopes:     []string{},
+		OAuth2Scopes:     nil,
 		SecuritySource:   s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "PersonalClientServiceUpdateRequest", "json", `request:"mediaType=application/json"`)

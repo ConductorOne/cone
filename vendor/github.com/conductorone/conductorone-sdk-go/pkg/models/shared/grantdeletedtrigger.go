@@ -5,12 +5,19 @@ package shared
 // The GrantDeletedTrigger message.
 type GrantDeletedTrigger struct {
 	// The GrantTriggerFilter message.
+	//
+	// This message contains a oneof named entitlement_inclusion. Only a single field of the following list may be set at a time:
+	//   - inclusionList
+	//   - inclusionAll
+	//   - inclusionCriteria
+	//   - inclusionListCel
+	//
 	GrantTriggerFilter *GrantTriggerFilter `json:"grantTriggerFilter,omitempty"`
 }
 
-func (o *GrantDeletedTrigger) GetGrantTriggerFilter() *GrantTriggerFilter {
-	if o == nil {
+func (g *GrantDeletedTrigger) GetGrantTriggerFilter() *GrantTriggerFilter {
+	if g == nil {
 		return nil
 	}
-	return o.GrantTriggerFilter
+	return g.GrantTriggerFilter
 }

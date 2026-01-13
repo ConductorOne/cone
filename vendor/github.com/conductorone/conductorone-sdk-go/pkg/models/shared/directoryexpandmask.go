@@ -8,9 +8,9 @@ type DirectoryExpandMask struct {
 	Paths []string `json:"paths,omitempty"`
 }
 
-func (o *DirectoryExpandMask) GetPaths() []string {
-	if o == nil {
+func (d *DirectoryExpandMask) GetPaths() []string {
+	if d == nil {
 		return nil
 	}
-	return o.Paths
+	return d.Paths
 }

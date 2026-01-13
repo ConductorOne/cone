@@ -22,10 +22,23 @@ const (
 	PrimaryTriggerTypeTriggerTypeWebhook           PrimaryTriggerType = "TRIGGER_TYPE_WEBHOOK"
 	PrimaryTriggerTypeTriggerTypeSchedule          PrimaryTriggerType = "TRIGGER_TYPE_SCHEDULE"
 	PrimaryTriggerTypeTriggerTypeForm              PrimaryTriggerType = "TRIGGER_TYPE_FORM"
+	PrimaryTriggerTypeTriggerTypeScheduleAppUser   PrimaryTriggerType = "TRIGGER_TYPE_SCHEDULE_APP_USER"
+	PrimaryTriggerTypeTriggerTypeAccessConflict    PrimaryTriggerType = "TRIGGER_TYPE_ACCESS_CONFLICT"
 )
 
 func (e PrimaryTriggerType) ToPointer() *PrimaryTriggerType {
 	return &e
+}
+
+// IsExact returns true if the value matches a known enum value, false otherwise.
+func (e *PrimaryTriggerType) IsExact() bool {
+	if e != nil {
+		switch *e {
+		case "TRIGGER_TYPE_UNSPECIFIED", "TRIGGER_TYPE_USER_PROFILE_CHANGE", "TRIGGER_TYPE_APP_USER_CREATE", "TRIGGER_TYPE_APP_USER_UPDATE", "TRIGGER_TYPE_UNUSED_ACCESS", "TRIGGER_TYPE_USER_CREATED", "TRIGGER_TYPE_GRANT_FOUND", "TRIGGER_TYPE_GRANT_DELETED", "TRIGGER_TYPE_WEBHOOK", "TRIGGER_TYPE_SCHEDULE", "TRIGGER_TYPE_FORM", "TRIGGER_TYPE_SCHEDULE_APP_USER", "TRIGGER_TYPE_ACCESS_CONFLICT":
+			return true
+		}
+	}
+	return false
 }
 
 // The Automation message.
@@ -70,122 +83,122 @@ func (a Automation) MarshalJSON() ([]byte, error) {
 }
 
 func (a *Automation) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &a, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &a, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *Automation) GetAutomationContext() *AutomationContext {
-	if o == nil {
+func (a *Automation) GetAutomationContext() *AutomationContext {
+	if a == nil {
 		return nil
 	}
-	return o.AutomationContext
+	return a.AutomationContext
 }
 
-func (o *Automation) GetDisabledReasonCircuitBreaker() *DisabledReasonCircuitBreaker {
-	if o == nil {
+func (a *Automation) GetDisabledReasonCircuitBreaker() *DisabledReasonCircuitBreaker {
+	if a == nil {
 		return nil
 	}
-	return o.DisabledReasonCircuitBreaker
+	return a.DisabledReasonCircuitBreaker
 }
 
-func (o *Automation) GetAppID() *string {
-	if o == nil {
+func (a *Automation) GetAppID() *string {
+	if a == nil {
 		return nil
 	}
-	return o.AppID
+	return a.AppID
 }
 
-func (o *Automation) GetAutomationSteps() []AutomationStep {
-	if o == nil {
+func (a *Automation) GetAutomationSteps() []AutomationStep {
+	if a == nil {
 		return nil
 	}
-	return o.AutomationSteps
+	return a.AutomationSteps
 }
 
-func (o *Automation) GetCreatedAt() *time.Time {
-	if o == nil {
+func (a *Automation) GetCreatedAt() *time.Time {
+	if a == nil {
 		return nil
 	}
-	return o.CreatedAt
+	return a.CreatedAt
 }
 
-func (o *Automation) GetCurrentVersion() *int64 {
-	if o == nil {
+func (a *Automation) GetCurrentVersion() *int64 {
+	if a == nil {
 		return nil
 	}
-	return o.CurrentVersion
+	return a.CurrentVersion
 }
 
-func (o *Automation) GetDescription() *string {
-	if o == nil {
+func (a *Automation) GetDescription() *string {
+	if a == nil {
 		return nil
 	}
-	return o.Description
+	return a.Description
 }
 
-func (o *Automation) GetDisplayName() *string {
-	if o == nil {
+func (a *Automation) GetDisplayName() *string {
+	if a == nil {
 		return nil
 	}
-	return o.DisplayName
+	return a.DisplayName
 }
 
-func (o *Automation) GetDraftAutomationSteps() []AutomationStep {
-	if o == nil {
+func (a *Automation) GetDraftAutomationSteps() []AutomationStep {
+	if a == nil {
 		return nil
 	}
-	return o.DraftAutomationSteps
+	return a.DraftAutomationSteps
 }
 
-func (o *Automation) GetDraftTriggers() []AutomationTrigger {
-	if o == nil {
+func (a *Automation) GetDraftTriggers() []AutomationTrigger {
+	if a == nil {
 		return nil
 	}
-	return o.DraftTriggers
+	return a.DraftTriggers
 }
 
-func (o *Automation) GetEnabled() *bool {
-	if o == nil {
+func (a *Automation) GetEnabled() *bool {
+	if a == nil {
 		return nil
 	}
-	return o.Enabled
+	return a.Enabled
 }
 
-func (o *Automation) GetID() *string {
-	if o == nil {
+func (a *Automation) GetID() *string {
+	if a == nil {
 		return nil
 	}
-	return o.ID
+	return a.ID
 }
 
-func (o *Automation) GetIsDraft() *bool {
-	if o == nil {
+func (a *Automation) GetIsDraft() *bool {
+	if a == nil {
 		return nil
 	}
-	return o.IsDraft
+	return a.IsDraft
 }
 
-func (o *Automation) GetLastExecutedAt() *time.Time {
-	if o == nil {
+func (a *Automation) GetLastExecutedAt() *time.Time {
+	if a == nil {
 		return nil
 	}
-	return o.LastExecutedAt
+	return a.LastExecutedAt
 }
 
-func (o *Automation) GetPrimaryTriggerType() *PrimaryTriggerType {
-	if o == nil {
+func (a *Automation) GetPrimaryTriggerType() *PrimaryTriggerType {
+	if a == nil {
 		return nil
 	}
-	return o.PrimaryTriggerType
+	return a.PrimaryTriggerType
 }
 
-func (o *Automation) GetTriggers() []AutomationTrigger {
-	if o == nil {
+func (a *Automation) GetTriggers() []AutomationTrigger {
+	if a == nil {
 		return nil
 	}
-	return o.Triggers
+	return a.Triggers
 }
 
 // AutomationInput - The Automation message.
@@ -228,113 +241,113 @@ func (a AutomationInput) MarshalJSON() ([]byte, error) {
 }
 
 func (a *AutomationInput) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &a, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &a, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *AutomationInput) GetAutomationContext() *AutomationContext {
-	if o == nil {
+func (a *AutomationInput) GetAutomationContext() *AutomationContext {
+	if a == nil {
 		return nil
 	}
-	return o.AutomationContext
+	return a.AutomationContext
 }
 
-func (o *AutomationInput) GetDisabledReasonCircuitBreaker() *DisabledReasonCircuitBreaker {
-	if o == nil {
+func (a *AutomationInput) GetDisabledReasonCircuitBreaker() *DisabledReasonCircuitBreaker {
+	if a == nil {
 		return nil
 	}
-	return o.DisabledReasonCircuitBreaker
+	return a.DisabledReasonCircuitBreaker
 }
 
-func (o *AutomationInput) GetAppID() *string {
-	if o == nil {
+func (a *AutomationInput) GetAppID() *string {
+	if a == nil {
 		return nil
 	}
-	return o.AppID
+	return a.AppID
 }
 
-func (o *AutomationInput) GetAutomationSteps() []AutomationStep {
-	if o == nil {
+func (a *AutomationInput) GetAutomationSteps() []AutomationStep {
+	if a == nil {
 		return nil
 	}
-	return o.AutomationSteps
+	return a.AutomationSteps
 }
 
-func (o *AutomationInput) GetCreatedAt() *time.Time {
-	if o == nil {
+func (a *AutomationInput) GetCreatedAt() *time.Time {
+	if a == nil {
 		return nil
 	}
-	return o.CreatedAt
+	return a.CreatedAt
 }
 
-func (o *AutomationInput) GetCurrentVersion() *int64 {
-	if o == nil {
+func (a *AutomationInput) GetCurrentVersion() *int64 {
+	if a == nil {
 		return nil
 	}
-	return o.CurrentVersion
+	return a.CurrentVersion
 }
 
-func (o *AutomationInput) GetDescription() *string {
-	if o == nil {
+func (a *AutomationInput) GetDescription() *string {
+	if a == nil {
 		return nil
 	}
-	return o.Description
+	return a.Description
 }
 
-func (o *AutomationInput) GetDisplayName() *string {
-	if o == nil {
+func (a *AutomationInput) GetDisplayName() *string {
+	if a == nil {
 		return nil
 	}
-	return o.DisplayName
+	return a.DisplayName
 }
 
-func (o *AutomationInput) GetDraftAutomationSteps() []AutomationStep {
-	if o == nil {
+func (a *AutomationInput) GetDraftAutomationSteps() []AutomationStep {
+	if a == nil {
 		return nil
 	}
-	return o.DraftAutomationSteps
+	return a.DraftAutomationSteps
 }
 
-func (o *AutomationInput) GetDraftTriggers() []AutomationTrigger {
-	if o == nil {
+func (a *AutomationInput) GetDraftTriggers() []AutomationTrigger {
+	if a == nil {
 		return nil
 	}
-	return o.DraftTriggers
+	return a.DraftTriggers
 }
 
-func (o *AutomationInput) GetEnabled() *bool {
-	if o == nil {
+func (a *AutomationInput) GetEnabled() *bool {
+	if a == nil {
 		return nil
 	}
-	return o.Enabled
+	return a.Enabled
 }
 
-func (o *AutomationInput) GetIsDraft() *bool {
-	if o == nil {
+func (a *AutomationInput) GetIsDraft() *bool {
+	if a == nil {
 		return nil
 	}
-	return o.IsDraft
+	return a.IsDraft
 }
 
-func (o *AutomationInput) GetLastExecutedAt() *time.Time {
-	if o == nil {
+func (a *AutomationInput) GetLastExecutedAt() *time.Time {
+	if a == nil {
 		return nil
 	}
-	return o.LastExecutedAt
+	return a.LastExecutedAt
 }
 
-func (o *AutomationInput) GetPrimaryTriggerType() *PrimaryTriggerType {
-	if o == nil {
+func (a *AutomationInput) GetPrimaryTriggerType() *PrimaryTriggerType {
+	if a == nil {
 		return nil
 	}
-	return o.PrimaryTriggerType
+	return a.PrimaryTriggerType
 }
 
-func (o *AutomationInput) GetTriggers() []AutomationTrigger {
-	if o == nil {
+func (a *AutomationInput) GetTriggers() []AutomationTrigger {
+	if a == nil {
 		return nil
 	}
-	return o.Triggers
+	return a.Triggers
 }

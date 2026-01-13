@@ -21,29 +21,29 @@ func (r RestartAction) MarshalJSON() ([]byte, error) {
 }
 
 func (r *RestartAction) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &r, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &r, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *RestartAction) GetOldPolicyStepID() *string {
-	if o == nil {
+func (r *RestartAction) GetOldPolicyStepID() *string {
+	if r == nil {
 		return nil
 	}
-	return o.OldPolicyStepID
+	return r.OldPolicyStepID
 }
 
-func (o *RestartAction) GetRestartedAt() *time.Time {
-	if o == nil {
+func (r *RestartAction) GetRestartedAt() *time.Time {
+	if r == nil {
 		return nil
 	}
-	return o.RestartedAt
+	return r.RestartedAt
 }
 
-func (o *RestartAction) GetUserID() *string {
-	if o == nil {
+func (r *RestartAction) GetUserID() *string {
+	if r == nil {
 		return nil
 	}
-	return o.UserID
+	return r.UserID
 }

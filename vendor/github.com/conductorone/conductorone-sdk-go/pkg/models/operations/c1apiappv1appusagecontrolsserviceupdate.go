@@ -12,18 +12,18 @@ type C1APIAppV1AppUsageControlsServiceUpdateRequest struct {
 	AppID                         string                                `pathParam:"style=simple,explode=false,name=app_id"`
 }
 
-func (o *C1APIAppV1AppUsageControlsServiceUpdateRequest) GetUpdateAppUsageControlsRequest() *shared.UpdateAppUsageControlsRequest {
-	if o == nil {
+func (c *C1APIAppV1AppUsageControlsServiceUpdateRequest) GetUpdateAppUsageControlsRequest() *shared.UpdateAppUsageControlsRequest {
+	if c == nil {
 		return nil
 	}
-	return o.UpdateAppUsageControlsRequest
+	return c.UpdateAppUsageControlsRequest
 }
 
-func (o *C1APIAppV1AppUsageControlsServiceUpdateRequest) GetAppID() string {
-	if o == nil {
+func (c *C1APIAppV1AppUsageControlsServiceUpdateRequest) GetAppID() string {
+	if c == nil {
 		return ""
 	}
-	return o.AppID
+	return c.AppID
 }
 
 type C1APIAppV1AppUsageControlsServiceUpdateResponse struct {
@@ -37,30 +37,30 @@ type C1APIAppV1AppUsageControlsServiceUpdateResponse struct {
 	UpdateAppUsageControlsResponse *shared.UpdateAppUsageControlsResponse
 }
 
-func (o *C1APIAppV1AppUsageControlsServiceUpdateResponse) GetContentType() string {
-	if o == nil {
+func (c *C1APIAppV1AppUsageControlsServiceUpdateResponse) GetContentType() string {
+	if c == nil {
 		return ""
 	}
-	return o.ContentType
+	return c.ContentType
 }
 
-func (o *C1APIAppV1AppUsageControlsServiceUpdateResponse) GetStatusCode() int {
-	if o == nil {
+func (c *C1APIAppV1AppUsageControlsServiceUpdateResponse) GetStatusCode() int {
+	if c == nil {
 		return 0
 	}
-	return o.StatusCode
+	return c.StatusCode
 }
 
-func (o *C1APIAppV1AppUsageControlsServiceUpdateResponse) GetRawResponse() *http.Response {
-	if o == nil {
+func (c *C1APIAppV1AppUsageControlsServiceUpdateResponse) GetRawResponse() *http.Response {
+	if c == nil {
 		return nil
 	}
-	return o.RawResponse
+	return c.RawResponse
 }
 
-func (o *C1APIAppV1AppUsageControlsServiceUpdateResponse) GetUpdateAppUsageControlsResponse() *shared.UpdateAppUsageControlsResponse {
-	if o == nil {
+func (c *C1APIAppV1AppUsageControlsServiceUpdateResponse) GetUpdateAppUsageControlsResponse() *shared.UpdateAppUsageControlsResponse {
+	if c == nil {
 		return nil
 	}
-	return o.UpdateAppUsageControlsResponse
+	return c.UpdateAppUsageControlsResponse
 }

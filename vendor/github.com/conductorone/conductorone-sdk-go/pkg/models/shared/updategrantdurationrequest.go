@@ -17,15 +17,15 @@ func (u UpdateGrantDurationRequest) MarshalJSON() ([]byte, error) {
 }
 
 func (u *UpdateGrantDurationRequest) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &u, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &u, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *UpdateGrantDurationRequest) GetNewDeprovisionAt() *time.Time {
-	if o == nil {
+func (u *UpdateGrantDurationRequest) GetNewDeprovisionAt() *time.Time {
+	if u == nil {
 		return nil
 	}
-	return o.NewDeprovisionAt
+	return u.NewDeprovisionAt
 }

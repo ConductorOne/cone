@@ -18,24 +18,24 @@ func (r RequestCatalogManagementServiceGetResponseExpanded) MarshalJSON() ([]byt
 }
 
 func (r *RequestCatalogManagementServiceGetResponseExpanded) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &r, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &r, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *RequestCatalogManagementServiceGetResponseExpanded) GetAtType() *string {
-	if o == nil {
+func (r *RequestCatalogManagementServiceGetResponseExpanded) GetAtType() *string {
+	if r == nil {
 		return nil
 	}
-	return o.AtType
+	return r.AtType
 }
 
-func (o *RequestCatalogManagementServiceGetResponseExpanded) GetAdditionalProperties() map[string]any {
-	if o == nil {
+func (r *RequestCatalogManagementServiceGetResponseExpanded) GetAdditionalProperties() map[string]any {
+	if r == nil {
 		return nil
 	}
-	return o.AdditionalProperties
+	return r.AdditionalProperties
 }
 
 // RequestCatalogManagementServiceGetResponse - The request catalog management service get response returns a request catalog view with the expanded items in the expanded array indicated by the expand mask in the request.
@@ -46,16 +46,16 @@ type RequestCatalogManagementServiceGetResponse struct {
 	Expanded []RequestCatalogManagementServiceGetResponseExpanded `json:"expanded,omitempty"`
 }
 
-func (o *RequestCatalogManagementServiceGetResponse) GetRequestCatalogView() *RequestCatalogView {
-	if o == nil {
+func (r *RequestCatalogManagementServiceGetResponse) GetRequestCatalogView() *RequestCatalogView {
+	if r == nil {
 		return nil
 	}
-	return o.RequestCatalogView
+	return r.RequestCatalogView
 }
 
-func (o *RequestCatalogManagementServiceGetResponse) GetExpanded() []RequestCatalogManagementServiceGetResponseExpanded {
-	if o == nil {
+func (r *RequestCatalogManagementServiceGetResponse) GetExpanded() []RequestCatalogManagementServiceGetResponseExpanded {
+	if r == nil {
 		return nil
 	}
-	return o.Expanded
+	return r.Expanded
 }

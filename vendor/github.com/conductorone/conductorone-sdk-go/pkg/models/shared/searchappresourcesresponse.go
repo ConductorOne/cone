@@ -18,24 +18,24 @@ func (s SearchAppResourcesResponseExpanded) MarshalJSON() ([]byte, error) {
 }
 
 func (s *SearchAppResourcesResponseExpanded) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &s, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *SearchAppResourcesResponseExpanded) GetAtType() *string {
-	if o == nil {
+func (s *SearchAppResourcesResponseExpanded) GetAtType() *string {
+	if s == nil {
 		return nil
 	}
-	return o.AtType
+	return s.AtType
 }
 
-func (o *SearchAppResourcesResponseExpanded) GetAdditionalProperties() map[string]any {
-	if o == nil {
+func (s *SearchAppResourcesResponseExpanded) GetAdditionalProperties() map[string]any {
+	if s == nil {
 		return nil
 	}
-	return o.AdditionalProperties
+	return s.AdditionalProperties
 }
 
 // The SearchAppResourcesResponse message.
@@ -48,23 +48,23 @@ type SearchAppResourcesResponse struct {
 	NextPageToken *string `json:"nextPageToken,omitempty"`
 }
 
-func (o *SearchAppResourcesResponse) GetExpanded() []SearchAppResourcesResponseExpanded {
-	if o == nil {
+func (s *SearchAppResourcesResponse) GetExpanded() []SearchAppResourcesResponseExpanded {
+	if s == nil {
 		return nil
 	}
-	return o.Expanded
+	return s.Expanded
 }
 
-func (o *SearchAppResourcesResponse) GetList() []AppResourceView {
-	if o == nil {
+func (s *SearchAppResourcesResponse) GetList() []AppResourceView {
+	if s == nil {
 		return nil
 	}
-	return o.List
+	return s.List
 }
 
-func (o *SearchAppResourcesResponse) GetNextPageToken() *string {
-	if o == nil {
+func (s *SearchAppResourcesResponse) GetNextPageToken() *string {
+	if s == nil {
 		return nil
 	}
-	return o.NextPageToken
+	return s.NextPageToken
 }

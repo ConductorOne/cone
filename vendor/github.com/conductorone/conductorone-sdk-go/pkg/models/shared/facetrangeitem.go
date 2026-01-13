@@ -8,9 +8,9 @@ type FacetRangeItem struct {
 	Ranges []FacetRange `json:"ranges,omitempty"`
 }
 
-func (o *FacetRangeItem) GetRanges() []FacetRange {
-	if o == nil {
+func (f *FacetRangeItem) GetRanges() []FacetRange {
+	if f == nil {
 		return nil
 	}
-	return o.Ranges
+	return f.Ranges
 }

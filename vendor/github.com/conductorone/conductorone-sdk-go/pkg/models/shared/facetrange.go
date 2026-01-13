@@ -16,37 +16,37 @@ type FacetRange struct {
 	To *int64 `integer:"string" json:"to,omitempty"`
 }
 
-func (o *FacetRange) GetCount() *int64 {
-	if o == nil {
+func (f *FacetRange) GetCount() *int64 {
+	if f == nil {
 		return nil
 	}
-	return o.Count
+	return f.Count
 }
 
-func (o *FacetRange) GetDisplayName() *string {
-	if o == nil {
+func (f *FacetRange) GetDisplayName() *string {
+	if f == nil {
 		return nil
 	}
-	return o.DisplayName
+	return f.DisplayName
 }
 
-func (o *FacetRange) GetFrom() *int64 {
-	if o == nil {
+func (f *FacetRange) GetFrom() *int64 {
+	if f == nil {
 		return nil
 	}
-	return o.From
+	return f.From
 }
 
-func (o *FacetRange) GetIconURL() *string {
-	if o == nil {
+func (f *FacetRange) GetIconURL() *string {
+	if f == nil {
 		return nil
 	}
-	return o.IconURL
+	return f.IconURL
 }
 
-func (o *FacetRange) GetTo() *int64 {
-	if o == nil {
+func (f *FacetRange) GetTo() *int64 {
+	if f == nil {
 		return nil
 	}
-	return o.To
+	return f.To
 }

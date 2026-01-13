@@ -23,6 +23,17 @@ func (e Purpose) ToPointer() *Purpose {
 	return &e
 }
 
+// IsExact returns true if the value matches a known enum value, false otherwise.
+func (e *Purpose) IsExact() bool {
+	if e != nil {
+		switch *e {
+		case "APP_ENTITLEMENT_PURPOSE_VALUE_UNSPECIFIED", "APP_ENTITLEMENT_PURPOSE_VALUE_ASSIGNMENT", "APP_ENTITLEMENT_PURPOSE_VALUE_PERMISSION":
+			return true
+		}
+	}
+	return false
+}
+
 // AppEntitlement - The app entitlement represents one permission in a downstream App (SAAS) that can be granted. For example, GitHub Read vs GitHub Write.
 //
 // This message contains a oneof named max_grant_duration. Only a single field of the following list may be set at a time:
@@ -39,6 +50,7 @@ type AppEntitlement struct {
 	//   - multiStep
 	//   - externalTicket
 	//   - unconfigured
+	//   - action
 	//
 	ProvisionPolicy *ProvisionPolicy `json:"deprovisionerPolicy,omitempty"`
 	// ProvisionPolicy is a oneOf that indicates how a provision step should be processed.
@@ -51,6 +63,7 @@ type AppEntitlement struct {
 	//   - multiStep
 	//   - externalTicket
 	//   - unconfigured
+	//   - action
 	//
 	ProvisionPolicy1 *ProvisionPolicy `json:"provisionerPolicy,omitempty"`
 	// The alias of the app entitlement used by Cone. Also exact-match queryable.
@@ -116,241 +129,241 @@ func (a AppEntitlement) MarshalJSON() ([]byte, error) {
 }
 
 func (a *AppEntitlement) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &a, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &a, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *AppEntitlement) GetProvisionPolicy() *ProvisionPolicy {
-	if o == nil {
+func (a *AppEntitlement) GetProvisionPolicy() *ProvisionPolicy {
+	if a == nil {
 		return nil
 	}
-	return o.ProvisionPolicy
+	return a.ProvisionPolicy
 }
 
-func (o *AppEntitlement) GetProvisionPolicy1() *ProvisionPolicy {
-	if o == nil {
+func (a *AppEntitlement) GetProvisionPolicy1() *ProvisionPolicy {
+	if a == nil {
 		return nil
 	}
-	return o.ProvisionPolicy1
+	return a.ProvisionPolicy1
 }
 
-func (o *AppEntitlement) GetAlias() *string {
-	if o == nil {
+func (a *AppEntitlement) GetAlias() *string {
+	if a == nil {
 		return nil
 	}
-	return o.Alias
+	return a.Alias
 }
 
-func (o *AppEntitlement) GetAppID() *string {
-	if o == nil {
+func (a *AppEntitlement) GetAppID() *string {
+	if a == nil {
 		return nil
 	}
-	return o.AppID
+	return a.AppID
 }
 
-func (o *AppEntitlement) GetAppResourceID() *string {
-	if o == nil {
+func (a *AppEntitlement) GetAppResourceID() *string {
+	if a == nil {
 		return nil
 	}
-	return o.AppResourceID
+	return a.AppResourceID
 }
 
-func (o *AppEntitlement) GetAppResourceTypeID() *string {
-	if o == nil {
+func (a *AppEntitlement) GetAppResourceTypeID() *string {
+	if a == nil {
 		return nil
 	}
-	return o.AppResourceTypeID
+	return a.AppResourceTypeID
 }
 
-func (o *AppEntitlement) GetCertifyPolicyID() *string {
-	if o == nil {
+func (a *AppEntitlement) GetCertifyPolicyID() *string {
+	if a == nil {
 		return nil
 	}
-	return o.CertifyPolicyID
+	return a.CertifyPolicyID
 }
 
-func (o *AppEntitlement) GetComplianceFrameworkValueIds() []string {
-	if o == nil {
+func (a *AppEntitlement) GetComplianceFrameworkValueIds() []string {
+	if a == nil {
 		return nil
 	}
-	return o.ComplianceFrameworkValueIds
+	return a.ComplianceFrameworkValueIds
 }
 
-func (o *AppEntitlement) GetCreatedAt() *time.Time {
-	if o == nil {
+func (a *AppEntitlement) GetCreatedAt() *time.Time {
+	if a == nil {
 		return nil
 	}
-	return o.CreatedAt
+	return a.CreatedAt
 }
 
-func (o *AppEntitlement) GetDefaultValuesApplied() *bool {
-	if o == nil {
+func (a *AppEntitlement) GetDefaultValuesApplied() *bool {
+	if a == nil {
 		return nil
 	}
-	return o.DefaultValuesApplied
+	return a.DefaultValuesApplied
 }
 
-func (o *AppEntitlement) GetDeletedAt() *time.Time {
-	if o == nil {
+func (a *AppEntitlement) GetDeletedAt() *time.Time {
+	if a == nil {
 		return nil
 	}
-	return o.DeletedAt
+	return a.DeletedAt
 }
 
-func (o *AppEntitlement) GetDescription() *string {
-	if o == nil {
+func (a *AppEntitlement) GetDescription() *string {
+	if a == nil {
 		return nil
 	}
-	return o.Description
+	return a.Description
 }
 
-func (o *AppEntitlement) GetDisplayName() *string {
-	if o == nil {
+func (a *AppEntitlement) GetDisplayName() *string {
+	if a == nil {
 		return nil
 	}
-	return o.DisplayName
+	return a.DisplayName
 }
 
-func (o *AppEntitlement) GetDurationGrant() *string {
-	if o == nil {
+func (a *AppEntitlement) GetDurationGrant() *string {
+	if a == nil {
 		return nil
 	}
-	return o.DurationGrant
+	return a.DurationGrant
 }
 
-func (o *AppEntitlement) GetDurationUnset() *AppEntitlementDurationUnset {
-	if o == nil {
+func (a *AppEntitlement) GetDurationUnset() *AppEntitlementDurationUnset {
+	if a == nil {
 		return nil
 	}
-	return o.DurationUnset
+	return a.DurationUnset
 }
 
-func (o *AppEntitlement) GetEmergencyGrantEnabled() *bool {
-	if o == nil {
+func (a *AppEntitlement) GetEmergencyGrantEnabled() *bool {
+	if a == nil {
 		return nil
 	}
-	return o.EmergencyGrantEnabled
+	return a.EmergencyGrantEnabled
 }
 
-func (o *AppEntitlement) GetEmergencyGrantPolicyID() *string {
-	if o == nil {
+func (a *AppEntitlement) GetEmergencyGrantPolicyID() *string {
+	if a == nil {
 		return nil
 	}
-	return o.EmergencyGrantPolicyID
+	return a.EmergencyGrantPolicyID
 }
 
-func (o *AppEntitlement) GetGrantCount() *int64 {
-	if o == nil {
+func (a *AppEntitlement) GetGrantCount() *int64 {
+	if a == nil {
 		return nil
 	}
-	return o.GrantCount
+	return a.GrantCount
 }
 
-func (o *AppEntitlement) GetGrantPolicyID() *string {
-	if o == nil {
+func (a *AppEntitlement) GetGrantPolicyID() *string {
+	if a == nil {
 		return nil
 	}
-	return o.GrantPolicyID
+	return a.GrantPolicyID
 }
 
-func (o *AppEntitlement) GetID() *string {
-	if o == nil {
+func (a *AppEntitlement) GetID() *string {
+	if a == nil {
 		return nil
 	}
-	return o.ID
+	return a.ID
 }
 
-func (o *AppEntitlement) GetIsAutomationEnabled() *bool {
-	if o == nil {
+func (a *AppEntitlement) GetIsAutomationEnabled() *bool {
+	if a == nil {
 		return nil
 	}
-	return o.IsAutomationEnabled
+	return a.IsAutomationEnabled
 }
 
-func (o *AppEntitlement) GetIsManuallyManaged() *bool {
-	if o == nil {
+func (a *AppEntitlement) GetIsManuallyManaged() *bool {
+	if a == nil {
 		return nil
 	}
-	return o.IsManuallyManaged
+	return a.IsManuallyManaged
 }
 
-func (o *AppEntitlement) GetMatchBatonID() *string {
-	if o == nil {
+func (a *AppEntitlement) GetMatchBatonID() *string {
+	if a == nil {
 		return nil
 	}
-	return o.MatchBatonID
+	return a.MatchBatonID
 }
 
-func (o *AppEntitlement) GetOverrideAccessRequestsDefaults() *bool {
-	if o == nil {
+func (a *AppEntitlement) GetOverrideAccessRequestsDefaults() *bool {
+	if a == nil {
 		return nil
 	}
-	return o.OverrideAccessRequestsDefaults
+	return a.OverrideAccessRequestsDefaults
 }
 
-func (o *AppEntitlement) GetPurpose() *Purpose {
-	if o == nil {
+func (a *AppEntitlement) GetPurpose() *Purpose {
+	if a == nil {
 		return nil
 	}
-	return o.Purpose
+	return a.Purpose
 }
 
-func (o *AppEntitlement) GetRequestSchemaID() *string {
-	if o == nil {
+func (a *AppEntitlement) GetRequestSchemaID() *string {
+	if a == nil {
 		return nil
 	}
-	return o.RequestSchemaID
+	return a.RequestSchemaID
 }
 
-func (o *AppEntitlement) GetRevokePolicyID() *string {
-	if o == nil {
+func (a *AppEntitlement) GetRevokePolicyID() *string {
+	if a == nil {
 		return nil
 	}
-	return o.RevokePolicyID
+	return a.RevokePolicyID
 }
 
-func (o *AppEntitlement) GetRiskLevelValueID() *string {
-	if o == nil {
+func (a *AppEntitlement) GetRiskLevelValueID() *string {
+	if a == nil {
 		return nil
 	}
-	return o.RiskLevelValueID
+	return a.RiskLevelValueID
 }
 
-func (o *AppEntitlement) GetSlug() *string {
-	if o == nil {
+func (a *AppEntitlement) GetSlug() *string {
+	if a == nil {
 		return nil
 	}
-	return o.Slug
+	return a.Slug
 }
 
-func (o *AppEntitlement) GetSourceConnectorIds() map[string]string {
-	if o == nil {
+func (a *AppEntitlement) GetSourceConnectorIds() map[string]string {
+	if a == nil {
 		return nil
 	}
-	return o.SourceConnectorIds
+	return a.SourceConnectorIds
 }
 
-func (o *AppEntitlement) GetSystemBuiltin() *bool {
-	if o == nil {
+func (a *AppEntitlement) GetSystemBuiltin() *bool {
+	if a == nil {
 		return nil
 	}
-	return o.SystemBuiltin
+	return a.SystemBuiltin
 }
 
-func (o *AppEntitlement) GetUpdatedAt() *time.Time {
-	if o == nil {
+func (a *AppEntitlement) GetUpdatedAt() *time.Time {
+	if a == nil {
 		return nil
 	}
-	return o.UpdatedAt
+	return a.UpdatedAt
 }
 
-func (o *AppEntitlement) GetUserEditedMask() *string {
-	if o == nil {
+func (a *AppEntitlement) GetUserEditedMask() *string {
+	if a == nil {
 		return nil
 	}
-	return o.UserEditedMask
+	return a.UserEditedMask
 }
 
 // AppEntitlementInput - The app entitlement represents one permission in a downstream App (SAAS) that can be granted. For example, GitHub Read vs GitHub Write.
@@ -369,6 +382,7 @@ type AppEntitlementInput struct {
 	//   - multiStep
 	//   - externalTicket
 	//   - unconfigured
+	//   - action
 	//
 	ProvisionPolicy *ProvisionPolicyInput `json:"deprovisionerPolicy,omitempty"`
 	// ProvisionPolicy is a oneOf that indicates how a provision step should be processed.
@@ -381,6 +395,7 @@ type AppEntitlementInput struct {
 	//   - multiStep
 	//   - externalTicket
 	//   - unconfigured
+	//   - action
 	//
 	ProvisionPolicy1 *ProvisionPolicyInput `json:"provisionerPolicy,omitempty"`
 	// The alias of the app entitlement used by Cone. Also exact-match queryable.
@@ -430,184 +445,184 @@ type AppEntitlementInput struct {
 	UserEditedMask     *string           `json:"userEditedMask,omitempty"`
 }
 
-func (o *AppEntitlementInput) GetProvisionPolicy() *ProvisionPolicyInput {
-	if o == nil {
+func (a *AppEntitlementInput) GetProvisionPolicy() *ProvisionPolicyInput {
+	if a == nil {
 		return nil
 	}
-	return o.ProvisionPolicy
+	return a.ProvisionPolicy
 }
 
-func (o *AppEntitlementInput) GetProvisionPolicy1() *ProvisionPolicyInput {
-	if o == nil {
+func (a *AppEntitlementInput) GetProvisionPolicy1() *ProvisionPolicyInput {
+	if a == nil {
 		return nil
 	}
-	return o.ProvisionPolicy1
+	return a.ProvisionPolicy1
 }
 
-func (o *AppEntitlementInput) GetAlias() *string {
-	if o == nil {
+func (a *AppEntitlementInput) GetAlias() *string {
+	if a == nil {
 		return nil
 	}
-	return o.Alias
+	return a.Alias
 }
 
-func (o *AppEntitlementInput) GetAppID() *string {
-	if o == nil {
+func (a *AppEntitlementInput) GetAppID() *string {
+	if a == nil {
 		return nil
 	}
-	return o.AppID
+	return a.AppID
 }
 
-func (o *AppEntitlementInput) GetAppResourceID() *string {
-	if o == nil {
+func (a *AppEntitlementInput) GetAppResourceID() *string {
+	if a == nil {
 		return nil
 	}
-	return o.AppResourceID
+	return a.AppResourceID
 }
 
-func (o *AppEntitlementInput) GetAppResourceTypeID() *string {
-	if o == nil {
+func (a *AppEntitlementInput) GetAppResourceTypeID() *string {
+	if a == nil {
 		return nil
 	}
-	return o.AppResourceTypeID
+	return a.AppResourceTypeID
 }
 
-func (o *AppEntitlementInput) GetCertifyPolicyID() *string {
-	if o == nil {
+func (a *AppEntitlementInput) GetCertifyPolicyID() *string {
+	if a == nil {
 		return nil
 	}
-	return o.CertifyPolicyID
+	return a.CertifyPolicyID
 }
 
-func (o *AppEntitlementInput) GetComplianceFrameworkValueIds() []string {
-	if o == nil {
+func (a *AppEntitlementInput) GetComplianceFrameworkValueIds() []string {
+	if a == nil {
 		return nil
 	}
-	return o.ComplianceFrameworkValueIds
+	return a.ComplianceFrameworkValueIds
 }
 
-func (o *AppEntitlementInput) GetDefaultValuesApplied() *bool {
-	if o == nil {
+func (a *AppEntitlementInput) GetDefaultValuesApplied() *bool {
+	if a == nil {
 		return nil
 	}
-	return o.DefaultValuesApplied
+	return a.DefaultValuesApplied
 }
 
-func (o *AppEntitlementInput) GetDescription() *string {
-	if o == nil {
+func (a *AppEntitlementInput) GetDescription() *string {
+	if a == nil {
 		return nil
 	}
-	return o.Description
+	return a.Description
 }
 
-func (o *AppEntitlementInput) GetDisplayName() *string {
-	if o == nil {
+func (a *AppEntitlementInput) GetDisplayName() *string {
+	if a == nil {
 		return nil
 	}
-	return o.DisplayName
+	return a.DisplayName
 }
 
-func (o *AppEntitlementInput) GetDurationGrant() *string {
-	if o == nil {
+func (a *AppEntitlementInput) GetDurationGrant() *string {
+	if a == nil {
 		return nil
 	}
-	return o.DurationGrant
+	return a.DurationGrant
 }
 
-func (o *AppEntitlementInput) GetDurationUnset() *AppEntitlementDurationUnset {
-	if o == nil {
+func (a *AppEntitlementInput) GetDurationUnset() *AppEntitlementDurationUnset {
+	if a == nil {
 		return nil
 	}
-	return o.DurationUnset
+	return a.DurationUnset
 }
 
-func (o *AppEntitlementInput) GetEmergencyGrantEnabled() *bool {
-	if o == nil {
+func (a *AppEntitlementInput) GetEmergencyGrantEnabled() *bool {
+	if a == nil {
 		return nil
 	}
-	return o.EmergencyGrantEnabled
+	return a.EmergencyGrantEnabled
 }
 
-func (o *AppEntitlementInput) GetEmergencyGrantPolicyID() *string {
-	if o == nil {
+func (a *AppEntitlementInput) GetEmergencyGrantPolicyID() *string {
+	if a == nil {
 		return nil
 	}
-	return o.EmergencyGrantPolicyID
+	return a.EmergencyGrantPolicyID
 }
 
-func (o *AppEntitlementInput) GetGrantPolicyID() *string {
-	if o == nil {
+func (a *AppEntitlementInput) GetGrantPolicyID() *string {
+	if a == nil {
 		return nil
 	}
-	return o.GrantPolicyID
+	return a.GrantPolicyID
 }
 
-func (o *AppEntitlementInput) GetIsManuallyManaged() *bool {
-	if o == nil {
+func (a *AppEntitlementInput) GetIsManuallyManaged() *bool {
+	if a == nil {
 		return nil
 	}
-	return o.IsManuallyManaged
+	return a.IsManuallyManaged
 }
 
-func (o *AppEntitlementInput) GetMatchBatonID() *string {
-	if o == nil {
+func (a *AppEntitlementInput) GetMatchBatonID() *string {
+	if a == nil {
 		return nil
 	}
-	return o.MatchBatonID
+	return a.MatchBatonID
 }
 
-func (o *AppEntitlementInput) GetOverrideAccessRequestsDefaults() *bool {
-	if o == nil {
+func (a *AppEntitlementInput) GetOverrideAccessRequestsDefaults() *bool {
+	if a == nil {
 		return nil
 	}
-	return o.OverrideAccessRequestsDefaults
+	return a.OverrideAccessRequestsDefaults
 }
 
-func (o *AppEntitlementInput) GetPurpose() *Purpose {
-	if o == nil {
+func (a *AppEntitlementInput) GetPurpose() *Purpose {
+	if a == nil {
 		return nil
 	}
-	return o.Purpose
+	return a.Purpose
 }
 
-func (o *AppEntitlementInput) GetRequestSchemaID() *string {
-	if o == nil {
+func (a *AppEntitlementInput) GetRequestSchemaID() *string {
+	if a == nil {
 		return nil
 	}
-	return o.RequestSchemaID
+	return a.RequestSchemaID
 }
 
-func (o *AppEntitlementInput) GetRevokePolicyID() *string {
-	if o == nil {
+func (a *AppEntitlementInput) GetRevokePolicyID() *string {
+	if a == nil {
 		return nil
 	}
-	return o.RevokePolicyID
+	return a.RevokePolicyID
 }
 
-func (o *AppEntitlementInput) GetRiskLevelValueID() *string {
-	if o == nil {
+func (a *AppEntitlementInput) GetRiskLevelValueID() *string {
+	if a == nil {
 		return nil
 	}
-	return o.RiskLevelValueID
+	return a.RiskLevelValueID
 }
 
-func (o *AppEntitlementInput) GetSlug() *string {
-	if o == nil {
+func (a *AppEntitlementInput) GetSlug() *string {
+	if a == nil {
 		return nil
 	}
-	return o.Slug
+	return a.Slug
 }
 
-func (o *AppEntitlementInput) GetSourceConnectorIds() map[string]string {
-	if o == nil {
+func (a *AppEntitlementInput) GetSourceConnectorIds() map[string]string {
+	if a == nil {
 		return nil
 	}
-	return o.SourceConnectorIds
+	return a.SourceConnectorIds
 }
 
-func (o *AppEntitlementInput) GetUserEditedMask() *string {
-	if o == nil {
+func (a *AppEntitlementInput) GetUserEditedMask() *string {
+	if a == nil {
 		return nil
 	}
-	return o.UserEditedMask
+	return a.UserEditedMask
 }

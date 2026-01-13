@@ -12,18 +12,18 @@ type C1APIAttributeV1AttributesDeleteComplianceFrameworkAttributeValueRequest st
 	ID                                             string                                                 `pathParam:"style=simple,explode=false,name=id"`
 }
 
-func (o *C1APIAttributeV1AttributesDeleteComplianceFrameworkAttributeValueRequest) GetDeleteComplianceFrameworkAttributeValueRequest() *shared.DeleteComplianceFrameworkAttributeValueRequest {
-	if o == nil {
+func (c *C1APIAttributeV1AttributesDeleteComplianceFrameworkAttributeValueRequest) GetDeleteComplianceFrameworkAttributeValueRequest() *shared.DeleteComplianceFrameworkAttributeValueRequest {
+	if c == nil {
 		return nil
 	}
-	return o.DeleteComplianceFrameworkAttributeValueRequest
+	return c.DeleteComplianceFrameworkAttributeValueRequest
 }
 
-func (o *C1APIAttributeV1AttributesDeleteComplianceFrameworkAttributeValueRequest) GetID() string {
-	if o == nil {
+func (c *C1APIAttributeV1AttributesDeleteComplianceFrameworkAttributeValueRequest) GetID() string {
+	if c == nil {
 		return ""
 	}
-	return o.ID
+	return c.ID
 }
 
 type C1APIAttributeV1AttributesDeleteComplianceFrameworkAttributeValueResponse struct {
@@ -37,30 +37,30 @@ type C1APIAttributeV1AttributesDeleteComplianceFrameworkAttributeValueResponse s
 	RawResponse *http.Response
 }
 
-func (o *C1APIAttributeV1AttributesDeleteComplianceFrameworkAttributeValueResponse) GetContentType() string {
-	if o == nil {
+func (c *C1APIAttributeV1AttributesDeleteComplianceFrameworkAttributeValueResponse) GetContentType() string {
+	if c == nil {
 		return ""
 	}
-	return o.ContentType
+	return c.ContentType
 }
 
-func (o *C1APIAttributeV1AttributesDeleteComplianceFrameworkAttributeValueResponse) GetDeleteComplianceFrameworkAttributeValueResponse() *shared.DeleteComplianceFrameworkAttributeValueResponse {
-	if o == nil {
+func (c *C1APIAttributeV1AttributesDeleteComplianceFrameworkAttributeValueResponse) GetDeleteComplianceFrameworkAttributeValueResponse() *shared.DeleteComplianceFrameworkAttributeValueResponse {
+	if c == nil {
 		return nil
 	}
-	return o.DeleteComplianceFrameworkAttributeValueResponse
+	return c.DeleteComplianceFrameworkAttributeValueResponse
 }
 
-func (o *C1APIAttributeV1AttributesDeleteComplianceFrameworkAttributeValueResponse) GetStatusCode() int {
-	if o == nil {
+func (c *C1APIAttributeV1AttributesDeleteComplianceFrameworkAttributeValueResponse) GetStatusCode() int {
+	if c == nil {
 		return 0
 	}
-	return o.StatusCode
+	return c.StatusCode
 }
 
-func (o *C1APIAttributeV1AttributesDeleteComplianceFrameworkAttributeValueResponse) GetRawResponse() *http.Response {
-	if o == nil {
+func (c *C1APIAttributeV1AttributesDeleteComplianceFrameworkAttributeValueResponse) GetRawResponse() *http.Response {
+	if c == nil {
 		return nil
 	}
-	return o.RawResponse
+	return c.RawResponse
 }

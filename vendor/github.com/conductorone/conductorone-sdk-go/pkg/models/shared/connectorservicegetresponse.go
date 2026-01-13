@@ -18,24 +18,24 @@ func (c ConnectorServiceGetResponseExpanded) MarshalJSON() ([]byte, error) {
 }
 
 func (c *ConnectorServiceGetResponseExpanded) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &c, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &c, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *ConnectorServiceGetResponseExpanded) GetAtType() *string {
-	if o == nil {
+func (c *ConnectorServiceGetResponseExpanded) GetAtType() *string {
+	if c == nil {
 		return nil
 	}
-	return o.AtType
+	return c.AtType
 }
 
-func (o *ConnectorServiceGetResponseExpanded) GetAdditionalProperties() map[string]any {
-	if o == nil {
+func (c *ConnectorServiceGetResponseExpanded) GetAdditionalProperties() map[string]any {
+	if c == nil {
 		return nil
 	}
-	return o.AdditionalProperties
+	return c.AdditionalProperties
 }
 
 // The ConnectorServiceGetResponse message contains the connectorView, and an expand mask.
@@ -46,16 +46,16 @@ type ConnectorServiceGetResponse struct {
 	Expanded []ConnectorServiceGetResponseExpanded `json:"expanded,omitempty"`
 }
 
-func (o *ConnectorServiceGetResponse) GetConnectorView() *ConnectorView {
-	if o == nil {
+func (c *ConnectorServiceGetResponse) GetConnectorView() *ConnectorView {
+	if c == nil {
 		return nil
 	}
-	return o.ConnectorView
+	return c.ConnectorView
 }
 
-func (o *ConnectorServiceGetResponse) GetExpanded() []ConnectorServiceGetResponseExpanded {
-	if o == nil {
+func (c *ConnectorServiceGetResponse) GetExpanded() []ConnectorServiceGetResponseExpanded {
+	if c == nil {
 		return nil
 	}
-	return o.Expanded
+	return c.Expanded
 }

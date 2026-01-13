@@ -10,16 +10,16 @@ type SystemLogServiceListEventsResponse struct {
 	NextPageToken *string `json:"nextPageToken,omitempty"`
 }
 
-func (o *SystemLogServiceListEventsResponse) GetList() []map[string]any {
-	if o == nil {
+func (s *SystemLogServiceListEventsResponse) GetList() []map[string]any {
+	if s == nil {
 		return nil
 	}
-	return o.List
+	return s.List
 }
 
-func (o *SystemLogServiceListEventsResponse) GetNextPageToken() *string {
-	if o == nil {
+func (s *SystemLogServiceListEventsResponse) GetNextPageToken() *string {
+	if s == nil {
 		return nil
 	}
-	return o.NextPageToken
+	return s.NextPageToken
 }

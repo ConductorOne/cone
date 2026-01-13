@@ -8,9 +8,9 @@ type Form struct {
 	Form *FormInput `json:"form,omitempty"`
 }
 
-func (o *Form) GetForm() *FormInput {
-	if o == nil {
+func (f *Form) GetForm() *FormInput {
+	if f == nil {
 		return nil
 	}
-	return o.Form
+	return f.Form
 }

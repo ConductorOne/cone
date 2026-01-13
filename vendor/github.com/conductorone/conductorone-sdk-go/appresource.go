@@ -62,7 +62,7 @@ func (s *AppResource) CreateManuallyManagedAppResource(ctx context.Context, requ
 		BaseURL:          baseURL,
 		Context:          ctx,
 		OperationID:      "c1.api.app.v1.AppResourceService.CreateManuallyManagedAppResource",
-		OAuth2Scopes:     []string{},
+		OAuth2Scopes:     nil,
 		SecuritySource:   s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "CreateManuallyManagedAppResourceRequest", "json", `request:"mediaType=application/json"`)
@@ -274,7 +274,7 @@ func (s *AppResource) DeleteManuallyManagedAppResource(ctx context.Context, requ
 		BaseURL:          baseURL,
 		Context:          ctx,
 		OperationID:      "c1.api.app.v1.AppResourceService.DeleteManuallyManagedAppResource",
-		OAuth2Scopes:     []string{},
+		OAuth2Scopes:     nil,
 		SecuritySource:   s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "DeleteManuallyManagedAppResourceRequest", "json", `request:"mediaType=application/json"`)
@@ -486,7 +486,7 @@ func (s *AppResource) Get(ctx context.Context, request operations.C1APIAppV1AppR
 		BaseURL:          baseURL,
 		Context:          ctx,
 		OperationID:      "c1.api.app.v1.AppResourceService.Get",
-		OAuth2Scopes:     []string{},
+		OAuth2Scopes:     nil,
 		SecuritySource:   s.sdkConfiguration.Security,
 	}
 
@@ -691,7 +691,7 @@ func (s *AppResource) List(ctx context.Context, request operations.C1APIAppV1App
 		BaseURL:          baseURL,
 		Context:          ctx,
 		OperationID:      "c1.api.app.v1.AppResourceService.List",
-		OAuth2Scopes:     []string{},
+		OAuth2Scopes:     nil,
 		SecuritySource:   s.sdkConfiguration.Security,
 	}
 
@@ -713,7 +713,7 @@ func (s *AppResource) List(ctx context.Context, request operations.C1APIAppV1App
 	req.Header.Set("Accept", "application/json")
 	req.Header.Set("User-Agent", s.sdkConfiguration.UserAgent)
 
-	if err := utils.PopulateQueryParams(ctx, req, request, nil); err != nil {
+	if err := utils.PopulateQueryParams(ctx, req, request, nil, nil); err != nil {
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
@@ -900,7 +900,7 @@ func (s *AppResource) Update(ctx context.Context, request operations.C1APIAppV1A
 		BaseURL:          baseURL,
 		Context:          ctx,
 		OperationID:      "c1.api.app.v1.AppResourceService.Update",
-		OAuth2Scopes:     []string{},
+		OAuth2Scopes:     nil,
 		SecuritySource:   s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "AppResourceServiceUpdateRequest", "json", `request:"mediaType=application/json"`)

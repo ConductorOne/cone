@@ -18,15 +18,26 @@ func (e TaskAuditCertifyOutcomeOutcome) ToPointer() *TaskAuditCertifyOutcomeOutc
 	return &e
 }
 
+// IsExact returns true if the value matches a known enum value, false otherwise.
+func (e *TaskAuditCertifyOutcomeOutcome) IsExact() bool {
+	if e != nil {
+		switch *e {
+		case "CERTIFY_OUTCOME_UNSPECIFIED", "CERTIFY_OUTCOME_CERTIFIED", "CERTIFY_OUTCOME_DECERTIFIED", "CERTIFY_OUTCOME_ERROR", "CERTIFY_OUTCOME_CANCELLED", "CERTIFY_OUTCOME_WAIT_TIMED_OUT":
+			return true
+		}
+	}
+	return false
+}
+
 // The TaskAuditCertifyOutcome message.
 type TaskAuditCertifyOutcome struct {
 	// The outcome field.
 	Outcome *TaskAuditCertifyOutcomeOutcome `json:"outcome,omitempty"`
 }
 
-func (o *TaskAuditCertifyOutcome) GetOutcome() *TaskAuditCertifyOutcomeOutcome {
-	if o == nil {
+func (t *TaskAuditCertifyOutcome) GetOutcome() *TaskAuditCertifyOutcomeOutcome {
+	if t == nil {
 		return nil
 	}
-	return o.Outcome
+	return t.Outcome
 }

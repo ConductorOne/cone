@@ -18,24 +18,24 @@ func (t TaskActionsServiceCloseResponseExpanded) MarshalJSON() ([]byte, error) {
 }
 
 func (t *TaskActionsServiceCloseResponseExpanded) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &t, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &t, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *TaskActionsServiceCloseResponseExpanded) GetAtType() *string {
-	if o == nil {
+func (t *TaskActionsServiceCloseResponseExpanded) GetAtType() *string {
+	if t == nil {
 		return nil
 	}
-	return o.AtType
+	return t.AtType
 }
 
-func (o *TaskActionsServiceCloseResponseExpanded) GetAdditionalProperties() map[string]any {
-	if o == nil {
+func (t *TaskActionsServiceCloseResponseExpanded) GetAdditionalProperties() map[string]any {
+	if t == nil {
 		return nil
 	}
-	return o.AdditionalProperties
+	return t.AdditionalProperties
 }
 
 // The TaskActionsServiceCloseResponse returns a task view with paths indicating the location of expanded items in the array.
@@ -48,23 +48,23 @@ type TaskActionsServiceCloseResponse struct {
 	TaskActionID *string `json:"taskActionId,omitempty"`
 }
 
-func (o *TaskActionsServiceCloseResponse) GetTaskView() *TaskView {
-	if o == nil {
+func (t *TaskActionsServiceCloseResponse) GetTaskView() *TaskView {
+	if t == nil {
 		return nil
 	}
-	return o.TaskView
+	return t.TaskView
 }
 
-func (o *TaskActionsServiceCloseResponse) GetExpanded() []TaskActionsServiceCloseResponseExpanded {
-	if o == nil {
+func (t *TaskActionsServiceCloseResponse) GetExpanded() []TaskActionsServiceCloseResponseExpanded {
+	if t == nil {
 		return nil
 	}
-	return o.Expanded
+	return t.Expanded
 }
 
-func (o *TaskActionsServiceCloseResponse) GetTaskActionID() *string {
-	if o == nil {
+func (t *TaskActionsServiceCloseResponse) GetTaskActionID() *string {
+	if t == nil {
 		return nil
 	}
-	return o.TaskActionID
+	return t.TaskActionID
 }

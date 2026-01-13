@@ -10,16 +10,16 @@ type FunctionsServiceCreateFunctionResponse struct {
 	FunctionCommit *FunctionCommit `json:"commit,omitempty"`
 }
 
-func (o *FunctionsServiceCreateFunctionResponse) GetFunction() *Function {
-	if o == nil {
+func (f *FunctionsServiceCreateFunctionResponse) GetFunction() *Function {
+	if f == nil {
 		return nil
 	}
-	return o.Function
+	return f.Function
 }
 
-func (o *FunctionsServiceCreateFunctionResponse) GetFunctionCommit() *FunctionCommit {
-	if o == nil {
+func (f *FunctionsServiceCreateFunctionResponse) GetFunctionCommit() *FunctionCommit {
+	if f == nil {
 		return nil
 	}
-	return o.FunctionCommit
+	return f.FunctionCommit
 }

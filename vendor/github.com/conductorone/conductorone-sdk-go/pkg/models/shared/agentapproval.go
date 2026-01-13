@@ -16,6 +16,17 @@ func (e AgentFailureAction) ToPointer() *AgentFailureAction {
 	return &e
 }
 
+// IsExact returns true if the value matches a known enum value, false otherwise.
+func (e *AgentFailureAction) IsExact() bool {
+	if e != nil {
+		switch *e {
+		case "APPROVAL_AGENT_FAILURE_ACTION_UNSPECIFIED", "APPROVAL_AGENT_FAILURE_ACTION_REASSIGN_TO_USERS", "APPROVAL_AGENT_FAILURE_ACTION_REASSIGN_TO_SUPER_ADMINS", "APPROVAL_AGENT_FAILURE_ACTION_SKIP_POLICY_STEP":
+			return true
+		}
+	}
+	return false
+}
+
 // AgentMode - The mode of the agent, full control, change policy only, or comment only.
 type AgentMode string
 
@@ -28,6 +39,17 @@ const (
 
 func (e AgentMode) ToPointer() *AgentMode {
 	return &e
+}
+
+// IsExact returns true if the value matches a known enum value, false otherwise.
+func (e *AgentMode) IsExact() bool {
+	if e != nil {
+		switch *e {
+		case "APPROVAL_AGENT_MODE_UNSPECIFIED", "APPROVAL_AGENT_MODE_FULL_CONTROL", "APPROVAL_AGENT_MODE_CHANGE_POLICY_ONLY", "APPROVAL_AGENT_MODE_COMMENT_ONLY":
+			return true
+		}
+	}
+	return false
 }
 
 // AgentApproval - The agent to assign the task to.
@@ -46,44 +68,44 @@ type AgentApproval struct {
 	ReassignToUserIds []string `json:"reassignToUserIds,omitempty"`
 }
 
-func (o *AgentApproval) GetAgentFailureAction() *AgentFailureAction {
-	if o == nil {
+func (a *AgentApproval) GetAgentFailureAction() *AgentFailureAction {
+	if a == nil {
 		return nil
 	}
-	return o.AgentFailureAction
+	return a.AgentFailureAction
 }
 
-func (o *AgentApproval) GetAgentMode() *AgentMode {
-	if o == nil {
+func (a *AgentApproval) GetAgentMode() *AgentMode {
+	if a == nil {
 		return nil
 	}
-	return o.AgentMode
+	return a.AgentMode
 }
 
-func (o *AgentApproval) GetAgentUserID() *string {
-	if o == nil {
+func (a *AgentApproval) GetAgentUserID() *string {
+	if a == nil {
 		return nil
 	}
-	return o.AgentUserID
+	return a.AgentUserID
 }
 
-func (o *AgentApproval) GetInstructions() *string {
-	if o == nil {
+func (a *AgentApproval) GetInstructions() *string {
+	if a == nil {
 		return nil
 	}
-	return o.Instructions
+	return a.Instructions
 }
 
-func (o *AgentApproval) GetPolicyIds() []string {
-	if o == nil {
+func (a *AgentApproval) GetPolicyIds() []string {
+	if a == nil {
 		return nil
 	}
-	return o.PolicyIds
+	return a.PolicyIds
 }
 
-func (o *AgentApproval) GetReassignToUserIds() []string {
-	if o == nil {
+func (a *AgentApproval) GetReassignToUserIds() []string {
+	if a == nil {
 		return nil
 	}
-	return o.ReassignToUserIds
+	return a.ReassignToUserIds
 }

@@ -17,6 +17,17 @@ func (e PolicyTypes) ToPointer() *PolicyTypes {
 	return &e
 }
 
+// IsExact returns true if the value matches a known enum value, false otherwise.
+func (e *PolicyTypes) IsExact() bool {
+	if e != nil {
+		switch *e {
+		case "POLICY_TYPE_UNSPECIFIED", "POLICY_TYPE_GRANT", "POLICY_TYPE_REVOKE", "POLICY_TYPE_CERTIFY", "POLICY_TYPE_ACCESS_REQUEST", "POLICY_TYPE_PROVISION":
+			return true
+		}
+	}
+	return false
+}
+
 // SearchPoliciesRequest - Search Policies by a few properties.
 type SearchPoliciesRequest struct {
 	// Search for policies with a case insensitive match on the display name.
@@ -37,58 +48,58 @@ type SearchPoliciesRequest struct {
 	Refs []PolicyRef `json:"refs,omitempty"`
 }
 
-func (o *SearchPoliciesRequest) GetDisplayName() *string {
-	if o == nil {
+func (s *SearchPoliciesRequest) GetDisplayName() *string {
+	if s == nil {
 		return nil
 	}
-	return o.DisplayName
+	return s.DisplayName
 }
 
-func (o *SearchPoliciesRequest) GetExcludePolicyIds() []string {
-	if o == nil {
+func (s *SearchPoliciesRequest) GetExcludePolicyIds() []string {
+	if s == nil {
 		return nil
 	}
-	return o.ExcludePolicyIds
+	return s.ExcludePolicyIds
 }
 
-func (o *SearchPoliciesRequest) GetIncludeDeleted() *bool {
-	if o == nil {
+func (s *SearchPoliciesRequest) GetIncludeDeleted() *bool {
+	if s == nil {
 		return nil
 	}
-	return o.IncludeDeleted
+	return s.IncludeDeleted
 }
 
-func (o *SearchPoliciesRequest) GetPageSize() *int {
-	if o == nil {
+func (s *SearchPoliciesRequest) GetPageSize() *int {
+	if s == nil {
 		return nil
 	}
-	return o.PageSize
+	return s.PageSize
 }
 
-func (o *SearchPoliciesRequest) GetPageToken() *string {
-	if o == nil {
+func (s *SearchPoliciesRequest) GetPageToken() *string {
+	if s == nil {
 		return nil
 	}
-	return o.PageToken
+	return s.PageToken
 }
 
-func (o *SearchPoliciesRequest) GetPolicyTypes() []PolicyTypes {
-	if o == nil {
+func (s *SearchPoliciesRequest) GetPolicyTypes() []PolicyTypes {
+	if s == nil {
 		return nil
 	}
-	return o.PolicyTypes
+	return s.PolicyTypes
 }
 
-func (o *SearchPoliciesRequest) GetQuery() *string {
-	if o == nil {
+func (s *SearchPoliciesRequest) GetQuery() *string {
+	if s == nil {
 		return nil
 	}
-	return o.Query
+	return s.Query
 }
 
-func (o *SearchPoliciesRequest) GetRefs() []PolicyRef {
-	if o == nil {
+func (s *SearchPoliciesRequest) GetRefs() []PolicyRef {
+	if s == nil {
 		return nil
 	}
-	return o.Refs
+	return s.Refs
 }

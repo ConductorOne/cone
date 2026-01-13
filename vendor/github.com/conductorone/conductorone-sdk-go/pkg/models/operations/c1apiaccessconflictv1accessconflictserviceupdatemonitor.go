@@ -12,18 +12,18 @@ type C1APIAccessconflictV1AccessConflictServiceUpdateMonitorRequest struct {
 	ID                           string                               `pathParam:"style=simple,explode=false,name=id"`
 }
 
-func (o *C1APIAccessconflictV1AccessConflictServiceUpdateMonitorRequest) GetConflictMonitorUpdateRequest() *shared.ConflictMonitorUpdateRequest {
-	if o == nil {
+func (c *C1APIAccessconflictV1AccessConflictServiceUpdateMonitorRequest) GetConflictMonitorUpdateRequest() *shared.ConflictMonitorUpdateRequest {
+	if c == nil {
 		return nil
 	}
-	return o.ConflictMonitorUpdateRequest
+	return c.ConflictMonitorUpdateRequest
 }
 
-func (o *C1APIAccessconflictV1AccessConflictServiceUpdateMonitorRequest) GetID() string {
-	if o == nil {
+func (c *C1APIAccessconflictV1AccessConflictServiceUpdateMonitorRequest) GetID() string {
+	if c == nil {
 		return ""
 	}
-	return o.ID
+	return c.ID
 }
 
 type C1APIAccessconflictV1AccessConflictServiceUpdateMonitorResponse struct {
@@ -37,30 +37,30 @@ type C1APIAccessconflictV1AccessConflictServiceUpdateMonitorResponse struct {
 	RawResponse *http.Response
 }
 
-func (o *C1APIAccessconflictV1AccessConflictServiceUpdateMonitorResponse) GetConflictMonitor() *shared.ConflictMonitor {
-	if o == nil {
+func (c *C1APIAccessconflictV1AccessConflictServiceUpdateMonitorResponse) GetConflictMonitor() *shared.ConflictMonitor {
+	if c == nil {
 		return nil
 	}
-	return o.ConflictMonitor
+	return c.ConflictMonitor
 }
 
-func (o *C1APIAccessconflictV1AccessConflictServiceUpdateMonitorResponse) GetContentType() string {
-	if o == nil {
+func (c *C1APIAccessconflictV1AccessConflictServiceUpdateMonitorResponse) GetContentType() string {
+	if c == nil {
 		return ""
 	}
-	return o.ContentType
+	return c.ContentType
 }
 
-func (o *C1APIAccessconflictV1AccessConflictServiceUpdateMonitorResponse) GetStatusCode() int {
-	if o == nil {
+func (c *C1APIAccessconflictV1AccessConflictServiceUpdateMonitorResponse) GetStatusCode() int {
+	if c == nil {
 		return 0
 	}
-	return o.StatusCode
+	return c.StatusCode
 }
 
-func (o *C1APIAccessconflictV1AccessConflictServiceUpdateMonitorResponse) GetRawResponse() *http.Response {
-	if o == nil {
+func (c *C1APIAccessconflictV1AccessConflictServiceUpdateMonitorResponse) GetRawResponse() *http.Response {
+	if c == nil {
 		return nil
 	}
-	return o.RawResponse
+	return c.RawResponse
 }

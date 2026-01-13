@@ -14,30 +14,30 @@ type CreateManuallyManagedAppResourceRequest struct {
 	ResourceOwnerUserIds []string `json:"resourceOwnerUserIds,omitempty"`
 }
 
-func (o *CreateManuallyManagedAppResourceRequest) GetDescription() *string {
-	if o == nil {
+func (c *CreateManuallyManagedAppResourceRequest) GetDescription() *string {
+	if c == nil {
 		return nil
 	}
-	return o.Description
+	return c.Description
 }
 
-func (o *CreateManuallyManagedAppResourceRequest) GetDisplayName() string {
-	if o == nil {
+func (c *CreateManuallyManagedAppResourceRequest) GetDisplayName() string {
+	if c == nil {
 		return ""
 	}
-	return o.DisplayName
+	return c.DisplayName
 }
 
-func (o *CreateManuallyManagedAppResourceRequest) GetMatchBatonID() *string {
-	if o == nil {
+func (c *CreateManuallyManagedAppResourceRequest) GetMatchBatonID() *string {
+	if c == nil {
 		return nil
 	}
-	return o.MatchBatonID
+	return c.MatchBatonID
 }
 
-func (o *CreateManuallyManagedAppResourceRequest) GetResourceOwnerUserIds() []string {
-	if o == nil {
+func (c *CreateManuallyManagedAppResourceRequest) GetResourceOwnerUserIds() []string {
+	if c == nil {
 		return nil
 	}
-	return o.ResourceOwnerUserIds
+	return c.ResourceOwnerUserIds
 }

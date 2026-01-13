@@ -12,25 +12,34 @@ type ConnectorAction struct {
 	// The actionName field.
 	ActionName   *string        `json:"actionName,omitempty"`
 	ArgsTemplate map[string]any `json:"argsTemplate,omitempty"`
+	// The resourceTypeId field.
+	ResourceTypeID *string `json:"resourceTypeId,omitempty"`
 }
 
-func (o *ConnectorAction) GetConnectorRef() *ConnectorRef {
-	if o == nil {
+func (c *ConnectorAction) GetConnectorRef() *ConnectorRef {
+	if c == nil {
 		return nil
 	}
-	return o.ConnectorRef
+	return c.ConnectorRef
 }
 
-func (o *ConnectorAction) GetActionName() *string {
-	if o == nil {
+func (c *ConnectorAction) GetActionName() *string {
+	if c == nil {
 		return nil
 	}
-	return o.ActionName
+	return c.ActionName
 }
 
-func (o *ConnectorAction) GetArgsTemplate() map[string]any {
-	if o == nil {
+func (c *ConnectorAction) GetArgsTemplate() map[string]any {
+	if c == nil {
 		return nil
 	}
-	return o.ArgsTemplate
+	return c.ArgsTemplate
+}
+
+func (c *ConnectorAction) GetResourceTypeID() *string {
+	if c == nil {
+		return nil
+	}
+	return c.ResourceTypeID
 }

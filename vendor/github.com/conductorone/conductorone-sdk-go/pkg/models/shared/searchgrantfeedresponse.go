@@ -18,24 +18,24 @@ func (s SearchGrantFeedResponseExpanded) MarshalJSON() ([]byte, error) {
 }
 
 func (s *SearchGrantFeedResponseExpanded) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &s, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *SearchGrantFeedResponseExpanded) GetAtType() *string {
-	if o == nil {
+func (s *SearchGrantFeedResponseExpanded) GetAtType() *string {
+	if s == nil {
 		return nil
 	}
-	return o.AtType
+	return s.AtType
 }
 
-func (o *SearchGrantFeedResponseExpanded) GetAdditionalProperties() map[string]any {
-	if o == nil {
+func (s *SearchGrantFeedResponseExpanded) GetAdditionalProperties() map[string]any {
+	if s == nil {
 		return nil
 	}
-	return o.AdditionalProperties
+	return s.AdditionalProperties
 }
 
 // The SearchGrantFeedResponse message contains a list of grant event results and a nextPageToken if applicable.
@@ -50,23 +50,23 @@ type SearchGrantFeedResponse struct {
 	NextPageToken *string `json:"nextPageToken,omitempty"`
 }
 
-func (o *SearchGrantFeedResponse) GetExpanded() []SearchGrantFeedResponseExpanded {
-	if o == nil {
+func (s *SearchGrantFeedResponse) GetExpanded() []SearchGrantFeedResponseExpanded {
+	if s == nil {
 		return nil
 	}
-	return o.Expanded
+	return s.Expanded
 }
 
-func (o *SearchGrantFeedResponse) GetList() []AppEntitlementUserBindingFeedView {
-	if o == nil {
+func (s *SearchGrantFeedResponse) GetList() []AppEntitlementUserBindingFeedView {
+	if s == nil {
 		return nil
 	}
-	return o.List
+	return s.List
 }
 
-func (o *SearchGrantFeedResponse) GetNextPageToken() *string {
-	if o == nil {
+func (s *SearchGrantFeedResponse) GetNextPageToken() *string {
+	if s == nil {
 		return nil
 	}
-	return o.NextPageToken
+	return s.NextPageToken
 }

@@ -63,7 +63,7 @@ func (s *Task) CreateGrantTask(ctx context.Context, request *shared.TaskServiceC
 		BaseURL:          baseURL,
 		Context:          ctx,
 		OperationID:      "c1.api.task.v1.TaskService.CreateGrantTask",
-		OAuth2Scopes:     []string{},
+		OAuth2Scopes:     nil,
 		SecuritySource:   s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
@@ -275,7 +275,7 @@ func (s *Task) CreateOffboardingTask(ctx context.Context, request *shared.TaskSe
 		BaseURL:          baseURL,
 		Context:          ctx,
 		OperationID:      "c1.api.task.v1.TaskService.CreateOffboardingTask",
-		OAuth2Scopes:     []string{},
+		OAuth2Scopes:     nil,
 		SecuritySource:   s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
@@ -487,7 +487,7 @@ func (s *Task) CreateRevokeTask(ctx context.Context, request *shared.TaskService
 		BaseURL:          baseURL,
 		Context:          ctx,
 		OperationID:      "c1.api.task.v1.TaskService.CreateRevokeTask",
-		OAuth2Scopes:     []string{},
+		OAuth2Scopes:     nil,
 		SecuritySource:   s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
@@ -699,7 +699,7 @@ func (s *Task) Get(ctx context.Context, request operations.C1APITaskV1TaskServic
 		BaseURL:          baseURL,
 		Context:          ctx,
 		OperationID:      "c1.api.task.v1.TaskService.Get",
-		OAuth2Scopes:     []string{},
+		OAuth2Scopes:     nil,
 		SecuritySource:   s.sdkConfiguration.Security,
 	}
 

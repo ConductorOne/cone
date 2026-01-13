@@ -21,6 +21,17 @@ func (e SearchStepUpTransactionsRequestState) ToPointer() *SearchStepUpTransacti
 	return &e
 }
 
+// IsExact returns true if the value matches a known enum value, false otherwise.
+func (e *SearchStepUpTransactionsRequestState) IsExact() bool {
+	if e != nil {
+		switch *e {
+		case "STEP_UP_TRANSACTION_STATE_UNSPECIFIED", "STEP_UP_TRANSACTION_STATE_PENDING", "STEP_UP_TRANSACTION_STATE_VERIFIED", "STEP_UP_TRANSACTION_STATE_ERROR":
+			return true
+		}
+	}
+	return false
+}
+
 // TargetType - The targetType field.
 type TargetType string
 
@@ -32,6 +43,17 @@ const (
 
 func (e TargetType) ToPointer() *TargetType {
 	return &e
+}
+
+// IsExact returns true if the value matches a known enum value, false otherwise.
+func (e *TargetType) IsExact() bool {
+	if e != nil {
+		switch *e {
+		case "TARGET_TYPE_UNSPECIFIED", "TARGET_TYPE_TICKET", "TARGET_TYPE_TEST":
+			return true
+		}
+	}
+	return false
 }
 
 // SearchStepUpTransactionsRequest - Request message for searching step-up transactions
@@ -59,71 +81,71 @@ func (s SearchStepUpTransactionsRequest) MarshalJSON() ([]byte, error) {
 }
 
 func (s *SearchStepUpTransactionsRequest) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &s, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *SearchStepUpTransactionsRequest) GetCreatedAfter() *time.Time {
-	if o == nil {
+func (s *SearchStepUpTransactionsRequest) GetCreatedAfter() *time.Time {
+	if s == nil {
 		return nil
 	}
-	return o.CreatedAfter
+	return s.CreatedAfter
 }
 
-func (o *SearchStepUpTransactionsRequest) GetCreatedBefore() *time.Time {
-	if o == nil {
+func (s *SearchStepUpTransactionsRequest) GetCreatedBefore() *time.Time {
+	if s == nil {
 		return nil
 	}
-	return o.CreatedBefore
+	return s.CreatedBefore
 }
 
-func (o *SearchStepUpTransactionsRequest) GetPageSize() *int {
-	if o == nil {
+func (s *SearchStepUpTransactionsRequest) GetPageSize() *int {
+	if s == nil {
 		return nil
 	}
-	return o.PageSize
+	return s.PageSize
 }
 
-func (o *SearchStepUpTransactionsRequest) GetPageToken() *string {
-	if o == nil {
+func (s *SearchStepUpTransactionsRequest) GetPageToken() *string {
+	if s == nil {
 		return nil
 	}
-	return o.PageToken
+	return s.PageToken
 }
 
-func (o *SearchStepUpTransactionsRequest) GetProviderID() *string {
-	if o == nil {
+func (s *SearchStepUpTransactionsRequest) GetProviderID() *string {
+	if s == nil {
 		return nil
 	}
-	return o.ProviderID
+	return s.ProviderID
 }
 
-func (o *SearchStepUpTransactionsRequest) GetState() *SearchStepUpTransactionsRequestState {
-	if o == nil {
+func (s *SearchStepUpTransactionsRequest) GetState() *SearchStepUpTransactionsRequestState {
+	if s == nil {
 		return nil
 	}
-	return o.State
+	return s.State
 }
 
-func (o *SearchStepUpTransactionsRequest) GetTargetType() *TargetType {
-	if o == nil {
+func (s *SearchStepUpTransactionsRequest) GetTargetType() *TargetType {
+	if s == nil {
 		return nil
 	}
-	return o.TargetType
+	return s.TargetType
 }
 
-func (o *SearchStepUpTransactionsRequest) GetTaskID() *string {
-	if o == nil {
+func (s *SearchStepUpTransactionsRequest) GetTaskID() *string {
+	if s == nil {
 		return nil
 	}
-	return o.TaskID
+	return s.TaskID
 }
 
-func (o *SearchStepUpTransactionsRequest) GetUserID() *string {
-	if o == nil {
+func (s *SearchStepUpTransactionsRequest) GetUserID() *string {
+	if s == nil {
 		return nil
 	}
-	return o.UserID
+	return s.UserID
 }

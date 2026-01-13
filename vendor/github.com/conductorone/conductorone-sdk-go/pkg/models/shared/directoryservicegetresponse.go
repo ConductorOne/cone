@@ -18,24 +18,24 @@ func (d DirectoryServiceGetResponseExpanded) MarshalJSON() ([]byte, error) {
 }
 
 func (d *DirectoryServiceGetResponseExpanded) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &d, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &d, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *DirectoryServiceGetResponseExpanded) GetAtType() *string {
-	if o == nil {
+func (d *DirectoryServiceGetResponseExpanded) GetAtType() *string {
+	if d == nil {
 		return nil
 	}
-	return o.AtType
+	return d.AtType
 }
 
-func (o *DirectoryServiceGetResponseExpanded) GetAdditionalProperties() map[string]any {
-	if o == nil {
+func (d *DirectoryServiceGetResponseExpanded) GetAdditionalProperties() map[string]any {
+	if d == nil {
 		return nil
 	}
-	return o.AdditionalProperties
+	return d.AdditionalProperties
 }
 
 // DirectoryServiceGetResponse - The Directory Service Get Response returns a directory view with a directory and JSONPATHs indicating the
@@ -48,16 +48,16 @@ type DirectoryServiceGetResponse struct {
 	Expanded []DirectoryServiceGetResponseExpanded `json:"expanded,omitempty"`
 }
 
-func (o *DirectoryServiceGetResponse) GetDirectoryView() *DirectoryView {
-	if o == nil {
+func (d *DirectoryServiceGetResponse) GetDirectoryView() *DirectoryView {
+	if d == nil {
 		return nil
 	}
-	return o.DirectoryView
+	return d.DirectoryView
 }
 
-func (o *DirectoryServiceGetResponse) GetExpanded() []DirectoryServiceGetResponseExpanded {
-	if o == nil {
+func (d *DirectoryServiceGetResponse) GetExpanded() []DirectoryServiceGetResponseExpanded {
+	if d == nil {
 		return nil
 	}
-	return o.Expanded
+	return d.Expanded
 }

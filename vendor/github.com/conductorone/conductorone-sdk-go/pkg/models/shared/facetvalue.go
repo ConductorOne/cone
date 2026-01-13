@@ -14,30 +14,30 @@ type FacetValue struct {
 	Value *string `json:"value,omitempty"`
 }
 
-func (o *FacetValue) GetCount() *int64 {
-	if o == nil {
+func (f *FacetValue) GetCount() *int64 {
+	if f == nil {
 		return nil
 	}
-	return o.Count
+	return f.Count
 }
 
-func (o *FacetValue) GetDisplayName() *string {
-	if o == nil {
+func (f *FacetValue) GetDisplayName() *string {
+	if f == nil {
 		return nil
 	}
-	return o.DisplayName
+	return f.DisplayName
 }
 
-func (o *FacetValue) GetIconURL() *string {
-	if o == nil {
+func (f *FacetValue) GetIconURL() *string {
+	if f == nil {
 		return nil
 	}
-	return o.IconURL
+	return f.IconURL
 }
 
-func (o *FacetValue) GetValue() *string {
-	if o == nil {
+func (f *FacetValue) GetValue() *string {
+	if f == nil {
 		return nil
 	}
-	return o.Value
+	return f.Value
 }

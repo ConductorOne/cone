@@ -15,6 +15,17 @@ func (e ProviderType) ToPointer() *ProviderType {
 	return &e
 }
 
+// IsExact returns true if the value matches a known enum value, false otherwise.
+func (e *ProviderType) IsExact() bool {
+	if e != nil {
+		switch *e {
+		case "PROVIDER_TYPE_UNSPECIFIED", "PROVIDER_TYPE_OAUTH2", "PROVIDER_TYPE_MICROSOFT":
+			return true
+		}
+	}
+	return false
+}
+
 // SearchStepUpProvidersRequest - Request message for searching step-up providers
 type SearchStepUpProvidersRequest struct {
 	// Maximum number of results to return
@@ -29,37 +40,37 @@ type SearchStepUpProvidersRequest struct {
 	Refs []StepUpProviderRef `json:"refs,omitempty"`
 }
 
-func (o *SearchStepUpProvidersRequest) GetPageSize() *int {
-	if o == nil {
+func (s *SearchStepUpProvidersRequest) GetPageSize() *int {
+	if s == nil {
 		return nil
 	}
-	return o.PageSize
+	return s.PageSize
 }
 
-func (o *SearchStepUpProvidersRequest) GetPageToken() *string {
-	if o == nil {
+func (s *SearchStepUpProvidersRequest) GetPageToken() *string {
+	if s == nil {
 		return nil
 	}
-	return o.PageToken
+	return s.PageToken
 }
 
-func (o *SearchStepUpProvidersRequest) GetProviderType() *ProviderType {
-	if o == nil {
+func (s *SearchStepUpProvidersRequest) GetProviderType() *ProviderType {
+	if s == nil {
 		return nil
 	}
-	return o.ProviderType
+	return s.ProviderType
 }
 
-func (o *SearchStepUpProvidersRequest) GetQuery() *string {
-	if o == nil {
+func (s *SearchStepUpProvidersRequest) GetQuery() *string {
+	if s == nil {
 		return nil
 	}
-	return o.Query
+	return s.Query
 }
 
-func (o *SearchStepUpProvidersRequest) GetRefs() []StepUpProviderRef {
-	if o == nil {
+func (s *SearchStepUpProvidersRequest) GetRefs() []StepUpProviderRef {
+	if s == nil {
 		return nil
 	}
-	return o.Refs
+	return s.Refs
 }

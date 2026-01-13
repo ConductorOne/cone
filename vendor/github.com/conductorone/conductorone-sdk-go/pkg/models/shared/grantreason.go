@@ -22,6 +22,17 @@ func (e ReferenceStrength) ToPointer() *ReferenceStrength {
 	return &e
 }
 
+// IsExact returns true if the value matches a known enum value, false otherwise.
+func (e *ReferenceStrength) IsExact() bool {
+	if e != nil {
+		switch *e {
+		case "GRANT_REASON_REFERENCE_STRENGTH_UNSPECIFIED", "GRANT_REASON_REFERENCE_STRENGTH_WEAK", "GRANT_REASON_REFERENCE_STRENGTH_STRONG":
+			return true
+		}
+	}
+	return false
+}
+
 // The GrantReason message.
 type GrantReason struct {
 	// The ID of the app entitlement that is associated with the grant reason.
@@ -48,78 +59,78 @@ func (g GrantReason) MarshalJSON() ([]byte, error) {
 }
 
 func (g *GrantReason) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &g, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &g, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *GrantReason) GetAppEntitlementID() *string {
-	if o == nil {
+func (g *GrantReason) GetAppEntitlementID() *string {
+	if g == nil {
 		return nil
 	}
-	return o.AppEntitlementID
+	return g.AppEntitlementID
 }
 
-func (o *GrantReason) GetAppID() *string {
-	if o == nil {
+func (g *GrantReason) GetAppID() *string {
+	if g == nil {
 		return nil
 	}
-	return o.AppID
+	return g.AppID
 }
 
-func (o *GrantReason) GetAppUserID() *string {
-	if o == nil {
+func (g *GrantReason) GetAppUserID() *string {
+	if g == nil {
 		return nil
 	}
-	return o.AppUserID
+	return g.AppUserID
 }
 
-func (o *GrantReason) GetCreatedAt() *time.Time {
-	if o == nil {
+func (g *GrantReason) GetCreatedAt() *time.Time {
+	if g == nil {
 		return nil
 	}
-	return o.CreatedAt
+	return g.CreatedAt
 }
 
-func (o *GrantReason) GetDeletedAt() *time.Time {
-	if o == nil {
+func (g *GrantReason) GetDeletedAt() *time.Time {
+	if g == nil {
 		return nil
 	}
-	return o.DeletedAt
+	return g.DeletedAt
 }
 
-func (o *GrantReason) GetDerivedIDData() *string {
-	if o == nil {
+func (g *GrantReason) GetDerivedIDData() *string {
+	if g == nil {
 		return nil
 	}
-	return o.DerivedIDData
+	return g.DerivedIDData
 }
 
-func (o *GrantReason) GetDerivedIDType() *string {
-	if o == nil {
+func (g *GrantReason) GetDerivedIDType() *string {
+	if g == nil {
 		return nil
 	}
-	return o.DerivedIDType
+	return g.DerivedIDType
 }
 
-func (o *GrantReason) GetReasonExpiresAt() *time.Time {
-	if o == nil {
+func (g *GrantReason) GetReasonExpiresAt() *time.Time {
+	if g == nil {
 		return nil
 	}
-	return o.ReasonExpiresAt
+	return g.ReasonExpiresAt
 }
 
-func (o *GrantReason) GetReferenceStrength() *ReferenceStrength {
-	if o == nil {
+func (g *GrantReason) GetReferenceStrength() *ReferenceStrength {
+	if g == nil {
 		return nil
 	}
-	return o.ReferenceStrength
+	return g.ReferenceStrength
 }
 
-func (o *GrantReason) GetUpdatedAt() *time.Time {
-	if o == nil {
+func (g *GrantReason) GetUpdatedAt() *time.Time {
+	if g == nil {
 		return nil
 	}
-	return o.UpdatedAt
+	return g.UpdatedAt
 }

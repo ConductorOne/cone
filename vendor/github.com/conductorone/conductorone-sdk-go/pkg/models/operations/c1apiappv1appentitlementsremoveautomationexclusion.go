@@ -13,25 +13,25 @@ type C1APIAppV1AppEntitlementsRemoveAutomationExclusionRequest struct {
 	AppID                            string                                   `pathParam:"style=simple,explode=false,name=app_id"`
 }
 
-func (o *C1APIAppV1AppEntitlementsRemoveAutomationExclusionRequest) GetRemoveAutomationExclusionRequest() *shared.RemoveAutomationExclusionRequest {
-	if o == nil {
+func (c *C1APIAppV1AppEntitlementsRemoveAutomationExclusionRequest) GetRemoveAutomationExclusionRequest() *shared.RemoveAutomationExclusionRequest {
+	if c == nil {
 		return nil
 	}
-	return o.RemoveAutomationExclusionRequest
+	return c.RemoveAutomationExclusionRequest
 }
 
-func (o *C1APIAppV1AppEntitlementsRemoveAutomationExclusionRequest) GetAppEntitlementID() string {
-	if o == nil {
+func (c *C1APIAppV1AppEntitlementsRemoveAutomationExclusionRequest) GetAppEntitlementID() string {
+	if c == nil {
 		return ""
 	}
-	return o.AppEntitlementID
+	return c.AppEntitlementID
 }
 
-func (o *C1APIAppV1AppEntitlementsRemoveAutomationExclusionRequest) GetAppID() string {
-	if o == nil {
+func (c *C1APIAppV1AppEntitlementsRemoveAutomationExclusionRequest) GetAppID() string {
+	if c == nil {
 		return ""
 	}
-	return o.AppID
+	return c.AppID
 }
 
 type C1APIAppV1AppEntitlementsRemoveAutomationExclusionResponse struct {
@@ -45,30 +45,30 @@ type C1APIAppV1AppEntitlementsRemoveAutomationExclusionResponse struct {
 	RawResponse *http.Response
 }
 
-func (o *C1APIAppV1AppEntitlementsRemoveAutomationExclusionResponse) GetContentType() string {
-	if o == nil {
+func (c *C1APIAppV1AppEntitlementsRemoveAutomationExclusionResponse) GetContentType() string {
+	if c == nil {
 		return ""
 	}
-	return o.ContentType
+	return c.ContentType
 }
 
-func (o *C1APIAppV1AppEntitlementsRemoveAutomationExclusionResponse) GetRemoveAutomationExclusionResponse() *shared.RemoveAutomationExclusionResponse {
-	if o == nil {
+func (c *C1APIAppV1AppEntitlementsRemoveAutomationExclusionResponse) GetRemoveAutomationExclusionResponse() *shared.RemoveAutomationExclusionResponse {
+	if c == nil {
 		return nil
 	}
-	return o.RemoveAutomationExclusionResponse
+	return c.RemoveAutomationExclusionResponse
 }
 
-func (o *C1APIAppV1AppEntitlementsRemoveAutomationExclusionResponse) GetStatusCode() int {
-	if o == nil {
+func (c *C1APIAppV1AppEntitlementsRemoveAutomationExclusionResponse) GetStatusCode() int {
+	if c == nil {
 		return 0
 	}
-	return o.StatusCode
+	return c.StatusCode
 }
 
-func (o *C1APIAppV1AppEntitlementsRemoveAutomationExclusionResponse) GetRawResponse() *http.Response {
-	if o == nil {
+func (c *C1APIAppV1AppEntitlementsRemoveAutomationExclusionResponse) GetRawResponse() *http.Response {
+	if c == nil {
 		return nil
 	}
-	return o.RawResponse
+	return c.RawResponse
 }

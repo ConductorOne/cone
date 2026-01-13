@@ -11,9 +11,16 @@ package shared
 //   - reject
 //   - wait
 //   - form
+//   - action
 type PolicyStepInput struct {
 	// This policy step indicates that a ticket should have an approved outcome. This is a terminal approval state and is used to explicitly define the end of approval steps.
 	Accept *Accept `json:"accept,omitempty"`
+	// The Action message.
+	//
+	// This message contains a oneof named target. Only a single field of the following list may be set at a time:
+	//   - automation
+	//
+	Action *Action `json:"action,omitempty"`
 	// The Approval message.
 	//
 	// This message contains a oneof named typ. Only a single field of the following list may be set at a time:
@@ -39,48 +46,57 @@ type PolicyStepInput struct {
 	//
 	// This message contains a oneof named until. Only a single field of the following list may be set at a time:
 	//   - condition
+	//   - duration
+	//   - untilTime
 	//
 	Wait *Wait `json:"wait,omitempty"`
 }
 
-func (o *PolicyStepInput) GetAccept() *Accept {
-	if o == nil {
+func (p *PolicyStepInput) GetAccept() *Accept {
+	if p == nil {
 		return nil
 	}
-	return o.Accept
+	return p.Accept
 }
 
-func (o *PolicyStepInput) GetApproval() *ApprovalInput {
-	if o == nil {
+func (p *PolicyStepInput) GetAction() *Action {
+	if p == nil {
 		return nil
 	}
-	return o.Approval
+	return p.Action
 }
 
-func (o *PolicyStepInput) GetForm() *FormInput1 {
-	if o == nil {
+func (p *PolicyStepInput) GetApproval() *ApprovalInput {
+	if p == nil {
 		return nil
 	}
-	return o.Form
+	return p.Approval
 }
 
-func (o *PolicyStepInput) GetProvision() *Provision {
-	if o == nil {
+func (p *PolicyStepInput) GetForm() *FormInput1 {
+	if p == nil {
 		return nil
 	}
-	return o.Provision
+	return p.Form
 }
 
-func (o *PolicyStepInput) GetReject() *Reject {
-	if o == nil {
+func (p *PolicyStepInput) GetProvision() *Provision {
+	if p == nil {
 		return nil
 	}
-	return o.Reject
+	return p.Provision
 }
 
-func (o *PolicyStepInput) GetWait() *Wait {
-	if o == nil {
+func (p *PolicyStepInput) GetReject() *Reject {
+	if p == nil {
 		return nil
 	}
-	return o.Wait
+	return p.Reject
+}
+
+func (p *PolicyStepInput) GetWait() *Wait {
+	if p == nil {
+		return nil
+	}
+	return p.Wait
 }

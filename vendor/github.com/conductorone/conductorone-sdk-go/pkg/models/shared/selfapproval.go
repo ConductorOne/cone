@@ -8,27 +8,45 @@ type SelfApproval struct {
 	AssignedUserIds []string `json:"assignedUserIds,omitempty"`
 	// Configuration to allow a fallback if the identity user of the target app user cannot be determined.
 	Fallback *bool `json:"fallback,omitempty"`
+	// Configuration to specify which groups to fallback to if fallback is enabled and the identity user of the target app user cannot be determined.
+	FallbackGroupIds []AppEntitlementReference `json:"fallbackGroupIds,omitempty"`
 	// Configuration to specific which users to fallback to if fallback is enabled and the identity user of the target app user cannot be determined.
 	FallbackUserIds []string `json:"fallbackUserIds,omitempty"`
+	// Configuration to enable fallback for group fallback.
+	IsGroupFallbackEnabled *bool `json:"isGroupFallbackEnabled,omitempty"`
 }
 
-func (o *SelfApproval) GetAssignedUserIds() []string {
-	if o == nil {
+func (s *SelfApproval) GetAssignedUserIds() []string {
+	if s == nil {
 		return nil
 	}
-	return o.AssignedUserIds
+	return s.AssignedUserIds
 }
 
-func (o *SelfApproval) GetFallback() *bool {
-	if o == nil {
+func (s *SelfApproval) GetFallback() *bool {
+	if s == nil {
 		return nil
 	}
-	return o.Fallback
+	return s.Fallback
 }
 
-func (o *SelfApproval) GetFallbackUserIds() []string {
-	if o == nil {
+func (s *SelfApproval) GetFallbackGroupIds() []AppEntitlementReference {
+	if s == nil {
 		return nil
 	}
-	return o.FallbackUserIds
+	return s.FallbackGroupIds
+}
+
+func (s *SelfApproval) GetFallbackUserIds() []string {
+	if s == nil {
+		return nil
+	}
+	return s.FallbackUserIds
+}
+
+func (s *SelfApproval) GetIsGroupFallbackEnabled() *bool {
+	if s == nil {
+		return nil
+	}
+	return s.IsGroupFallbackEnabled
 }

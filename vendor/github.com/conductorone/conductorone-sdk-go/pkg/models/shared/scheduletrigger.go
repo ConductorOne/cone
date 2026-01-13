@@ -11,11 +11,17 @@ import (
 type ScheduleTrigger struct {
 	// The advanced field.
 	Advanced *bool `json:"advanced,omitempty"`
+	// The condition field.
+	Condition *string `json:"condition,omitempty"`
 	// The cronSpec field.
 	CronSpec *string `json:"cronSpec,omitempty"`
 	// The skipIfTrueCel field.
+	//
+	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
 	SkipIfTrueCel *string    `json:"skipIfTrueCel,omitempty"`
 	Start         *time.Time `json:"start,omitempty"`
+	// The timezone field.
+	Timezone *string `json:"timezone,omitempty"`
 }
 
 func (s ScheduleTrigger) MarshalJSON() ([]byte, error) {
@@ -23,36 +29,50 @@ func (s ScheduleTrigger) MarshalJSON() ([]byte, error) {
 }
 
 func (s *ScheduleTrigger) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &s, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *ScheduleTrigger) GetAdvanced() *bool {
-	if o == nil {
+func (s *ScheduleTrigger) GetAdvanced() *bool {
+	if s == nil {
 		return nil
 	}
-	return o.Advanced
+	return s.Advanced
 }
 
-func (o *ScheduleTrigger) GetCronSpec() *string {
-	if o == nil {
+func (s *ScheduleTrigger) GetCondition() *string {
+	if s == nil {
 		return nil
 	}
-	return o.CronSpec
+	return s.Condition
 }
 
-func (o *ScheduleTrigger) GetSkipIfTrueCel() *string {
-	if o == nil {
+func (s *ScheduleTrigger) GetCronSpec() *string {
+	if s == nil {
 		return nil
 	}
-	return o.SkipIfTrueCel
+	return s.CronSpec
 }
 
-func (o *ScheduleTrigger) GetStart() *time.Time {
-	if o == nil {
+func (s *ScheduleTrigger) GetSkipIfTrueCel() *string {
+	if s == nil {
 		return nil
 	}
-	return o.Start
+	return s.SkipIfTrueCel
+}
+
+func (s *ScheduleTrigger) GetStart() *time.Time {
+	if s == nil {
+		return nil
+	}
+	return s.Start
+}
+
+func (s *ScheduleTrigger) GetTimezone() *string {
+	if s == nil {
+		return nil
+	}
+	return s.Timezone
 }

@@ -21,29 +21,29 @@ func (c CompletedAction) MarshalJSON() ([]byte, error) {
 }
 
 func (c *CompletedAction) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &c, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &c, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *CompletedAction) GetCompletedAt() *time.Time {
-	if o == nil {
+func (c *CompletedAction) GetCompletedAt() *time.Time {
+	if c == nil {
 		return nil
 	}
-	return o.CompletedAt
+	return c.CompletedAt
 }
 
-func (o *CompletedAction) GetEntitlements() []AppEntitlementReference {
-	if o == nil {
+func (c *CompletedAction) GetEntitlements() []AppEntitlementReference {
+	if c == nil {
 		return nil
 	}
-	return o.Entitlements
+	return c.Entitlements
 }
 
-func (o *CompletedAction) GetUserID() *string {
-	if o == nil {
+func (c *CompletedAction) GetUserID() *string {
+	if c == nil {
 		return nil
 	}
-	return o.UserID
+	return c.UserID
 }

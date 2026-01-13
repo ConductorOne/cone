@@ -18,24 +18,24 @@ func (t TaskActionsServiceProcessNowResponseExpanded) MarshalJSON() ([]byte, err
 }
 
 func (t *TaskActionsServiceProcessNowResponseExpanded) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &t, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &t, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *TaskActionsServiceProcessNowResponseExpanded) GetAtType() *string {
-	if o == nil {
+func (t *TaskActionsServiceProcessNowResponseExpanded) GetAtType() *string {
+	if t == nil {
 		return nil
 	}
-	return o.AtType
+	return t.AtType
 }
 
-func (o *TaskActionsServiceProcessNowResponseExpanded) GetAdditionalProperties() map[string]any {
-	if o == nil {
+func (t *TaskActionsServiceProcessNowResponseExpanded) GetAdditionalProperties() map[string]any {
+	if t == nil {
 		return nil
 	}
-	return o.AdditionalProperties
+	return t.AdditionalProperties
 }
 
 // The TaskActionsServiceProcessNowResponse message.
@@ -46,16 +46,16 @@ type TaskActionsServiceProcessNowResponse struct {
 	Expanded []TaskActionsServiceProcessNowResponseExpanded `json:"expanded,omitempty"`
 }
 
-func (o *TaskActionsServiceProcessNowResponse) GetTaskView() *TaskView {
-	if o == nil {
+func (t *TaskActionsServiceProcessNowResponse) GetTaskView() *TaskView {
+	if t == nil {
 		return nil
 	}
-	return o.TaskView
+	return t.TaskView
 }
 
-func (o *TaskActionsServiceProcessNowResponse) GetExpanded() []TaskActionsServiceProcessNowResponseExpanded {
-	if o == nil {
+func (t *TaskActionsServiceProcessNowResponse) GetExpanded() []TaskActionsServiceProcessNowResponseExpanded {
+	if t == nil {
 		return nil
 	}
-	return o.Expanded
+	return t.Expanded
 }

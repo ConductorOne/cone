@@ -10,16 +10,16 @@ type TaskActionsServiceCloseRequest struct {
 	Comment *string `json:"comment,omitempty"`
 }
 
-func (o *TaskActionsServiceCloseRequest) GetTaskExpandMask() *TaskExpandMask {
-	if o == nil {
+func (t *TaskActionsServiceCloseRequest) GetTaskExpandMask() *TaskExpandMask {
+	if t == nil {
 		return nil
 	}
-	return o.TaskExpandMask
+	return t.TaskExpandMask
 }
 
-func (o *TaskActionsServiceCloseRequest) GetComment() *string {
-	if o == nil {
+func (t *TaskActionsServiceCloseRequest) GetComment() *string {
+	if t == nil {
 		return nil
 	}
-	return o.Comment
+	return t.Comment
 }

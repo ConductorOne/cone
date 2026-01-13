@@ -16,32 +16,34 @@ type C1APIAppV1AppResourceSearchSearchAppResourceTypesResponse struct {
 	StatusCode int
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
+
+	Next func() (*C1APIAppV1AppResourceSearchSearchAppResourceTypesResponse, error)
 }
 
-func (o *C1APIAppV1AppResourceSearchSearchAppResourceTypesResponse) GetContentType() string {
-	if o == nil {
+func (c *C1APIAppV1AppResourceSearchSearchAppResourceTypesResponse) GetContentType() string {
+	if c == nil {
 		return ""
 	}
-	return o.ContentType
+	return c.ContentType
 }
 
-func (o *C1APIAppV1AppResourceSearchSearchAppResourceTypesResponse) GetSearchAppResourceTypesResponse() *shared.SearchAppResourceTypesResponse {
-	if o == nil {
+func (c *C1APIAppV1AppResourceSearchSearchAppResourceTypesResponse) GetSearchAppResourceTypesResponse() *shared.SearchAppResourceTypesResponse {
+	if c == nil {
 		return nil
 	}
-	return o.SearchAppResourceTypesResponse
+	return c.SearchAppResourceTypesResponse
 }
 
-func (o *C1APIAppV1AppResourceSearchSearchAppResourceTypesResponse) GetStatusCode() int {
-	if o == nil {
+func (c *C1APIAppV1AppResourceSearchSearchAppResourceTypesResponse) GetStatusCode() int {
+	if c == nil {
 		return 0
 	}
-	return o.StatusCode
+	return c.StatusCode
 }
 
-func (o *C1APIAppV1AppResourceSearchSearchAppResourceTypesResponse) GetRawResponse() *http.Response {
-	if o == nil {
+func (c *C1APIAppV1AppResourceSearchSearchAppResourceTypesResponse) GetRawResponse() *http.Response {
+	if c == nil {
 		return nil
 	}
-	return o.RawResponse
+	return c.RawResponse
 }

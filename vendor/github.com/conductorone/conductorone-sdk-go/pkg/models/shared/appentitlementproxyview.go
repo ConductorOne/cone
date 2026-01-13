@@ -20,37 +20,37 @@ type AppEntitlementProxyView struct {
 	SrcAppPath *string `json:"srcAppPath,omitempty"`
 }
 
-func (o *AppEntitlementProxyView) GetAppEntitlementProxy() *AppEntitlementProxy {
-	if o == nil {
+func (a *AppEntitlementProxyView) GetAppEntitlementProxy() *AppEntitlementProxy {
+	if a == nil {
 		return nil
 	}
-	return o.AppEntitlementProxy
+	return a.AppEntitlementProxy
 }
 
-func (o *AppEntitlementProxyView) GetDstAppEntitlementPath() *string {
-	if o == nil {
+func (a *AppEntitlementProxyView) GetDstAppEntitlementPath() *string {
+	if a == nil {
 		return nil
 	}
-	return o.DstAppEntitlementPath
+	return a.DstAppEntitlementPath
 }
 
-func (o *AppEntitlementProxyView) GetDstAppPath() *string {
-	if o == nil {
+func (a *AppEntitlementProxyView) GetDstAppPath() *string {
+	if a == nil {
 		return nil
 	}
-	return o.DstAppPath
+	return a.DstAppPath
 }
 
-func (o *AppEntitlementProxyView) GetSrcAppEntitlementPath() *string {
-	if o == nil {
+func (a *AppEntitlementProxyView) GetSrcAppEntitlementPath() *string {
+	if a == nil {
 		return nil
 	}
-	return o.SrcAppEntitlementPath
+	return a.SrcAppEntitlementPath
 }
 
-func (o *AppEntitlementProxyView) GetSrcAppPath() *string {
-	if o == nil {
+func (a *AppEntitlementProxyView) GetSrcAppPath() *string {
+	if a == nil {
 		return nil
 	}
-	return o.SrcAppPath
+	return a.SrcAppPath
 }

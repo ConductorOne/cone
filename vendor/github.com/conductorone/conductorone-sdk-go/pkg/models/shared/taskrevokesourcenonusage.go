@@ -18,22 +18,22 @@ func (t TaskRevokeSourceNonUsage) MarshalJSON() ([]byte, error) {
 }
 
 func (t *TaskRevokeSourceNonUsage) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &t, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &t, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *TaskRevokeSourceNonUsage) GetExpiresAt() *time.Time {
-	if o == nil {
+func (t *TaskRevokeSourceNonUsage) GetExpiresAt() *time.Time {
+	if t == nil {
 		return nil
 	}
-	return o.ExpiresAt
+	return t.ExpiresAt
 }
 
-func (o *TaskRevokeSourceNonUsage) GetLastLogin() *time.Time {
-	if o == nil {
+func (t *TaskRevokeSourceNonUsage) GetLastLogin() *time.Time {
+	if t == nil {
 		return nil
 	}
-	return o.LastLogin
+	return t.LastLogin
 }

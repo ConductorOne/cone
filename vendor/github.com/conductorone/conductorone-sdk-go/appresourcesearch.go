@@ -17,6 +17,7 @@ import (
 	"net/http"
 	"net/url"
 	"strconv"
+	"strings"
 )
 
 type AppResourceSearch struct {
@@ -65,7 +66,7 @@ func (s *AppResourceSearch) SearchAppResourceTypes(ctx context.Context, request 
 		BaseURL:          baseURL,
 		Context:          ctx,
 		OperationID:      "c1.api.app.v1.AppResourceSearch.SearchAppResourceTypes",
-		OAuth2Scopes:     []string{},
+		OAuth2Scopes:     nil,
 		SecuritySource:   s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
@@ -198,6 +199,60 @@ func (s *AppResourceSearch) SearchAppResourceTypes(ctx context.Context, request 
 		ContentType: httpRes.Header.Get("Content-Type"),
 		RawResponse: httpRes,
 	}
+	res.Next = func() (*operations.C1APIAppV1AppResourceSearchSearchAppResourceTypesResponse, error) {
+		rawBody, err := utils.ConsumeRawBody(httpRes)
+		if err != nil {
+			return nil, err
+		}
+
+		b, err := ajson.Unmarshal(rawBody)
+		if err != nil {
+			return nil, err
+		}
+		nC, err := ajson.Eval(b, "$.nextPageToken")
+		if err != nil {
+			return nil, err
+		}
+		var nCVal string
+
+		if nC.IsNumeric() {
+			numVal, err := nC.GetNumeric()
+			if err != nil {
+				return nil, err
+			}
+			// GetNumeric returns as float64 so convert to the appropriate type.
+			nCVal = strconv.FormatFloat(numVal, 'f', 0, 64)
+		} else {
+			val, err := nC.Value()
+			if err != nil {
+				return nil, err
+			}
+			if val == nil {
+				return nil, nil
+			}
+			nCVal = val.(string)
+			if strings.TrimSpace(nCVal) == "" {
+				return nil, nil
+			}
+		}
+
+		return s.SearchAppResourceTypes(
+			ctx,
+			&shared.SearchAppResourceTypesRequest{
+				AppIds:                      request.AppIds,
+				AppUserIds:                  request.AppUserIds,
+				DisplayName:                 request.DisplayName,
+				ExcludeResourceTypeIds:      request.ExcludeResourceTypeIds,
+				ExcludeResourceTypeTraitIds: request.ExcludeResourceTypeTraitIds,
+				PageSize:                    request.PageSize,
+				PageToken:                   &nCVal,
+				Query:                       request.Query,
+				ResourceTypeIds:             request.ResourceTypeIds,
+				ResourceTypeTraitIds:        request.ResourceTypeTraitIds,
+			},
+			opts...,
+		)
+	}
 
 	switch {
 	case httpRes.StatusCode == 200:
@@ -277,7 +332,7 @@ func (s *AppResourceSearch) SearchAppResources(ctx context.Context, request *sha
 		BaseURL:          baseURL,
 		Context:          ctx,
 		OperationID:      "c1.api.app.v1.AppResourceSearch.SearchAppResources",
-		OAuth2Scopes:     []string{},
+		OAuth2Scopes:     nil,
 		SecuritySource:   s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
@@ -442,6 +497,9 @@ func (s *AppResourceSearch) SearchAppResources(ctx context.Context, request *sha
 				return nil, nil
 			}
 			nCVal = val.(string)
+			if strings.TrimSpace(nCVal) == "" {
+				return nil, nil
+			}
 		}
 
 		return s.SearchAppResources(
@@ -452,6 +510,7 @@ func (s *AppResourceSearch) SearchAppResources(ctx context.Context, request *sha
 				ExcludeDeletedResourceBindings: request.ExcludeDeletedResourceBindings,
 				ExcludeResourceIds:             request.ExcludeResourceIds,
 				ExcludeResourceTypeTraitIds:    request.ExcludeResourceTypeTraitIds,
+				OwnerUserIds:                   request.OwnerUserIds,
 				PageSize:                       request.PageSize,
 				PageToken:                      &nCVal,
 				Query:                          request.Query,

@@ -13,25 +13,25 @@ type C1APIAppV1AppEntitlementsDeleteAutomationRequest struct {
 	AppID                   string                          `pathParam:"style=simple,explode=false,name=app_id"`
 }
 
-func (o *C1APIAppV1AppEntitlementsDeleteAutomationRequest) GetDeleteAutomationRequest() *shared.DeleteAutomationRequest {
-	if o == nil {
+func (c *C1APIAppV1AppEntitlementsDeleteAutomationRequest) GetDeleteAutomationRequest() *shared.DeleteAutomationRequest {
+	if c == nil {
 		return nil
 	}
-	return o.DeleteAutomationRequest
+	return c.DeleteAutomationRequest
 }
 
-func (o *C1APIAppV1AppEntitlementsDeleteAutomationRequest) GetAppEntitlementID() string {
-	if o == nil {
+func (c *C1APIAppV1AppEntitlementsDeleteAutomationRequest) GetAppEntitlementID() string {
+	if c == nil {
 		return ""
 	}
-	return o.AppEntitlementID
+	return c.AppEntitlementID
 }
 
-func (o *C1APIAppV1AppEntitlementsDeleteAutomationRequest) GetAppID() string {
-	if o == nil {
+func (c *C1APIAppV1AppEntitlementsDeleteAutomationRequest) GetAppID() string {
+	if c == nil {
 		return ""
 	}
-	return o.AppID
+	return c.AppID
 }
 
 type C1APIAppV1AppEntitlementsDeleteAutomationResponse struct {
@@ -45,30 +45,30 @@ type C1APIAppV1AppEntitlementsDeleteAutomationResponse struct {
 	RawResponse *http.Response
 }
 
-func (o *C1APIAppV1AppEntitlementsDeleteAutomationResponse) GetContentType() string {
-	if o == nil {
+func (c *C1APIAppV1AppEntitlementsDeleteAutomationResponse) GetContentType() string {
+	if c == nil {
 		return ""
 	}
-	return o.ContentType
+	return c.ContentType
 }
 
-func (o *C1APIAppV1AppEntitlementsDeleteAutomationResponse) GetDeleteAutomationResponse() *shared.DeleteAutomationResponse {
-	if o == nil {
+func (c *C1APIAppV1AppEntitlementsDeleteAutomationResponse) GetDeleteAutomationResponse() *shared.DeleteAutomationResponse {
+	if c == nil {
 		return nil
 	}
-	return o.DeleteAutomationResponse
+	return c.DeleteAutomationResponse
 }
 
-func (o *C1APIAppV1AppEntitlementsDeleteAutomationResponse) GetStatusCode() int {
-	if o == nil {
+func (c *C1APIAppV1AppEntitlementsDeleteAutomationResponse) GetStatusCode() int {
+	if c == nil {
 		return 0
 	}
-	return o.StatusCode
+	return c.StatusCode
 }
 
-func (o *C1APIAppV1AppEntitlementsDeleteAutomationResponse) GetRawResponse() *http.Response {
-	if o == nil {
+func (c *C1APIAppV1AppEntitlementsDeleteAutomationResponse) GetRawResponse() *http.Response {
+	if c == nil {
 		return nil
 	}
-	return o.RawResponse
+	return c.RawResponse
 }

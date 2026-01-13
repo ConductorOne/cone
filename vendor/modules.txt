@@ -26,7 +26,7 @@ github.com/conductorone/baton-sdk/pb/c1/config/v1
 github.com/conductorone/baton-sdk/pb/c1/connector/v2
 github.com/conductorone/baton-sdk/pkg/crypto/providers
 github.com/conductorone/baton-sdk/pkg/crypto/providers/jwk
-# github.com/conductorone/conductorone-sdk-go v1.26.0
+# github.com/conductorone/conductorone-sdk-go v1.27.1
 ## explicit; go 1.21
 github.com/conductorone/conductorone-sdk-go
 github.com/conductorone/conductorone-sdk-go/internal/config
@@ -34,6 +34,7 @@ github.com/conductorone/conductorone-sdk-go/internal/hooks
 github.com/conductorone/conductorone-sdk-go/pkg/models/operations
 github.com/conductorone/conductorone-sdk-go/pkg/models/sdkerrors
 github.com/conductorone/conductorone-sdk-go/pkg/models/shared
+github.com/conductorone/conductorone-sdk-go/pkg/optionalnullable
 github.com/conductorone/conductorone-sdk-go/pkg/retry
 github.com/conductorone/conductorone-sdk-go/pkg/types
 github.com/conductorone/conductorone-sdk-go/pkg/utils
@@ -46,9 +47,6 @@ github.com/containerd/console
 github.com/envoyproxy/protoc-gen-validate/validate
 # github.com/ericlagergren/decimal v0.0.0-20240411145413-00de7ca16731
 ## explicit; go 1.16
-github.com/ericlagergren/decimal
-github.com/ericlagergren/decimal/internal/arith
-github.com/ericlagergren/decimal/internal/c
 # github.com/fsnotify/fsnotify v1.9.0
 ## explicit; go 1.17
 github.com/fsnotify/fsnotify
@@ -174,7 +172,6 @@ golang.org/x/crypto/ssh
 golang.org/x/crypto/ssh/internal/bcrypt_pbkdf
 # golang.org/x/exp v0.0.0-20250620022241-b7579e27df2b
 ## explicit; go 1.23.0
-golang.org/x/exp/maps
 golang.org/x/exp/slices
 # golang.org/x/net v0.41.0
 ## explicit; go 1.23.0

@@ -14,16 +14,16 @@ type CreateAutomationResponseInput struct {
 	WebhookHmacSecret *string `json:"webhookHmacSecret,omitempty"`
 }
 
-func (o *CreateAutomationResponseInput) GetAutomation() *Automation {
-	if o == nil {
+func (c *CreateAutomationResponseInput) GetAutomation() *Automation {
+	if c == nil {
 		return nil
 	}
-	return o.Automation
+	return c.Automation
 }
 
-func (o *CreateAutomationResponseInput) GetWebhookHmacSecret() *string {
-	if o == nil {
+func (c *CreateAutomationResponseInput) GetWebhookHmacSecret() *string {
+	if c == nil {
 		return nil
 	}
-	return o.WebhookHmacSecret
+	return c.WebhookHmacSecret
 }

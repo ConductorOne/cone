@@ -8,9 +8,9 @@ type AppEntitlementProxyExpandMask struct {
 	Paths []string `json:"paths,omitempty"`
 }
 
-func (o *AppEntitlementProxyExpandMask) GetPaths() []string {
-	if o == nil {
+func (a *AppEntitlementProxyExpandMask) GetPaths() []string {
+	if a == nil {
 		return nil
 	}
-	return o.Paths
+	return a.Paths
 }

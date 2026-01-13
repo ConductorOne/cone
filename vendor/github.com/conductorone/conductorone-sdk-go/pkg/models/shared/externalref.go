@@ -14,6 +14,17 @@ func (e ExternalRefSource) ToPointer() *ExternalRefSource {
 	return &e
 }
 
+// IsExact returns true if the value matches a known enum value, false otherwise.
+func (e *ExternalRefSource) IsExact() bool {
+	if e != nil {
+		switch *e {
+		case "UNSPECIFIED", "JIRA":
+			return true
+		}
+	}
+	return false
+}
+
 // ExternalRef - A reference to an external source. This value is unused currently, but may be brought back.
 type ExternalRef struct {
 	// The source of the external reference.
@@ -24,23 +35,23 @@ type ExternalRef struct {
 	URL *string `json:"url,omitempty"`
 }
 
-func (o *ExternalRef) GetExternalRefSource() *ExternalRefSource {
-	if o == nil {
+func (e *ExternalRef) GetExternalRefSource() *ExternalRefSource {
+	if e == nil {
 		return nil
 	}
-	return o.ExternalRefSource
+	return e.ExternalRefSource
 }
 
-func (o *ExternalRef) GetName() *string {
-	if o == nil {
+func (e *ExternalRef) GetName() *string {
+	if e == nil {
 		return nil
 	}
-	return o.Name
+	return e.Name
 }
 
-func (o *ExternalRef) GetURL() *string {
-	if o == nil {
+func (e *ExternalRef) GetURL() *string {
+	if e == nil {
 		return nil
 	}
-	return o.URL
+	return e.URL
 }

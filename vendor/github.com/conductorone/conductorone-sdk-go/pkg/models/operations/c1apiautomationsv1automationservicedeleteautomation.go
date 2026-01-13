@@ -12,18 +12,18 @@ type C1APIAutomationsV1AutomationServiceDeleteAutomationRequest struct {
 	ID                      string                          `pathParam:"style=simple,explode=false,name=id"`
 }
 
-func (o *C1APIAutomationsV1AutomationServiceDeleteAutomationRequest) GetDeleteAutomationRequest() *shared.DeleteAutomationRequest {
-	if o == nil {
+func (c *C1APIAutomationsV1AutomationServiceDeleteAutomationRequest) GetDeleteAutomationRequest() *shared.DeleteAutomationRequest {
+	if c == nil {
 		return nil
 	}
-	return o.DeleteAutomationRequest
+	return c.DeleteAutomationRequest
 }
 
-func (o *C1APIAutomationsV1AutomationServiceDeleteAutomationRequest) GetID() string {
-	if o == nil {
+func (c *C1APIAutomationsV1AutomationServiceDeleteAutomationRequest) GetID() string {
+	if c == nil {
 		return ""
 	}
-	return o.ID
+	return c.ID
 }
 
 type C1APIAutomationsV1AutomationServiceDeleteAutomationResponse struct {
@@ -37,30 +37,30 @@ type C1APIAutomationsV1AutomationServiceDeleteAutomationResponse struct {
 	RawResponse *http.Response
 }
 
-func (o *C1APIAutomationsV1AutomationServiceDeleteAutomationResponse) GetContentType() string {
-	if o == nil {
+func (c *C1APIAutomationsV1AutomationServiceDeleteAutomationResponse) GetContentType() string {
+	if c == nil {
 		return ""
 	}
-	return o.ContentType
+	return c.ContentType
 }
 
-func (o *C1APIAutomationsV1AutomationServiceDeleteAutomationResponse) GetDeleteAutomationResponse() *shared.DeleteAutomationResponse {
-	if o == nil {
+func (c *C1APIAutomationsV1AutomationServiceDeleteAutomationResponse) GetDeleteAutomationResponse() *shared.DeleteAutomationResponse {
+	if c == nil {
 		return nil
 	}
-	return o.DeleteAutomationResponse
+	return c.DeleteAutomationResponse
 }
 
-func (o *C1APIAutomationsV1AutomationServiceDeleteAutomationResponse) GetStatusCode() int {
-	if o == nil {
+func (c *C1APIAutomationsV1AutomationServiceDeleteAutomationResponse) GetStatusCode() int {
+	if c == nil {
 		return 0
 	}
-	return o.StatusCode
+	return c.StatusCode
 }
 
-func (o *C1APIAutomationsV1AutomationServiceDeleteAutomationResponse) GetRawResponse() *http.Response {
-	if o == nil {
+func (c *C1APIAutomationsV1AutomationServiceDeleteAutomationResponse) GetRawResponse() *http.Response {
+	if c == nil {
 		return nil
 	}
-	return o.RawResponse
+	return c.RawResponse
 }

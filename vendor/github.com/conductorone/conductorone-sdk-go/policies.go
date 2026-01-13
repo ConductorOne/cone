@@ -63,7 +63,7 @@ func (s *Policies) Create(ctx context.Context, request *shared.CreatePolicyReque
 		BaseURL:          baseURL,
 		Context:          ctx,
 		OperationID:      "c1.api.policy.v1.Policies.Create",
-		OAuth2Scopes:     []string{},
+		OAuth2Scopes:     nil,
 		SecuritySource:   s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
@@ -275,7 +275,7 @@ func (s *Policies) Delete(ctx context.Context, request operations.C1APIPolicyV1P
 		BaseURL:          baseURL,
 		Context:          ctx,
 		OperationID:      "c1.api.policy.v1.Policies.Delete",
-		OAuth2Scopes:     []string{},
+		OAuth2Scopes:     nil,
 		SecuritySource:   s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "DeletePolicyRequest", "json", `request:"mediaType=application/json"`)
@@ -487,7 +487,7 @@ func (s *Policies) Get(ctx context.Context, request operations.C1APIPolicyV1Poli
 		BaseURL:          baseURL,
 		Context:          ctx,
 		OperationID:      "c1.api.policy.v1.Policies.Get",
-		OAuth2Scopes:     []string{},
+		OAuth2Scopes:     nil,
 		SecuritySource:   s.sdkConfiguration.Security,
 	}
 
@@ -692,7 +692,7 @@ func (s *Policies) List(ctx context.Context, request operations.C1APIPolicyV1Pol
 		BaseURL:          baseURL,
 		Context:          ctx,
 		OperationID:      "c1.api.policy.v1.Policies.List",
-		OAuth2Scopes:     []string{},
+		OAuth2Scopes:     nil,
 		SecuritySource:   s.sdkConfiguration.Security,
 	}
 
@@ -714,7 +714,7 @@ func (s *Policies) List(ctx context.Context, request operations.C1APIPolicyV1Pol
 	req.Header.Set("Accept", "application/json")
 	req.Header.Set("User-Agent", s.sdkConfiguration.UserAgent)
 
-	if err := utils.PopulateQueryParams(ctx, req, request, nil); err != nil {
+	if err := utils.PopulateQueryParams(ctx, req, request, nil, nil); err != nil {
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
@@ -901,7 +901,7 @@ func (s *Policies) Update(ctx context.Context, request operations.C1APIPolicyV1P
 		BaseURL:          baseURL,
 		Context:          ctx,
 		OperationID:      "c1.api.policy.v1.Policies.Update",
-		OAuth2Scopes:     []string{},
+		OAuth2Scopes:     nil,
 		SecuritySource:   s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "UpdatePolicyRequest", "json", `request:"mediaType=application/json"`)

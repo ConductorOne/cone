@@ -12,18 +12,18 @@ type C1APIRequestcatalogV1RequestCatalogManagementServiceUpdateRequest struct {
 	ID                                           string                                               `pathParam:"style=simple,explode=false,name=id"`
 }
 
-func (o *C1APIRequestcatalogV1RequestCatalogManagementServiceUpdateRequest) GetRequestCatalogManagementServiceUpdateRequest() *shared.RequestCatalogManagementServiceUpdateRequest {
-	if o == nil {
+func (c *C1APIRequestcatalogV1RequestCatalogManagementServiceUpdateRequest) GetRequestCatalogManagementServiceUpdateRequest() *shared.RequestCatalogManagementServiceUpdateRequest {
+	if c == nil {
 		return nil
 	}
-	return o.RequestCatalogManagementServiceUpdateRequest
+	return c.RequestCatalogManagementServiceUpdateRequest
 }
 
-func (o *C1APIRequestcatalogV1RequestCatalogManagementServiceUpdateRequest) GetID() string {
-	if o == nil {
+func (c *C1APIRequestcatalogV1RequestCatalogManagementServiceUpdateRequest) GetID() string {
+	if c == nil {
 		return ""
 	}
-	return o.ID
+	return c.ID
 }
 
 type C1APIRequestcatalogV1RequestCatalogManagementServiceUpdateResponse struct {
@@ -37,30 +37,30 @@ type C1APIRequestcatalogV1RequestCatalogManagementServiceUpdateResponse struct {
 	RawResponse *http.Response
 }
 
-func (o *C1APIRequestcatalogV1RequestCatalogManagementServiceUpdateResponse) GetContentType() string {
-	if o == nil {
+func (c *C1APIRequestcatalogV1RequestCatalogManagementServiceUpdateResponse) GetContentType() string {
+	if c == nil {
 		return ""
 	}
-	return o.ContentType
+	return c.ContentType
 }
 
-func (o *C1APIRequestcatalogV1RequestCatalogManagementServiceUpdateResponse) GetRequestCatalogManagementServiceGetResponse() *shared.RequestCatalogManagementServiceGetResponse {
-	if o == nil {
+func (c *C1APIRequestcatalogV1RequestCatalogManagementServiceUpdateResponse) GetRequestCatalogManagementServiceGetResponse() *shared.RequestCatalogManagementServiceGetResponse {
+	if c == nil {
 		return nil
 	}
-	return o.RequestCatalogManagementServiceGetResponse
+	return c.RequestCatalogManagementServiceGetResponse
 }
 
-func (o *C1APIRequestcatalogV1RequestCatalogManagementServiceUpdateResponse) GetStatusCode() int {
-	if o == nil {
+func (c *C1APIRequestcatalogV1RequestCatalogManagementServiceUpdateResponse) GetStatusCode() int {
+	if c == nil {
 		return 0
 	}
-	return o.StatusCode
+	return c.StatusCode
 }
 
-func (o *C1APIRequestcatalogV1RequestCatalogManagementServiceUpdateResponse) GetRawResponse() *http.Response {
-	if o == nil {
+func (c *C1APIRequestcatalogV1RequestCatalogManagementServiceUpdateResponse) GetRawResponse() *http.Response {
+	if c == nil {
 		return nil
 	}
-	return o.RawResponse
+	return c.RawResponse
 }

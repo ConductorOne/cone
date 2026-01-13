@@ -17,15 +17,15 @@ func (c ConditionSucceeded) MarshalJSON() ([]byte, error) {
 }
 
 func (c *ConditionSucceeded) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &c, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &c, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *ConditionSucceeded) GetSucceededAt() *time.Time {
-	if o == nil {
+func (c *ConditionSucceeded) GetSucceededAt() *time.Time {
+	if c == nil {
 		return nil
 	}
-	return o.SucceededAt
+	return c.SucceededAt
 }

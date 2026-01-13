@@ -7,17 +7,54 @@ import (
 	"time"
 )
 
-type AccountTypes string
+type TaskSearchRequestAccountTypes string
 
 const (
-	AccountTypesAppUserTypeUnspecified    AccountTypes = "APP_USER_TYPE_UNSPECIFIED"
-	AccountTypesAppUserTypeUser           AccountTypes = "APP_USER_TYPE_USER"
-	AccountTypesAppUserTypeServiceAccount AccountTypes = "APP_USER_TYPE_SERVICE_ACCOUNT"
-	AccountTypesAppUserTypeSystemAccount  AccountTypes = "APP_USER_TYPE_SYSTEM_ACCOUNT"
+	TaskSearchRequestAccountTypesAppUserTypeUnspecified    TaskSearchRequestAccountTypes = "APP_USER_TYPE_UNSPECIFIED"
+	TaskSearchRequestAccountTypesAppUserTypeUser           TaskSearchRequestAccountTypes = "APP_USER_TYPE_USER"
+	TaskSearchRequestAccountTypesAppUserTypeServiceAccount TaskSearchRequestAccountTypes = "APP_USER_TYPE_SERVICE_ACCOUNT"
+	TaskSearchRequestAccountTypesAppUserTypeSystemAccount  TaskSearchRequestAccountTypes = "APP_USER_TYPE_SYSTEM_ACCOUNT"
 )
 
-func (e AccountTypes) ToPointer() *AccountTypes {
+func (e TaskSearchRequestAccountTypes) ToPointer() *TaskSearchRequestAccountTypes {
 	return &e
+}
+
+// IsExact returns true if the value matches a known enum value, false otherwise.
+func (e *TaskSearchRequestAccountTypes) IsExact() bool {
+	if e != nil {
+		switch *e {
+		case "APP_USER_TYPE_UNSPECIFIED", "APP_USER_TYPE_USER", "APP_USER_TYPE_SERVICE_ACCOUNT", "APP_USER_TYPE_SYSTEM_ACCOUNT":
+			return true
+		}
+	}
+	return false
+}
+
+type CertifyOutcomes string
+
+const (
+	CertifyOutcomesCertifyOutcomeUnspecified  CertifyOutcomes = "CERTIFY_OUTCOME_UNSPECIFIED"
+	CertifyOutcomesCertifyOutcomeCertified    CertifyOutcomes = "CERTIFY_OUTCOME_CERTIFIED"
+	CertifyOutcomesCertifyOutcomeDecertified  CertifyOutcomes = "CERTIFY_OUTCOME_DECERTIFIED"
+	CertifyOutcomesCertifyOutcomeError        CertifyOutcomes = "CERTIFY_OUTCOME_ERROR"
+	CertifyOutcomesCertifyOutcomeCancelled    CertifyOutcomes = "CERTIFY_OUTCOME_CANCELLED"
+	CertifyOutcomesCertifyOutcomeWaitTimedOut CertifyOutcomes = "CERTIFY_OUTCOME_WAIT_TIMED_OUT"
+)
+
+func (e CertifyOutcomes) ToPointer() *CertifyOutcomes {
+	return &e
+}
+
+// IsExact returns true if the value matches a known enum value, false otherwise.
+func (e *CertifyOutcomes) IsExact() bool {
+	if e != nil {
+		switch *e {
+		case "CERTIFY_OUTCOME_UNSPECIFIED", "CERTIFY_OUTCOME_CERTIFIED", "CERTIFY_OUTCOME_DECERTIFIED", "CERTIFY_OUTCOME_ERROR", "CERTIFY_OUTCOME_CANCELLED", "CERTIFY_OUTCOME_WAIT_TIMED_OUT":
+			return true
+		}
+	}
+	return false
 }
 
 // CurrentStep - Search tasks that have this type of step as the current step.
@@ -31,6 +68,17 @@ const (
 
 func (e CurrentStep) ToPointer() *CurrentStep {
 	return &e
+}
+
+// IsExact returns true if the value matches a known enum value, false otherwise.
+func (e *CurrentStep) IsExact() bool {
+	if e != nil {
+		switch *e {
+		case "TASK_SEARCH_CURRENT_STEP_UNSPECIFIED", "TASK_SEARCH_CURRENT_STEP_APPROVAL", "TASK_SEARCH_CURRENT_STEP_PROVISION":
+			return true
+		}
+	}
+	return false
 }
 
 // EmergencyStatus - Search tasks that are or are not emergency access.
@@ -47,22 +95,97 @@ func (e EmergencyStatus) ToPointer() *EmergencyStatus {
 	return &e
 }
 
+// IsExact returns true if the value matches a known enum value, false otherwise.
+func (e *EmergencyStatus) IsExact() bool {
+	if e != nil {
+		switch *e {
+		case "UNSPECIFIED", "ALL", "NON_EMERGENCY", "EMERGENCY":
+			return true
+		}
+	}
+	return false
+}
+
+type GrantOutcomes string
+
+const (
+	GrantOutcomesGrantOutcomeUnspecified  GrantOutcomes = "GRANT_OUTCOME_UNSPECIFIED"
+	GrantOutcomesGrantOutcomeGranted      GrantOutcomes = "GRANT_OUTCOME_GRANTED"
+	GrantOutcomesGrantOutcomeDenied       GrantOutcomes = "GRANT_OUTCOME_DENIED"
+	GrantOutcomesGrantOutcomeError        GrantOutcomes = "GRANT_OUTCOME_ERROR"
+	GrantOutcomesGrantOutcomeCancelled    GrantOutcomes = "GRANT_OUTCOME_CANCELLED"
+	GrantOutcomesGrantOutcomeWaitTimedOut GrantOutcomes = "GRANT_OUTCOME_WAIT_TIMED_OUT"
+)
+
+func (e GrantOutcomes) ToPointer() *GrantOutcomes {
+	return &e
+}
+
+// IsExact returns true if the value matches a known enum value, false otherwise.
+func (e *GrantOutcomes) IsExact() bool {
+	if e != nil {
+		switch *e {
+		case "GRANT_OUTCOME_UNSPECIFIED", "GRANT_OUTCOME_GRANTED", "GRANT_OUTCOME_DENIED", "GRANT_OUTCOME_ERROR", "GRANT_OUTCOME_CANCELLED", "GRANT_OUTCOME_WAIT_TIMED_OUT":
+			return true
+		}
+	}
+	return false
+}
+
+type RevokeOutcomes string
+
+const (
+	RevokeOutcomesRevokeOutcomeUnspecified  RevokeOutcomes = "REVOKE_OUTCOME_UNSPECIFIED"
+	RevokeOutcomesRevokeOutcomeRevoked      RevokeOutcomes = "REVOKE_OUTCOME_REVOKED"
+	RevokeOutcomesRevokeOutcomeDenied       RevokeOutcomes = "REVOKE_OUTCOME_DENIED"
+	RevokeOutcomesRevokeOutcomeError        RevokeOutcomes = "REVOKE_OUTCOME_ERROR"
+	RevokeOutcomesRevokeOutcomeCancelled    RevokeOutcomes = "REVOKE_OUTCOME_CANCELLED"
+	RevokeOutcomesRevokeOutcomeWaitTimedOut RevokeOutcomes = "REVOKE_OUTCOME_WAIT_TIMED_OUT"
+)
+
+func (e RevokeOutcomes) ToPointer() *RevokeOutcomes {
+	return &e
+}
+
+// IsExact returns true if the value matches a known enum value, false otherwise.
+func (e *RevokeOutcomes) IsExact() bool {
+	if e != nil {
+		switch *e {
+		case "REVOKE_OUTCOME_UNSPECIFIED", "REVOKE_OUTCOME_REVOKED", "REVOKE_OUTCOME_DENIED", "REVOKE_OUTCOME_ERROR", "REVOKE_OUTCOME_CANCELLED", "REVOKE_OUTCOME_WAIT_TIMED_OUT":
+			return true
+		}
+	}
+	return false
+}
+
 // SortBy - Sort tasks in a specific order.
 type SortBy string
 
 const (
-	SortByTaskSearchSortByUnspecified      SortBy = "TASK_SEARCH_SORT_BY_UNSPECIFIED"
-	SortByTaskSearchSortByAccount          SortBy = "TASK_SEARCH_SORT_BY_ACCOUNT"
-	SortByTaskSearchSortByResource         SortBy = "TASK_SEARCH_SORT_BY_RESOURCE"
-	SortByTaskSearchSortByAccountOwner     SortBy = "TASK_SEARCH_SORT_BY_ACCOUNT_OWNER"
-	SortByTaskSearchSortByReverseTicketID  SortBy = "TASK_SEARCH_SORT_BY_REVERSE_TICKET_ID"
-	SortByTaskSearchSortByTicketID         SortBy = "TASK_SEARCH_SORT_BY_TICKET_ID"
-	SortByTaskSearchSortByCreatedAt        SortBy = "TASK_SEARCH_SORT_BY_CREATED_AT"
-	SortByTaskSearchSortByReverseCreatedAt SortBy = "TASK_SEARCH_SORT_BY_REVERSE_CREATED_AT"
+	SortByTaskSearchSortByUnspecified                    SortBy = "TASK_SEARCH_SORT_BY_UNSPECIFIED"
+	SortByTaskSearchSortByAccount                        SortBy = "TASK_SEARCH_SORT_BY_ACCOUNT"
+	SortByTaskSearchSortByResource                       SortBy = "TASK_SEARCH_SORT_BY_RESOURCE"
+	SortByTaskSearchSortByAccountOwner                   SortBy = "TASK_SEARCH_SORT_BY_ACCOUNT_OWNER"
+	SortByTaskSearchSortByReverseTicketID                SortBy = "TASK_SEARCH_SORT_BY_REVERSE_TICKET_ID"
+	SortByTaskSearchSortByTicketID                       SortBy = "TASK_SEARCH_SORT_BY_TICKET_ID"
+	SortByTaskSearchSortByCreatedAt                      SortBy = "TASK_SEARCH_SORT_BY_CREATED_AT"
+	SortByTaskSearchSortByReverseCreatedAt               SortBy = "TASK_SEARCH_SORT_BY_REVERSE_CREATED_AT"
+	SortByTaskSearchSortByAppResourceIDAndAppEntitlement SortBy = "TASK_SEARCH_SORT_BY_APP_RESOURCE_ID_AND_APP_ENTITLEMENT"
 )
 
 func (e SortBy) ToPointer() *SortBy {
 	return &e
+}
+
+// IsExact returns true if the value matches a known enum value, false otherwise.
+func (e *SortBy) IsExact() bool {
+	if e != nil {
+		switch *e {
+		case "TASK_SEARCH_SORT_BY_UNSPECIFIED", "TASK_SEARCH_SORT_BY_ACCOUNT", "TASK_SEARCH_SORT_BY_RESOURCE", "TASK_SEARCH_SORT_BY_ACCOUNT_OWNER", "TASK_SEARCH_SORT_BY_REVERSE_TICKET_ID", "TASK_SEARCH_SORT_BY_TICKET_ID", "TASK_SEARCH_SORT_BY_CREATED_AT", "TASK_SEARCH_SORT_BY_REVERSE_CREATED_AT", "TASK_SEARCH_SORT_BY_APP_RESOURCE_ID_AND_APP_ENTITLEMENT":
+			return true
+		}
+	}
+	return false
 }
 
 type StepApprovalTypes string
@@ -85,6 +208,17 @@ func (e StepApprovalTypes) ToPointer() *StepApprovalTypes {
 	return &e
 }
 
+// IsExact returns true if the value matches a known enum value, false otherwise.
+func (e *StepApprovalTypes) IsExact() bool {
+	if e != nil {
+		switch *e {
+		case "STEP_APPROVAL_TYPE_UNSPECIFIED", "STEP_APPROVAL_TYPE_USERS", "STEP_APPROVAL_TYPE_MANAGER", "STEP_APPROVAL_TYPE_APP_OWNERS", "STEP_APPROVAL_TYPE_GROUP", "STEP_APPROVAL_TYPE_SELF", "STEP_APPROVAL_TYPE_ENTITLEMENT_OWNERS", "STEP_APPROVAL_TYPE_EXPRESSION", "STEP_APPROVAL_TYPE_WEBHOOK", "STEP_APPROVAL_TYPE_RESOURCE_OWNERS", "STEP_APPROVAL_TYPE_AGENT":
+			return true
+		}
+	}
+	return false
+}
+
 type TaskStates string
 
 const (
@@ -97,6 +231,17 @@ func (e TaskStates) ToPointer() *TaskStates {
 	return &e
 }
 
+// IsExact returns true if the value matches a known enum value, false otherwise.
+func (e *TaskStates) IsExact() bool {
+	if e != nil {
+		switch *e {
+		case "TASK_STATE_UNSPECIFIED", "TASK_STATE_OPEN", "TASK_STATE_CLOSED":
+			return true
+		}
+	}
+	return false
+}
+
 // TaskSearchRequest - Search for tasks based on a plethora filters.
 type TaskSearchRequest struct {
 	// The task expand mask is an array of strings that specifes the related objects the requester wishes to have returned when making a request where the expand mask is part of the input. Use '*' to view all possible responses.
@@ -106,7 +251,7 @@ type TaskSearchRequest struct {
 	// Search tasks that have any of these account owners.
 	AccountOwnerIds []string `json:"accountOwnerIds,omitempty"`
 	// The accountTypes field.
-	AccountTypes []AccountTypes `json:"accountTypes,omitempty"`
+	AccountTypes []TaskSearchRequestAccountTypes `json:"accountTypes,omitempty"`
 	// Search tasks that have this actor ID.
 	ActorID *string `json:"actorId,omitempty"`
 	// Search tasks that have any of these app entitlement IDs.
@@ -122,9 +267,11 @@ type TaskSearchRequest struct {
 	// Search tasks that are currently assigned to this user, or that are closed and were previously approved by this user.
 	AssignedOrStepApproverUserID *string `json:"assignedOrStepApproverUserId,omitempty"`
 	// Search tasks by  List of UserIDs which are currently assigned these Tasks
-	AssigneesInIds []string   `json:"assigneesInIds,omitempty"`
-	CreatedAfter   *time.Time `json:"createdAfter,omitempty"`
-	CreatedBefore  *time.Time `json:"createdBefore,omitempty"`
+	AssigneesInIds []string `json:"assigneesInIds,omitempty"`
+	// Search tasks by certify outcome
+	CertifyOutcomes []CertifyOutcomes `json:"certifyOutcomes,omitempty"`
+	CreatedAfter    *time.Time        `json:"createdAfter,omitempty"`
+	CreatedBefore   *time.Time        `json:"createdBefore,omitempty"`
 	// Search tasks that have this type of step as the current step.
 	CurrentStep *CurrentStep `json:"currentStep,omitempty"`
 	// Search tasks that are or are not emergency access.
@@ -135,6 +282,9 @@ type TaskSearchRequest struct {
 	ExcludeAppResourceTypeIds []string `json:"excludeAppResourceTypeIds,omitempty"`
 	// Exclude Specific TaskIDs from this serach result.
 	ExcludeIds []string `json:"excludeIds,omitempty"`
+	// Search tasks by grant outcome
+	GrantOutcomes     []GrantOutcomes `json:"grantOutcomes,omitempty"`
+	IncludeActedAfter *time.Time      `json:"includeActedAfter,omitempty"`
 	// Whether or not to include deleted tasks.
 	IncludeDeleted *bool `json:"includeDeleted,omitempty"`
 	// Search tasks where the user would see this task in the My Work section
@@ -143,17 +293,21 @@ type TaskSearchRequest struct {
 	// Search tasks that were created by any of the users in this array.
 	OpenerIds []string `json:"openerIds,omitempty"`
 	// Search tasks that were opened by this user, or that the user is the subject of.
-	OpenerOrSubjectUserID *string `json:"openerOrSubjectUserId,omitempty"`
+	OpenerOrSubjectUserID *string    `json:"openerOrSubjectUserId,omitempty"`
+	OutcomeAfter          *time.Time `json:"outcomeAfter,omitempty"`
+	OutcomeBefore         *time.Time `json:"outcomeBefore,omitempty"`
 	// The pageSize where 0 <= pageSize <= 100. Values < 10 will be set to 10. A value of 0 returns the default page size (currently 25)
 	PageSize *int `json:"pageSize,omitempty"`
 	// The pageToken field.
 	PageToken *string `json:"pageToken,omitempty"`
 	// Search tasks that were acted on by any of these users.
 	PreviouslyActedOnIds []string `json:"previouslyActedOnIds,omitempty"`
-	// Fuzzy search tasks by display name or description. Also can search by numeric ID.
+	// Fuzzy search tasks by display name, description, or ID.
 	Query *string `json:"query,omitempty"`
 	// Query tasks by display name, description, or numeric ID.
 	Refs []TaskRef `json:"refs,omitempty"`
+	// Search tasks by revoke outcome
+	RevokeOutcomes []RevokeOutcomes `json:"revokeOutcomes,omitempty"`
 	// Sort tasks in a specific order.
 	SortBy *SortBy `json:"sortBy,omitempty"`
 	// Search tasks that have a current policy step of this type
@@ -173,253 +327,295 @@ func (t TaskSearchRequest) MarshalJSON() ([]byte, error) {
 }
 
 func (t *TaskSearchRequest) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &t, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &t, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *TaskSearchRequest) GetTaskExpandMask() *TaskExpandMask {
-	if o == nil {
+func (t *TaskSearchRequest) GetTaskExpandMask() *TaskExpandMask {
+	if t == nil {
 		return nil
 	}
-	return o.TaskExpandMask
+	return t.TaskExpandMask
 }
 
-func (o *TaskSearchRequest) GetAccessReviewIds() []string {
-	if o == nil {
+func (t *TaskSearchRequest) GetAccessReviewIds() []string {
+	if t == nil {
 		return nil
 	}
-	return o.AccessReviewIds
+	return t.AccessReviewIds
 }
 
-func (o *TaskSearchRequest) GetAccountOwnerIds() []string {
-	if o == nil {
+func (t *TaskSearchRequest) GetAccountOwnerIds() []string {
+	if t == nil {
 		return nil
 	}
-	return o.AccountOwnerIds
+	return t.AccountOwnerIds
 }
 
-func (o *TaskSearchRequest) GetAccountTypes() []AccountTypes {
-	if o == nil {
+func (t *TaskSearchRequest) GetAccountTypes() []TaskSearchRequestAccountTypes {
+	if t == nil {
 		return nil
 	}
-	return o.AccountTypes
+	return t.AccountTypes
 }
 
-func (o *TaskSearchRequest) GetActorID() *string {
-	if o == nil {
+func (t *TaskSearchRequest) GetActorID() *string {
+	if t == nil {
 		return nil
 	}
-	return o.ActorID
+	return t.ActorID
 }
 
-func (o *TaskSearchRequest) GetAppEntitlementIds() []string {
-	if o == nil {
+func (t *TaskSearchRequest) GetAppEntitlementIds() []string {
+	if t == nil {
 		return nil
 	}
-	return o.AppEntitlementIds
+	return t.AppEntitlementIds
 }
 
-func (o *TaskSearchRequest) GetAppResourceIds() []string {
-	if o == nil {
+func (t *TaskSearchRequest) GetAppResourceIds() []string {
+	if t == nil {
 		return nil
 	}
-	return o.AppResourceIds
+	return t.AppResourceIds
 }
 
-func (o *TaskSearchRequest) GetAppResourceTypeIds() []string {
-	if o == nil {
+func (t *TaskSearchRequest) GetAppResourceTypeIds() []string {
+	if t == nil {
 		return nil
 	}
-	return o.AppResourceTypeIds
+	return t.AppResourceTypeIds
 }
 
-func (o *TaskSearchRequest) GetAppUserSubjectIds() []string {
-	if o == nil {
+func (t *TaskSearchRequest) GetAppUserSubjectIds() []string {
+	if t == nil {
 		return nil
 	}
-	return o.AppUserSubjectIds
+	return t.AppUserSubjectIds
 }
 
-func (o *TaskSearchRequest) GetApplicationIds() []string {
-	if o == nil {
+func (t *TaskSearchRequest) GetApplicationIds() []string {
+	if t == nil {
 		return nil
 	}
-	return o.ApplicationIds
+	return t.ApplicationIds
 }
 
-func (o *TaskSearchRequest) GetAssignedOrStepApproverUserID() *string {
-	if o == nil {
+func (t *TaskSearchRequest) GetAssignedOrStepApproverUserID() *string {
+	if t == nil {
 		return nil
 	}
-	return o.AssignedOrStepApproverUserID
+	return t.AssignedOrStepApproverUserID
 }
 
-func (o *TaskSearchRequest) GetAssigneesInIds() []string {
-	if o == nil {
+func (t *TaskSearchRequest) GetAssigneesInIds() []string {
+	if t == nil {
 		return nil
 	}
-	return o.AssigneesInIds
+	return t.AssigneesInIds
 }
 
-func (o *TaskSearchRequest) GetCreatedAfter() *time.Time {
-	if o == nil {
+func (t *TaskSearchRequest) GetCertifyOutcomes() []CertifyOutcomes {
+	if t == nil {
 		return nil
 	}
-	return o.CreatedAfter
+	return t.CertifyOutcomes
 }
 
-func (o *TaskSearchRequest) GetCreatedBefore() *time.Time {
-	if o == nil {
+func (t *TaskSearchRequest) GetCreatedAfter() *time.Time {
+	if t == nil {
 		return nil
 	}
-	return o.CreatedBefore
+	return t.CreatedAfter
 }
 
-func (o *TaskSearchRequest) GetCurrentStep() *CurrentStep {
-	if o == nil {
+func (t *TaskSearchRequest) GetCreatedBefore() *time.Time {
+	if t == nil {
 		return nil
 	}
-	return o.CurrentStep
+	return t.CreatedBefore
 }
 
-func (o *TaskSearchRequest) GetEmergencyStatus() *EmergencyStatus {
-	if o == nil {
+func (t *TaskSearchRequest) GetCurrentStep() *CurrentStep {
+	if t == nil {
 		return nil
 	}
-	return o.EmergencyStatus
+	return t.CurrentStep
 }
 
-func (o *TaskSearchRequest) GetExcludeAppEntitlementIds() []string {
-	if o == nil {
+func (t *TaskSearchRequest) GetEmergencyStatus() *EmergencyStatus {
+	if t == nil {
 		return nil
 	}
-	return o.ExcludeAppEntitlementIds
+	return t.EmergencyStatus
 }
 
-func (o *TaskSearchRequest) GetExcludeAppResourceTypeIds() []string {
-	if o == nil {
+func (t *TaskSearchRequest) GetExcludeAppEntitlementIds() []string {
+	if t == nil {
 		return nil
 	}
-	return o.ExcludeAppResourceTypeIds
+	return t.ExcludeAppEntitlementIds
 }
 
-func (o *TaskSearchRequest) GetExcludeIds() []string {
-	if o == nil {
+func (t *TaskSearchRequest) GetExcludeAppResourceTypeIds() []string {
+	if t == nil {
 		return nil
 	}
-	return o.ExcludeIds
+	return t.ExcludeAppResourceTypeIds
 }
 
-func (o *TaskSearchRequest) GetIncludeDeleted() *bool {
-	if o == nil {
+func (t *TaskSearchRequest) GetExcludeIds() []string {
+	if t == nil {
 		return nil
 	}
-	return o.IncludeDeleted
+	return t.ExcludeIds
 }
 
-func (o *TaskSearchRequest) GetMyWorkUserIds() []string {
-	if o == nil {
+func (t *TaskSearchRequest) GetGrantOutcomes() []GrantOutcomes {
+	if t == nil {
 		return nil
 	}
-	return o.MyWorkUserIds
+	return t.GrantOutcomes
 }
 
-func (o *TaskSearchRequest) GetOlderThanDuration() *string {
-	if o == nil {
+func (t *TaskSearchRequest) GetIncludeActedAfter() *time.Time {
+	if t == nil {
 		return nil
 	}
-	return o.OlderThanDuration
+	return t.IncludeActedAfter
 }
 
-func (o *TaskSearchRequest) GetOpenerIds() []string {
-	if o == nil {
+func (t *TaskSearchRequest) GetIncludeDeleted() *bool {
+	if t == nil {
 		return nil
 	}
-	return o.OpenerIds
+	return t.IncludeDeleted
 }
 
-func (o *TaskSearchRequest) GetOpenerOrSubjectUserID() *string {
-	if o == nil {
+func (t *TaskSearchRequest) GetMyWorkUserIds() []string {
+	if t == nil {
 		return nil
 	}
-	return o.OpenerOrSubjectUserID
+	return t.MyWorkUserIds
 }
 
-func (o *TaskSearchRequest) GetPageSize() *int {
-	if o == nil {
+func (t *TaskSearchRequest) GetOlderThanDuration() *string {
+	if t == nil {
 		return nil
 	}
-	return o.PageSize
+	return t.OlderThanDuration
 }
 
-func (o *TaskSearchRequest) GetPageToken() *string {
-	if o == nil {
+func (t *TaskSearchRequest) GetOpenerIds() []string {
+	if t == nil {
 		return nil
 	}
-	return o.PageToken
+	return t.OpenerIds
 }
 
-func (o *TaskSearchRequest) GetPreviouslyActedOnIds() []string {
-	if o == nil {
+func (t *TaskSearchRequest) GetOpenerOrSubjectUserID() *string {
+	if t == nil {
 		return nil
 	}
-	return o.PreviouslyActedOnIds
+	return t.OpenerOrSubjectUserID
 }
 
-func (o *TaskSearchRequest) GetQuery() *string {
-	if o == nil {
+func (t *TaskSearchRequest) GetOutcomeAfter() *time.Time {
+	if t == nil {
 		return nil
 	}
-	return o.Query
+	return t.OutcomeAfter
 }
 
-func (o *TaskSearchRequest) GetRefs() []TaskRef {
-	if o == nil {
+func (t *TaskSearchRequest) GetOutcomeBefore() *time.Time {
+	if t == nil {
 		return nil
 	}
-	return o.Refs
+	return t.OutcomeBefore
 }
 
-func (o *TaskSearchRequest) GetSortBy() *SortBy {
-	if o == nil {
+func (t *TaskSearchRequest) GetPageSize() *int {
+	if t == nil {
 		return nil
 	}
-	return o.SortBy
+	return t.PageSize
 }
 
-func (o *TaskSearchRequest) GetStepApprovalTypes() []StepApprovalTypes {
-	if o == nil {
+func (t *TaskSearchRequest) GetPageToken() *string {
+	if t == nil {
 		return nil
 	}
-	return o.StepApprovalTypes
+	return t.PageToken
 }
 
-func (o *TaskSearchRequest) GetSubjectIds() []string {
-	if o == nil {
+func (t *TaskSearchRequest) GetPreviouslyActedOnIds() []string {
+	if t == nil {
 		return nil
 	}
-	return o.SubjectIds
+	return t.PreviouslyActedOnIds
 }
 
-func (o *TaskSearchRequest) GetTaskStates() []TaskStates {
-	if o == nil {
+func (t *TaskSearchRequest) GetQuery() *string {
+	if t == nil {
 		return nil
 	}
-	return o.TaskStates
+	return t.Query
 }
 
-func (o *TaskSearchRequest) GetTaskTypes() []TaskTypeInput {
-	if o == nil {
+func (t *TaskSearchRequest) GetRefs() []TaskRef {
+	if t == nil {
 		return nil
 	}
-	return o.TaskTypes
+	return t.Refs
 }
 
-func (o *TaskSearchRequest) GetUserEmploymentStatuses() []string {
-	if o == nil {
+func (t *TaskSearchRequest) GetRevokeOutcomes() []RevokeOutcomes {
+	if t == nil {
 		return nil
 	}
-	return o.UserEmploymentStatuses
+	return t.RevokeOutcomes
+}
+
+func (t *TaskSearchRequest) GetSortBy() *SortBy {
+	if t == nil {
+		return nil
+	}
+	return t.SortBy
+}
+
+func (t *TaskSearchRequest) GetStepApprovalTypes() []StepApprovalTypes {
+	if t == nil {
+		return nil
+	}
+	return t.StepApprovalTypes
+}
+
+func (t *TaskSearchRequest) GetSubjectIds() []string {
+	if t == nil {
+		return nil
+	}
+	return t.SubjectIds
+}
+
+func (t *TaskSearchRequest) GetTaskStates() []TaskStates {
+	if t == nil {
+		return nil
+	}
+	return t.TaskStates
+}
+
+func (t *TaskSearchRequest) GetTaskTypes() []TaskTypeInput {
+	if t == nil {
+		return nil
+	}
+	return t.TaskTypes
+}
+
+func (t *TaskSearchRequest) GetUserEmploymentStatuses() []string {
+	if t == nil {
+		return nil
+	}
+	return t.UserEmploymentStatuses
 }

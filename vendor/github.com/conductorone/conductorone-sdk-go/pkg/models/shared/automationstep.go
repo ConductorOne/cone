@@ -9,6 +9,7 @@ package shared
 //   - waitForDuration
 //   - unenrollFromAllAccessProfiles
 //   - createRevokeTasks
+//   - createRevokeTasksV2
 //   - sendEmail
 //   - removeFromDelegation
 //   - runAutomation
@@ -20,7 +21,17 @@ package shared
 //   - grantEntitlements
 //   - sendSlackMessage
 //   - callFunction
+//   - accountLifecycleAction
+//   - generatePassword
+//   - evaluateExpressions
 type AutomationStep struct {
+	// The AccountLifecycleAction message.
+	//
+	// This message contains a oneof named account_identifier. Only a single field of the following list may be set at a time:
+	//   - accountRef
+	//   - accountInContext
+	//
+	AccountLifecycleAction *AccountLifecycleAction `json:"accountLifecycleAction,omitempty"`
 	// The CallFunction message.
 	CallFunction *CallFunction `json:"callFunction,omitempty"`
 	// The ConnectorAction message.
@@ -40,6 +51,32 @@ type AutomationStep struct {
 	CreateAccessReview *CreateAccessReview `json:"createAccessReview,omitempty"`
 	// The CreateRevokeTasks message.
 	CreateRevokeTasks *CreateRevokeTasks `json:"createRevokeTasks,omitempty"`
+	// The CreateRevokeTasksV2 message.
+	//
+	// This message contains a oneof named user. Only a single field of the following list may be set at a time:
+	//   - userIdCel
+	//   - userRef
+	//   - useSubjectUser
+	//
+	//
+	// This message contains a oneof named inclusion. Only a single field of the following list may be set at a time:
+	//   - inclusionList
+	//   - inclusionAll
+	//   - inclusionCriteria
+	//   - inclusionListCel
+	//
+	//
+	// This message contains a oneof named exclusion. Only a single field of the following list may be set at a time:
+	//   - exclusionNone
+	//   - exclusionList
+	//   - exclusionCriteria
+	//   - exclusionListCel
+	//
+	CreateRevokeTasksV2 *CreateRevokeTasksV2 `json:"createRevokeTasksV2,omitempty"`
+	// The EvaluateExpressions message.
+	EvaluateExpressions *EvaluateExpressions `json:"evaluateExpressions,omitempty"`
+	// The GeneratePassword message.
+	GeneratePassword *GeneratePassword `json:"generatePassword,omitempty"`
 	// The GrantEntitlements message.
 	GrantEntitlements *GrantEntitlements `json:"grantEntitlements,omitempty"`
 	// RemoveFromDelegation: find all users that have the target user as their delegated user, and modify the delegation.
@@ -103,128 +140,156 @@ type AutomationStep struct {
 	StepName *string `json:"stepName,omitempty"`
 }
 
-func (o *AutomationStep) GetCallFunction() *CallFunction {
-	if o == nil {
+func (a *AutomationStep) GetAccountLifecycleAction() *AccountLifecycleAction {
+	if a == nil {
 		return nil
 	}
-	return o.CallFunction
+	return a.AccountLifecycleAction
 }
 
-func (o *AutomationStep) GetConnectorAction() *ConnectorAction {
-	if o == nil {
+func (a *AutomationStep) GetCallFunction() *CallFunction {
+	if a == nil {
 		return nil
 	}
-	return o.ConnectorAction
+	return a.CallFunction
 }
 
-func (o *AutomationStep) GetConnectorCreateAccount() *ConnectorCreateAccount {
-	if o == nil {
+func (a *AutomationStep) GetConnectorAction() *ConnectorAction {
+	if a == nil {
 		return nil
 	}
-	return o.ConnectorCreateAccount
+	return a.ConnectorAction
 }
 
-func (o *AutomationStep) GetCreateAccessReview() *CreateAccessReview {
-	if o == nil {
+func (a *AutomationStep) GetConnectorCreateAccount() *ConnectorCreateAccount {
+	if a == nil {
 		return nil
 	}
-	return o.CreateAccessReview
+	return a.ConnectorCreateAccount
 }
 
-func (o *AutomationStep) GetCreateRevokeTasks() *CreateRevokeTasks {
-	if o == nil {
+func (a *AutomationStep) GetCreateAccessReview() *CreateAccessReview {
+	if a == nil {
 		return nil
 	}
-	return o.CreateRevokeTasks
+	return a.CreateAccessReview
 }
 
-func (o *AutomationStep) GetGrantEntitlements() *GrantEntitlements {
-	if o == nil {
+func (a *AutomationStep) GetCreateRevokeTasks() *CreateRevokeTasks {
+	if a == nil {
 		return nil
 	}
-	return o.GrantEntitlements
+	return a.CreateRevokeTasks
 }
 
-func (o *AutomationStep) GetRemoveFromDelegation() *RemoveFromDelegation {
-	if o == nil {
+func (a *AutomationStep) GetCreateRevokeTasksV2() *CreateRevokeTasksV2 {
+	if a == nil {
 		return nil
 	}
-	return o.RemoveFromDelegation
+	return a.CreateRevokeTasksV2
 }
 
-func (o *AutomationStep) GetRunAutomation() *RunAutomation {
-	if o == nil {
+func (a *AutomationStep) GetEvaluateExpressions() *EvaluateExpressions {
+	if a == nil {
 		return nil
 	}
-	return o.RunAutomation
+	return a.EvaluateExpressions
 }
 
-func (o *AutomationStep) GetSendEmail() *SendEmail {
-	if o == nil {
+func (a *AutomationStep) GetGeneratePassword() *GeneratePassword {
+	if a == nil {
 		return nil
 	}
-	return o.SendEmail
+	return a.GeneratePassword
 }
 
-func (o *AutomationStep) GetSendSlackMessage() *SendSlackMessage {
-	if o == nil {
+func (a *AutomationStep) GetGrantEntitlements() *GrantEntitlements {
+	if a == nil {
 		return nil
 	}
-	return o.SendSlackMessage
+	return a.GrantEntitlements
 }
 
-func (o *AutomationStep) GetTaskAction() *TaskAction {
-	if o == nil {
+func (a *AutomationStep) GetRemoveFromDelegation() *RemoveFromDelegation {
+	if a == nil {
 		return nil
 	}
-	return o.TaskAction
+	return a.RemoveFromDelegation
 }
 
-func (o *AutomationStep) GetUnenrollFromAllAccessProfiles() *UnenrollFromAllAccessProfiles {
-	if o == nil {
+func (a *AutomationStep) GetRunAutomation() *RunAutomation {
+	if a == nil {
 		return nil
 	}
-	return o.UnenrollFromAllAccessProfiles
+	return a.RunAutomation
 }
 
-func (o *AutomationStep) GetUpdateUser() *UpdateUser {
-	if o == nil {
+func (a *AutomationStep) GetSendEmail() *SendEmail {
+	if a == nil {
 		return nil
 	}
-	return o.UpdateUser
+	return a.SendEmail
 }
 
-func (o *AutomationStep) GetWaitForDuration() *WaitForDuration {
-	if o == nil {
+func (a *AutomationStep) GetSendSlackMessage() *SendSlackMessage {
+	if a == nil {
 		return nil
 	}
-	return o.WaitForDuration
+	return a.SendSlackMessage
 }
 
-func (o *AutomationStep) GetWebhook() *Webhook {
-	if o == nil {
+func (a *AutomationStep) GetTaskAction() *TaskAction {
+	if a == nil {
 		return nil
 	}
-	return o.Webhook
+	return a.TaskAction
 }
 
-func (o *AutomationStep) GetSkipIfTrueCel() *string {
-	if o == nil {
+func (a *AutomationStep) GetUnenrollFromAllAccessProfiles() *UnenrollFromAllAccessProfiles {
+	if a == nil {
 		return nil
 	}
-	return o.SkipIfTrueCel
+	return a.UnenrollFromAllAccessProfiles
 }
 
-func (o *AutomationStep) GetStepDisplayName() *string {
-	if o == nil {
+func (a *AutomationStep) GetUpdateUser() *UpdateUser {
+	if a == nil {
 		return nil
 	}
-	return o.StepDisplayName
+	return a.UpdateUser
 }
 
-func (o *AutomationStep) GetStepName() *string {
-	if o == nil {
+func (a *AutomationStep) GetWaitForDuration() *WaitForDuration {
+	if a == nil {
 		return nil
 	}
-	return o.StepName
+	return a.WaitForDuration
+}
+
+func (a *AutomationStep) GetWebhook() *Webhook {
+	if a == nil {
+		return nil
+	}
+	return a.Webhook
+}
+
+func (a *AutomationStep) GetSkipIfTrueCel() *string {
+	if a == nil {
+		return nil
+	}
+	return a.SkipIfTrueCel
+}
+
+func (a *AutomationStep) GetStepDisplayName() *string {
+	if a == nil {
+		return nil
+	}
+	return a.StepDisplayName
+}
+
+func (a *AutomationStep) GetStepName() *string {
+	if a == nil {
+		return nil
+	}
+	return a.StepName
 }

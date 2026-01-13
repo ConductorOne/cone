@@ -81,7 +81,7 @@ func collectFormFields(ctx context.Context, v *viper.Viper, form *shared.FormInp
 }
 
 // collectFieldValue collects a single field value from the user based on field type.
-func collectFieldValue(ctx context.Context, field shared.Field, displayName, description string) (any, error) {
+func collectFieldValue(ctx context.Context, field shared.FieldInput, displayName, description string) (any, error) {
 	// Check for default value first
 	if defaultValue := getFieldDefaultValue(field); defaultValue != nil {
 		// Show default value and ask for confirmation
@@ -235,7 +235,7 @@ func collectStringSliceField(ctx context.Context, field *shared.StringSliceField
 }
 
 // getFieldDefaultValue extracts the default value from a field based on its type.
-func getFieldDefaultValue(field shared.Field) any {
+func getFieldDefaultValue(field shared.FieldInput) any {
 	switch {
 	case field.StringField != nil && field.StringField.DefaultValue != nil:
 		return *field.StringField.DefaultValue
@@ -385,7 +385,7 @@ func (v Int64FieldValidator) Prompt(isFirstRun bool) {
 }
 
 // isFieldRequired checks if a field is required based on its validation rules.
-func isFieldRequired(field shared.Field) bool {
+func isFieldRequired(field shared.FieldInput) bool {
 	switch {
 	case field.StringField != nil:
 		rules := field.StringField.StringRules

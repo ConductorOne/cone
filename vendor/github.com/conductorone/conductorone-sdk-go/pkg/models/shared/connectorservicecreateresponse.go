@@ -18,24 +18,24 @@ func (c ConnectorServiceCreateResponseExpanded) MarshalJSON() ([]byte, error) {
 }
 
 func (c *ConnectorServiceCreateResponseExpanded) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &c, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &c, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *ConnectorServiceCreateResponseExpanded) GetAtType() *string {
-	if o == nil {
+func (c *ConnectorServiceCreateResponseExpanded) GetAtType() *string {
+	if c == nil {
 		return nil
 	}
-	return o.AtType
+	return c.AtType
 }
 
-func (o *ConnectorServiceCreateResponseExpanded) GetAdditionalProperties() map[string]any {
-	if o == nil {
+func (c *ConnectorServiceCreateResponseExpanded) GetAdditionalProperties() map[string]any {
+	if c == nil {
 		return nil
 	}
-	return o.AdditionalProperties
+	return c.AdditionalProperties
 }
 
 // The ConnectorServiceCreateResponse is the response returned from creating a connector.
@@ -46,16 +46,16 @@ type ConnectorServiceCreateResponse struct {
 	Expanded []ConnectorServiceCreateResponseExpanded `json:"expanded,omitempty"`
 }
 
-func (o *ConnectorServiceCreateResponse) GetConnectorView() *ConnectorView {
-	if o == nil {
+func (c *ConnectorServiceCreateResponse) GetConnectorView() *ConnectorView {
+	if c == nil {
 		return nil
 	}
-	return o.ConnectorView
+	return c.ConnectorView
 }
 
-func (o *ConnectorServiceCreateResponse) GetExpanded() []ConnectorServiceCreateResponseExpanded {
-	if o == nil {
+func (c *ConnectorServiceCreateResponse) GetExpanded() []ConnectorServiceCreateResponseExpanded {
+	if c == nil {
 		return nil
 	}
-	return o.Expanded
+	return c.Expanded
 }

@@ -63,7 +63,7 @@ func (s *Automation) CreateAutomation(ctx context.Context, request *shared.Creat
 		BaseURL:          baseURL,
 		Context:          ctx,
 		OperationID:      "c1.api.automations.v1.AutomationService.CreateAutomation",
-		OAuth2Scopes:     []string{},
+		OAuth2Scopes:     nil,
 		SecuritySource:   s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "Request", "json", `request:"mediaType=application/json"`)
@@ -275,7 +275,7 @@ func (s *Automation) DeleteAutomation(ctx context.Context, request operations.C1
 		BaseURL:          baseURL,
 		Context:          ctx,
 		OperationID:      "c1.api.automations.v1.AutomationService.DeleteAutomation",
-		OAuth2Scopes:     []string{},
+		OAuth2Scopes:     nil,
 		SecuritySource:   s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "DeleteAutomationRequest", "json", `request:"mediaType=application/json"`)
@@ -487,7 +487,7 @@ func (s *Automation) ExecuteAutomation(ctx context.Context, request operations.C
 		BaseURL:          baseURL,
 		Context:          ctx,
 		OperationID:      "c1.api.automations.v1.AutomationService.ExecuteAutomation",
-		OAuth2Scopes:     []string{},
+		OAuth2Scopes:     nil,
 		SecuritySource:   s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "ExecuteAutomationRequest", "json", `request:"mediaType=application/json"`)
@@ -699,7 +699,7 @@ func (s *Automation) GetAutomation(ctx context.Context, request operations.C1API
 		BaseURL:          baseURL,
 		Context:          ctx,
 		OperationID:      "c1.api.automations.v1.AutomationService.GetAutomation",
-		OAuth2Scopes:     []string{},
+		OAuth2Scopes:     nil,
 		SecuritySource:   s.sdkConfiguration.Security,
 	}
 
@@ -904,7 +904,7 @@ func (s *Automation) ListAutomations(ctx context.Context, opts ...operations.Opt
 		BaseURL:          baseURL,
 		Context:          ctx,
 		OperationID:      "c1.api.automations.v1.AutomationService.ListAutomations",
-		OAuth2Scopes:     []string{},
+		OAuth2Scopes:     nil,
 		SecuritySource:   s.sdkConfiguration.Security,
 	}
 
@@ -1109,7 +1109,7 @@ func (s *Automation) UpdateAutomation(ctx context.Context, request operations.C1
 		BaseURL:          baseURL,
 		Context:          ctx,
 		OperationID:      "c1.api.automations.v1.AutomationService.UpdateAutomation",
-		OAuth2Scopes:     []string{},
+		OAuth2Scopes:     nil,
 		SecuritySource:   s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "UpdateAutomationRequest", "json", `request:"mediaType=application/json"`)

@@ -13,6 +13,17 @@ func (e FunctionTypes) ToPointer() *FunctionTypes {
 	return &e
 }
 
+// IsExact returns true if the value matches a known enum value, false otherwise.
+func (e *FunctionTypes) IsExact() bool {
+	if e != nil {
+		switch *e {
+		case "FUNCTION_TYPE_UNSPECIFIED", "FUNCTION_TYPE_ANY":
+			return true
+		}
+	}
+	return false
+}
+
 // The FunctionsSearchRequest message.
 type FunctionsSearchRequest struct {
 	// The functionTypes field.
@@ -25,30 +36,30 @@ type FunctionsSearchRequest struct {
 	Query *string `json:"query,omitempty"`
 }
 
-func (o *FunctionsSearchRequest) GetFunctionTypes() []FunctionTypes {
-	if o == nil {
+func (f *FunctionsSearchRequest) GetFunctionTypes() []FunctionTypes {
+	if f == nil {
 		return nil
 	}
-	return o.FunctionTypes
+	return f.FunctionTypes
 }
 
-func (o *FunctionsSearchRequest) GetPageSize() *int {
-	if o == nil {
+func (f *FunctionsSearchRequest) GetPageSize() *int {
+	if f == nil {
 		return nil
 	}
-	return o.PageSize
+	return f.PageSize
 }
 
-func (o *FunctionsSearchRequest) GetPageToken() *string {
-	if o == nil {
+func (f *FunctionsSearchRequest) GetPageToken() *string {
+	if f == nil {
 		return nil
 	}
-	return o.PageToken
+	return f.PageToken
 }
 
-func (o *FunctionsSearchRequest) GetQuery() *string {
-	if o == nil {
+func (f *FunctionsSearchRequest) GetQuery() *string {
+	if f == nil {
 		return nil
 	}
-	return o.Query
+	return f.Query
 }

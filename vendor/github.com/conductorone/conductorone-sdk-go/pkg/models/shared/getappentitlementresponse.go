@@ -18,24 +18,24 @@ func (g GetAppEntitlementResponseExpanded) MarshalJSON() ([]byte, error) {
 }
 
 func (g *GetAppEntitlementResponseExpanded) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &g, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &g, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *GetAppEntitlementResponseExpanded) GetAtType() *string {
-	if o == nil {
+func (g *GetAppEntitlementResponseExpanded) GetAtType() *string {
+	if g == nil {
 		return nil
 	}
-	return o.AtType
+	return g.AtType
 }
 
-func (o *GetAppEntitlementResponseExpanded) GetAdditionalProperties() map[string]any {
-	if o == nil {
+func (g *GetAppEntitlementResponseExpanded) GetAdditionalProperties() map[string]any {
+	if g == nil {
 		return nil
 	}
-	return o.AdditionalProperties
+	return g.AdditionalProperties
 }
 
 // GetAppEntitlementResponse - The get app entitlement response returns an entitlement view containing paths in the expanded array for the objects expanded as indicated by the expand mask in the request.
@@ -46,16 +46,16 @@ type GetAppEntitlementResponse struct {
 	Expanded []GetAppEntitlementResponseExpanded `json:"expanded,omitempty"`
 }
 
-func (o *GetAppEntitlementResponse) GetAppEntitlementView() *AppEntitlementView {
-	if o == nil {
+func (g *GetAppEntitlementResponse) GetAppEntitlementView() *AppEntitlementView {
+	if g == nil {
 		return nil
 	}
-	return o.AppEntitlementView
+	return g.AppEntitlementView
 }
 
-func (o *GetAppEntitlementResponse) GetExpanded() []GetAppEntitlementResponseExpanded {
-	if o == nil {
+func (g *GetAppEntitlementResponse) GetExpanded() []GetAppEntitlementResponseExpanded {
+	if g == nil {
 		return nil
 	}
-	return o.Expanded
+	return g.Expanded
 }

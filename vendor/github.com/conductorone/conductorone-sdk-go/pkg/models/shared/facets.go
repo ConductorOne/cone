@@ -10,16 +10,16 @@ type Facets struct {
 	Facets []FacetCategory `json:"facets,omitempty"`
 }
 
-func (o *Facets) GetCount() *int64 {
-	if o == nil {
+func (f *Facets) GetCount() *int64 {
+	if f == nil {
 		return nil
 	}
-	return o.Count
+	return f.Count
 }
 
-func (o *Facets) GetFacets() []FacetCategory {
-	if o == nil {
+func (f *Facets) GetFacets() []FacetCategory {
+	if f == nil {
 		return nil
 	}
-	return o.Facets
+	return f.Facets
 }

@@ -10,9 +10,9 @@ type UserExpandMask struct {
 	Paths []string `json:"paths,omitempty"`
 }
 
-func (o *UserExpandMask) GetPaths() []string {
-	if o == nil {
+func (u *UserExpandMask) GetPaths() []string {
+	if u == nil {
 		return nil
 	}
-	return o.Paths
+	return u.Paths
 }

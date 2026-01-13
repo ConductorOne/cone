@@ -8,27 +8,54 @@ type ResourceOwnerApproval struct {
 	AllowSelfApproval *bool `json:"allowSelfApproval,omitempty"`
 	// Configuration to allow a fallback if the resource owner cannot be identified.
 	Fallback *bool `json:"fallback,omitempty"`
+	// Configuration to specify which groups to fallback to if fallback is enabled and the resource owner cannot be identified.
+	FallbackGroupIds []AppEntitlementReference `json:"fallbackGroupIds,omitempty"`
 	// Configuration to specific which users to fallback to if fallback is enabled and the resource owner cannot be identified.
 	FallbackUserIds []string `json:"fallbackUserIds,omitempty"`
+	// Configuration to enable fallback for group fallback.
+	IsGroupFallbackEnabled *bool `json:"isGroupFallbackEnabled,omitempty"`
+	// Configuration to require distinct approvers across approval steps of a rule.
+	RequireDistinctApprovers *bool `json:"requireDistinctApprovers,omitempty"`
 }
 
-func (o *ResourceOwnerApproval) GetAllowSelfApproval() *bool {
-	if o == nil {
+func (r *ResourceOwnerApproval) GetAllowSelfApproval() *bool {
+	if r == nil {
 		return nil
 	}
-	return o.AllowSelfApproval
+	return r.AllowSelfApproval
 }
 
-func (o *ResourceOwnerApproval) GetFallback() *bool {
-	if o == nil {
+func (r *ResourceOwnerApproval) GetFallback() *bool {
+	if r == nil {
 		return nil
 	}
-	return o.Fallback
+	return r.Fallback
 }
 
-func (o *ResourceOwnerApproval) GetFallbackUserIds() []string {
-	if o == nil {
+func (r *ResourceOwnerApproval) GetFallbackGroupIds() []AppEntitlementReference {
+	if r == nil {
 		return nil
 	}
-	return o.FallbackUserIds
+	return r.FallbackGroupIds
+}
+
+func (r *ResourceOwnerApproval) GetFallbackUserIds() []string {
+	if r == nil {
+		return nil
+	}
+	return r.FallbackUserIds
+}
+
+func (r *ResourceOwnerApproval) GetIsGroupFallbackEnabled() *bool {
+	if r == nil {
+		return nil
+	}
+	return r.IsGroupFallbackEnabled
+}
+
+func (r *ResourceOwnerApproval) GetRequireDistinctApprovers() *bool {
+	if r == nil {
+		return nil
+	}
+	return r.RequireDistinctApprovers
 }

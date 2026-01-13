@@ -43,6 +43,17 @@ func (e Actions) ToPointer() *Actions {
 	return &e
 }
 
+// IsExact returns true if the value matches a known enum value, false otherwise.
+func (e *Actions) IsExact() bool {
+	if e != nil {
+		switch *e {
+		case "TASK_ACTION_TYPE_UNSPECIFIED", "TASK_ACTION_TYPE_CLOSE", "TASK_ACTION_TYPE_APPROVE", "TASK_ACTION_TYPE_DENY", "TASK_ACTION_TYPE_COMMENT", "TASK_ACTION_TYPE_DELETE", "TASK_ACTION_TYPE_REASSIGN", "TASK_ACTION_TYPE_RESTART", "TASK_ACTION_TYPE_SEND_REMINDER", "TASK_ACTION_TYPE_PROVISION_COMPLETE", "TASK_ACTION_TYPE_PROVISION_CANCELLED", "TASK_ACTION_TYPE_PROVISION_ERRORED", "TASK_ACTION_TYPE_ROLLBACK_SKIPPED", "TASK_ACTION_TYPE_PROVISION_APP_USER_TARGET_CREATED", "TASK_ACTION_TYPE_HARD_RESET", "TASK_ACTION_TYPE_ESCALATE_TO_EMERGENCY_ACCESS", "TASK_ACTION_TYPE_CHANGE_POLICY", "TASK_ACTION_TYPE_RECALCULATE_DENIAL_FROM_BASE_POLICY_DECISIONS", "TASK_ACTION_TYPE_SET_INSIGHTS_AND_RECOMMENDATION", "TASK_ACTION_TYPE_SET_ANALYSIS_ID", "TASK_ACTION_TYPE_RECALCULATE_APPROVERS_LIST", "TASK_ACTION_TYPE_PROCESS_NOW", "TASK_ACTION_TYPE_APPROVE_WITH_STEP_UP", "TASK_ACTION_TYPE_SKIP_STEP", "TASK_ACTION_TYPE_ROLLBACK_CANCELLED", "TASK_ACTION_TYPE_UPDATE_REQUEST_DATA", "TASK_ACTION_TYPE_UPDATE_GRANT_DURATION":
+			return true
+		}
+	}
+	return false
+}
+
 // Annotations - Contains an arbitrary serialized message along with a @type that describes the type of the serialized message.
 type Annotations struct {
 	// The type of the serialized message.
@@ -55,24 +66,24 @@ func (a Annotations) MarshalJSON() ([]byte, error) {
 }
 
 func (a *Annotations) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &a, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &a, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *Annotations) GetAtType() *string {
-	if o == nil {
+func (a *Annotations) GetAtType() *string {
+	if a == nil {
 		return nil
 	}
-	return o.AtType
+	return a.AtType
 }
 
-func (o *Annotations) GetAdditionalProperties() map[string]any {
-	if o == nil {
+func (a *Annotations) GetAdditionalProperties() map[string]any {
+	if a == nil {
 		return nil
 	}
-	return o.AdditionalProperties
+	return a.AdditionalProperties
 }
 
 // Origin - The origin field.
@@ -98,6 +109,17 @@ func (e Origin) ToPointer() *Origin {
 	return &e
 }
 
+// IsExact returns true if the value matches a known enum value, false otherwise.
+func (e *Origin) IsExact() bool {
+	if e != nil {
+		switch *e {
+		case "TASK_ORIGIN_UNSPECIFIED", "TASK_ORIGIN_PROFILE_MEMBERSHIP_AUTOMATION", "TASK_ORIGIN_SLACK", "TASK_ORIGIN_API", "TASK_ORIGIN_JIRA", "TASK_ORIGIN_COPILOT", "TASK_ORIGIN_WEBAPP", "TASK_ORIGIN_TIME_REVOKE", "TASK_ORIGIN_NON_USAGE_REVOKE", "TASK_ORIGIN_PROFILE_MEMBERSHIP_MANUAL", "TASK_ORIGIN_PROFILE_MEMBERSHIP", "TASK_ORIGIN_AUTOMATION", "TASK_ORIGIN_ACCESS_REVIEW":
+			return true
+		}
+	}
+	return false
+}
+
 // Processing - The processing state of a task as defined by the `processing_enum`
 type Processing string
 
@@ -110,6 +132,17 @@ const (
 
 func (e Processing) ToPointer() *Processing {
 	return &e
+}
+
+// IsExact returns true if the value matches a known enum value, false otherwise.
+func (e *Processing) IsExact() bool {
+	if e != nil {
+		switch *e {
+		case "TASK_PROCESSING_TYPE_UNSPECIFIED", "TASK_PROCESSING_TYPE_PROCESSING", "TASK_PROCESSING_TYPE_WAITING", "TASK_PROCESSING_TYPE_DONE":
+			return true
+		}
+	}
+	return false
 }
 
 // Recommendation - The recommendation field.
@@ -126,6 +159,17 @@ func (e Recommendation) ToPointer() *Recommendation {
 	return &e
 }
 
+// IsExact returns true if the value matches a known enum value, false otherwise.
+func (e *Recommendation) IsExact() bool {
+	if e != nil {
+		switch *e {
+		case "INSIGHT_RECOMMENDATION_UNSPECIFIED", "INSIGHT_RECOMMENDATION_APPROVE", "INSIGHT_RECOMMENDATION_DENY", "INSIGHT_RECOMMENDATION_REVIEW":
+			return true
+		}
+	}
+	return false
+}
+
 // TaskState - The current state of the task as defined by the `state_enum`
 type TaskState string
 
@@ -137,6 +181,17 @@ const (
 
 func (e TaskState) ToPointer() *TaskState {
 	return &e
+}
+
+// IsExact returns true if the value matches a known enum value, false otherwise.
+func (e *TaskState) IsExact() bool {
+	if e != nil {
+		switch *e {
+		case "TASK_STATE_UNSPECIFIED", "TASK_STATE_OPEN", "TASK_STATE_CLOSED":
+			return true
+		}
+	}
+	return false
 }
 
 // Task - A fully-fleged task object. Includes its policy, references to external apps, its type, its processing history, and more.
@@ -152,6 +207,7 @@ type Task struct {
 	//   - revoke
 	//   - certify
 	//   - offboarding
+	//   - action
 	//
 	TaskType *TaskType `json:"type,omitempty"`
 	// The actions that can be performed on the task by the current user.
@@ -203,190 +259,190 @@ func (t Task) MarshalJSON() ([]byte, error) {
 }
 
 func (t *Task) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &t, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &t, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *Task) GetForm() *FormInput {
-	if o == nil {
+func (t *Task) GetForm() *FormInput {
+	if t == nil {
 		return nil
 	}
-	return o.Form
+	return t.Form
 }
 
-func (o *Task) GetPolicyInstance() *PolicyInstance {
-	if o == nil {
+func (t *Task) GetPolicyInstance() *PolicyInstance {
+	if t == nil {
 		return nil
 	}
-	return o.PolicyInstance
+	return t.PolicyInstance
 }
 
-func (o *Task) GetTaskType() *TaskType {
-	if o == nil {
+func (t *Task) GetTaskType() *TaskType {
+	if t == nil {
 		return nil
 	}
-	return o.TaskType
+	return t.TaskType
 }
 
-func (o *Task) GetActions() []Actions {
-	if o == nil {
+func (t *Task) GetActions() []Actions {
+	if t == nil {
 		return nil
 	}
-	return o.Actions
+	return t.Actions
 }
 
-func (o *Task) GetAnalysisID() *string {
-	if o == nil {
+func (t *Task) GetAnalysisID() *string {
+	if t == nil {
 		return nil
 	}
-	return o.AnalysisID
+	return t.AnalysisID
 }
 
-func (o *Task) GetAnnotations() []Annotations {
-	if o == nil {
+func (t *Task) GetAnnotations() []Annotations {
+	if t == nil {
 		return nil
 	}
-	return o.Annotations
+	return t.Annotations
 }
 
-func (o *Task) GetCommentCount() *int {
-	if o == nil {
+func (t *Task) GetCommentCount() *int {
+	if t == nil {
 		return nil
 	}
-	return o.CommentCount
+	return t.CommentCount
 }
 
-func (o *Task) GetCreatedAt() *time.Time {
-	if o == nil {
+func (t *Task) GetCreatedAt() *time.Time {
+	if t == nil {
 		return nil
 	}
-	return o.CreatedAt
+	return t.CreatedAt
 }
 
-func (o *Task) GetCreatedByUserID() *string {
-	if o == nil {
+func (t *Task) GetCreatedByUserID() *string {
+	if t == nil {
 		return nil
 	}
-	return o.CreatedByUserID
+	return t.CreatedByUserID
 }
 
-func (o *Task) GetData() map[string]any {
-	if o == nil {
+func (t *Task) GetData() map[string]any {
+	if t == nil {
 		return nil
 	}
-	return o.Data
+	return t.Data
 }
 
-func (o *Task) GetDeletedAt() *time.Time {
-	if o == nil {
+func (t *Task) GetDeletedAt() *time.Time {
+	if t == nil {
 		return nil
 	}
-	return o.DeletedAt
+	return t.DeletedAt
 }
 
-func (o *Task) GetDescription() *string {
-	if o == nil {
+func (t *Task) GetDescription() *string {
+	if t == nil {
 		return nil
 	}
-	return o.Description
+	return t.Description
 }
 
-func (o *Task) GetDisplayName() *string {
-	if o == nil {
+func (t *Task) GetDisplayName() *string {
+	if t == nil {
 		return nil
 	}
-	return o.DisplayName
+	return t.DisplayName
 }
 
-func (o *Task) GetEmergencyAccess() *bool {
-	if o == nil {
+func (t *Task) GetEmergencyAccess() *bool {
+	if t == nil {
 		return nil
 	}
-	return o.EmergencyAccess
+	return t.EmergencyAccess
 }
 
-func (o *Task) GetExternalRefs() []ExternalRef {
-	if o == nil {
+func (t *Task) GetExternalRefs() []ExternalRef {
+	if t == nil {
 		return nil
 	}
-	return o.ExternalRefs
+	return t.ExternalRefs
 }
 
-func (o *Task) GetID() *string {
-	if o == nil {
+func (t *Task) GetID() *string {
+	if t == nil {
 		return nil
 	}
-	return o.ID
+	return t.ID
 }
 
-func (o *Task) GetInsightIds() []string {
-	if o == nil {
+func (t *Task) GetInsightIds() []string {
+	if t == nil {
 		return nil
 	}
-	return o.InsightIds
+	return t.InsightIds
 }
 
-func (o *Task) GetNumericID() *int64 {
-	if o == nil {
+func (t *Task) GetNumericID() *int64 {
+	if t == nil {
 		return nil
 	}
-	return o.NumericID
+	return t.NumericID
 }
 
-func (o *Task) GetOrigin() *Origin {
-	if o == nil {
+func (t *Task) GetOrigin() *Origin {
+	if t == nil {
 		return nil
 	}
-	return o.Origin
+	return t.Origin
 }
 
-func (o *Task) GetPolicyGenerationID() *string {
-	if o == nil {
+func (t *Task) GetPolicyGenerationID() *string {
+	if t == nil {
 		return nil
 	}
-	return o.PolicyGenerationID
+	return t.PolicyGenerationID
 }
 
-func (o *Task) GetProcessing() *Processing {
-	if o == nil {
+func (t *Task) GetProcessing() *Processing {
+	if t == nil {
 		return nil
 	}
-	return o.Processing
+	return t.Processing
 }
 
-func (o *Task) GetRecommendation() *Recommendation {
-	if o == nil {
+func (t *Task) GetRecommendation() *Recommendation {
+	if t == nil {
 		return nil
 	}
-	return o.Recommendation
+	return t.Recommendation
 }
 
-func (o *Task) GetState() *TaskState {
-	if o == nil {
+func (t *Task) GetState() *TaskState {
+	if t == nil {
 		return nil
 	}
-	return o.State
+	return t.State
 }
 
-func (o *Task) GetStepApproverIds() []string {
-	if o == nil {
+func (t *Task) GetStepApproverIds() []string {
+	if t == nil {
 		return nil
 	}
-	return o.StepApproverIds
+	return t.StepApproverIds
 }
 
-func (o *Task) GetUpdatedAt() *time.Time {
-	if o == nil {
+func (t *Task) GetUpdatedAt() *time.Time {
+	if t == nil {
 		return nil
 	}
-	return o.UpdatedAt
+	return t.UpdatedAt
 }
 
-func (o *Task) GetUserID() *string {
-	if o == nil {
+func (t *Task) GetUserID() *string {
+	if t == nil {
 		return nil
 	}
-	return o.UserID
+	return t.UserID
 }

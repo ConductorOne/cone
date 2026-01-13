@@ -63,7 +63,7 @@ func (s *Roles) Get(ctx context.Context, request operations.C1APIIamV1RolesGetRe
 		BaseURL:          baseURL,
 		Context:          ctx,
 		OperationID:      "c1.api.iam.v1.Roles.Get",
-		OAuth2Scopes:     []string{},
+		OAuth2Scopes:     nil,
 		SecuritySource:   s.sdkConfiguration.Security,
 	}
 
@@ -268,7 +268,7 @@ func (s *Roles) List(ctx context.Context, request operations.C1APIIamV1RolesList
 		BaseURL:          baseURL,
 		Context:          ctx,
 		OperationID:      "c1.api.iam.v1.Roles.List",
-		OAuth2Scopes:     []string{},
+		OAuth2Scopes:     nil,
 		SecuritySource:   s.sdkConfiguration.Security,
 	}
 
@@ -290,7 +290,7 @@ func (s *Roles) List(ctx context.Context, request operations.C1APIIamV1RolesList
 	req.Header.Set("Accept", "application/json")
 	req.Header.Set("User-Agent", s.sdkConfiguration.UserAgent)
 
-	if err := utils.PopulateQueryParams(ctx, req, request, nil); err != nil {
+	if err := utils.PopulateQueryParams(ctx, req, request, nil, nil); err != nil {
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
@@ -477,7 +477,7 @@ func (s *Roles) Update(ctx context.Context, request operations.C1APIIamV1RolesUp
 		BaseURL:          baseURL,
 		Context:          ctx,
 		OperationID:      "c1.api.iam.v1.Roles.Update",
-		OAuth2Scopes:     []string{},
+		OAuth2Scopes:     nil,
 		SecuritySource:   s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "UpdateRoleRequest", "json", `request:"mediaType=application/json"`)

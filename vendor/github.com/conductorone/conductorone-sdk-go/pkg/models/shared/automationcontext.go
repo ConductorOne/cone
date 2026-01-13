@@ -7,9 +7,9 @@ type AutomationContext struct {
 	Context map[string]any `json:"context,omitempty"`
 }
 
-func (o *AutomationContext) GetContext() map[string]any {
-	if o == nil {
+func (a *AutomationContext) GetContext() map[string]any {
+	if a == nil {
 		return nil
 	}
-	return o.Context
+	return a.Context
 }

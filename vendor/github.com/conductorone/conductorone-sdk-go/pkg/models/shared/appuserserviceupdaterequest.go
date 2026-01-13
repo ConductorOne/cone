@@ -11,23 +11,23 @@ type AppUserServiceUpdateRequest struct {
 	UpdateMask        *string            `json:"updateMask,omitempty"`
 }
 
-func (o *AppUserServiceUpdateRequest) GetAppUser() *AppUserInput {
-	if o == nil {
+func (a *AppUserServiceUpdateRequest) GetAppUser() *AppUserInput {
+	if a == nil {
 		return nil
 	}
-	return o.AppUser
+	return a.AppUser
 }
 
-func (o *AppUserServiceUpdateRequest) GetAppUserExpandMask() *AppUserExpandMask {
-	if o == nil {
+func (a *AppUserServiceUpdateRequest) GetAppUserExpandMask() *AppUserExpandMask {
+	if a == nil {
 		return nil
 	}
-	return o.AppUserExpandMask
+	return a.AppUserExpandMask
 }
 
-func (o *AppUserServiceUpdateRequest) GetUpdateMask() *string {
-	if o == nil {
+func (a *AppUserServiceUpdateRequest) GetUpdateMask() *string {
+	if a == nil {
 		return nil
 	}
-	return o.UpdateMask
+	return a.UpdateMask
 }

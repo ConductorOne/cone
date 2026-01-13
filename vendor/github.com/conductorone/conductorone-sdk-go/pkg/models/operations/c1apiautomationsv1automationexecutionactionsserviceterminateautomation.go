@@ -12,18 +12,18 @@ type C1APIAutomationsV1AutomationExecutionActionsServiceTerminateAutomationReque
 	ID                         int64                              `integer:"string" pathParam:"style=simple,explode=false,name=id"`
 }
 
-func (o *C1APIAutomationsV1AutomationExecutionActionsServiceTerminateAutomationRequest) GetTerminateAutomationRequest() *shared.TerminateAutomationRequest {
-	if o == nil {
+func (c *C1APIAutomationsV1AutomationExecutionActionsServiceTerminateAutomationRequest) GetTerminateAutomationRequest() *shared.TerminateAutomationRequest {
+	if c == nil {
 		return nil
 	}
-	return o.TerminateAutomationRequest
+	return c.TerminateAutomationRequest
 }
 
-func (o *C1APIAutomationsV1AutomationExecutionActionsServiceTerminateAutomationRequest) GetID() int64 {
-	if o == nil {
+func (c *C1APIAutomationsV1AutomationExecutionActionsServiceTerminateAutomationRequest) GetID() int64 {
+	if c == nil {
 		return 0
 	}
-	return o.ID
+	return c.ID
 }
 
 type C1APIAutomationsV1AutomationExecutionActionsServiceTerminateAutomationResponse struct {
@@ -37,30 +37,30 @@ type C1APIAutomationsV1AutomationExecutionActionsServiceTerminateAutomationRespo
 	TerminateAutomationResponse *shared.TerminateAutomationResponse
 }
 
-func (o *C1APIAutomationsV1AutomationExecutionActionsServiceTerminateAutomationResponse) GetContentType() string {
-	if o == nil {
+func (c *C1APIAutomationsV1AutomationExecutionActionsServiceTerminateAutomationResponse) GetContentType() string {
+	if c == nil {
 		return ""
 	}
-	return o.ContentType
+	return c.ContentType
 }
 
-func (o *C1APIAutomationsV1AutomationExecutionActionsServiceTerminateAutomationResponse) GetStatusCode() int {
-	if o == nil {
+func (c *C1APIAutomationsV1AutomationExecutionActionsServiceTerminateAutomationResponse) GetStatusCode() int {
+	if c == nil {
 		return 0
 	}
-	return o.StatusCode
+	return c.StatusCode
 }
 
-func (o *C1APIAutomationsV1AutomationExecutionActionsServiceTerminateAutomationResponse) GetRawResponse() *http.Response {
-	if o == nil {
+func (c *C1APIAutomationsV1AutomationExecutionActionsServiceTerminateAutomationResponse) GetRawResponse() *http.Response {
+	if c == nil {
 		return nil
 	}
-	return o.RawResponse
+	return c.RawResponse
 }
 
-func (o *C1APIAutomationsV1AutomationExecutionActionsServiceTerminateAutomationResponse) GetTerminateAutomationResponse() *shared.TerminateAutomationResponse {
-	if o == nil {
+func (c *C1APIAutomationsV1AutomationExecutionActionsServiceTerminateAutomationResponse) GetTerminateAutomationResponse() *shared.TerminateAutomationResponse {
+	if c == nil {
 		return nil
 	}
-	return o.TerminateAutomationResponse
+	return c.TerminateAutomationResponse
 }

@@ -18,24 +18,24 @@ func (a AppResourceTypeServiceListResponseExpanded) MarshalJSON() ([]byte, error
 }
 
 func (a *AppResourceTypeServiceListResponseExpanded) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &a, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &a, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *AppResourceTypeServiceListResponseExpanded) GetAtType() *string {
-	if o == nil {
+func (a *AppResourceTypeServiceListResponseExpanded) GetAtType() *string {
+	if a == nil {
 		return nil
 	}
-	return o.AtType
+	return a.AtType
 }
 
-func (o *AppResourceTypeServiceListResponseExpanded) GetAdditionalProperties() map[string]any {
-	if o == nil {
+func (a *AppResourceTypeServiceListResponseExpanded) GetAdditionalProperties() map[string]any {
+	if a == nil {
 		return nil
 	}
-	return o.AdditionalProperties
+	return a.AdditionalProperties
 }
 
 // The AppResourceTypeServiceListResponse message contains a list of results and a nextPageToken if applicable.
@@ -50,23 +50,23 @@ type AppResourceTypeServiceListResponse struct {
 	NextPageToken *string `json:"nextPageToken,omitempty"`
 }
 
-func (o *AppResourceTypeServiceListResponse) GetExpanded() []AppResourceTypeServiceListResponseExpanded {
-	if o == nil {
+func (a *AppResourceTypeServiceListResponse) GetExpanded() []AppResourceTypeServiceListResponseExpanded {
+	if a == nil {
 		return nil
 	}
-	return o.Expanded
+	return a.Expanded
 }
 
-func (o *AppResourceTypeServiceListResponse) GetList() []AppResourceTypeView {
-	if o == nil {
+func (a *AppResourceTypeServiceListResponse) GetList() []AppResourceTypeView {
+	if a == nil {
 		return nil
 	}
-	return o.List
+	return a.List
 }
 
-func (o *AppResourceTypeServiceListResponse) GetNextPageToken() *string {
-	if o == nil {
+func (a *AppResourceTypeServiceListResponse) GetNextPageToken() *string {
+	if a == nil {
 		return nil
 	}
-	return o.NextPageToken
+	return a.NextPageToken
 }

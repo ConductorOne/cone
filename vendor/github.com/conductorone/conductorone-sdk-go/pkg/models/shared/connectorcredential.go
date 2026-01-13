@@ -13,6 +13,8 @@ type ConnectorCredential struct {
 	AppID *string `json:"appId,omitempty"`
 	// The client id of the ConnectorCredential.
 	ClientID *string `json:"clientId,omitempty"`
+	// The client secret of the ConnectorCredential. It's only returned on creation.
+	ClientSecret *string `json:"clientSecret,omitempty"`
 	// The connectorId of the connector the credential is associated with.
 	ConnectorID *string    `json:"connectorId,omitempty"`
 	CreatedAt   *time.Time `json:"createdAt,omitempty"`
@@ -31,78 +33,85 @@ func (c ConnectorCredential) MarshalJSON() ([]byte, error) {
 }
 
 func (c *ConnectorCredential) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &c, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &c, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *ConnectorCredential) GetAppID() *string {
-	if o == nil {
+func (c *ConnectorCredential) GetAppID() *string {
+	if c == nil {
 		return nil
 	}
-	return o.AppID
+	return c.AppID
 }
 
-func (o *ConnectorCredential) GetClientID() *string {
-	if o == nil {
+func (c *ConnectorCredential) GetClientID() *string {
+	if c == nil {
 		return nil
 	}
-	return o.ClientID
+	return c.ClientID
 }
 
-func (o *ConnectorCredential) GetConnectorID() *string {
-	if o == nil {
+func (c *ConnectorCredential) GetClientSecret() *string {
+	if c == nil {
 		return nil
 	}
-	return o.ConnectorID
+	return c.ClientSecret
 }
 
-func (o *ConnectorCredential) GetCreatedAt() *time.Time {
-	if o == nil {
+func (c *ConnectorCredential) GetConnectorID() *string {
+	if c == nil {
 		return nil
 	}
-	return o.CreatedAt
+	return c.ConnectorID
 }
 
-func (o *ConnectorCredential) GetDeletedAt() *time.Time {
-	if o == nil {
+func (c *ConnectorCredential) GetCreatedAt() *time.Time {
+	if c == nil {
 		return nil
 	}
-	return o.DeletedAt
+	return c.CreatedAt
 }
 
-func (o *ConnectorCredential) GetDisplayName() *string {
-	if o == nil {
+func (c *ConnectorCredential) GetDeletedAt() *time.Time {
+	if c == nil {
 		return nil
 	}
-	return o.DisplayName
+	return c.DeletedAt
 }
 
-func (o *ConnectorCredential) GetExpiresTime() *time.Time {
-	if o == nil {
+func (c *ConnectorCredential) GetDisplayName() *string {
+	if c == nil {
 		return nil
 	}
-	return o.ExpiresTime
+	return c.DisplayName
 }
 
-func (o *ConnectorCredential) GetID() *string {
-	if o == nil {
+func (c *ConnectorCredential) GetExpiresTime() *time.Time {
+	if c == nil {
 		return nil
 	}
-	return o.ID
+	return c.ExpiresTime
 }
 
-func (o *ConnectorCredential) GetLastUsedAt() *time.Time {
-	if o == nil {
+func (c *ConnectorCredential) GetID() *string {
+	if c == nil {
 		return nil
 	}
-	return o.LastUsedAt
+	return c.ID
 }
 
-func (o *ConnectorCredential) GetUpdatedAt() *time.Time {
-	if o == nil {
+func (c *ConnectorCredential) GetLastUsedAt() *time.Time {
+	if c == nil {
 		return nil
 	}
-	return o.UpdatedAt
+	return c.LastUsedAt
+}
+
+func (c *ConnectorCredential) GetUpdatedAt() *time.Time {
+	if c == nil {
+		return nil
+	}
+	return c.UpdatedAt
 }

@@ -63,9 +63,16 @@ func (r *User) WideHeader() []string {
 }
 
 func (r *User) rows() []string {
+	var statusStr string
+	if r.Status != nil {
+		statusStr = userStatusToString[*r.Status]
+	} else {
+		statusStr = "Unknown"
+	}
+
 	return []string{
 		client.StringFromPtr(r.Email),
-		userStatusToString[*r.Status],
+		statusStr,
 		client.StringFromPtr(r.JobTitle),
 		client.StringFromPtr(r.Department),
 		client.StringFromPtr(r.EmploymentStatus),
@@ -82,8 +89,9 @@ func (r *User) Rows() [][]string {
 	return [][]string{r.rows()}
 }
 
-var userStatusToString = map[shared.UserStatus]string{
-	shared.UserStatusEnabled:  "Enabled",
-	shared.UserStatusDisabled: "Disabled",
-	shared.UserStatusDeleted:  "Deleted",
+var userStatusToString = map[shared.UserSchemasStatus]string{
+	shared.UserSchemasStatusUnknown:  "Unknown",
+	shared.UserSchemasStatusEnabled:  "Enabled",
+	shared.UserSchemasStatusDisabled: "Disabled",
+	shared.UserSchemasStatusDeleted:  "Deleted",
 }

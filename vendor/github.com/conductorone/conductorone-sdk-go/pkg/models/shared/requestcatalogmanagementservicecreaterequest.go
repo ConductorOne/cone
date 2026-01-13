@@ -15,6 +15,17 @@ func (e RequestCatalogManagementServiceCreateRequestEnrollmentBehavior) ToPointe
 	return &e
 }
 
+// IsExact returns true if the value matches a known enum value, false otherwise.
+func (e *RequestCatalogManagementServiceCreateRequestEnrollmentBehavior) IsExact() bool {
+	if e != nil {
+		switch *e {
+		case "REQUEST_CATALOG_ENROLLMENT_BEHAVIOR_UNSPECIFIED", "REQUEST_CATALOG_ENROLLMENT_BEHAVIOR_BYPASS_ENTITLEMENT_REQUEST_POLICY", "REQUEST_CATALOG_ENROLLMENT_BEHAVIOR_ENFORCE_ENTITLEMENT_REQUEST_POLICY":
+			return true
+		}
+	}
+	return false
+}
+
 // RequestCatalogManagementServiceCreateRequestUnenrollmentBehavior - Defines how to handle the revocation of the entitlements in the catalog during unenrollment.
 type RequestCatalogManagementServiceCreateRequestUnenrollmentBehavior string
 
@@ -29,6 +40,17 @@ func (e RequestCatalogManagementServiceCreateRequestUnenrollmentBehavior) ToPoin
 	return &e
 }
 
+// IsExact returns true if the value matches a known enum value, false otherwise.
+func (e *RequestCatalogManagementServiceCreateRequestUnenrollmentBehavior) IsExact() bool {
+	if e != nil {
+		switch *e {
+		case "REQUEST_CATALOG_UNENROLLMENT_BEHAVIOR_UNSPECIFIED", "REQUEST_CATALOG_UNENROLLMENT_BEHAVIOR_LEAVE_ACCESS_AS_IS", "REQUEST_CATALOG_UNENROLLMENT_BEHAVIOR_REVOKE_ALL", "REQUEST_CATALOG_UNENROLLMENT_BEHAVIOR_REVOKE_UNJUSTIFIED":
+			return true
+		}
+	}
+	return false
+}
+
 // RequestCatalogManagementServiceCreateRequestUnenrollmentEntitlementBehavior - Defines how to handle the revoke policies of the entitlements in the catalog during unenrollment.
 type RequestCatalogManagementServiceCreateRequestUnenrollmentEntitlementBehavior string
 
@@ -40,6 +62,17 @@ const (
 
 func (e RequestCatalogManagementServiceCreateRequestUnenrollmentEntitlementBehavior) ToPointer() *RequestCatalogManagementServiceCreateRequestUnenrollmentEntitlementBehavior {
 	return &e
+}
+
+// IsExact returns true if the value matches a known enum value, false otherwise.
+func (e *RequestCatalogManagementServiceCreateRequestUnenrollmentEntitlementBehavior) IsExact() bool {
+	if e != nil {
+		switch *e {
+		case "REQUEST_CATALOG_UNENROLLMENT_ENTITLEMENT_BEHAVIOR_UNSPECIFIED", "REQUEST_CATALOG_UNENROLLMENT_ENTITLEMENT_BEHAVIOR_BYPASS", "REQUEST_CATALOG_UNENROLLMENT_ENTITLEMENT_BEHAVIOR_ENFORCE":
+			return true
+		}
+	}
+	return false
 }
 
 // RequestCatalogManagementServiceCreateRequest - Create a request catalog.
@@ -64,65 +97,65 @@ type RequestCatalogManagementServiceCreateRequest struct {
 	VisibleToEveryone *bool `json:"visibleToEveryone,omitempty"`
 }
 
-func (o *RequestCatalogManagementServiceCreateRequest) GetRequestCatalogExpandMask() *RequestCatalogExpandMask {
-	if o == nil {
+func (r *RequestCatalogManagementServiceCreateRequest) GetRequestCatalogExpandMask() *RequestCatalogExpandMask {
+	if r == nil {
 		return nil
 	}
-	return o.RequestCatalogExpandMask
+	return r.RequestCatalogExpandMask
 }
 
-func (o *RequestCatalogManagementServiceCreateRequest) GetDescription() *string {
-	if o == nil {
+func (r *RequestCatalogManagementServiceCreateRequest) GetDescription() *string {
+	if r == nil {
 		return nil
 	}
-	return o.Description
+	return r.Description
 }
 
-func (o *RequestCatalogManagementServiceCreateRequest) GetDisplayName() string {
-	if o == nil {
+func (r *RequestCatalogManagementServiceCreateRequest) GetDisplayName() string {
+	if r == nil {
 		return ""
 	}
-	return o.DisplayName
+	return r.DisplayName
 }
 
-func (o *RequestCatalogManagementServiceCreateRequest) GetEnrollmentBehavior() *RequestCatalogManagementServiceCreateRequestEnrollmentBehavior {
-	if o == nil {
+func (r *RequestCatalogManagementServiceCreateRequest) GetEnrollmentBehavior() *RequestCatalogManagementServiceCreateRequestEnrollmentBehavior {
+	if r == nil {
 		return nil
 	}
-	return o.EnrollmentBehavior
+	return r.EnrollmentBehavior
 }
 
-func (o *RequestCatalogManagementServiceCreateRequest) GetPublished() *bool {
-	if o == nil {
+func (r *RequestCatalogManagementServiceCreateRequest) GetPublished() *bool {
+	if r == nil {
 		return nil
 	}
-	return o.Published
+	return r.Published
 }
 
-func (o *RequestCatalogManagementServiceCreateRequest) GetRequestBundle() *bool {
-	if o == nil {
+func (r *RequestCatalogManagementServiceCreateRequest) GetRequestBundle() *bool {
+	if r == nil {
 		return nil
 	}
-	return o.RequestBundle
+	return r.RequestBundle
 }
 
-func (o *RequestCatalogManagementServiceCreateRequest) GetUnenrollmentBehavior() *RequestCatalogManagementServiceCreateRequestUnenrollmentBehavior {
-	if o == nil {
+func (r *RequestCatalogManagementServiceCreateRequest) GetUnenrollmentBehavior() *RequestCatalogManagementServiceCreateRequestUnenrollmentBehavior {
+	if r == nil {
 		return nil
 	}
-	return o.UnenrollmentBehavior
+	return r.UnenrollmentBehavior
 }
 
-func (o *RequestCatalogManagementServiceCreateRequest) GetUnenrollmentEntitlementBehavior() *RequestCatalogManagementServiceCreateRequestUnenrollmentEntitlementBehavior {
-	if o == nil {
+func (r *RequestCatalogManagementServiceCreateRequest) GetUnenrollmentEntitlementBehavior() *RequestCatalogManagementServiceCreateRequestUnenrollmentEntitlementBehavior {
+	if r == nil {
 		return nil
 	}
-	return o.UnenrollmentEntitlementBehavior
+	return r.UnenrollmentEntitlementBehavior
 }
 
-func (o *RequestCatalogManagementServiceCreateRequest) GetVisibleToEveryone() *bool {
-	if o == nil {
+func (r *RequestCatalogManagementServiceCreateRequest) GetVisibleToEveryone() *bool {
+	if r == nil {
 		return nil
 	}
-	return o.VisibleToEveryone
+	return r.VisibleToEveryone
 }

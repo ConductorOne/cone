@@ -12,18 +12,18 @@ type C1APIRequestcatalogV1RequestCatalogManagementServiceDeleteBundleAutomationR
 	RequestCatalogID              string                                `pathParam:"style=simple,explode=false,name=request_catalog_id"`
 }
 
-func (o *C1APIRequestcatalogV1RequestCatalogManagementServiceDeleteBundleAutomationRequest) GetDeleteBundleAutomationRequest() *shared.DeleteBundleAutomationRequest {
-	if o == nil {
+func (c *C1APIRequestcatalogV1RequestCatalogManagementServiceDeleteBundleAutomationRequest) GetDeleteBundleAutomationRequest() *shared.DeleteBundleAutomationRequest {
+	if c == nil {
 		return nil
 	}
-	return o.DeleteBundleAutomationRequest
+	return c.DeleteBundleAutomationRequest
 }
 
-func (o *C1APIRequestcatalogV1RequestCatalogManagementServiceDeleteBundleAutomationRequest) GetRequestCatalogID() string {
-	if o == nil {
+func (c *C1APIRequestcatalogV1RequestCatalogManagementServiceDeleteBundleAutomationRequest) GetRequestCatalogID() string {
+	if c == nil {
 		return ""
 	}
-	return o.RequestCatalogID
+	return c.RequestCatalogID
 }
 
 type C1APIRequestcatalogV1RequestCatalogManagementServiceDeleteBundleAutomationResponse struct {
@@ -37,30 +37,30 @@ type C1APIRequestcatalogV1RequestCatalogManagementServiceDeleteBundleAutomationR
 	RawResponse *http.Response
 }
 
-func (o *C1APIRequestcatalogV1RequestCatalogManagementServiceDeleteBundleAutomationResponse) GetContentType() string {
-	if o == nil {
+func (c *C1APIRequestcatalogV1RequestCatalogManagementServiceDeleteBundleAutomationResponse) GetContentType() string {
+	if c == nil {
 		return ""
 	}
-	return o.ContentType
+	return c.ContentType
 }
 
-func (o *C1APIRequestcatalogV1RequestCatalogManagementServiceDeleteBundleAutomationResponse) GetDeleteBundleAutomationResponse() *shared.DeleteBundleAutomationResponse {
-	if o == nil {
+func (c *C1APIRequestcatalogV1RequestCatalogManagementServiceDeleteBundleAutomationResponse) GetDeleteBundleAutomationResponse() *shared.DeleteBundleAutomationResponse {
+	if c == nil {
 		return nil
 	}
-	return o.DeleteBundleAutomationResponse
+	return c.DeleteBundleAutomationResponse
 }
 
-func (o *C1APIRequestcatalogV1RequestCatalogManagementServiceDeleteBundleAutomationResponse) GetStatusCode() int {
-	if o == nil {
+func (c *C1APIRequestcatalogV1RequestCatalogManagementServiceDeleteBundleAutomationResponse) GetStatusCode() int {
+	if c == nil {
 		return 0
 	}
-	return o.StatusCode
+	return c.StatusCode
 }
 
-func (o *C1APIRequestcatalogV1RequestCatalogManagementServiceDeleteBundleAutomationResponse) GetRawResponse() *http.Response {
-	if o == nil {
+func (c *C1APIRequestcatalogV1RequestCatalogManagementServiceDeleteBundleAutomationResponse) GetRawResponse() *http.Response {
+	if c == nil {
 		return nil
 	}
-	return o.RawResponse
+	return c.RawResponse
 }

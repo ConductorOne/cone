@@ -12,18 +12,18 @@ type C1APIRequestcatalogV1RequestCatalogManagementServiceAddAccessEntitlementsRe
 	CatalogID                                                   string                                                              `pathParam:"style=simple,explode=false,name=catalog_id"`
 }
 
-func (o *C1APIRequestcatalogV1RequestCatalogManagementServiceAddAccessEntitlementsRequest) GetRequestCatalogManagementServiceAddAccessEntitlementsRequest() *shared.RequestCatalogManagementServiceAddAccessEntitlementsRequest {
-	if o == nil {
+func (c *C1APIRequestcatalogV1RequestCatalogManagementServiceAddAccessEntitlementsRequest) GetRequestCatalogManagementServiceAddAccessEntitlementsRequest() *shared.RequestCatalogManagementServiceAddAccessEntitlementsRequest {
+	if c == nil {
 		return nil
 	}
-	return o.RequestCatalogManagementServiceAddAccessEntitlementsRequest
+	return c.RequestCatalogManagementServiceAddAccessEntitlementsRequest
 }
 
-func (o *C1APIRequestcatalogV1RequestCatalogManagementServiceAddAccessEntitlementsRequest) GetCatalogID() string {
-	if o == nil {
+func (c *C1APIRequestcatalogV1RequestCatalogManagementServiceAddAccessEntitlementsRequest) GetCatalogID() string {
+	if c == nil {
 		return ""
 	}
-	return o.CatalogID
+	return c.CatalogID
 }
 
 type C1APIRequestcatalogV1RequestCatalogManagementServiceAddAccessEntitlementsResponse struct {
@@ -37,30 +37,30 @@ type C1APIRequestcatalogV1RequestCatalogManagementServiceAddAccessEntitlementsRe
 	RawResponse *http.Response
 }
 
-func (o *C1APIRequestcatalogV1RequestCatalogManagementServiceAddAccessEntitlementsResponse) GetContentType() string {
-	if o == nil {
+func (c *C1APIRequestcatalogV1RequestCatalogManagementServiceAddAccessEntitlementsResponse) GetContentType() string {
+	if c == nil {
 		return ""
 	}
-	return o.ContentType
+	return c.ContentType
 }
 
-func (o *C1APIRequestcatalogV1RequestCatalogManagementServiceAddAccessEntitlementsResponse) GetRequestCatalogManagementServiceAddAccessEntitlementsResponse() *shared.RequestCatalogManagementServiceAddAccessEntitlementsResponse {
-	if o == nil {
+func (c *C1APIRequestcatalogV1RequestCatalogManagementServiceAddAccessEntitlementsResponse) GetRequestCatalogManagementServiceAddAccessEntitlementsResponse() *shared.RequestCatalogManagementServiceAddAccessEntitlementsResponse {
+	if c == nil {
 		return nil
 	}
-	return o.RequestCatalogManagementServiceAddAccessEntitlementsResponse
+	return c.RequestCatalogManagementServiceAddAccessEntitlementsResponse
 }
 
-func (o *C1APIRequestcatalogV1RequestCatalogManagementServiceAddAccessEntitlementsResponse) GetStatusCode() int {
-	if o == nil {
+func (c *C1APIRequestcatalogV1RequestCatalogManagementServiceAddAccessEntitlementsResponse) GetStatusCode() int {
+	if c == nil {
 		return 0
 	}
-	return o.StatusCode
+	return c.StatusCode
 }
 
-func (o *C1APIRequestcatalogV1RequestCatalogManagementServiceAddAccessEntitlementsResponse) GetRawResponse() *http.Response {
-	if o == nil {
+func (c *C1APIRequestcatalogV1RequestCatalogManagementServiceAddAccessEntitlementsResponse) GetRawResponse() *http.Response {
+	if c == nil {
 		return nil
 	}
-	return o.RawResponse
+	return c.RawResponse
 }

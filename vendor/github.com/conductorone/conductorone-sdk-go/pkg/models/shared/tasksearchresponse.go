@@ -18,24 +18,24 @@ func (t TaskSearchResponseExpanded) MarshalJSON() ([]byte, error) {
 }
 
 func (t *TaskSearchResponseExpanded) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &t, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &t, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *TaskSearchResponseExpanded) GetAtType() *string {
-	if o == nil {
+func (t *TaskSearchResponseExpanded) GetAtType() *string {
+	if t == nil {
 		return nil
 	}
-	return o.AtType
+	return t.AtType
 }
 
-func (o *TaskSearchResponseExpanded) GetAdditionalProperties() map[string]any {
-	if o == nil {
+func (t *TaskSearchResponseExpanded) GetAdditionalProperties() map[string]any {
+	if t == nil {
 		return nil
 	}
-	return o.AdditionalProperties
+	return t.AdditionalProperties
 }
 
 // The TaskSearchResponse message contains a list of results and a nextPageToken if applicable.
@@ -50,23 +50,23 @@ type TaskSearchResponse struct {
 	NextPageToken *string `json:"nextPageToken,omitempty"`
 }
 
-func (o *TaskSearchResponse) GetExpanded() []TaskSearchResponseExpanded {
-	if o == nil {
+func (t *TaskSearchResponse) GetExpanded() []TaskSearchResponseExpanded {
+	if t == nil {
 		return nil
 	}
-	return o.Expanded
+	return t.Expanded
 }
 
-func (o *TaskSearchResponse) GetList() []TaskView {
-	if o == nil {
+func (t *TaskSearchResponse) GetList() []TaskView {
+	if t == nil {
 		return nil
 	}
-	return o.List
+	return t.List
 }
 
-func (o *TaskSearchResponse) GetNextPageToken() *string {
-	if o == nil {
+func (t *TaskSearchResponse) GetNextPageToken() *string {
+	if t == nil {
 		return nil
 	}
-	return o.NextPageToken
+	return t.NextPageToken
 }

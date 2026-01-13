@@ -11,23 +11,23 @@ type ConnectorServiceUpdateDelegatedRequest struct {
 	UpdateMask          *string              `json:"updateMask,omitempty"`
 }
 
-func (o *ConnectorServiceUpdateDelegatedRequest) GetConnector() *ConnectorInput {
-	if o == nil {
+func (c *ConnectorServiceUpdateDelegatedRequest) GetConnector() *ConnectorInput {
+	if c == nil {
 		return nil
 	}
-	return o.Connector
+	return c.Connector
 }
 
-func (o *ConnectorServiceUpdateDelegatedRequest) GetConnectorExpandMask() *ConnectorExpandMask {
-	if o == nil {
+func (c *ConnectorServiceUpdateDelegatedRequest) GetConnectorExpandMask() *ConnectorExpandMask {
+	if c == nil {
 		return nil
 	}
-	return o.ConnectorExpandMask
+	return c.ConnectorExpandMask
 }
 
-func (o *ConnectorServiceUpdateDelegatedRequest) GetUpdateMask() *string {
-	if o == nil {
+func (c *ConnectorServiceUpdateDelegatedRequest) GetUpdateMask() *string {
+	if c == nil {
 		return nil
 	}
-	return o.UpdateMask
+	return c.UpdateMask
 }

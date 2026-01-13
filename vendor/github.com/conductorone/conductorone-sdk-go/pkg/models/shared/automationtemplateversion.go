@@ -27,57 +27,57 @@ func (a AutomationTemplateVersion) MarshalJSON() ([]byte, error) {
 }
 
 func (a *AutomationTemplateVersion) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &a, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &a, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *AutomationTemplateVersion) GetAutomationSteps() []AutomationStep {
-	if o == nil {
+func (a *AutomationTemplateVersion) GetAutomationSteps() []AutomationStep {
+	if a == nil {
 		return nil
 	}
-	return o.AutomationSteps
+	return a.AutomationSteps
 }
 
-func (o *AutomationTemplateVersion) GetAutomationTemplateID() *string {
-	if o == nil {
+func (a *AutomationTemplateVersion) GetAutomationTemplateID() *string {
+	if a == nil {
 		return nil
 	}
-	return o.AutomationTemplateID
+	return a.AutomationTemplateID
 }
 
-func (o *AutomationTemplateVersion) GetCreatedAt() *time.Time {
-	if o == nil {
+func (a *AutomationTemplateVersion) GetCreatedAt() *time.Time {
+	if a == nil {
 		return nil
 	}
-	return o.CreatedAt
+	return a.CreatedAt
 }
 
-func (o *AutomationTemplateVersion) GetDeletedAt() *time.Time {
-	if o == nil {
+func (a *AutomationTemplateVersion) GetDeletedAt() *time.Time {
+	if a == nil {
 		return nil
 	}
-	return o.DeletedAt
+	return a.DeletedAt
 }
 
-func (o *AutomationTemplateVersion) GetTriggers() []AutomationTrigger {
-	if o == nil {
+func (a *AutomationTemplateVersion) GetTriggers() []AutomationTrigger {
+	if a == nil {
 		return nil
 	}
-	return o.Triggers
+	return a.Triggers
 }
 
-func (o *AutomationTemplateVersion) GetUpdatedAt() *time.Time {
-	if o == nil {
+func (a *AutomationTemplateVersion) GetUpdatedAt() *time.Time {
+	if a == nil {
 		return nil
 	}
-	return o.UpdatedAt
+	return a.UpdatedAt
 }
 
-func (o *AutomationTemplateVersion) GetVersion() *int64 {
-	if o == nil {
+func (a *AutomationTemplateVersion) GetVersion() *int64 {
+	if a == nil {
 		return nil
 	}
-	return o.Version
+	return a.Version
 }

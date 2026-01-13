@@ -23,6 +23,17 @@ func (e TaskTypeRevokeOutcome) ToPointer() *TaskTypeRevokeOutcome {
 	return &e
 }
 
+// IsExact returns true if the value matches a known enum value, false otherwise.
+func (e *TaskTypeRevokeOutcome) IsExact() bool {
+	if e != nil {
+		switch *e {
+		case "REVOKE_OUTCOME_UNSPECIFIED", "REVOKE_OUTCOME_REVOKED", "REVOKE_OUTCOME_DENIED", "REVOKE_OUTCOME_ERROR", "REVOKE_OUTCOME_CANCELLED", "REVOKE_OUTCOME_WAIT_TIMED_OUT":
+			return true
+		}
+	}
+	return false
+}
+
 // The TaskTypeRevoke message indicates that a task is a revoke task and all related details.
 type TaskTypeRevoke struct {
 	// The TaskRevokeSource message indicates the source of the revoke task is one of expired, nonUsage, request, or review.
@@ -52,57 +63,57 @@ func (t TaskTypeRevoke) MarshalJSON() ([]byte, error) {
 }
 
 func (t *TaskTypeRevoke) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &t, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &t, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *TaskTypeRevoke) GetTaskRevokeSource() *TaskRevokeSource {
-	if o == nil {
+func (t *TaskTypeRevoke) GetTaskRevokeSource() *TaskRevokeSource {
+	if t == nil {
 		return nil
 	}
-	return o.TaskRevokeSource
+	return t.TaskRevokeSource
 }
 
-func (o *TaskTypeRevoke) GetAppEntitlementID() *string {
-	if o == nil {
+func (t *TaskTypeRevoke) GetAppEntitlementID() *string {
+	if t == nil {
 		return nil
 	}
-	return o.AppEntitlementID
+	return t.AppEntitlementID
 }
 
-func (o *TaskTypeRevoke) GetAppID() *string {
-	if o == nil {
+func (t *TaskTypeRevoke) GetAppID() *string {
+	if t == nil {
 		return nil
 	}
-	return o.AppID
+	return t.AppID
 }
 
-func (o *TaskTypeRevoke) GetAppUserID() *string {
-	if o == nil {
+func (t *TaskTypeRevoke) GetAppUserID() *string {
+	if t == nil {
 		return nil
 	}
-	return o.AppUserID
+	return t.AppUserID
 }
 
-func (o *TaskTypeRevoke) GetIdentityUserID() *string {
-	if o == nil {
+func (t *TaskTypeRevoke) GetIdentityUserID() *string {
+	if t == nil {
 		return nil
 	}
-	return o.IdentityUserID
+	return t.IdentityUserID
 }
 
-func (o *TaskTypeRevoke) GetOutcome() *TaskTypeRevokeOutcome {
-	if o == nil {
+func (t *TaskTypeRevoke) GetOutcome() *TaskTypeRevokeOutcome {
+	if t == nil {
 		return nil
 	}
-	return o.Outcome
+	return t.Outcome
 }
 
-func (o *TaskTypeRevoke) GetOutcomeTime() *time.Time {
-	if o == nil {
+func (t *TaskTypeRevoke) GetOutcomeTime() *time.Time {
+	if t == nil {
 		return nil
 	}
-	return o.OutcomeTime
+	return t.OutcomeTime
 }

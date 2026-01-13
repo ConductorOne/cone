@@ -8,9 +8,9 @@ type AutomationExecutionRef struct {
 	ID *int64 `integer:"string" json:"id,omitempty"`
 }
 
-func (o *AutomationExecutionRef) GetID() *int64 {
-	if o == nil {
+func (a *AutomationExecutionRef) GetID() *int64 {
+	if a == nil {
 		return nil
 	}
-	return o.ID
+	return a.ID
 }

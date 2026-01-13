@@ -15,39 +15,39 @@ type C1APIAppV1AppEntitlementsProxyCreateRequest struct {
 	SrcAppID                         string                                   `pathParam:"style=simple,explode=false,name=src_app_id"`
 }
 
-func (o *C1APIAppV1AppEntitlementsProxyCreateRequest) GetCreateAppEntitlementProxyRequest() *shared.CreateAppEntitlementProxyRequest {
-	if o == nil {
+func (c *C1APIAppV1AppEntitlementsProxyCreateRequest) GetCreateAppEntitlementProxyRequest() *shared.CreateAppEntitlementProxyRequest {
+	if c == nil {
 		return nil
 	}
-	return o.CreateAppEntitlementProxyRequest
+	return c.CreateAppEntitlementProxyRequest
 }
 
-func (o *C1APIAppV1AppEntitlementsProxyCreateRequest) GetDstAppEntitlementID() string {
-	if o == nil {
+func (c *C1APIAppV1AppEntitlementsProxyCreateRequest) GetDstAppEntitlementID() string {
+	if c == nil {
 		return ""
 	}
-	return o.DstAppEntitlementID
+	return c.DstAppEntitlementID
 }
 
-func (o *C1APIAppV1AppEntitlementsProxyCreateRequest) GetDstAppID() string {
-	if o == nil {
+func (c *C1APIAppV1AppEntitlementsProxyCreateRequest) GetDstAppID() string {
+	if c == nil {
 		return ""
 	}
-	return o.DstAppID
+	return c.DstAppID
 }
 
-func (o *C1APIAppV1AppEntitlementsProxyCreateRequest) GetSrcAppEntitlementID() string {
-	if o == nil {
+func (c *C1APIAppV1AppEntitlementsProxyCreateRequest) GetSrcAppEntitlementID() string {
+	if c == nil {
 		return ""
 	}
-	return o.SrcAppEntitlementID
+	return c.SrcAppEntitlementID
 }
 
-func (o *C1APIAppV1AppEntitlementsProxyCreateRequest) GetSrcAppID() string {
-	if o == nil {
+func (c *C1APIAppV1AppEntitlementsProxyCreateRequest) GetSrcAppID() string {
+	if c == nil {
 		return ""
 	}
-	return o.SrcAppID
+	return c.SrcAppID
 }
 
 type C1APIAppV1AppEntitlementsProxyCreateResponse struct {
@@ -61,30 +61,30 @@ type C1APIAppV1AppEntitlementsProxyCreateResponse struct {
 	RawResponse *http.Response
 }
 
-func (o *C1APIAppV1AppEntitlementsProxyCreateResponse) GetContentType() string {
-	if o == nil {
+func (c *C1APIAppV1AppEntitlementsProxyCreateResponse) GetContentType() string {
+	if c == nil {
 		return ""
 	}
-	return o.ContentType
+	return c.ContentType
 }
 
-func (o *C1APIAppV1AppEntitlementsProxyCreateResponse) GetCreateAppEntitlementProxyResponse() *shared.CreateAppEntitlementProxyResponse {
-	if o == nil {
+func (c *C1APIAppV1AppEntitlementsProxyCreateResponse) GetCreateAppEntitlementProxyResponse() *shared.CreateAppEntitlementProxyResponse {
+	if c == nil {
 		return nil
 	}
-	return o.CreateAppEntitlementProxyResponse
+	return c.CreateAppEntitlementProxyResponse
 }
 
-func (o *C1APIAppV1AppEntitlementsProxyCreateResponse) GetStatusCode() int {
-	if o == nil {
+func (c *C1APIAppV1AppEntitlementsProxyCreateResponse) GetStatusCode() int {
+	if c == nil {
 		return 0
 	}
-	return o.StatusCode
+	return c.StatusCode
 }
 
-func (o *C1APIAppV1AppEntitlementsProxyCreateResponse) GetRawResponse() *http.Response {
-	if o == nil {
+func (c *C1APIAppV1AppEntitlementsProxyCreateResponse) GetRawResponse() *http.Response {
+	if c == nil {
 		return nil
 	}
-	return o.RawResponse
+	return c.RawResponse
 }

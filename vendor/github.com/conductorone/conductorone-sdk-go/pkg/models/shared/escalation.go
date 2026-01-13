@@ -2,6 +2,8 @@
 
 package shared
 
+import "github.com/conductorone/conductorone-sdk-go/pkg/utils"
+
 // The Escalation message.
 //
 // This message contains a oneof named escalation_policy. Only a single field of the following list may be set at a time:
@@ -22,6 +24,17 @@ type Escalation struct {
 	EscalationComment *string `json:"escalationComment,omitempty"`
 	// The expiration field.
 	Expiration *int64 `integer:"string" json:"expiration,omitempty"`
+}
+
+func (e Escalation) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(e, "", false)
+}
+
+func (e *Escalation) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, e, "", false, nil); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (e *Escalation) GetCancelTicket() *CancelTicket {

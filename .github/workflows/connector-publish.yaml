@@ -1,0 +1,83 @@
+# Reusable workflow for publishing connectors to the ConductorOne registry.
+#
+# Usage in your connector repo:
+#
+#   name: Publish Connector
+#   on:
+#     release:
+#       types: [published]
+#   jobs:
+#     publish:
+#       uses: ConductorOne/cone/.github/workflows/connector-publish.yaml@main
+#       with:
+#         connector-name: my-service
+#       secrets:
+#         registry-token: ${{ secrets.C1_REGISTRY_TOKEN }}
+
+name: Connector Publish
+
+on:
+  workflow_call:
+    inputs:
+      connector-name:
+        description: 'Connector name (e.g., "github", "okta")'
+        required: true
+        type: string
+      registry-url:
+        description: 'Registry URL (defaults to production)'
+        required: false
+        type: string
+        default: 'https://registry.conductorone.com'
+      config-path:
+        description: 'Path to connector config file'
+        required: false
+        type: string
+        default: '.baton.yaml'
+    secrets:
+      registry-token:
+        description: 'ConductorOne registry authentication token'
+        required: true
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.23.x'
+
+      - name: Install cone CLI
+        run: |
+          go install github.com/conductorone/cone@latest
+
+      - name: Build connector
+        run: |
+          go build -o baton-${{ inputs.connector-name }} .
+
+      - name: Extract version from tag
+        id: version
+        run: |
+          VERSION=${GITHUB_REF#refs/tags/}
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+
+      - name: Publish to registry
+        env:
+          C1_REGISTRY_TOKEN: ${{ secrets.registry-token }}
+          C1_REGISTRY_URL: ${{ inputs.registry-url }}
+        run: |
+          cone connector publish \
+            --name "${{ inputs.connector-name }}" \
+            --version "${{ steps.version.outputs.version }}" \
+            --binary "baton-${{ inputs.connector-name }}" \
+            --config "${{ inputs.config-path }}"
+
+      - name: Verify publication
+        env:
+          C1_REGISTRY_TOKEN: ${{ secrets.registry-token }}
+          C1_REGISTRY_URL: ${{ inputs.registry-url }}
+        run: |
+          cone registry info "${{ inputs.connector-name }}" --version "${{ steps.version.outputs.version }}"

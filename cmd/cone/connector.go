@@ -15,12 +15,14 @@ func connectorCmd() *cobra.Command {
 The connector subcommands help you:
   - Initialize new connector projects
   - Run a local development server with hot reload
-  - Build connector binaries for deployment`,
+  - Build connector binaries for deployment
+  - Publish connectors to the ConductorOne registry`,
 	}
 
 	cmd.AddCommand(connectorBuildCmd())
 	cmd.AddCommand(connectorInitCmd())
-	// TODO: Add connectorDevCmd() in Tier 2 feature [10]
+	cmd.AddCommand(connectorDevCmd())
+	cmd.AddCommand(connectorPublishCmd())
 
 	return cmd
 }

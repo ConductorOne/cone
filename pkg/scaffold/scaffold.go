@@ -90,7 +90,7 @@ func generateFile(cfg *Config, tf templateFile) error {
 	// Execute template
 	data := map[string]string{
 		"Name":        cfg.Name,
-		"NameTitle":   strings.Title(strings.ReplaceAll(cfg.Name, "-", " ")),
+		"NameTitle":   toTitleCase(cfg.Name),
 		"NamePascal":  toPascalCase(cfg.Name),
 		"ModulePath":  cfg.ModulePath,
 		"Description": cfg.Description,
@@ -113,19 +113,30 @@ func toPascalCase(s string) string {
 	return strings.Join(parts, "")
 }
 
+// toTitleCase converts a kebab-case string to Title Case.
+func toTitleCase(s string) string {
+	parts := strings.Split(s, "-")
+	for i, p := range parts {
+		if len(p) > 0 {
+			parts[i] = strings.ToUpper(p[:1]) + p[1:]
+		}
+	}
+	return strings.Join(parts, " ")
+}
+
 // templateFiles contains all the files to generate for a new connector.
+// These templates use baton-sdk v0.4.7+ patterns with config.DefineConfiguration.
 var templateFiles = []templateFile{
 	{
 		Path: "go.mod",
 		Template: `module {{.ModulePath}}
 
-go 1.21
+go 1.23
 
 require (
-	github.com/conductorone/baton-sdk v0.2.0
-	github.com/conductorone/conductorone-sdk-go v1.0.0
+	github.com/conductorone/baton-sdk v0.4.7
 	github.com/grpc-ecosystem/go-grpc-middleware v1.4.0
-	go.uber.org/zap v1.26.0
+	go.uber.org/zap v1.27.0
 )
 `,
 	},
@@ -138,67 +149,82 @@ import (
 	"fmt"
 	"os"
 
-	"{{.ModulePath}}/cmd/baton-{{.Name}}/config"
 	"{{.ModulePath}}/pkg/connector"
-	"github.com/conductorone/baton-sdk/pkg/cli"
+	configSdk "github.com/conductorone/baton-sdk/pkg/config"
 	"github.com/conductorone/baton-sdk/pkg/connectorbuilder"
+	"github.com/conductorone/baton-sdk/pkg/field"
 	"github.com/conductorone/baton-sdk/pkg/types"
+	"github.com/grpc-ecosystem/go-grpc-middleware/logging/zap/ctxzap"
+	"go.uber.org/zap"
 )
 
 var version = "dev"
 
+// Config holds the connector configuration.
+// It implements field.Configurable to work with the SDK's configuration system.
+type Config struct {
+	// Add connector-specific fields here as needed.
+	// Example: APIKey string ` + "`" + `mapstructure:"api-key"` + "`" + `
+}
+
+// Implement field.Configurable interface.
+// These methods allow the SDK to read configuration values.
+func (c *Config) GetString(key string) string         { return "" }
+func (c *Config) GetBool(key string) bool             { return false }
+func (c *Config) GetInt(key string) int               { return 0 }
+func (c *Config) GetStringSlice(key string) []string  { return nil }
+func (c *Config) GetStringMap(key string) map[string]any { return nil }
+
+// Configuration fields for the connector.
+// Add required fields here, e.g.:
+//   field.StringField("api-key", field.WithRequired(true), field.WithDescription("API key")),
+var configFields = []field.SchemaField{}
+
+// ConfigSchema is the configuration schema for the connector.
+var ConfigSchema = field.NewConfiguration(
+	configFields,
+	field.WithConnectorDisplayName("{{.NameTitle}}"),
+)
+
 func main() {
 	ctx := context.Background()
 
-	cfg := &config.Config{}
-	app, err := cli.NewApp(
+	_, cmd, err := configSdk.DefineConfiguration(
+		ctx,
 		"baton-{{.Name}}",
-		version,
-		cfg,
-		cli.WithConnector(func(ctx context.Context, cfg *config.Config) (types.ConnectorServer, error) {
-			return connector.New(ctx, cfg)
-		}),
+		getConnector,
+		ConfigSchema,
 	)
 	if err != nil {
 		fmt.Fprintln(os.Stderr, err.Error())
 		os.Exit(1)
 	}
 
-	err = app.Run(ctx)
+	cmd.Version = version
+
+	err = cmd.Execute()
 	if err != nil {
 		fmt.Fprintln(os.Stderr, err.Error())
 		os.Exit(1)
 	}
 }
-`,
-	},
-	{
-		Path: "cmd/baton-{{.Name}}/config/config.go",
-		Template: `package config
 
-import "github.com/conductorone/baton-sdk/pkg/field"
+func getConnector(ctx context.Context, cfg *Config) (types.ConnectorServer, error) {
+	l := ctxzap.Extract(ctx)
 
-// Config holds the configuration for the {{.Name}} connector.
-type Config struct {
-	// APIKey is the API key for authenticating with {{.NameTitle}}.
-	APIKey string ` + "`" + `mapstructure:"api-key"` + "`" + `
-	// BaseURL is the base URL for the {{.NameTitle}} API (optional).
-	BaseURL string ` + "`" + `mapstructure:"base-url"` + "`" + `
-}
-
-// Fields returns the configuration fields for the connector.
-func (c *Config) Fields() []field.SchemaField {
-	return []field.SchemaField{
-		field.StringField(
-			"api-key",
-			field.WithRequired(true),
-			field.WithDescription("API key for {{.NameTitle}}"),
-		),
-		field.StringField(
-			"base-url",
-			field.WithDescription("Base URL for the {{.NameTitle}} API"),
-		),
+	cb, err := connector.New(ctx)
+	if err != nil {
+		l.Error("error creating connector", zap.Error(err))
+		return nil, err
 	}
+
+	c, err := connectorbuilder.NewConnector(ctx, cb)
+	if err != nil {
+		l.Error("error creating connector", zap.Error(err))
+		return nil, err
+	}
+
+	return c, nil
 }
 `,
 	},
@@ -208,10 +234,8 @@ func (c *Config) Fields() []field.SchemaField {
 
 import (
 	"context"
-	"fmt"
+	"io"
 
-	"{{.ModulePath}}/cmd/baton-{{.Name}}/config"
-	"{{.ModulePath}}/pkg/client"
 	v2 "github.com/conductorone/baton-sdk/pb/c1/connector/v2"
 	"github.com/conductorone/baton-sdk/pkg/annotations"
 	"github.com/conductorone/baton-sdk/pkg/connectorbuilder"
@@ -219,28 +243,22 @@ import (
 
 // Connector implements the {{.Name}} connector.
 type Connector struct {
-	client *client.Client
+	// Add API client or other state here.
 }
 
-// New creates a new {{.Name}} connector.
-func New(ctx context.Context, cfg *config.Config) (*Connector, error) {
-	c, err := client.New(ctx, cfg.APIKey, cfg.BaseURL)
-	if err != nil {
-		return nil, fmt.Errorf("{{.Name}}: failed to create client: %w", err)
-	}
-	return &Connector{client: c}, nil
-}
-
-// ResourceSyncers returns the resource syncers for this connector.
+// ResourceSyncers returns a ResourceSyncer for each resource type that should be synced.
 func (c *Connector) ResourceSyncers(ctx context.Context) []connectorbuilder.ResourceSyncer {
 	return []connectorbuilder.ResourceSyncer{
-		newUserSyncer(c.client),
-		newGroupSyncer(c.client),
-		newRoleSyncer(c.client),
+		newUserBuilder(),
 	}
 }
 
-// Metadata returns connector metadata.
+// Asset takes an input AssetRef and attempts to fetch it.
+func (c *Connector) Asset(ctx context.Context, asset *v2.AssetRef) (string, io.ReadCloser, error) {
+	return "", nil, nil
+}
+
+// Metadata returns metadata about the connector.
 func (c *Connector) Metadata(ctx context.Context) (*v2.ConnectorMetadata, error) {
 	return &v2.ConnectorMetadata{
 		DisplayName: "{{.NameTitle}}",
@@ -248,10 +266,31 @@ func (c *Connector) Metadata(ctx context.Context) (*v2.ConnectorMetadata, error)
 	}, nil
 }
 
-// Validate validates the connector configuration.
+// Validate is called to ensure that the connector is properly configured.
 func (c *Connector) Validate(ctx context.Context) (annotations.Annotations, error) {
 	// TODO: Implement validation (e.g., test API connection)
 	return nil, nil
+}
+
+// New returns a new instance of the connector.
+func New(ctx context.Context) (*Connector, error) {
+	return &Connector{}, nil
+}
+`,
+	},
+	{
+		Path: "pkg/connector/resource_types.go",
+		Template: `package connector
+
+import (
+	v2 "github.com/conductorone/baton-sdk/pb/c1/connector/v2"
+)
+
+// userResourceType defines the user resource type.
+var userResourceType = &v2.ResourceType{
+	Id:          "user",
+	DisplayName: "User",
+	Traits:      []v2.ResourceType_Trait{v2.ResourceType_TRAIT_USER},
 }
 `,
 	},
@@ -262,205 +301,43 @@ func (c *Connector) Validate(ctx context.Context) (annotations.Annotations, erro
 import (
 	"context"
 
-	"{{.ModulePath}}/pkg/client"
 	v2 "github.com/conductorone/baton-sdk/pb/c1/connector/v2"
 	"github.com/conductorone/baton-sdk/pkg/annotations"
 	"github.com/conductorone/baton-sdk/pkg/pagination"
-	"github.com/conductorone/baton-sdk/pkg/types/resource"
 )
 
-const userResourceTypeID = "user"
+type userBuilder struct{}
 
-var userResourceType = &v2.ResourceType{
-	Id:          userResourceTypeID,
-	DisplayName: "User",
-	Traits:      []v2.ResourceType_Trait{v2.ResourceType_TRAIT_USER},
-}
-
-type userSyncer struct {
-	client *client.Client
-}
-
-func newUserSyncer(c *client.Client) *userSyncer {
-	return &userSyncer{client: c}
-}
-
-func (s *userSyncer) ResourceType(ctx context.Context) *v2.ResourceType {
+func (o *userBuilder) ResourceType(ctx context.Context) *v2.ResourceType {
 	return userResourceType
 }
 
-func (s *userSyncer) List(ctx context.Context, parentResourceID *v2.ResourceId, pToken *pagination.Token) ([]*v2.Resource, string, annotations.Annotations, error) {
+// List returns all the users from the upstream service as resource objects.
+func (o *userBuilder) List(ctx context.Context, parentResourceID *v2.ResourceId, pToken *pagination.Token) ([]*v2.Resource, string, annotations.Annotations, error) {
 	// TODO: Implement user listing
-	// users, nextToken, err := s.client.ListUsers(ctx, pToken.Token)
-	// if err != nil {
-	//     return nil, "", nil, err
-	// }
-
-	var resources []*v2.Resource
-	// for _, user := range users {
-	//     r, err := resource.NewUserResource(
-	//         user.Name,
-	//         userResourceType,
-	//         user.ID,
-	//         []resource.UserTraitOption{
-	//             resource.WithEmail(user.Email, true),
-	//         },
-	//     )
-	//     if err != nil {
-	//         return nil, "", nil, err
-	//     }
-	//     resources = append(resources, r)
-	// }
-
-	return resources, "", nil, nil
-}
-
-func (s *userSyncer) Entitlements(ctx context.Context, resource *v2.Resource, pToken *pagination.Token) ([]*v2.Entitlement, string, annotations.Annotations, error) {
+	// Example:
+	//   users, nextToken, err := client.ListUsers(ctx, pToken.Token)
+	//   for _, user := range users {
+	//       r, _ := resource.NewUserResource(user.Name, userResourceType, user.ID,
+	//           []resource.UserTraitOption{resource.WithEmail(user.Email, true)})
+	//       resources = append(resources, r)
+	//   }
 	return nil, "", nil, nil
 }
 
-func (s *userSyncer) Grants(ctx context.Context, resource *v2.Resource, pToken *pagination.Token) ([]*v2.Grant, string, annotations.Annotations, error) {
-	return nil, "", nil, nil
-}
-`,
-	},
-	{
-		Path: "pkg/connector/groups.go",
-		Template: `package connector
-
-import (
-	"context"
-
-	"{{.ModulePath}}/pkg/client"
-	v2 "github.com/conductorone/baton-sdk/pb/c1/connector/v2"
-	"github.com/conductorone/baton-sdk/pkg/annotations"
-	"github.com/conductorone/baton-sdk/pkg/pagination"
-)
-
-const groupResourceTypeID = "group"
-
-var groupResourceType = &v2.ResourceType{
-	Id:          groupResourceTypeID,
-	DisplayName: "Group",
-	Traits:      []v2.ResourceType_Trait{v2.ResourceType_TRAIT_GROUP},
-}
-
-type groupSyncer struct {
-	client *client.Client
-}
-
-func newGroupSyncer(c *client.Client) *groupSyncer {
-	return &groupSyncer{client: c}
-}
-
-func (s *groupSyncer) ResourceType(ctx context.Context) *v2.ResourceType {
-	return groupResourceType
-}
-
-func (s *groupSyncer) List(ctx context.Context, parentResourceID *v2.ResourceId, pToken *pagination.Token) ([]*v2.Resource, string, annotations.Annotations, error) {
-	// TODO: Implement group listing
+// Entitlements always returns an empty slice for users.
+func (o *userBuilder) Entitlements(_ context.Context, resource *v2.Resource, _ *pagination.Token) ([]*v2.Entitlement, string, annotations.Annotations, error) {
 	return nil, "", nil, nil
 }
 
-func (s *groupSyncer) Entitlements(ctx context.Context, resource *v2.Resource, pToken *pagination.Token) ([]*v2.Entitlement, string, annotations.Annotations, error) {
-	// TODO: Implement group entitlements (membership)
+// Grants always returns an empty slice for users since they don't have any entitlements.
+func (o *userBuilder) Grants(ctx context.Context, resource *v2.Resource, pToken *pagination.Token) ([]*v2.Grant, string, annotations.Annotations, error) {
 	return nil, "", nil, nil
 }
 
-func (s *groupSyncer) Grants(ctx context.Context, resource *v2.Resource, pToken *pagination.Token) ([]*v2.Grant, string, annotations.Annotations, error) {
-	// TODO: Implement group grants (members)
-	return nil, "", nil, nil
+func newUserBuilder() *userBuilder {
+	return &userBuilder{}
 }
-`,
-	},
-	{
-		Path: "pkg/connector/roles.go",
-		Template: `package connector
-
-import (
-	"context"
-
-	"{{.ModulePath}}/pkg/client"
-	v2 "github.com/conductorone/baton-sdk/pb/c1/connector/v2"
-	"github.com/conductorone/baton-sdk/pkg/annotations"
-	"github.com/conductorone/baton-sdk/pkg/pagination"
-)
-
-const roleResourceTypeID = "role"
-
-var roleResourceType = &v2.ResourceType{
-	Id:          roleResourceTypeID,
-	DisplayName: "Role",
-	Traits:      []v2.ResourceType_Trait{v2.ResourceType_TRAIT_ROLE},
-}
-
-type roleSyncer struct {
-	client *client.Client
-}
-
-func newRoleSyncer(c *client.Client) *roleSyncer {
-	return &roleSyncer{client: c}
-}
-
-func (s *roleSyncer) ResourceType(ctx context.Context) *v2.ResourceType {
-	return roleResourceType
-}
-
-func (s *roleSyncer) List(ctx context.Context, parentResourceID *v2.ResourceId, pToken *pagination.Token) ([]*v2.Resource, string, annotations.Annotations, error) {
-	// TODO: Implement role listing
-	return nil, "", nil, nil
-}
-
-func (s *roleSyncer) Entitlements(ctx context.Context, resource *v2.Resource, pToken *pagination.Token) ([]*v2.Entitlement, string, annotations.Annotations, error) {
-	// TODO: Implement role entitlements (assignment)
-	return nil, "", nil, nil
-}
-
-func (s *roleSyncer) Grants(ctx context.Context, resource *v2.Resource, pToken *pagination.Token) ([]*v2.Grant, string, annotations.Annotations, error) {
-	// TODO: Implement role grants (assignees)
-	return nil, "", nil, nil
-}
-`,
-	},
-	{
-		Path: "pkg/client/client.go",
-		Template: `package client
-
-import (
-	"context"
-	"fmt"
-	"net/http"
-)
-
-const defaultBaseURL = "https://api.example.com/v1"
-
-// Client is an API client for {{.NameTitle}}.
-type Client struct {
-	httpClient *http.Client
-	baseURL    string
-	apiKey     string
-}
-
-// New creates a new {{.NameTitle}} API client.
-func New(ctx context.Context, apiKey, baseURL string) (*Client, error) {
-	if apiKey == "" {
-		return nil, fmt.Errorf("client: API key is required")
-	}
-	if baseURL == "" {
-		baseURL = defaultBaseURL
-	}
-
-	return &Client{
-		httpClient: &http.Client{},
-		baseURL:    baseURL,
-		apiKey:     apiKey,
-	}, nil
-}
-
-// TODO: Implement API methods
-// func (c *Client) ListUsers(ctx context.Context, pageToken string) ([]*User, string, error) { ... }
-// func (c *Client) ListGroups(ctx context.Context, pageToken string) ([]*Group, string, error) { ... }
-// func (c *Client) ListRoles(ctx context.Context, pageToken string) ([]*Role, string, error) { ... }
 `,
 	},
 	{
@@ -504,8 +381,7 @@ c1z/
 
 ## Prerequisites
 
-- Go 1.21+
-- {{.NameTitle}} API key
+- Go 1.23+
 
 ## Installation
 
@@ -516,14 +392,11 @@ go install {{.ModulePath}}@latest
 ## Usage
 
 ` + "```" + `bash
-# Set credentials
-export BATON_API_KEY="your-api-key"
-
 # Run sync
 baton-{{.Name}}
 
-# Or use flags
-baton-{{.Name}} --api-key "your-api-key"
+# See all options
+baton-{{.Name}} --help
 ` + "```" + `
 
 ## Development
@@ -533,7 +406,7 @@ baton-{{.Name}} --api-key "your-api-key"
 go build -o baton-{{.Name}} .
 
 # Run locally
-./baton-{{.Name}} --api-key "your-api-key"
+./baton-{{.Name}}
 
 # Run with hot reload (using cone)
 cone connector dev
@@ -546,8 +419,6 @@ This connector syncs the following resources:
 | Resource Type | Description |
 |---------------|-------------|
 | User | {{.NameTitle}} users |
-| Group | {{.NameTitle}} groups |
-| Role | {{.NameTitle}} roles |
 
 ## Contributing
 

@@ -1619,15 +1619,15 @@ jobs:
     # Documentation: https://github.com/ConductorOne/github-workflows
     uses: ConductorOne/github-workflows/.github/workflows/release.yaml@v2
     with:
-      tag: ${{ github.ref_name }}
+      tag: ${{"{{"}} github.ref_name {{"}}"}}
       lambda: false  # Set to true if you need Lambda deployment
     secrets:
-      RELENG_GITHUB_TOKEN: ${{ secrets.RELENG_GITHUB_TOKEN }}
-      APPLE_SIGNING_KEY_P12: ${{ secrets.APPLE_SIGNING_KEY_P12 }}
-      APPLE_SIGNING_KEY_P12_PASSWORD: ${{ secrets.APPLE_SIGNING_KEY_P12_PASSWORD }}
-      AC_PASSWORD: ${{ secrets.AC_PASSWORD }}
-      AC_PROVIDER: ${{ secrets.AC_PROVIDER }}
-      DATADOG_API_KEY: ${{ secrets.DATADOG_API_KEY }}
+      RELENG_GITHUB_TOKEN: ${{"{{"}} secrets.RELENG_GITHUB_TOKEN {{"}}"}}
+      APPLE_SIGNING_KEY_P12: ${{"{{"}} secrets.APPLE_SIGNING_KEY_P12 {{"}}"}}
+      APPLE_SIGNING_KEY_P12_PASSWORD: ${{"{{"}} secrets.APPLE_SIGNING_KEY_P12_PASSWORD {{"}}"}}
+      AC_PASSWORD: ${{"{{"}} secrets.AC_PASSWORD {{"}}"}}
+      AC_PROVIDER: ${{"{{"}} secrets.AC_PROVIDER {{"}}"}}
+      DATADOG_API_KEY: ${{"{{"}} secrets.DATADOG_API_KEY {{"}}"}}
 `,
 	},
 	{

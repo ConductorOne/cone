@@ -14,6 +14,7 @@ import (
 	"runtime"
 	"strings"
 
+	c1client "github.com/conductorone/cone/pkg/client"
 	"github.com/spf13/cobra"
 )
 
@@ -128,7 +129,7 @@ func runConnectorPublish(cmd *cobra.Command, args []string) error {
 		platformNames[i] = b.Platform
 	}
 
-	createResp, err := client.CreateVersion(ctx, &createVersionRequest{
+	_, err = client.CreateVersion(ctx, &createVersionRequest{
 		Org:          metadata.Org,
 		Name:         metadata.Name,
 		Version:      version,
@@ -147,15 +148,27 @@ func runConnectorPublish(cmd *cobra.Command, args []string) error {
 
 	fmt.Printf("Created version %s (state: PENDING)\n", version)
 
-	// Step 2: Upload binaries
-	fmt.Println("\nUploading binaries...")
+	// Step 2: Get upload URLs
+	fmt.Println("\nGetting upload URLs...")
+	uploadResp, err := client.GetUploadURLs(ctx, &getUploadURLsRequest{
+		Org:       metadata.Org,
+		Name:      metadata.Name,
+		Version:   version,
+		Platforms: platformNames,
+	})
+	if err != nil {
+		return fmt.Errorf("failed to get upload URLs: %w", err)
+	}
+
+	// Step 3: Upload binaries
+	fmt.Println("Uploading binaries...")
 	var assetMetadata []assetMeta
 	for _, binary := range binaries {
 		fmt.Printf("  Uploading %s...", binary.Platform)
 
 		// Get upload URL
 		uploadKey := fmt.Sprintf("%s/binary", binary.Platform)
-		uploadURL, ok := createResp.UploadURLs[uploadKey]
+		uploadURL, ok := uploadResp.UploadURLs[uploadKey]
 		if !ok {
 			fmt.Println(" SKIP (no upload URL)")
 			continue
@@ -168,25 +181,27 @@ func runConnectorPublish(cmd *cobra.Command, args []string) error {
 
 		// Upload checksum
 		checksumKey := fmt.Sprintf("%s/checksum", binary.Platform)
-		if checksumURL, ok := createResp.UploadURLs[checksumKey]; ok {
+		if checksumURL, ok := uploadResp.UploadURLs[checksumKey]; ok {
 			checksumContent := fmt.Sprintf("%s  %s\n", binary.Checksum, binary.Filename)
 			if err := uploadContent(ctx, checksumURL, []byte(checksumContent)); err != nil {
 				return fmt.Errorf("failed to upload checksum for %s: %w", binary.Platform, err)
 			}
 		}
 
+		// Filename must match the registry's expected format: {name}-{version}-{platform}.tar.gz
+		registryFilename := fmt.Sprintf("%s-%s-%s.tar.gz", metadata.Name, version, binary.Platform)
 		assetMetadata = append(assetMetadata, assetMeta{
 			Platform:  binary.Platform,
-			Filename:  binary.Filename,
+			Filename:  registryFilename,
 			SHA256:    binary.Checksum,
 			SizeBytes: binary.Size,
-			MediaType: "application/octet-stream",
+			MediaType: "application/gzip",
 		})
 
 		fmt.Println(" OK")
 	}
 
-	// Step 3: Finalize version
+	// Step 4: Finalize version
 	fmt.Println("\nFinalizing version...")
 	finalResp, err := client.FinalizeVersion(ctx, &finalizeVersionRequest{
 		Org:     metadata.Org,
@@ -493,18 +508,35 @@ func getGitCommitSHA() string {
 	return content
 }
 
-// getAuthToken retrieves the auth token for API calls.
+// getAuthToken retrieves the auth token for API calls using cone's OAuth credential flow.
 func getAuthToken(ctx context.Context, cmd *cobra.Command) (string, error) {
-	// TODO: Integrate with cone's existing auth system
-	// For now, check environment variable
-	token := os.Getenv("CONE_REGISTRY_TOKEN")
-	if token == "" {
-		token = os.Getenv("C1_TOKEN")
+	// Allow env var override for CI/automation
+	if token := os.Getenv("CONE_REGISTRY_TOKEN"); token != "" {
+		return token, nil
 	}
-	if token == "" {
-		return "", fmt.Errorf("no auth token found, set CONE_REGISTRY_TOKEN or run 'cone login'")
+
+	// Use cone's OAuth credential flow (same as other commands)
+	v, err := getSubViperForProfile(cmd)
+	if err != nil {
+		return "", fmt.Errorf("failed to get config: %w", err)
 	}
-	return token, nil
+
+	clientId, clientSecret, err := getCredentials(v)
+	if err != nil {
+		return "", fmt.Errorf("no credentials available. Run 'cone login' first: %w", err)
+	}
+
+	tokenSrc, _, _, err := c1client.NewC1TokenSource(ctx, clientId, clientSecret, v.GetString("api-endpoint"), v.GetBool("debug"))
+	if err != nil {
+		return "", fmt.Errorf("failed to create token source: %w", err)
+	}
+
+	token, err := tokenSrc.Token()
+	if err != nil {
+		return "", fmt.Errorf("failed to get auth token: %w", err)
+	}
+
+	return token.AccessToken, nil
 }
 
 // Registry client types and methods
@@ -552,8 +584,18 @@ type createVersionRequest struct {
 }
 
 type createVersionResponse struct {
-	Release    releaseManifest   `json:"release"`
-	UploadURLs map[string]string `json:"upload_urls"`
+	Release releaseManifest `json:"release"`
+}
+
+type getUploadURLsRequest struct {
+	Org       string   `json:"org"`
+	Name      string   `json:"name"`
+	Version   string   `json:"version"`
+	Platforms []string `json:"platforms"`
+}
+
+type getUploadURLsResponse struct {
+	UploadURLs map[string]string `json:"uploadUrls"`
 }
 
 type releaseManifest struct {
@@ -610,9 +652,10 @@ func (c *registryClient) EnsureConnector(ctx context.Context, org, name string) 
 	}
 	defer resp.Body.Close()
 
+	// 200 OK = connector returned (already exists or created)
 	// 201 Created = new connector
 	// 409 Conflict = already exists (that's fine)
-	if resp.StatusCode == http.StatusCreated || resp.StatusCode == http.StatusConflict {
+	if resp.StatusCode == http.StatusOK || resp.StatusCode == http.StatusCreated || resp.StatusCode == http.StatusConflict {
 		return nil
 	}
 
@@ -654,6 +697,47 @@ func (c *registryClient) CreateVersion(ctx context.Context, req *createVersionRe
 	}
 
 	var result createVersionResponse
+	if err := json.Unmarshal(respBody, &result); err != nil {
+		return nil, fmt.Errorf("failed to parse response: %w", err)
+	}
+
+	return &result, nil
+}
+
+func (c *registryClient) GetUploadURLs(ctx context.Context, req *getUploadURLsRequest) (*getUploadURLsResponse, error) {
+	url := fmt.Sprintf("%s/api/v1/connectors/%s/%s/versions/%s/upload-urls", c.baseURL, req.Org, req.Name, req.Version)
+
+	body, err := json.Marshal(req)
+	if err != nil {
+		return nil, fmt.Errorf("failed to marshal request: %w", err)
+	}
+
+	httpReq, err := http.NewRequestWithContext(ctx, "POST", url, bytes.NewReader(body))
+	if err != nil {
+		return nil, fmt.Errorf("failed to create request: %w", err)
+	}
+
+	httpReq.Header.Set("Content-Type", "application/json")
+	if c.token != "" {
+		httpReq.Header.Set("Authorization", "Bearer "+c.token)
+	}
+
+	resp, err := c.httpClient.Do(httpReq)
+	if err != nil {
+		return nil, fmt.Errorf("request failed: %w", err)
+	}
+	defer resp.Body.Close()
+
+	respBody, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return nil, fmt.Errorf("failed to read response: %w", err)
+	}
+
+	if resp.StatusCode != http.StatusOK && resp.StatusCode != http.StatusCreated {
+		return nil, fmt.Errorf("API error (status %d): %s", resp.StatusCode, string(respBody))
+	}
+
+	var result getUploadURLsResponse
 	if err := json.Unmarshal(respBody, &result); err != nil {
 		return nil, fmt.Errorf("failed to parse response: %w", err)
 	}

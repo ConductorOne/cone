@@ -23,6 +23,9 @@ The connector subcommands help you:
 	cmd.AddCommand(connectorInitCmd())
 	cmd.AddCommand(connectorDevCmd())
 	cmd.AddCommand(connectorPublishCmd())
+	cmd.AddCommand(connectorValidateConfigCmd())
+	cmd.AddCommand(connectorConsentCmd())
+	cmd.AddCommand(connectorAnalyzeCmd())
 
 	return cmd
 }

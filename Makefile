@@ -31,3 +31,10 @@ test:
 lint:
 	golangci-lint run
 
+.PHONY: install-hooks
+install-hooks:
+	@echo '#!/bin/sh' > .git/hooks/pre-push
+	@echo 'make lint' >> .git/hooks/pre-push
+	@chmod +x .git/hooks/pre-push
+	@echo "Installed pre-push hook to run 'make lint'"
+

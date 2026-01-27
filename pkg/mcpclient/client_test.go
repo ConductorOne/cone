@@ -94,7 +94,8 @@ func TestClient_Analyze(t *testing.T) {
 				}
 			case "tools/call":
 				params := req["params"].(map[string]interface{})
-				if params["name"] == "connector_analyze" {
+				switch params["name"] {
+				case "connector_analyze":
 					resp = map[string]interface{}{
 						"jsonrpc": "2.0",
 						"id":      req["id"],
@@ -107,7 +108,7 @@ func TestClient_Analyze(t *testing.T) {
 							},
 						},
 					}
-				} else if params["name"] == "tool_result" {
+				case "tool_result":
 					resp = map[string]interface{}{
 						"jsonrpc": "2.0",
 						"id":      req["id"],

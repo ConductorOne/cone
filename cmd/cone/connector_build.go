@@ -66,7 +66,7 @@ Examples:
 
 			// Build the connector
 			// Template creates main.go at root, so build from "."
-			buildCmd := exec.Command("go", "build", "-o", outputPath, ".")
+			buildCmd := exec.CommandContext(cmd.Context(), "go", "build", "-o", outputPath, ".")
 			buildCmd.Dir = absPath
 			buildCmd.Env = buildEnv
 			buildCmd.Stdout = os.Stdout

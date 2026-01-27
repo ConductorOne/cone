@@ -12,11 +12,7 @@ import (
 
 func TestGenerate(t *testing.T) {
 	// Create temp directory
-	tmpDir, err := os.MkdirTemp("", "scaffold-test-*")
-	if err != nil {
-		t.Fatalf("failed to create temp dir: %v", err)
-	}
-	defer os.RemoveAll(tmpDir)
+	tmpDir := t.TempDir()
 
 	outputDir := filepath.Join(tmpDir, "baton-test-app")
 
@@ -89,20 +85,10 @@ func TestGenerate(t *testing.T) {
 }
 
 func TestGenerateDefaults(t *testing.T) {
-	tmpDir, err := os.MkdirTemp("", "scaffold-test-*")
-	if err != nil {
-		t.Fatalf("failed to create temp dir: %v", err)
-	}
-	defer os.RemoveAll(tmpDir)
+	tmpDir := t.TempDir()
 
 	// Change to temp dir so default output dir works
-	oldWd, _ := os.Getwd()
-	if err := os.Chdir(tmpDir); err != nil {
-		t.Fatalf("failed to chdir to temp dir: %v", err)
-	}
-	defer func() {
-		_ = os.Chdir(oldWd)
-	}()
+	t.Chdir(tmpDir)
 
 	cfg := &Config{
 		Name: "my-service",
@@ -171,11 +157,7 @@ func TestGenerateCompiles(t *testing.T) {
 		t.Skip("skipping compilation test: SKIP_COMPILE_TEST is set")
 	}
 
-	tmpDir, err := os.MkdirTemp("", "scaffold-compile-test-*")
-	if err != nil {
-		t.Fatalf("failed to create temp dir: %v", err)
-	}
-	defer os.RemoveAll(tmpDir)
+	tmpDir := t.TempDir()
 
 	outputDir := filepath.Join(tmpDir, "baton-compile-test")
 
@@ -210,11 +192,7 @@ func TestGenerateVet(t *testing.T) {
 		t.Skip("skipping vet test: SKIP_COMPILE_TEST is set")
 	}
 
-	tmpDir, err := os.MkdirTemp("", "scaffold-vet-test-*")
-	if err != nil {
-		t.Fatalf("failed to create temp dir: %v", err)
-	}
-	defer os.RemoveAll(tmpDir)
+	tmpDir := t.TempDir()
 
 	outputDir := filepath.Join(tmpDir, "baton-vet-test")
 

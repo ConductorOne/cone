@@ -22,11 +22,7 @@ func TestIntegration_FullAnalysisFlow(t *testing.T) {
 	// 4. Runs analysis with tool callbacks
 	// 5. Verifies completion
 	// Create a temporary connector directory with some files
-	tmpDir, err := os.MkdirTemp("", "connector-integration-test")
-	if err != nil {
-		t.Fatalf("failed to create temp dir: %v", err)
-	}
-	defer os.RemoveAll(tmpDir)
+	tmpDir := t.TempDir()
 
 	// Create minimal connector files that the mock server will request
 	files := map[string]string{

@@ -15,6 +15,7 @@ import (
 	"net/http"
 	"os"
 	"sync"
+	"time"
 )
 
 // Scenario defines a test scenario with canned tool calls and expected responses.
@@ -61,7 +62,7 @@ func (s *Server) Start(addr string) error {
 	s.server = &http.Server{
 		Addr:              addr,
 		Handler:           mux,
-		ReadHeaderTimeout: 10 * 1e9, // 10 seconds
+		ReadHeaderTimeout: 10 * time.Second,
 	}
 
 	go func() {

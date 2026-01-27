@@ -718,33 +718,56 @@ func (g *groupBuilder) Grants(ctx context.Context, resource *v2.Resource, pToken
 // =============================================================================
 // Uncomment to support group membership provisioning.
 //
+// ENTITY SOURCE RULE (prevents the #1 connector bug pattern):
+// - principal = WHO is getting access (the user receiving the grant)
+// - entitlement = WHAT access they're getting (the group/permission)
+// Verify each ID comes from the correct entity before calling API.
+//
 // func (g *groupBuilder) Grant(ctx context.Context, principal *v2.Resource, entitlement *v2.Entitlement) (annotations.Annotations, error) {
 //     l := ctxzap.Extract(ctx)
-//     groupID := entitlement.Resource.Id.Resource
-//     userID := principal.Id.Resource
+//
+//     // ENTITY SOURCE: group ID comes from entitlement (what), user ID from principal (who)
+//     groupID := entitlement.Resource.Id.Resource  // from entitlement
+//     userID := principal.Id.Resource              // from principal
+//
 //     l.Info("baton-{{.Name}}: granting group membership", zap.String("group", groupID), zap.String("user", userID))
-//     // TODO: Add user to group in upstream system
-//     // err := g.conn.client.AddGroupMember(ctx, groupID, userID)
-//     // if err != nil {
-//     //     return nil, fmt.Errorf("baton-{{.Name}}: failed to grant membership: %w", err)
-//     // }
-//     // return nil, nil
-//     return nil, fmt.Errorf("baton-{{.Name}}: grant not implemented")
+//
+//     err := g.conn.client.AddGroupMember(ctx, groupID, userID)
+//     if err != nil {
+//         // IDEMPOTENCY: "already exists" is success, not failure
+//         if isAlreadyMemberError(err) {
+//             l.Debug("baton-{{.Name}}: user already member of group")
+//             return nil, nil
+//         }
+//         return nil, fmt.Errorf("baton-{{.Name}}: failed to grant membership: %w", err)
+//     }
+//     return nil, nil
 // }
 //
 // func (g *groupBuilder) Revoke(ctx context.Context, grantToRevoke *v2.Grant) (annotations.Annotations, error) {
 //     l := ctxzap.Extract(ctx)
+//
+//     // ENTITY SOURCE: IDs come from the grant being revoked
 //     groupID := grantToRevoke.Entitlement.Resource.Id.Resource
 //     userID := grantToRevoke.Principal.Id.Resource
+//
 //     l.Info("baton-{{.Name}}: revoking group membership", zap.String("group", groupID), zap.String("user", userID))
-//     // TODO: Remove user from group in upstream system
-//     // err := g.conn.client.RemoveGroupMember(ctx, groupID, userID)
-//     // if err != nil {
-//     //     return nil, fmt.Errorf("baton-{{.Name}}: failed to revoke membership: %w", err)
-//     // }
-//     // return nil, nil
-//     return nil, fmt.Errorf("baton-{{.Name}}: revoke not implemented")
+//
+//     err := g.conn.client.RemoveGroupMember(ctx, groupID, userID)
+//     if err != nil {
+//         // IDEMPOTENCY: "not found" is success - already revoked
+//         if isNotFoundError(err) {
+//             l.Debug("baton-{{.Name}}: user not member of group (already revoked)")
+//             return nil, nil
+//         }
+//         return nil, fmt.Errorf("baton-{{.Name}}: failed to revoke membership: %w", err)
+//     }
+//     return nil, nil
 // }
+//
+// // Helper functions for idempotency checks - implement based on your API's error responses
+// // func isAlreadyMemberError(err error) bool { return strings.Contains(err.Error(), "already") }
+// // func isNotFoundError(err error) bool { return strings.Contains(err.Error(), "not found") }
 
 func newGroupBuilder(conn *Connector) *groupBuilder {
 	return &groupBuilder{conn: conn}
@@ -893,22 +916,48 @@ func (r *roleBuilder) Grants(ctx context.Context, resource *v2.Resource, pToken 
 // =============================================================================
 // Uncomment to support role assignment provisioning.
 //
+// ENTITY SOURCE RULE (prevents the #1 connector bug pattern):
+// - principal = WHO is getting access (the user receiving the role)
+// - entitlement = WHAT access they're getting (the role)
+// Verify each ID comes from the correct entity before calling API.
+//
 // func (r *roleBuilder) Grant(ctx context.Context, principal *v2.Resource, entitlement *v2.Entitlement) (annotations.Annotations, error) {
 //     l := ctxzap.Extract(ctx)
-//     roleID := entitlement.Resource.Id.Resource
-//     userID := principal.Id.Resource
+//
+//     // ENTITY SOURCE: role ID comes from entitlement, user ID from principal
+//     roleID := entitlement.Resource.Id.Resource  // from entitlement
+//     userID := principal.Id.Resource              // from principal
+//
 //     l.Info("baton-{{.Name}}: granting role", zap.String("role", roleID), zap.String("user", userID))
-//     // TODO: Assign role to user in upstream system
-//     return nil, fmt.Errorf("baton-{{.Name}}: grant not implemented")
+//
+//     err := r.conn.client.AssignRole(ctx, roleID, userID)
+//     if err != nil {
+//         // IDEMPOTENCY: "already assigned" is success
+//         if isAlreadyAssignedError(err) {
+//             return nil, nil
+//         }
+//         return nil, fmt.Errorf("baton-{{.Name}}: failed to grant role: %w", err)
+//     }
+//     return nil, nil
 // }
 //
 // func (r *roleBuilder) Revoke(ctx context.Context, grantToRevoke *v2.Grant) (annotations.Annotations, error) {
 //     l := ctxzap.Extract(ctx)
+//
 //     roleID := grantToRevoke.Entitlement.Resource.Id.Resource
 //     userID := grantToRevoke.Principal.Id.Resource
+//
 //     l.Info("baton-{{.Name}}: revoking role", zap.String("role", roleID), zap.String("user", userID))
-//     // TODO: Unassign role from user in upstream system
-//     return nil, fmt.Errorf("baton-{{.Name}}: revoke not implemented")
+//
+//     err := r.conn.client.UnassignRole(ctx, roleID, userID)
+//     if err != nil {
+//         // IDEMPOTENCY: "not found" is success - already revoked
+//         if isNotFoundError(err) {
+//             return nil, nil
+//         }
+//         return nil, fmt.Errorf("baton-{{.Name}}: failed to revoke role: %w", err)
+//     }
+//     return nil, nil
 // }
 
 func newRoleBuilder(conn *Connector) *roleBuilder {
@@ -1864,6 +1913,7 @@ func (c *Client) ListUsers(ctx context.Context, cursor string, limit int) ([]Use
 	// Execute request
 	resp, err := c.httpClient.Do(req)
 	if err != nil {
+		// HTTP errors (timeouts, connection refused) may have nil response
 		return nil, "", fmt.Errorf("request failed: %w", err)
 	}
 	defer resp.Body.Close()
@@ -1880,6 +1930,8 @@ func (c *Client) ListUsers(ctx context.Context, cursor string, limit int) ([]Use
 		return nil, "", fmt.Errorf("failed to decode response: %w", err)
 	}
 
+	// PAGINATION: Return API's next token for termination, not len(results) < limit
+	// Some APIs return empty pages before the final page, so result count is unreliable
 	return result.Users, result.NextCursor, nil
 }
 

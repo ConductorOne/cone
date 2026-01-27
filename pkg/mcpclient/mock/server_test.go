@@ -31,7 +31,10 @@ func TestMockServer_HappyPath(t *testing.T) {
 	var listResult struct {
 		Tools []map[string]interface{} `json:"tools"`
 	}
-	listBytes, _ := json.Marshal(resp["result"])
+	listBytes, err := json.Marshal(resp["result"])
+	if err != nil {
+		t.Fatalf("json.Marshal failed for resp[result]: %v", err)
+	}
 	if err := json.Unmarshal(listBytes, &listResult); err != nil {
 		t.Fatalf("failed to parse tools/list result: %v", err)
 	}
@@ -56,7 +59,10 @@ func TestMockServer_HappyPath(t *testing.T) {
 			Arguments map[string]interface{} `json:"arguments"`
 		} `json:"tool_call"`
 	}
-	resultBytes, _ := json.Marshal(resp["result"])
+	resultBytes, err := json.Marshal(resp["result"])
+	if err != nil {
+		t.Fatalf("json.Marshal failed for resp[result]: %v", err)
+	}
 	if err := json.Unmarshal(resultBytes, &callResult); err != nil {
 		t.Fatalf("failed to parse tool call result: %v", err)
 	}
@@ -119,7 +125,10 @@ func doRequest(t *testing.T, url, method string, params interface{}) map[string]
 		req["params"] = params
 	}
 
-	body, _ := json.Marshal(req)
+	body, err := json.Marshal(req)
+	if err != nil {
+		t.Fatalf("json.Marshal failed for request: %v", err)
+	}
 	httpReq, err := http.NewRequestWithContext(context.Background(), http.MethodPost, url, bytes.NewReader(body))
 	if err != nil {
 		t.Fatalf("failed to create request: %v", err)

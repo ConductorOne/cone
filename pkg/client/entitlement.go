@@ -157,6 +157,10 @@ func (c *client) SearchEntitlements(ctx context.Context, filter *SearchEntitleme
 	// Iterate over the expandable objects and convert them to the final response
 	rv := make([]*EntitlementWithBindings, 0, len(list))
 	for _, v := range expandableList {
+		// Skip entries with nil AppEntitlementView or AppEntitlement
+		if v.AppEntitlementView == nil || v.AppEntitlementView.AppEntitlement == nil {
+			continue
+		}
 		rv = append(rv, &EntitlementWithBindings{
 			Entitlement: AppEntitlement(*v.AppEntitlementView.AppEntitlement),
 			Bindings:    v.AppEntitlementUserBindings,

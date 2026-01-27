@@ -13,6 +13,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"os"
 	"sync"
 )
 
@@ -230,7 +231,9 @@ func (s *Server) sendResult(w http.ResponseWriter, id interface{}, result interf
 		"result":  result,
 	}
 	w.Header().Set("Content-Type", "application/json")
-	_ = json.NewEncoder(w).Encode(resp)
+	if err := json.NewEncoder(w).Encode(resp); err != nil {
+		fmt.Fprintf(os.Stderr, "mock server: failed to encode result response (id=%v): %v\n", id, err)
+	}
 }
 
 func (s *Server) sendError(w http.ResponseWriter, id interface{}, code int, message string) {
@@ -243,7 +246,9 @@ func (s *Server) sendError(w http.ResponseWriter, id interface{}, code int, mess
 		},
 	}
 	w.Header().Set("Content-Type", "application/json")
-	_ = json.NewEncoder(w).Encode(resp)
+	if err := json.NewEncoder(w).Encode(resp); err != nil {
+		fmt.Fprintf(os.Stderr, "mock server: failed to encode error response (id=%v, code=%d): %v\n", id, code, err)
+	}
 }
 
 // Predefined test scenarios

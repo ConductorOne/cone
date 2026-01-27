@@ -186,6 +186,11 @@ func (c *Client) processAnalysisResponse(ctx context.Context, resp *jsonrpcRespo
 				return nil, fmt.Errorf("%s status but no tool_call data", statusToolCall)
 			}
 
+			// Ensure we have a tool handler configured
+			if c.ToolHandler == nil {
+				return nil, fmt.Errorf("no ToolHandler configured for tool_call %s", result.ToolCall.Name)
+			}
+
 			// Execute the tool locally
 			toolResult, err := c.ToolHandler.HandleToolCall(ctx, result.ToolCall.Name, result.ToolCall.Arguments)
 			if err != nil {

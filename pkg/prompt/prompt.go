@@ -279,8 +279,18 @@ func DisplayBox(title, content string) {
 
 	// Title
 	if title != "" {
-		padding := (width - 2 - len(title)) / 2
-		fmt.Printf("|%s%s%s|\n", strings.Repeat(" ", padding), title, strings.Repeat(" ", width-2-padding-len(title)))
+		// Truncate title if too long to prevent negative padding
+		displayTitle := title
+		maxTitleLen := width - 4 // Leave room for padding
+		if len(displayTitle) > maxTitleLen {
+			displayTitle = displayTitle[:maxTitleLen-3] + "..."
+		}
+		padding := (width - 2 - len(displayTitle)) / 2
+		rightPad := width - 2 - padding - len(displayTitle)
+		if rightPad < 0 {
+			rightPad = 0
+		}
+		fmt.Printf("|%s%s%s|\n", strings.Repeat(" ", padding), displayTitle, strings.Repeat(" ", rightPad))
 		fmt.Println("+" + strings.Repeat("-", width-2) + "+")
 	}
 
@@ -288,6 +298,9 @@ func DisplayBox(title, content string) {
 	lines := wrapText(content, width-4)
 	for _, line := range lines {
 		padding := width - 2 - len(line)
+		if padding < 1 {
+			padding = 1 // Minimum padding for the closing |
+		}
 		fmt.Printf("| %s%s|\n", line, strings.Repeat(" ", padding-1))
 	}
 

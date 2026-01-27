@@ -87,11 +87,14 @@ func (s *Server) Addr() string {
 	return s.addr
 }
 
-// ToolResults returns the results received from tool calls.
+// ToolResults returns a snapshot of the results received from tool calls.
+// Returns a copy to prevent data races with concurrent handleToolResult calls.
 func (s *Server) ToolResults() []map[string]interface{} {
 	s.mu.Lock()
 	defer s.mu.Unlock()
-	return s.toolResults
+	result := make([]map[string]interface{}, len(s.toolResults))
+	copy(result, s.toolResults)
+	return result
 }
 
 // HandleMCP handles MCP protocol messages. Exported for use in tests.

@@ -2,6 +2,7 @@ package mock
 
 import (
 	"bytes"
+	"context"
 	"encoding/json"
 	"net/http"
 	"net/http/httptest"
@@ -119,7 +120,12 @@ func doRequest(t *testing.T, url, method string, params interface{}) map[string]
 	}
 
 	body, _ := json.Marshal(req)
-	resp, err := http.Post(url, "application/json", bytes.NewReader(body))
+	httpReq, err := http.NewRequestWithContext(context.Background(), http.MethodPost, url, bytes.NewReader(body))
+	if err != nil {
+		t.Fatalf("failed to create request: %v", err)
+	}
+	httpReq.Header.Set("Content-Type", "application/json")
+	resp, err := http.DefaultClient.Do(httpReq)
 	if err != nil {
 		t.Fatalf("request failed: %v", err)
 	}
@@ -139,4 +145,3 @@ func assertNoError(t *testing.T, resp map[string]interface{}) {
 		t.Fatalf("unexpected error: %v", errObj)
 	}
 }
-

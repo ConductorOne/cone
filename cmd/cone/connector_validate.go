@@ -103,12 +103,12 @@ type FieldMapping struct {
 
 // EntitlementConfig defines an entitlement.
 type EntitlementConfig struct {
-	ID           string            `yaml:"id"`
-	DisplayName  string            `yaml:"display_name"`
-	Description  string            `yaml:"description,omitempty"`
-	GrantableTo  []string          `yaml:"grantable_to"`
-	Grants       *GrantsConfig     `yaml:"grants,omitempty"`
-	Provisioning *ProvisionConfig  `yaml:"provisioning,omitempty"`
+	ID           string           `yaml:"id"`
+	DisplayName  string           `yaml:"display_name"`
+	Description  string           `yaml:"description,omitempty"`
+	GrantableTo  []string         `yaml:"grantable_to"`
+	Grants       *GrantsConfig    `yaml:"grants,omitempty"`
+	Provisioning *ProvisionConfig `yaml:"provisioning,omitempty"`
 }
 
 // GrantsConfig defines how to fetch grants.
@@ -148,11 +148,11 @@ func (c *MappingConfig) Validate() error {
 	hasUser := false
 	resourceTypes := make(map[string]bool)
 	validTraits := map[string]bool{
-		"":             true,
-		"TRAIT_USER":   true,
-		"TRAIT_GROUP":  true,
-		"TRAIT_ROLE":   true,
-		"TRAIT_APP":    true,
+		"":            true,
+		"TRAIT_USER":  true,
+		"TRAIT_GROUP": true,
+		"TRAIT_ROLE":  true,
+		"TRAIT_APP":   true,
 	}
 
 	for i, r := range c.Resources {
@@ -161,11 +161,12 @@ func (c *MappingConfig) Validate() error {
 			prefix = fmt.Sprintf("resources[%d] (%s)", i, r.Type)
 		}
 
-		if r.Type == "" {
+		switch {
+		case r.Type == "":
 			errs = append(errs, fmt.Sprintf("%s: type is required", prefix))
-		} else if resourceTypes[r.Type] {
+		case resourceTypes[r.Type]:
 			errs = append(errs, fmt.Sprintf("%s: duplicate resource type", prefix))
-		} else {
+		default:
 			resourceTypes[r.Type] = true
 		}
 

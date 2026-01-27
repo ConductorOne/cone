@@ -156,8 +156,8 @@ func watchAndRun(ctx context.Context, path string, port int) error {
 			runCancel()
 		}
 		if runCmd != nil && runCmd.Process != nil {
-			runCmd.Process.Kill()
-			runCmd.Wait()
+			_ = runCmd.Process.Kill()
+			_ = runCmd.Wait()
 		}
 
 		fmt.Printf("[dev] Starting connector (port %d)...\n", port)
@@ -205,7 +205,7 @@ func watchAndRun(ctx context.Context, path string, port int) error {
 				runCancel()
 			}
 			// Clean up binary
-			os.Remove(binaryPath)
+			_ = os.Remove(binaryPath)
 			return nil
 
 		case event, ok := <-watcher.Events:

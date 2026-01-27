@@ -97,8 +97,12 @@ func TestGenerateDefaults(t *testing.T) {
 
 	// Change to temp dir so default output dir works
 	oldWd, _ := os.Getwd()
-	os.Chdir(tmpDir)
-	defer os.Chdir(oldWd)
+	if err := os.Chdir(tmpDir); err != nil {
+		t.Fatalf("failed to chdir to temp dir: %v", err)
+	}
+	defer func() {
+		_ = os.Chdir(oldWd)
+	}()
 
 	cfg := &Config{
 		Name: "my-service",

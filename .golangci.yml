@@ -101,3 +101,21 @@ issues:
     # Don't require TODO comments to end in a period
     - source: "(TODO)"
       linters: [ godot ]
+    # Allow fmt.Print* in CLI commands - this is expected for CLI output
+    - path: cmd/
+      linters: [ forbidigo ]
+    # Allow fmt.Print* in mcpclient tools for user interaction
+    - path: pkg/mcpclient/tools\.go
+      linters: [ forbidigo ]
+    # Allow fmt.Print* in prompt package - it's for terminal I/O
+    - path: pkg/prompt/
+      linters: [ forbidigo ]
+    # Allow fmt.Print* in mock server - it's for debugging
+    - path: pkg/mcpclient/mock/
+      linters: [ forbidigo ]
+    # ToolHandler functions return ToolResult with error info, so returning nil as error is intentional
+    - path: pkg/mcpclient/tools\.go
+      linters: [ nilerr ]
+    # connector_dev.go returns nil when context is cancelled - expected behavior
+    - path: cmd/cone/connector_dev\.go
+      linters: [ nilerr ]

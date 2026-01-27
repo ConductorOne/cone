@@ -13,13 +13,14 @@ import (
 	"github.com/conductorone/cone/pkg/mcpclient/mock"
 )
 
-// TestIntegration_FullAnalysisFlow runs a complete end-to-end test:
-// 1. Creates temp connector directory with files
-// 2. Starts mock MCP server
-// 3. Connects cone client
-// 4. Runs analysis with tool callbacks
-// 5. Verifies completion
+// TestIntegration_FullAnalysisFlow runs a complete end-to-end integration test.
 func TestIntegration_FullAnalysisFlow(t *testing.T) {
+	// Flow:
+	// 1. Creates temp connector directory with files
+	// 2. Starts mock MCP server
+	// 3. Connects cone client
+	// 4. Runs analysis with tool callbacks
+	// 5. Verifies completion
 	// Create a temporary connector directory with some files
 	tmpDir, err := os.MkdirTemp("", "connector-integration-test")
 	if err != nil {
@@ -34,7 +35,7 @@ func TestIntegration_FullAnalysisFlow(t *testing.T) {
 		"README.md":    "# Test Connector\n",
 	}
 	for name, content := range files {
-		if err := os.WriteFile(filepath.Join(tmpDir, name), []byte(content), 0644); err != nil {
+		if err := os.WriteFile(filepath.Join(tmpDir, name), []byte(content), 0600); err != nil {
 			t.Fatalf("failed to create %s: %v", name, err)
 		}
 	}
@@ -190,7 +191,12 @@ func sendJSONRPC(t *testing.T, client *http.Client, url, method string, params i
 	}
 
 	body, _ := json.Marshal(req)
-	resp, err := client.Post(url, "application/json", bytes.NewReader(body))
+	httpReq, err := http.NewRequestWithContext(context.Background(), http.MethodPost, url, bytes.NewReader(body))
+	if err != nil {
+		t.Fatalf("failed to create request: %v", err)
+	}
+	httpReq.Header.Set("Content-Type", "application/json")
+	resp, err := client.Do(httpReq)
 	if err != nil {
 		t.Fatalf("request failed: %v", err)
 	}

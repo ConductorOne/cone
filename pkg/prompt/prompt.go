@@ -105,7 +105,7 @@ func Input(prompt string) (string, error) {
 	}
 
 	reader := bufio.NewReader(os.Stdin)
-	fmt.Print(prompt)
+	_, _ = fmt.Fprint(os.Stdout, prompt)
 	input, err := reader.ReadString('\n')
 	if err != nil {
 		return "", fmt.Errorf("failed to read input: %w", err)

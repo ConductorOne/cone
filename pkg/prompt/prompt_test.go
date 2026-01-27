@@ -1,6 +1,7 @@
 package prompt
 
 import (
+	"errors"
 	"strings"
 	"testing"
 )
@@ -20,7 +21,7 @@ func TestRequireInteractive_InTests(t *testing.T) {
 			t.Errorf("expected no error in interactive mode, got %v", err)
 		}
 	} else {
-		if err != ErrNotInteractive {
+		if !errors.Is(err, ErrNotInteractive) {
 			t.Errorf("expected ErrNotInteractive, got %v", err)
 		}
 	}
@@ -35,7 +36,7 @@ func TestConfirm_NonInteractive(t *testing.T) {
 	if result {
 		t.Error("expected false result")
 	}
-	if err != ErrNotInteractive {
+	if !errors.Is(err, ErrNotInteractive) {
 		t.Errorf("expected ErrNotInteractive, got %v", err)
 	}
 }
@@ -49,7 +50,7 @@ func TestConfirmWithDefault_NonInteractive(t *testing.T) {
 	if result {
 		t.Error("expected false result")
 	}
-	if err != ErrNotInteractive {
+	if !errors.Is(err, ErrNotInteractive) {
 		t.Errorf("expected ErrNotInteractive, got %v", err)
 	}
 }
@@ -63,7 +64,7 @@ func TestInput_NonInteractive(t *testing.T) {
 	if result != "" {
 		t.Errorf("expected empty result, got %s", result)
 	}
-	if err != ErrNotInteractive {
+	if !errors.Is(err, ErrNotInteractive) {
 		t.Errorf("expected ErrNotInteractive, got %v", err)
 	}
 }
@@ -77,7 +78,7 @@ func TestInputWithDefault_NonInteractive(t *testing.T) {
 	if result != "" {
 		t.Errorf("expected empty result, got %s", result)
 	}
-	if err != ErrNotInteractive {
+	if !errors.Is(err, ErrNotInteractive) {
 		t.Errorf("expected ErrNotInteractive, got %v", err)
 	}
 }
@@ -96,7 +97,7 @@ func TestSelect_NonInteractive(t *testing.T) {
 	if result != -1 {
 		t.Errorf("expected -1, got %d", result)
 	}
-	if err != ErrNotInteractive {
+	if !errors.Is(err, ErrNotInteractive) {
 		t.Errorf("expected ErrNotInteractive, got %v", err)
 	}
 }
@@ -122,7 +123,7 @@ func TestSelectString_NonInteractive(t *testing.T) {
 	if result != -1 {
 		t.Errorf("expected -1, got %d", result)
 	}
-	if err != ErrNotInteractive {
+	if !errors.Is(err, ErrNotInteractive) {
 		t.Errorf("expected ErrNotInteractive, got %v", err)
 	}
 }
@@ -141,7 +142,7 @@ func TestMultiSelect_NonInteractive(t *testing.T) {
 	if result != nil {
 		t.Errorf("expected nil, got %v", result)
 	}
-	if err != ErrNotInteractive {
+	if !errors.Is(err, ErrNotInteractive) {
 		t.Errorf("expected ErrNotInteractive, got %v", err)
 	}
 }
@@ -295,8 +296,9 @@ func TestSelectStringConvertsToOptions(t *testing.T) {
 	if idx1 != idx2 {
 		t.Errorf("expected same index, got %d and %d", idx1, idx2)
 	}
-	if err1 != err2 {
-		t.Errorf("expected same error, got %v and %v", err1, err2)
+	// Both should return ErrNotInteractive in non-interactive mode.
+	if !errors.Is(err1, ErrNotInteractive) || !errors.Is(err2, ErrNotInteractive) {
+		t.Errorf("expected both errors to be ErrNotInteractive, got %v and %v", err1, err2)
 	}
 }
 

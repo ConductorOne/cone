@@ -284,7 +284,6 @@ func getConnector(ctx context.Context, cfg *Config) (types.ConnectorServer, erro
 import (
 	"context"
 	"crypto/tls"
-	"fmt"
 	"io"
 	"net/http"
 
@@ -443,7 +442,6 @@ import (
 	"github.com/conductorone/baton-sdk/pkg/pagination"
 	rs "github.com/conductorone/baton-sdk/pkg/types/resource"
 	"github.com/grpc-ecosystem/go-grpc-middleware/logging/zap/ctxzap"
-	"go.uber.org/zap"
 )
 
 type userBuilder struct {

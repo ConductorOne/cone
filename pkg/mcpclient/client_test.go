@@ -1,7 +1,6 @@
 package mcpclient
 
 import (
-	"bytes"
 	"context"
 	"encoding/json"
 	"net/http"
@@ -13,7 +12,7 @@ func TestClient_Connect(t *testing.T) {
 	t.Run("successful initialize", func(t *testing.T) {
 		server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			var req map[string]interface{}
-			json.NewDecoder(r.Body).Decode(&req)
+			_ = json.NewDecoder(r.Body).Decode(&req)
 
 			if req["method"] != "initialize" {
 				t.Errorf("expected initialize method, got %v", req["method"])
@@ -30,7 +29,7 @@ func TestClient_Connect(t *testing.T) {
 					},
 				},
 			}
-			json.NewEncoder(w).Encode(resp)
+			_ = json.NewEncoder(w).Encode(resp)
 		}))
 		defer server.Close()
 
@@ -48,7 +47,7 @@ func TestClient_Connect(t *testing.T) {
 	t.Run("handles server error", func(t *testing.T) {
 		server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			var req map[string]interface{}
-			json.NewDecoder(r.Body).Decode(&req)
+			_ = json.NewDecoder(r.Body).Decode(&req)
 
 			resp := map[string]interface{}{
 				"jsonrpc": "2.0",
@@ -58,7 +57,7 @@ func TestClient_Connect(t *testing.T) {
 					"message": "Invalid Request",
 				},
 			}
-			json.NewEncoder(w).Encode(resp)
+			_ = json.NewEncoder(w).Encode(resp)
 		}))
 		defer server.Close()
 
@@ -79,7 +78,7 @@ func TestClient_Analyze(t *testing.T) {
 		callCount := 0
 		server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			var req map[string]interface{}
-			json.NewDecoder(r.Body).Decode(&req)
+			_ = json.NewDecoder(r.Body).Decode(&req)
 
 			callCount++
 			var resp map[string]interface{}
@@ -124,7 +123,7 @@ func TestClient_Analyze(t *testing.T) {
 				}
 			}
 
-			json.NewEncoder(w).Encode(resp)
+			_ = json.NewEncoder(w).Encode(resp)
 		}))
 		defer server.Close()
 
@@ -209,18 +208,4 @@ func TestToolHandler_HandleToolCall(t *testing.T) {
 		}
 		// In dry-run, file should not actually be written
 	})
-}
-
-// Helper to create JSON request body
-func jsonBody(method string, params interface{}) *bytes.Buffer {
-	req := map[string]interface{}{
-		"jsonrpc": "2.0",
-		"id":      1,
-		"method":  method,
-	}
-	if params != nil {
-		req["params"] = params
-	}
-	body, _ := json.Marshal(req)
-	return bytes.NewBuffer(body)
 }

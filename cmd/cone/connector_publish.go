@@ -11,7 +11,6 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
-	"runtime"
 	"strings"
 
 	c1client "github.com/conductorone/cone/pkg/client"
@@ -58,7 +57,7 @@ Prerequisites:
 	cmd.Flags().String("registry-url", "https://registry.conductorone.com", "Registry API URL")
 	cmd.Flags().String("signing-key", "", "Signing key ID for this release")
 
-	cmd.MarkFlagRequired("version")
+	_ = cmd.MarkFlagRequired("version")
 
 	return cmd
 }
@@ -130,17 +129,17 @@ func runConnectorPublish(cmd *cobra.Command, args []string) error {
 	}
 
 	_, err = client.CreateVersion(ctx, &createVersionRequest{
-		Org:          metadata.Org,
-		Name:         metadata.Name,
-		Version:      version,
-		Description:  metadata.Description,
+		Org:           metadata.Org,
+		Name:          metadata.Name,
+		Version:       version,
+		Description:   metadata.Description,
 		RepositoryURL: metadata.RepositoryURL,
-		HomepageURL:  metadata.HomepageURL,
-		License:      metadata.License,
-		Changelog:    metadata.Changelog,
-		CommitSHA:    getGitCommitSHA(),
-		Platforms:    platformNames,
-		SigningKeyID: signingKey,
+		HomepageURL:   metadata.HomepageURL,
+		License:       metadata.License,
+		Changelog:     metadata.Changelog,
+		CommitSHA:     getGitCommitSHA(),
+		Platforms:     platformNames,
+		SigningKeyID:  signingKey,
 	})
 	if err != nil {
 		return fmt.Errorf("failed to create version: %w", err)
@@ -297,13 +296,14 @@ func parseConnectorYAML(data []byte, metadata *connectorMetadata) {
 	lines := strings.Split(string(data), "\n")
 	for _, line := range lines {
 		line = strings.TrimSpace(line)
-		if strings.HasPrefix(line, "description:") {
+		switch {
+		case strings.HasPrefix(line, "description:"):
 			metadata.Description = strings.TrimSpace(strings.TrimPrefix(line, "description:"))
-		} else if strings.HasPrefix(line, "license:") {
+		case strings.HasPrefix(line, "license:"):
 			metadata.License = strings.TrimSpace(strings.TrimPrefix(line, "license:"))
-		} else if strings.HasPrefix(line, "homepage_url:") {
+		case strings.HasPrefix(line, "homepage_url:"):
 			metadata.HomepageURL = strings.TrimSpace(strings.TrimPrefix(line, "homepage_url:"))
-		} else if strings.HasPrefix(line, "repository_url:") {
+		case strings.HasPrefix(line, "repository_url:"):
 			metadata.RepositoryURL = strings.TrimSpace(strings.TrimPrefix(line, "repository_url:"))
 		}
 	}
@@ -560,15 +560,6 @@ type createConnectorRequest struct {
 	Name string `json:"name"`
 }
 
-type createConnectorResponse struct {
-	Connector connectorInfo `json:"connector"`
-}
-
-type connectorInfo struct {
-	Org  string `json:"org"`
-	Name string `json:"name"`
-}
-
 type createVersionRequest struct {
 	Org           string   `json:"org"`
 	Name          string   `json:"name"`
@@ -636,7 +627,7 @@ func (c *registryClient) EnsureConnector(ctx context.Context, org, name string) 
 		return fmt.Errorf("failed to marshal request: %w", err)
 	}
 
-	httpReq, err := http.NewRequestWithContext(ctx, "POST", url, bytes.NewReader(body))
+	httpReq, err := http.NewRequestWithContext(ctx, "http.MethodPost", url, bytes.NewReader(body))
 	if err != nil {
 		return fmt.Errorf("failed to create request: %w", err)
 	}
@@ -671,7 +662,7 @@ func (c *registryClient) CreateVersion(ctx context.Context, req *createVersionRe
 		return nil, fmt.Errorf("failed to marshal request: %w", err)
 	}
 
-	httpReq, err := http.NewRequestWithContext(ctx, "POST", url, bytes.NewReader(body))
+	httpReq, err := http.NewRequestWithContext(ctx, "http.MethodPost", url, bytes.NewReader(body))
 	if err != nil {
 		return nil, fmt.Errorf("failed to create request: %w", err)
 	}
@@ -712,7 +703,7 @@ func (c *registryClient) GetUploadURLs(ctx context.Context, req *getUploadURLsRe
 		return nil, fmt.Errorf("failed to marshal request: %w", err)
 	}
 
-	httpReq, err := http.NewRequestWithContext(ctx, "POST", url, bytes.NewReader(body))
+	httpReq, err := http.NewRequestWithContext(ctx, "http.MethodPost", url, bytes.NewReader(body))
 	if err != nil {
 		return nil, fmt.Errorf("failed to create request: %w", err)
 	}
@@ -753,7 +744,7 @@ func (c *registryClient) FinalizeVersion(ctx context.Context, req *finalizeVersi
 		return nil, fmt.Errorf("failed to marshal request: %w", err)
 	}
 
-	httpReq, err := http.NewRequestWithContext(ctx, "POST", url, bytes.NewReader(body))
+	httpReq, err := http.NewRequestWithContext(ctx, "http.MethodPost", url, bytes.NewReader(body))
 	if err != nil {
 		return nil, fmt.Errorf("failed to create request: %w", err)
 	}
@@ -798,7 +789,7 @@ func uploadFile(ctx context.Context, url, path string) error {
 		return err
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "PUT", url, f)
+	req, err := http.NewRequestWithContext(ctx, "http.MethodPut", url, f)
 	if err != nil {
 		return err
 	}
@@ -819,7 +810,7 @@ func uploadFile(ctx context.Context, url, path string) error {
 }
 
 func uploadContent(ctx context.Context, url string, content []byte) error {
-	req, err := http.NewRequestWithContext(ctx, "PUT", url, strings.NewReader(string(content)))
+	req, err := http.NewRequestWithContext(ctx, "http.MethodPut", url, strings.NewReader(string(content)))
 	if err != nil {
 		return err
 	}
@@ -837,9 +828,4 @@ func uploadContent(ctx context.Context, url string, content []byte) error {
 	}
 
 	return nil
-}
-
-// getCurrentPlatform returns the current OS/arch.
-func getCurrentPlatform() string {
-	return fmt.Sprintf("%s-%s", runtime.GOOS, runtime.GOARCH)
 }

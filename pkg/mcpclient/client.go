@@ -10,6 +10,11 @@ import (
 	"time"
 )
 
+// Status values for MCP analysis responses.
+const (
+	statusToolCall = "tool_call"
+)
+
 // Client is an MCP client for connecting to C1's connector analysis service.
 type Client struct {
 	// ServerURL is the URL of the MCP server (e.g., https://tenant.conductorone.com/api/v1alpha/cone/mcp)
@@ -176,9 +181,9 @@ func (c *Client) processAnalysisResponse(ctx context.Context, resp *jsonrpcRespo
 				Summary:      result.Summary,
 			}, nil
 
-		case "tool_call":
+		case statusToolCall:
 			if result.ToolCall == nil {
-				return nil, fmt.Errorf("tool_call status but no tool_call data")
+				return nil, fmt.Errorf("%s status but no tool_call data", statusToolCall)
 			}
 
 			// Execute the tool locally

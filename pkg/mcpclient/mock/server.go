@@ -33,14 +33,14 @@ type ToolCall struct {
 
 // Server is a mock MCP server for testing.
 type Server struct {
-	scenario     *Scenario
-	currentStep  int
-	mu           sync.Mutex
-	addr         string
-	server       *http.Server
-	toolResults  []map[string]interface{}
-	sessionID    string
-	initialized  bool
+	scenario    *Scenario
+	currentStep int
+	mu          sync.Mutex
+	addr        string
+	server      *http.Server
+	toolResults []map[string]interface{}
+	sessionID   string
+	initialized bool
 }
 
 // NewServer creates a new mock MCP server with the given scenario.
@@ -58,8 +58,9 @@ func (s *Server) Start(addr string) error {
 	mux.HandleFunc("/", s.HandleMCP)
 
 	s.server = &http.Server{
-		Addr:    addr,
-		Handler: mux,
+		Addr:              addr,
+		Handler:           mux,
+		ReadHeaderTimeout: 10 * 1e9, // 10 seconds
 	}
 
 	go func() {
@@ -229,7 +230,7 @@ func (s *Server) sendResult(w http.ResponseWriter, id interface{}, result interf
 		"result":  result,
 	}
 	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(resp)
+	_ = json.NewEncoder(w).Encode(resp)
 }
 
 func (s *Server) sendError(w http.ResponseWriter, id interface{}, code int, message string) {
@@ -242,7 +243,7 @@ func (s *Server) sendError(w http.ResponseWriter, id interface{}, code int, mess
 		},
 	}
 	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(resp)
+	_ = json.NewEncoder(w).Encode(resp)
 }
 
 // Predefined test scenarios

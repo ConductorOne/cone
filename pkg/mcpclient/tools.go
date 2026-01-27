@@ -63,7 +63,7 @@ func (h *ToolHandler) HandleToolCall(ctx context.Context, name string, args map[
 
 // handleReadFiles reads files matching the given glob patterns.
 // Security: Only reads files within ConnectorDir.
-func (h *ToolHandler) handleReadFiles(ctx context.Context, args map[string]interface{}) (*ToolResult, error) {
+func (h *ToolHandler) handleReadFiles(_ context.Context, args map[string]interface{}) (*ToolResult, error) {
 	patternsRaw, ok := args["patterns"]
 	if !ok {
 		return &ToolResult{Success: false, Error: "missing 'patterns' argument"}, nil
@@ -127,7 +127,7 @@ func (h *ToolHandler) handleReadFiles(ctx context.Context, args map[string]inter
 }
 
 // handleAskUser prompts the user for input.
-func (h *ToolHandler) handleAskUser(ctx context.Context, args map[string]interface{}) (*ToolResult, error) {
+func (h *ToolHandler) handleAskUser(_ context.Context, args map[string]interface{}) (*ToolResult, error) {
 	question, _ := args["question"].(string)
 	questionType, _ := args["type"].(string)
 
@@ -195,12 +195,12 @@ func (h *ToolHandler) handleAskUser(ctx context.Context, args map[string]interfa
 
 // handleEditFile applies an edit to a file.
 // Security: Only edits files within ConnectorDir.
-func (h *ToolHandler) handleEditFile(ctx context.Context, args map[string]interface{}) (*ToolResult, error) {
+func (h *ToolHandler) handleEditFile(_ context.Context, args map[string]interface{}) (*ToolResult, error) {
 	path, _ := args["path"].(string)
-	old, _ := args["old"].(string)
-	new, _ := args["new"].(string)
+	oldStr, _ := args["old"].(string)
+	newStr, _ := args["new"].(string)
 
-	if path == "" || old == "" {
+	if path == "" || oldStr == "" {
 		return &ToolResult{Success: false, Error: "missing required arguments (path, old)"}, nil
 	}
 
@@ -218,7 +218,7 @@ func (h *ToolHandler) handleEditFile(ctx context.Context, args map[string]interf
 	}
 
 	// Check if old string exists
-	if !strings.Contains(string(content), old) {
+	if !strings.Contains(string(content), oldStr) {
 		return &ToolResult{Success: false, Error: "old string not found in file"}, nil
 	}
 
@@ -226,8 +226,8 @@ func (h *ToolHandler) handleEditFile(ctx context.Context, args map[string]interf
 	fmt.Printf("\n--- %s (before)\n", path)
 	fmt.Printf("+++ %s (after)\n", path)
 	fmt.Printf("@@ edit @@\n")
-	fmt.Printf("-%s\n", strings.ReplaceAll(old, "\n", "\n-"))
-	fmt.Printf("+%s\n", strings.ReplaceAll(new, "\n", "\n+"))
+	fmt.Printf("-%s\n", strings.ReplaceAll(oldStr, "\n", "\n-"))
+	fmt.Printf("+%s\n", strings.ReplaceAll(newStr, "\n", "\n+"))
 	fmt.Println()
 
 	if h.DryRun {
@@ -250,8 +250,8 @@ func (h *ToolHandler) handleEditFile(ctx context.Context, args map[string]interf
 	}
 
 	// Apply the edit
-	newContent := strings.Replace(string(content), old, new, 1)
-	if err := os.WriteFile(fullPath, []byte(newContent), 0644); err != nil {
+	newContent := strings.Replace(string(content), oldStr, newStr, 1)
+	if err := os.WriteFile(fullPath, []byte(newContent), 0600); err != nil {
 		return &ToolResult{Success: false, Error: fmt.Sprintf("failed to write file: %v", err)}, nil
 	}
 
@@ -263,7 +263,7 @@ func (h *ToolHandler) handleEditFile(ctx context.Context, args map[string]interf
 
 // handleWriteFile writes a new file.
 // Security: Only writes files within ConnectorDir.
-func (h *ToolHandler) handleWriteFile(ctx context.Context, args map[string]interface{}) (*ToolResult, error) {
+func (h *ToolHandler) handleWriteFile(_ context.Context, args map[string]interface{}) (*ToolResult, error) {
 	path, _ := args["path"].(string)
 	content, _ := args["content"].(string)
 
@@ -306,7 +306,7 @@ func (h *ToolHandler) handleWriteFile(ctx context.Context, args map[string]inter
 	}
 
 	// Write the file
-	if err := os.WriteFile(fullPath, []byte(content), 0644); err != nil {
+	if err := os.WriteFile(fullPath, []byte(content), 0600); err != nil {
 		return &ToolResult{Success: false, Error: fmt.Sprintf("failed to write file: %v", err)}, nil
 	}
 
@@ -317,18 +317,18 @@ func (h *ToolHandler) handleWriteFile(ctx context.Context, args map[string]inter
 }
 
 // handleShowDiff displays a diff for review.
-func (h *ToolHandler) handleShowDiff(ctx context.Context, args map[string]interface{}) (*ToolResult, error) {
+func (h *ToolHandler) handleShowDiff(_ context.Context, args map[string]interface{}) (*ToolResult, error) {
 	path, _ := args["path"].(string)
-	old, _ := args["old"].(string)
-	new, _ := args["new"].(string)
+	oldStr, _ := args["old"].(string)
+	newStr, _ := args["new"].(string)
 
 	fmt.Printf("\n--- %s (before)\n", path)
 	fmt.Printf("+++ %s (after)\n", path)
 	fmt.Printf("@@ diff @@\n")
 
 	// Simple line-by-line diff display
-	oldLines := strings.Split(old, "\n")
-	newLines := strings.Split(new, "\n")
+	oldLines := strings.Split(oldStr, "\n")
+	newLines := strings.Split(newStr, "\n")
 
 	for _, line := range oldLines {
 		fmt.Printf("-%s\n", line)
@@ -350,7 +350,7 @@ func (h *ToolHandler) handleShowDiff(ctx context.Context, args map[string]interf
 }
 
 // handleConfirm asks for a simple yes/no confirmation.
-func (h *ToolHandler) handleConfirm(ctx context.Context, args map[string]interface{}) (*ToolResult, error) {
+func (h *ToolHandler) handleConfirm(_ context.Context, args map[string]interface{}) (*ToolResult, error) {
 	message, _ := args["message"].(string)
 	if message == "" {
 		message = "Continue?"

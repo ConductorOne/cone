@@ -2,6 +2,7 @@ package consent
 
 import (
 	"encoding/json"
+	"errors"
 	"os"
 	"path/filepath"
 	"testing"
@@ -9,18 +10,15 @@ import (
 )
 
 // setupTestDir creates a temp directory and sets HOME to point to it.
-// Returns a cleanup function that restores the original HOME.
+// Returns a cleanup function (t.Setenv automatically restores the original value).
 func setupTestDir(t *testing.T) func() {
 	t.Helper()
 
-	originalHome := os.Getenv("HOME")
 	tmpDir := t.TempDir()
-	if err := os.Setenv("HOME", tmpDir); err != nil {
-		t.Fatalf("failed to set HOME: %v", err)
-	}
+	t.Setenv("HOME", tmpDir)
 
 	return func() {
-		os.Setenv("HOME", originalHome)
+		// t.Setenv automatically restores the original value.
 	}
 }
 
@@ -86,7 +84,7 @@ func TestLoad_NoConsent(t *testing.T) {
 	if record != nil {
 		t.Error("expected nil record")
 	}
-	if err != ErrNoConsent {
+	if !errors.Is(err, ErrNoConsent) {
 		t.Errorf("expected ErrNoConsent, got %v", err)
 	}
 }
@@ -163,7 +161,7 @@ func TestLoad_VersionMismatch(t *testing.T) {
 	if loaded == nil {
 		t.Error("expected record to be returned even on version mismatch")
 	}
-	if err != ErrConsentVersionMismatch {
+	if !errors.Is(err, ErrConsentVersionMismatch) {
 		t.Errorf("expected ErrConsentVersionMismatch, got %v", err)
 	}
 	if loaded != nil && loaded.Version != "0.9" {
@@ -512,7 +510,7 @@ func TestConsentFileInSubdirectory(t *testing.T) {
 	}
 }
 
-// contains is a helper for string containment checks
+// contains is a helper for string containment checks.
 func contains(s, substr string) bool {
 	return len(s) >= len(substr) && (s == substr || len(substr) == 0 ||
 		(len(s) > 0 && len(substr) > 0 && findSubstring(s, substr)))

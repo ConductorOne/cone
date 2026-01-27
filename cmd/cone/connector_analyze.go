@@ -77,12 +77,12 @@ func runConnectorAnalyze(cmd *cobra.Command, args []string) error {
 	// Check consent
 	if !offline && !consent.HasValidConsent() {
 		pterm.Warning.Println("AI-assisted analysis requires consent.")
-		fmt.Println()
-		fmt.Println("To enable AI analysis, run:")
-		fmt.Println("  cone connector consent --agree")
-		fmt.Println()
-		fmt.Println("Running offline analysis instead...")
-		fmt.Println()
+		pterm.Println()
+		pterm.Println("To enable AI analysis, run:")
+		pterm.Println("  cone connector consent --agree")
+		pterm.Println()
+		pterm.Println("Running offline analysis instead...")
+		pterm.Println()
 		offline = true
 	}
 
@@ -119,29 +119,29 @@ func runOfflineAnalysis(ctx context.Context, connectorPath string) error {
 	}
 
 	spinner.Success("Offline analysis complete")
-	fmt.Println()
+	pterm.Println()
 
 	// Display results
-	fmt.Println("Checks:")
+	pterm.Println("Checks:")
 	allPassed := true
 	for _, check := range checks {
 		if check.passed {
-			fmt.Printf("  [PASS] %s\n", check.name)
+			pterm.Printfln("  [PASS] %s", check.name)
 		} else {
-			fmt.Printf("  [FAIL] %s\n", check.name)
+			pterm.Printfln("  [FAIL] %s", check.name)
 			allPassed = false
 		}
 	}
 
-	fmt.Println()
+	pterm.Println()
 	if !allPassed {
-		fmt.Println("Some checks failed. For full AI analysis, run:")
-		fmt.Println("  cone connector consent --agree")
-		fmt.Println("  cone connector analyze")
+		pterm.Println("Some checks failed. For full AI analysis, run:")
+		pterm.Println("  cone connector consent --agree")
+		pterm.Println("  cone connector analyze")
 	} else {
-		fmt.Println("Basic checks passed. For deeper AI analysis, run:")
-		fmt.Println("  cone connector consent --agree")
-		fmt.Println("  cone connector analyze")
+		pterm.Println("Basic checks passed. For deeper AI analysis, run:")
+		pterm.Println("  cone connector consent --agree")
+		pterm.Println("  cone connector analyze")
 	}
 
 	return nil
@@ -212,12 +212,12 @@ func runOnlineAnalysis(ctx context.Context, connectorPath, mode string, dryRun b
 	spinner.Success("Connected")
 
 	// Run analysis
-	fmt.Println()
+	pterm.Println()
 	pterm.Info.Printf("Analyzing connector at: %s\n", connectorPath)
 	if dryRun {
 		pterm.Warning.Println("Dry run mode - no changes will be applied")
 	}
-	fmt.Println()
+	pterm.Println()
 
 	result, err := client.Analyze(ctx, connectorPath, mode)
 	if err != nil {
@@ -225,18 +225,18 @@ func runOnlineAnalysis(ctx context.Context, connectorPath, mode string, dryRun b
 	}
 
 	// Display results
-	fmt.Println()
-	fmt.Println("Analysis Complete")
-	fmt.Println("=================")
-	fmt.Printf("Status: %s\n", result.Status)
+	pterm.Println()
+	pterm.Println("Analysis Complete")
+	pterm.Println("=================")
+	pterm.Printfln("Status: %s", result.Status)
 	if result.Message != "" {
-		fmt.Printf("Message: %s\n", result.Message)
+		pterm.Printfln("Message: %s", result.Message)
 	}
 	if result.FilesScanned > 0 {
-		fmt.Printf("Files scanned: %d\n", result.FilesScanned)
+		pterm.Printfln("Files scanned: %d", result.FilesScanned)
 	}
 	if result.IssuesFound > 0 {
-		fmt.Printf("Issues found: %d\n", result.IssuesFound)
+		pterm.Printfln("Issues found: %d", result.IssuesFound)
 	}
 
 	return nil

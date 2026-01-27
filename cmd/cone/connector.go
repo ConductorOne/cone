@@ -4,8 +4,8 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// connectorCmd returns the root command for connector operations.
-// Subcommands: init, dev, build
+// connectorCmd returns the root command for connector operations
+// (subcommands: init, dev, build).
 func connectorCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "connector",

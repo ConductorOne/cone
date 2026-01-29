@@ -1936,6 +1936,12 @@ func (c *Client) ListUsers(ctx context.Context, cursor string, limit int) ([]Use
 }
 
 // GetUser returns a single user by ID.
+//
+// TYPE ASSERTION SAFETY: When working with interface{} or map[string]any:
+//   WRONG: userID := data["user_id"].(string)  // Panics if missing or wrong type
+//   CORRECT:
+//     userID, ok := data["user_id"].(string)
+//     if !ok { return nil, fmt.Errorf("user_id missing or not string") }
 func (c *Client) GetUser(ctx context.Context, userID string) (*User, error) {
 	reqURL := fmt.Sprintf("%s/api/v1/users/%s", c.baseURL, url.PathEscape(userID))
 

@@ -24,7 +24,11 @@ const durationInputTip = "We accept a sequence of decimal numbers, each with opt
 	"such as \"12h\", \"1w2d\" or \"2h45m\". Valid units are (m)inutes, (h)ours, (d)ays, (w)eeks."
 const justificationWarningMessage = "Please provide a justification when requesting access to an entitlement."
 const justificationInputTip = "You can add a justification using -j or --justification"
-const appUserMultipleUsersWarningMessage = "This app has multiple users. Please select any one. "
+const appUserMultipleUsersWarningMessage = "This app has multiple users. Please select any one."
+
+// Error message variants (lowercase, no trailing punctuation per Go style).
+const errJustificationRequired = "justification is required when requesting access to an entitlement"
+const errMultipleUsersSelectOne = "this app has multiple users, please select one"
 
 func getCmd() *cobra.Command {
 	cmd := &cobra.Command{
@@ -135,7 +139,7 @@ func getValidJustification(ctx context.Context, v *viper.Viper, justification st
 
 	if v.GetBool(nonInteractiveFlag) {
 		pterm.Info.Println(justificationInputTip)
-		return "", errors.New(justificationWarningMessage)
+		return "", errors.New(errJustificationRequired)
 	}
 	justificationInput, err := output.GetValidInput[string](ctx, justification, JustificationValidator{})
 	if err != nil {
@@ -450,7 +454,7 @@ func getAppUserId(ctx context.Context, c client.C1Client, v *viper.Viper, appId,
 		return client.StringFromPtr(appUsers[0].ID), nil
 	default:
 		if v.GetBool(nonInteractiveFlag) {
-			return "", errors.New(appUserMultipleUsersWarningMessage)
+			return "", errors.New(errMultipleUsersSelectOne)
 		}
 
 		output.InputNeeded.Println(appUserMultipleUsersWarningMessage)

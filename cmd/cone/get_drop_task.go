@@ -135,7 +135,7 @@ func getValidJustification(ctx context.Context, v *viper.Viper, justification st
 
 	if v.GetBool(nonInteractiveFlag) {
 		pterm.Info.Println(justificationInputTip)
-		return "", errors.New(justificationWarningMessage)
+		return "", errors.New("please provide a justification when requesting access to an entitlement")
 	}
 	justificationInput, err := output.GetValidInput[string](ctx, justification, JustificationValidator{})
 	if err != nil {
@@ -450,7 +450,7 @@ func getAppUserId(ctx context.Context, c client.C1Client, v *viper.Viper, appId,
 		return client.StringFromPtr(appUsers[0].ID), nil
 	default:
 		if v.GetBool(nonInteractiveFlag) {
-			return "", errors.New(appUserMultipleUsersWarningMessage)
+			return "", errors.New("this app has multiple users, please select one")
 		}
 
 		output.InputNeeded.Println(appUserMultipleUsersWarningMessage)

@@ -5,6 +5,7 @@ import (
 	"crypto/elliptic"
 	"crypto/rand"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"os"
 	"os/exec"
@@ -49,7 +50,7 @@ Requires 'deno' to be installed (https://deno.land).`,
 	return cmd
 }
 
-// denoConfig represents relevant fields from deno.json
+// denoConfig represents relevant fields from deno.json.
 type denoConfig struct {
 	Permissions struct {
 		Net []string `json:"net"`
@@ -188,7 +189,7 @@ func functionsDevRun(cmd *cobra.Command, args []string) error {
 		if err != nil {
 			return fmt.Errorf("failed to start proxy: %w", err)
 		}
-		defer proxyInstance.Stop()
+		defer func() { _ = proxyInstance.Stop() }()
 
 		pterm.Info.Printf("MITM proxy started on %s\n", proxyAddr)
 		if len(proxyConfig.Allowlist) > 0 {
@@ -258,7 +259,7 @@ func functionsDevRun(cmd *cobra.Command, args []string) error {
 	go func() {
 		<-sigCh
 		if proxyInstance != nil {
-			proxyInstance.Stop()
+			_ = proxyInstance.Stop()
 		}
 		if execCmd.Process != nil {
 			_ = execCmd.Process.Signal(syscall.SIGTERM)
@@ -271,12 +272,13 @@ func functionsDevRun(cmd *cobra.Command, args []string) error {
 		pterm.Info.Println("Hot reload enabled")
 	}
 	pterm.Info.Println("Press Ctrl+C to stop")
-	fmt.Println()
+	pterm.Println()
 
 	err = execCmd.Run()
 	if err != nil {
-		// Check if it was killed by signal (expected on Ctrl+C)
-		if exitErr, ok := err.(*exec.ExitError); ok {
+		// Check if it was killed by signal (expected on Ctrl+C).
+		var exitErr *exec.ExitError
+		if errors.As(err, &exitErr) {
 			if exitErr.ExitCode() == -1 {
 				return nil
 			}
@@ -318,4 +320,3 @@ func createDPoPProofer() (*dpop.Proofer, error) {
 
 	return dpop.NewProofer(&jwk)
 }
-

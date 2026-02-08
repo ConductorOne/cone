@@ -21,7 +21,7 @@ import (
 var libsFS embed.FS
 
 const (
-	// C1FunctionImportHost is the virtual host for @c1/ imports
+	// C1FunctionImportHost is the virtual host for @c1/ imports.
 	C1FunctionImportHost = "c1-function-import"
 )
 
@@ -70,22 +70,19 @@ func New(ca *CA, config Config) (*Proxy, error) {
 	// Configure MITM for all HTTPS
 	proxy.OnRequest().HandleConnect(goproxy.AlwaysMitm)
 
-	// Handle @c1/ imports
-	proxy.OnRequest(goproxy.DstHostIs(C1FunctionImportHost)).DoFunc(
-		importsHandler(config.SourceDir),
-	)
+	// Handle @c1/ imports.
+	//nolint:bodyclose // goproxy handlers manage response body lifecycle
+	proxy.OnRequest(goproxy.DstHostIs(C1FunctionImportHost)).DoFunc(importsHandler(config.SourceDir))
 
-	// Handle C1 API requests - inject auth
+	// Handle C1 API requests - inject auth.
 	if config.C1APIHost != "" {
-		proxy.OnRequest(isDstC1API(config.C1APIHost)).DoFunc(
-			apiHandler(config.TokenSource, config.Proofer, config.C1APIHost),
-		)
+		//nolint:bodyclose // goproxy handlers manage response body lifecycle
+		proxy.OnRequest(isDstC1API(config.C1APIHost)).DoFunc(apiHandler(config.TokenSource, config.Proofer, config.C1APIHost))
 	}
 
-	// Handle all other requests - check allowlist
-	proxy.OnRequest().DoFunc(
-		allowlistHandler(config.Allowlist, config.C1APIHost),
-	)
+	// Handle all other requests - check allowlist.
+	//nolint:bodyclose // goproxy handlers manage response body lifecycle
+	proxy.OnRequest().DoFunc(allowlistHandler(config.Allowlist, config.C1APIHost))
 
 	proxy.Verbose = false
 
@@ -98,18 +95,24 @@ func New(ca *CA, config Config) (*Proxy, error) {
 
 // Start starts the proxy on a random available port and returns the address.
 func (p *Proxy) Start(ctx context.Context) (string, error) {
-	listener, err := net.Listen("tcp", "127.0.0.1:0")
+	lc := net.ListenConfig{}
+	listener, err := lc.Listen(ctx, "tcp", "127.0.0.1:0")
 	if err != nil {
 		return "", fmt.Errorf("failed to start proxy listener: %w", err)
 	}
 	p.listener = listener
 
-	server := &http.Server{Handler: p.proxy}
+	server := &http.Server{
+		Handler:           p.proxy,
+		ReadHeaderTimeout: 30 * time.Second,
+	}
 	go func() {
 		<-ctx.Done()
-		server.Close()
+		_ = server.Close()
 	}()
-	go server.Serve(listener)
+	go func() {
+		_ = server.Serve(listener)
+	}()
 
 	return listener.Addr().String(), nil
 }

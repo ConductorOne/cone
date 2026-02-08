@@ -145,8 +145,8 @@ func createCA(keyPath, certPath string) (*CA, error) {
 		return nil, fmt.Errorf("failed to write CA key: %w", err)
 	}
 
-	// Write cert file
-	if err := os.WriteFile(certPath, certPEM, 0644); err != nil {
+	// Write cert file (read-only for others).
+	if err := os.WriteFile(certPath, certPEM, 0600); err != nil {
 		return nil, fmt.Errorf("failed to write CA cert: %w", err)
 	}
 

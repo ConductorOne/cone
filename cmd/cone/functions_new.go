@@ -77,7 +77,7 @@ console.log(` + "`Function listening on port ${port}`" + `);
 serve(handler, { port });
 `
 
-	if err := os.WriteFile(filepath.Join(name, "main.ts"), []byte(mainTS), 0644); err != nil {
+	if err := os.WriteFile(filepath.Join(name, "main.ts"), []byte(mainTS), 0600); err != nil {
 		return fmt.Errorf("failed to write main.ts: %w", err)
 	}
 
@@ -98,7 +98,7 @@ serve(handler, { port });
 }
 `
 
-	if err := os.WriteFile(filepath.Join(name, "deno.json"), []byte(denoJSON), 0644); err != nil {
+	if err := os.WriteFile(filepath.Join(name, "deno.json"), []byte(denoJSON), 0600); err != nil {
 		return fmt.Errorf("failed to write deno.json: %w", err)
 	}
 
@@ -108,7 +108,7 @@ serve(handler, { port });
 *.log
 `
 
-	if err := os.WriteFile(filepath.Join(name, ".gitignore"), []byte(gitignore), 0644); err != nil {
+	if err := os.WriteFile(filepath.Join(name, ".gitignore"), []byte(gitignore), 0600); err != nil {
 		return fmt.Errorf("failed to write .gitignore: %w", err)
 	}
 

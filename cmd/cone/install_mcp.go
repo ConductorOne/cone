@@ -30,7 +30,7 @@ Requires 'cone login <tenant>' to have been run first.`,
 	return cmd
 }
 
-func installMCPRun(cmd *cobra.Command, args []string) error {
+func installMCPRun(cmd *cobra.Command, _ []string) error {
 	v, err := getSubViperForProfile(cmd)
 	if err != nil {
 		return err
@@ -64,7 +64,7 @@ func installMCPRun(cmd *cobra.Command, args []string) error {
 	manual, _ := cmd.Flags().GetBool("manual")
 
 	if dryRun {
-		fmt.Printf("Would run:\n  claude mcp add --transport http --scope %s %s %s\n", scope, serverName, mcpURL)
+		pterm.Printf("Would run:\n  claude mcp add --transport http --scope %s %s %s\n", scope, serverName, mcpURL)
 		return nil
 	}
 
@@ -73,9 +73,9 @@ func installMCPRun(cmd *cobra.Command, args []string) error {
 		return nil
 	}
 
-	claudePath, err := exec.LookPath("claude")
-	if err != nil {
-		fmt.Printf("claude CLI not found on PATH. Falling back to manual config.\n\n")
+	claudePath, _ := exec.LookPath("claude")
+	if claudePath == "" {
+		pterm.Printf("claude CLI not found on PATH. Falling back to manual config.\n\n")
 		printManualMCPConfig(serverName, mcpURL)
 		return nil
 	}
@@ -85,7 +85,7 @@ func installMCPRun(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
-	out, err := exec.CommandContext(cmd.Context(), claudePath, "mcp", "add",
+	out, err := exec.CommandContext(cmd.Context(), claudePath, "mcp", "add", //nolint:gosec // args are from config, not user input
 		"--transport", "http",
 		"--scope", scope,
 		serverName, mcpURL,
@@ -96,15 +96,15 @@ func installMCPRun(cmd *cobra.Command, args []string) error {
 	}
 
 	spinner.Success(fmt.Sprintf("Registered %q (scope: %s)", serverName, scope))
-	fmt.Printf("\nEndpoint: %s\n", mcpURL)
-	fmt.Printf("Claude Code will handle OAuth on first connection.\n")
-	fmt.Printf("Restart Claude Code or run /mcp to connect.\n")
+	pterm.Printf("\nEndpoint: %s\n", mcpURL)
+	pterm.Printf("Claude Code will handle OAuth on first connection.\n")
+	pterm.Printf("Restart Claude Code or run /mcp to connect.\n")
 
 	return nil
 }
 
 // parseTenantHost extracts the host from a C1 client-id.
-// Client-id format: {name}@{host}/{path}
+// Client-id format: {name}@{host}/{path}.
 func parseTenantHost(clientID string) (string, error) {
 	parts := strings.SplitN(clientID, "@", 2)
 	if len(parts) != 2 {
@@ -127,6 +127,6 @@ func printManualMCPConfig(serverName, mcpURL string) {
 		serverName: config,
 	}, "", "  ")
 
-	fmt.Printf("Add the following to your Claude Code MCP config:\n\n")
-	fmt.Printf("%s\n", configJSON)
+	pterm.Printf("Add the following to your Claude Code MCP config:\n\n")
+	pterm.Printf("%s\n", configJSON)
 }

@@ -1,3 +1,5 @@
+version: "2"
+
 linters-settings:
   exhaustive:
     default-signifies-exhaustive: true
@@ -47,22 +49,14 @@ linters-settings:
       - name: var-naming
         arguments: [["ID", "URL", "HTTP", "API"], []]
 
-  tenv:
-    all: true
-
-  varcheck:
-    exported-fields: false # this appears to improperly detect exported variables as unused when they are used from a package with the same name
-
 
 linters:
   disable-all: true
   enable:
     - errcheck # Errcheck is a program for checking for unchecked errors in go programs. These unchecked errors can be critical bugs in some cases
-    - gosimple # Linter for Go source code that specializes in simplifying a code
     - govet # Vet examines Go source code and reports suspicious constructs, such as Printf calls whose arguments do not align with the format string
     - ineffassign # Detects when assignments to existing variables are not used
     - staticcheck # Staticcheck is a go vet on steroids, applying a ton of static analysis checks
-    - typecheck # Like the front-end of a Go compiler, parses and type-checks Go code
     - unused # Checks Go code for unused constants, variables, functions and types
     - asasalint # Check for pass []any as any in variadic func(...any)
     - asciicheck # Simple linter to check that your code does not contain non-ASCII identifiers
@@ -76,7 +70,6 @@ linters:
     - goconst # Finds repeated strings that could be replaced by a constant
     - gocritic # Provides diagnostics that check for bugs, performance and style issues.
     - godot # Check if comments end in a period
-    - goimports # In addition to fixing imports, goimports also formats your code in the same style as gofmt.
     - gomoddirectives # Manage the use of 'replace', 'retract', and 'excludes' directives in go.mod.
     - goprintffuncname # Checks that printf-like functions are named with f at the end
     - gosec # Inspects source code for security problems
@@ -88,11 +81,14 @@ linters:
     - nosprintfhostport # Checks for misuse of Sprintf to construct a host with port in a URL.
     - predeclared # find code that shadows one of Go's predeclared identifiers
     - revive # Fast, configurable, extensible, flexible, and beautiful linter for Go. Drop-in replacement of golint.
-    - tenv # tenv is analyzer that detects using os.Setenv instead of t.Setenv since Go1.17
     - tparallel # tparallel detects inappropriate usage of t.Parallel() method in your Go test codes
     - unconvert # Remove unnecessary type conversions
     - usestdlibvars # detect the possibility to use variables/constants from the Go standard library
     - whitespace # Tool for detection of leading and trailing whitespace
+
+formatters:
+  enable:
+    - goimports # In addition to fixing imports, goimports also formats your code in the same style as gofmt.
 
 issues:
   max-same-issues: 50

@@ -69,7 +69,7 @@ func (e *ExpandableEntitlementWithBindings) GetPaths() []PathDetails {
 	if e == nil {
 		return nil
 	}
-	view := *e.AppEntitlementWithUserBindings.AppEntitlementView
+	view := *e.AppEntitlementView
 	return []PathDetails{
 		{
 			Name: ExpandedApp,
@@ -158,8 +158,8 @@ func (c *client) SearchEntitlements(ctx context.Context, filter *SearchEntitleme
 	rv := make([]*EntitlementWithBindings, 0, len(list))
 	for _, v := range expandableList {
 		rv = append(rv, &EntitlementWithBindings{
-			Entitlement: AppEntitlement(*v.AppEntitlementWithUserBindings.AppEntitlementView.AppEntitlement),
-			Bindings:    v.AppEntitlementWithUserBindings.AppEntitlementUserBindings,
+			Entitlement: AppEntitlement(*v.AppEntitlementView.AppEntitlement),
+			Bindings:    v.AppEntitlementUserBindings,
 			expanded:    PopulateExpandedMap(v.ExpandedMap, expanded),
 		})
 	}

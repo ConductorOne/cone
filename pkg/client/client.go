@@ -58,6 +58,7 @@ func intPtr(i int) *int {
 
 type C1Client interface {
 	BaseURL() string
+	SDK() *sdk.ConductoroneAPI
 
 	AuthIntrospect(ctx context.Context) (*shared.IntrospectResponse, error)
 	GetUser(ctx context.Context, userID string) (*shared.User, error)
@@ -102,6 +103,10 @@ type C1Client interface {
 
 func (c *client) BaseURL() string {
 	return c.baseURL.String()
+}
+
+func (c *client) SDK() *sdk.ConductoroneAPI {
+	return c.sdk
 }
 
 func New(

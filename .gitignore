@@ -26,3 +26,10 @@ dist/
 .idea/
 
 terraform_example/
+
+# Local research/design docs
+INSTALL_MCP_DESIGN.md
+INSTALL_MCP_DESIGN_V2.md
+WRITE_SAFETY_DESIGN.md
+FUNCTIONS_DX_DESIGN.md
+GOALS.md

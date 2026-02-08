@@ -80,6 +80,7 @@ func runCli(ctx context.Context) int {
 	cliCmd.AddCommand(hasCmd())
 	cliCmd.AddCommand(tokenCmd())
 	cliCmd.AddCommand(decryptCredentialCmd())
+	cliCmd.AddCommand(installMCPCmd())
 
 	err = cliCmd.ExecuteContext(ctx)
 	if err != nil {

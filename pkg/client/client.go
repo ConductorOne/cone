@@ -5,9 +5,11 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
+	"os"
 	"strconv"
 
 	"github.com/spf13/viper"
+	"golang.org/x/oauth2"
 
 	sdk "github.com/conductorone/conductorone-sdk-go"
 	"github.com/conductorone/conductorone-sdk-go/pkg/models/shared"
@@ -16,6 +18,15 @@ import (
 )
 
 const ConeClientID = "2RGdOS94VDferT9e80mdgntl36K"
+
+// Environment variable names for ConductorOne authentication.
+// These match the constants in conductorone-sdk-go and terraform-provider-conductorone.
+const (
+	EnvAccessToken  = "CONDUCTORONE_ACCESS_TOKEN"
+	EnvOIDCToken    = "CONDUCTORONE_OIDC_TOKEN"
+	EnvClientID     = "CONDUCTORONE_CLIENT_ID"
+	EnvClientSecret = "CONDUCTORONE_CLIENT_SECRET"
+)
 
 type contextKey string
 
@@ -120,6 +131,73 @@ func New(
 		return nil, err
 	}
 
+	return newClientWithTokenSource(ctx, tokenSrc, clientName, tokenHost, v, cmdName)
+}
+
+// NewWithAccessToken creates a client using a pre-exchanged bearer token.
+func NewWithAccessToken(
+	ctx context.Context,
+	accessToken string,
+	clientID string,
+	v *viper.Viper,
+	cmdName string,
+) (C1Client, error) {
+	tokenSrc := oauth2.StaticTokenSource(&oauth2.Token{
+		AccessToken: accessToken,
+	})
+
+	tokenHost := ""
+	clientName := ""
+	if clientID != "" {
+		var err error
+		clientName, tokenHost, err = parseClientID(clientID, v.GetString("api-endpoint"))
+		if err != nil {
+			return nil, err
+		}
+	}
+	// If no client ID, try to derive host from env or flags
+	if tokenHost == "" {
+		tokenHost = v.GetString("api-endpoint")
+	}
+	if tokenHost == "" {
+		tokenHost = os.Getenv("CONDUCTORONE_SERVER_URL")
+	}
+	if tokenHost == "" {
+		return nil, fmt.Errorf("%s requires --client-id, %s, or --api-endpoint to determine the server", EnvAccessToken, EnvClientID)
+	}
+
+	return newClientWithTokenSource(ctx, tokenSrc, clientName, tokenHost, v, cmdName)
+}
+
+// NewWithOIDCToken creates a client that exchanges an OIDC token for a C1 access token.
+func NewWithOIDCToken(
+	ctx context.Context,
+	oidcToken string,
+	clientID string,
+	v *viper.Viper,
+	cmdName string,
+) (C1Client, error) {
+	clientName, tokenHost, err := parseClientID(clientID, v.GetString("api-endpoint"))
+	if err != nil {
+		return nil, err
+	}
+
+	tokenSrc, err := NewTokenExchangeSource(ctx, oidcToken, clientID, tokenHost, v.GetBool("debug"))
+	if err != nil {
+		return nil, err
+	}
+
+	return newClientWithTokenSource(ctx, tokenSrc, clientName, tokenHost, v, cmdName)
+}
+
+func newClientWithTokenSource(
+	ctx context.Context,
+	tokenSrc oauth2.TokenSource,
+	clientName string,
+	tokenHost string,
+	v *viper.Viper,
+	cmdName string,
+) (C1Client, error) {
 	uclient, err := uhttp.NewClient(
 		ctx,
 		uhttp.WithTokenSource(tokenSrc),

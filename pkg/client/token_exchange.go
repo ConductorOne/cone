@@ -17,8 +17,8 @@ import (
 )
 
 const (
-	grantTypeTokenExchange = "urn:ietf:params:oauth:grant-type:token-exchange"
-	subjectTokenTypeJWT    = "urn:ietf:params:oauth:token-type:jwt"
+	grantTypeTokenExchange = "urn:ietf:params:oauth:grant-type:token-exchange" //nolint:gosec // OAuth2 grant type URI, not a credential
+	subjectTokenTypeJWT    = "urn:ietf:params:oauth:token-type:jwt"            //nolint:gosec // OAuth2 token type URI, not a credential
 )
 
 // tokenExchangeSource implements oauth2.TokenSource by exchanging an external

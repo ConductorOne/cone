@@ -49,30 +49,6 @@ type c1TokenSource struct {
 	httpClient   *http.Client
 }
 
-func parseClientID(input string, forceTokenHost string) (string, string, error) {
-	// split the input into 2 parts by @
-	items := strings.SplitN(input, "@", 2)
-	if len(items) != 2 {
-		return "", "", ErrInvalidClientID
-	}
-	clientName := items[0]
-
-	// split the right part into 2 parts by /
-	items = strings.SplitN(items[1], "/", 2)
-	if len(items) != 2 {
-		return "", "", ErrInvalidClientID
-	}
-
-	if forceTokenHost != "" {
-		return clientName, forceTokenHost, nil
-	}
-
-	if envHost, ok := os.LookupEnv("CONE_API_ENDPOINT"); ok && envHost != "" {
-		return clientName, envHost, nil
-	}
-
-	return clientName, items[0], nil
-}
 
 func ParseSecret(input []byte) (*jose.JSONWebKey, error) {
 	items := bytes.SplitN(input, []byte(":"), 4)
@@ -203,17 +179,12 @@ func NewC1TokenSource(
 	ctx context.Context,
 	clientID string,
 	clientSecret string,
-	forceTokenHost string,
+	tokenHost string,
 	debug bool,
-) (oauth2.TokenSource, string, string, error) {
-	clientName, tokenHost, err := parseClientID(clientID, forceTokenHost)
-	if err != nil {
-		return nil, "", "", err
-	}
-
+) (oauth2.TokenSource, error) {
 	secret, err := ParseSecret([]byte(clientSecret))
 	if err != nil {
-		return nil, "", "", err
+		return nil, err
 	}
 
 	httpClient, err := uhttp.NewClient(ctx,
@@ -222,12 +193,12 @@ func NewC1TokenSource(
 		uhttp.WithDebug(debug),
 	)
 	if err != nil {
-		return nil, "", "", err
+		return nil, err
 	}
 	return oauth2.ReuseTokenSource(nil, &c1TokenSource{
 		clientID:     clientID,
 		clientSecret: secret,
 		tokenHost:    tokenHost,
 		httpClient:   httpClient,
-	}), clientName, tokenHost, nil
+	}), nil
 }

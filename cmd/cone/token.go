@@ -40,9 +40,14 @@ func tokenRun(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
-	tokenSrc, _, _, err := client.NewC1TokenSource(ctx,
+	_, tokenHost, err := client.ResolveServerHost(clientId, v)
+	if err != nil {
+		return err
+	}
+
+	tokenSrc, err := client.NewC1TokenSource(ctx,
 		clientId, clientSecret,
-		v.GetString("api-endpoint"), v.GetBool("debug"),
+		tokenHost, v.GetBool("debug"),
 	)
 	if err != nil {
 		return err

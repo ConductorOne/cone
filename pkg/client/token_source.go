@@ -49,7 +49,6 @@ type c1TokenSource struct {
 	httpClient   *http.Client
 }
 
-
 func ParseSecret(input []byte) (*jose.JSONWebKey, error) {
 	items := bytes.SplitN(input, []byte(":"), 4)
 	if len(items) != 4 {

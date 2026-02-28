@@ -11,6 +11,7 @@ import (
 	"github.com/conductorone/baton-sdk/pkg/crypto/providers"
 	"github.com/conductorone/baton-sdk/pkg/crypto/providers/jwk"
 	"github.com/conductorone/conductorone-sdk-go/pkg/models/shared"
+	josev4 "github.com/go-jose/go-jose/v4"
 	"github.com/pterm/pterm"
 	"github.com/spf13/cobra"
 	"gopkg.in/square/go-jose.v2"
@@ -54,12 +55,18 @@ func decodeCredential(ctx context.Context, privateJWK *jose.JSONWebKey, cred sha
 		EncryptedBytes: credentialDec,
 	}
 
+	// Convert from gopkg.in/square/go-jose.v2 to github.com/go-jose/go-jose/v4
 	privateKeyBytes, err := privateJWK.MarshalJSON()
 	if err != nil {
 		return nil, fmt.Errorf("failed to marshal private jwk: %w", err)
 	}
 
-	plaintext, err := provider.Decrypt(ctx, ciphertext, privateKeyBytes)
+	var privateJWKv4 josev4.JSONWebKey
+	if err := privateJWKv4.UnmarshalJSON(privateKeyBytes); err != nil {
+		return nil, fmt.Errorf("failed to convert jwk to v4: %w", err)
+	}
+
+	plaintext, err := provider.Decrypt(ctx, ciphertext, &privateJWKv4)
 	if err != nil {
 		return nil, fmt.Errorf("failed to decrypt credential: %w", err)
 	}

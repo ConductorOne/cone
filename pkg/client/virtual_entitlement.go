@@ -78,8 +78,8 @@ func (c *client) CreateManuallyManagedResource(
 	resp, err := c.sdk.AppResource.CreateManuallyManagedAppResource(
 		ctx,
 		operations.C1APIAppV1AppResourceServiceCreateManuallyManagedAppResourceRequest{
-			AppID:                                  appID,
-			AppResourceTypeID:                      resourceTypeID,
+			AppID:                                   appID,
+			AppResourceTypeID:                       resourceTypeID,
 			CreateManuallyManagedAppResourceRequest: &req,
 		},
 	)
@@ -182,7 +182,7 @@ func (c *client) ResolveAppByNameOrID(ctx context.Context, appIDOrName string) (
 
 func isAlphanumeric(s string) bool {
 	for _, r := range s {
-		if !((r >= 'a' && r <= 'z') || (r >= 'A' && r <= 'Z') || (r >= '0' && r <= '9')) {
+		if (r < 'a' || r > 'z') && (r < 'A' || r > 'Z') && (r < '0' || r > '9') {
 			return false
 		}
 	}

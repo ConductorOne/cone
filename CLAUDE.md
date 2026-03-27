@@ -50,6 +50,7 @@ Uses vendored dependencies (`vendor/`). After modifying `go.mod`, run `go mod ti
 ## Linting Rules
 
 Key non-obvious rules from `.golangci.yml`:
+
 - Line length limit: 200 characters
 - No naked returns (any function length)
 - No named returns

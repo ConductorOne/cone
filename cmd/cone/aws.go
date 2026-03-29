@@ -297,7 +297,7 @@ Can be used directly or as an AWS credential_process:
 }
 
 func awsCredentialsRun(cmd *cobra.Command, args []string) error {
-	ctx, _, _, err := cmdContext(cmd)
+	ctx, c, _, err := cmdContext(cmd)
 	if err != nil {
 		return err
 	}
@@ -308,7 +308,7 @@ func awsCredentialsRun(cmd *cobra.Command, args []string) error {
 
 	profileName := args[0]
 
-	accessResult, err := checkC1Access(ctx, profileName)
+	accessResult, err := checkC1Access(ctx, c, profileName)
 	if err != nil {
 		return fmt.Errorf("failed to check access: %w", err)
 	}
@@ -319,7 +319,7 @@ func awsCredentialsRun(cmd *cobra.Command, args []string) error {
 		}
 
 		// Fetch the entitlement to get its max grant duration.
-		entitlement, err := accessResult.client.GetEntitlement(ctx, accessResult.appID, accessResult.entitlementID)
+		entitlement, err := c.GetEntitlement(ctx, accessResult.appID, accessResult.entitlementID)
 		if err != nil {
 			return fmt.Errorf("failed to get entitlement details: %w", err)
 		}
@@ -332,7 +332,7 @@ func awsCredentialsRun(cmd *cobra.Command, args []string) error {
 
 		fmt.Fprintf(os.Stderr, "No active grant for %q — submitting access request...\n", profileName)
 
-		grantResp, err := accessResult.client.CreateGrantTask(
+		grantResp, err := c.CreateGrantTask(
 			ctx,
 			accessResult.appID,
 			accessResult.entitlementID,
@@ -357,7 +357,7 @@ func awsCredentialsRun(cmd *cobra.Command, args []string) error {
 			time.Sleep(autoRequestPollInterval)
 			fmt.Fprintf(os.Stderr, ".")
 
-			taskResp, err := accessResult.client.GetTask(ctx, taskID)
+			taskResp, err := c.GetTask(ctx, taskID)
 			if err != nil {
 				break
 			}
@@ -491,6 +491,13 @@ func getSSOToken(ssoStartURL string) (string, error) {
 	return "", fmt.Errorf("no valid SSO token found for %s", ssoStartURL)
 }
 
+func requireAWSCLI() error {
+	if _, err := exec.LookPath("aws"); err != nil {
+		return fmt.Errorf("the AWS CLI is required but was not found on PATH — install it from https://aws.amazon.com/cli/")
+	}
+	return nil
+}
+
 func ssoLogin() error {
 	fmt.Fprintf(os.Stderr, "AWS SSO session expired. Logging in...\n")
 	loginCmd := exec.Command("aws", "sso", "login", "--sso-session", "cone-sso")
@@ -519,6 +526,10 @@ func getRoleCredentials(token, accountID, roleName, ssoRegion string) ([]byte, e
 }
 
 func getTemporaryCredentials(accountID, roleName, ssoStartURL, ssoRegion string) (*AWSCredentials, error) {
+	if err := requireAWSCLI(); err != nil {
+		return nil, err
+	}
+
 	token, err := getSSOToken(ssoStartURL)
 	if err != nil {
 		if loginErr := ssoLogin(); loginErr != nil {
@@ -576,27 +587,9 @@ type accessCheckResult struct {
 	appID         string
 	entitlementID string
 	userID        string
-	client        client.C1Client
 }
 
-func checkC1Access(ctx context.Context, profileName string) (*accessCheckResult, error) {
-	// Build a minimal command to get a client context.
-	tempCmd := &cobra.Command{Use: "temp"}
-	tempCmd.PersistentFlags().StringP("profile", "p", "default", "")
-	tempCmd.PersistentFlags().BoolP("non-interactive", "i", false, "")
-	tempCmd.PersistentFlags().String("client-id", "", "")
-	tempCmd.PersistentFlags().String("client-secret", "", "")
-	tempCmd.PersistentFlags().String("api-endpoint", "", "")
-	tempCmd.PersistentFlags().StringP("output", "o", "table", "")
-	tempCmd.PersistentFlags().Bool("debug", false, "")
-	tempCmd.PersistentFlags().String("log-level", "", "")
-	tempCmd.SetContext(ctx)
-
-	_, c, _, err := cmdContext(tempCmd)
-	if err != nil {
-		return nil, err
-	}
-
+func checkC1Access(ctx context.Context, c client.C1Client, profileName string) (*accessCheckResult, error) {
 	userInfo, err := c.AuthIntrospect(ctx)
 	if err != nil {
 		return nil, err
@@ -613,7 +606,6 @@ func checkC1Access(ctx context.Context, profileName string) (*accessCheckResult,
 
 	result := &accessCheckResult{
 		userID: userID,
-		client: c,
 	}
 
 	for _, ent := range entitlements {

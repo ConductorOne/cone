@@ -70,6 +70,10 @@ YAML format:
 
 var slugRegexp = regexp.MustCompile(`[^a-z0-9\-_.]`)
 
+// makeSlug produces a URL-safe slug from a display name. Non-alphanumeric characters
+// are replaced with hyphens, so distinct names like "foo@bar" and "foo#bar" will
+// collide to the same slug. This is acceptable because the C1 API upserts entitlements
+// on (app, resource_type, resource) — slug is not part of the uniqueness key.
 func makeSlug(name string) string {
 	slug := strings.ToLower(name)
 	slug = strings.ReplaceAll(slug, " ", "-")

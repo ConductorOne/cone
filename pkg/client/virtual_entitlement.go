@@ -21,12 +21,25 @@ var resourceTypeMap = map[string]shared.ResourceType{
 	"PROFILE_TYPE": shared.ResourceTypeProfileType,
 }
 
+// resourceTypeDisplayNames maps enum keys to canonical display names matching
+// the C1 server's conventions (see pkg/connector/manual/constants.go).
+var resourceTypeDisplayNames = map[string]string{
+	"ROLE":         "Role",
+	"GROUP":        "Group",
+	"LICENSE":      "License",
+	"PROJECT":      "Project",
+	"CATALOG":      "Access Profile",
+	"CUSTOM":       "Custom",
+	"VAULT":        "Vault",
+	"PROFILE_TYPE": "Profile Type",
+}
+
 // ResolveResourceType maps a user-provided type string to (ResourceType enum, display name).
 // Known enum names map directly. Anything else uses CUSTOM with the user's string as the display name.
 func ResolveResourceType(typeStr string) (shared.ResourceType, string) {
 	normalized := strings.ToUpper(strings.ReplaceAll(strings.ReplaceAll(typeStr, "-", "_"), " ", "_"))
 	if rt, ok := resourceTypeMap[normalized]; ok {
-		return rt, strings.ToUpper(normalized[:1]) + strings.ToLower(normalized[1:])
+		return rt, resourceTypeDisplayNames[normalized]
 	}
 	return shared.ResourceTypeCustom, typeStr
 }

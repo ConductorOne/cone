@@ -2,6 +2,7 @@ package client
 
 import (
 	"context"
+	"strings"
 
 	"github.com/conductorone/conductorone-sdk-go/pkg/models/operations"
 	"github.com/conductorone/conductorone-sdk-go/pkg/models/shared"
@@ -180,4 +181,27 @@ func (c *client) UpdateTaskRequestData(ctx context.Context, taskID string, reque
 		return nil, err
 	}
 	return resp.TaskServiceActionResponse, nil
+}
+
+// IsAWSPermissionSet checks if an entitlement is an AWS SSO permission set.
+func IsAWSPermissionSet(entitlement *shared.AppEntitlement, resourceType *shared.AppResourceType) bool {
+	if entitlement == nil || resourceType == nil {
+		return false
+	}
+
+	if resourceType.DisplayName != nil {
+		if strings.Contains(strings.ToLower(*resourceType.DisplayName), "aws permission set") {
+			return true
+		}
+	}
+
+	if entitlement.SourceConnectorIds != nil {
+		for _, value := range entitlement.SourceConnectorIds {
+			if strings.Contains(value, "arn:aws:sso:::permissionSet/") {
+				return true
+			}
+		}
+	}
+
+	return false
 }

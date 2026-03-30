@@ -55,7 +55,7 @@ func HandleErrors(ctx context.Context, v *viper.Viper, input error) error {
 		return input
 	}
 	outputType := v.GetString("output")
-	if outputType != "json" && outputType != output.JSONPretty {
+	if outputType != output.JSON && outputType != output.JSONPretty {
 		return input
 	}
 	var jsonError []byte

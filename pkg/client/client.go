@@ -190,6 +190,11 @@ type C1Client interface {
 	ListAppUserCredentials(ctx context.Context, appID string, appUserID string) ([]shared.AppUserCredential, error)
 	ListPolicies(ctx context.Context) ([]shared.Policy, error)
 	ListEntitlements(ctx context.Context, appId string) ([]shared.AppEntitlement, error)
+	SearchApps(ctx context.Context, query string) ([]shared.App, error)
+	ResolveAppByNameOrID(ctx context.Context, appIDOrName string) (*shared.App, error)
+	CreateManuallyManagedResourceType(ctx context.Context, appID string, resourceType shared.ResourceType, displayName string) (*shared.AppResourceType, error)
+	CreateManuallyManagedResource(ctx context.Context, appID string, resourceTypeID string, displayName string, description string) (*shared.AppResource, error)
+	CreateAppEntitlement(ctx context.Context, appID string, resourceTypeID string, resourceID string, displayName string, slug string) (*shared.AppEntitlement, error)
 	UpdateEntitlement(ctx context.Context, appID, entitlementID string, req *shared.UpdateAppEntitlementRequest) error
 }
 

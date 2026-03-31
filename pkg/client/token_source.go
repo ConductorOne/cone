@@ -152,7 +152,7 @@ func (c *c1TokenSource) Token() (*oauth2.Token, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer resp.Body.Close()
+	defer resp.Body.Close() //nolint:errcheck // best-effort close
 
 	if resp.StatusCode != http.StatusOK {
 		return nil, status.Errorf(codes.Unauthenticated, "failed to get token: %s", resp.Status)

@@ -37,6 +37,8 @@ linters:
   settings:
     exhaustive:
       default-signifies-exhaustive: true
+    goconst:
+      min-occurrences: 5
     gocritic:
       settings:
         underef:

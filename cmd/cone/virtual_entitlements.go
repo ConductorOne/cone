@@ -109,7 +109,7 @@ func virtualEntitlementsCreateRun(cmd *cobra.Command, args []string) error {
 
 	var resources []virtualResourceYAML
 	if fromFile != "" {
-		data, err := os.ReadFile(fromFile)
+		data, err := os.ReadFile(fromFile) //nolint:gosec // path from CLI flag
 		if err != nil {
 			return fmt.Errorf("reading file %s: %w", fromFile, err)
 		}

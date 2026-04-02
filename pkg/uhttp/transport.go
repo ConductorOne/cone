@@ -175,6 +175,19 @@ func (uat *debugTripper) RoundTrip(req *http.Request) (*http.Response, error) {
 	return resp, nil
 }
 
+type cacheControlTripper struct {
+	next http.RoundTripper
+}
+
+func (cct *cacheControlTripper) RoundTrip(req *http.Request) (*http.Response, error) {
+	if req.Method == http.MethodPost {
+		req.Header.Set("Cache-Control", "no-store, no-cache, must-revalidate")
+		req.Header.Set("Pragma", "no-cache")
+		req.Header.Set("Expires", "0")
+	}
+	return cct.next.RoundTrip(req)
+}
+
 type tokenSourceTripper struct {
 	next        http.RoundTripper
 	tokenSource oauth2.TokenSource
@@ -215,6 +228,7 @@ func (t *Transport) make(ctx context.Context) (http.RoundTripper, error) {
 	var rv http.RoundTripper = baseTransport
 	t.userAgent = fmt.Sprintf("%s cone", t.userAgent)
 	rv = &debugTripper{next: rv, debug: t.debug}
+	rv = &cacheControlTripper{next: rv}
 	rv = &userAgentTripper{next: rv, userAgent: t.userAgent}
 	rv = &tokenSourceTripper{next: rv, tokenSource: t.tokenSource}
 	rv = &requestSourceTripper{next: rv, requestSource: t.requestSource}

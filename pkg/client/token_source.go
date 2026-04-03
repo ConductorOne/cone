@@ -148,7 +148,6 @@ func (c *c1TokenSource) Token() (*oauth2.Token, error) {
 	}
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 	resp, err := c.httpClient.Do(req)
-
 	if err != nil {
 		return nil, err
 	}

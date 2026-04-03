@@ -162,8 +162,10 @@ func awsSetupRun(cmd *cobra.Command, args []string) error {
 			continue
 		}
 
+		appID := client.StringFromPtr(ent.Entitlement.AppID)
+		entID := client.StringFromPtr(ent.Entitlement.ID)
 		appResource := client.GetExpanded[shared.AppResource](ent, client.ExpandedAppResource)
-		profileName, err := createAWSProfile(&sdkEnt, appResource, ssoURL, ssoRegion, defaultRegion)
+		profileName, err := createAWSProfile(&sdkEnt, appResource, appID, entID, ssoURL, ssoRegion, defaultRegion)
 		if err != nil {
 			pterm.Warning.Printf("Skipping %s: %v\n", client.StringFromPtr(ent.Entitlement.DisplayName), err)
 			skipped++
@@ -187,7 +189,7 @@ func awsSetupRun(cmd *cobra.Command, args []string) error {
 
 // createAWSProfile writes a single profile to ~/.aws/config.
 // Returns the profile name if created, empty string if it already exists.
-func createAWSProfile(entitlement *shared.AppEntitlement, resource *shared.AppResource, ssoURL string, ssoRegion string, defaultRegion string) (string, error) {
+func createAWSProfile(entitlement *shared.AppEntitlement, resource *shared.AppResource, appID string, entitlementID string, ssoURL string, ssoRegion string, defaultRegion string) (string, error) {
 	if entitlement == nil {
 		return "", fmt.Errorf("entitlement is nil")
 	}
@@ -221,7 +223,7 @@ func createAWSProfile(entitlement *shared.AppEntitlement, resource *shared.AppRe
 	}
 
 	configPath := filepath.Join(awsConfigDir, "config")
-	configContent, err := os.ReadFile(configPath) //nolint:gosec // path from known config dir
+	configContent, err := os.ReadFile(configPath) //nolint:gosec // trusted path ~/.aws/config
 	if err != nil && !os.IsNotExist(err) {
 		return "", fmt.Errorf("failed to read AWS config: %w", err)
 	}
@@ -238,6 +240,8 @@ func createAWSProfile(entitlement *shared.AppEntitlement, resource *shared.AppRe
 	newConfig := fmt.Sprintf(`
 [profile %s]
 credential_process = cone aws credentials "%s"
+cone_app_id = %s
+cone_entitlement_id = %s
 cone_sso_account_id = %s
 cone_sso_role_name = %s
 cone_sso_region = %s
@@ -246,7 +250,7 @@ cone_sso_registration_scopes = sso:account:access
 sso_session = cone-sso
 region = %s
 output = json
-`, profileName, profileName, accountID, roleName, ssoRegion, ssoURL, defaultRegion)
+`, profileName, profileName, appID, entitlementID, accountID, roleName, ssoRegion, ssoURL, defaultRegion)
 
 	if !ssoSessionExists {
 		newConfig += fmt.Sprintf(`
@@ -308,23 +312,42 @@ func awsCredentialsRun(cmd *cobra.Command, args []string) error {
 
 	profileName := args[0]
 
-	accessResult, err := checkC1Access(ctx, c, profileName)
+	// Read entitlement IDs from the AWS profile config.
+	awsConfigDir := filepath.Join(os.Getenv("HOME"), ".aws")
+	configPath := filepath.Join(awsConfigDir, "config")
+	configContent, err := os.ReadFile(configPath) //nolint:gosec // trusted path ~/.aws/config
+	if err != nil {
+		return fmt.Errorf("failed to read AWS config: %w", err)
+	}
+	profileConfig := extractProfileConfig(string(configContent), fmt.Sprintf("[profile %s]", profileName))
+
+	appID := extractProfileValue(profileConfig, "cone_app_id")
+	entitlementID := extractProfileValue(profileConfig, "cone_entitlement_id")
+	if appID == "" || entitlementID == "" {
+		return fmt.Errorf("profile %q is missing cone_app_id or cone_entitlement_id — re-run 'cone aws setup'", profileName)
+	}
+
+	accessResult, err := checkC1Access(ctx, c, appID, entitlementID)
 	if err != nil {
 		return fmt.Errorf("failed to check access: %w", err)
 	}
 
 	if !accessResult.hasAccess {
-		if accessResult.appID == "" || accessResult.entitlementID == "" {
-			return fmt.Errorf("no entitlement found matching profile %q", profileName)
+		// Check if the entitlement requires a request form — if so, the user must use cone get interactively.
+		hasForm, err := c.HasRequestForm(ctx, appID, entitlementID)
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "Warning: could not check for request form: %v\n", err)
+		}
+		if hasForm {
+			return fmt.Errorf("no active grant for %q. This entitlement requires a request form — request access with:\n  cone get --app-id %s --entitlement-id %s", profileName, appID, entitlementID)
 		}
 
 		// Fetch the entitlement to get its max grant duration.
-		entitlement, err := c.GetEntitlement(ctx, accessResult.appID, accessResult.entitlementID)
+		entitlement, err := c.GetEntitlement(ctx, appID, entitlementID)
 		if err != nil {
 			return fmt.Errorf("failed to get entitlement details: %w", err)
 		}
 
-		// Use the entitlement's max duration if set, otherwise leave empty (unlimited).
 		duration := ""
 		if entitlement.DurationGrant != nil {
 			duration = *entitlement.DurationGrant
@@ -334,24 +357,41 @@ func awsCredentialsRun(cmd *cobra.Command, args []string) error {
 
 		grantResp, err := c.CreateGrantTask(
 			ctx,
-			accessResult.appID,
-			accessResult.entitlementID,
+			appID,
+			entitlementID,
 			accessResult.userID,
 			"", // appUserId
 			"Auto-requested via cone aws credentials", // justification
-			duration, // use entitlement's max duration
-			false,    // emergencyAccess
-			nil,      // requestData
+			duration,
+			false, // emergencyAccess
+			nil,   // requestData
 		)
 		if err != nil {
+			// Handle duplicate task — extract the existing task ID from the error.
+			if strings.Contains(err.Error(), "duplicate ticket found") {
+				existingTaskID := extractDuplicateTaskID(err.Error())
+				if existingTaskID != "" {
+					dupNum := existingTaskID
+					if dupTask, fetchErr := c.GetTask(ctx, existingTaskID); fetchErr == nil {
+						dupNum = client.StringFromIntPtr(dupTask.TaskView.Task.NumericID)
+					}
+					fmt.Fprintf(os.Stderr, "A pending request already exists for %q.\n", profileName)
+					fmt.Fprintf(os.Stderr, "Check status: cone task get %s\n", dupNum)
+					fmt.Fprintf(os.Stderr, "Once resolved, retry the command.\n")
+					return fmt.Errorf("duplicate request (task: %s)", dupNum)
+				}
+				return fmt.Errorf("a pending request already exists for %q. Check ConductorOne for status, then retry", profileName)
+			}
 			return fmt.Errorf("failed to submit access request: %w", err)
 		}
 
-		taskID := client.StringFromPtr(grantResp.TaskView.Task.ID)
-		fmt.Fprintf(os.Stderr, "Access request submitted (task: %s). Checking for auto-approval...\n", taskID)
+		task := grantResp.TaskView.Task
+		taskID := client.StringFromPtr(task.ID)
+		taskNum := client.StringFromIntPtr(task.NumericID)
+		fmt.Fprintf(os.Stderr, "Access request submitted (task: %s)\n", taskNum)
 
-		// Poll for approval.
-		granted := false
+		// Poll until the task closes, requires human action, or we time out.
+		var outcome string
 		deadline := time.Now().Add(autoRequestPollTimeout)
 		for time.Now().Before(deadline) {
 			time.Sleep(autoRequestPollInterval)
@@ -361,42 +401,52 @@ func awsCredentialsRun(cmd *cobra.Command, args []string) error {
 			if err != nil {
 				break
 			}
-			task := taskResp.TaskView.Task
-			if task.State == nil {
-				continue
-			}
-			if *task.State != shared.TaskStateTaskStateClosed {
-				continue
-			}
-			// Task is closed — check if it was granted.
-			if task.TaskType.TaskTypeGrant != nil && task.TaskType.TaskTypeGrant.Outcome != nil {
-				if *task.TaskType.TaskTypeGrant.Outcome == shared.TaskTypeGrantOutcomeGrantOutcomeGranted {
-					granted = true
+			t := taskResp.TaskView.Task
+
+			// Check the current step — if it needs human action, stop polling.
+			if t.PolicyInstance != nil && t.PolicyInstance.PolicyStepInstance != nil {
+				step := t.PolicyInstance.PolicyStepInstance
+				switch {
+				case step.ApprovalInstance != nil:
+					fmt.Fprintf(os.Stderr, "\n")
+					fmt.Fprintf(os.Stderr, "Request submitted for %q but requires approval.\n", profileName)
+					fmt.Fprintf(os.Stderr, "Check status: cone task get %s\n", taskNum)
+					fmt.Fprintf(os.Stderr, "Once approved, retry the command.\n")
+					return fmt.Errorf("awaiting approval")
+				case step.FormInstance != nil:
+					fmt.Fprintf(os.Stderr, "\n")
+					return fmt.Errorf("request submitted for %q but requires form input. Complete it with:\n  cone get --app-id %s --entitlement-id %s", profileName, appID, entitlementID)
 				}
+			}
+
+			// Check if closed.
+			if t.State == nil || *t.State != shared.TaskStateTaskStateClosed {
+				continue
+			}
+			if t.TaskType.TaskTypeGrant != nil && t.TaskType.TaskTypeGrant.Outcome != nil {
+				outcome = string(*t.TaskType.TaskTypeGrant.Outcome)
 			}
 			break
 		}
 		fmt.Fprintf(os.Stderr, "\n")
 
-		if !granted {
-			fmt.Fprintf(os.Stderr, "Request is pending approval. Retry the command after it's approved.\n")
-			return fmt.Errorf("access request pending for %q", profileName)
+		switch outcome {
+		case string(shared.TaskTypeGrantOutcomeGrantOutcomeGranted):
+			fmt.Fprintf(os.Stderr, "Access granted!\n")
+		case string(shared.TaskTypeGrantOutcomeGrantOutcomeDenied):
+			return fmt.Errorf("access request for %q was denied", profileName)
+		case string(shared.TaskTypeGrantOutcomeGrantOutcomeError):
+			return fmt.Errorf("access request for %q encountered an error. Check ConductorOne for details", profileName)
+		case string(shared.TaskTypeGrantOutcomeGrantOutcomeCancelled):
+			return fmt.Errorf("access request for %q was cancelled", profileName)
+		case "":
+			return fmt.Errorf("request for %q is still processing. Retry the command shortly", profileName)
+		default:
+			return fmt.Errorf("access request for %q completed with outcome: %s", profileName, outcome)
 		}
-
-		fmt.Fprintf(os.Stderr, "Access granted!\n")
 	}
 
-	// We have access — fetch credentials.
-	awsConfigDir := filepath.Join(os.Getenv("HOME"), ".aws")
-	configPath := filepath.Join(awsConfigDir, "config")
-
-	configContent, err := os.ReadFile(configPath) //nolint:gosec // path from known config dir
-	if err != nil {
-		return fmt.Errorf("failed to read AWS config: %w", err)
-	}
-
-	profileConfig := extractProfileConfig(string(configContent), fmt.Sprintf("[profile %s]", profileName))
-
+	// We have access — fetch credentials using profile config already read above.
 	accountID := extractProfileValue(profileConfig, "cone_sso_account_id")
 	roleName := extractProfileValue(profileConfig, "cone_sso_role_name")
 	ssoStartURL := extractProfileValue(profileConfig, "cone_sso_start_url")
@@ -409,9 +459,25 @@ func awsCredentialsRun(cmd *cobra.Command, args []string) error {
 		return fmt.Errorf("missing required SSO configuration for profile %s", profileName)
 	}
 
-	creds, err := getTemporaryCredentials(accountID, roleName, ssoStartURL, ssoRegion)
-	if err != nil {
-		return err
+	creds, credErr := getTemporaryCredentials(ctx, accountID, roleName, ssoStartURL, ssoRegion)
+
+	// If credentials fail with a Forbidden/No access error, the AWS permission may still be provisioning.
+	// Retry for up to 60 seconds.
+	if credErr != nil && (strings.Contains(credErr.Error(), "ForbiddenException") || strings.Contains(credErr.Error(), "No access")) {
+		fmt.Fprintf(os.Stderr, "Waiting for AWS permission to propagate...\n")
+		credDeadline := time.Now().Add(60 * time.Second)
+		for time.Now().Before(credDeadline) {
+			time.Sleep(autoRequestPollInterval)
+			fmt.Fprintf(os.Stderr, ".")
+			creds, credErr = getTemporaryCredentials(ctx, accountID, roleName, ssoStartURL, ssoRegion)
+			if credErr == nil {
+				break
+			}
+		}
+		fmt.Fprintf(os.Stderr, "\n")
+	}
+	if credErr != nil {
+		return credErr
 	}
 
 	jsonOutput, err := json.Marshal(creds)
@@ -419,11 +485,33 @@ func awsCredentialsRun(cmd *cobra.Command, args []string) error {
 		return fmt.Errorf("failed to marshal credentials: %w", err)
 	}
 
-	fmt.Fprintln(os.Stdout, string(jsonOutput)) //nolint:errcheck // writing to stdout
-	return nil
+	_, err = fmt.Fprintln(os.Stdout, string(jsonOutput))
+	return err
 }
 
 // --- helpers ---
+
+// extractDuplicateTaskID parses the task ID from a C1 "duplicate ticket found" error.
+// The error JSON contains: "details":[{"@type":"...TaskRef", "id":"<task-id>"}].
+func extractDuplicateTaskID(errMsg string) string {
+	// Find the JSON body in the error message.
+	jsonStart := strings.Index(errMsg, "{")
+	if jsonStart == -1 {
+		return ""
+	}
+	var errBody struct {
+		Details []struct {
+			ID string `json:"id"`
+		} `json:"details"`
+	}
+	if err := json.Unmarshal([]byte(errMsg[jsonStart:]), &errBody); err != nil {
+		return ""
+	}
+	if len(errBody.Details) > 0 && errBody.Details[0].ID != "" {
+		return errBody.Details[0].ID
+	}
+	return ""
+}
 
 func extractProfileConfig(config, profileSection string) string {
 	lines := strings.Split(config, "\n")
@@ -469,7 +557,7 @@ func getSSOToken(ssoStartURL string) (string, error) {
 		if file.IsDir() || !strings.HasSuffix(file.Name(), ".json") {
 			continue
 		}
-		content, err := os.ReadFile(filepath.Join(cacheDir, file.Name())) //nolint:gosec // path from known cache dir
+		content, err := os.ReadFile(filepath.Join(cacheDir, file.Name())) //nolint:gosec // reading AWS SSO cache files
 		if err != nil {
 			continue
 		}
@@ -498,17 +586,17 @@ func requireAWSCLI() error {
 	return nil
 }
 
-func ssoLogin() error {
+func ssoLogin(ctx context.Context) error {
 	fmt.Fprintf(os.Stderr, "AWS SSO session expired. Logging in...\n")
-	loginCmd := exec.Command("aws", "sso", "login", "--sso-session", "cone-sso")
+	loginCmd := exec.CommandContext(ctx, "aws", "sso", "login", "--sso-session", "cone-sso")
 	loginCmd.Stdin = os.Stdin
 	loginCmd.Stdout = os.Stderr
 	loginCmd.Stderr = os.Stderr
 	return loginCmd.Run()
 }
 
-func getRoleCredentials(token, accountID, roleName, ssoRegion string) ([]byte, error) {
-	cmd := exec.Command("aws", "sso", "get-role-credentials",
+func getRoleCredentials(ctx context.Context, token, accountID, roleName, ssoRegion string) ([]byte, error) {
+	cmd := exec.CommandContext(ctx, "aws", "sso", "get-role-credentials",
 		"--access-token", token,
 		"--account-id", accountID,
 		"--role-name", roleName,
@@ -525,14 +613,14 @@ func getRoleCredentials(token, accountID, roleName, ssoRegion string) ([]byte, e
 	return stdout.Bytes(), nil
 }
 
-func getTemporaryCredentials(accountID, roleName, ssoStartURL, ssoRegion string) (*AWSCredentials, error) {
+func getTemporaryCredentials(ctx context.Context, accountID, roleName, ssoStartURL, ssoRegion string) (*AWSCredentials, error) {
 	if err := requireAWSCLI(); err != nil {
 		return nil, err
 	}
 
 	token, err := getSSOToken(ssoStartURL)
 	if err != nil {
-		if loginErr := ssoLogin(); loginErr != nil {
+		if loginErr := ssoLogin(ctx); loginErr != nil {
 			return nil, fmt.Errorf("SSO login failed: %w", loginErr)
 		}
 		token, err = getSSOToken(ssoStartURL)
@@ -541,18 +629,18 @@ func getTemporaryCredentials(accountID, roleName, ssoStartURL, ssoRegion string)
 		}
 	}
 
-	output, err := getRoleCredentials(token, accountID, roleName, ssoRegion)
+	output, err := getRoleCredentials(ctx, token, accountID, roleName, ssoRegion)
 	if err != nil {
 		// Token might be cached but invalid — retry with fresh login.
 		if strings.Contains(err.Error(), "UnauthorizedException") || strings.Contains(err.Error(), "Session token not found") {
-			if loginErr := ssoLogin(); loginErr != nil {
+			if loginErr := ssoLogin(ctx); loginErr != nil {
 				return nil, fmt.Errorf("SSO login failed: %w", loginErr)
 			}
 			token, err = getSSOToken(ssoStartURL)
 			if err != nil {
 				return nil, fmt.Errorf("failed to get SSO token after login: %w", err)
 			}
-			output, err = getRoleCredentials(token, accountID, roleName, ssoRegion)
+			output, err = getRoleCredentials(ctx, token, accountID, roleName, ssoRegion)
 			if err != nil {
 				return nil, fmt.Errorf("failed to get credentials after re-login: %w", err)
 			}
@@ -583,52 +671,30 @@ func getTemporaryCredentials(accountID, roleName, ssoStartURL, ssoRegion string)
 }
 
 type accessCheckResult struct {
-	hasAccess     bool
-	appID         string
-	entitlementID string
-	userID        string
+	hasAccess bool
+	userID    string
 }
 
-func checkC1Access(ctx context.Context, c client.C1Client, profileName string) (*accessCheckResult, error) {
+func checkC1Access(ctx context.Context, c client.C1Client, appID string, entitlementID string) (*accessCheckResult, error) {
 	userInfo, err := c.AuthIntrospect(ctx)
 	if err != nil {
 		return nil, err
 	}
 	userID := client.StringFromPtr(userInfo.UserID)
 
-	entitlements, err := c.SearchEntitlements(ctx, &client.SearchEntitlementsFilter{
-		EntitlementAlias: profileName,
-		GrantedStatus:    shared.GrantedStatusAll,
-	})
-	if err != nil {
-		return nil, err
-	}
-
 	result := &accessCheckResult{
 		userID: userID,
 	}
 
-	for _, ent := range entitlements {
-		appID := client.StringFromPtr(ent.Entitlement.AppID)
-		entID := client.StringFromPtr(ent.Entitlement.ID)
+	grants, err := c.GetGrantsForIdentity(ctx, appID, entitlementID, userID)
+	if err != nil {
+		return result, err
+	}
 
-		// Track the first matching entitlement for request submission.
-		if result.appID == "" {
-			result.appID = appID
-			result.entitlementID = entID
-		}
-
-		grants, err := c.GetGrantsForIdentity(ctx, appID, entID, userID)
-		if err != nil {
-			continue
-		}
-		for _, grant := range grants {
-			if grant.CreatedAt != nil && grant.DeletedAt == nil {
-				result.hasAccess = true
-				result.appID = appID
-				result.entitlementID = entID
-				return result, nil
-			}
+	for _, grant := range grants {
+		if grant.CreatedAt != nil && grant.DeletedAt == nil {
+			result.hasAccess = true
+			return result, nil
 		}
 	}
 

@@ -196,6 +196,7 @@ type C1Client interface {
 	CreateManuallyManagedResource(ctx context.Context, appID string, resourceTypeID string, displayName string, description string) (*shared.AppResource, error)
 	CreateAppEntitlement(ctx context.Context, appID string, resourceTypeID string, resourceID string, displayName string, slug string) (*shared.AppEntitlement, error)
 	UpdateEntitlement(ctx context.Context, appID, entitlementID string, req *shared.UpdateAppEntitlementRequest) error
+	HasRequestForm(ctx context.Context, appID string, entitlementID string) (bool, error)
 }
 
 func (c *client) BaseURL() string {

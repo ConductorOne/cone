@@ -3,6 +3,7 @@ package client
 import (
 	"context"
 	"errors"
+	"net/http"
 
 	"github.com/conductorone/conductorone-sdk-go/pkg/models/operations"
 	"github.com/conductorone/conductorone-sdk-go/pkg/models/shared"
@@ -220,6 +221,32 @@ func (c *client) ListEntitlements(ctx context.Context, appId string) ([]shared.A
 	}
 
 	return entitlements, nil
+}
+
+// HasRequestForm checks if an entitlement has a request form (custom fields) bound to it.
+func (c *client) HasRequestForm(ctx context.Context, appID string, entitlementID string) (bool, error) {
+	resp, err := c.sdk.RequestSchema.FindBindingForAppEntitlement(
+		ctx,
+		&shared.RequestSchemaServiceFindBindingForAppEntitlementRequest{
+			AppEntitlementRef: &shared.AppEntitlementRef{
+				AppID: &appID,
+				ID:    &entitlementID,
+			},
+		},
+	)
+	if err != nil {
+		return false, err
+	}
+	// 404 means no binding — no form.
+	if resp.RawResponse.StatusCode == http.StatusNotFound {
+		return false, nil
+	}
+	if httpErr := NewHTTPError(resp.RawResponse); httpErr != nil {
+		return false, httpErr
+	}
+
+	result := resp.RequestSchemaServiceFindBindingForAppEntitlementResponse
+	return result != nil && result.RequestSchemaID != nil && *result.RequestSchemaID != "", nil
 }
 
 func (c *client) UpdateEntitlement(ctx context.Context, appID, entitlementID string, req *shared.UpdateAppEntitlementRequest) error {

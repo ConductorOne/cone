@@ -221,7 +221,7 @@ func createAWSProfile(entitlement *shared.AppEntitlement, resource *shared.AppRe
 	}
 
 	configPath := filepath.Join(awsConfigDir, "config")
-	configContent, err := os.ReadFile(configPath)
+	configContent, err := os.ReadFile(configPath) //nolint:gosec // path from known config dir
 	if err != nil && !os.IsNotExist(err) {
 		return "", fmt.Errorf("failed to read AWS config: %w", err)
 	}
@@ -390,7 +390,7 @@ func awsCredentialsRun(cmd *cobra.Command, args []string) error {
 	awsConfigDir := filepath.Join(os.Getenv("HOME"), ".aws")
 	configPath := filepath.Join(awsConfigDir, "config")
 
-	configContent, err := os.ReadFile(configPath)
+	configContent, err := os.ReadFile(configPath) //nolint:gosec // path from known config dir
 	if err != nil {
 		return fmt.Errorf("failed to read AWS config: %w", err)
 	}
@@ -419,7 +419,7 @@ func awsCredentialsRun(cmd *cobra.Command, args []string) error {
 		return fmt.Errorf("failed to marshal credentials: %w", err)
 	}
 
-	fmt.Fprintln(os.Stdout, string(jsonOutput))
+	fmt.Fprintln(os.Stdout, string(jsonOutput)) //nolint:errcheck // writing to stdout
 	return nil
 }
 
@@ -469,7 +469,7 @@ func getSSOToken(ssoStartURL string) (string, error) {
 		if file.IsDir() || !strings.HasSuffix(file.Name(), ".json") {
 			continue
 		}
-		content, err := os.ReadFile(filepath.Join(cacheDir, file.Name()))
+		content, err := os.ReadFile(filepath.Join(cacheDir, file.Name())) //nolint:gosec // path from known cache dir
 		if err != nil {
 			continue
 		}

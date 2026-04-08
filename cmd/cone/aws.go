@@ -194,6 +194,9 @@ func createAWSProfile(entitlement *shared.AppEntitlement, resource *shared.AppRe
 		return "", fmt.Errorf("entitlement is nil")
 	}
 
+	appID = sanitizeINIValue(appID)
+	entitlementID = sanitizeINIValue(entitlementID)
+
 	var accountID string
 	for _, value := range entitlement.SourceConnectorIds {
 		parts := strings.Split(value, "|")
@@ -202,6 +205,7 @@ func createAWSProfile(entitlement *shared.AppEntitlement, resource *shared.AppRe
 			break
 		}
 	}
+	accountID = sanitizeINIValue(accountID)
 	if accountID == "" {
 		return "", fmt.Errorf("could not extract AWS account ID from sourceConnectorIds")
 	}
@@ -209,13 +213,13 @@ func createAWSProfile(entitlement *shared.AppEntitlement, resource *shared.AppRe
 	if entitlement.DisplayName == nil {
 		return "", fmt.Errorf("entitlement has no display name")
 	}
-	roleName := strings.Split(*entitlement.DisplayName, " ")[0]
+	roleName := sanitizeINIValue(strings.Split(*entitlement.DisplayName, " ")[0])
 
 	accountName := "aws"
 	if resource != nil && resource.DisplayName != nil {
-		accountName = strings.ToLower(strings.ReplaceAll(*resource.DisplayName, " ", "-"))
+		accountName = sanitizeINIValue(strings.ToLower(strings.ReplaceAll(*resource.DisplayName, " ", "-")))
 	}
-	profileName := fmt.Sprintf("%s-%s", accountName, strings.ToLower(roleName))
+	profileName := sanitizeINIValue(fmt.Sprintf("%s-%s", accountName, strings.ToLower(roleName)))
 
 	awsConfigDir := filepath.Join(os.Getenv("HOME"), ".aws")
 	if err := os.MkdirAll(awsConfigDir, 0700); err != nil {
@@ -511,6 +515,22 @@ func extractDuplicateTaskID(errMsg string) string {
 		return errBody.Details[0].ID
 	}
 	return ""
+}
+
+// sanitizeINIValue strips characters that could break INI structure or enable
+// injection when API-derived values are interpolated into ~/.aws/config.
+func sanitizeINIValue(s string) string {
+	var b strings.Builder
+	b.Grow(len(s))
+	for _, r := range s {
+		switch r {
+		case '\n', '\r', '\x00', '[', ']', '"', '\\':
+			continue
+		default:
+			b.WriteRune(r)
+		}
+	}
+	return b.String()
 }
 
 func extractProfileConfig(config, profileSection string) string {

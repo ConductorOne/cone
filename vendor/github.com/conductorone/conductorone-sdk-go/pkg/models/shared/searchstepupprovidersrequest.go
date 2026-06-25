@@ -36,7 +36,7 @@ type SearchStepUpProvidersRequest struct {
 	ProviderType *ProviderType `json:"providerType,omitempty"`
 	// Filter by name (partial match)
 	Query *string `json:"query,omitempty"`
-	// The refs field.
+	// Filter to specific providers by their references.
 	Refs []StepUpProviderRef `json:"refs,omitempty"`
 }
 

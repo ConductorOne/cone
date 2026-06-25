@@ -5,3 +5,6 @@ package shared
 // The OAuth2Field message.
 type OAuth2Field struct {
 }
+
+// #region class-body-oauth2field
+// #endregion class-body-oauth2field

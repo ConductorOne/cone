@@ -2,12 +2,27 @@
 
 package shared
 
+import (
+	"github.com/conductorone/conductorone-sdk-go/pkg/utils"
+)
+
 // The WebhookSourceWorkflowStep message.
 type WebhookSourceWorkflowStep struct {
 	// The workflowExecutionId field.
 	WorkflowExecutionID *int64 `integer:"string" json:"workflowExecutionId,omitempty"`
 	// The workflowStepId field.
 	WorkflowStepID *string `json:"workflowStepId,omitempty"`
+}
+
+func (w WebhookSourceWorkflowStep) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(w, "", false)
+}
+
+func (w *WebhookSourceWorkflowStep) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &w, "", false, nil); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (w *WebhookSourceWorkflowStep) GetWorkflowExecutionID() *int64 {

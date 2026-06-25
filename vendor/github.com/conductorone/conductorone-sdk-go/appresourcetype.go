@@ -31,7 +31,7 @@ func newAppResourceType(rootSDK *ConductoroneAPI, sdkConfig config.SDKConfigurat
 }
 
 // CreateManuallyManagedResourceType - Create Manually Managed Resource Type
-// Invokes the c1.api.app.v1.AppResourceTypeService.CreateManuallyManagedResourceType method.
+// Create a manually managed resource type that classifies resources within an app.
 func (s *AppResourceType) CreateManuallyManagedResourceType(ctx context.Context, request operations.C1APIAppV1AppResourceTypeServiceCreateManuallyManagedResourceTypeRequest, opts ...operations.Option) (*operations.C1APIAppV1AppResourceTypeServiceCreateManuallyManagedResourceTypeResponse, error) {
 	o := operations.Options{}
 	supportedOptions := []string{
@@ -243,7 +243,7 @@ func (s *AppResourceType) CreateManuallyManagedResourceType(ctx context.Context,
 }
 
 // DeleteManuallyManagedResourceType - Delete Manually Managed Resource Type
-// Invokes the c1.api.app.v1.AppResourceTypeService.DeleteManuallyManagedResourceType method.
+// Delete a manually managed resource type and all its associated resources from an app.
 func (s *AppResourceType) DeleteManuallyManagedResourceType(ctx context.Context, request operations.C1APIAppV1AppResourceTypeServiceDeleteManuallyManagedResourceTypeRequest, opts ...operations.Option) (*operations.C1APIAppV1AppResourceTypeServiceDeleteManuallyManagedResourceTypeResponse, error) {
 	o := operations.Options{}
 	supportedOptions := []string{
@@ -869,7 +869,7 @@ func (s *AppResourceType) List(ctx context.Context, request operations.C1APIAppV
 }
 
 // UpdateManuallyManagedResourceType - Update Manually Managed Resource Type
-// Invokes the c1.api.app.v1.AppResourceTypeService.UpdateManuallyManagedResourceType method.
+// Update a manually managed resource type's fields. Only the fields specified in the update mask are modified.
 func (s *AppResourceType) UpdateManuallyManagedResourceType(ctx context.Context, request operations.C1APIAppV1AppResourceTypeServiceUpdateManuallyManagedResourceTypeRequest, opts ...operations.Option) (*operations.C1APIAppV1AppResourceTypeServiceUpdateManuallyManagedResourceTypeResponse, error) {
 	o := operations.Options{}
 	supportedOptions := []string{

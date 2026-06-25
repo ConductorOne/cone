@@ -84,6 +84,7 @@ func runCli(ctx context.Context) int {
 	cliCmd.AddCommand(virtualEntitlementsCmd())
 	cliCmd.AddCommand(generateAliasCmd())
 	cliCmd.AddCommand(awsCmd())
+	cliCmd.AddCommand(secretCmd())
 
 	err = cliCmd.ExecuteContext(ctx)
 	if err != nil {

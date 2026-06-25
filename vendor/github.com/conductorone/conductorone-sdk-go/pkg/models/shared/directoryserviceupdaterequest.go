@@ -14,6 +14,8 @@ type DirectoryServiceUpdateRequest struct {
 	DirectoryAccountFilterCel *DirectoryAccountFilterCel `json:"celExpression,omitempty"`
 	// The fields to be included in the directory response.
 	DirectoryExpandMask *DirectoryExpandMask `json:"expandMask,omitempty"`
+	// DirectoryMergeConfig configures how AppUsers from this directory are matched to C1 Users.
+	DirectoryMergeConfig *DirectoryMergeConfig `json:"mergeConfig,omitempty"`
 }
 
 func (d *DirectoryServiceUpdateRequest) GetDirectoryAccountFilterAll() *DirectoryAccountFilterAll {
@@ -35,4 +37,11 @@ func (d *DirectoryServiceUpdateRequest) GetDirectoryExpandMask() *DirectoryExpan
 		return nil
 	}
 	return d.DirectoryExpandMask
+}
+
+func (d *DirectoryServiceUpdateRequest) GetDirectoryMergeConfig() *DirectoryMergeConfig {
+	if d == nil {
+		return nil
+	}
+	return d.DirectoryMergeConfig
 }

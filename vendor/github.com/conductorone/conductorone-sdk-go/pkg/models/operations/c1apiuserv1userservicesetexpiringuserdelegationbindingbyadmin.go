@@ -26,10 +26,13 @@ func (c *C1APIUserV1UserServiceSetExpiringUserDelegationBindingByAdminRequest) G
 	return c.UserID
 }
 
+// #region class-body-c1apiuserv1userservicesetexpiringuserdelegationbindingbyadminrequest
+// #endregion class-body-c1apiuserv1userservicesetexpiringuserdelegationbindingbyadminrequest
+
 type C1APIUserV1UserServiceSetExpiringUserDelegationBindingByAdminResponse struct {
 	// HTTP response content type for this operation
 	ContentType string
-	// Successful response
+	// SetExpiringUserDelegationBindingByAdminResponse is the response containing the created or updated delegation binding.
 	SetExpiringUserDelegationBindingByAdminResponse *shared.SetExpiringUserDelegationBindingByAdminResponse
 	// HTTP response status code for this operation
 	StatusCode int
@@ -64,3 +67,6 @@ func (c *C1APIUserV1UserServiceSetExpiringUserDelegationBindingByAdminResponse) 
 	}
 	return c.RawResponse
 }
+
+// #region class-body-c1apiuserv1userservicesetexpiringuserdelegationbindingbyadminresponse
+// #endregion class-body-c1apiuserv1userservicesetexpiringuserdelegationbindingbyadminresponse

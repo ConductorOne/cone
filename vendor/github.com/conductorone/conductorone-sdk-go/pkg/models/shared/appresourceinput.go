@@ -2,6 +2,10 @@
 
 package shared
 
+import (
+	"github.com/conductorone/conductorone-sdk-go/pkg/utils"
+)
+
 // AppResourceInput - The app resource message is a single resource that can have entitlements.
 //
 // This message contains a oneof named metadata. Only a single field of the following list may be set at a time:
@@ -9,6 +13,9 @@ package shared
 type AppResourceInput struct {
 	// The SecretTrait message.
 	SecretTrait *SecretTrait `json:"secretTrait,omitempty"`
+	// The access config ID for this resource. May be empty.
+	//  Must be one of the builtin access config IDs or empty.
+	AccessConfigID *string `json:"accessConfigId,omitempty"`
 	// The app that this resource belongs to.
 	AppID *string `json:"appId,omitempty"`
 	// The resource type that this resource is.
@@ -31,11 +38,29 @@ type AppResourceInput struct {
 	ParentAppResourceTypeID *string `json:"parentAppResourceTypeId,omitempty"`
 }
 
+func (a AppResourceInput) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(a, "", false)
+}
+
+func (a *AppResourceInput) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &a, "", false, nil); err != nil {
+		return err
+	}
+	return nil
+}
+
 func (a *AppResourceInput) GetSecretTrait() *SecretTrait {
 	if a == nil {
 		return nil
 	}
 	return a.SecretTrait
+}
+
+func (a *AppResourceInput) GetAccessConfigID() *string {
+	if a == nil {
+		return nil
+	}
+	return a.AccessConfigID
 }
 
 func (a *AppResourceInput) GetAppID() *string {

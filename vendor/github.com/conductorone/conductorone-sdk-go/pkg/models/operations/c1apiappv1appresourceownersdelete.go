@@ -42,6 +42,9 @@ func (c *C1APIAppV1AppResourceOwnersDeleteRequest) GetResourceTypeID() string {
 	return c.ResourceTypeID
 }
 
+// #region class-body-c1apiappv1appresourceownersdeleterequest
+// #endregion class-body-c1apiappv1appresourceownersdeleterequest
+
 type C1APIAppV1AppResourceOwnersDeleteResponse struct {
 	// HTTP response content type for this operation
 	ContentType string
@@ -80,3 +83,6 @@ func (c *C1APIAppV1AppResourceOwnersDeleteResponse) GetRawResponse() *http.Respo
 	}
 	return c.RawResponse
 }
+
+// #region class-body-c1apiappv1appresourceownersdeleteresponse
+// #endregion class-body-c1apiappv1appresourceownersdeleteresponse

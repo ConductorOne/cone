@@ -5,7 +5,6 @@ package shared
 // AutomationTrigger - Automation Triggers
 //
 // This message contains a oneof named kind. Only a single field of the following list may be set at a time:
-//   - manual
 //   - userProfileChange
 //   - appUserCreated
 //   - appUserUpdated
@@ -15,9 +14,9 @@ package shared
 //   - grantDeleted
 //   - webhook
 //   - schedule
-//   - form
 //   - scheduleAppUser
 //   - accessConflict
+//   - scheduleNoUser
 type AutomationTrigger struct {
 	// The AccessConflictTrigger message.
 	//
@@ -40,18 +39,17 @@ type AutomationTrigger struct {
 	//   - appIdCel
 	//
 	AppUserUpdatedTrigger *AppUserUpdatedTrigger `json:"appUserUpdated,omitempty"`
-	// The FormTrigger message.
-	FormTrigger *FormTrigger `json:"form,omitempty"`
 	// The GrantDeletedTrigger message.
 	GrantDeletedTrigger *GrantDeletedTrigger `json:"grantDeleted,omitempty"`
 	// The GrantFoundTrigger message.
 	GrantFoundTrigger *GrantFoundTrigger `json:"grantFound,omitempty"`
-	// The ManualAutomationTrigger message.
-	ManualAutomationTrigger *ManualAutomationTrigger `json:"manual,omitempty"`
 	// The ScheduleTrigger message.
 	ScheduleTrigger *ScheduleTrigger `json:"schedule,omitempty"`
 	// The ScheduleTriggerAppUser message.
 	ScheduleTriggerAppUser *ScheduleTriggerAppUser `json:"scheduleAppUser,omitempty"`
+	// ScheduleTriggerNoUser fires on a cron schedule with no subject user (e.g. reports, syncs, orchestration).
+	//  Minimum cron interval is enforced at 1 hour in validation.
+	ScheduleTriggerNoUser *ScheduleTriggerNoUser `json:"scheduleNoUser,omitempty"`
 	// The UsageBasedRevocationTrigger message.
 	//
 	// This message contains a oneof named cold_start_schedule. Only a single field of the following list may be set at a time:
@@ -68,6 +66,7 @@ type AutomationTrigger struct {
 	// This message contains a oneof named auth_config. Only a single field of the following list may be set at a time:
 	//   - jwt
 	//   - hmac
+	//   - capabilityUrl
 	//
 	WebhookAutomationTrigger *WebhookAutomationTrigger `json:"webhook,omitempty"`
 }
@@ -93,13 +92,6 @@ func (a *AutomationTrigger) GetAppUserUpdatedTrigger() *AppUserUpdatedTrigger {
 	return a.AppUserUpdatedTrigger
 }
 
-func (a *AutomationTrigger) GetFormTrigger() *FormTrigger {
-	if a == nil {
-		return nil
-	}
-	return a.FormTrigger
-}
-
 func (a *AutomationTrigger) GetGrantDeletedTrigger() *GrantDeletedTrigger {
 	if a == nil {
 		return nil
@@ -114,13 +106,6 @@ func (a *AutomationTrigger) GetGrantFoundTrigger() *GrantFoundTrigger {
 	return a.GrantFoundTrigger
 }
 
-func (a *AutomationTrigger) GetManualAutomationTrigger() *ManualAutomationTrigger {
-	if a == nil {
-		return nil
-	}
-	return a.ManualAutomationTrigger
-}
-
 func (a *AutomationTrigger) GetScheduleTrigger() *ScheduleTrigger {
 	if a == nil {
 		return nil
@@ -133,6 +118,13 @@ func (a *AutomationTrigger) GetScheduleTriggerAppUser() *ScheduleTriggerAppUser 
 		return nil
 	}
 	return a.ScheduleTriggerAppUser
+}
+
+func (a *AutomationTrigger) GetScheduleTriggerNoUser() *ScheduleTriggerNoUser {
+	if a == nil {
+		return nil
+	}
+	return a.ScheduleTriggerNoUser
 }
 
 func (a *AutomationTrigger) GetUsageBasedRevocationTrigger() *UsageBasedRevocationTrigger {

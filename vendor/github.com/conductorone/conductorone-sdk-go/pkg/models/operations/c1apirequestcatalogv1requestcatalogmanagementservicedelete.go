@@ -26,6 +26,9 @@ func (c *C1APIRequestcatalogV1RequestCatalogManagementServiceDeleteRequest) GetI
 	return c.ID
 }
 
+// #region class-body-c1apirequestcatalogv1requestcatalogmanagementservicedeleterequest
+// #endregion class-body-c1apirequestcatalogv1requestcatalogmanagementservicedeleterequest
+
 type C1APIRequestcatalogV1RequestCatalogManagementServiceDeleteResponse struct {
 	// HTTP response content type for this operation
 	ContentType string
@@ -64,3 +67,6 @@ func (c *C1APIRequestcatalogV1RequestCatalogManagementServiceDeleteResponse) Get
 	}
 	return c.RawResponse
 }
+
+// #region class-body-c1apirequestcatalogv1requestcatalogmanagementservicedeleteresponse
+// #endregion class-body-c1apirequestcatalogv1requestcatalogmanagementservicedeleteresponse

@@ -4,11 +4,23 @@ package operations
 
 import (
 	"github.com/conductorone/conductorone-sdk-go/pkg/models/shared"
+	"github.com/conductorone/conductorone-sdk-go/pkg/utils"
 	"net/http"
 )
 
 type C1APIAutomationsV1AutomationExecutionServiceGetAutomationExecutionRequest struct {
 	ID int64 `integer:"string" pathParam:"style=simple,explode=false,name=id"`
+}
+
+func (c C1APIAutomationsV1AutomationExecutionServiceGetAutomationExecutionRequest) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(c, "", false)
+}
+
+func (c *C1APIAutomationsV1AutomationExecutionServiceGetAutomationExecutionRequest) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &c, "", false, nil); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (c *C1APIAutomationsV1AutomationExecutionServiceGetAutomationExecutionRequest) GetID() int64 {
@@ -17,6 +29,9 @@ func (c *C1APIAutomationsV1AutomationExecutionServiceGetAutomationExecutionReque
 	}
 	return c.ID
 }
+
+// #region class-body-c1apiautomationsv1automationexecutionservicegetautomationexecutionrequest
+// #endregion class-body-c1apiautomationsv1automationexecutionservicegetautomationexecutionrequest
 
 type C1APIAutomationsV1AutomationExecutionServiceGetAutomationExecutionResponse struct {
 	// HTTP response content type for this operation
@@ -56,3 +71,6 @@ func (c *C1APIAutomationsV1AutomationExecutionServiceGetAutomationExecutionRespo
 	}
 	return c.RawResponse
 }
+
+// #region class-body-c1apiautomationsv1automationexecutionservicegetautomationexecutionresponse
+// #endregion class-body-c1apiautomationsv1automationexecutionservicegetautomationexecutionresponse

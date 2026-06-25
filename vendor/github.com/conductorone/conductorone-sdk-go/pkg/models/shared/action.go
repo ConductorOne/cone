@@ -6,9 +6,16 @@ package shared
 //
 // This message contains a oneof named target. Only a single field of the following list may be set at a time:
 //   - automation
+//   - batonResourceAction
+//   - clientIdApproval
 type Action struct {
-	// The ActionTargetAutomation message.
+	// ActionTargetAutomation targets automation templates for policy actions.
 	ActionTargetAutomation *ActionTargetAutomation `json:"automation,omitempty"`
+	// ActionTargetResource targets resource actions for policy actions.
+	ActionTargetBatonResourceAction *ActionTargetBatonResourceAction `json:"batonResourceAction,omitempty"`
+	// ActionTargetClientIdApproval targets administrator review of an external
+	//  OAuth client registration (CIMD or DCR) for policy actions.
+	ActionTargetClientIDApproval *ActionTargetClientIDApproval `json:"clientIdApproval,omitempty"`
 }
 
 func (a *Action) GetActionTargetAutomation() *ActionTargetAutomation {
@@ -16,4 +23,18 @@ func (a *Action) GetActionTargetAutomation() *ActionTargetAutomation {
 		return nil
 	}
 	return a.ActionTargetAutomation
+}
+
+func (a *Action) GetActionTargetBatonResourceAction() *ActionTargetBatonResourceAction {
+	if a == nil {
+		return nil
+	}
+	return a.ActionTargetBatonResourceAction
+}
+
+func (a *Action) GetActionTargetClientIDApproval() *ActionTargetClientIDApproval {
+	if a == nil {
+		return nil
+	}
+	return a.ActionTargetClientIDApproval
 }

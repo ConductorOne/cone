@@ -6,7 +6,7 @@ package shared
 type TaskActionsServiceCommentRequest struct {
 	// The task expand mask is an array of strings that specifes the related objects the requester wishes to have returned when making a request where the expand mask is part of the input. Use '*' to view all possible responses.
 	TaskExpandMask *TaskExpandMask `json:"expandMask,omitempty"`
-	// The comment to be posted to the ticket
+	// The comment to be posted to the task.
 	Comment *string `json:"comment,omitempty"`
 }
 

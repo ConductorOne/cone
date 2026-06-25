@@ -2,7 +2,7 @@
 
 package shared
 
-// The PolicyStep message.
+// PolicyStep - A single step in a policy workflow. Exactly one step type is set.
 //
 // This message contains a oneof named step. Only a single field of the following list may be set at a time:
 //   - approval
@@ -19,6 +19,8 @@ type PolicyStep struct {
 	//
 	// This message contains a oneof named target. Only a single field of the following list may be set at a time:
 	//   - automation
+	//   - batonResourceAction
+	//   - clientIdApproval
 	//
 	Action *Action `json:"action,omitempty"`
 	// The Approval message.

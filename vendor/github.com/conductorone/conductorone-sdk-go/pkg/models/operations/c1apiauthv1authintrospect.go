@@ -45,3 +45,6 @@ func (c *C1APIAuthV1AuthIntrospectResponse) GetRawResponse() *http.Response {
 	}
 	return c.RawResponse
 }
+
+// #region class-body-c1apiauthv1authintrospectresponse
+// #endregion class-body-c1apiauthv1authintrospectresponse

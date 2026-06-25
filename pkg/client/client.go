@@ -197,6 +197,10 @@ type C1Client interface {
 	CreateAppEntitlement(ctx context.Context, appID string, resourceTypeID string, resourceID string, displayName string, slug string) (*shared.AppEntitlement, error)
 	UpdateEntitlement(ctx context.Context, appID, entitlementID string, req *shared.UpdateAppEntitlementRequest) error
 	HasRequestForm(ctx context.Context, appID string, entitlementID string) (bool, error)
+	CreateInternalSecret(ctx context.Context, req *shared.PaperSecretServiceCreateInternalRequest) (*shared.PaperSecretServiceCreateResponse, error)
+	SetSecretTextContent(ctx context.Context, vaultID string, encryptedContent string, inputFormat *shared.PaperSecretServiceSetTextContentRequestInputFormat) error
+	GetSecret(ctx context.Context, vaultID string) (*shared.PaperSecret, error)
+	GetSecretContent(ctx context.Context, vaultID string, readerRecipient string) (*shared.PaperSecretServiceGetContentResponse, error)
 }
 
 func (c *client) BaseURL() string {

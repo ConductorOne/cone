@@ -2,12 +2,13 @@
 
 package shared
 
-// FunctionsServiceCreateFunctionRequestFunctionType - The functionType field.
+// FunctionsServiceCreateFunctionRequestFunctionType - The type of function to create, controlling its execution environment and capabilities.
 type FunctionsServiceCreateFunctionRequestFunctionType string
 
 const (
 	FunctionsServiceCreateFunctionRequestFunctionTypeFunctionTypeUnspecified FunctionsServiceCreateFunctionRequestFunctionType = "FUNCTION_TYPE_UNSPECIFIED"
 	FunctionsServiceCreateFunctionRequestFunctionTypeFunctionTypeAny         FunctionsServiceCreateFunctionRequestFunctionType = "FUNCTION_TYPE_ANY"
+	FunctionsServiceCreateFunctionRequestFunctionTypeFunctionTypeCodeMode    FunctionsServiceCreateFunctionRequestFunctionType = "FUNCTION_TYPE_CODE_MODE"
 )
 
 func (e FunctionsServiceCreateFunctionRequestFunctionType) ToPointer() *FunctionsServiceCreateFunctionRequestFunctionType {
@@ -18,7 +19,7 @@ func (e FunctionsServiceCreateFunctionRequestFunctionType) ToPointer() *Function
 func (e *FunctionsServiceCreateFunctionRequestFunctionType) IsExact() bool {
 	if e != nil {
 		switch *e {
-		case "FUNCTION_TYPE_UNSPECIFIED", "FUNCTION_TYPE_ANY":
+		case "FUNCTION_TYPE_UNSPECIFIED", "FUNCTION_TYPE_ANY", "FUNCTION_TYPE_CODE_MODE":
 			return true
 		}
 	}
@@ -27,15 +28,15 @@ func (e *FunctionsServiceCreateFunctionRequestFunctionType) IsExact() bool {
 
 // The FunctionsServiceCreateFunctionRequest message.
 type FunctionsServiceCreateFunctionRequest struct {
-	// The commitMessage field.
+	// The commit message describing the initial code submission.
 	CommitMessage *string `json:"commitMessage,omitempty"`
-	// The description field.
+	// A description of what the function does.
 	Description *string `json:"description,omitempty"`
-	// The displayName field.
+	// The human-readable name for the function.
 	DisplayName *string `json:"displayName,omitempty"`
-	// The functionType field.
+	// The type of function to create, controlling its execution environment and capabilities.
 	FunctionType *FunctionsServiceCreateFunctionRequestFunctionType `json:"functionType,omitempty"`
-	// The initialContent field.
+	// Map of filename to file content for the initial code commit.
 	InitialContent map[string]string `json:"initialContent,omitempty"`
 }
 

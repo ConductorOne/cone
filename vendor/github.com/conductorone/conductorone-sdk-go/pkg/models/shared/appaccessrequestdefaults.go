@@ -51,8 +51,10 @@ type AppAccessRequestDefaults struct {
 	EmergencyGrantEnabled *bool `json:"emergencyGrantEnabled,omitempty"`
 	// The policy id for the emergency grant policy.
 	EmergencyGrantPolicyID *string `json:"emergencyGrantPolicyId,omitempty"`
-	// The requestPolicyId field.
+	// The ID of the request policy to apply to entitlements matching this rule.
 	RequestPolicyID *string `json:"requestPolicyId,omitempty"`
+	// The ID of the request schema to apply to entitlements matching this rule.
+	RequestSchemaID *string `json:"requestSchemaId,omitempty"`
 	// The app resource type ids for which the app access request defaults are applied.
 	ResourceTypeIds []string `json:"resourceTypeIds,omitempty"`
 	// The last applied state of the app access request defaults.
@@ -115,6 +117,13 @@ func (a *AppAccessRequestDefaults) GetRequestPolicyID() *string {
 	return a.RequestPolicyID
 }
 
+func (a *AppAccessRequestDefaults) GetRequestSchemaID() *string {
+	if a == nil {
+		return nil
+	}
+	return a.RequestSchemaID
+}
+
 func (a *AppAccessRequestDefaults) GetResourceTypeIds() []string {
 	if a == nil {
 		return nil
@@ -145,8 +154,10 @@ type AppAccessRequestDefaults1 struct {
 	EmergencyGrantEnabled *bool `json:"emergencyGrantEnabled,omitempty"`
 	// The policy id for the emergency grant policy.
 	EmergencyGrantPolicyID *string `json:"emergencyGrantPolicyId,omitempty"`
-	// The requestPolicyId field.
+	// The ID of the request policy to apply to entitlements matching this rule.
 	RequestPolicyID *string `json:"requestPolicyId,omitempty"`
+	// The ID of the request schema to apply to entitlements matching this rule.
+	RequestSchemaID *string `json:"requestSchemaId,omitempty"`
 	// The app resource type ids for which the app access request defaults are applied.
 	ResourceTypeIds []string `json:"resourceTypeIds,omitempty"`
 	// The last applied state of the app access request defaults.
@@ -202,6 +213,13 @@ func (a *AppAccessRequestDefaults1) GetRequestPolicyID() *string {
 	return a.RequestPolicyID
 }
 
+func (a *AppAccessRequestDefaults1) GetRequestSchemaID() *string {
+	if a == nil {
+		return nil
+	}
+	return a.RequestSchemaID
+}
+
 func (a *AppAccessRequestDefaults1) GetResourceTypeIds() []string {
 	if a == nil {
 		return nil
@@ -215,3 +233,6 @@ func (a *AppAccessRequestDefaults1) GetState() *AppAccessRequestDefaultsState {
 	}
 	return a.State
 }
+
+// #region class-body-appaccessrequestdefaults1
+// #endregion class-body-appaccessrequestdefaults1

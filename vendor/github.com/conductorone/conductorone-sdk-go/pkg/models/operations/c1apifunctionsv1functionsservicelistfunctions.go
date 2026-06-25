@@ -45,3 +45,6 @@ func (c *C1APIFunctionsV1FunctionsServiceListFunctionsResponse) GetRawResponse()
 	}
 	return c.RawResponse
 }
+
+// #region class-body-c1apifunctionsv1functionsservicelistfunctionsresponse
+// #endregion class-body-c1apifunctionsv1functionsservicelistfunctionsresponse

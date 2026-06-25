@@ -45,3 +45,6 @@ func (c *C1APIAppV1AppEntitlementUserBindingServiceSearchGrantFeedResponse) GetR
 	}
 	return c.RawResponse
 }
+
+// #region class-body-c1apiappv1appentitlementuserbindingservicesearchgrantfeedresponse
+// #endregion class-body-c1apiappv1appentitlementuserbindingservicesearchgrantfeedresponse

@@ -10,7 +10,7 @@ import (
 type C1APIRequestSchemaV1RequestSchemaServiceFindBindingForAppEntitlementResponse struct {
 	// HTTP response content type for this operation
 	ContentType string
-	// Successful response
+	// The response message containing the binding for the specified app entitlement.
 	RequestSchemaServiceFindBindingForAppEntitlementResponse *shared.RequestSchemaServiceFindBindingForAppEntitlementResponse
 	// HTTP response status code for this operation
 	StatusCode int
@@ -45,3 +45,6 @@ func (c *C1APIRequestSchemaV1RequestSchemaServiceFindBindingForAppEntitlementRes
 	}
 	return c.RawResponse
 }
+
+// #region class-body-c1apirequestschemav1requestschemaservicefindbindingforappentitlementresponse
+// #endregion class-body-c1apirequestschemav1requestschemaservicefindbindingforappentitlementresponse

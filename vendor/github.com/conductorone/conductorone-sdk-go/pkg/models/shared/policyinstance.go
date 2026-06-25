@@ -4,7 +4,10 @@ package shared
 
 // PolicyInstance - A policy instance is an object that contains a reference to the policy it was created from, the currently executing step, the next steps, and the history of previously completed steps.
 type PolicyInstance struct {
-	// A policy describes the behavior of the ConductorOne system when processing a task. You can describe the type, approvers, fallback behavior, and escalation processes.
+	// A policy defines a workflow (sequence of steps) that runs when processing
+	//  access requests, reviews, or revocations. Policies support conditional
+	//  routing: different conditions can trigger different step sequences, with a
+	//  baseline fallback.
 	Policy *Policy `json:"policy,omitempty"`
 	// The policy step instance includes a reference to an instance of a policy step that tracks state and has a unique ID.
 	//

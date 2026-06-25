@@ -44,7 +44,7 @@ type TaskActionsServiceApproveResponse struct {
 	TaskView *TaskView `json:"taskView,omitempty"`
 	// List of serialized related objects.
 	Expanded []TaskActionsServiceApproveResponseExpanded `json:"expanded,omitempty"`
-	// The ID of the ticket (task) approve action created by this request.
+	// The ID of the task approve action created by this request.
 	TicketActionID *string `json:"ticketActionId,omitempty"`
 }
 

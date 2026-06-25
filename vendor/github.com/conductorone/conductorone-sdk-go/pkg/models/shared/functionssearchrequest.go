@@ -7,6 +7,7 @@ type FunctionTypes string
 const (
 	FunctionTypesFunctionTypeUnspecified FunctionTypes = "FUNCTION_TYPE_UNSPECIFIED"
 	FunctionTypesFunctionTypeAny         FunctionTypes = "FUNCTION_TYPE_ANY"
+	FunctionTypesFunctionTypeCodeMode    FunctionTypes = "FUNCTION_TYPE_CODE_MODE"
 )
 
 func (e FunctionTypes) ToPointer() *FunctionTypes {
@@ -17,7 +18,7 @@ func (e FunctionTypes) ToPointer() *FunctionTypes {
 func (e *FunctionTypes) IsExact() bool {
 	if e != nil {
 		switch *e {
-		case "FUNCTION_TYPE_UNSPECIFIED", "FUNCTION_TYPE_ANY":
+		case "FUNCTION_TYPE_UNSPECIFIED", "FUNCTION_TYPE_ANY", "FUNCTION_TYPE_CODE_MODE":
 			return true
 		}
 	}

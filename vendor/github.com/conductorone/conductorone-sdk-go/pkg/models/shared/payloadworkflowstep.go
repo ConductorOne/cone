@@ -2,6 +2,10 @@
 
 package shared
 
+import (
+	"github.com/conductorone/conductorone-sdk-go/pkg/utils"
+)
+
 // The PayloadWorkflowStep message.
 type PayloadWorkflowStep struct {
 	Context map[string]any `json:"context,omitempty"`
@@ -11,6 +15,17 @@ type PayloadWorkflowStep struct {
 	WorkflowExecutionStepID *string `json:"workflowExecutionStepId,omitempty"`
 	// The workflow template ID
 	WorkflowID *string `json:"workflowId,omitempty"`
+}
+
+func (p PayloadWorkflowStep) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(p, "", false)
+}
+
+func (p *PayloadWorkflowStep) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &p, "", false, nil); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (p *PayloadWorkflowStep) GetContext() map[string]any {

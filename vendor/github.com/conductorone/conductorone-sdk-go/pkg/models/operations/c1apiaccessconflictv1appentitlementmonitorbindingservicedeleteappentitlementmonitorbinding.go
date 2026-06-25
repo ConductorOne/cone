@@ -10,7 +10,7 @@ import (
 type C1APIAccessconflictV1AppEntitlementMonitorBindingServiceDeleteAppEntitlementMonitorBindingResponse struct {
 	// HTTP response content type for this operation
 	ContentType string
-	// Successful response
+	// The response message for deleting an app entitlement monitor binding.
 	DeleteAppEntitlementMonitorBindingResponse *shared.DeleteAppEntitlementMonitorBindingResponse
 	// HTTP response status code for this operation
 	StatusCode int
@@ -45,3 +45,6 @@ func (c *C1APIAccessconflictV1AppEntitlementMonitorBindingServiceDeleteAppEntitl
 	}
 	return c.RawResponse
 }
+
+// #region class-body-c1apiaccessconflictv1appentitlementmonitorbindingservicedeleteappentitlementmonitorbindingresponse
+// #endregion class-body-c1apiaccessconflictv1appentitlementmonitorbindingservicedeleteappentitlementmonitorbindingresponse

@@ -8,7 +8,7 @@ import (
 )
 
 type C1APIAccessconflictV1AppEntitlementMonitorBindingServiceCreateAppEntitlementMonitorBindingResponse struct {
-	// Successful response
+	// Represents the association of an app entitlement with one side (A or B) of a conflict monitor.
 	AppEntitlementMonitorBinding *shared.AppEntitlementMonitorBinding
 	// HTTP response content type for this operation
 	ContentType string
@@ -45,3 +45,6 @@ func (c *C1APIAccessconflictV1AppEntitlementMonitorBindingServiceCreateAppEntitl
 	}
 	return c.RawResponse
 }
+
+// #region class-body-c1apiaccessconflictv1appentitlementmonitorbindingservicecreateappentitlementmonitorbindingresponse
+// #endregion class-body-c1apiaccessconflictv1appentitlementmonitorbindingservicecreateappentitlementmonitorbindingresponse

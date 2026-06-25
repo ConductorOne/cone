@@ -6,6 +6,8 @@ package shared
 type KeyValueField struct {
 	// The secret field.
 	Secret *bool `json:"secret,omitempty"`
+	// When true, UI allows file uploads per key-value entry.
+	SupportsFileUpload *bool `json:"supportsFileUpload,omitempty"`
 }
 
 func (k *KeyValueField) GetSecret() *bool {
@@ -13,4 +15,11 @@ func (k *KeyValueField) GetSecret() *bool {
 		return nil
 	}
 	return k.Secret
+}
+
+func (k *KeyValueField) GetSupportsFileUpload() *bool {
+	if k == nil {
+		return nil
+	}
+	return k.SupportsFileUpload
 }

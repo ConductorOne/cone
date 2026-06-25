@@ -10,8 +10,9 @@ require (
 )
 
 require (
+	filippo.io/age v1.2.1
 	github.com/conductorone/baton-sdk v0.3.17
-	github.com/conductorone/conductorone-sdk-go v1.27.2-0.20260113184555-c2a4cbf81d4c
+	github.com/conductorone/conductorone-sdk-go v1.28.2
 	github.com/pterm/pterm v0.12.81
 	github.com/toqueteos/webbrowser v1.2.0
 	github.com/xhit/go-str2duration/v2 v2.1.0
@@ -22,7 +23,6 @@ require (
 	atomicgo.dev/cursor v0.2.0 // indirect
 	atomicgo.dev/keyboard v0.2.9 // indirect
 	atomicgo.dev/schedule v0.1.0 // indirect
-	filippo.io/age v1.2.1 // indirect
 	filippo.io/edwards25519 v1.1.0 // indirect
 	github.com/containerd/console v1.0.5 // indirect
 	github.com/envoyproxy/protoc-gen-validate v1.2.1 // indirect
@@ -59,5 +59,5 @@ require (
 	golang.org/x/sys v0.33.0 // indirect
 	golang.org/x/text v0.26.0 // indirect
 	gopkg.in/square/go-jose.v2 v2.6.0
-	gopkg.in/yaml.v3 v3.0.1 // indirect
+	gopkg.in/yaml.v3 v3.0.1
 )

@@ -26,6 +26,9 @@ func (c *C1APIAppV1ConnectorServiceGetRequest) GetID() string {
 	return c.ID
 }
 
+// #region class-body-c1apiappv1connectorservicegetrequest
+// #endregion class-body-c1apiappv1connectorservicegetrequest
+
 type C1APIAppV1ConnectorServiceGetResponse struct {
 	// The ConnectorServiceGetResponse message contains the connectorView, and an expand mask.
 	ConnectorServiceGetResponse *shared.ConnectorServiceGetResponse
@@ -64,3 +67,6 @@ func (c *C1APIAppV1ConnectorServiceGetResponse) GetRawResponse() *http.Response 
 	}
 	return c.RawResponse
 }
+
+// #region class-body-c1apiappv1connectorservicegetresponse
+// #endregion class-body-c1apiappv1connectorservicegetresponse

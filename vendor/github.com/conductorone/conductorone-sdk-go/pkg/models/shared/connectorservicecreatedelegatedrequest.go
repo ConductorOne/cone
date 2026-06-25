@@ -8,6 +8,8 @@ type ConnectorServiceCreateDelegatedRequest struct {
 	AppManagedStateBindingRef *AppManagedStateBindingRef `json:"appManagedStateBindingRef,omitempty"`
 	// The ConnectorExpandMask is used to expand related objects on a connector.
 	ConnectorExpandMask *ConnectorExpandMask `json:"expandMask,omitempty"`
+	// Sets entitlement owners on the app.
+	AppEntitlementOwnerRefs []AppEntitlementRef `json:"appEntitlementOwnerRefs,omitempty"`
 	// The catalogId describes which catalog entry this connector is an instance of. For example, every Okta connector will have the same catalogId indicating it is an Okta connector.
 	CatalogID *string `json:"catalogId,omitempty"`
 	// The description of the connector.
@@ -30,6 +32,13 @@ func (c *ConnectorServiceCreateDelegatedRequest) GetConnectorExpandMask() *Conne
 		return nil
 	}
 	return c.ConnectorExpandMask
+}
+
+func (c *ConnectorServiceCreateDelegatedRequest) GetAppEntitlementOwnerRefs() []AppEntitlementRef {
+	if c == nil {
+		return nil
+	}
+	return c.AppEntitlementOwnerRefs
 }
 
 func (c *ConnectorServiceCreateDelegatedRequest) GetCatalogID() *string {

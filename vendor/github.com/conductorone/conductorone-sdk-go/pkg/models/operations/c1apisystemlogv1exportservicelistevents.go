@@ -26,10 +26,13 @@ func (c *C1APISystemlogV1ExportServiceListEventsRequest) GetExportID() string {
 	return c.ExportID
 }
 
+// #region class-body-c1apisystemlogv1exportservicelisteventsrequest
+// #endregion class-body-c1apisystemlogv1exportservicelisteventsrequest
+
 type C1APISystemlogV1ExportServiceListEventsResponse struct {
 	// HTTP response content type for this operation
 	ContentType string
-	// Successful response
+	// ExportServiceListEventsResponse is the response containing audit events for an export.
 	ExportServiceListEventsResponse *shared.ExportServiceListEventsResponse
 	// HTTP response status code for this operation
 	StatusCode int
@@ -64,3 +67,6 @@ func (c *C1APISystemlogV1ExportServiceListEventsResponse) GetRawResponse() *http
 	}
 	return c.RawResponse
 }
+
+// #region class-body-c1apisystemlogv1exportservicelisteventsresponse
+// #endregion class-body-c1apisystemlogv1exportservicelisteventsresponse

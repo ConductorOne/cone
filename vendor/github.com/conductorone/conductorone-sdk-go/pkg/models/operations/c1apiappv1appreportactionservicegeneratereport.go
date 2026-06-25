@@ -26,6 +26,9 @@ func (c *C1APIAppV1AppReportActionServiceGenerateReportRequest) GetAppID() strin
 	return c.AppID
 }
 
+// #region class-body-c1apiappv1appreportactionservicegeneratereportrequest
+// #endregion class-body-c1apiappv1appreportactionservicegeneratereportrequest
+
 type C1APIAppV1AppReportActionServiceGenerateReportResponse struct {
 	// Empty response body. Status code indicates success.
 	AppActionsServiceGenerateReportResponse *shared.AppActionsServiceGenerateReportResponse
@@ -64,3 +67,6 @@ func (c *C1APIAppV1AppReportActionServiceGenerateReportResponse) GetRawResponse(
 	}
 	return c.RawResponse
 }
+
+// #region class-body-c1apiappv1appreportactionservicegeneratereportresponse
+// #endregion class-body-c1apiappv1appreportactionservicegeneratereportresponse

@@ -31,7 +31,7 @@ func newAppAccessRequestsDefaults(rootSDK *ConductoroneAPI, sdkConfig config.SDK
 }
 
 // CancelAppAccessRequestsDefaults - Cancel App Access Requests Defaults
-// Invokes the c1.api.app.v1.AppAccessRequestsDefaultsService.CancelAppAccessRequestsDefaults method.
+// Cancel an in-progress apply operation for the app's access request defaults.
 func (s *AppAccessRequestsDefaults) CancelAppAccessRequestsDefaults(ctx context.Context, request operations.C1APIAppV1AppAccessRequestsDefaultsServiceCancelAppAccessRequestsDefaultsRequest, opts ...operations.Option) (*operations.C1APIAppV1AppAccessRequestsDefaultsServiceCancelAppAccessRequestsDefaultsResponse, error) {
 	o := operations.Options{}
 	supportedOptions := []string{
@@ -243,7 +243,7 @@ func (s *AppAccessRequestsDefaults) CancelAppAccessRequestsDefaults(ctx context.
 }
 
 // CreateAppAccessRequestsDefaults - Create App Access Requests Defaults
-// Invokes the c1.api.app.v1.AppAccessRequestsDefaultsService.CreateAppAccessRequestsDefaults method.
+// Create or replace the access request default settings for an app.
 func (s *AppAccessRequestsDefaults) CreateAppAccessRequestsDefaults(ctx context.Context, request operations.C1APIAppV1AppAccessRequestsDefaultsServiceCreateAppAccessRequestsDefaultsRequest, opts ...operations.Option) (*operations.C1APIAppV1AppAccessRequestsDefaultsServiceCreateAppAccessRequestsDefaultsResponse, error) {
 	o := operations.Options{}
 	supportedOptions := []string{
@@ -455,7 +455,7 @@ func (s *AppAccessRequestsDefaults) CreateAppAccessRequestsDefaults(ctx context.
 }
 
 // GetAppAccessRequestsDefaults - Get App Access Requests Defaults
-// Invokes the c1.api.app.v1.AppAccessRequestsDefaultsService.GetAppAccessRequestsDefaults method.
+// Retrieve the current access request default settings for an app.
 func (s *AppAccessRequestsDefaults) GetAppAccessRequestsDefaults(ctx context.Context, request operations.C1APIAppV1AppAccessRequestsDefaultsServiceGetAppAccessRequestsDefaultsRequest, opts ...operations.Option) (*operations.C1APIAppV1AppAccessRequestsDefaultsServiceGetAppAccessRequestsDefaultsResponse, error) {
 	o := operations.Options{}
 	supportedOptions := []string{

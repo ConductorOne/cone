@@ -42,10 +42,13 @@ func (c *C1APIAppV1AppResourceOwnersRemoveRequest) GetResourceTypeID() string {
 	return c.ResourceTypeID
 }
 
+// #region class-body-c1apiappv1appresourceownersremoverequest
+// #endregion class-body-c1apiappv1appresourceownersremoverequest
+
 type C1APIAppV1AppResourceOwnersRemoveResponse struct {
 	// HTTP response content type for this operation
 	ContentType string
-	// Successful response
+	// The empty response message for removing an owner from an app resource.
 	RemoveAppResourceOwnerResponse *shared.RemoveAppResourceOwnerResponse
 	// HTTP response status code for this operation
 	StatusCode int
@@ -80,3 +83,6 @@ func (c *C1APIAppV1AppResourceOwnersRemoveResponse) GetRawResponse() *http.Respo
 	}
 	return c.RawResponse
 }
+
+// #region class-body-c1apiappv1appresourceownersremoveresponse
+// #endregion class-body-c1apiappv1appresourceownersremoveresponse

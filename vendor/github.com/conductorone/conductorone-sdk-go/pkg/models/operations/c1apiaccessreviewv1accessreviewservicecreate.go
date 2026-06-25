@@ -45,3 +45,6 @@ func (c *C1APIAccessreviewV1AccessReviewServiceCreateResponse) GetRawResponse() 
 	}
 	return c.RawResponse
 }
+
+// #region class-body-c1apiaccessreviewv1accessreviewservicecreateresponse
+// #endregion class-body-c1apiaccessreviewv1accessreviewservicecreateresponse

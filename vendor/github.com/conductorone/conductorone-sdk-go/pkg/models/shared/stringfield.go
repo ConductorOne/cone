@@ -3,27 +3,7 @@
 package shared
 
 // The StringField message.
-//
-// This message contains a oneof named view. Only a single field of the following list may be set at a time:
-//   - textField
-//   - passwordField
-//   - selectField
-//   - pickerField
-//
-// This message contains a oneof named _rules. Only a single field of the following list may be set at a time:
-//   - rules
 type StringField struct {
-	// The PasswordField message.
-	PasswordField *PasswordField `json:"passwordField,omitempty"`
-	// The PickerField message.
-	//
-	// This message contains a oneof named type. Only a single field of the following list may be set at a time:
-	//   - appUserPicker
-	//   - resourcePicker
-	//
-	PickerField *PickerField `json:"pickerField,omitempty"`
-	// The SelectField message.
-	SelectField *SelectField `json:"selectField,omitempty"`
 	// StringRules describe the constraints applied to `string` values
 	//
 	// This message contains a oneof named well_known. Only a single field of the following list may be set at a time:
@@ -38,34 +18,9 @@ type StringField struct {
 	//   - uuid
 	//   - wellKnownRegex
 	//
-	StringRules *StringRules `json:"rules,omitempty"`
-	// The TextField message.
-	TextField *TextField `json:"textField,omitempty"`
-	// The defaultValue field.
-	DefaultValue *string `json:"defaultValue,omitempty"`
-	// The placeholder field.
-	Placeholder *string `json:"placeholder,omitempty"`
-}
-
-func (s *StringField) GetPasswordField() *PasswordField {
-	if s == nil {
-		return nil
-	}
-	return s.PasswordField
-}
-
-func (s *StringField) GetPickerField() *PickerField {
-	if s == nil {
-		return nil
-	}
-	return s.PickerField
-}
-
-func (s *StringField) GetSelectField() *SelectField {
-	if s == nil {
-		return nil
-	}
-	return s.SelectField
+	StringRules *StringRules `json:"valueValidator,omitempty"`
+	// If secret, value is write-only in UI and a password-type form is used.
+	Secret *bool `json:"secret,omitempty"`
 }
 
 func (s *StringField) GetStringRules() *StringRules {
@@ -75,23 +30,9 @@ func (s *StringField) GetStringRules() *StringRules {
 	return s.StringRules
 }
 
-func (s *StringField) GetTextField() *TextField {
+func (s *StringField) GetSecret() *bool {
 	if s == nil {
 		return nil
 	}
-	return s.TextField
-}
-
-func (s *StringField) GetDefaultValue() *string {
-	if s == nil {
-		return nil
-	}
-	return s.DefaultValue
-}
-
-func (s *StringField) GetPlaceholder() *string {
-	if s == nil {
-		return nil
-	}
-	return s.Placeholder
+	return s.Secret
 }

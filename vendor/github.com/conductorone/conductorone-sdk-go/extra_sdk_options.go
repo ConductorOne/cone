@@ -7,15 +7,28 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
+	"os"
 	"strings"
 
 	"go.uber.org/zap"
+	"golang.org/x/oauth2"
 
 	"github.com/conductorone/conductorone-sdk-go/uhttp"
 )
 
 const c1TenantDomain = ".conductor.one"
 const ClientIdGolangSDK = "2RCzHlak5q7CY14SdBc8HoZEJRf"
+
+// Environment variable names for ConductorOne authentication.
+// These are used across all ConductorOne client tools (sdk-go, cone, terraform-provider).
+const (
+	EnvAccessToken  = "CONDUCTORONE_ACCESS_TOKEN"
+	EnvOIDCToken    = "CONDUCTORONE_OIDC_TOKEN"
+	EnvClientID     = "CONDUCTORONE_CLIENT_ID"
+	EnvClientSecret = "CONDUCTORONE_CLIENT_SECRET"
+	EnvTenantDomain = "CONDUCTORONE_TENANT_DOMAIN"
+	EnvServerURL    = "CONDUCTORONE_SERVER_URL"
+)
 
 func WithTenant(input string) (SDKOption, error) {
 	resp, err := NormalizeTenant(input)
@@ -146,11 +159,15 @@ type CustomOptions struct {
 	userAgent string
 }
 
+// NewWithCredentials creates a ConductoroneAPI client using explicit client credentials
+// (Ed25519 JWT bearer assertion). This function does NOT read environment variables;
+// use [NewWithEnv] for environment-based auth.
 func NewWithCredentials(ctx context.Context, cred *ClientCredentials, opts ...CustomSDKOption) (*ConductoroneAPI, error) {
 	options := &CustomOptions{}
 	for _, opt := range opts {
 		opt(options)
 	}
+
 	if options.GetServerURL() == "" {
 		resp, err := ParseClientID(cred.ClientID)
 		if err != nil {
@@ -162,6 +179,106 @@ func NewWithCredentials(ctx context.Context, cred *ClientCredentials, opts ...Cu
 	tokenSource, err := NewTokenSource(ctx, cred.ClientID, cred.ClientSecret, options.GetServerURL())
 	if err != nil {
 		return nil, err
+	}
+
+	return newWithTokenSource(ctx, tokenSource, cred.ClientID, options)
+}
+
+// NewWithOIDCToken creates a ConductoroneAPI client that exchanges an external OIDC token
+// for a ConductorOne access token via RFC 8693 token exchange.
+func NewWithOIDCToken(ctx context.Context, oidcToken, clientID string, opts ...CustomSDKOption) (*ConductoroneAPI, error) {
+	options := &CustomOptions{}
+	for _, opt := range opts {
+		opt(options)
+	}
+	return newWithOIDCToken(ctx, oidcToken, clientID, options)
+}
+
+// NewWithAccessToken creates a ConductoroneAPI client using a pre-exchanged bearer token.
+func NewWithAccessToken(ctx context.Context, accessToken, clientID string, opts ...CustomSDKOption) (*ConductoroneAPI, error) {
+	options := &CustomOptions{}
+	for _, opt := range opts {
+		opt(options)
+	}
+	return newWithTokenSource(ctx, oauth2.StaticTokenSource(&oauth2.Token{
+		AccessToken: accessToken,
+	}), clientID, options)
+}
+
+// NewWithEnv creates a ConductoroneAPI client using environment variables.
+// Auth priority:
+//  1. CONDUCTORONE_ACCESS_TOKEN -- static bearer token
+//  2. CONDUCTORONE_OIDC_TOKEN + CONDUCTORONE_CLIENT_ID -- RFC 8693 token exchange
+//  3. CONDUCTORONE_CLIENT_ID + CONDUCTORONE_CLIENT_SECRET -- Ed25519 JWT assertion
+func NewWithEnv(ctx context.Context, opts ...CustomSDKOption) (*ConductoroneAPI, error) {
+	options := &CustomOptions{}
+	for _, opt := range opts {
+		opt(options)
+	}
+
+	clientID := os.Getenv(EnvClientID)
+
+	// Priority 1: CONDUCTORONE_ACCESS_TOKEN
+	if accessToken := os.Getenv(EnvAccessToken); accessToken != "" {
+		return newWithTokenSource(ctx, oauth2.StaticTokenSource(&oauth2.Token{
+			AccessToken: accessToken,
+		}), clientID, options)
+	}
+
+	// Priority 2: CONDUCTORONE_OIDC_TOKEN
+	if oidcToken := os.Getenv(EnvOIDCToken); oidcToken != "" {
+		if clientID == "" {
+			return nil, fmt.Errorf("%s requires %s", EnvOIDCToken, EnvClientID)
+		}
+		return newWithOIDCToken(ctx, oidcToken, clientID, options)
+	}
+
+	// Priority 3: CONDUCTORONE_CLIENT_ID + CONDUCTORONE_CLIENT_SECRET
+	clientSecret := os.Getenv(EnvClientSecret)
+	if clientID == "" || clientSecret == "" {
+		return nil, fmt.Errorf("one of %s, %s, or %s+%s must be set", EnvAccessToken, EnvOIDCToken, EnvClientID, EnvClientSecret)
+	}
+
+	if options.GetServerURL() == "" {
+		resp, err := ParseClientID(clientID)
+		if err != nil {
+			return nil, err
+		}
+		options.ClientConfig = resp
+	}
+
+	tokenSource, err := NewTokenSource(ctx, clientID, clientSecret, options.GetServerURL())
+	if err != nil {
+		return nil, err
+	}
+
+	return newWithTokenSource(ctx, tokenSource, clientID, options)
+}
+
+func newWithOIDCToken(ctx context.Context, oidcToken, clientID string, options *CustomOptions) (*ConductoroneAPI, error) {
+	if options.GetServerURL() == "" {
+		resp, err := ParseClientID(clientID)
+		if err != nil {
+			return nil, err
+		}
+		options.ClientConfig = resp
+	}
+
+	tokenSource, err := NewTokenExchangeSource(ctx, oidcToken, clientID, options.GetServerURL())
+	if err != nil {
+		return nil, err
+	}
+
+	return newWithTokenSource(ctx, tokenSource, clientID, options)
+}
+
+func newWithTokenSource(ctx context.Context, tokenSource oauth2.TokenSource, clientID string, options *CustomOptions) (*ConductoroneAPI, error) {
+	if options.GetServerURL() == "" && clientID != "" {
+		resp, err := ParseClientID(clientID)
+		if err != nil {
+			return nil, err
+		}
+		options.ClientConfig = resp
 	}
 
 	if options.userAgent == "" {

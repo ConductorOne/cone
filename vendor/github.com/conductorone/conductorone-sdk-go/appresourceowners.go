@@ -31,7 +31,7 @@ func newAppResourceOwners(rootSDK *ConductoroneAPI, sdkConfig config.SDKConfigur
 }
 
 // Add
-// Invokes the c1.api.app.v1.AppResourceOwners.Add method.
+// Add a user as an owner of an app resource.
 func (s *AppResourceOwners) Add(ctx context.Context, request operations.C1APIAppV1AppResourceOwnersAddRequest, opts ...operations.Option) (*operations.C1APIAppV1AppResourceOwnersAddResponse, error) {
 	o := operations.Options{}
 	supportedOptions := []string{
@@ -869,7 +869,7 @@ func (s *AppResourceOwners) ListOwnerIDs(ctx context.Context, request operations
 }
 
 // Remove
-// Invokes the c1.api.app.v1.AppResourceOwners.Remove method.
+// Remove a user from the owners of an app resource.
 func (s *AppResourceOwners) Remove(ctx context.Context, request operations.C1APIAppV1AppResourceOwnersRemoveRequest, opts ...operations.Option) (*operations.C1APIAppV1AppResourceOwnersRemoveResponse, error) {
 	o := operations.Options{}
 	supportedOptions := []string{

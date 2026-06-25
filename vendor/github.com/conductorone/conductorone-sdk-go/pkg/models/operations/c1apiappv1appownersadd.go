@@ -34,6 +34,9 @@ func (c *C1APIAppV1AppOwnersAddRequest) GetUserID() string {
 	return c.UserID
 }
 
+// #region class-body-c1apiappv1appownersaddrequest
+// #endregion class-body-c1apiappv1appownersaddrequest
+
 type C1APIAppV1AppOwnersAddResponse struct {
 	// Empty response with a status code indicating success
 	AddAppOwnerResponse *shared.AddAppOwnerResponse
@@ -72,3 +75,6 @@ func (c *C1APIAppV1AppOwnersAddResponse) GetRawResponse() *http.Response {
 	}
 	return c.RawResponse
 }
+
+// #region class-body-c1apiappv1appownersaddresponse
+// #endregion class-body-c1apiappv1appownersaddresponse

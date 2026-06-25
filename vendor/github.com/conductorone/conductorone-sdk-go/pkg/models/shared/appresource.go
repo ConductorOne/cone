@@ -14,6 +14,9 @@ import (
 type AppResource struct {
 	// The SecretTrait message.
 	SecretTrait *SecretTrait `json:"secretTrait,omitempty"`
+	// The access config ID for this resource. May be empty.
+	//  Must be one of the builtin access config IDs or empty.
+	AccessConfigID *string `json:"accessConfigId,omitempty"`
 	// The app that this resource belongs to.
 	AppID *string `json:"appId,omitempty"`
 	// The resource type that this resource is.
@@ -26,6 +29,9 @@ type AppResource struct {
 	Description *string `json:"description,omitempty"`
 	// The display name for this resource.
 	DisplayName *string `json:"displayName,omitempty"`
+	// The upstream product's native external ID for this resource (e.g. an Okta group ID).
+	//  Populated from the connector's external ID during sync.
+	ExternalID *string `json:"externalId,omitempty"`
 	// The number of grants to this resource.
 	GrantCount *int64 `integer:"string" json:"grantCount,omitempty"`
 	// The id of the resource.
@@ -35,8 +41,9 @@ type AppResource struct {
 	// The parent resource id, if this resource is a child of another resource.
 	ParentAppResourceID *string `json:"parentAppResourceId,omitempty"`
 	// The parent resource type id, if this resource is a child of another resource.
-	ParentAppResourceTypeID *string    `json:"parentAppResourceTypeId,omitempty"`
-	UpdatedAt               *time.Time `json:"updatedAt,omitempty"`
+	ParentAppResourceTypeID *string        `json:"parentAppResourceTypeId,omitempty"`
+	Profile                 map[string]any `json:"profile,omitempty"`
+	UpdatedAt               *time.Time     `json:"updatedAt,omitempty"`
 }
 
 func (a AppResource) MarshalJSON() ([]byte, error) {
@@ -55,6 +62,13 @@ func (a *AppResource) GetSecretTrait() *SecretTrait {
 		return nil
 	}
 	return a.SecretTrait
+}
+
+func (a *AppResource) GetAccessConfigID() *string {
+	if a == nil {
+		return nil
+	}
+	return a.AccessConfigID
 }
 
 func (a *AppResource) GetAppID() *string {
@@ -106,6 +120,13 @@ func (a *AppResource) GetDisplayName() *string {
 	return a.DisplayName
 }
 
+func (a *AppResource) GetExternalID() *string {
+	if a == nil {
+		return nil
+	}
+	return a.ExternalID
+}
+
 func (a *AppResource) GetGrantCount() *int64 {
 	if a == nil {
 		return nil
@@ -139,6 +160,13 @@ func (a *AppResource) GetParentAppResourceTypeID() *string {
 		return nil
 	}
 	return a.ParentAppResourceTypeID
+}
+
+func (a *AppResource) GetProfile() map[string]any {
+	if a == nil {
+		return nil
+	}
+	return a.Profile
 }
 
 func (a *AppResource) GetUpdatedAt() *time.Time {

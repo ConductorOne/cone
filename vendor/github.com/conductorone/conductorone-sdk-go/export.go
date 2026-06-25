@@ -244,7 +244,7 @@ func (s *Export) Create(ctx context.Context, request *shared.ExportServiceCreate
 }
 
 // Delete
-// Delete a policy by ID.
+// Delete a system log export by ID.
 func (s *Export) Delete(ctx context.Context, request operations.C1APISystemlogV1ExportServiceDeleteRequest, opts ...operations.Option) (*operations.C1APISystemlogV1ExportServiceDeleteResponse, error) {
 	o := operations.Options{}
 	supportedOptions := []string{
@@ -870,7 +870,7 @@ func (s *Export) List(ctx context.Context, request operations.C1APISystemlogV1Ex
 }
 
 // ListEvents - List Events
-// Invokes the c1.api.systemlog.v1.ExportService.ListEvents method.
+// List audit events belonging to a specific system log export.
 func (s *Export) ListEvents(ctx context.Context, request operations.C1APISystemlogV1ExportServiceListEventsRequest, opts ...operations.Option) (*operations.C1APISystemlogV1ExportServiceListEventsResponse, error) {
 	o := operations.Options{}
 	supportedOptions := []string{
@@ -1082,7 +1082,7 @@ func (s *Export) ListEvents(ctx context.Context, request operations.C1APISysteml
 }
 
 // Update
-// Update a system log export by providing a policy object and an update mask.
+// Update a system log export by providing an export object and an update mask.
 func (s *Export) Update(ctx context.Context, request operations.C1APISystemlogV1ExportServiceUpdateRequest, opts ...operations.Option) (*operations.C1APISystemlogV1ExportServiceUpdateResponse, error) {
 	o := operations.Options{}
 	supportedOptions := []string{

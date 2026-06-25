@@ -34,6 +34,9 @@ func (c *C1APIAppV1ConnectorServiceDeleteRequest) GetID() string {
 	return c.ID
 }
 
+// #region class-body-c1apiappv1connectorservicedeleterequest
+// #endregion class-body-c1apiappv1connectorservicedeleterequest
+
 type C1APIAppV1ConnectorServiceDeleteResponse struct {
 	// Empty response body. Status code indicates success.
 	ConnectorServiceDeleteResponse *shared.ConnectorServiceDeleteResponse
@@ -72,3 +75,6 @@ func (c *C1APIAppV1ConnectorServiceDeleteResponse) GetRawResponse() *http.Respon
 	}
 	return c.RawResponse
 }
+
+// #region class-body-c1apiappv1connectorservicedeleteresponse
+// #endregion class-body-c1apiappv1connectorservicedeleteresponse

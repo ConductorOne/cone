@@ -8,14 +8,21 @@ import (
 )
 
 type C1APIAutomationsV1AutomationServiceCreateAutomationResponse struct {
+	// Successful response
+	AutomationsCreateAutomationResponse *shared.AutomationsCreateAutomationResponse
 	// HTTP response content type for this operation
 	ContentType string
-	// Successful response
-	CreateAutomationResponse *shared.CreateAutomationResponseInput
 	// HTTP response status code for this operation
 	StatusCode int
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
+}
+
+func (c *C1APIAutomationsV1AutomationServiceCreateAutomationResponse) GetAutomationsCreateAutomationResponse() *shared.AutomationsCreateAutomationResponse {
+	if c == nil {
+		return nil
+	}
+	return c.AutomationsCreateAutomationResponse
 }
 
 func (c *C1APIAutomationsV1AutomationServiceCreateAutomationResponse) GetContentType() string {
@@ -23,13 +30,6 @@ func (c *C1APIAutomationsV1AutomationServiceCreateAutomationResponse) GetContent
 		return ""
 	}
 	return c.ContentType
-}
-
-func (c *C1APIAutomationsV1AutomationServiceCreateAutomationResponse) GetCreateAutomationResponse() *shared.CreateAutomationResponseInput {
-	if c == nil {
-		return nil
-	}
-	return c.CreateAutomationResponse
 }
 
 func (c *C1APIAutomationsV1AutomationServiceCreateAutomationResponse) GetStatusCode() int {
@@ -45,3 +45,6 @@ func (c *C1APIAutomationsV1AutomationServiceCreateAutomationResponse) GetRawResp
 	}
 	return c.RawResponse
 }
+
+// #region class-body-c1apiautomationsv1automationservicecreateautomationresponse
+// #endregion class-body-c1apiautomationsv1automationservicecreateautomationresponse

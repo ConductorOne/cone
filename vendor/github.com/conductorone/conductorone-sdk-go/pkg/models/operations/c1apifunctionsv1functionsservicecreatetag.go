@@ -26,6 +26,9 @@ func (c *C1APIFunctionsV1FunctionsServiceCreateTagRequest) GetFunctionID() strin
 	return c.FunctionID
 }
 
+// #region class-body-c1apifunctionsv1functionsservicecreatetagrequest
+// #endregion class-body-c1apifunctionsv1functionsservicecreatetagrequest
+
 type C1APIFunctionsV1FunctionsServiceCreateTagResponse struct {
 	// HTTP response content type for this operation
 	ContentType string
@@ -64,3 +67,6 @@ func (c *C1APIFunctionsV1FunctionsServiceCreateTagResponse) GetRawResponse() *ht
 	}
 	return c.RawResponse
 }
+
+// #region class-body-c1apifunctionsv1functionsservicecreatetagresponse
+// #endregion class-body-c1apifunctionsv1functionsservicecreatetagresponse

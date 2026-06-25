@@ -5,12 +5,12 @@ package shared
 // The Form message.
 type Form struct {
 	// A form is a collection of fields to be filled out by a user
-	Form *FormInput `json:"form,omitempty"`
+	RequestSchemaForm *RequestSchemaForm `json:"form,omitempty"`
 }
 
-func (f *Form) GetForm() *FormInput {
+func (f *Form) GetRequestSchemaForm() *RequestSchemaForm {
 	if f == nil {
 		return nil
 	}
-	return f.Form
+	return f.RequestSchemaForm
 }

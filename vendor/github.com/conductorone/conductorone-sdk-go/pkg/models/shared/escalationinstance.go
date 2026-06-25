@@ -16,13 +16,13 @@ import (
 //   - skipStep
 type EscalationInstance struct {
 	// The CancelTicket message.
-	CancelTicket *CancelTicket `json:"cancelTicket,omitempty"`
+	EscalationInstanceCancelTicket *EscalationInstanceCancelTicket `json:"cancelTicket,omitempty"`
 	// The ReassignToApprovers message.
-	ReassignToApprovers *ReassignToApprovers `json:"reassignToApprovers,omitempty"`
+	EscalationInstanceReassignToApprovers *EscalationInstanceReassignToApprovers `json:"reassignToApprovers,omitempty"`
 	// The ReplacePolicy message.
-	ReplacePolicy *ReplacePolicy `json:"replacePolicy,omitempty"`
+	EscalationInstanceReplacePolicy *EscalationInstanceReplacePolicy `json:"replacePolicy,omitempty"`
 	// The SkipStep message.
-	SkipStep *SkipStep `json:"skipStep,omitempty"`
+	EscalationInstanceSkipStep *EscalationInstanceSkipStep `json:"skipStep,omitempty"`
 	// The alreadyEscalated field.
 	AlreadyEscalated *bool `json:"alreadyEscalated,omitempty"`
 	// The escalationComment field.
@@ -41,32 +41,32 @@ func (e *EscalationInstance) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (e *EscalationInstance) GetCancelTicket() *CancelTicket {
+func (e *EscalationInstance) GetEscalationInstanceCancelTicket() *EscalationInstanceCancelTicket {
 	if e == nil {
 		return nil
 	}
-	return e.CancelTicket
+	return e.EscalationInstanceCancelTicket
 }
 
-func (e *EscalationInstance) GetReassignToApprovers() *ReassignToApprovers {
+func (e *EscalationInstance) GetEscalationInstanceReassignToApprovers() *EscalationInstanceReassignToApprovers {
 	if e == nil {
 		return nil
 	}
-	return e.ReassignToApprovers
+	return e.EscalationInstanceReassignToApprovers
 }
 
-func (e *EscalationInstance) GetReplacePolicy() *ReplacePolicy {
+func (e *EscalationInstance) GetEscalationInstanceReplacePolicy() *EscalationInstanceReplacePolicy {
 	if e == nil {
 		return nil
 	}
-	return e.ReplacePolicy
+	return e.EscalationInstanceReplacePolicy
 }
 
-func (e *EscalationInstance) GetSkipStep() *SkipStep {
+func (e *EscalationInstance) GetEscalationInstanceSkipStep() *EscalationInstanceSkipStep {
 	if e == nil {
 		return nil
 	}
-	return e.SkipStep
+	return e.EscalationInstanceSkipStep
 }
 
 func (e *EscalationInstance) GetAlreadyEscalated() *bool {

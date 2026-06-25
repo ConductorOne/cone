@@ -42,6 +42,9 @@ func (c *C1APIAppV1AppEntitlementOwnersListRequest) GetPageToken() *string {
 	return c.PageToken
 }
 
+// #region class-body-c1apiappv1appentitlementownerslistrequest
+// #endregion class-body-c1apiappv1appentitlementownerslistrequest
+
 type C1APIAppV1AppEntitlementOwnersListResponse struct {
 	// HTTP response content type for this operation
 	ContentType string
@@ -80,3 +83,6 @@ func (c *C1APIAppV1AppEntitlementOwnersListResponse) GetRawResponse() *http.Resp
 	}
 	return c.RawResponse
 }
+
+// #region class-body-c1apiappv1appentitlementownerslistresponse
+// #endregion class-body-c1apiappv1appentitlementownerslistresponse

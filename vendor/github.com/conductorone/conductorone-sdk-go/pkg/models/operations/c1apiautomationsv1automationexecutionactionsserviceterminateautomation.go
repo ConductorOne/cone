@@ -4,12 +4,24 @@ package operations
 
 import (
 	"github.com/conductorone/conductorone-sdk-go/pkg/models/shared"
+	"github.com/conductorone/conductorone-sdk-go/pkg/utils"
 	"net/http"
 )
 
 type C1APIAutomationsV1AutomationExecutionActionsServiceTerminateAutomationRequest struct {
 	TerminateAutomationRequest *shared.TerminateAutomationRequest `request:"mediaType=application/json"`
 	ID                         int64                              `integer:"string" pathParam:"style=simple,explode=false,name=id"`
+}
+
+func (c C1APIAutomationsV1AutomationExecutionActionsServiceTerminateAutomationRequest) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(c, "", false)
+}
+
+func (c *C1APIAutomationsV1AutomationExecutionActionsServiceTerminateAutomationRequest) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &c, "", false, nil); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (c *C1APIAutomationsV1AutomationExecutionActionsServiceTerminateAutomationRequest) GetTerminateAutomationRequest() *shared.TerminateAutomationRequest {
@@ -25,6 +37,9 @@ func (c *C1APIAutomationsV1AutomationExecutionActionsServiceTerminateAutomationR
 	}
 	return c.ID
 }
+
+// #region class-body-c1apiautomationsv1automationexecutionactionsserviceterminateautomationrequest
+// #endregion class-body-c1apiautomationsv1automationexecutionactionsserviceterminateautomationrequest
 
 type C1APIAutomationsV1AutomationExecutionActionsServiceTerminateAutomationResponse struct {
 	// HTTP response content type for this operation
@@ -64,3 +79,6 @@ func (c *C1APIAutomationsV1AutomationExecutionActionsServiceTerminateAutomationR
 	}
 	return c.TerminateAutomationResponse
 }
+
+// #region class-body-c1apiautomationsv1automationexecutionactionsserviceterminateautomationresponse
+// #endregion class-body-c1apiautomationsv1automationexecutionactionsserviceterminateautomationresponse

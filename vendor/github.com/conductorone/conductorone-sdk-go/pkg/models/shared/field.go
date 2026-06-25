@@ -20,7 +20,11 @@ package shared
 //   - stringMap
 type Field struct {
 	// The CheckboxField message.
-	CheckboxField *CheckboxField1 `json:"checkbox,omitempty"`
+	ConnectorCheckboxField *ConnectorCheckboxField `json:"checkbox,omitempty"`
+	// The SelectField message.
+	ConnectorSelectField *ConnectorSelectField `json:"select,omitempty"`
+	// The TextField message.
+	ConnectorTextField *ConnectorTextField `json:"text,omitempty"`
 	// The ImportField message.
 	ImportField *ImportField `json:"import,omitempty"`
 	// The KeyValueField message.
@@ -35,16 +39,12 @@ type Field struct {
 	ReadOnlyField *ReadOnlyField `json:"readOnly,omitempty"`
 	// The RotatableSecretField message.
 	RotatableSecretField *RotatableSecretField `json:"secret,omitempty"`
-	// The SelectField message.
-	SelectField *SelectField `json:"select,omitempty"`
 	// The StringField message.
 	StringField *StringField `json:"str,omitempty"`
 	// The StringListField message.
 	StringListField *StringListField `json:"strList,omitempty"`
 	// The StringMapField message.
 	StringMapField *StringMapField `json:"stringMap,omitempty"`
-	// The TextField message.
-	TextField *TextField `json:"text,omitempty"`
 	// Optional. Additional placeholder text for the field
 	//  In cases where a single placeholder is not enough to describe the field
 	AdditionalPlaceholder *string `json:"additionalPlaceholder,omitempty"`
@@ -62,11 +62,25 @@ type Field struct {
 	PostCreate *bool `json:"postCreate,omitempty"`
 }
 
-func (f *Field) GetCheckboxField() *CheckboxField1 {
+func (f *Field) GetConnectorCheckboxField() *ConnectorCheckboxField {
 	if f == nil {
 		return nil
 	}
-	return f.CheckboxField
+	return f.ConnectorCheckboxField
+}
+
+func (f *Field) GetConnectorSelectField() *ConnectorSelectField {
+	if f == nil {
+		return nil
+	}
+	return f.ConnectorSelectField
+}
+
+func (f *Field) GetConnectorTextField() *ConnectorTextField {
+	if f == nil {
+		return nil
+	}
+	return f.ConnectorTextField
 }
 
 func (f *Field) GetImportField() *ImportField {
@@ -118,13 +132,6 @@ func (f *Field) GetRotatableSecretField() *RotatableSecretField {
 	return f.RotatableSecretField
 }
 
-func (f *Field) GetSelectField() *SelectField {
-	if f == nil {
-		return nil
-	}
-	return f.SelectField
-}
-
 func (f *Field) GetStringField() *StringField {
 	if f == nil {
 		return nil
@@ -144,13 +151,6 @@ func (f *Field) GetStringMapField() *StringMapField {
 		return nil
 	}
 	return f.StringMapField
-}
-
-func (f *Field) GetTextField() *TextField {
-	if f == nil {
-		return nil
-	}
-	return f.TextField
 }
 
 func (f *Field) GetAdditionalPlaceholder() *string {

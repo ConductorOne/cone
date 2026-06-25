@@ -668,7 +668,7 @@ func (s *RequestCatalogManagement) Create(ctx context.Context, request *shared.R
 }
 
 // CreateBundleAutomation - Create Bundle Automation
-// Invokes the c1.api.requestcatalog.v1.RequestCatalogManagementService.CreateBundleAutomation method.
+// Create a new bundle automation rule for a catalog that automatically syncs catalog membership from a query.
 func (s *RequestCatalogManagement) CreateBundleAutomation(ctx context.Context, request operations.C1APIRequestcatalogV1RequestCatalogManagementServiceCreateBundleAutomationRequest, opts ...operations.Option) (*operations.C1APIRequestcatalogV1RequestCatalogManagementServiceCreateBundleAutomationResponse, error) {
 	o := operations.Options{}
 	supportedOptions := []string{
@@ -1304,7 +1304,7 @@ func (s *RequestCatalogManagement) Delete(ctx context.Context, request operation
 }
 
 // DeleteBundleAutomation - Delete Bundle Automation
-// Invokes the c1.api.requestcatalog.v1.RequestCatalogManagementService.DeleteBundleAutomation method.
+// Delete the bundle automation rule for a catalog, stopping automatic membership syncing.
 func (s *RequestCatalogManagement) DeleteBundleAutomation(ctx context.Context, request operations.C1APIRequestcatalogV1RequestCatalogManagementServiceDeleteBundleAutomationRequest, opts ...operations.Option) (*operations.C1APIRequestcatalogV1RequestCatalogManagementServiceDeleteBundleAutomationResponse, error) {
 	o := operations.Options{}
 	supportedOptions := []string{
@@ -1728,7 +1728,7 @@ func (s *RequestCatalogManagement) DeleteRequestableEntry(ctx context.Context, r
 }
 
 // ForceRunBundleAutomation - Force Run Bundle Automation
-// Invokes the c1.api.requestcatalog.v1.RequestCatalogManagementService.ForceRunBundleAutomation method.
+// Trigger an immediate execution of a catalog's bundle automation, bypassing the normal schedule.
 func (s *RequestCatalogManagement) ForceRunBundleAutomation(ctx context.Context, request operations.C1APIRequestcatalogV1RequestCatalogManagementServiceForceRunBundleAutomationRequest, opts ...operations.Option) (*operations.C1APIRequestcatalogV1RequestCatalogManagementServiceForceRunBundleAutomationResponse, error) {
 	o := operations.Options{}
 	supportedOptions := []string{
@@ -2764,7 +2764,7 @@ func (s *RequestCatalogManagement) List(ctx context.Context, request operations.
 }
 
 // ListAllEntitlementIdsPerApp - List All Entitlement Ids Per App
-// Invokes the c1.api.requestcatalog.v1.RequestCatalogManagementService.ListAllEntitlementIdsPerApp method.
+// List all requestable entitlement IDs in a catalog without pagination.
 func (s *RequestCatalogManagement) ListAllEntitlementIdsPerApp(ctx context.Context, request operations.C1APIRequestcatalogV1RequestCatalogManagementServiceListAllEntitlementIdsPerAppRequest, opts ...operations.Option) (*operations.C1APIRequestcatalogV1RequestCatalogManagementServiceListAllEntitlementIdsPerAppResponse, error) {
 	o := operations.Options{}
 	supportedOptions := []string{
@@ -3387,7 +3387,7 @@ func (s *RequestCatalogManagement) ListEntitlementsPerCatalog(ctx context.Contex
 }
 
 // RemoveAccessEntitlements - Remove Access Entitlements
-// Remove visibility bindings (access entitlements) to a catalog.
+// Remove visibility bindings (access entitlements) from a catalog.
 func (s *RequestCatalogManagement) RemoveAccessEntitlements(ctx context.Context, request operations.C1APIRequestcatalogV1RequestCatalogManagementServiceRemoveAccessEntitlementsRequest, opts ...operations.Option) (*operations.C1APIRequestcatalogV1RequestCatalogManagementServiceRemoveAccessEntitlementsResponse, error) {
 	o := operations.Options{}
 	supportedOptions := []string{
@@ -3811,7 +3811,7 @@ func (s *RequestCatalogManagement) RemoveAppEntitlements(ctx context.Context, re
 }
 
 // ResumePausedBundleAutomation - Resume Paused Bundle Automation
-// Invokes the c1.api.requestcatalog.v1.RequestCatalogManagementService.ResumePausedBundleAutomation method.
+// Resume a bundle automation that was paused by the circuit breaker after detecting excessive membership changes.
 func (s *RequestCatalogManagement) ResumePausedBundleAutomation(ctx context.Context, request operations.C1APIRequestcatalogV1RequestCatalogManagementServiceResumePausedBundleAutomationRequest, opts ...operations.Option) (*operations.C1APIRequestcatalogV1RequestCatalogManagementServiceResumePausedBundleAutomationResponse, error) {
 	o := operations.Options{}
 	supportedOptions := []string{
@@ -4023,7 +4023,7 @@ func (s *RequestCatalogManagement) ResumePausedBundleAutomation(ctx context.Cont
 }
 
 // SetBundleAutomation - Set Bundle Automation
-// Invokes the c1.api.requestcatalog.v1.RequestCatalogManagementService.SetBundleAutomation method.
+// Create or update the bundle automation rule for a catalog that automatically syncs catalog membership.
 func (s *RequestCatalogManagement) SetBundleAutomation(ctx context.Context, request operations.C1APIRequestcatalogV1RequestCatalogManagementServiceSetBundleAutomationRequest, opts ...operations.Option) (*operations.C1APIRequestcatalogV1RequestCatalogManagementServiceSetBundleAutomationResponse, error) {
 	o := operations.Options{}
 	supportedOptions := []string{
@@ -4447,7 +4447,7 @@ func (s *RequestCatalogManagement) Update(ctx context.Context, request operation
 }
 
 // UpdateAppEntitlements - Update App Entitlements
-// Invokes the c1.api.requestcatalog.v1.RequestCatalogManagementService.UpdateAppEntitlements method.
+// Replace the full set of requestable entitlements in a catalog with the provided list.
 func (s *RequestCatalogManagement) UpdateAppEntitlements(ctx context.Context, request operations.C1APIRequestcatalogV1RequestCatalogManagementServiceUpdateAppEntitlementsRequest, opts ...operations.Option) (*operations.C1APIRequestcatalogV1RequestCatalogManagementServiceUpdateAppEntitlementsResponse, error) {
 	o := operations.Options{}
 	supportedOptions := []string{

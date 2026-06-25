@@ -9,6 +9,7 @@ const (
 	CreateAppRequestIdentityMatchingAppUserIdentityMatchingUnspecified CreateAppRequestIdentityMatching = "APP_USER_IDENTITY_MATCHING_UNSPECIFIED"
 	CreateAppRequestIdentityMatchingAppUserIdentityMatchingStrict      CreateAppRequestIdentityMatching = "APP_USER_IDENTITY_MATCHING_STRICT"
 	CreateAppRequestIdentityMatchingAppUserIdentityMatchingDisplayName CreateAppRequestIdentityMatching = "APP_USER_IDENTITY_MATCHING_DISPLAY_NAME"
+	CreateAppRequestIdentityMatchingAppUserIdentityMatchingCustom      CreateAppRequestIdentityMatching = "APP_USER_IDENTITY_MATCHING_CUSTOM"
 )
 
 func (e CreateAppRequestIdentityMatching) ToPointer() *CreateAppRequestIdentityMatching {
@@ -19,7 +20,7 @@ func (e CreateAppRequestIdentityMatching) ToPointer() *CreateAppRequestIdentityM
 func (e *CreateAppRequestIdentityMatching) IsExact() bool {
 	if e != nil {
 		switch *e {
-		case "APP_USER_IDENTITY_MATCHING_UNSPECIFIED", "APP_USER_IDENTITY_MATCHING_STRICT", "APP_USER_IDENTITY_MATCHING_DISPLAY_NAME":
+		case "APP_USER_IDENTITY_MATCHING_UNSPECIFIED", "APP_USER_IDENTITY_MATCHING_STRICT", "APP_USER_IDENTITY_MATCHING_DISPLAY_NAME", "APP_USER_IDENTITY_MATCHING_CUSTOM":
 			return true
 		}
 	}
@@ -28,6 +29,8 @@ func (e *CreateAppRequestIdentityMatching) IsExact() bool {
 
 // The CreateAppRequest message is used to create a new app.
 type CreateAppRequest struct {
+	// Sets entitlement owners on the app.
+	AppEntitlementOwnerRefs []AppEntitlementRef `json:"appEntitlementOwnerRefs,omitempty"`
 	// Creates the app with this certify policy.
 	CertifyPolicyID *string `json:"certifyPolicyId,omitempty"`
 	// Creates the app with this description.
@@ -42,12 +45,19 @@ type CreateAppRequest struct {
 	Instructions *string `json:"instructions,omitempty"`
 	// Creates the app with this monthly cost per seat.
 	MonthlyCostUsd *int `json:"monthlyCostUsd,omitempty"`
-	// Creates the app with this array of owners.
+	// Creates the app with this array of user owners.
 	Owners []string `json:"owners,omitempty"`
 	// Creates the app with this revoke policy.
 	RevokePolicyID *string `json:"revokePolicyId,omitempty"`
 	// This flag enforces a provisioning mode where the access entitlement is always included in the provisioning flow, if the app user doesn't exist
 	StrictAccessEntitlementProvisioning *bool `json:"strictAccessEntitlementProvisioning,omitempty"`
+}
+
+func (c *CreateAppRequest) GetAppEntitlementOwnerRefs() []AppEntitlementRef {
+	if c == nil {
+		return nil
+	}
+	return c.AppEntitlementOwnerRefs
 }
 
 func (c *CreateAppRequest) GetCertifyPolicyID() *string {

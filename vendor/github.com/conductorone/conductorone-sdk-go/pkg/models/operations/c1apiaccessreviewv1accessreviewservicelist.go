@@ -26,6 +26,9 @@ func (c *C1APIAccessreviewV1AccessReviewServiceListRequest) GetPageToken() *stri
 	return c.PageToken
 }
 
+// #region class-body-c1apiaccessreviewv1accessreviewservicelistrequest
+// #endregion class-body-c1apiaccessreviewv1accessreviewservicelistrequest
+
 type C1APIAccessreviewV1AccessReviewServiceListResponse struct {
 	// Successful response
 	AccessReviewServiceListResponse *shared.AccessReviewServiceListResponse
@@ -64,3 +67,6 @@ func (c *C1APIAccessreviewV1AccessReviewServiceListResponse) GetRawResponse() *h
 	}
 	return c.RawResponse
 }
+
+// #region class-body-c1apiaccessreviewv1accessreviewservicelistresponse
+// #endregion class-body-c1apiaccessreviewv1accessreviewservicelistresponse

@@ -18,6 +18,9 @@ func (c *C1APIAccessreviewV1AccessReviewServiceGetRequest) GetID() string {
 	return c.ID
 }
 
+// #region class-body-c1apiaccessreviewv1accessreviewservicegetrequest
+// #endregion class-body-c1apiaccessreviewv1accessreviewservicegetrequest
+
 type C1APIAccessreviewV1AccessReviewServiceGetResponse struct {
 	// Successful response
 	AccessReviewServiceGetResponse *shared.AccessReviewServiceGetResponse
@@ -56,3 +59,6 @@ func (c *C1APIAccessreviewV1AccessReviewServiceGetResponse) GetRawResponse() *ht
 	}
 	return c.RawResponse
 }
+
+// #region class-body-c1apiaccessreviewv1accessreviewservicegetresponse
+// #endregion class-body-c1apiaccessreviewv1accessreviewservicegetresponse

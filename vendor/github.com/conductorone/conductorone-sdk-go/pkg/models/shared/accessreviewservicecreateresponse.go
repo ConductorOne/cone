@@ -42,7 +42,7 @@ func (e *Expanded) GetAdditionalProperties() map[string]any {
 type AccessReviewServiceCreateResponse struct {
 	// The AccessReviewView message.
 	AccessReviewView *AccessReviewView `json:"accessReview,omitempty"`
-	// The expanded field.
+	// Related objects requested via the expand mask.
 	Expanded []Expanded `json:"expanded,omitempty"`
 }
 

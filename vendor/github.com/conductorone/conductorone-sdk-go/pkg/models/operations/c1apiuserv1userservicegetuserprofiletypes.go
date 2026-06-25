@@ -18,10 +18,13 @@ func (c *C1APIUserV1UserServiceGetUserProfileTypesRequest) GetUserID() string {
 	return c.UserID
 }
 
+// #region class-body-c1apiuserv1userservicegetuserprofiletypesrequest
+// #endregion class-body-c1apiuserv1userservicegetuserprofiletypesrequest
+
 type C1APIUserV1UserServiceGetUserProfileTypesResponse struct {
 	// HTTP response content type for this operation
 	ContentType string
-	// Successful response
+	// GetUserProfileTypesResponse is the response containing the profile types for a user.
 	GetUserProfileTypesResponse *shared.GetUserProfileTypesResponse
 	// HTTP response status code for this operation
 	StatusCode int
@@ -56,3 +59,6 @@ func (c *C1APIUserV1UserServiceGetUserProfileTypesResponse) GetRawResponse() *ht
 	}
 	return c.RawResponse
 }
+
+// #region class-body-c1apiuserv1userservicegetuserprofiletypesresponse
+// #endregion class-body-c1apiuserv1userservicegetuserprofiletypesresponse

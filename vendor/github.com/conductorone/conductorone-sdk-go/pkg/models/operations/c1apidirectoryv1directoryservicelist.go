@@ -26,6 +26,9 @@ func (c *C1APIDirectoryV1DirectoryServiceListRequest) GetPageToken() *string {
 	return c.PageToken
 }
 
+// #region class-body-c1apidirectoryv1directoryservicelistrequest
+// #endregion class-body-c1apidirectoryv1directoryservicelistrequest
+
 type C1APIDirectoryV1DirectoryServiceListResponse struct {
 	// HTTP response content type for this operation
 	ContentType string
@@ -64,3 +67,6 @@ func (c *C1APIDirectoryV1DirectoryServiceListResponse) GetRawResponse() *http.Re
 	}
 	return c.RawResponse
 }
+
+// #region class-body-c1apidirectoryv1directoryservicelistresponse
+// #endregion class-body-c1apidirectoryv1directoryservicelistresponse

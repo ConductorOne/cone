@@ -34,6 +34,9 @@ func (c *C1APIAppV1AppEntitlementOwnersAddRequest) GetEntitlementID() string {
 	return c.EntitlementID
 }
 
+// #region class-body-c1apiappv1appentitlementownersaddrequest
+// #endregion class-body-c1apiappv1appentitlementownersaddrequest
+
 type C1APIAppV1AppEntitlementOwnersAddResponse struct {
 	// The empty response message for adding an app entitlement owner.
 	AddAppEntitlementOwnerResponse *shared.AddAppEntitlementOwnerResponse
@@ -72,3 +75,6 @@ func (c *C1APIAppV1AppEntitlementOwnersAddResponse) GetRawResponse() *http.Respo
 	}
 	return c.RawResponse
 }
+
+// #region class-body-c1apiappv1appentitlementownersaddresponse
+// #endregion class-body-c1apiappv1appentitlementownersaddresponse

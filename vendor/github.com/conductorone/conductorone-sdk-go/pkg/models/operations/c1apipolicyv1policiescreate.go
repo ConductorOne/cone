@@ -45,3 +45,6 @@ func (c *C1APIPolicyV1PoliciesCreateResponse) GetRawResponse() *http.Response {
 	}
 	return c.RawResponse
 }
+
+// #region class-body-c1apipolicyv1policiescreateresponse
+// #endregion class-body-c1apipolicyv1policiescreateresponse

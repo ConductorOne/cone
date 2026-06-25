@@ -2,7 +2,7 @@
 
 package shared
 
-// DeleteAppEntitlementMonitorBindingRequestEntitlementGroup - The entitlementGroup field.
+// DeleteAppEntitlementMonitorBindingRequestEntitlementGroup - Which side of the conflict monitor (A or B) the binding belongs to.
 type DeleteAppEntitlementMonitorBindingRequestEntitlementGroup string
 
 const (
@@ -26,15 +26,15 @@ func (e *DeleteAppEntitlementMonitorBindingRequestEntitlementGroup) IsExact() bo
 	return false
 }
 
-// The DeleteAppEntitlementMonitorBindingRequest message.
+// DeleteAppEntitlementMonitorBindingRequest - The request message for deleting an app entitlement monitor binding.
 type DeleteAppEntitlementMonitorBindingRequest struct {
-	// The appEntitlementId field.
+	// The unique identifier of the app entitlement to unbind.
 	AppEntitlementID *string `json:"appEntitlementId,omitempty"`
-	// The appId field.
+	// The unique identifier of the application containing the entitlement.
 	AppID *string `json:"appId,omitempty"`
-	// The entitlementGroup field.
+	// Which side of the conflict monitor (A or B) the binding belongs to.
 	EntitlementGroup *DeleteAppEntitlementMonitorBindingRequestEntitlementGroup `json:"entitlementGroup,omitempty"`
-	// The monitorId field.
+	// The unique identifier of the conflict monitor.
 	MonitorID *string `json:"monitorId,omitempty"`
 }
 

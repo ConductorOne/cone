@@ -7,11 +7,15 @@ package shared
 // This message contains a oneof named type. Only a single field of the following list may be set at a time:
 //   - appUserPicker
 //   - resourcePicker
+//   - c1UserPicker
 type PickerField struct {
 	// The AppResourceFilter message.
 	AppResourceFilter *AppResourceFilter `json:"resourcePicker,omitempty"`
 	// The AppUserFilter message.
 	AppUserFilter *AppUserFilter `json:"appUserPicker,omitempty"`
+	// C1UserFilter is used to configure a picker for selecting ConductorOne users.
+	//  This is distinct from AppUserFilter which selects accounts within a connected app.
+	C1UserFilter *C1UserFilter `json:"c1UserPicker,omitempty"`
 }
 
 func (p *PickerField) GetAppResourceFilter() *AppResourceFilter {
@@ -26,4 +30,11 @@ func (p *PickerField) GetAppUserFilter() *AppUserFilter {
 		return nil
 	}
 	return p.AppUserFilter
+}
+
+func (p *PickerField) GetC1UserFilter() *C1UserFilter {
+	if p == nil {
+		return nil
+	}
+	return p.C1UserFilter
 }

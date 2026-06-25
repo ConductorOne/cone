@@ -26,10 +26,13 @@ func (c *C1APIAttributeV1AttributesListComplianceFrameworksRequest) GetPageToken
 	return c.PageToken
 }
 
+// #region class-body-c1apiattributev1attributeslistcomplianceframeworksrequest
+// #endregion class-body-c1apiattributev1attributeslistcomplianceframeworksrequest
+
 type C1APIAttributeV1AttributesListComplianceFrameworksResponse struct {
 	// HTTP response content type for this operation
 	ContentType string
-	// Successful response
+	// ListComplianceFrameworksResponse is the response for listing compliance framework attribute values.
 	ListComplianceFrameworksResponse *shared.ListComplianceFrameworksResponse
 	// HTTP response status code for this operation
 	StatusCode int
@@ -64,3 +67,6 @@ func (c *C1APIAttributeV1AttributesListComplianceFrameworksResponse) GetRawRespo
 	}
 	return c.RawResponse
 }
+
+// #region class-body-c1apiattributev1attributeslistcomplianceframeworksresponse
+// #endregion class-body-c1apiattributev1attributeslistcomplianceframeworksresponse

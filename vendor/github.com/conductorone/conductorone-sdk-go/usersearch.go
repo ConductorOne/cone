@@ -235,25 +235,11 @@ func (s *UserSearch) Search(ctx context.Context, request *shared.SearchUsersRequ
 				return nil, nil
 			}
 		}
+		request.PageToken = &nCVal
 
 		return s.Search(
 			ctx,
-			&shared.SearchUsersRequest{
-				UserExpandMask: request.UserExpandMask,
-				Departments:    request.Departments,
-				Email:          request.Email,
-				ExcludeIds:     request.ExcludeIds,
-				ExcludeTypes:   request.ExcludeTypes,
-				Ids:            request.Ids,
-				JobTitles:      request.JobTitles,
-				ManagerIds:     request.ManagerIds,
-				PageSize:       request.PageSize,
-				PageToken:      &nCVal,
-				Query:          request.Query,
-				Refs:           request.Refs,
-				RoleIds:        request.RoleIds,
-				UserStatuses:   request.UserStatuses,
-			},
+			request,
 			opts...,
 		)
 	}

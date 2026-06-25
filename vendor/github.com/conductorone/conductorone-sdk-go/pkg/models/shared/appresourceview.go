@@ -4,6 +4,8 @@ package shared
 
 // AppResourceView - The app resource view returns an app resource with paths for items in the expand mask filled in when this response is returned and a request expand mask has "*" or "app_id" or "resource_type_id".
 type AppResourceView struct {
+	// The ActorObjectPermissions message.
+	ActorObjectPermissions *ActorObjectPermissions `json:"objectPermissions,omitempty"`
 	// The app resource message is a single resource that can have entitlements.
 	//
 	// This message contains a oneof named metadata. Only a single field of the following list may be set at a time:
@@ -18,6 +20,13 @@ type AppResourceView struct {
 	ParentResourceTypePath *string `json:"parentResourceTypePath,omitempty"`
 	// JSONPATH expression indicating the location of the Resource Type object in the array
 	ResourceTypePath *string `json:"resourceTypePath,omitempty"`
+}
+
+func (a *AppResourceView) GetActorObjectPermissions() *ActorObjectPermissions {
+	if a == nil {
+		return nil
+	}
+	return a.ActorObjectPermissions
 }
 
 func (a *AppResourceView) GetAppResource() *AppResource {

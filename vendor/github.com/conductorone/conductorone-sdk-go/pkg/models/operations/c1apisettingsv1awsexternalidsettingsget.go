@@ -45,3 +45,6 @@ func (c *C1APISettingsV1AWSExternalIDSettingsGetResponse) GetRawResponse() *http
 	}
 	return c.RawResponse
 }
+
+// #region class-body-c1apisettingsv1awsexternalidsettingsgetresponse
+// #endregion class-body-c1apisettingsv1awsexternalidsettingsgetresponse

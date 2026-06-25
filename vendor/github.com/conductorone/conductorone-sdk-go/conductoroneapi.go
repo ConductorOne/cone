@@ -2,7 +2,7 @@
 
 package conductoronesdkgo
 
-// Generated from OpenAPI doc version 0.1.0-alpha and generator version 2.794.1
+// Generated from OpenAPI doc version 0.1.0-alpha and generator version 2.882.0
 
 import (
 	"context"
@@ -18,7 +18,7 @@ import (
 
 // ServerList contains the list of servers available to the SDK
 var ServerList = []string{
-	// The ConductorOne API server for the current tenant.
+	// The C1 API server for the current tenant.
 	"https://{tenantDomain}.conductor.one",
 }
 
@@ -48,71 +48,101 @@ func Float64(f float64) *float64 { return &f }
 // Pointer provides a helper function to return a pointer to a type
 func Pointer[T any](v T) *T { return &v }
 
-// ConductoroneAPI - ConductorOne API: The ConductorOne API is a HTTP API for managing ConductorOne resources.
+// ConductoroneAPI - C1 API: The C1 API is a HTTP API for managing C1 resources.
 type ConductoroneAPI struct {
-	SDKVersion                   string
-	AccessReview                 *AccessReview
-	AccessReviewTemplate         *AccessReviewTemplate
-	AccessConflict               *AccessConflict
-	AppEntitlementMonitorBinding *AppEntitlementMonitorBinding
-	Apps                         *Apps
-	Connector                    *Connector
-	AppAccessRequestsDefaults    *AppAccessRequestsDefaults
-	AppUser                      *AppUser
-	AppEntitlements              *AppEntitlements
-	AppEntitlementSearch         *AppEntitlementSearch
-	AppEntitlementUserBinding    *AppEntitlementUserBinding
-	AppEntitlementOwners         *AppEntitlementOwners
-	AppOwners                    *AppOwners
-	AppReport                    *AppReport
-	AppReportAction              *AppReportAction
-	AppResourceType              *AppResourceType
-	AppResource                  *AppResource
-	AppResourceOwners            *AppResourceOwners
-	AppUsageControls             *AppUsageControls
-	AppEntitlementsProxy         *AppEntitlementsProxy
-	Attributes                   *Attributes
-	Auth                         *Auth
-	AutomationExecution          *AutomationExecution
-	AutomationExecutionSearch    *AutomationExecutionSearch
-	AutomationExecutionActions   *AutomationExecutionActions
-	AutomationSearch             *AutomationSearch
-	Automation                   *Automation
-	RequestCatalogManagement     *RequestCatalogManagement
-	ConnectorCatalog             *ConnectorCatalog
-	Directory                    *Directory
-	Functions                    *Functions
-	FunctionsInvocation          *FunctionsInvocation
-	PersonalClient               *PersonalClient
-	Roles                        *Roles
-	Policies                     *Policies
-	AccountProvisionPolicyTest   *AccountProvisionPolicyTest
-	PolicyValidate               *PolicyValidate
-	RequestSchema                *RequestSchema
-	AppResourceSearch            *AppResourceSearch
-	AppSearch                    *AppSearch
-	AttributeSearch              *AttributeSearch
-	FunctionsSearch              *FunctionsSearch
-	PersonalClientSearch         *PersonalClientSearch
-	PolicySearch                 *PolicySearch
-	RequestCatalogSearch         *RequestCatalogSearch
-	StepUpProvider               *StepUpProvider
-	StepUpTransaction            *StepUpTransaction
-	ExportsSearch                *ExportsSearch
-	TaskSearch                   *TaskSearch
-	UserSearch                   *UserSearch
-	WebhooksSearch               *WebhooksSearch
-	AWSExternalIDSettings        *AWSExternalIDSettings
-	OrgDomain                    *OrgDomain
-	SessionSettings              *SessionSettings
-	SystemLog                    *SystemLog
-	Export                       *Export
-	TaskAudit                    *TaskAudit
-	Task                         *Task
-	TaskActions                  *TaskActions
-	User                         *User
-	Vault                        *Vault
-	Webhooks                     *Webhooks
+	SDKVersion                           string
+	A2UI                                 *A2UI
+	AccessReview                         *AccessReview
+	AccessReviewSetupEntitlement         *AccessReviewSetupEntitlement
+	AccessReviewTemplate                 *AccessReviewTemplate
+	AccessReviewTemplateSetupEntitlement *AccessReviewTemplateSetupEntitlement
+	AccessConflict                       *AccessConflict
+	AppEntitlementMonitorBinding         *AppEntitlementMonitorBinding
+	Apps                                 *Apps
+	Connector                            *Connector
+	AppAccessRequestsDefaults            *AppAccessRequestsDefaults
+	AppUser                              *AppUser
+	AppEntitlements                      *AppEntitlements
+	AppEntitlementSearch                 *AppEntitlementSearch
+	AppEntitlementUserBinding            *AppEntitlementUserBinding
+	AppEntitlementOwners                 *AppEntitlementOwners
+	AppOwners                            *AppOwners
+	AppReport                            *AppReport
+	AppReportAction                      *AppReportAction
+	AppResourceType                      *AppResourceType
+	AppResource                          *AppResource
+	AppResourceOwners                    *AppResourceOwners
+	AppUsageControls                     *AppUsageControls
+	AppEntitlementsProxy                 *AppEntitlementsProxy
+	Attributes                           *Attributes
+	TenantAuthConfig                     *TenantAuthConfig
+	Auth                                 *Auth
+	AutomationExecution                  *AutomationExecution
+	AutomationExecutionActions           *AutomationExecutionActions
+	Automation                           *Automation
+	RequestCatalogManagement             *RequestCatalogManagement
+	ConnectorCatalog                     *ConnectorCatalog
+	Directory                            *Directory
+	Finding                              *Finding
+	FindingRoutingRule                   *FindingRoutingRule
+	FindingSearch                        *FindingSearch
+	Functions                            *Functions
+	FunctionsInvocation                  *FunctionsInvocation
+	FunctionsInvocationSearch            *FunctionsInvocationSearch
+	Hooks                                *Hooks
+	PersonalClient                       *PersonalClient
+	Roles                                *Roles
+	LocalDirectoryConfig                 *LocalDirectoryConfig
+	LocalUserInvitation                  *LocalUserInvitation
+	Policies                             *Policies
+	AccountProvisionPolicyTest           *AccountProvisionPolicyTest
+	PolicyValidate                       *PolicyValidate
+	RequestSchema                        *RequestSchema
+	RoleMiningManagement                 *RoleMiningManagement
+	AutomationExecutionSearch            *AutomationExecutionSearch
+	AppResourceSearch                    *AppResourceSearch
+	AppSearch                            *AppSearch
+	AttributeSearch                      *AttributeSearch
+	AutomationSearch                     *AutomationSearch
+	FunctionsSearch                      *FunctionsSearch
+	HooksSearch                          *HooksSearch
+	ExternalClientSearch                 *ExternalClientSearch
+	PersonalClientSearch                 *PersonalClientSearch
+	PolicySearch                         *PolicySearch
+	RequestCatalogSearch                 *RequestCatalogSearch
+	RoleMiningManagementSearch           *RoleMiningManagementSearch
+	PaperSecretAdmin                     *PaperSecretAdmin
+	PaperSecret                          *PaperSecret
+	SSFReceiverEventSearch               *SSFReceiverEventSearch
+	StepUpProvider                       *StepUpProvider
+	StepUpTransaction                    *StepUpTransaction
+	ExportsSearch                        *ExportsSearch
+	TaskSearch                           *TaskSearch
+	UserSearch                           *UserSearch
+	WebhooksSearch                       *WebhooksSearch
+	WorkloadFederation                   *WorkloadFederation
+	Principal                            *Principal
+	AWSExternalIDSettings                *AWSExternalIDSettings
+	Contacts                             *Contacts
+	OrgDomain                            *OrgDomain
+	TenantEmailProvider                  *TenantEmailProvider
+	OrgNotificationSettings              *OrgNotificationSettings
+	UserNotificationSettings             *UserNotificationSettings
+	OnboardingSettings                   *OnboardingSettings
+	SessionSettings                      *SessionSettings
+	SSFReceiverStream                    *SSFReceiverStream
+	SSFReceiverEvent                     *SSFReceiverEvent
+	SystemLog                            *SystemLog
+	Export                               *Export
+	TaskAudit                            *TaskAudit
+	Task                                 *Task
+	TaskActions                          *TaskActions
+	User                                 *User
+	Vault                                *Vault
+	Webhooks                             *Webhooks
+	ConnectorOwnersV2                    *ConnectorOwnersV2
+	AppEntitlementOwnersV2               *AppEntitlementOwnersV2
+	AppOwnersV2                          *AppOwnersV2
 
 	sdkConfiguration config.SDKConfiguration
 	hooks            *hooks.Hooks
@@ -120,7 +150,7 @@ type ConductoroneAPI struct {
 
 type SDKOption func(*ConductoroneAPI)
 
-// WithServerURL allows the overriding of the default server URL
+// WithServerURL allows providing an alternative server URL
 func WithServerURL(serverURL string) SDKOption {
 	return func(sdk *ConductoroneAPI) {
 		sdk.sdkConfiguration.ServerURL = serverURL
@@ -201,9 +231,9 @@ func WithTimeout(timeout time.Duration) SDKOption {
 // New creates a new instance of the SDK with the provided options
 func New(opts ...SDKOption) *ConductoroneAPI {
 	sdk := &ConductoroneAPI{
-		SDKVersion: "1.26.1",
+		SDKVersion: "1.28.2",
 		sdkConfiguration: config.SDKConfiguration{
-			UserAgent:  "speakeasy-sdk/go 1.26.1 2.794.1 0.1.0-alpha github.com/conductorone/conductorone-sdk-go",
+			UserAgent:  "speakeasy-sdk/go 1.28.2 2.882.0 0.1.0-alpha github.com/conductorone/conductorone-sdk-go",
 			ServerList: ServerList,
 			ServerVariables: []map[string]string{
 				{
@@ -229,8 +259,11 @@ func New(opts ...SDKOption) *ConductoroneAPI {
 		sdk.sdkConfiguration.ServerURL = serverURL
 	}
 
+	sdk.A2UI = newA2UI(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.AccessReview = newAccessReview(sdk, sdk.sdkConfiguration, sdk.hooks)
+	sdk.AccessReviewSetupEntitlement = newAccessReviewSetupEntitlement(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.AccessReviewTemplate = newAccessReviewTemplate(sdk, sdk.sdkConfiguration, sdk.hooks)
+	sdk.AccessReviewTemplateSetupEntitlement = newAccessReviewTemplateSetupEntitlement(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.AccessConflict = newAccessConflict(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.AppEntitlementMonitorBinding = newAppEntitlementMonitorBinding(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.Apps = newApps(sdk, sdk.sdkConfiguration, sdk.hooks)
@@ -250,39 +283,63 @@ func New(opts ...SDKOption) *ConductoroneAPI {
 	sdk.AppUsageControls = newAppUsageControls(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.AppEntitlementsProxy = newAppEntitlementsProxy(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.Attributes = newAttributes(sdk, sdk.sdkConfiguration, sdk.hooks)
+	sdk.TenantAuthConfig = newTenantAuthConfig(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.Auth = newAuth(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.AutomationExecution = newAutomationExecution(sdk, sdk.sdkConfiguration, sdk.hooks)
-	sdk.AutomationExecutionSearch = newAutomationExecutionSearch(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.AutomationExecutionActions = newAutomationExecutionActions(sdk, sdk.sdkConfiguration, sdk.hooks)
-	sdk.AutomationSearch = newAutomationSearch(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.Automation = newAutomation(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.RequestCatalogManagement = newRequestCatalogManagement(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.ConnectorCatalog = newConnectorCatalog(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.Directory = newDirectory(sdk, sdk.sdkConfiguration, sdk.hooks)
+	sdk.Finding = newFinding(sdk, sdk.sdkConfiguration, sdk.hooks)
+	sdk.FindingRoutingRule = newFindingRoutingRule(sdk, sdk.sdkConfiguration, sdk.hooks)
+	sdk.FindingSearch = newFindingSearch(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.Functions = newFunctions(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.FunctionsInvocation = newFunctionsInvocation(sdk, sdk.sdkConfiguration, sdk.hooks)
+	sdk.FunctionsInvocationSearch = newFunctionsInvocationSearch(sdk, sdk.sdkConfiguration, sdk.hooks)
+	sdk.Hooks = newHooks(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.PersonalClient = newPersonalClient(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.Roles = newRoles(sdk, sdk.sdkConfiguration, sdk.hooks)
+	sdk.LocalDirectoryConfig = newLocalDirectoryConfig(sdk, sdk.sdkConfiguration, sdk.hooks)
+	sdk.LocalUserInvitation = newLocalUserInvitation(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.Policies = newPolicies(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.AccountProvisionPolicyTest = newAccountProvisionPolicyTest(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.PolicyValidate = newPolicyValidate(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.RequestSchema = newRequestSchema(sdk, sdk.sdkConfiguration, sdk.hooks)
+	sdk.RoleMiningManagement = newRoleMiningManagement(sdk, sdk.sdkConfiguration, sdk.hooks)
+	sdk.AutomationExecutionSearch = newAutomationExecutionSearch(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.AppResourceSearch = newAppResourceSearch(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.AppSearch = newAppSearch(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.AttributeSearch = newAttributeSearch(sdk, sdk.sdkConfiguration, sdk.hooks)
+	sdk.AutomationSearch = newAutomationSearch(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.FunctionsSearch = newFunctionsSearch(sdk, sdk.sdkConfiguration, sdk.hooks)
+	sdk.HooksSearch = newHooksSearch(sdk, sdk.sdkConfiguration, sdk.hooks)
+	sdk.ExternalClientSearch = newExternalClientSearch(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.PersonalClientSearch = newPersonalClientSearch(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.PolicySearch = newPolicySearch(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.RequestCatalogSearch = newRequestCatalogSearch(sdk, sdk.sdkConfiguration, sdk.hooks)
+	sdk.RoleMiningManagementSearch = newRoleMiningManagementSearch(sdk, sdk.sdkConfiguration, sdk.hooks)
+	sdk.PaperSecretAdmin = newPaperSecretAdmin(sdk, sdk.sdkConfiguration, sdk.hooks)
+	sdk.PaperSecret = newPaperSecret(sdk, sdk.sdkConfiguration, sdk.hooks)
+	sdk.SSFReceiverEventSearch = newSSFReceiverEventSearch(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.StepUpProvider = newStepUpProvider(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.StepUpTransaction = newStepUpTransaction(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.ExportsSearch = newExportsSearch(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.TaskSearch = newTaskSearch(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.UserSearch = newUserSearch(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.WebhooksSearch = newWebhooksSearch(sdk, sdk.sdkConfiguration, sdk.hooks)
+	sdk.WorkloadFederation = newWorkloadFederation(sdk, sdk.sdkConfiguration, sdk.hooks)
+	sdk.Principal = newPrincipal(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.AWSExternalIDSettings = newAWSExternalIDSettings(sdk, sdk.sdkConfiguration, sdk.hooks)
+	sdk.Contacts = newContacts(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.OrgDomain = newOrgDomain(sdk, sdk.sdkConfiguration, sdk.hooks)
+	sdk.TenantEmailProvider = newTenantEmailProvider(sdk, sdk.sdkConfiguration, sdk.hooks)
+	sdk.OrgNotificationSettings = newOrgNotificationSettings(sdk, sdk.sdkConfiguration, sdk.hooks)
+	sdk.UserNotificationSettings = newUserNotificationSettings(sdk, sdk.sdkConfiguration, sdk.hooks)
+	sdk.OnboardingSettings = newOnboardingSettings(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.SessionSettings = newSessionSettings(sdk, sdk.sdkConfiguration, sdk.hooks)
+	sdk.SSFReceiverStream = newSSFReceiverStream(sdk, sdk.sdkConfiguration, sdk.hooks)
+	sdk.SSFReceiverEvent = newSSFReceiverEvent(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.SystemLog = newSystemLog(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.Export = newExport(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.TaskAudit = newTaskAudit(sdk, sdk.sdkConfiguration, sdk.hooks)
@@ -291,6 +348,9 @@ func New(opts ...SDKOption) *ConductoroneAPI {
 	sdk.User = newUser(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.Vault = newVault(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.Webhooks = newWebhooks(sdk, sdk.sdkConfiguration, sdk.hooks)
+	sdk.ConnectorOwnersV2 = newConnectorOwnersV2(sdk, sdk.sdkConfiguration, sdk.hooks)
+	sdk.AppEntitlementOwnersV2 = newAppEntitlementOwnersV2(sdk, sdk.sdkConfiguration, sdk.hooks)
+	sdk.AppOwnersV2 = newAppOwnersV2(sdk, sdk.sdkConfiguration, sdk.hooks)
 
 	return sdk
 }

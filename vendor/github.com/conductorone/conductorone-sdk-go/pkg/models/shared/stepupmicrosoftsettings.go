@@ -2,12 +2,38 @@
 
 package shared
 
-// StepUpMicrosoftSettings represents a Microsoft Entra Provider using Conditional Access Policies to enforce step-up authentication.
+// ValidationMode - Validation approach. See MicrosoftValidationMode for details on each mode.
+type ValidationMode string
+
+const (
+	ValidationModeMicrosoftValidationModeUnspecified ValidationMode = "MICROSOFT_VALIDATION_MODE_UNSPECIFIED"
+	ValidationModeMicrosoftValidationModeAcrs        ValidationMode = "MICROSOFT_VALIDATION_MODE_ACRS"
+	ValidationModeMicrosoftValidationModeOidc        ValidationMode = "MICROSOFT_VALIDATION_MODE_OIDC"
+)
+
+func (e ValidationMode) ToPointer() *ValidationMode {
+	return &e
+}
+
+// IsExact returns true if the value matches a known enum value, false otherwise.
+func (e *ValidationMode) IsExact() bool {
+	if e != nil {
+		switch *e {
+		case "MICROSOFT_VALIDATION_MODE_UNSPECIFIED", "MICROSOFT_VALIDATION_MODE_ACRS", "MICROSOFT_VALIDATION_MODE_OIDC":
+			return true
+		}
+	}
+	return false
+}
+
+// StepUpMicrosoftSettings configures a Microsoft Entra step-up provider using Conditional Access.
 type StepUpMicrosoftSettings struct {
-	// The conditionalAccessIds field.
+	// Authentication context IDs (C1-C99). Required for ACRS mode; ignored for OIDC mode.
 	ConditionalAccessIds []string `json:"conditionalAccessIds,omitempty"`
-	// The tenant field.
+	// Microsoft Entra tenant ID (GUID or domain). Used for response validation.
 	Tenant *string `json:"tenant,omitempty"`
+	// Validation approach. See MicrosoftValidationMode for details on each mode.
+	ValidationMode *ValidationMode `json:"validationMode,omitempty"`
 }
 
 func (s *StepUpMicrosoftSettings) GetConditionalAccessIds() []string {
@@ -22,4 +48,11 @@ func (s *StepUpMicrosoftSettings) GetTenant() *string {
 		return nil
 	}
 	return s.Tenant
+}
+
+func (s *StepUpMicrosoftSettings) GetValidationMode() *ValidationMode {
+	if s == nil {
+		return nil
+	}
+	return s.ValidationMode
 }

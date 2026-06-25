@@ -44,7 +44,7 @@ type TaskActionsServiceDenyResponse struct {
 	TaskView *TaskView `json:"taskView,omitempty"`
 	// List of serialized related objects.
 	Expanded []TaskActionsServiceDenyResponseExpanded `json:"expanded,omitempty"`
-	// The ID of the ticket (task) deny action created by this request.
+	// The ID of the task deny action created by this request.
 	TicketActionID *string `json:"ticketActionId,omitempty"`
 }
 

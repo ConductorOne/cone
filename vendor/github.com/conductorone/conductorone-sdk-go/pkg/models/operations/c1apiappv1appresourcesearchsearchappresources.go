@@ -10,7 +10,7 @@ import (
 type C1APIAppV1AppResourceSearchSearchAppResourcesResponse struct {
 	// HTTP response content type for this operation
 	ContentType string
-	// Successful response
+	// The SearchAppResourcesResponse message contains a list of results and a nextPageToken if applicable.
 	SearchAppResourcesResponse *shared.SearchAppResourcesResponse
 	// HTTP response status code for this operation
 	StatusCode int
@@ -47,3 +47,6 @@ func (c *C1APIAppV1AppResourceSearchSearchAppResourcesResponse) GetRawResponse()
 	}
 	return c.RawResponse
 }
+
+// #region class-body-c1apiappv1appresourcesearchsearchappresourcesresponse
+// #endregion class-body-c1apiappv1appresourcesearchsearchappresourcesresponse

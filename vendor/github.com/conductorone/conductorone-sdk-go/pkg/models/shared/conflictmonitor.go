@@ -7,23 +7,25 @@ import (
 	"time"
 )
 
-// The ConflictMonitor message.
+// ConflictMonitor - A conflict monitor defines a Separation of Duty rule between two entitlement sets.
+//
+//	It detects when any user holds entitlements from both set A and set B simultaneously.
 type ConflictMonitor struct {
 	// The NotificationConfig message.
-	NotificationConfig *NotificationConfig1 `json:"notificationConfig,omitempty"`
-	CreatedAt          *time.Time           `json:"createdAt,omitempty"`
-	DeletedAt          *time.Time           `json:"deletedAt,omitempty"`
-	// The description field.
+	AccessConflictNotificationConfig *AccessConflictNotificationConfig `json:"notificationConfig,omitempty"`
+	CreatedAt                        *time.Time                        `json:"createdAt,omitempty"`
+	DeletedAt                        *time.Time                        `json:"deletedAt,omitempty"`
+	// A description explaining the purpose of this Separation of Duty rule.
 	Description *string `json:"description,omitempty"`
-	// The displayName field.
+	// The human-readable name of the conflict monitor.
 	DisplayName *string `json:"displayName,omitempty"`
-	// The enabled field.
+	// Whether the conflict monitor is actively scanning for violations.
 	Enabled *bool `json:"enabled,omitempty"`
-	// The entitlementSetAId field.
+	// The identifier of entitlement set A in the conflict rule.
 	EntitlementSetAID *string `json:"entitlementSetAId,omitempty"`
-	// The entitlementSetBId field.
+	// The identifier of entitlement set B in the conflict rule.
 	EntitlementSetBID *string `json:"entitlementSetBId,omitempty"`
-	// The id field.
+	// The unique identifier of this conflict monitor.
 	ID        *string    `json:"id,omitempty"`
 	UpdatedAt *time.Time `json:"updatedAt,omitempty"`
 }
@@ -39,11 +41,11 @@ func (c *ConflictMonitor) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (c *ConflictMonitor) GetNotificationConfig() *NotificationConfig1 {
+func (c *ConflictMonitor) GetAccessConflictNotificationConfig() *AccessConflictNotificationConfig {
 	if c == nil {
 		return nil
 	}
-	return c.NotificationConfig
+	return c.AccessConflictNotificationConfig
 }
 
 func (c *ConflictMonitor) GetCreatedAt() *time.Time {

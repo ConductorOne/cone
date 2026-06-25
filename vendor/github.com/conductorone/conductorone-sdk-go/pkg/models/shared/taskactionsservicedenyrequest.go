@@ -8,7 +8,7 @@ type TaskActionsServiceDenyRequest struct {
 	TaskExpandMask *TaskExpandMask `json:"expandMask,omitempty"`
 	// The comment attached to the request.
 	Comment *string `json:"comment,omitempty"`
-	// The ID of the currently policy step. This is the step you want to deny.
+	// The ID of the current policy step. This is the step you want to deny.
 	PolicyStepID *string `json:"policyStepId,omitempty"`
 }
 

@@ -10,7 +10,7 @@ import (
 type C1APISystemlogV1ExportsSearchServiceSearchResponse struct {
 	// HTTP response content type for this operation
 	ContentType string
-	// Successful response
+	// ExportsSearchServiceSearchResponse is the response for searching system log exports.
 	ExportsSearchServiceSearchResponse *shared.ExportsSearchServiceSearchResponse
 	// HTTP response status code for this operation
 	StatusCode int
@@ -45,3 +45,6 @@ func (c *C1APISystemlogV1ExportsSearchServiceSearchResponse) GetRawResponse() *h
 	}
 	return c.RawResponse
 }
+
+// #region class-body-c1apisystemlogv1exportssearchservicesearchresponse
+// #endregion class-body-c1apisystemlogv1exportssearchservicesearchresponse

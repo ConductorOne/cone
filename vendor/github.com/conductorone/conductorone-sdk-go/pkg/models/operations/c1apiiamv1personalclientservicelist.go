@@ -45,3 +45,6 @@ func (c *C1APIIamV1PersonalClientServiceListResponse) GetRawResponse() *http.Res
 	}
 	return c.RawResponse
 }
+
+// #region class-body-c1apiiamv1personalclientservicelistresponse
+// #endregion class-body-c1apiiamv1personalclientservicelistresponse

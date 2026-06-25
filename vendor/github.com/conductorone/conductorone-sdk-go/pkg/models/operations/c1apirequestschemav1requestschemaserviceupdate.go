@@ -26,10 +26,13 @@ func (c *C1APIRequestSchemaV1RequestSchemaServiceUpdateRequest) GetRequestSchema
 	return c.RequestSchemaID
 }
 
+// #region class-body-c1apirequestschemav1requestschemaserviceupdaterequest
+// #endregion class-body-c1apirequestschemav1requestschemaserviceupdaterequest
+
 type C1APIRequestSchemaV1RequestSchemaServiceUpdateResponse struct {
 	// HTTP response content type for this operation
 	ContentType string
-	// Successful response
+	// The response message for updating a request schema.
 	RequestSchemaServiceUpdateResponse *shared.RequestSchemaServiceUpdateResponse
 	// HTTP response status code for this operation
 	StatusCode int
@@ -64,3 +67,6 @@ func (c *C1APIRequestSchemaV1RequestSchemaServiceUpdateResponse) GetRawResponse(
 	}
 	return c.RawResponse
 }
+
+// #region class-body-c1apirequestschemav1requestschemaserviceupdateresponse
+// #endregion class-body-c1apirequestschemav1requestschemaserviceupdateresponse

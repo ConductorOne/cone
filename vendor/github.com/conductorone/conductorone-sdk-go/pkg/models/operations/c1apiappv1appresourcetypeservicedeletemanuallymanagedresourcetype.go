@@ -34,10 +34,13 @@ func (c *C1APIAppV1AppResourceTypeServiceDeleteManuallyManagedResourceTypeReques
 	return c.ID
 }
 
+// #region class-body-c1apiappv1appresourcetypeservicedeletemanuallymanagedresourcetyperequest
+// #endregion class-body-c1apiappv1appresourcetypeservicedeletemanuallymanagedresourcetyperequest
+
 type C1APIAppV1AppResourceTypeServiceDeleteManuallyManagedResourceTypeResponse struct {
 	// HTTP response content type for this operation
 	ContentType string
-	// Successful response
+	// The empty response message for deleting a manually managed resource type.
 	DeleteManuallyManagedResourceTypeResponse *shared.DeleteManuallyManagedResourceTypeResponse
 	// HTTP response status code for this operation
 	StatusCode int
@@ -72,3 +75,6 @@ func (c *C1APIAppV1AppResourceTypeServiceDeleteManuallyManagedResourceTypeRespon
 	}
 	return c.RawResponse
 }
+
+// #region class-body-c1apiappv1appresourcetypeservicedeletemanuallymanagedresourcetyperesponse
+// #endregion class-body-c1apiappv1appresourcetypeservicedeletemanuallymanagedresourcetyperesponse

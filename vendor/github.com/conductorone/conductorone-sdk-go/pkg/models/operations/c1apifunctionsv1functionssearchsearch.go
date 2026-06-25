@@ -45,3 +45,6 @@ func (c *C1APIFunctionsV1FunctionsSearchSearchResponse) GetRawResponse() *http.R
 	}
 	return c.RawResponse
 }
+
+// #region class-body-c1apifunctionsv1functionssearchsearchresponse
+// #endregion class-body-c1apifunctionsv1functionssearchsearchresponse

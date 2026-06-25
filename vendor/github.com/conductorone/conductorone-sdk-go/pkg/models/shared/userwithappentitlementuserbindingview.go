@@ -6,11 +6,11 @@ package shared
 type UserWithAppEntitlementUserBindingView struct {
 	// The User object provides all of the details for an user, as well as some configuration.
 	User *User `json:"user,omitempty"`
-	// The appEntitlementId field.
+	// The ID of the app entitlement.
 	AppEntitlementID *string `json:"appEntitlementId,omitempty"`
-	// The appId field.
+	// The ID of the app that contains the entitlement.
 	AppID *string `json:"appId,omitempty"`
-	// The appUserId field.
+	// The ID of the app user associated with this binding.
 	AppUserID *string `json:"appUserId,omitempty"`
 }
 

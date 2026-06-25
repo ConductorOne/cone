@@ -2,60 +2,15 @@
 
 package shared
 
-// FormInput - A form is a collection of fields to be filled out by a user
+// FormInput - The Form message.
 type FormInput struct {
-	// The description field.
-	Description *string `json:"description,omitempty"`
-	// The displayName field.
-	DisplayName *string `json:"displayName,omitempty"`
-	// The fieldGroups field.
-	FieldGroups []FieldGroup `json:"fieldGroups,omitempty"`
-	// The fieldRelationships field.
-	FieldRelationships []FieldRelationship `json:"fieldRelationships,omitempty"`
-	// The fields field.
-	Fields []FieldInput `json:"fields,omitempty"`
-	// The id field.
-	ID *string `json:"id,omitempty"`
+	// A form is a collection of fields to be filled out by a user
+	RequestSchemaForm *RequestSchemaForm `json:"form,omitempty"`
 }
 
-func (f *FormInput) GetDescription() *string {
+func (f *FormInput) GetRequestSchemaForm() *RequestSchemaForm {
 	if f == nil {
 		return nil
 	}
-	return f.Description
-}
-
-func (f *FormInput) GetDisplayName() *string {
-	if f == nil {
-		return nil
-	}
-	return f.DisplayName
-}
-
-func (f *FormInput) GetFieldGroups() []FieldGroup {
-	if f == nil {
-		return nil
-	}
-	return f.FieldGroups
-}
-
-func (f *FormInput) GetFieldRelationships() []FieldRelationship {
-	if f == nil {
-		return nil
-	}
-	return f.FieldRelationships
-}
-
-func (f *FormInput) GetFields() []FieldInput {
-	if f == nil {
-		return nil
-	}
-	return f.Fields
-}
-
-func (f *FormInput) GetID() *string {
-	if f == nil {
-		return nil
-	}
-	return f.ID
+	return f.RequestSchemaForm
 }

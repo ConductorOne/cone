@@ -17,10 +17,19 @@ import (
 	"github.com/conductorone/cone/pkg/output"
 )
 
+// formFields returns the field definitions for a form, or nil if the form is empty.
+func formFields(form *shared.RequestSchemaForm) []shared.FormField {
+	if form == nil {
+		return nil
+	}
+	return form.Fields
+}
+
 // collectFormFields collects form field values from the user based on the form definition.
 // Returns a map of field names to their values, or nil if no form fields are present.
-func collectFormFields(ctx context.Context, v *viper.Viper, form *shared.FormInput) (map[string]any, error) {
-	if form == nil || len(form.Fields) == 0 {
+func collectFormFields(ctx context.Context, v *viper.Viper, form *shared.RequestSchemaForm) (map[string]any, error) {
+	fields := formFields(form)
+	if len(fields) == 0 {
 		return nil, nil
 	}
 
@@ -34,7 +43,7 @@ func collectFormFields(ctx context.Context, v *viper.Viper, form *shared.FormInp
 		return nil, err
 	}
 
-	for _, field := range form.Fields {
+	for _, field := range fields {
 		fieldName := client.StringFromPtr(field.Name)
 		if fieldName == "" {
 			continue
@@ -81,7 +90,7 @@ func collectFormFields(ctx context.Context, v *viper.Viper, form *shared.FormInp
 }
 
 // collectFieldValue collects a single field value from the user based on field type.
-func collectFieldValue(ctx context.Context, field shared.FieldInput, displayName, description string) (any, error) {
+func collectFieldValue(ctx context.Context, field shared.FormField, displayName, description string) (any, error) {
 	// Check for default value first
 	if defaultValue := getFieldDefaultValue(field); defaultValue != nil {
 		// Show default value and ask for confirmation
@@ -100,8 +109,8 @@ func collectFieldValue(ctx context.Context, field shared.FieldInput, displayName
 
 	// Collect based on field type
 	switch {
-	case field.StringField != nil:
-		return collectStringField(ctx, field.StringField, displayName, description)
+	case field.FormStringField != nil:
+		return collectStringField(ctx, field.FormStringField, displayName, description)
 	case field.BoolField != nil:
 		return collectBoolField(ctx, field.BoolField, displayName, description)
 	case field.Int64Field != nil:
@@ -116,7 +125,7 @@ func collectFieldValue(ctx context.Context, field shared.FieldInput, displayName
 }
 
 // collectStringField collects a string field value with validation.
-func collectStringField(ctx context.Context, field *shared.StringField, displayName, description string) (string, error) {
+func collectStringField(ctx context.Context, field *shared.FormStringField, displayName, description string) (string, error) {
 	validator := StringFieldValidator{
 		field:       field,
 		displayName: displayName,
@@ -235,10 +244,10 @@ func collectStringSliceField(ctx context.Context, field *shared.StringSliceField
 }
 
 // getFieldDefaultValue extracts the default value from a field based on its type.
-func getFieldDefaultValue(field shared.FieldInput) any {
+func getFieldDefaultValue(field shared.FormField) any {
 	switch {
-	case field.StringField != nil && field.StringField.DefaultValue != nil:
-		return *field.StringField.DefaultValue
+	case field.FormStringField != nil && field.FormStringField.DefaultValue != nil:
+		return *field.FormStringField.DefaultValue
 	case field.BoolField != nil && field.BoolField.DefaultValue != nil:
 		return *field.BoolField.DefaultValue
 	case field.Int64Field != nil && field.Int64Field.DefaultValue != nil:
@@ -270,7 +279,7 @@ func parseFormDataFlag(formDataFlag string) (map[string]any, error) {
 
 // StringFieldValidator validates string field input.
 type StringFieldValidator struct {
-	field       *shared.StringField
+	field       *shared.FormStringField
 	displayName string
 	description string
 }
@@ -385,10 +394,10 @@ func (v Int64FieldValidator) Prompt(isFirstRun bool) {
 }
 
 // isFieldRequired checks if a field is required based on its validation rules.
-func isFieldRequired(field shared.FieldInput) bool {
+func isFieldRequired(field shared.FormField) bool {
 	switch {
-	case field.StringField != nil:
-		rules := field.StringField.StringRules
+	case field.FormStringField != nil:
+		rules := field.FormStringField.StringRules
 		if rules == nil {
 			return false
 		}
@@ -420,12 +429,8 @@ func isFieldRequired(field shared.FieldInput) bool {
 }
 
 // validateFormData validates that all required form fields are present.
-func validateFormData(form *shared.FormInput, requestData map[string]any) error {
-	if form == nil {
-		return nil
-	}
-
-	for _, field := range form.Fields {
+func validateFormData(form *shared.RequestSchemaForm, requestData map[string]any) error {
+	for _, field := range formFields(form) {
 		fieldName := client.StringFromPtr(field.Name)
 		if fieldName == "" {
 			continue

@@ -8,15 +8,15 @@ import (
 )
 
 type C1APIAutomationsV1AutomationServiceDeleteAutomationRequest struct {
-	DeleteAutomationRequest *shared.DeleteAutomationRequest `request:"mediaType=application/json"`
-	ID                      string                          `pathParam:"style=simple,explode=false,name=id"`
+	AutomationsDeleteAutomationRequest *shared.AutomationsDeleteAutomationRequest `request:"mediaType=application/json"`
+	ID                                 string                                     `pathParam:"style=simple,explode=false,name=id"`
 }
 
-func (c *C1APIAutomationsV1AutomationServiceDeleteAutomationRequest) GetDeleteAutomationRequest() *shared.DeleteAutomationRequest {
+func (c *C1APIAutomationsV1AutomationServiceDeleteAutomationRequest) GetAutomationsDeleteAutomationRequest() *shared.AutomationsDeleteAutomationRequest {
 	if c == nil {
 		return nil
 	}
-	return c.DeleteAutomationRequest
+	return c.AutomationsDeleteAutomationRequest
 }
 
 func (c *C1APIAutomationsV1AutomationServiceDeleteAutomationRequest) GetID() string {
@@ -26,15 +26,25 @@ func (c *C1APIAutomationsV1AutomationServiceDeleteAutomationRequest) GetID() str
 	return c.ID
 }
 
+// #region class-body-c1apiautomationsv1automationservicedeleteautomationrequest
+// #endregion class-body-c1apiautomationsv1automationservicedeleteautomationrequest
+
 type C1APIAutomationsV1AutomationServiceDeleteAutomationResponse struct {
+	// Successful response
+	AutomationsDeleteAutomationResponse *shared.AutomationsDeleteAutomationResponse
 	// HTTP response content type for this operation
 	ContentType string
-	// Successful response
-	DeleteAutomationResponse *shared.DeleteAutomationResponse
 	// HTTP response status code for this operation
 	StatusCode int
 	// Raw HTTP response; suitable for custom response parsing
 	RawResponse *http.Response
+}
+
+func (c *C1APIAutomationsV1AutomationServiceDeleteAutomationResponse) GetAutomationsDeleteAutomationResponse() *shared.AutomationsDeleteAutomationResponse {
+	if c == nil {
+		return nil
+	}
+	return c.AutomationsDeleteAutomationResponse
 }
 
 func (c *C1APIAutomationsV1AutomationServiceDeleteAutomationResponse) GetContentType() string {
@@ -42,13 +52,6 @@ func (c *C1APIAutomationsV1AutomationServiceDeleteAutomationResponse) GetContent
 		return ""
 	}
 	return c.ContentType
-}
-
-func (c *C1APIAutomationsV1AutomationServiceDeleteAutomationResponse) GetDeleteAutomationResponse() *shared.DeleteAutomationResponse {
-	if c == nil {
-		return nil
-	}
-	return c.DeleteAutomationResponse
 }
 
 func (c *C1APIAutomationsV1AutomationServiceDeleteAutomationResponse) GetStatusCode() int {
@@ -64,3 +67,6 @@ func (c *C1APIAutomationsV1AutomationServiceDeleteAutomationResponse) GetRawResp
 	}
 	return c.RawResponse
 }
+
+// #region class-body-c1apiautomationsv1automationservicedeleteautomationresponse
+// #endregion class-body-c1apiautomationsv1automationservicedeleteautomationresponse

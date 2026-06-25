@@ -34,10 +34,13 @@ func (c *C1APIAppV1ConnectorServiceResumeSyncRequest) GetConnectorID() string {
 	return c.ConnectorID
 }
 
+// #region class-body-c1apiappv1connectorserviceresumesyncrequest
+// #endregion class-body-c1apiappv1connectorserviceresumesyncrequest
+
 type C1APIAppV1ConnectorServiceResumeSyncResponse struct {
 	// HTTP response content type for this operation
 	ContentType string
-	// Successful response
+	// Empty response body. Status code indicates success.
 	ResumeSyncResponse *shared.ResumeSyncResponse
 	// HTTP response status code for this operation
 	StatusCode int
@@ -72,3 +75,6 @@ func (c *C1APIAppV1ConnectorServiceResumeSyncResponse) GetRawResponse() *http.Re
 	}
 	return c.RawResponse
 }
+
+// #region class-body-c1apiappv1connectorserviceresumesyncresponse
+// #endregion class-body-c1apiappv1connectorserviceresumesyncresponse

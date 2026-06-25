@@ -8,7 +8,8 @@ import (
 )
 
 type C1APIAccessconflictV1AccessConflictServiceCreateMonitorResponse struct {
-	// Successful response
+	// A conflict monitor defines a Separation of Duty rule between two entitlement sets.
+	//  It detects when any user holds entitlements from both set A and set B simultaneously.
 	ConflictMonitor *shared.ConflictMonitor
 	// HTTP response content type for this operation
 	ContentType string
@@ -45,3 +46,6 @@ func (c *C1APIAccessconflictV1AccessConflictServiceCreateMonitorResponse) GetRaw
 	}
 	return c.RawResponse
 }
+
+// #region class-body-c1apiaccessconflictv1accessconflictservicecreatemonitorresponse
+// #endregion class-body-c1apiaccessconflictv1accessconflictservicecreatemonitorresponse

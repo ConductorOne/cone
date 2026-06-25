@@ -26,6 +26,9 @@ func (c *C1APISystemlogV1ExportServiceUpdateRequest) GetExportID() string {
 	return c.ExportID
 }
 
+// #region class-body-c1apisystemlogv1exportserviceupdaterequest
+// #endregion class-body-c1apisystemlogv1exportserviceupdaterequest
+
 type C1APISystemlogV1ExportServiceUpdateResponse struct {
 	// HTTP response content type for this operation
 	ContentType string
@@ -64,3 +67,6 @@ func (c *C1APISystemlogV1ExportServiceUpdateResponse) GetRawResponse() *http.Res
 	}
 	return c.RawResponse
 }
+
+// #region class-body-c1apisystemlogv1exportserviceupdateresponse
+// #endregion class-body-c1apisystemlogv1exportserviceupdateresponse

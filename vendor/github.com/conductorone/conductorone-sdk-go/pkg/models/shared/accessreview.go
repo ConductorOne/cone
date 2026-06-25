@@ -7,6 +7,55 @@ import (
 	"time"
 )
 
+// AccuracyIssueAction - The accuracyIssueAction field.
+type AccuracyIssueAction string
+
+const (
+	AccuracyIssueActionAccuracyIssueActionUnspecified AccuracyIssueAction = "ACCURACY_ISSUE_ACTION_UNSPECIFIED"
+	AccuracyIssueActionAccuracyIssueActionContinue    AccuracyIssueAction = "ACCURACY_ISSUE_ACTION_CONTINUE"
+	AccuracyIssueActionAccuracyIssueActionWait        AccuracyIssueAction = "ACCURACY_ISSUE_ACTION_WAIT"
+)
+
+func (e AccuracyIssueAction) ToPointer() *AccuracyIssueAction {
+	return &e
+}
+
+// IsExact returns true if the value matches a known enum value, false otherwise.
+func (e *AccuracyIssueAction) IsExact() bool {
+	if e != nil {
+		switch *e {
+		case "ACCURACY_ISSUE_ACTION_UNSPECIFIED", "ACCURACY_ISSUE_ACTION_CONTINUE", "ACCURACY_ISSUE_ACTION_WAIT":
+			return true
+		}
+	}
+	return false
+}
+
+// AutoCloseDecision - The autoCloseDecision field.
+type AutoCloseDecision string
+
+const (
+	AutoCloseDecisionCloseDecisionUnspecified AutoCloseDecision = "CLOSE_DECISION_UNSPECIFIED"
+	AutoCloseDecisionCloseDecisionRevoked     AutoCloseDecision = "CLOSE_DECISION_REVOKED"
+	AutoCloseDecisionCloseDecisionSkip        AutoCloseDecision = "CLOSE_DECISION_SKIP"
+	AutoCloseDecisionCloseDecisionNoAction    AutoCloseDecision = "CLOSE_DECISION_NO_ACTION"
+)
+
+func (e AutoCloseDecision) ToPointer() *AutoCloseDecision {
+	return &e
+}
+
+// IsExact returns true if the value matches a known enum value, false otherwise.
+func (e *AutoCloseDecision) IsExact() bool {
+	if e != nil {
+		switch *e {
+		case "CLOSE_DECISION_UNSPECIFIED", "CLOSE_DECISION_REVOKED", "CLOSE_DECISION_SKIP", "CLOSE_DECISION_NO_ACTION":
+			return true
+		}
+	}
+	return false
+}
+
 // DefaultView - the default view that reviewers will see when they complete their access reviews
 type DefaultView string
 
@@ -15,6 +64,7 @@ const (
 	DefaultViewAccessReviewViewTypeByApp        DefaultView = "ACCESS_REVIEW_VIEW_TYPE_BY_APP"
 	DefaultViewAccessReviewViewTypeByUser       DefaultView = "ACCESS_REVIEW_VIEW_TYPE_BY_USER"
 	DefaultViewAccessReviewViewTypeUnstructured DefaultView = "ACCESS_REVIEW_VIEW_TYPE_UNSTRUCTURED"
+	DefaultViewAccessReviewViewTypeByResource   DefaultView = "ACCESS_REVIEW_VIEW_TYPE_BY_RESOURCE"
 )
 
 func (e DefaultView) ToPointer() *DefaultView {
@@ -25,7 +75,32 @@ func (e DefaultView) ToPointer() *DefaultView {
 func (e *DefaultView) IsExact() bool {
 	if e != nil {
 		switch *e {
-		case "ACCESS_REVIEW_VIEW_TYPE_UNSPECIFIED", "ACCESS_REVIEW_VIEW_TYPE_BY_APP", "ACCESS_REVIEW_VIEW_TYPE_BY_USER", "ACCESS_REVIEW_VIEW_TYPE_UNSTRUCTURED":
+		case "ACCESS_REVIEW_VIEW_TYPE_UNSPECIFIED", "ACCESS_REVIEW_VIEW_TYPE_BY_APP", "ACCESS_REVIEW_VIEW_TYPE_BY_USER", "ACCESS_REVIEW_VIEW_TYPE_UNSTRUCTURED", "ACCESS_REVIEW_VIEW_TYPE_BY_RESOURCE":
+			return true
+		}
+	}
+	return false
+}
+
+// ErrorState - Error state set when a prepare action fails with a recoverable condition.
+//
+//	Cleared when the campaign scope is changed.
+type ErrorState string
+
+const (
+	ErrorStateAccessReviewErrorStateUnspecified               ErrorState = "ACCESS_REVIEW_ERROR_STATE_UNSPECIFIED"
+	ErrorStateAccessReviewErrorStateSelectionQuotaExceedError ErrorState = "ACCESS_REVIEW_ERROR_STATE_SELECTION_QUOTA_EXCEED_ERROR"
+)
+
+func (e ErrorState) ToPointer() *ErrorState {
+	return &e
+}
+
+// IsExact returns true if the value matches a known enum value, false otherwise.
+func (e *ErrorState) IsExact() bool {
+	if e != nil {
+		switch *e {
+		case "ACCESS_REVIEW_ERROR_STATE_UNSPECIFIED", "ACCESS_REVIEW_ERROR_STATE_SELECTION_QUOTA_EXCEED_ERROR":
 			return true
 		}
 	}
@@ -39,6 +114,8 @@ const (
 	ScopeTypeAccessReviewScopeTypeUnspecified       ScopeType = "ACCESS_REVIEW_SCOPE_TYPE_UNSPECIFIED"
 	ScopeTypeAccessReviewScopeTypeByEntitlements    ScopeType = "ACCESS_REVIEW_SCOPE_TYPE_BY_ENTITLEMENTS"
 	ScopeTypeAccessReviewScopeTypeByAccessConflicts ScopeType = "ACCESS_REVIEW_SCOPE_TYPE_BY_ACCESS_CONFLICTS"
+	ScopeTypeAccessReviewScopeTypeByResource        ScopeType = "ACCESS_REVIEW_SCOPE_TYPE_BY_RESOURCE"
+	ScopeTypeAccessReviewScopeTypeByInheritance     ScopeType = "ACCESS_REVIEW_SCOPE_TYPE_BY_INHERITANCE"
 )
 
 func (e ScopeType) ToPointer() *ScopeType {
@@ -49,38 +126,38 @@ func (e ScopeType) ToPointer() *ScopeType {
 func (e *ScopeType) IsExact() bool {
 	if e != nil {
 		switch *e {
-		case "ACCESS_REVIEW_SCOPE_TYPE_UNSPECIFIED", "ACCESS_REVIEW_SCOPE_TYPE_BY_ENTITLEMENTS", "ACCESS_REVIEW_SCOPE_TYPE_BY_ACCESS_CONFLICTS":
+		case "ACCESS_REVIEW_SCOPE_TYPE_UNSPECIFIED", "ACCESS_REVIEW_SCOPE_TYPE_BY_ENTITLEMENTS", "ACCESS_REVIEW_SCOPE_TYPE_BY_ACCESS_CONFLICTS", "ACCESS_REVIEW_SCOPE_TYPE_BY_RESOURCE", "ACCESS_REVIEW_SCOPE_TYPE_BY_INHERITANCE":
 			return true
 		}
 	}
 	return false
 }
 
-// State - The state field.
-type State string
+// AccessReviewState - The current lifecycle state of the campaign (e.g., draft, open, closed).
+type AccessReviewState string
 
 const (
-	StateAccessReviewStateUnspecified                   State = "ACCESS_REVIEW_STATE_UNSPECIFIED"
-	StateAccessReviewStateOpen                          State = "ACCESS_REVIEW_STATE_OPEN"
-	StateAccessReviewStateClosed                        State = "ACCESS_REVIEW_STATE_CLOSED"
-	StateAccessReviewStatePending                       State = "ACCESS_REVIEW_STATE_PENDING"
-	StateAccessReviewStateReview                        State = "ACCESS_REVIEW_STATE_REVIEW"
-	StateAccessReviewStatePreparing                     State = "ACCESS_REVIEW_STATE_PREPARING"
-	StateAccessReviewStateStarting                      State = "ACCESS_REVIEW_STATE_STARTING"
-	StateAccessReviewStateDraft                         State = "ACCESS_REVIEW_STATE_DRAFT"
-	StateAccessReviewStateDeleting                      State = "ACCESS_REVIEW_STATE_DELETING"
-	StateAccessReviewStateDeleted                       State = "ACCESS_REVIEW_STATE_DELETED"
-	StateAccessReviewStateResettingPolicies             State = "ACCESS_REVIEW_STATE_RESETTING_POLICIES"
-	StateAccessReviewStateCopyingSetupEntitlements      State = "ACCESS_REVIEW_STATE_COPYING_SETUP_ENTITLEMENTS"
-	StateAccessReviewStateCopyingResourceTypeSelections State = "ACCESS_REVIEW_STATE_COPYING_RESOURCE_TYPE_SELECTIONS"
+	AccessReviewStateAccessReviewStateUnspecified                   AccessReviewState = "ACCESS_REVIEW_STATE_UNSPECIFIED"
+	AccessReviewStateAccessReviewStateOpen                          AccessReviewState = "ACCESS_REVIEW_STATE_OPEN"
+	AccessReviewStateAccessReviewStateClosed                        AccessReviewState = "ACCESS_REVIEW_STATE_CLOSED"
+	AccessReviewStateAccessReviewStatePending                       AccessReviewState = "ACCESS_REVIEW_STATE_PENDING"
+	AccessReviewStateAccessReviewStateReview                        AccessReviewState = "ACCESS_REVIEW_STATE_REVIEW"
+	AccessReviewStateAccessReviewStatePreparing                     AccessReviewState = "ACCESS_REVIEW_STATE_PREPARING"
+	AccessReviewStateAccessReviewStateStarting                      AccessReviewState = "ACCESS_REVIEW_STATE_STARTING"
+	AccessReviewStateAccessReviewStateDraft                         AccessReviewState = "ACCESS_REVIEW_STATE_DRAFT"
+	AccessReviewStateAccessReviewStateDeleting                      AccessReviewState = "ACCESS_REVIEW_STATE_DELETING"
+	AccessReviewStateAccessReviewStateDeleted                       AccessReviewState = "ACCESS_REVIEW_STATE_DELETED"
+	AccessReviewStateAccessReviewStateResettingPolicies             AccessReviewState = "ACCESS_REVIEW_STATE_RESETTING_POLICIES"
+	AccessReviewStateAccessReviewStateCopyingSetupEntitlements      AccessReviewState = "ACCESS_REVIEW_STATE_COPYING_SETUP_ENTITLEMENTS"
+	AccessReviewStateAccessReviewStateCopyingResourceTypeSelections AccessReviewState = "ACCESS_REVIEW_STATE_COPYING_RESOURCE_TYPE_SELECTIONS"
 )
 
-func (e State) ToPointer() *State {
+func (e AccessReviewState) ToPointer() *AccessReviewState {
 	return &e
 }
 
 // IsExact returns true if the value matches a known enum value, false otherwise.
-func (e *State) IsExact() bool {
+func (e *AccessReviewState) IsExact() bool {
 	if e != nil {
 		switch *e {
 		case "ACCESS_REVIEW_STATE_UNSPECIFIED", "ACCESS_REVIEW_STATE_OPEN", "ACCESS_REVIEW_STATE_CLOSED", "ACCESS_REVIEW_STATE_PENDING", "ACCESS_REVIEW_STATE_REVIEW", "ACCESS_REVIEW_STATE_PREPARING", "ACCESS_REVIEW_STATE_STARTING", "ACCESS_REVIEW_STATE_DRAFT", "ACCESS_REVIEW_STATE_DELETING", "ACCESS_REVIEW_STATE_DELETED", "ACCESS_REVIEW_STATE_RESETTING_POLICIES", "ACCESS_REVIEW_STATE_COPYING_SETUP_ENTITLEMENTS", "ACCESS_REVIEW_STATE_COPYING_RESOURCE_TYPE_SELECTIONS":
@@ -90,13 +167,15 @@ func (e *State) IsExact() bool {
 	return false
 }
 
-// The AccessReview message.
+// AccessReview - An access review campaign (also called a certification campaign) that verifies whether users still need their access entitlements.
 //
 // This message contains a oneof named setup_metadata. Only a single field of the following list may be set at a time:
 //   - singleApp
 //   - multiApp
 //   - bindings
 type AccessReview struct {
+	// Configuration for which columns are visible in the reviewer task list.
+	AccessReviewColumnConfig *AccessReviewColumnConfig `json:"columnConfig,omitempty"`
 	// The AccessReviewExclusionScope message.
 	AccessReviewExclusionScope *AccessReviewExclusionScope `json:"exclusionScope,omitempty"`
 	// The AccessReviewInclusionScope message.
@@ -134,12 +213,20 @@ type AccessReview struct {
 	//   - allAccessConflicts
 	//   - specificAccessConflicts
 	//
+	//
+	// This message contains a oneof named resource_scope. Only a single field of the following list may be set at a time:
+	//   - resourceSelection
+	//
 	AccessReviewScopeV2 *AccessReviewScopeV2 `json:"scopeV2,omitempty"`
 	// The BindingObjectSetup message.
 	BindingObjectSetup *BindingObjectSetup `json:"bindings,omitempty"`
+	// Campaign health snapshot. Read-only; updated by backend maintenance processors.
+	CampaignHealthSnapshot *CampaignHealthSnapshot `json:"campaignHealth,omitempty"`
+	// AI-generated campaign insights (markdown). Read-only; set by backend when campaign is closed.
+	CampaignInsights *CampaignInsights `json:"campaignInsights,omitempty"`
 	// The MultiAppSetup message.
 	MultiAppSetup *MultiAppSetup `json:"multiApp,omitempty"`
-	// The NotificationConfig message.
+	// Controls which email notifications are sent during the access review lifecycle.
 	NotificationConfig *NotificationConfig `json:"notificationConfig,omitempty"`
 	// Signature configuration for access review submissions
 	ReviewSignatureConfig *ReviewSignatureConfig `json:"signatureConfig,omitempty"`
@@ -147,42 +234,55 @@ type AccessReview struct {
 	SingleAppSetup *SingleAppSetup `json:"singleApp,omitempty"`
 	// The ID of the template if the campaign was created from one
 	AccessReviewTemplateID *string `json:"accessReviewTemplateId,omitempty"`
+	// The accuracyIssueAction field.
+	AccuracyIssueAction *AccuracyIssueAction `json:"accuracyIssueAction,omitempty"`
+	// Auto-close configuration
+	//  completion_date is used as the scheduled close date
+	AutoCloseCampaign *bool `json:"autoCloseCampaign,omitempty"`
+	// The autoCloseDecision field.
+	AutoCloseDecision *AutoCloseDecision `json:"autoCloseDecision,omitempty"`
 	// The autoGenerateReport field.
 	AutoGenerateReport *bool `json:"autoGenerateReport,omitempty"`
-	// The autoResolve field.
-	AutoResolve              *bool      `json:"autoResolve,omitempty"`
+	// When true, selections are automatically resolved if the entitlement grant no longer exists.
+	AutoResolve *bool `json:"autoResolve,omitempty"`
+	// Auto-start configuration
+	AutoStartCampaign        *bool      `json:"autoStartCampaign,omitempty"`
 	ClosedAt                 *time.Time `json:"closedAt,omitempty"`
 	CompletionDate           *time.Time `json:"completionDate,omitempty"`
 	ConnectorSourcesFrozenAt *time.Time `json:"connectorSourcesFrozenAt,omitempty"`
 	CreatedAt                *time.Time `json:"createdAt,omitempty"`
-	// The createdById field.
+	// The ID of the user who created this campaign.
 	CreatedByID *string `json:"createdById,omitempty"`
 	// the default view that reviewers will see when they complete their access reviews
 	DefaultView *DefaultView `json:"defaultView,omitempty"`
-	// The description field.
+	// An optional description providing context about this campaign.
 	Description *string `json:"description,omitempty"`
-	// The displayName field.
+	// The human-readable name of this campaign.
 	DisplayName *string `json:"displayName,omitempty"`
+	// Error state set when a prepare action fails with a recoverable condition.
+	//  Cleared when the campaign scope is changed.
+	ErrorState *ErrorState `json:"errorState,omitempty"`
 	// this setting is used for access conflict type scope
 	ExemptCertifiedAccessConflicts *bool `json:"exemptCertifiedAccessConflicts,omitempty"`
-	// The expectedTicketCount field.
+	// The estimated number of review tasks that will be generated when the campaign starts.
 	ExpectedTicketCount *int `json:"expectedTicketCount,omitempty"`
-	// The hasAccuracySupport field.
+	// Whether the connectors in this campaign support accuracy checking.
 	HasAccuracySupport *bool `json:"hasAccuracySupport,omitempty"`
-	// The id field.
+	// The unique identifier of this access review campaign.
 	ID *string `json:"id,omitempty"`
-	// The policyId field.
+	// The ID of the review policy that governs how review tasks are assigned and resolved.
 	PolicyID *string `json:"policyId,omitempty"`
-	// The reviewInstructions field.
-	ReviewInstructions *string `json:"reviewInstructions,omitempty"`
+	// Optional instructions displayed to reviewers when completing their review tasks.
+	ReviewInstructions *string    `json:"reviewInstructions,omitempty"`
+	ScheduledStartDate *time.Time `json:"scheduledStartDate,omitempty"`
 	// this sets the scope type for the access review
 	ScopeType *ScopeType `json:"scopeType,omitempty"`
-	// The scopingVersion field.
+	// Internal version counter incremented when the campaign scope changes.
 	ScopingVersion *int64     `integer:"string" json:"scopingVersion,omitempty"`
 	StartedAt      *time.Time `json:"startedAt,omitempty"`
-	// The state field.
-	State     *State     `json:"state,omitempty"`
-	UpdatedAt *time.Time `json:"updatedAt,omitempty"`
+	// The current lifecycle state of the campaign (e.g., draft, open, closed).
+	State     *AccessReviewState `json:"state,omitempty"`
+	UpdatedAt *time.Time         `json:"updatedAt,omitempty"`
 	// Determines the policy applied to the campaign. Default is false, using the campaign policy.
 	//  If true, the order of precedence is entitlement → app → campaign policy.
 	UsePolicyOverride *bool `json:"usePolicyOverride,omitempty"`
@@ -197,6 +297,13 @@ func (a *AccessReview) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
+}
+
+func (a *AccessReview) GetAccessReviewColumnConfig() *AccessReviewColumnConfig {
+	if a == nil {
+		return nil
+	}
+	return a.AccessReviewColumnConfig
 }
 
 func (a *AccessReview) GetAccessReviewExclusionScope() *AccessReviewExclusionScope {
@@ -234,6 +341,20 @@ func (a *AccessReview) GetBindingObjectSetup() *BindingObjectSetup {
 	return a.BindingObjectSetup
 }
 
+func (a *AccessReview) GetCampaignHealthSnapshot() *CampaignHealthSnapshot {
+	if a == nil {
+		return nil
+	}
+	return a.CampaignHealthSnapshot
+}
+
+func (a *AccessReview) GetCampaignInsights() *CampaignInsights {
+	if a == nil {
+		return nil
+	}
+	return a.CampaignInsights
+}
+
 func (a *AccessReview) GetMultiAppSetup() *MultiAppSetup {
 	if a == nil {
 		return nil
@@ -269,6 +390,27 @@ func (a *AccessReview) GetAccessReviewTemplateID() *string {
 	return a.AccessReviewTemplateID
 }
 
+func (a *AccessReview) GetAccuracyIssueAction() *AccuracyIssueAction {
+	if a == nil {
+		return nil
+	}
+	return a.AccuracyIssueAction
+}
+
+func (a *AccessReview) GetAutoCloseCampaign() *bool {
+	if a == nil {
+		return nil
+	}
+	return a.AutoCloseCampaign
+}
+
+func (a *AccessReview) GetAutoCloseDecision() *AutoCloseDecision {
+	if a == nil {
+		return nil
+	}
+	return a.AutoCloseDecision
+}
+
 func (a *AccessReview) GetAutoGenerateReport() *bool {
 	if a == nil {
 		return nil
@@ -281,6 +423,13 @@ func (a *AccessReview) GetAutoResolve() *bool {
 		return nil
 	}
 	return a.AutoResolve
+}
+
+func (a *AccessReview) GetAutoStartCampaign() *bool {
+	if a == nil {
+		return nil
+	}
+	return a.AutoStartCampaign
 }
 
 func (a *AccessReview) GetClosedAt() *time.Time {
@@ -339,6 +488,13 @@ func (a *AccessReview) GetDisplayName() *string {
 	return a.DisplayName
 }
 
+func (a *AccessReview) GetErrorState() *ErrorState {
+	if a == nil {
+		return nil
+	}
+	return a.ErrorState
+}
+
 func (a *AccessReview) GetExemptCertifiedAccessConflicts() *bool {
 	if a == nil {
 		return nil
@@ -381,6 +537,13 @@ func (a *AccessReview) GetReviewInstructions() *string {
 	return a.ReviewInstructions
 }
 
+func (a *AccessReview) GetScheduledStartDate() *time.Time {
+	if a == nil {
+		return nil
+	}
+	return a.ScheduledStartDate
+}
+
 func (a *AccessReview) GetScopeType() *ScopeType {
 	if a == nil {
 		return nil
@@ -402,7 +565,7 @@ func (a *AccessReview) GetStartedAt() *time.Time {
 	return a.StartedAt
 }
 
-func (a *AccessReview) GetState() *State {
+func (a *AccessReview) GetState() *AccessReviewState {
 	if a == nil {
 		return nil
 	}
@@ -423,13 +586,15 @@ func (a *AccessReview) GetUsePolicyOverride() *bool {
 	return a.UsePolicyOverride
 }
 
-// AccessReviewInput - The AccessReview message.
+// AccessReviewInput - An access review campaign (also called a certification campaign) that verifies whether users still need their access entitlements.
 //
 // This message contains a oneof named setup_metadata. Only a single field of the following list may be set at a time:
 //   - singleApp
 //   - multiApp
 //   - bindings
 type AccessReviewInput struct {
+	// Configuration for which columns are visible in the reviewer task list.
+	AccessReviewColumnConfig *AccessReviewColumnConfig `json:"columnConfig,omitempty"`
 	// The AccessReviewExclusionScope message.
 	AccessReviewExclusionScope *AccessReviewExclusionScope `json:"exclusionScope,omitempty"`
 	// The AccessReviewInclusionScope message.
@@ -467,12 +632,20 @@ type AccessReviewInput struct {
 	//   - allAccessConflicts
 	//   - specificAccessConflicts
 	//
+	//
+	// This message contains a oneof named resource_scope. Only a single field of the following list may be set at a time:
+	//   - resourceSelection
+	//
 	AccessReviewScopeV2 *AccessReviewScopeV2 `json:"scopeV2,omitempty"`
 	// The BindingObjectSetup message.
 	BindingObjectSetup *BindingObjectSetup `json:"bindings,omitempty"`
+	// Campaign health snapshot. Read-only; updated by backend maintenance processors.
+	CampaignHealthSnapshot *CampaignHealthSnapshot `json:"campaignHealth,omitempty"`
+	// AI-generated campaign insights (markdown). Read-only; set by backend when campaign is closed.
+	CampaignInsights *CampaignInsights `json:"campaignInsights,omitempty"`
 	// The MultiAppSetup message.
 	MultiAppSetup *MultiAppSetup `json:"multiApp,omitempty"`
-	// The NotificationConfig message.
+	// Controls which email notifications are sent during the access review lifecycle.
 	NotificationConfig *NotificationConfig `json:"notificationConfig,omitempty"`
 	// Signature configuration for access review submissions
 	ReviewSignatureConfig *ReviewSignatureConfig `json:"signatureConfig,omitempty"`
@@ -480,40 +653,50 @@ type AccessReviewInput struct {
 	SingleAppSetup *SingleAppSetup `json:"singleApp,omitempty"`
 	// The ID of the template if the campaign was created from one
 	AccessReviewTemplateID *string `json:"accessReviewTemplateId,omitempty"`
+	// The accuracyIssueAction field.
+	AccuracyIssueAction *AccuracyIssueAction `json:"accuracyIssueAction,omitempty"`
+	// Auto-close configuration
+	//  completion_date is used as the scheduled close date
+	AutoCloseCampaign *bool `json:"autoCloseCampaign,omitempty"`
+	// The autoCloseDecision field.
+	AutoCloseDecision *AutoCloseDecision `json:"autoCloseDecision,omitempty"`
 	// The autoGenerateReport field.
 	AutoGenerateReport *bool `json:"autoGenerateReport,omitempty"`
-	// The autoResolve field.
-	AutoResolve              *bool      `json:"autoResolve,omitempty"`
+	// When true, selections are automatically resolved if the entitlement grant no longer exists.
+	AutoResolve *bool `json:"autoResolve,omitempty"`
+	// Auto-start configuration
+	AutoStartCampaign        *bool      `json:"autoStartCampaign,omitempty"`
 	ClosedAt                 *time.Time `json:"closedAt,omitempty"`
 	CompletionDate           *time.Time `json:"completionDate,omitempty"`
 	ConnectorSourcesFrozenAt *time.Time `json:"connectorSourcesFrozenAt,omitempty"`
-	// The createdById field.
+	// The ID of the user who created this campaign.
 	CreatedByID *string `json:"createdById,omitempty"`
 	// the default view that reviewers will see when they complete their access reviews
 	DefaultView *DefaultView `json:"defaultView,omitempty"`
-	// The description field.
+	// An optional description providing context about this campaign.
 	Description *string `json:"description,omitempty"`
-	// The displayName field.
+	// The human-readable name of this campaign.
 	DisplayName *string `json:"displayName,omitempty"`
 	// this setting is used for access conflict type scope
 	ExemptCertifiedAccessConflicts *bool `json:"exemptCertifiedAccessConflicts,omitempty"`
-	// The expectedTicketCount field.
+	// The estimated number of review tasks that will be generated when the campaign starts.
 	ExpectedTicketCount *int `json:"expectedTicketCount,omitempty"`
-	// The hasAccuracySupport field.
+	// Whether the connectors in this campaign support accuracy checking.
 	HasAccuracySupport *bool `json:"hasAccuracySupport,omitempty"`
-	// The id field.
+	// The unique identifier of this access review campaign.
 	ID *string `json:"id,omitempty"`
-	// The policyId field.
+	// The ID of the review policy that governs how review tasks are assigned and resolved.
 	PolicyID *string `json:"policyId,omitempty"`
-	// The reviewInstructions field.
-	ReviewInstructions *string `json:"reviewInstructions,omitempty"`
+	// Optional instructions displayed to reviewers when completing their review tasks.
+	ReviewInstructions *string    `json:"reviewInstructions,omitempty"`
+	ScheduledStartDate *time.Time `json:"scheduledStartDate,omitempty"`
 	// this sets the scope type for the access review
 	ScopeType *ScopeType `json:"scopeType,omitempty"`
-	// The scopingVersion field.
+	// Internal version counter incremented when the campaign scope changes.
 	ScopingVersion *int64     `integer:"string" json:"scopingVersion,omitempty"`
 	StartedAt      *time.Time `json:"startedAt,omitempty"`
-	// The state field.
-	State *State `json:"state,omitempty"`
+	// The current lifecycle state of the campaign (e.g., draft, open, closed).
+	State *AccessReviewState `json:"state,omitempty"`
 	// Determines the policy applied to the campaign. Default is false, using the campaign policy.
 	//  If true, the order of precedence is entitlement → app → campaign policy.
 	UsePolicyOverride *bool `json:"usePolicyOverride,omitempty"`
@@ -528,6 +711,13 @@ func (a *AccessReviewInput) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
+}
+
+func (a *AccessReviewInput) GetAccessReviewColumnConfig() *AccessReviewColumnConfig {
+	if a == nil {
+		return nil
+	}
+	return a.AccessReviewColumnConfig
 }
 
 func (a *AccessReviewInput) GetAccessReviewExclusionScope() *AccessReviewExclusionScope {
@@ -565,6 +755,20 @@ func (a *AccessReviewInput) GetBindingObjectSetup() *BindingObjectSetup {
 	return a.BindingObjectSetup
 }
 
+func (a *AccessReviewInput) GetCampaignHealthSnapshot() *CampaignHealthSnapshot {
+	if a == nil {
+		return nil
+	}
+	return a.CampaignHealthSnapshot
+}
+
+func (a *AccessReviewInput) GetCampaignInsights() *CampaignInsights {
+	if a == nil {
+		return nil
+	}
+	return a.CampaignInsights
+}
+
 func (a *AccessReviewInput) GetMultiAppSetup() *MultiAppSetup {
 	if a == nil {
 		return nil
@@ -600,6 +804,27 @@ func (a *AccessReviewInput) GetAccessReviewTemplateID() *string {
 	return a.AccessReviewTemplateID
 }
 
+func (a *AccessReviewInput) GetAccuracyIssueAction() *AccuracyIssueAction {
+	if a == nil {
+		return nil
+	}
+	return a.AccuracyIssueAction
+}
+
+func (a *AccessReviewInput) GetAutoCloseCampaign() *bool {
+	if a == nil {
+		return nil
+	}
+	return a.AutoCloseCampaign
+}
+
+func (a *AccessReviewInput) GetAutoCloseDecision() *AutoCloseDecision {
+	if a == nil {
+		return nil
+	}
+	return a.AutoCloseDecision
+}
+
 func (a *AccessReviewInput) GetAutoGenerateReport() *bool {
 	if a == nil {
 		return nil
@@ -612,6 +837,13 @@ func (a *AccessReviewInput) GetAutoResolve() *bool {
 		return nil
 	}
 	return a.AutoResolve
+}
+
+func (a *AccessReviewInput) GetAutoStartCampaign() *bool {
+	if a == nil {
+		return nil
+	}
+	return a.AutoStartCampaign
 }
 
 func (a *AccessReviewInput) GetClosedAt() *time.Time {
@@ -705,6 +937,13 @@ func (a *AccessReviewInput) GetReviewInstructions() *string {
 	return a.ReviewInstructions
 }
 
+func (a *AccessReviewInput) GetScheduledStartDate() *time.Time {
+	if a == nil {
+		return nil
+	}
+	return a.ScheduledStartDate
+}
+
 func (a *AccessReviewInput) GetScopeType() *ScopeType {
 	if a == nil {
 		return nil
@@ -726,7 +965,7 @@ func (a *AccessReviewInput) GetStartedAt() *time.Time {
 	return a.StartedAt
 }
 
-func (a *AccessReviewInput) GetState() *State {
+func (a *AccessReviewInput) GetState() *AccessReviewState {
 	if a == nil {
 		return nil
 	}

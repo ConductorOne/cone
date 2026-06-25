@@ -32,7 +32,7 @@ func newAccessConflict(rootSDK *ConductoroneAPI, sdkConfig config.SDKConfigurati
 }
 
 // CreateMonitor - Create Monitor
-// Invokes the c1.api.accessconflict.v1.AccessConflictService.CreateMonitor method.
+// Create a new conflict monitor for defining a Separation of Duty rule. Entitlement sets are bound separately via AppEntitlementMonitorBindingService.
 func (s *AccessConflict) CreateMonitor(ctx context.Context, request *shared.ConflictMonitorCreateRequest, opts ...operations.Option) (*operations.C1APIAccessconflictV1AccessConflictServiceCreateMonitorResponse, error) {
 	o := operations.Options{}
 	supportedOptions := []string{
@@ -244,7 +244,7 @@ func (s *AccessConflict) CreateMonitor(ctx context.Context, request *shared.Conf
 }
 
 // DeleteMonitor - Delete Monitor
-// Invokes the c1.api.accessconflict.v1.AccessConflictService.DeleteMonitor method.
+// Delete a conflict monitor and its associated entitlement set bindings.
 func (s *AccessConflict) DeleteMonitor(ctx context.Context, request operations.C1APIAccessconflictV1AccessConflictServiceDeleteMonitorRequest, opts ...operations.Option) (*operations.C1APIAccessconflictV1AccessConflictServiceDeleteMonitorResponse, error) {
 	o := operations.Options{}
 	supportedOptions := []string{
@@ -456,7 +456,7 @@ func (s *AccessConflict) DeleteMonitor(ctx context.Context, request operations.C
 }
 
 // GetMonitor - Get Monitor
-// Invokes the c1.api.accessconflict.v1.AccessConflictService.GetMonitor method.
+// Retrieve a single conflict monitor by ID.
 func (s *AccessConflict) GetMonitor(ctx context.Context, request operations.C1APIAccessconflictV1AccessConflictServiceGetMonitorRequest, opts ...operations.Option) (*operations.C1APIAccessconflictV1AccessConflictServiceGetMonitorResponse, error) {
 	o := operations.Options{}
 	supportedOptions := []string{
@@ -661,7 +661,7 @@ func (s *AccessConflict) GetMonitor(ctx context.Context, request operations.C1AP
 }
 
 // UpdateMonitor - Update Monitor
-// Invokes the c1.api.accessconflict.v1.AccessConflictService.UpdateMonitor method.
+// Update the display name, description, or notification settings of a conflict monitor.
 func (s *AccessConflict) UpdateMonitor(ctx context.Context, request operations.C1APIAccessconflictV1AccessConflictServiceUpdateMonitorRequest, opts ...operations.Option) (*operations.C1APIAccessconflictV1AccessConflictServiceUpdateMonitorResponse, error) {
 	o := operations.Options{}
 	supportedOptions := []string{

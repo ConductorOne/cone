@@ -26,6 +26,9 @@ func (c *C1APISystemlogV1ExportServiceDeleteRequest) GetExportID() string {
 	return c.ExportID
 }
 
+// #region class-body-c1apisystemlogv1exportservicedeleterequest
+// #endregion class-body-c1apisystemlogv1exportservicedeleterequest
+
 type C1APISystemlogV1ExportServiceDeleteResponse struct {
 	// HTTP response content type for this operation
 	ContentType string
@@ -64,3 +67,6 @@ func (c *C1APISystemlogV1ExportServiceDeleteResponse) GetRawResponse() *http.Res
 	}
 	return c.RawResponse
 }
+
+// #region class-body-c1apisystemlogv1exportservicedeleteresponse
+// #endregion class-body-c1apisystemlogv1exportservicedeleteresponse

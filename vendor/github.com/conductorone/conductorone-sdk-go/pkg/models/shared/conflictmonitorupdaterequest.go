@@ -2,21 +2,21 @@
 
 package shared
 
-// The ConflictMonitorUpdateRequest message.
+// ConflictMonitorUpdateRequest - The request message for updating an existing conflict monitor.
 type ConflictMonitorUpdateRequest struct {
 	// The NotificationConfig message.
-	NotificationConfig *NotificationConfig1 `json:"notificationConfig,omitempty"`
-	// The description field.
+	AccessConflictNotificationConfig *AccessConflictNotificationConfig `json:"notificationConfig,omitempty"`
+	// The updated description for the conflict monitor.
 	Description *string `json:"description,omitempty"`
-	// The displayName field.
+	// The updated human-readable name for the conflict monitor.
 	DisplayName *string `json:"displayName,omitempty"`
 }
 
-func (c *ConflictMonitorUpdateRequest) GetNotificationConfig() *NotificationConfig1 {
+func (c *ConflictMonitorUpdateRequest) GetAccessConflictNotificationConfig() *AccessConflictNotificationConfig {
 	if c == nil {
 		return nil
 	}
-	return c.NotificationConfig
+	return c.AccessConflictNotificationConfig
 }
 
 func (c *ConflictMonitorUpdateRequest) GetDescription() *string {

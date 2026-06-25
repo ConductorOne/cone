@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-// JustificationVisibility - The justificationVisibility field.
+// JustificationVisibility - Controls whether the justification field is shown or hidden on the request form.
 type JustificationVisibility string
 
 const (
@@ -31,15 +31,15 @@ func (e *JustificationVisibility) IsExact() bool {
 	return false
 }
 
-// The RequestSchema message.
+// RequestSchema - A request schema defines a form template that users fill out when requesting access.
 type RequestSchema struct {
 	// A form is a collection of fields to be filled out by a user
-	Form      *FormInput `json:"form,omitempty"`
-	CreatedAt *time.Time `json:"createdAt,omitempty"`
-	DeletedAt *time.Time `json:"deletedAt,omitempty"`
-	// The id field.
+	RequestSchemaForm *RequestSchemaForm `json:"form,omitempty"`
+	CreatedAt         *time.Time         `json:"createdAt,omitempty"`
+	DeletedAt         *time.Time         `json:"deletedAt,omitempty"`
+	// The unique identifier of this request schema.
 	ID *string `json:"id,omitempty"`
-	// The justificationVisibility field.
+	// Controls whether the justification field is shown or hidden on the request form.
 	JustificationVisibility *JustificationVisibility `json:"justificationVisibility,omitempty"`
 	ModifiedAt              *time.Time               `json:"modifiedAt,omitempty"`
 }
@@ -55,11 +55,11 @@ func (r *RequestSchema) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (r *RequestSchema) GetForm() *FormInput {
+func (r *RequestSchema) GetRequestSchemaForm() *RequestSchemaForm {
 	if r == nil {
 		return nil
 	}
-	return r.Form
+	return r.RequestSchemaForm
 }
 
 func (r *RequestSchema) GetCreatedAt() *time.Time {

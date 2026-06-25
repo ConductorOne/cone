@@ -2,6 +2,10 @@
 
 package shared
 
+import (
+	"github.com/conductorone/conductorone-sdk-go/pkg/utils"
+)
+
 // The NumberField message.
 type NumberField struct {
 	// The maxValue field.
@@ -10,6 +14,17 @@ type NumberField struct {
 	MinValue *int64 `integer:"string" json:"minValue,omitempty"`
 	// The step field.
 	Step *int64 `integer:"string" json:"step,omitempty"`
+}
+
+func (n NumberField) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(n, "", false)
+}
+
+func (n *NumberField) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &n, "", false, nil); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (n *NumberField) GetMaxValue() *int64 {

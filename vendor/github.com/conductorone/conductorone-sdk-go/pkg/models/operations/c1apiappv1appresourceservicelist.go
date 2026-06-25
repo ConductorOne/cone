@@ -42,6 +42,9 @@ func (c *C1APIAppV1AppResourceServiceListRequest) GetPageToken() *string {
 	return c.PageToken
 }
 
+// #region class-body-c1apiappv1appresourceservicelistrequest
+// #endregion class-body-c1apiappv1appresourceservicelistrequest
+
 type C1APIAppV1AppResourceServiceListResponse struct {
 	// The AppResourceServiceListResponse message contains a list of results and a nextPageToken if applicable.
 	AppResourceServiceListResponse *shared.AppResourceServiceListResponse
@@ -80,3 +83,6 @@ func (c *C1APIAppV1AppResourceServiceListResponse) GetRawResponse() *http.Respon
 	}
 	return c.RawResponse
 }
+
+// #region class-body-c1apiappv1appresourceservicelistresponse
+// #endregion class-body-c1apiappv1appresourceservicelistresponse

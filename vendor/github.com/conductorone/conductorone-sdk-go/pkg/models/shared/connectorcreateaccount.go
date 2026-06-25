@@ -12,6 +12,9 @@ type ConnectorCreateAccount struct {
 	ConnectorRef *ConnectorRef `json:"connectorRef,omitempty"`
 	// The UserProperties message.
 	UserProperties *UserProperties `json:"userProperties,omitempty"`
+	// CEL expression referencing a GeneratePassword step output (e.g. "genStep.password").
+	//  When set, the resolved password is encrypted for the connector and sent as CredentialOptions.EncryptedPassword.
+	PasswordCel *string `json:"passwordCel,omitempty"`
 	// The userIdCel field.
 	// This field is part of the `create_account_arguments` oneof.
 	// See the documentation for `c1.api.automations.v1.ConnectorCreateAccount` for more details.
@@ -30,6 +33,13 @@ func (c *ConnectorCreateAccount) GetUserProperties() *UserProperties {
 		return nil
 	}
 	return c.UserProperties
+}
+
+func (c *ConnectorCreateAccount) GetPasswordCel() *string {
+	if c == nil {
+		return nil
+	}
+	return c.PasswordCel
 }
 
 func (c *ConnectorCreateAccount) GetUserIDCel() *string {

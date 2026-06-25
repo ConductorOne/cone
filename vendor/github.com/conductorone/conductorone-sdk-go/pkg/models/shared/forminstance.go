@@ -34,12 +34,12 @@ func (e *FormInstanceState) IsExact() bool {
 //   - reassigned
 //   - skipped
 type FormInstance struct {
-	// A form is a collection of fields to be filled out by a user
-	Form *FormInput `json:"form,omitempty"`
 	// The FormCompletedAction message.
 	FormCompletedAction *FormCompletedAction `json:"completed,omitempty"`
 	// The ReassignedAction object describes the outcome of a policy step that has been reassigned.
 	ReassignedAction *ReassignedAction `json:"reassigned,omitempty"`
+	// A form is a collection of fields to be filled out by a user
+	RequestSchemaForm *RequestSchemaForm `json:"form,omitempty"`
 	// The restart action describes the outcome of policy steps for when the task was restarted. This can be applied to multiple steps since restart skips all pending next steps.
 	RestartAction *RestartAction `json:"restarted,omitempty"`
 	// The SkippedAction object describes the outcome of a policy step that has been skipped.
@@ -47,13 +47,6 @@ type FormInstance struct {
 	Data          map[string]any `json:"data,omitempty"`
 	// The state field.
 	State *FormInstanceState `json:"state,omitempty"`
-}
-
-func (f *FormInstance) GetForm() *FormInput {
-	if f == nil {
-		return nil
-	}
-	return f.Form
 }
 
 func (f *FormInstance) GetFormCompletedAction() *FormCompletedAction {
@@ -68,6 +61,13 @@ func (f *FormInstance) GetReassignedAction() *ReassignedAction {
 		return nil
 	}
 	return f.ReassignedAction
+}
+
+func (f *FormInstance) GetRequestSchemaForm() *RequestSchemaForm {
+	if f == nil {
+		return nil
+	}
+	return f.RequestSchemaForm
 }
 
 func (f *FormInstance) GetRestartAction() *RestartAction {

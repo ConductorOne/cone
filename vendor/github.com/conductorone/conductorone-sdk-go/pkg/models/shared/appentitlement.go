@@ -10,13 +10,14 @@ import (
 type AppEntitlementDurationUnset struct {
 }
 
-// Purpose - The purpose field.
+// Purpose - The purpose of this entitlement (e.g., assignment, permission, ownership).
 type Purpose string
 
 const (
 	PurposeAppEntitlementPurposeValueUnspecified Purpose = "APP_ENTITLEMENT_PURPOSE_VALUE_UNSPECIFIED"
 	PurposeAppEntitlementPurposeValueAssignment  Purpose = "APP_ENTITLEMENT_PURPOSE_VALUE_ASSIGNMENT"
 	PurposeAppEntitlementPurposeValuePermission  Purpose = "APP_ENTITLEMENT_PURPOSE_VALUE_PERMISSION"
+	PurposeAppEntitlementPurposeValueOwnership   Purpose = "APP_ENTITLEMENT_PURPOSE_VALUE_OWNERSHIP"
 )
 
 func (e Purpose) ToPointer() *Purpose {
@@ -27,7 +28,7 @@ func (e Purpose) ToPointer() *Purpose {
 func (e *Purpose) IsExact() bool {
 	if e != nil {
 		switch *e {
-		case "APP_ENTITLEMENT_PURPOSE_VALUE_UNSPECIFIED", "APP_ENTITLEMENT_PURPOSE_VALUE_ASSIGNMENT", "APP_ENTITLEMENT_PURPOSE_VALUE_PERMISSION":
+		case "APP_ENTITLEMENT_PURPOSE_VALUE_UNSPECIFIED", "APP_ENTITLEMENT_PURPOSE_VALUE_ASSIGNMENT", "APP_ENTITLEMENT_PURPOSE_VALUE_PERMISSION", "APP_ENTITLEMENT_PURPOSE_VALUE_OWNERSHIP":
 			return true
 		}
 	}
@@ -92,6 +93,9 @@ type AppEntitlement struct {
 	EmergencyGrantEnabled *bool `json:"emergencyGrantEnabled,omitempty"`
 	// The ID of the policy that will be used for emergency access grant tasks.
 	EmergencyGrantPolicyID *string `json:"emergencyGrantPolicyId,omitempty"`
+	// The upstream product's native external ID for this entitlement (e.g. an Okta group ID).
+	//  Populated from the connector's external ID during sync.
+	ExternalID *string `json:"externalId,omitempty"`
 	// The amount of grants open for this entitlement
 	GrantCount *int64 `integer:"string" json:"grantCount,omitempty"`
 	// The ID of the policy that will be used for grant tickets related to the app entitlement.
@@ -102,17 +106,17 @@ type AppEntitlement struct {
 	IsAutomationEnabled *bool `json:"isAutomationEnabled,omitempty"`
 	// Flag to indicate if the app entitlement is manually managed.
 	IsManuallyManaged *bool `json:"isManuallyManaged,omitempty"`
-	// The matchBatonId field.
+	// An identifier used to match this entitlement to a connector-synced entitlement during sync.
 	MatchBatonID *string `json:"matchBatonId,omitempty"`
 	// Flag to indicate if the app-level access request settings have been overridden for the entitlement
 	OverrideAccessRequestsDefaults *bool `json:"overrideAccessRequestsDefaults,omitempty"`
-	// The purpose field.
+	// The purpose of this entitlement (e.g., assignment, permission, ownership).
 	Purpose *Purpose `json:"purpose,omitempty"`
 	// The ID of the request schema associated with this app entitlement.
 	RequestSchemaID *string `json:"requestSchemaId,omitempty"`
 	// The ID of the policy that will be used for revoke tickets related to the app entitlement
 	RevokePolicyID *string `json:"revokePolicyId,omitempty"`
-	// The riskLevelValueId field.
+	// The ID of the risk level assigned to this entitlement.
 	RiskLevelValueID *string `json:"riskLevelValueId,omitempty"`
 	// The slug is displayed as an oval next to the name in the frontend of C1, it tells you what permission the entitlement grants. See https://www.conductorone.com/docs/product/admin/entitlements/
 	Slug *string `json:"slug,omitempty"`
@@ -252,6 +256,13 @@ func (a *AppEntitlement) GetEmergencyGrantPolicyID() *string {
 		return nil
 	}
 	return a.EmergencyGrantPolicyID
+}
+
+func (a *AppEntitlement) GetExternalID() *string {
+	if a == nil {
+		return nil
+	}
+	return a.ExternalID
 }
 
 func (a *AppEntitlement) GetGrantCount() *int64 {
@@ -426,17 +437,17 @@ type AppEntitlementInput struct {
 	GrantPolicyID *string `json:"grantPolicyId,omitempty"`
 	// Flag to indicate if the app entitlement is manually managed.
 	IsManuallyManaged *bool `json:"isManuallyManaged,omitempty"`
-	// The matchBatonId field.
+	// An identifier used to match this entitlement to a connector-synced entitlement during sync.
 	MatchBatonID *string `json:"matchBatonId,omitempty"`
 	// Flag to indicate if the app-level access request settings have been overridden for the entitlement
 	OverrideAccessRequestsDefaults *bool `json:"overrideAccessRequestsDefaults,omitempty"`
-	// The purpose field.
+	// The purpose of this entitlement (e.g., assignment, permission, ownership).
 	Purpose *Purpose `json:"purpose,omitempty"`
 	// The ID of the request schema associated with this app entitlement.
 	RequestSchemaID *string `json:"requestSchemaId,omitempty"`
 	// The ID of the policy that will be used for revoke tickets related to the app entitlement
 	RevokePolicyID *string `json:"revokePolicyId,omitempty"`
-	// The riskLevelValueId field.
+	// The ID of the risk level assigned to this entitlement.
 	RiskLevelValueID *string `json:"riskLevelValueId,omitempty"`
 	// The slug is displayed as an oval next to the name in the frontend of C1, it tells you what permission the entitlement grants. See https://www.conductorone.com/docs/product/admin/entitlements/
 	Slug *string `json:"slug,omitempty"`

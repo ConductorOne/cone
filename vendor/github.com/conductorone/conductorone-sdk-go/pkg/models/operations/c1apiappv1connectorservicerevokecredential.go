@@ -42,6 +42,9 @@ func (c *C1APIAppV1ConnectorServiceRevokeCredentialRequest) GetID() string {
 	return c.ID
 }
 
+// #region class-body-c1apiappv1connectorservicerevokecredentialrequest
+// #endregion class-body-c1apiappv1connectorservicerevokecredentialrequest
+
 type C1APIAppV1ConnectorServiceRevokeCredentialResponse struct {
 	// Empty response body. Status code indicates success.
 	ConnectorServiceRevokeCredentialResponse *shared.ConnectorServiceRevokeCredentialResponse
@@ -80,3 +83,6 @@ func (c *C1APIAppV1ConnectorServiceRevokeCredentialResponse) GetRawResponse() *h
 	}
 	return c.RawResponse
 }
+
+// #region class-body-c1apiappv1connectorservicerevokecredentialresponse
+// #endregion class-body-c1apiappv1connectorservicerevokecredentialresponse

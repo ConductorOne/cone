@@ -8,7 +8,7 @@ type TaskActionsServiceRestartRequest struct {
 	TaskExpandMask *TaskExpandMask `json:"expandMask,omitempty"`
 	// The comment attached to the request.
 	Comment *string `json:"comment,omitempty"`
-	// The ID of the policy step on the given task to restart.
+	// Deprecated. This field is accepted but does not affect behavior.
 	PolicyStepID *string `json:"policyStepId,omitempty"`
 }
 

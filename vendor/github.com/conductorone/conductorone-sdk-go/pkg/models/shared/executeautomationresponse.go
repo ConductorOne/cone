@@ -2,10 +2,25 @@
 
 package shared
 
+import (
+	"github.com/conductorone/conductorone-sdk-go/pkg/utils"
+)
+
 // The ExecuteAutomationResponse message.
 type ExecuteAutomationResponse struct {
-	// The executionId field.
+	// The unique identifier of the newly created execution.
 	ExecutionID *int64 `integer:"string" json:"executionId,omitempty"`
+}
+
+func (e ExecuteAutomationResponse) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(e, "", false)
+}
+
+func (e *ExecuteAutomationResponse) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &e, "", false, nil); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (e *ExecuteAutomationResponse) GetExecutionID() *int64 {

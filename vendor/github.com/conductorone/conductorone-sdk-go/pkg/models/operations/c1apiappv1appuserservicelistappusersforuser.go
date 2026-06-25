@@ -42,8 +42,11 @@ func (c *C1APIAppV1AppUserServiceListAppUsersForUserRequest) GetUserID() string 
 	return c.UserID
 }
 
+// #region class-body-c1apiappv1appuserservicelistappusersforuserrequest
+// #endregion class-body-c1apiappv1appuserservicelistappusersforuserrequest
+
 type C1APIAppV1AppUserServiceListAppUsersForUserResponse struct {
-	// Successful response
+	// The response message for listing app users correlated to a specific C1 user.
 	AppUsersForUserServiceListResponse *shared.AppUsersForUserServiceListResponse
 	// HTTP response content type for this operation
 	ContentType string
@@ -80,3 +83,6 @@ func (c *C1APIAppV1AppUserServiceListAppUsersForUserResponse) GetRawResponse() *
 	}
 	return c.RawResponse
 }
+
+// #region class-body-c1apiappv1appuserservicelistappusersforuserresponse
+// #endregion class-body-c1apiappv1appuserservicelistappusersforuserresponse

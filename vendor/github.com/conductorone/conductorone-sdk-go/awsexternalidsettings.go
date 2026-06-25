@@ -32,7 +32,7 @@ func newAWSExternalIDSettings(rootSDK *ConductoroneAPI, sdkConfig config.SDKConf
 }
 
 // Get
-// Invokes the c1.api.settings.v1.AWSExternalIDSettings.Get method.
+// Get retrieves the AWS external ID for the tenant, used in IAM role trust policies for AWS connectors.
 func (s *AWSExternalIDSettings) Get(ctx context.Context, opts ...operations.Option) (*operations.C1APISettingsV1AWSExternalIDSettingsGetResponse, error) {
 	o := operations.Options{}
 	supportedOptions := []string{

@@ -45,3 +45,6 @@ func (c *C1APIAutomationsV1AutomationExecutionServiceListAutomationExecutionsRes
 	}
 	return c.RawResponse
 }
+
+// #region class-body-c1apiautomationsv1automationexecutionservicelistautomationexecutionsresponse
+// #endregion class-body-c1apiautomationsv1automationexecutionservicelistautomationexecutionsresponse

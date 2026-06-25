@@ -2,6 +2,10 @@
 
 package shared
 
+import (
+	"github.com/conductorone/conductorone-sdk-go/pkg/utils"
+)
+
 // RequestCatalogView - The request catalog view contains the serialized request catalog and paths to objects referenced by the request catalog.
 type RequestCatalogView struct {
 	// The RequestCatalog is used for managing which entitlements are requestable, and who can request them.
@@ -12,6 +16,17 @@ type RequestCatalogView struct {
 	CreatedByUserPath *string `json:"createdByUserPath,omitempty"`
 	// Total number of the members of the catalog
 	MemberCount *int64 `integer:"string" json:"memberCount,omitempty"`
+}
+
+func (r RequestCatalogView) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(r, "", false)
+}
+
+func (r *RequestCatalogView) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &r, "", false, nil); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (r *RequestCatalogView) GetRequestCatalog() *RequestCatalog {

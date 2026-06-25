@@ -34,6 +34,9 @@ func (c *C1APIAppV1ConnectorServiceListRequest) GetPageToken() *string {
 	return c.PageToken
 }
 
+// #region class-body-c1apiappv1connectorservicelistrequest
+// #endregion class-body-c1apiappv1connectorservicelistrequest
+
 type C1APIAppV1ConnectorServiceListResponse struct {
 	// The ConnectorServiceListResponse message contains a list of results and a nextPageToken if applicable
 	ConnectorServiceListResponse *shared.ConnectorServiceListResponse
@@ -72,3 +75,6 @@ func (c *C1APIAppV1ConnectorServiceListResponse) GetRawResponse() *http.Response
 	}
 	return c.RawResponse
 }
+
+// #region class-body-c1apiappv1connectorservicelistresponse
+// #endregion class-body-c1apiappv1connectorservicelistresponse

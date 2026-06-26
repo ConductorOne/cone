@@ -130,6 +130,65 @@ func TestCreateInputFormat(t *testing.T) {
 	}
 }
 
+func TestCreateExternalInputFormat(t *testing.T) {
+	tests := []struct {
+		name string
+		want shared.PaperSecretServiceCreateExternalRequestInputFormat
+	}{
+		{name: "json", want: shared.PaperSecretServiceCreateExternalRequestInputFormatSecretInputFormatJSON},
+		{name: "yaml", want: shared.PaperSecretServiceCreateExternalRequestInputFormatSecretInputFormatYaml},
+		{name: "key-value", want: shared.PaperSecretServiceCreateExternalRequestInputFormatSecretInputFormatKeyValue},
+		{name: "plaintext", want: shared.PaperSecretServiceCreateExternalRequestInputFormatSecretInputFormatPlaintext},
+		{name: "unknown", want: shared.PaperSecretServiceCreateExternalRequestInputFormatSecretInputFormatPlaintext},
+		{name: "", want: shared.PaperSecretServiceCreateExternalRequestInputFormatSecretInputFormatPlaintext},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got := createExternalInputFormat(tt.name)
+			if got == nil {
+				t.Fatal("createExternalInputFormat() returned nil")
+			}
+			if *got != tt.want {
+				t.Errorf("createExternalInputFormat(%q) = %q, want %q", tt.name, *got, tt.want)
+			}
+		})
+	}
+}
+
+// TestEncryptBytesToAgeRecipient verifies the FILE path produces raw (non-base64) Age bytes
+// that decrypt back to the original, since file content is PUT verbatim rather than base64-encoded.
+func TestEncryptBytesToAgeRecipient(t *testing.T) {
+	identity, err := age.GenerateX25519Identity()
+	if err != nil {
+		t.Fatalf("GenerateX25519Identity() unexpected error: %v", err)
+	}
+
+	plaintext := []byte("binary\x00file\xff content")
+	raw, err := encryptBytesToAgeRecipient(identity.Recipient().String(), plaintext)
+	if err != nil {
+		t.Fatalf("encryptBytesToAgeRecipient() unexpected error: %v", err)
+	}
+	if !strings.HasPrefix(string(raw), "age-encryption.org/v1") {
+		t.Errorf("raw output is not Age format, got prefix %q", string(raw[:min(len(raw), 22)]))
+	}
+
+	// Decrypt via the base64-wrapping helper to confirm the bytes roundtrip.
+	got, err := decryptFromAgeIdentity(identity, base64.StdEncoding.EncodeToString(raw))
+	if err != nil {
+		t.Fatalf("decryptFromAgeIdentity() unexpected error: %v", err)
+	}
+	if got != string(plaintext) {
+		t.Errorf("roundtrip = %q, want %q", got, plaintext)
+	}
+}
+
+func TestEncryptBytesToAgeRecipientInvalid(t *testing.T) {
+	if _, err := encryptBytesToAgeRecipient("not-a-valid-age-recipient", []byte("data")); err == nil {
+		t.Error("encryptBytesToAgeRecipient() with invalid recipient expected error, got nil")
+	}
+}
+
 func TestSetContentInputFormat(t *testing.T) {
 	tests := []struct {
 		name string

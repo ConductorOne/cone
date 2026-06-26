@@ -198,7 +198,9 @@ type C1Client interface {
 	UpdateEntitlement(ctx context.Context, appID, entitlementID string, req *shared.UpdateAppEntitlementRequest) error
 	HasRequestForm(ctx context.Context, appID string, entitlementID string) (bool, error)
 	CreateInternalSecret(ctx context.Context, req *shared.PaperSecretServiceCreateInternalRequest) (*shared.PaperSecretServiceCreateResponse, error)
+	CreateExternalSecret(ctx context.Context, req *shared.PaperSecretServiceCreateExternalRequest) (*shared.PaperSecretServiceCreateResponse, error)
 	SetSecretTextContent(ctx context.Context, vaultID string, encryptedContent string, inputFormat *shared.PaperSecretServiceSetTextContentRequestInputFormat) error
+	UploadSecretFile(ctx context.Context, uploadURL string, encrypted []byte) error
 	GetSecret(ctx context.Context, vaultID string) (*shared.PaperSecret, error)
 	GetSecretContent(ctx context.Context, vaultID string, readerRecipient string) (*shared.PaperSecretServiceGetContentResponse, error)
 }

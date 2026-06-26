@@ -2,9 +2,13 @@ package main
 
 import (
 	"bytes"
+	"context"
 	"encoding/base64"
 	"fmt"
 	"io"
+	"mime"
+	"os"
+	"path/filepath"
 	"strconv"
 
 	"filippo.io/age"
@@ -18,8 +22,10 @@ import (
 const (
 	displayNameFlag    = "display-name"
 	contentFlag        = "content"
+	fileFlag           = "file"
 	inputFormatFlag    = "input-format"
 	allowedUserIdsFlag = "allowed-user-ids"
+	allowedEmailsFlag  = "allowed-emails"
 	expiresInFlag      = "expires-in"
 	maxViewsFlag       = "max-views"
 )
@@ -40,17 +46,26 @@ func secretCmd() *cobra.Command {
 func secretCreateCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "create",
-		Short: "Create an internal TEXT secret",
-		Long: "Create an internal TEXT secret. When --content is provided it is encrypted client-side " +
-			"(Age) to the recipient the API returns and uploaded. Without --content the secret is created " +
-			"empty and its vault id and Age recipient are returned for out-of-band upload.",
+		Short: "Create a TEXT or FILE secret shared with team members or external recipients",
+		Long: "Create a secret and encrypt its content client-side (Age) to the recipient the API returns.\n\n" +
+			"Recipients (exactly one is required):\n" +
+			"  --allowed-user-ids   share with C1 team members who sign in with SSO\n" +
+			"  --allowed-emails     share with external recipients who verify via email\n\n" +
+			"Content:\n" +
+			"  --content   inline TEXT content; --input-format hints the viewer (plaintext, json, yaml, key-value)\n" +
+			"  --file       path to a FILE to upload; its content type, size, and name are derived automatically\n" +
+			"  (omit both)  create an empty secret and print the vault id, Age recipient, and upload URL for\n" +
+			"               out-of-band upload\n\n" +
+			"--content and --file are mutually exclusive, as are --allowed-user-ids and --allowed-emails.",
 		RunE: secretCreateRun,
 	}
 
 	cmd.Flags().String(displayNameFlag, "", "A cleartext label for the secret, visible in the My Secrets view.")
-	cmd.Flags().String(contentFlag, "", "The plaintext secret content to encrypt and store (max 64KB encrypted).")
-	cmd.Flags().String(inputFormatFlag, "plaintext", "Format hint for the viewer UI: plaintext, json, yaml, or key-value.")
-	cmd.Flags().StringSlice(allowedUserIdsFlag, nil, "Required. C1 user IDs allowed to view this secret (1 to 128).")
+	cmd.Flags().String(contentFlag, "", "The plaintext TEXT content to encrypt and store (max 64KB encrypted).")
+	cmd.Flags().String(fileFlag, "", "Path to a file to upload as a FILE secret (max 1GB). Mutually exclusive with --content.")
+	cmd.Flags().String(inputFormatFlag, "plaintext", "TEXT format hint for the viewer UI: plaintext, json, yaml, or key-value. Ignored for files.")
+	cmd.Flags().StringSlice(allowedUserIdsFlag, nil, "C1 user IDs allowed to view this secret (1 to 128). Mutually exclusive with --allowed-emails.")
+	cmd.Flags().StringSlice(allowedEmailsFlag, nil, "External email addresses allowed to view this secret (1 to 64). Mutually exclusive with --allowed-user-ids.")
 	cmd.Flags().String(expiresInFlag, "", "Required. Duration after which the secret content expires (e.g. 3600s).")
 	cmd.Flags().Int64(maxViewsFlag, 0, "Maximum number of views before the secret is burned (0 = unlimited).")
 
@@ -67,32 +82,56 @@ func secretCreateRun(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
-	// AllowedUserIds and ExpiresIn are required by the API.
-	allowed := v.GetStringSlice(allowedUserIdsFlag)
-	if len(allowed) == 0 {
-		return fmt.Errorf("--%s is required (1 to 128 C1 user IDs)", allowedUserIdsFlag)
+	// Recipients: exactly one of team members (user IDs) or external recipients (emails).
+	userIDs := v.GetStringSlice(allowedUserIdsFlag)
+	emails := v.GetStringSlice(allowedEmailsFlag)
+	switch {
+	case len(userIDs) == 0 && len(emails) == 0:
+		return fmt.Errorf("one of --%s or --%s is required", allowedUserIdsFlag, allowedEmailsFlag)
+	case len(userIDs) > 0 && len(emails) > 0:
+		return fmt.Errorf("--%s and --%s are mutually exclusive (team vs external sharing)", allowedUserIdsFlag, allowedEmailsFlag)
 	}
+
 	expiresIn := v.GetString(expiresInFlag)
 	if expiresIn == "" {
 		return fmt.Errorf("--%s is required (e.g. 3600s)", expiresInFlag)
 	}
 
-	secretType := shared.PaperSecretServiceCreateInternalRequestSecretTypeSecretTypeText
-	req := &shared.PaperSecretServiceCreateInternalRequest{
-		SecretType:     &secretType,
-		InputFormat:    createInputFormat(v.GetString(inputFormatFlag)),
-		AllowedUserIds: allowed,
-		ExpiresIn:      &expiresIn,
+	content := v.GetString(contentFlag)
+	filePath := v.GetString(fileFlag)
+	if content != "" && filePath != "" {
+		return fmt.Errorf("--%s and --%s are mutually exclusive", contentFlag, fileFlag)
 	}
 
-	if displayName := v.GetString(displayNameFlag); displayName != "" {
-		req.DisplayName = &displayName
+	// Read the file up-front to fail fast and capture its original metadata. FileSize must
+	// be the original (pre-encryption) size: the create request requires it, but content can
+	// only be Age-encrypted after the API returns the recipient, so it is not the ciphertext size.
+	var fileBytes []byte
+	params := createSecretParams{
+		userIDs:     userIDs,
+		emails:      emails,
+		expiresIn:   expiresIn,
+		displayName: v.GetString(displayNameFlag),
+		inputFormat: v.GetString(inputFormatFlag),
+		isFile:      filePath != "",
 	}
-	if maxViews := v.GetInt64(maxViewsFlag); maxViews > 0 {
-		req.MaxViews = &maxViews
+	if mv := v.GetInt64(maxViewsFlag); mv > 0 {
+		params.maxViews = &mv
+	}
+	if params.isFile {
+		fileBytes, err = os.ReadFile(filePath)
+		if err != nil {
+			return fmt.Errorf("failed to read --%s: %w", fileFlag, err)
+		}
+		params.filename = filepath.Base(filePath)
+		params.contentType = mime.TypeByExtension(filepath.Ext(filePath))
+		if params.contentType == "" {
+			params.contentType = "application/octet-stream"
+		}
+		params.fileSize = int64(len(fileBytes))
 	}
 
-	createResp, err := c.CreateInternalSecret(ctx, req)
+	createResp, err := createSecret(ctx, c, params)
 	if err != nil {
 		return err
 	}
@@ -104,9 +143,8 @@ func secretCreateRun(cmd *cobra.Command, args []string) error {
 
 	outputManager := output.NewManager(ctx, v)
 
-	// Without content, return the vault id and Age recipient for out-of-band upload.
-	content := v.GetString(contentFlag)
-	if content == "" {
+	// Empty TEXT secret: return the vault id, Age recipient, and upload URL for out-of-band upload.
+	if !params.isFile && content == "" {
 		resp := SecretCreateResult(*createResp)
 		return outputManager.Output(ctx, &resp, output.WithTransposeTable())
 	}
@@ -116,13 +154,26 @@ func secretCreateRun(cmd *cobra.Command, args []string) error {
 		return fmt.Errorf("secret %s was created but the API returned no Age recipient for encryption", vaultID)
 	}
 
-	encrypted, err := encryptToAgeRecipient(recipientKey, []byte(content))
-	if err != nil {
-		return fmt.Errorf("failed to encrypt secret content: %w", err)
-	}
-
-	if err := c.SetSecretTextContent(ctx, vaultID, encrypted, setContentInputFormat(v.GetString(inputFormatFlag))); err != nil {
-		return fmt.Errorf("secret %s was created but uploading content failed: %w", vaultID, err)
+	if params.isFile {
+		uploadURL := client.StringFromPtr(createResp.UploadURL)
+		if uploadURL == "" {
+			return fmt.Errorf("file secret %s was created but the API returned no upload URL", vaultID)
+		}
+		encrypted, err := encryptBytesToAgeRecipient(recipientKey, fileBytes)
+		if err != nil {
+			return fmt.Errorf("failed to encrypt file content: %w", err)
+		}
+		if err := c.UploadSecretFile(ctx, uploadURL, encrypted); err != nil {
+			return fmt.Errorf("secret %s was created but uploading the file failed: %w", vaultID, err)
+		}
+	} else {
+		encrypted, err := encryptToAgeRecipient(recipientKey, []byte(content))
+		if err != nil {
+			return fmt.Errorf("failed to encrypt secret content: %w", err)
+		}
+		if err := c.SetSecretTextContent(ctx, vaultID, encrypted, setContentInputFormat(params.inputFormat)); err != nil {
+			return fmt.Errorf("secret %s was created but uploading content failed: %w", vaultID, err)
+		}
 	}
 
 	// Re-fetch so the displayed metadata reflects the uploaded content.
@@ -133,6 +184,73 @@ func secretCreateRun(cmd *cobra.Command, args []string) error {
 
 	resp := Secret(*secret)
 	return outputManager.Output(ctx, &resp, output.WithTransposeTable())
+}
+
+// createSecretParams carries the inputs for building a create request. Exactly one of
+// userIDs (internal/team sharing) or emails (external sharing) is set.
+type createSecretParams struct {
+	userIDs     []string
+	emails      []string
+	expiresIn   string
+	displayName string
+	maxViews    *int64
+	inputFormat string
+	isFile      bool
+	filename    string
+	contentType string
+	fileSize    int64
+}
+
+// createSecret builds and sends the appropriate create request: external (allowedEmails)
+// when emails are provided, otherwise internal (allowedUserIds). FILE secrets set the file
+// metadata; TEXT secrets set the input-format hint.
+func createSecret(ctx context.Context, c client.C1Client, p createSecretParams) (*shared.PaperSecretServiceCreateResponse, error) {
+	var displayName *string
+	if p.displayName != "" {
+		displayName = &p.displayName
+	}
+
+	if len(p.emails) > 0 {
+		secretType := shared.PaperSecretServiceCreateExternalRequestSecretTypeSecretTypeText
+		if p.isFile {
+			secretType = shared.PaperSecretServiceCreateExternalRequestSecretTypeSecretTypeFile
+		}
+		req := &shared.PaperSecretServiceCreateExternalRequest{
+			SecretType:    &secretType,
+			AllowedEmails: p.emails,
+			ExpiresIn:     &p.expiresIn,
+			DisplayName:   displayName,
+			MaxViews:      p.maxViews,
+		}
+		if p.isFile {
+			req.ContentType = &p.contentType
+			req.Filename = &p.filename
+			req.FileSize = &p.fileSize
+		} else {
+			req.InputFormat = createExternalInputFormat(p.inputFormat)
+		}
+		return c.CreateExternalSecret(ctx, req)
+	}
+
+	secretType := shared.PaperSecretServiceCreateInternalRequestSecretTypeSecretTypeText
+	if p.isFile {
+		secretType = shared.PaperSecretServiceCreateInternalRequestSecretTypeSecretTypeFile
+	}
+	req := &shared.PaperSecretServiceCreateInternalRequest{
+		SecretType:     &secretType,
+		AllowedUserIds: p.userIDs,
+		ExpiresIn:      &p.expiresIn,
+		DisplayName:    displayName,
+		MaxViews:       p.maxViews,
+	}
+	if p.isFile {
+		req.ContentType = &p.contentType
+		req.Filename = &p.filename
+		req.FileSize = &p.fileSize
+	} else {
+		req.InputFormat = createInputFormat(p.inputFormat)
+	}
+	return c.CreateInternalSecret(ctx, req)
 }
 
 func secretGetCmd() *cobra.Command {
@@ -162,29 +280,39 @@ func secretGetRun(cmd *cobra.Command, args []string) error {
 	return output.NewManager(ctx, v).Output(ctx, &resp, output.WithTransposeTable())
 }
 
-// encryptToAgeRecipient encrypts plaintext to an Age X25519 recipient and returns the
-// base64-encoded ciphertext. The API stores content in a protobuf bytes field, which is
-// base64-encoded over JSON; the decoded bytes are the raw Age format beginning with
-// "age-encryption.org/v1".
-func encryptToAgeRecipient(recipientKey string, plaintext []byte) (string, error) {
+// encryptBytesToAgeRecipient encrypts plaintext to an Age X25519 recipient and returns the
+// raw ciphertext bytes, which begin with the Age header "age-encryption.org/v1". FILE secrets
+// PUT these bytes verbatim to the upload URL.
+func encryptBytesToAgeRecipient(recipientKey string, plaintext []byte) ([]byte, error) {
 	recipient, err := age.ParseX25519Recipient(recipientKey)
 	if err != nil {
-		return "", fmt.Errorf("invalid Age recipient: %w", err)
+		return nil, fmt.Errorf("invalid Age recipient: %w", err)
 	}
 
 	buf := &bytes.Buffer{}
 	w, err := age.Encrypt(buf, recipient)
 	if err != nil {
-		return "", err
+		return nil, err
 	}
 	if _, err := w.Write(plaintext); err != nil {
-		return "", err
+		return nil, err
 	}
 	if err := w.Close(); err != nil {
-		return "", err
+		return nil, err
 	}
 
-	return base64.StdEncoding.EncodeToString(buf.Bytes()), nil
+	return buf.Bytes(), nil
+}
+
+// encryptToAgeRecipient encrypts plaintext to an Age X25519 recipient and returns the
+// base64-encoded ciphertext. The TEXT content API stores content in a protobuf bytes field,
+// which is base64-encoded over JSON; the decoded bytes are the raw Age format.
+func encryptToAgeRecipient(recipientKey string, plaintext []byte) (string, error) {
+	raw, err := encryptBytesToAgeRecipient(recipientKey, plaintext)
+	if err != nil {
+		return "", err
+	}
+	return base64.StdEncoding.EncodeToString(raw), nil
 }
 
 func secretViewCmd() *cobra.Command {
@@ -267,6 +395,21 @@ func createInputFormat(name string) *shared.PaperSecretServiceCreateInternalRequ
 		format = shared.PaperSecretServiceCreateInternalRequestInputFormatSecretInputFormatKeyValue
 	default:
 		format = shared.PaperSecretServiceCreateInternalRequestInputFormatSecretInputFormatPlaintext
+	}
+	return &format
+}
+
+func createExternalInputFormat(name string) *shared.PaperSecretServiceCreateExternalRequestInputFormat {
+	var format shared.PaperSecretServiceCreateExternalRequestInputFormat
+	switch name {
+	case "json":
+		format = shared.PaperSecretServiceCreateExternalRequestInputFormatSecretInputFormatJSON
+	case "yaml":
+		format = shared.PaperSecretServiceCreateExternalRequestInputFormatSecretInputFormatYaml
+	case "key-value":
+		format = shared.PaperSecretServiceCreateExternalRequestInputFormatSecretInputFormatKeyValue
+	default:
+		format = shared.PaperSecretServiceCreateExternalRequestInputFormatSecretInputFormatPlaintext
 	}
 	return &format
 }

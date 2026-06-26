@@ -1,6 +1,6 @@
 module github.com/conductorone/cone
 
-go 1.24.2
+go 1.26
 
 require (
 	go.uber.org/zap v1.27.0

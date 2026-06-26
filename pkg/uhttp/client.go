@@ -43,16 +43,19 @@ func WithLogger(log bool, logger *zap.Logger) Option {
 
 type tokenSourceOption struct {
 	tokenSource oauth2.TokenSource
+	tokenHost   string
 }
 
 func (t tokenSourceOption) Apply(c *Transport) {
 	c.tokenSource = t.tokenSource
+	c.tokenHost = t.tokenHost
 }
 
 // WithTokenSource sets a token source option to the transport layer.
-func WithTokenSource(tokenSource oauth2.TokenSource) Option {
+func WithTokenSource(tokenSource oauth2.TokenSource, tokenHost string) Option {
 	return tokenSourceOption{
 		tokenSource: tokenSource,
+		tokenHost:   tokenHost,
 	}
 }
 

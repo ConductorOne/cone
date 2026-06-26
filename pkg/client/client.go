@@ -301,7 +301,7 @@ func newClientWithTokenSource(
 ) (C1Client, error) {
 	uclient, err := uhttp.NewClient(
 		ctx,
-		uhttp.WithTokenSource(tokenSrc),
+		uhttp.WithTokenSource(tokenSrc, tokenHost),
 		uhttp.WithDebug(v.GetBool("debug")),
 		uhttp.WithRequestSource(cmdName),
 	)

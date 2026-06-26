@@ -10,6 +10,7 @@ import (
 	"os"
 	"path/filepath"
 	"strconv"
+	"time"
 
 	"filippo.io/age"
 	"github.com/spf13/cobra"
@@ -90,6 +91,11 @@ func secretCreateRun(cmd *cobra.Command, args []string) error {
 	content := v.GetString(contentFlag)
 	filePath := v.GetString(fileFlag)
 	if err := validateSecretCreateInput(userIDs, emails, content, filePath, expiresIn); err != nil {
+		return err
+	}
+
+	expiresIn, err = normalizeExpiresIn(expiresIn)
+	if err != nil {
 		return err
 	}
 
@@ -174,6 +180,26 @@ func secretCreateRun(cmd *cobra.Command, args []string) error {
 
 	resp := Secret(*secret)
 	return outputManager.Output(ctx, &resp, output.WithTransposeTable())
+}
+
+// The API requires the secret content expiry to fall within this range.
+const (
+	minSecretExpiry = time.Hour
+	maxSecretExpiry = 720 * time.Hour
+)
+
+// normalizeExpiresIn parses a human-friendly duration (e.g. "1h", "3600s", "30m") and returns
+// it in the protobuf Duration format the API requires ("<seconds>s"), after validating it falls
+// within [1h, 720h]. This catches bad input client-side instead of via an opaque API 400.
+func normalizeExpiresIn(s string) (string, error) {
+	d, err := time.ParseDuration(s)
+	if err != nil {
+		return "", fmt.Errorf("invalid --%s %q: %w", expiresInFlag, s, err)
+	}
+	if d < minSecretExpiry || d > maxSecretExpiry {
+		return "", fmt.Errorf("--%s must be between %s and %s, got %s", expiresInFlag, minSecretExpiry, maxSecretExpiry, d)
+	}
+	return fmt.Sprintf("%ds", int64(d.Seconds())), nil
 }
 
 // validateSecretCreateInput enforces the create command's flag rules: exactly one recipient
@@ -332,6 +358,26 @@ func encryptToAgeRecipient(recipientKey string, plaintext []byte) (string, error
 	return base64.StdEncoding.EncodeToString(raw), nil
 }
 
+// ensureReadableSecret returns a friendly error if the secret is shared externally. External
+// secrets are decrypted by their recipients through the share-URL opener flow (email magic link
+// or OAuth), so they cannot be read with the creator's API credentials — the content API rejects
+// the attempt with an opaque 400.
+func ensureReadableSecret(ctx context.Context, c client.C1Client, vaultID string) error {
+	secret, err := c.GetSecret(ctx, vaultID)
+	if err != nil {
+		return err
+	}
+
+	if secret.SharingMode == nil || *secret.SharingMode != shared.SharingModePaperVaultSharingModeExternal {
+		return nil
+	}
+
+	if shareURL := client.StringFromPtr(secret.ShareURL); shareURL != "" {
+		return fmt.Errorf("secret %s is shared with external recipients; it can only be opened via its share URL: %s", vaultID, shareURL)
+	}
+	return fmt.Errorf("secret %s is shared with external recipients; it can only be opened via its share URL by an authorized recipient", vaultID)
+}
+
 func secretViewCmd() *cobra.Command {
 	return &cobra.Command{
 		Use:   "view <vault-id>",
@@ -350,6 +396,10 @@ func secretViewRun(cmd *cobra.Command, args []string) error {
 	}
 
 	if err := validateArgLenth(1, args, cmd); err != nil {
+		return err
+	}
+
+	if err := ensureReadableSecret(ctx, c, args[0]); err != nil {
 		return err
 	}
 
@@ -433,6 +483,10 @@ func secretDownloadRun(cmd *cobra.Command, args []string) error {
 	}
 
 	if err := validateArgLenth(1, args, cmd); err != nil {
+		return err
+	}
+
+	if err := ensureReadableSecret(ctx, c, args[0]); err != nil {
 		return err
 	}
 

@@ -169,6 +169,45 @@ func TestValidateSecretCreateInput(t *testing.T) {
 	}
 }
 
+func TestNormalizeExpiresIn(t *testing.T) {
+	tests := []struct {
+		name    string
+		in      string
+		want    string
+		wantErr string
+	}{
+		{name: "seconds at min", in: "3600s", want: "3600s"},
+		{name: "hours normalized to seconds", in: "1h", want: "3600s"},
+		{name: "compound", in: "1h30m", want: "5400s"},
+		{name: "max", in: "720h", want: "2592000s"},
+		{name: "below min", in: "30m", wantErr: "must be between"},
+		{name: "above max", in: "721h", wantErr: "must be between"},
+		{name: "unparseable", in: "soon", wantErr: "invalid"},
+		{name: "empty", in: "", wantErr: "invalid"},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got, err := normalizeExpiresIn(tt.in)
+			if tt.wantErr != "" {
+				if err == nil {
+					t.Fatalf("normalizeExpiresIn(%q) expected error containing %q, got nil", tt.in, tt.wantErr)
+				}
+				if !strings.Contains(err.Error(), tt.wantErr) {
+					t.Errorf("normalizeExpiresIn(%q) error = %q, want contains %q", tt.in, err.Error(), tt.wantErr)
+				}
+				return
+			}
+			if err != nil {
+				t.Fatalf("normalizeExpiresIn(%q) unexpected error: %v", tt.in, err)
+			}
+			if got != tt.want {
+				t.Errorf("normalizeExpiresIn(%q) = %q, want %q", tt.in, got, tt.want)
+			}
+		})
+	}
+}
+
 // fakeSecretCreator captures whichever create request createSecret builds so tests can
 // assert the request fields without a live API.
 type fakeSecretCreator struct {

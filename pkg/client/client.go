@@ -3,6 +3,7 @@ package client
 import (
 	"context"
 	"fmt"
+	"io"
 	"net/http"
 	"net/url"
 	"os"
@@ -197,6 +198,19 @@ type C1Client interface {
 	CreateAppEntitlement(ctx context.Context, appID string, resourceTypeID string, resourceID string, displayName string, slug string) (*shared.AppEntitlement, error)
 	UpdateEntitlement(ctx context.Context, appID, entitlementID string, req *shared.UpdateAppEntitlementRequest) error
 	HasRequestForm(ctx context.Context, appID string, entitlementID string) (bool, error)
+	CreateInternalSecret(ctx context.Context, req *shared.PaperSecretServiceCreateInternalRequest) (*shared.PaperSecretServiceCreateResponse, error)
+	CreateExternalSecret(ctx context.Context, req *shared.PaperSecretServiceCreateExternalRequest) (*shared.PaperSecretServiceCreateResponse, error)
+	SetSecretTextContent(ctx context.Context, vaultID string, encryptedContent string, inputFormat *shared.PaperSecretServiceSetTextContentRequestInputFormat) error
+	UploadSecretFile(ctx context.Context, uploadURL string, encrypted []byte) error
+	UploadSecretFileReader(ctx context.Context, uploadURL string, encrypted io.Reader, contentLength int64) error
+	DownloadSecretFile(ctx context.Context, downloadURL string) (io.ReadCloser, error)
+	GetSecret(ctx context.Context, vaultID string) (*shared.PaperSecret, error)
+	GetSecretByShareCode(ctx context.Context, shareCode string) (*shared.PaperSecret, error)
+	GetSecretContent(ctx context.Context, vaultID string, readerRecipient string) (*shared.PaperSecretServiceGetContentResponse, error)
+	SearchMySecrets(ctx context.Context, req *shared.PaperSecretServiceSearchMySecretsRequest) ([]shared.PaperSecret, error)
+	RevokeSecret(ctx context.Context, vaultID string) (*shared.PaperSecret, error)
+	SearchSecretAuditEvents(ctx context.Context, vaultID string, pageSize int) ([]map[string]any, error)
+	SearchUsers(ctx context.Context, req *shared.SearchUsersRequest) ([]*shared.User, error)
 }
 
 func (c *client) BaseURL() string {

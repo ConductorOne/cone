@@ -2,13 +2,13 @@
 
 package shared
 
-// StepUpProviderInput - The StepUpProvider message.
+// StepUpProviderInput - StepUpProvider represents a configured step-up authentication integration (e.g., Duo, custom OIDC).
 //
 // This message contains a oneof named settings. Only a single field of the following list may be set at a time:
 //   - oauth2
 //   - microsoft
 type StepUpProviderInput struct {
-	// StepUpMicrosoftSettings represents a Microsoft Entra Provider using Conditional Access Policies to enforce step-up authentication.
+	// StepUpMicrosoftSettings configures a Microsoft Entra step-up provider using Conditional Access.
 	StepUpMicrosoftSettings *StepUpMicrosoftSettings `json:"microsoft,omitempty"`
 	// StepUpOAuth2Settings repersents an OAuth2 provider that supports RFC 9470 <https://www.rfc-editor.org/rfc/rfc9470>
 	//
@@ -20,13 +20,13 @@ type StepUpProviderInput struct {
 	//    - "phr" (okta)
 	//    - "phrh" (okta)
 	StepUpOAuth2Settings *StepUpOAuth2Settings `json:"oauth2,omitempty"`
-	// The clientId field.
+	// The OAuth2 client ID used to authenticate with the step-up provider.
 	ClientID *string `json:"clientId,omitempty"`
-	// The displayName field.
+	// The human-readable name of the step-up provider.
 	DisplayName *string `json:"displayName,omitempty"`
-	// The enabled field.
+	// Whether the step-up provider is active and available for use.
 	Enabled *bool `json:"enabled,omitempty"`
-	// The issuerUrl field.
+	// The OIDC issuer URL for the step-up provider.
 	IssuerURL *string `json:"issuerUrl,omitempty"`
 }
 

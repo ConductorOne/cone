@@ -38,13 +38,13 @@ func (s *SearchAppResourcesResponseExpanded) GetAdditionalProperties() map[strin
 	return s.AdditionalProperties
 }
 
-// The SearchAppResourcesResponse message.
+// The SearchAppResourcesResponse message contains a list of results and a nextPageToken if applicable.
 type SearchAppResourcesResponse struct {
-	// The expanded field.
+	// List of serialized related objects.
 	Expanded []SearchAppResourcesResponseExpanded `json:"expanded,omitempty"`
-	// The list field.
+	// The list of app resource results.
 	List []AppResourceView `json:"list,omitempty"`
-	// The nextPageToken field.
+	// The token for fetching the next page of results.
 	NextPageToken *string `json:"nextPageToken,omitempty"`
 }
 

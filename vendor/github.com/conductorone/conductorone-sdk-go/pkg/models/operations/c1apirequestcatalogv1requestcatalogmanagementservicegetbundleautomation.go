@@ -18,6 +18,9 @@ func (c *C1APIRequestcatalogV1RequestCatalogManagementServiceGetBundleAutomation
 	return c.RequestCatalogID
 }
 
+// #region class-body-c1apirequestcatalogv1requestcatalogmanagementservicegetbundleautomationrequest
+// #endregion class-body-c1apirequestcatalogv1requestcatalogmanagementservicegetbundleautomationrequest
+
 type C1APIRequestcatalogV1RequestCatalogManagementServiceGetBundleAutomationResponse struct {
 	// Successful response
 	BundleAutomation *shared.BundleAutomation
@@ -56,3 +59,6 @@ func (c *C1APIRequestcatalogV1RequestCatalogManagementServiceGetBundleAutomation
 	}
 	return c.RawResponse
 }
+
+// #region class-body-c1apirequestcatalogv1requestcatalogmanagementservicegetbundleautomationresponse
+// #endregion class-body-c1apirequestcatalogv1requestcatalogmanagementservicegetbundleautomationresponse

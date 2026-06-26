@@ -2,6 +2,10 @@
 
 package shared
 
+import (
+	"github.com/conductorone/conductorone-sdk-go/pkg/utils"
+)
+
 // A FacetValue message contains count and value of the facet entry.
 type FacetValue struct {
 	// The count of the values in this facet.
@@ -12,6 +16,17 @@ type FacetValue struct {
 	IconURL *string `json:"iconUrl,omitempty"`
 	// The value of this facet.
 	Value *string `json:"value,omitempty"`
+}
+
+func (f FacetValue) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(f, "", false)
+}
+
+func (f *FacetValue) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &f, "", false, nil); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (f *FacetValue) GetCount() *int64 {

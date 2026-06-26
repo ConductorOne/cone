@@ -4,4 +4,30 @@ package shared
 
 // The GeneratePassword message.
 type GeneratePassword struct {
+	// GeneratePasswordPolicy defines inline password generation rules.
+	//
+	// This message contains a oneof named character_rules. Only a single field of the following list may be set at a time:
+	//   - noRestrictions
+	//   - customCharacters
+	//   - excludedCharacters
+	//
+	GeneratePasswordPolicy *GeneratePasswordPolicy `json:"policy,omitempty"`
+	// Deprecated: password policy ID lookup is no longer used.
+	//
+	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
+	PasswordPolicyID *string `json:"passwordPolicyId,omitempty"`
+}
+
+func (g *GeneratePassword) GetGeneratePasswordPolicy() *GeneratePasswordPolicy {
+	if g == nil {
+		return nil
+	}
+	return g.GeneratePasswordPolicy
+}
+
+func (g *GeneratePassword) GetPasswordPolicyID() *string {
+	if g == nil {
+		return nil
+	}
+	return g.PasswordPolicyID
 }

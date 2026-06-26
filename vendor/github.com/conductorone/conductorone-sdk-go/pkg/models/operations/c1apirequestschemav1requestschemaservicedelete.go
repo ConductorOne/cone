@@ -26,10 +26,13 @@ func (c *C1APIRequestSchemaV1RequestSchemaServiceDeleteRequest) GetRequestSchema
 	return c.RequestSchemaID
 }
 
+// #region class-body-c1apirequestschemav1requestschemaservicedeleterequest
+// #endregion class-body-c1apirequestschemav1requestschemaservicedeleterequest
+
 type C1APIRequestSchemaV1RequestSchemaServiceDeleteResponse struct {
 	// HTTP response content type for this operation
 	ContentType string
-	// Successful response
+	// The response message for deleting a request schema.
 	RequestSchemaServiceDeleteResponse *shared.RequestSchemaServiceDeleteResponse
 	// HTTP response status code for this operation
 	StatusCode int
@@ -64,3 +67,6 @@ func (c *C1APIRequestSchemaV1RequestSchemaServiceDeleteResponse) GetRawResponse(
 	}
 	return c.RawResponse
 }
+
+// #region class-body-c1apirequestschemav1requestschemaservicedeleteresponse
+// #endregion class-body-c1apirequestschemav1requestschemaservicedeleteresponse

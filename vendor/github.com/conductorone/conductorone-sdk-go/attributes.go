@@ -2337,7 +2337,7 @@ func (s *Attributes) ListAttributeValues(ctx context.Context, request operations
 }
 
 // ListComplianceFrameworks - List Compliance Frameworks
-// Invokes the c1.api.attribute.v1.Attributes.ListComplianceFrameworks method.
+// List all compliance framework attribute values (e.g., SOC 2, HIPAA) with pagination.
 func (s *Attributes) ListComplianceFrameworks(ctx context.Context, request operations.C1APIAttributeV1AttributesListComplianceFrameworksRequest, opts ...operations.Option) (*operations.C1APIAttributeV1AttributesListComplianceFrameworksResponse, error) {
 	o := operations.Options{}
 	supportedOptions := []string{
@@ -2546,7 +2546,7 @@ func (s *Attributes) ListComplianceFrameworks(ctx context.Context, request opera
 }
 
 // ListRiskLevels - List Risk Levels
-// Invokes the c1.api.attribute.v1.Attributes.ListRiskLevels method.
+// List all risk level attribute values with pagination.
 func (s *Attributes) ListRiskLevels(ctx context.Context, request operations.C1APIAttributeV1AttributesListRiskLevelsRequest, opts ...operations.Option) (*operations.C1APIAttributeV1AttributesListRiskLevelsResponse, error) {
 	o := operations.Options{}
 	supportedOptions := []string{

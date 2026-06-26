@@ -7,24 +7,24 @@ import (
 	"time"
 )
 
-// Frequency - The frequency field.
-type Frequency string
+// RecurrenceRuleFrequency - The frequency field.
+type RecurrenceRuleFrequency string
 
 const (
-	FrequencyFrequencyUnspecified Frequency = "FREQUENCY_UNSPECIFIED"
-	FrequencyFrequencyNone        Frequency = "FREQUENCY_NONE"
-	FrequencyFrequencyDaily       Frequency = "FREQUENCY_DAILY"
-	FrequencyFrequencyWeekly      Frequency = "FREQUENCY_WEEKLY"
-	FrequencyFrequencyMonthly     Frequency = "FREQUENCY_MONTHLY"
-	FrequencyFrequencyYearly      Frequency = "FREQUENCY_YEARLY"
+	RecurrenceRuleFrequencyFrequencyUnspecified RecurrenceRuleFrequency = "FREQUENCY_UNSPECIFIED"
+	RecurrenceRuleFrequencyFrequencyNone        RecurrenceRuleFrequency = "FREQUENCY_NONE"
+	RecurrenceRuleFrequencyFrequencyDaily       RecurrenceRuleFrequency = "FREQUENCY_DAILY"
+	RecurrenceRuleFrequencyFrequencyWeekly      RecurrenceRuleFrequency = "FREQUENCY_WEEKLY"
+	RecurrenceRuleFrequencyFrequencyMonthly     RecurrenceRuleFrequency = "FREQUENCY_MONTHLY"
+	RecurrenceRuleFrequencyFrequencyYearly      RecurrenceRuleFrequency = "FREQUENCY_YEARLY"
 )
 
-func (e Frequency) ToPointer() *Frequency {
+func (e RecurrenceRuleFrequency) ToPointer() *RecurrenceRuleFrequency {
 	return &e
 }
 
 // IsExact returns true if the value matches a known enum value, false otherwise.
-func (e *Frequency) IsExact() bool {
+func (e *RecurrenceRuleFrequency) IsExact() bool {
 	if e != nil {
 		switch *e {
 		case "FREQUENCY_UNSPECIFIED", "FREQUENCY_NONE", "FREQUENCY_DAILY", "FREQUENCY_WEEKLY", "FREQUENCY_MONTHLY", "FREQUENCY_YEARLY":
@@ -42,7 +42,7 @@ func (e *Frequency) IsExact() bool {
 type RecurrenceRule struct {
 	EndDate *time.Time `json:"endDate,omitempty"`
 	// The frequency field.
-	Frequency *Frequency `json:"frequency,omitempty"`
+	Frequency *RecurrenceRuleFrequency `json:"frequency,omitempty"`
 	// The interval field.
 	Interval *int `json:"interval,omitempty"`
 	// The occurrences field.
@@ -70,7 +70,7 @@ func (r *RecurrenceRule) GetEndDate() *time.Time {
 	return r.EndDate
 }
 
-func (r *RecurrenceRule) GetFrequency() *Frequency {
+func (r *RecurrenceRule) GetFrequency() *RecurrenceRuleFrequency {
 	if r == nil {
 		return nil
 	}

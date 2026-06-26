@@ -34,8 +34,11 @@ type AppEntitlementAutomation struct {
 	// The description of the app entitlement.
 	Description *string `json:"description,omitempty"`
 	// The display name of the app entitlement.
-	DisplayName *string    `json:"displayName,omitempty"`
-	UpdatedAt   *time.Time `json:"updatedAt,omitempty"`
+	DisplayName *string `json:"displayName,omitempty"`
+	// When set, this automation is managed by an access profile's bundle automation.
+	//  Read-only. Not settable via this API.
+	ManagedByRequestCatalogID *string    `json:"managedByRequestCatalogId,omitempty"`
+	UpdatedAt                 *time.Time `json:"updatedAt,omitempty"`
 }
 
 func (a AppEntitlementAutomation) MarshalJSON() ([]byte, error) {
@@ -124,6 +127,13 @@ func (a *AppEntitlementAutomation) GetDisplayName() *string {
 		return nil
 	}
 	return a.DisplayName
+}
+
+func (a *AppEntitlementAutomation) GetManagedByRequestCatalogID() *string {
+	if a == nil {
+		return nil
+	}
+	return a.ManagedByRequestCatalogID
 }
 
 func (a *AppEntitlementAutomation) GetUpdatedAt() *time.Time {

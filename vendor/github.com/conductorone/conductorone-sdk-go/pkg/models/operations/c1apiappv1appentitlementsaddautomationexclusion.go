@@ -34,6 +34,9 @@ func (c *C1APIAppV1AppEntitlementsAddAutomationExclusionRequest) GetAppID() stri
 	return c.AppID
 }
 
+// #region class-body-c1apiappv1appentitlementsaddautomationexclusionrequest
+// #endregion class-body-c1apiappv1appentitlementsaddautomationexclusionrequest
+
 type C1APIAppV1AppEntitlementsAddAutomationExclusionResponse struct {
 	// Empty response with a status code indicating success.
 	AddAutomationExclusionResponse *shared.AddAutomationExclusionResponse
@@ -72,3 +75,6 @@ func (c *C1APIAppV1AppEntitlementsAddAutomationExclusionResponse) GetRawResponse
 	}
 	return c.RawResponse
 }
+
+// #region class-body-c1apiappv1appentitlementsaddautomationexclusionresponse
+// #endregion class-body-c1apiappv1appentitlementsaddautomationexclusionresponse

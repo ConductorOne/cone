@@ -10,7 +10,7 @@ import (
 type C1APIRequestSchemaV1RequestSchemaServiceCreateEntitlementBindingResponse struct {
 	// HTTP response content type for this operation
 	ContentType string
-	// Successful response
+	// The response message for creating a single entitlement binding.
 	RequestSchemaServiceCreateEntitlementBindingResponse *shared.RequestSchemaServiceCreateEntitlementBindingResponse
 	// HTTP response status code for this operation
 	StatusCode int
@@ -45,3 +45,6 @@ func (c *C1APIRequestSchemaV1RequestSchemaServiceCreateEntitlementBindingRespons
 	}
 	return c.RawResponse
 }
+
+// #region class-body-c1apirequestschemav1requestschemaservicecreateentitlementbindingresponse
+// #endregion class-body-c1apirequestschemav1requestschemaservicecreateentitlementbindingresponse

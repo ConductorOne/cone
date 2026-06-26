@@ -18,10 +18,13 @@ func (c *C1APIRequestcatalogV1RequestCatalogManagementServiceListAllEntitlementI
 	return c.CatalogID
 }
 
+// #region class-body-c1apirequestcatalogv1requestcatalogmanagementservicelistallentitlementidsperapprequest
+// #endregion class-body-c1apirequestcatalogv1requestcatalogmanagementservicelistallentitlementidsperapprequest
+
 type C1APIRequestcatalogV1RequestCatalogManagementServiceListAllEntitlementIdsPerAppResponse struct {
 	// HTTP response content type for this operation
 	ContentType string
-	// Successful response
+	// The response message containing all requestable entitlement references in the catalog.
 	RequestCatalogManagementServiceListAllEntitlementIdsPerCatalogResponse *shared.RequestCatalogManagementServiceListAllEntitlementIdsPerCatalogResponse
 	// HTTP response status code for this operation
 	StatusCode int
@@ -56,3 +59,6 @@ func (c *C1APIRequestcatalogV1RequestCatalogManagementServiceListAllEntitlementI
 	}
 	return c.RawResponse
 }
+
+// #region class-body-c1apirequestcatalogv1requestcatalogmanagementservicelistallentitlementidsperappresponse
+// #endregion class-body-c1apirequestcatalogv1requestcatalogmanagementservicelistallentitlementidsperappresponse

@@ -32,7 +32,7 @@ func newSessionSettings(rootSDK *ConductoroneAPI, sdkConfig config.SDKConfigurat
 }
 
 // Get
-// Invokes the c1.api.settings.v1.SessionSettingsService.Get method.
+// Get retrieves the current session security settings for the tenant.
 func (s *SessionSettings) Get(ctx context.Context, opts ...operations.Option) (*operations.C1APISettingsV1SessionSettingsServiceGetResponse, error) {
 	o := operations.Options{}
 	supportedOptions := []string{
@@ -237,7 +237,7 @@ func (s *SessionSettings) Get(ctx context.Context, opts ...operations.Option) (*
 }
 
 // TestSourceIP - Test Source Ip
-// Invokes the c1.api.settings.v1.SessionSettingsService.TestSourceIP method.
+// TestSourceIP checks whether a given IP address would be allowed by the specified CIDR allowlist rules.
 func (s *SessionSettings) TestSourceIP(ctx context.Context, request *shared.TestSourceIPRequest, opts ...operations.Option) (*operations.C1APISettingsV1SessionSettingsServiceTestSourceIPResponse, error) {
 	o := operations.Options{}
 	supportedOptions := []string{
@@ -449,7 +449,7 @@ func (s *SessionSettings) TestSourceIP(ctx context.Context, request *shared.Test
 }
 
 // Update
-// Invokes the c1.api.settings.v1.SessionSettingsService.Update method.
+// Update modifies the session security settings for the tenant, such as session length and IP allowlists.
 func (s *SessionSettings) Update(ctx context.Context, request *shared.UpdateSessionSettingsRequest, opts ...operations.Option) (*operations.C1APISettingsV1SessionSettingsServiceUpdateResponse, error) {
 	o := operations.Options{}
 	supportedOptions := []string{

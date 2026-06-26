@@ -8,7 +8,7 @@ package shared
 //   - oauth2
 //   - microsoft
 type CreateStepUpProviderRequest struct {
-	// StepUpMicrosoftSettings represents a Microsoft Entra Provider using Conditional Access Policies to enforce step-up authentication.
+	// StepUpMicrosoftSettings configures a Microsoft Entra step-up provider using Conditional Access.
 	StepUpMicrosoftSettings *StepUpMicrosoftSettings `json:"microsoft,omitempty"`
 	// StepUpOAuth2Settings repersents an OAuth2 provider that supports RFC 9470 <https://www.rfc-editor.org/rfc/rfc9470>
 	//
@@ -20,13 +20,13 @@ type CreateStepUpProviderRequest struct {
 	//    - "phr" (okta)
 	//    - "phrh" (okta)
 	StepUpOAuth2Settings *StepUpOAuth2Settings `json:"oauth2,omitempty"`
-	// The clientId field.
+	// The OAuth2 client ID used to authenticate with the step-up provider.
 	ClientID *string `json:"clientId,omitempty"`
-	// The clientSecret field.
+	// The OAuth2 client secret. Write-only; never returned in responses.
 	ClientSecret *string `json:"clientSecret,omitempty"`
-	// The displayName field.
+	// The human-readable name for the new step-up provider.
 	DisplayName *string `json:"displayName,omitempty"`
-	// The issuerUrl field.
+	// The OIDC issuer URL for the step-up provider.
 	IssuerURL *string `json:"issuerUrl,omitempty"`
 }
 

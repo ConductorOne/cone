@@ -244,7 +244,7 @@ func (s *Task) CreateGrantTask(ctx context.Context, request *shared.TaskServiceC
 }
 
 // CreateOffboardingTask - Create Offboarding Task
-// Invokes the c1.api.task.v1.TaskService.CreateOffboardingTask method.
+// Create an offboarding task to remove a user's access across applications.
 func (s *Task) CreateOffboardingTask(ctx context.Context, request *shared.TaskServiceCreateOffboardingRequest, opts ...operations.Option) (*operations.C1APITaskV1TaskServiceCreateOffboardingTaskResponse, error) {
 	o := operations.Options{}
 	supportedOptions := []string{

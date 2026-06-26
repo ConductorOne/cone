@@ -26,10 +26,13 @@ func (c *C1APIRequestcatalogV1RequestCatalogManagementServiceDeleteBundleAutomat
 	return c.RequestCatalogID
 }
 
+// #region class-body-c1apirequestcatalogv1requestcatalogmanagementservicedeletebundleautomationrequest
+// #endregion class-body-c1apirequestcatalogv1requestcatalogmanagementservicedeletebundleautomationrequest
+
 type C1APIRequestcatalogV1RequestCatalogManagementServiceDeleteBundleAutomationResponse struct {
 	// HTTP response content type for this operation
 	ContentType string
-	// Successful response
+	// The response message for deleting a bundle automation.
 	DeleteBundleAutomationResponse *shared.DeleteBundleAutomationResponse
 	// HTTP response status code for this operation
 	StatusCode int
@@ -64,3 +67,6 @@ func (c *C1APIRequestcatalogV1RequestCatalogManagementServiceDeleteBundleAutomat
 	}
 	return c.RawResponse
 }
+
+// #region class-body-c1apirequestcatalogv1requestcatalogmanagementservicedeletebundleautomationresponse
+// #endregion class-body-c1apirequestcatalogv1requestcatalogmanagementservicedeletebundleautomationresponse

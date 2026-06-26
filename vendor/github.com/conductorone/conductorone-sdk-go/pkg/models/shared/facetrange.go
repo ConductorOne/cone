@@ -2,6 +2,10 @@
 
 package shared
 
+import (
+	"github.com/conductorone/conductorone-sdk-go/pkg/utils"
+)
+
 // The FacetRange message.
 type FacetRange struct {
 	// The count of items in the range.
@@ -14,6 +18,17 @@ type FacetRange struct {
 	IconURL *string `json:"iconUrl,omitempty"`
 	// The ending value of the range.
 	To *int64 `integer:"string" json:"to,omitempty"`
+}
+
+func (f FacetRange) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(f, "", false)
+}
+
+func (f *FacetRange) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &f, "", false, nil); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (f *FacetRange) GetCount() *int64 {

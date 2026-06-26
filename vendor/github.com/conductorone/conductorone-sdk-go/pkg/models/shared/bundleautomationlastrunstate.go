@@ -35,6 +35,8 @@ func (e *BundleAutomationLastRunStateStatus) IsExact() bool {
 
 // The BundleAutomationLastRunState message.
 type BundleAutomationLastRunState struct {
+	// The BundleAutomationCelEvaluationState message.
+	BundleAutomationCelEvaluationState *BundleAutomationCelEvaluationState `json:"celEvaluation,omitempty"`
 	// The errorMessage field.
 	ErrorMessage *string    `json:"errorMessage,omitempty"`
 	LastRunAt    *time.Time `json:"lastRunAt,omitempty"`
@@ -51,6 +53,13 @@ func (b *BundleAutomationLastRunState) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
+}
+
+func (b *BundleAutomationLastRunState) GetBundleAutomationCelEvaluationState() *BundleAutomationCelEvaluationState {
+	if b == nil {
+		return nil
+	}
+	return b.BundleAutomationCelEvaluationState
 }
 
 func (b *BundleAutomationLastRunState) GetErrorMessage() *string {

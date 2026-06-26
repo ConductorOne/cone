@@ -12,9 +12,9 @@ type TestSourceIPResponse struct {
 	//  You can find out more about this error model and how to work with it in the
 	//  [API Design Guide](https://cloud.google.com/apis/design/errors).
 	Status *Status `json:"details,omitempty"`
-	// The allowed field.
+	// Whether the tested IP address is allowed by the CIDR rules.
 	Allowed *bool `json:"allowed,omitempty"`
-	// The checkedIp field.
+	// The IP address that was checked, either from the request or inferred from the caller.
 	CheckedIP *string `json:"checkedIp,omitempty"`
 }
 

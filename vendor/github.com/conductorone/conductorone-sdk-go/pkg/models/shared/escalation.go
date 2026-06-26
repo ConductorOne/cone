@@ -2,7 +2,9 @@
 
 package shared
 
-import "github.com/conductorone/conductorone-sdk-go/pkg/utils"
+import (
+	"github.com/conductorone/conductorone-sdk-go/pkg/utils"
+)
 
 // The Escalation message.
 //
@@ -31,7 +33,7 @@ func (e Escalation) MarshalJSON() ([]byte, error) {
 }
 
 func (e *Escalation) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, e, "", false, nil); err != nil {
+	if err := utils.UnmarshalJSON(data, &e, "", false, nil); err != nil {
 		return err
 	}
 	return nil

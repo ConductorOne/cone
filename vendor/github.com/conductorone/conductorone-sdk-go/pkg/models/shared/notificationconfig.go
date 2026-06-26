@@ -2,11 +2,13 @@
 
 package shared
 
-// The NotificationConfig message.
+// NotificationConfig - Controls which email notifications are sent during the access review lifecycle.
 type NotificationConfig struct {
-	// The sendClose field.
+	// Whether to send a notification when the campaign is closed.
 	SendClose *bool `json:"sendClose,omitempty"`
-	// The sendReminders field.
+	// Whether to send a notification when the campaign is started.
+	SendKickoff *bool `json:"sendKickoff,omitempty"`
+	// Whether to send periodic reminder emails to reviewers with outstanding tasks.
 	SendReminders *bool `json:"sendReminders,omitempty"`
 }
 
@@ -15,6 +17,13 @@ func (n *NotificationConfig) GetSendClose() *bool {
 		return nil
 	}
 	return n.SendClose
+}
+
+func (n *NotificationConfig) GetSendKickoff() *bool {
+	if n == nil {
+		return nil
+	}
+	return n.SendKickoff
 }
 
 func (n *NotificationConfig) GetSendReminders() *bool {

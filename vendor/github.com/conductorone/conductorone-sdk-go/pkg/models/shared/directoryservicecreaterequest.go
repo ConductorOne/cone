@@ -14,6 +14,8 @@ type DirectoryServiceCreateRequest struct {
 	DirectoryAccountFilterCel *DirectoryAccountFilterCel `json:"celExpression,omitempty"`
 	// The fields to be included in the directory response.
 	DirectoryExpandMask *DirectoryExpandMask `json:"expandMask,omitempty"`
+	// DirectoryMergeConfig configures how AppUsers from this directory are matched to C1 Users.
+	DirectoryMergeConfig *DirectoryMergeConfig `json:"mergeConfig,omitempty"`
 	// The AppID to make into a directory, providing identities and more for the C1 app.
 	AppID *string `json:"appId,omitempty"`
 }
@@ -37,6 +39,13 @@ func (d *DirectoryServiceCreateRequest) GetDirectoryExpandMask() *DirectoryExpan
 		return nil
 	}
 	return d.DirectoryExpandMask
+}
+
+func (d *DirectoryServiceCreateRequest) GetDirectoryMergeConfig() *DirectoryMergeConfig {
+	if d == nil {
+		return nil
+	}
+	return d.DirectoryMergeConfig
 }
 
 func (d *DirectoryServiceCreateRequest) GetAppID() *string {

@@ -34,6 +34,9 @@ func (c *C1APIAppV1ConnectorServiceUpdateDelegatedRequest) GetConnectorID() stri
 	return c.ConnectorID
 }
 
+// #region class-body-c1apiappv1connectorserviceupdatedelegatedrequest
+// #endregion class-body-c1apiappv1connectorserviceupdatedelegatedrequest
+
 type C1APIAppV1ConnectorServiceUpdateDelegatedResponse struct {
 	// ConnectorServiceUpdateResponse is the response returned by the update method.
 	ConnectorServiceUpdateResponse *shared.ConnectorServiceUpdateResponse
@@ -72,3 +75,6 @@ func (c *C1APIAppV1ConnectorServiceUpdateDelegatedResponse) GetRawResponse() *ht
 	}
 	return c.RawResponse
 }
+
+// #region class-body-c1apiappv1connectorserviceupdatedelegatedresponse
+// #endregion class-body-c1apiappv1connectorserviceupdatedelegatedresponse

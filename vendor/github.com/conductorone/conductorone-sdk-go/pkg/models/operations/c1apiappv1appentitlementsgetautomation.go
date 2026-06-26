@@ -26,6 +26,9 @@ func (c *C1APIAppV1AppEntitlementsGetAutomationRequest) GetAppID() string {
 	return c.AppID
 }
 
+// #region class-body-c1apiappv1appentitlementsgetautomationrequest
+// #endregion class-body-c1apiappv1appentitlementsgetautomationrequest
+
 type C1APIAppV1AppEntitlementsGetAutomationResponse struct {
 	// Successful response
 	AppEntitlementServiceGetAutomationResponse *shared.AppEntitlementServiceGetAutomationResponse
@@ -64,3 +67,6 @@ func (c *C1APIAppV1AppEntitlementsGetAutomationResponse) GetRawResponse() *http.
 	}
 	return c.RawResponse
 }
+
+// #region class-body-c1apiappv1appentitlementsgetautomationresponse
+// #endregion class-body-c1apiappv1appentitlementsgetautomationresponse

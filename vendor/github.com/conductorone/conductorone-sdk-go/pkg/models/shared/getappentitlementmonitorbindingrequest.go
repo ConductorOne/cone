@@ -2,7 +2,7 @@
 
 package shared
 
-// GetAppEntitlementMonitorBindingRequestEntitlementGroup - The entitlementGroup field.
+// GetAppEntitlementMonitorBindingRequestEntitlementGroup - Which side of the conflict monitor (A or B) this binding belongs to.
 type GetAppEntitlementMonitorBindingRequestEntitlementGroup string
 
 const (
@@ -26,15 +26,15 @@ func (e *GetAppEntitlementMonitorBindingRequestEntitlementGroup) IsExact() bool 
 	return false
 }
 
-// The GetAppEntitlementMonitorBindingRequest message.
+// GetAppEntitlementMonitorBindingRequest - The request message for retrieving a single app entitlement monitor binding.
 type GetAppEntitlementMonitorBindingRequest struct {
-	// The appEntitlementId field.
+	// The unique identifier of the app entitlement bound to the monitor.
 	AppEntitlementID *string `json:"appEntitlementId,omitempty"`
-	// The appId field.
+	// The unique identifier of the application containing the entitlement.
 	AppID *string `json:"appId,omitempty"`
-	// The entitlementGroup field.
+	// Which side of the conflict monitor (A or B) this binding belongs to.
 	EntitlementGroup *GetAppEntitlementMonitorBindingRequestEntitlementGroup `json:"entitlementGroup,omitempty"`
-	// The monitorId field.
+	// The unique identifier of the conflict monitor.
 	MonitorID *string `json:"monitorId,omitempty"`
 }
 

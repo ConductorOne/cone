@@ -17,6 +17,8 @@ type Directory struct {
 	DirectoryAccountFilterAll *DirectoryAccountFilterAll `json:"all,omitempty"`
 	// The DirectoryAccountFilterCel message.
 	DirectoryAccountFilterCel *DirectoryAccountFilterCel `json:"celExpression,omitempty"`
+	// DirectoryMergeConfig configures how AppUsers from this directory are matched to C1 Users.
+	DirectoryMergeConfig *DirectoryMergeConfig `json:"mergeConfig,omitempty"`
 	// The ID of the app associated with the directory.
 	AppID     *string    `json:"appId,omitempty"`
 	CreatedAt *time.Time `json:"createdAt,omitempty"`
@@ -47,6 +49,13 @@ func (d *Directory) GetDirectoryAccountFilterCel() *DirectoryAccountFilterCel {
 		return nil
 	}
 	return d.DirectoryAccountFilterCel
+}
+
+func (d *Directory) GetDirectoryMergeConfig() *DirectoryMergeConfig {
+	if d == nil {
+		return nil
+	}
+	return d.DirectoryMergeConfig
 }
 
 func (d *Directory) GetAppID() *string {

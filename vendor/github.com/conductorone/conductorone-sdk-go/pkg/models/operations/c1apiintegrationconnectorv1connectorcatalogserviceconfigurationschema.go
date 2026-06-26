@@ -8,7 +8,7 @@ import (
 )
 
 type C1APIIntegrationConnectorV1ConnectorCatalogServiceConfigurationSchemaResponse struct {
-	// Successful response
+	// ConnectorCatalogServiceConfigurationSchemaResponse is the response containing the connector's configuration schema.
 	ConnectorCatalogServiceConfigurationSchemaResponse *shared.ConnectorCatalogServiceConfigurationSchemaResponse
 	// HTTP response content type for this operation
 	ContentType string
@@ -45,3 +45,6 @@ func (c *C1APIIntegrationConnectorV1ConnectorCatalogServiceConfigurationSchemaRe
 	}
 	return c.RawResponse
 }
+
+// #region class-body-c1apiintegrationconnectorv1connectorcatalogserviceconfigurationschemaresponse
+// #endregion class-body-c1apiintegrationconnectorv1connectorcatalogserviceconfigurationschemaresponse

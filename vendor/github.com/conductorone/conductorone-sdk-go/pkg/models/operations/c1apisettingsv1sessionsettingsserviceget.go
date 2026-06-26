@@ -45,3 +45,6 @@ func (c *C1APISettingsV1SessionSettingsServiceGetResponse) GetRawResponse() *htt
 	}
 	return c.RawResponse
 }
+
+// #region class-body-c1apisettingsv1sessionsettingsservicegetresponse
+// #endregion class-body-c1apisettingsv1sessionsettingsservicegetresponse

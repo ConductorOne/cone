@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-// EntitlementGroup - The entitlementGroup field.
+// EntitlementGroup - Which side of the conflict monitor (A or B) this entitlement is assigned to.
 type EntitlementGroup string
 
 const (
@@ -31,17 +31,17 @@ func (e *EntitlementGroup) IsExact() bool {
 	return false
 }
 
-// The AppEntitlementMonitorBinding message.
+// AppEntitlementMonitorBinding - Represents the association of an app entitlement with one side (A or B) of a conflict monitor.
 type AppEntitlementMonitorBinding struct {
-	// The appEntitlementId field.
+	// The unique identifier of the bound app entitlement.
 	AppEntitlementID *string `json:"appEntitlementId,omitempty"`
-	// The appId field.
+	// The unique identifier of the application containing the entitlement.
 	AppID     *string    `json:"appId,omitempty"`
 	CreatedAt *time.Time `json:"createdAt,omitempty"`
 	DeletedAt *time.Time `json:"deletedAt,omitempty"`
-	// The entitlementGroup field.
+	// Which side of the conflict monitor (A or B) this entitlement is assigned to.
 	EntitlementGroup *EntitlementGroup `json:"entitlementGroup,omitempty"`
-	// The monitorId field.
+	// The unique identifier of the conflict monitor this binding belongs to.
 	MonitorID *string    `json:"monitorId,omitempty"`
 	UpdatedAt *time.Time `json:"updatedAt,omitempty"`
 }

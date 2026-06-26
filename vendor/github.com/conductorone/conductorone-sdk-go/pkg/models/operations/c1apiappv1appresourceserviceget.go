@@ -34,6 +34,9 @@ func (c *C1APIAppV1AppResourceServiceGetRequest) GetID() string {
 	return c.ID
 }
 
+// #region class-body-c1apiappv1appresourceservicegetrequest
+// #endregion class-body-c1apiappv1appresourceservicegetrequest
+
 type C1APIAppV1AppResourceServiceGetResponse struct {
 	// The app resource service get response contains the app resource view and array of expanded items indicated by the request's expand mask.
 	AppResourceServiceGetResponse *shared.AppResourceServiceGetResponse
@@ -72,3 +75,6 @@ func (c *C1APIAppV1AppResourceServiceGetResponse) GetRawResponse() *http.Respons
 	}
 	return c.RawResponse
 }
+
+// #region class-body-c1apiappv1appresourceservicegetresponse
+// #endregion class-body-c1apiappv1appresourceservicegetresponse

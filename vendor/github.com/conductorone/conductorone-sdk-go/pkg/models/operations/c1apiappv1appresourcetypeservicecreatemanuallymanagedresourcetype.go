@@ -26,10 +26,13 @@ func (c *C1APIAppV1AppResourceTypeServiceCreateManuallyManagedResourceTypeReques
 	return c.AppID
 }
 
+// #region class-body-c1apiappv1appresourcetypeservicecreatemanuallymanagedresourcetyperequest
+// #endregion class-body-c1apiappv1appresourcetypeservicecreatemanuallymanagedresourcetyperequest
+
 type C1APIAppV1AppResourceTypeServiceCreateManuallyManagedResourceTypeResponse struct {
 	// HTTP response content type for this operation
 	ContentType string
-	// Successful response
+	// The response message for creating a manually managed resource type.
 	CreateManuallyManagedResourceTypeResponse *shared.CreateManuallyManagedResourceTypeResponse
 	// HTTP response status code for this operation
 	StatusCode int
@@ -64,3 +67,6 @@ func (c *C1APIAppV1AppResourceTypeServiceCreateManuallyManagedResourceTypeRespon
 	}
 	return c.RawResponse
 }
+
+// #region class-body-c1apiappv1appresourcetypeservicecreatemanuallymanagedresourcetyperesponse
+// #endregion class-body-c1apiappv1appresourcetypeservicecreatemanuallymanagedresourcetyperesponse

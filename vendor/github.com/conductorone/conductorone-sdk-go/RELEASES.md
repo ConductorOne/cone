@@ -89,3 +89,33 @@ Based on:
 - [go v1.26.1] .
 ### Releases
 - [Go v1.26.1] https://github.com/ConductorOne/conductorone-sdk-go/releases/tag/v1.26.1 - .
+
+## 2026-05-05 21:45:43
+### Changes
+Based on:
+- OpenAPI Doc  
+- Speakeasy CLI 1.762.0 (2.882.0) https://github.com/speakeasy-api/speakeasy
+### Generated
+- [go v1.28.0] .
+### Releases
+- [Go v1.28.0] https://github.com/ConductorOne/conductorone-sdk-go/releases/tag/v1.28.0 - .
+
+## 2026-05-06 00:49:24
+### Changes
+Based on:
+- OpenAPI Doc  
+- Speakeasy CLI 1.762.0 (2.882.0) https://github.com/speakeasy-api/speakeasy
+### Generated
+- [go v1.28.1] .
+### Releases
+- [Go v1.28.1] https://github.com/ConductorOne/conductorone-sdk-go/releases/tag/v1.28.1 - .
+
+## 2026-05-07 00:53:56
+### Changes
+Based on:
+- OpenAPI Doc  
+- Speakeasy CLI 1.762.0 (2.882.0) https://github.com/speakeasy-api/speakeasy
+### Generated
+- [go v1.28.2] .
+### Releases
+- [Go v1.28.2] https://github.com/ConductorOne/conductorone-sdk-go/releases/tag/v1.28.2 - .

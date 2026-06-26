@@ -2,23 +2,23 @@
 
 package shared
 
-// Outcome - The outcome field.
-type Outcome string
+// TaskAuditAccessRequestOutcomeOutcome - The outcome field.
+type TaskAuditAccessRequestOutcomeOutcome string
 
 const (
-	OutcomeAccessRequestOutcomeUnspecified Outcome = "ACCESS_REQUEST_OUTCOME_UNSPECIFIED"
-	OutcomeAccessRequestOutcomeApproved    Outcome = "ACCESS_REQUEST_OUTCOME_APPROVED"
-	OutcomeAccessRequestOutcomeDenied      Outcome = "ACCESS_REQUEST_OUTCOME_DENIED"
-	OutcomeAccessRequestOutcomeError       Outcome = "ACCESS_REQUEST_OUTCOME_ERROR"
-	OutcomeAccessRequestOutcomeCancelled   Outcome = "ACCESS_REQUEST_OUTCOME_CANCELLED"
+	TaskAuditAccessRequestOutcomeOutcomeAccessRequestOutcomeUnspecified TaskAuditAccessRequestOutcomeOutcome = "ACCESS_REQUEST_OUTCOME_UNSPECIFIED"
+	TaskAuditAccessRequestOutcomeOutcomeAccessRequestOutcomeApproved    TaskAuditAccessRequestOutcomeOutcome = "ACCESS_REQUEST_OUTCOME_APPROVED"
+	TaskAuditAccessRequestOutcomeOutcomeAccessRequestOutcomeDenied      TaskAuditAccessRequestOutcomeOutcome = "ACCESS_REQUEST_OUTCOME_DENIED"
+	TaskAuditAccessRequestOutcomeOutcomeAccessRequestOutcomeError       TaskAuditAccessRequestOutcomeOutcome = "ACCESS_REQUEST_OUTCOME_ERROR"
+	TaskAuditAccessRequestOutcomeOutcomeAccessRequestOutcomeCancelled   TaskAuditAccessRequestOutcomeOutcome = "ACCESS_REQUEST_OUTCOME_CANCELLED"
 )
 
-func (e Outcome) ToPointer() *Outcome {
+func (e TaskAuditAccessRequestOutcomeOutcome) ToPointer() *TaskAuditAccessRequestOutcomeOutcome {
 	return &e
 }
 
 // IsExact returns true if the value matches a known enum value, false otherwise.
-func (e *Outcome) IsExact() bool {
+func (e *TaskAuditAccessRequestOutcomeOutcome) IsExact() bool {
 	if e != nil {
 		switch *e {
 		case "ACCESS_REQUEST_OUTCOME_UNSPECIFIED", "ACCESS_REQUEST_OUTCOME_APPROVED", "ACCESS_REQUEST_OUTCOME_DENIED", "ACCESS_REQUEST_OUTCOME_ERROR", "ACCESS_REQUEST_OUTCOME_CANCELLED":
@@ -31,10 +31,10 @@ func (e *Outcome) IsExact() bool {
 // The TaskAuditAccessRequestOutcome message.
 type TaskAuditAccessRequestOutcome struct {
 	// The outcome field.
-	Outcome *Outcome `json:"outcome,omitempty"`
+	Outcome *TaskAuditAccessRequestOutcomeOutcome `json:"outcome,omitempty"`
 }
 
-func (t *TaskAuditAccessRequestOutcome) GetOutcome() *Outcome {
+func (t *TaskAuditAccessRequestOutcome) GetOutcome() *TaskAuditAccessRequestOutcomeOutcome {
 	if t == nil {
 		return nil
 	}

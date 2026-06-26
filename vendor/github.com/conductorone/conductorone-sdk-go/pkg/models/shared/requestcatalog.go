@@ -94,6 +94,9 @@ type RequestCatalog struct {
 	DisplayName *string `json:"displayName,omitempty"`
 	// Defines how to handle the request policies of the entitlements in the catalog during enrollment.
 	EnrollmentBehavior *EnrollmentBehavior `json:"enrollmentBehavior,omitempty"`
+	// The ID of the policy to use for access requests in this catalog.
+	//  This is different from the catalog AppEntitlement's grant_policy_id, which is used for catalog membership grants.
+	GrantPolicyID *string `json:"grantPolicyId,omitempty"`
 	// The id of the request catalog.
 	ID *string `json:"id,omitempty"`
 	// Whether or not this catalog is published.
@@ -169,6 +172,13 @@ func (r *RequestCatalog) GetEnrollmentBehavior() *EnrollmentBehavior {
 	return r.EnrollmentBehavior
 }
 
+func (r *RequestCatalog) GetGrantPolicyID() *string {
+	if r == nil {
+		return nil
+	}
+	return r.GrantPolicyID
+}
+
 func (r *RequestCatalog) GetID() *string {
 	if r == nil {
 		return nil
@@ -230,6 +240,9 @@ type RequestCatalogInput struct {
 	DisplayName *string `json:"displayName,omitempty"`
 	// Defines how to handle the request policies of the entitlements in the catalog during enrollment.
 	EnrollmentBehavior *EnrollmentBehavior `json:"enrollmentBehavior,omitempty"`
+	// The ID of the policy to use for access requests in this catalog.
+	//  This is different from the catalog AppEntitlement's grant_policy_id, which is used for catalog membership grants.
+	GrantPolicyID *string `json:"grantPolicyId,omitempty"`
 	// The id of the request catalog.
 	ID *string `json:"id,omitempty"`
 	// Whether or not this catalog is published.
@@ -277,6 +290,13 @@ func (r *RequestCatalogInput) GetEnrollmentBehavior() *EnrollmentBehavior {
 		return nil
 	}
 	return r.EnrollmentBehavior
+}
+
+func (r *RequestCatalogInput) GetGrantPolicyID() *string {
+	if r == nil {
+		return nil
+	}
+	return r.GrantPolicyID
 }
 
 func (r *RequestCatalogInput) GetID() *string {

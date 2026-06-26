@@ -34,6 +34,9 @@ func (c *C1APIAppV1AppEntitlementsRemoveEntitlementMembershipRequest) GetAppID()
 	return c.AppID
 }
 
+// #region class-body-c1apiappv1appentitlementsremoveentitlementmembershiprequest
+// #endregion class-body-c1apiappv1appentitlementsremoveentitlementmembershiprequest
+
 type C1APIAppV1AppEntitlementsRemoveEntitlementMembershipResponse struct {
 	// HTTP response content type for this operation
 	ContentType string
@@ -72,3 +75,6 @@ func (c *C1APIAppV1AppEntitlementsRemoveEntitlementMembershipResponse) GetRawRes
 	}
 	return c.RawResponse
 }
+
+// #region class-body-c1apiappv1appentitlementsremoveentitlementmembershipresponse
+// #endregion class-body-c1apiappv1appentitlementsremoveentitlementmembershipresponse

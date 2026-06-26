@@ -42,8 +42,11 @@ func (c *C1APIAppV1AppResourceOwnersAddRequest) GetResourceTypeID() string {
 	return c.ResourceTypeID
 }
 
+// #region class-body-c1apiappv1appresourceownersaddrequest
+// #endregion class-body-c1apiappv1appresourceownersaddrequest
+
 type C1APIAppV1AppResourceOwnersAddResponse struct {
-	// Successful response
+	// The empty response message for adding an owner to an app resource.
 	AddAppResourceOwnerResponse *shared.AddAppResourceOwnerResponse
 	// HTTP response content type for this operation
 	ContentType string
@@ -80,3 +83,6 @@ func (c *C1APIAppV1AppResourceOwnersAddResponse) GetRawResponse() *http.Response
 	}
 	return c.RawResponse
 }
+
+// #region class-body-c1apiappv1appresourceownersaddresponse
+// #endregion class-body-c1apiappv1appresourceownersaddresponse

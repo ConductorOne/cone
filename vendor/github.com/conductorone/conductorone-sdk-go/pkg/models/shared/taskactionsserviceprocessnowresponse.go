@@ -38,11 +38,11 @@ func (t *TaskActionsServiceProcessNowResponseExpanded) GetAdditionalProperties()
 	return t.AdditionalProperties
 }
 
-// The TaskActionsServiceProcessNowResponse message.
+// The TaskActionsServiceProcessNowResponse returns the task view after triggering immediate processing.
 type TaskActionsServiceProcessNowResponse struct {
 	// Contains a task and JSONPATH expressions that describe where in the expanded array related objects are located. This view can be used to display a fully-detailed dashboard of task information.
 	TaskView *TaskView `json:"taskView,omitempty"`
-	// The expanded field.
+	// List of serialized related objects.
 	Expanded []TaskActionsServiceProcessNowResponseExpanded `json:"expanded,omitempty"`
 }
 

@@ -7,9 +7,6 @@ package shared
 // This message contains a oneof named view. Only a single field of the following list may be set at a time:
 //   - chipsField
 //   - pickerField
-//
-// This message contains a oneof named _rules. Only a single field of the following list may be set at a time:
-//   - rules
 type StringSliceField struct {
 	// The ChipsField message.
 	ChipsField *ChipsField `json:"chipsField,omitempty"`
@@ -18,6 +15,7 @@ type StringSliceField struct {
 	// This message contains a oneof named type. Only a single field of the following list may be set at a time:
 	//   - appUserPicker
 	//   - resourcePicker
+	//   - c1UserPicker
 	//
 	PickerField *PickerField `json:"pickerField,omitempty"`
 	// RepeatedRules describe the constraints applied to `repeated` values

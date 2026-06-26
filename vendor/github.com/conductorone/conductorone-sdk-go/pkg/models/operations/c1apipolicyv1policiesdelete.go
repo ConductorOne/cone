@@ -26,6 +26,9 @@ func (c *C1APIPolicyV1PoliciesDeleteRequest) GetID() string {
 	return c.ID
 }
 
+// #region class-body-c1apipolicyv1policiesdeleterequest
+// #endregion class-body-c1apipolicyv1policiesdeleterequest
+
 type C1APIPolicyV1PoliciesDeleteResponse struct {
 	// HTTP response content type for this operation
 	ContentType string
@@ -64,3 +67,6 @@ func (c *C1APIPolicyV1PoliciesDeleteResponse) GetRawResponse() *http.Response {
 	}
 	return c.RawResponse
 }
+
+// #region class-body-c1apipolicyv1policiesdeleteresponse
+// #endregion class-body-c1apipolicyv1policiesdeleteresponse

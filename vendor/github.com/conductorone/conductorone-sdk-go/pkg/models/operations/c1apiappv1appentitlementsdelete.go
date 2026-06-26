@@ -34,6 +34,9 @@ func (c *C1APIAppV1AppEntitlementsDeleteRequest) GetID() string {
 	return c.ID
 }
 
+// #region class-body-c1apiappv1appentitlementsdeleterequest
+// #endregion class-body-c1apiappv1appentitlementsdeleterequest
+
 type C1APIAppV1AppEntitlementsDeleteResponse struct {
 	// HTTP response content type for this operation
 	ContentType string
@@ -72,3 +75,6 @@ func (c *C1APIAppV1AppEntitlementsDeleteResponse) GetRawResponse() *http.Respons
 	}
 	return c.RawResponse
 }
+
+// #region class-body-c1apiappv1appentitlementsdeleteresponse
+// #endregion class-body-c1apiappv1appentitlementsdeleteresponse

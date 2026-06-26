@@ -47,3 +47,6 @@ func (c *C1APIUserV1UserSearchSearchResponse) GetRawResponse() *http.Response {
 	}
 	return c.RawResponse
 }
+
+// #region class-body-c1apiuserv1usersearchsearchresponse
+// #endregion class-body-c1apiuserv1usersearchsearchresponse

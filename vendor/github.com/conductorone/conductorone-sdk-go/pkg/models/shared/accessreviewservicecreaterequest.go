@@ -7,13 +7,15 @@ import (
 	"time"
 )
 
-// AccessReviewServiceCreateRequestScopeType - The scopeType field.
+// AccessReviewServiceCreateRequestScopeType - The type of scoping method for the campaign (e.g., by entitlements, by access conflicts, or by resource).
 type AccessReviewServiceCreateRequestScopeType string
 
 const (
 	AccessReviewServiceCreateRequestScopeTypeAccessReviewScopeTypeUnspecified       AccessReviewServiceCreateRequestScopeType = "ACCESS_REVIEW_SCOPE_TYPE_UNSPECIFIED"
 	AccessReviewServiceCreateRequestScopeTypeAccessReviewScopeTypeByEntitlements    AccessReviewServiceCreateRequestScopeType = "ACCESS_REVIEW_SCOPE_TYPE_BY_ENTITLEMENTS"
 	AccessReviewServiceCreateRequestScopeTypeAccessReviewScopeTypeByAccessConflicts AccessReviewServiceCreateRequestScopeType = "ACCESS_REVIEW_SCOPE_TYPE_BY_ACCESS_CONFLICTS"
+	AccessReviewServiceCreateRequestScopeTypeAccessReviewScopeTypeByResource        AccessReviewServiceCreateRequestScopeType = "ACCESS_REVIEW_SCOPE_TYPE_BY_RESOURCE"
+	AccessReviewServiceCreateRequestScopeTypeAccessReviewScopeTypeByInheritance     AccessReviewServiceCreateRequestScopeType = "ACCESS_REVIEW_SCOPE_TYPE_BY_INHERITANCE"
 )
 
 func (e AccessReviewServiceCreateRequestScopeType) ToPointer() *AccessReviewServiceCreateRequestScopeType {
@@ -24,7 +26,7 @@ func (e AccessReviewServiceCreateRequestScopeType) ToPointer() *AccessReviewServ
 func (e *AccessReviewServiceCreateRequestScopeType) IsExact() bool {
 	if e != nil {
 		switch *e {
-		case "ACCESS_REVIEW_SCOPE_TYPE_UNSPECIFIED", "ACCESS_REVIEW_SCOPE_TYPE_BY_ENTITLEMENTS", "ACCESS_REVIEW_SCOPE_TYPE_BY_ACCESS_CONFLICTS":
+		case "ACCESS_REVIEW_SCOPE_TYPE_UNSPECIFIED", "ACCESS_REVIEW_SCOPE_TYPE_BY_ENTITLEMENTS", "ACCESS_REVIEW_SCOPE_TYPE_BY_ACCESS_CONFLICTS", "ACCESS_REVIEW_SCOPE_TYPE_BY_RESOURCE", "ACCESS_REVIEW_SCOPE_TYPE_BY_INHERITANCE":
 			return true
 		}
 	}
@@ -35,20 +37,56 @@ func (e *AccessReviewServiceCreateRequestScopeType) IsExact() bool {
 type AccessReviewServiceCreateRequest struct {
 	// The AccessReviewExpandMask message.
 	AccessReviewExpandMask *AccessReviewExpandMask `json:"expandMask,omitempty"`
-	// The NotificationConfig message.
+	// The AccessReviewScopeV2 message.
+	//
+	// This message contains a oneof named apps_and_resources_scope. Only a single field of the following list may be set at a time:
+	//   - appAccess
+	//   - specificResources
+	//   - appSelectionCriteria
+	//   - resourceTypeSelections
+	//
+	//
+	// This message contains a oneof named users_scope. Only a single field of the following list may be set at a time:
+	//   - allUsers
+	//   - selectedUsers
+	//   - userCriteria
+	//   - celExpression
+	//
+	//
+	// This message contains a oneof named accounts_scope. Only a single field of the following list may be set at a time:
+	//   - allAccounts
+	//   - accountCriteria
+	//   - accountCelExpression
+	//
+	//
+	// This message contains a oneof named grants_scope. Only a single field of the following list may be set at a time:
+	//   - allGrants
+	//   - grantsByCriteria
+	//
+	//
+	// This message contains a oneof named access_conflicts_scope. Only a single field of the following list may be set at a time:
+	//   - allAccessConflicts
+	//   - specificAccessConflicts
+	//
+	//
+	// This message contains a oneof named resource_scope. Only a single field of the following list may be set at a time:
+	//   - resourceSelection
+	//
+	AccessReviewScopeV2 *AccessReviewScopeV2 `json:"scopeV2,omitempty"`
+	// Controls which email notifications are sent during the access review lifecycle.
 	NotificationConfig *NotificationConfig `json:"notificationConfig,omitempty"`
 	CompletionDate     *time.Time          `json:"completionDate,omitempty"`
-	// The description field.
+	// An optional description providing context about the campaign.
 	Description *string `json:"description,omitempty"`
-	// The displayName field.
+	// The display name for the new campaign.
 	DisplayName *string `json:"displayName,omitempty"`
-	// The duplicateFrom field.
+	// The ID of an existing campaign to copy scope and entitlement configuration from. Optional.
 	DuplicateFrom *string `json:"duplicateFrom,omitempty"`
-	// The ownerIds field.
+	// The IDs of the users who own and manage this campaign. At least one owner is required.
 	OwnerIds []string `json:"ownerIds,omitempty"`
-	// The policyId field.
+	// The ID of the review policy that governs task assignment and resolution.
 	PolicyID *string `json:"policyId,omitempty"`
-	// The scopeType field.
+	// The type of scoping method for the campaign (e.g., by entitlements, by access conflicts, or by resource).
 	ScopeType *AccessReviewServiceCreateRequestScopeType `json:"scopeType,omitempty"`
 }
 
@@ -68,6 +106,13 @@ func (a *AccessReviewServiceCreateRequest) GetAccessReviewExpandMask() *AccessRe
 		return nil
 	}
 	return a.AccessReviewExpandMask
+}
+
+func (a *AccessReviewServiceCreateRequest) GetAccessReviewScopeV2() *AccessReviewScopeV2 {
+	if a == nil {
+		return nil
+	}
+	return a.AccessReviewScopeV2
 }
 
 func (a *AccessReviewServiceCreateRequest) GetNotificationConfig() *NotificationConfig {

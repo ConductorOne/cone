@@ -34,6 +34,9 @@ func (c *C1APIAppV1AppUserServiceUpdateRequest) GetAppUserID() string {
 	return c.AppUserID
 }
 
+// #region class-body-c1apiappv1appuserserviceupdaterequest
+// #endregion class-body-c1apiappv1appuserserviceupdaterequest
+
 type C1APIAppV1AppUserServiceUpdateResponse struct {
 	// Successful response
 	AppUserServiceUpdateResponse *shared.AppUserServiceUpdateResponse
@@ -72,3 +75,6 @@ func (c *C1APIAppV1AppUserServiceUpdateResponse) GetRawResponse() *http.Response
 	}
 	return c.RawResponse
 }
+
+// #region class-body-c1apiappv1appuserserviceupdateresponse
+// #endregion class-body-c1apiappv1appuserserviceupdateresponse

@@ -40,11 +40,11 @@ func (s *SearchAutomationExecutionsResponseExpanded) GetAdditionalProperties() m
 
 // The SearchAutomationExecutionsResponse message.
 type SearchAutomationExecutionsResponse struct {
-	// The expanded field.
+	// Related objects requested via the expand mask.
 	Expanded []SearchAutomationExecutionsResponseExpanded `json:"expanded,omitempty"`
-	// The list field.
+	// The page of execution views matching the search criteria.
 	List []AutomationExecutionView `json:"list,omitempty"`
-	// The nextPageToken field.
+	// Token to retrieve the next page of results, empty when no more results exist.
 	NextPageToken *string `json:"nextPageToken,omitempty"`
 }
 

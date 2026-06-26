@@ -47,3 +47,6 @@ func (c *C1APIAppV1AppEntitlementSearchServiceSearchResponse) GetRawResponse() *
 	}
 	return c.RawResponse
 }
+
+// #region class-body-c1apiappv1appentitlementsearchservicesearchresponse
+// #endregion class-body-c1apiappv1appentitlementsearchservicesearchresponse

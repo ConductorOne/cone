@@ -42,6 +42,9 @@ func (c *C1APIAppV1AppEntitlementOwnersRemoveRequest) GetUserID() string {
 	return c.UserID
 }
 
+// #region class-body-c1apiappv1appentitlementownersremoverequest
+// #endregion class-body-c1apiappv1appentitlementownersremoverequest
+
 type C1APIAppV1AppEntitlementOwnersRemoveResponse struct {
 	// HTTP response content type for this operation
 	ContentType string
@@ -80,3 +83,6 @@ func (c *C1APIAppV1AppEntitlementOwnersRemoveResponse) GetRawResponse() *http.Re
 	}
 	return c.RawResponse
 }
+
+// #region class-body-c1apiappv1appentitlementownersremoveresponse
+// #endregion class-body-c1apiappv1appentitlementownersremoveresponse

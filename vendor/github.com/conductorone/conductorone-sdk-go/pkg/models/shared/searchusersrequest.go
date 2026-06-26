@@ -2,6 +2,54 @@
 
 package shared
 
+// DelegateStatus - Filter for users based on their delegate status.
+type DelegateStatus string
+
+const (
+	DelegateStatusDelegateStatusUnspecified DelegateStatus = "DELEGATE_STATUS_UNSPECIFIED"
+	DelegateStatusDelegateStatusHasDelegate DelegateStatus = "DELEGATE_STATUS_HAS_DELEGATE"
+	DelegateStatusDelegateStatusNoDelegate  DelegateStatus = "DELEGATE_STATUS_NO_DELEGATE"
+)
+
+func (e DelegateStatus) ToPointer() *DelegateStatus {
+	return &e
+}
+
+// IsExact returns true if the value matches a known enum value, false otherwise.
+func (e *DelegateStatus) IsExact() bool {
+	if e != nil {
+		switch *e {
+		case "DELEGATE_STATUS_UNSPECIFIED", "DELEGATE_STATUS_HAS_DELEGATE", "DELEGATE_STATUS_NO_DELEGATE":
+			return true
+		}
+	}
+	return false
+}
+
+type ExcludeOrigins string
+
+const (
+	ExcludeOriginsUserOriginUnspecified ExcludeOrigins = "USER_ORIGIN_UNSPECIFIED"
+	ExcludeOriginsUserOriginDirectory   ExcludeOrigins = "USER_ORIGIN_DIRECTORY"
+	ExcludeOriginsUserOriginLocal       ExcludeOrigins = "USER_ORIGIN_LOCAL"
+	ExcludeOriginsUserOriginSystem      ExcludeOrigins = "USER_ORIGIN_SYSTEM"
+)
+
+func (e ExcludeOrigins) ToPointer() *ExcludeOrigins {
+	return &e
+}
+
+// IsExact returns true if the value matches a known enum value, false otherwise.
+func (e *ExcludeOrigins) IsExact() bool {
+	if e != nil {
+		switch *e {
+		case "USER_ORIGIN_UNSPECIFIED", "USER_ORIGIN_DIRECTORY", "USER_ORIGIN_LOCAL", "USER_ORIGIN_SYSTEM":
+			return true
+		}
+	}
+	return false
+}
+
 type ExcludeTypes string
 
 const (
@@ -21,6 +69,30 @@ func (e *ExcludeTypes) IsExact() bool {
 	if e != nil {
 		switch *e {
 		case "USER_TYPE_UNSPECIFIED", "USER_TYPE_SYSTEM", "USER_TYPE_HUMAN", "USER_TYPE_SERVICE", "USER_TYPE_AGENT":
+			return true
+		}
+	}
+	return false
+}
+
+type Origins string
+
+const (
+	OriginsUserOriginUnspecified Origins = "USER_ORIGIN_UNSPECIFIED"
+	OriginsUserOriginDirectory   Origins = "USER_ORIGIN_DIRECTORY"
+	OriginsUserOriginLocal       Origins = "USER_ORIGIN_LOCAL"
+	OriginsUserOriginSystem      Origins = "USER_ORIGIN_SYSTEM"
+)
+
+func (e Origins) ToPointer() *Origins {
+	return &e
+}
+
+// IsExact returns true if the value matches a known enum value, false otherwise.
+func (e *Origins) IsExact() bool {
+	if e != nil {
+		switch *e {
+		case "USER_ORIGIN_UNSPECIFIED", "USER_ORIGIN_DIRECTORY", "USER_ORIGIN_LOCAL", "USER_ORIGIN_SYSTEM":
 			return true
 		}
 	}
@@ -56,20 +128,30 @@ type SearchUsersRequest struct {
 	// The user expand mask is used to indicate which related objects should be expanded in the response.
 	//  The supported paths are 'role_ids', 'manager_ids', 'delegated_user_id', 'directory_ids', and '*'.
 	UserExpandMask *UserExpandMask `json:"expandMask,omitempty"`
+	// Filter for users based on their delegate status.
+	DelegateStatus *DelegateStatus `json:"delegateStatus,omitempty"`
+	// Filter for users that have any of the delegated user IDs on this list.
+	DelegatedUserIds []string `json:"delegatedUserIds,omitempty"`
 	// Search for users that have any of the departments on this list.
 	Departments []string `json:"departments,omitempty"`
 	// Search for users based on their email (exact match).
 	Email *string `json:"email,omitempty"`
 	// An array of users IDs to exclude from the results.
 	ExcludeIds []string `json:"excludeIds,omitempty"`
+	// Filter to exclude users with these origins.
+	ExcludeOrigins []ExcludeOrigins `json:"excludeOrigins,omitempty"`
 	// An array of types to exclude from the results.
 	ExcludeTypes []ExcludeTypes `json:"excludeTypes,omitempty"`
 	// Deprecated. Use refs array instead.
 	Ids []string `json:"ids,omitempty"`
+	// Filter for users who are delegates of at least one other user.
+	IsDelegate *bool `json:"isDelegate,omitempty"`
 	// Search for users that have any of the job titles on this list.
 	JobTitles []string `json:"jobTitles,omitempty"`
 	// Search for users that have any of the manager IDs on this list.
 	ManagerIds []string `json:"managerIds,omitempty"`
+	// Filter to include only users with these origins.
+	Origins []Origins `json:"origins,omitempty"`
 	// The pageSize where 0 <= pageSize <= 100. Values < 10 will be set to 10. A value of 0 returns the default page size (currently 25)
 	PageSize *int `json:"pageSize,omitempty"`
 	// The pageToken field.
@@ -89,6 +171,20 @@ func (s *SearchUsersRequest) GetUserExpandMask() *UserExpandMask {
 		return nil
 	}
 	return s.UserExpandMask
+}
+
+func (s *SearchUsersRequest) GetDelegateStatus() *DelegateStatus {
+	if s == nil {
+		return nil
+	}
+	return s.DelegateStatus
+}
+
+func (s *SearchUsersRequest) GetDelegatedUserIds() []string {
+	if s == nil {
+		return nil
+	}
+	return s.DelegatedUserIds
 }
 
 func (s *SearchUsersRequest) GetDepartments() []string {
@@ -112,6 +208,13 @@ func (s *SearchUsersRequest) GetExcludeIds() []string {
 	return s.ExcludeIds
 }
 
+func (s *SearchUsersRequest) GetExcludeOrigins() []ExcludeOrigins {
+	if s == nil {
+		return nil
+	}
+	return s.ExcludeOrigins
+}
+
 func (s *SearchUsersRequest) GetExcludeTypes() []ExcludeTypes {
 	if s == nil {
 		return nil
@@ -126,6 +229,13 @@ func (s *SearchUsersRequest) GetIds() []string {
 	return s.Ids
 }
 
+func (s *SearchUsersRequest) GetIsDelegate() *bool {
+	if s == nil {
+		return nil
+	}
+	return s.IsDelegate
+}
+
 func (s *SearchUsersRequest) GetJobTitles() []string {
 	if s == nil {
 		return nil
@@ -138,6 +248,13 @@ func (s *SearchUsersRequest) GetManagerIds() []string {
 		return nil
 	}
 	return s.ManagerIds
+}
+
+func (s *SearchUsersRequest) GetOrigins() []Origins {
+	if s == nil {
+		return nil
+	}
+	return s.Origins
 }
 
 func (s *SearchUsersRequest) GetPageSize() *int {

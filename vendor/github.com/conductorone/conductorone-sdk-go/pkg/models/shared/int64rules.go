@@ -2,6 +2,10 @@
 
 package shared
 
+import (
+	"github.com/conductorone/conductorone-sdk-go/pkg/utils"
+)
+
 // Int64Rules describes the constraints applied to `int64` values
 type Int64Rules struct {
 	// Const specifies that this field must be exactly the specified value
@@ -29,6 +33,17 @@ type Int64Rules struct {
 	// NotIn specifies that this field cannot be equal to one of the specified
 	//  values
 	NotIn []int64 `integer:"string" json:"notIn,omitempty"`
+}
+
+func (i Int64Rules) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(i, "", false)
+}
+
+func (i *Int64Rules) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &i, "", false, nil); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (i *Int64Rules) GetConst() *int64 {
@@ -86,3 +101,6 @@ func (i *Int64Rules) GetNotIn() []int64 {
 	}
 	return i.NotIn
 }
+
+// #region class-body-int64rules
+// #endregion class-body-int64rules

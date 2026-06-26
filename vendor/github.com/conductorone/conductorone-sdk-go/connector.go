@@ -32,7 +32,7 @@ func newConnector(rootSDK *ConductoroneAPI, sdkConfig config.SDKConfiguration, h
 }
 
 // ConfirmSyncValid - Confirm Sync Valid
-// Invokes the c1.api.app.v1.ConnectorService.ConfirmSyncValid method.
+// Confirm that a sync which errored due to a data drop is valid, overriding the error and triggering a new sync. Only applicable when the sync status is ERRORED_NO_DATA.
 func (s *Connector) ConfirmSyncValid(ctx context.Context, request operations.C1APIAppV1ConnectorServiceConfirmSyncValidRequest, opts ...operations.Option) (*operations.C1APIAppV1ConnectorServiceConfirmSyncValidResponse, error) {
 	o := operations.Options{}
 	supportedOptions := []string{
@@ -880,7 +880,7 @@ func (s *Connector) Delete(ctx context.Context, request operations.C1APIAppV1Con
 }
 
 // ForceSync - Force Sync
-// Invokes the c1.api.app.v1.ConnectorService.ForceSync method.
+// Trigger an immediate sync for a connector. The sync is queued and may not start instantly.
 func (s *Connector) ForceSync(ctx context.Context, request operations.C1APIAppV1ConnectorServiceForceSyncRequest, opts ...operations.Option) (*operations.C1APIAppV1ConnectorServiceForceSyncResponse, error) {
 	o := operations.Options{}
 	supportedOptions := []string{
@@ -1916,7 +1916,7 @@ func (s *Connector) List(ctx context.Context, request operations.C1APIAppV1Conne
 }
 
 // PauseSync - Pause Sync
-// Invokes the c1.api.app.v1.ConnectorService.PauseSync method.
+// Pause syncing and provisioning for a connector. No new syncs or grant/revoke operations will run until the connector is resumed.
 func (s *Connector) PauseSync(ctx context.Context, request operations.C1APIAppV1ConnectorServicePauseSyncRequest, opts ...operations.Option) (*operations.C1APIAppV1ConnectorServicePauseSyncResponse, error) {
 	o := operations.Options{}
 	supportedOptions := []string{
@@ -2128,7 +2128,7 @@ func (s *Connector) PauseSync(ctx context.Context, request operations.C1APIAppV1
 }
 
 // ResumeSync - Resume Sync
-// Invokes the c1.api.app.v1.ConnectorService.ResumeSync method.
+// Resume syncing and provisioning for a connector that was previously paused. Clears the paused state and triggers a new sync.
 func (s *Connector) ResumeSync(ctx context.Context, request operations.C1APIAppV1ConnectorServiceResumeSyncRequest, opts ...operations.Option) (*operations.C1APIAppV1ConnectorServiceResumeSyncResponse, error) {
 	o := operations.Options{}
 	supportedOptions := []string{
@@ -2976,7 +2976,7 @@ func (s *Connector) Update(ctx context.Context, request operations.C1APIAppV1Con
 }
 
 // UpdateConnectorSchedule - Update Connector Schedule
-// Invokes the c1.api.app.v1.ConnectorService.UpdateConnectorSchedule method.
+// Update the sync schedule for a connector.
 func (s *Connector) UpdateConnectorSchedule(ctx context.Context, request operations.C1APIAppV1ConnectorServiceUpdateConnectorScheduleRequest, opts ...operations.Option) (*operations.C1APIAppV1ConnectorServiceUpdateConnectorScheduleResponse, error) {
 	o := operations.Options{}
 	supportedOptions := []string{
@@ -3400,7 +3400,7 @@ func (s *Connector) UpdateDelegated(ctx context.Context, request operations.C1AP
 }
 
 // ValidateHTTPConnectorConfig - Validate Http Connector Config
-// Invokes the c1.api.app.v1.ConnectorService.ValidateHTTPConnectorConfig method.
+// Validate an HTTP connector configuration and return any diagnostics or errors found.
 func (s *Connector) ValidateHTTPConnectorConfig(ctx context.Context, request *shared.EditorValidateRequest, opts ...operations.Option) (*operations.C1APIAppV1ConnectorServiceValidateHTTPConnectorConfigResponse, error) {
 	o := operations.Options{}
 	supportedOptions := []string{

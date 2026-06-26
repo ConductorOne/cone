@@ -32,7 +32,7 @@ func newRequestSchema(rootSDK *ConductoroneAPI, sdkConfig config.SDKConfiguratio
 }
 
 // Create
-// Invokes the c1.api.request_schema.v1.RequestSchemaService.Create method.
+// Create a new request schema that defines a form template for access requests.
 func (s *RequestSchema) Create(ctx context.Context, request *shared.RequestSchemaServiceCreateRequest, opts ...operations.Option) (*operations.C1APIRequestSchemaV1RequestSchemaServiceCreateResponse, error) {
 	o := operations.Options{}
 	supportedOptions := []string{
@@ -244,7 +244,7 @@ func (s *RequestSchema) Create(ctx context.Context, request *shared.RequestSchem
 }
 
 // CreateEntitlementBinding - Create Entitlement Binding
-// Invokes the c1.api.request_schema.v1.RequestSchemaService.CreateEntitlementBinding method.
+// Link a request schema to a single app entitlement so the form is shown when requesting that entitlement.
 func (s *RequestSchema) CreateEntitlementBinding(ctx context.Context, request *shared.RequestSchemaServiceCreateEntitlementBindingRequest, opts ...operations.Option) (*operations.C1APIRequestSchemaV1RequestSchemaServiceCreateEntitlementBindingResponse, error) {
 	o := operations.Options{}
 	supportedOptions := []string{
@@ -456,7 +456,7 @@ func (s *RequestSchema) CreateEntitlementBinding(ctx context.Context, request *s
 }
 
 // Delete
-// Invokes the c1.api.request_schema.v1.RequestSchemaService.Delete method.
+// Delete a request schema by ID. Associated entitlement bindings are also deleted.
 func (s *RequestSchema) Delete(ctx context.Context, request operations.C1APIRequestSchemaV1RequestSchemaServiceDeleteRequest, opts ...operations.Option) (*operations.C1APIRequestSchemaV1RequestSchemaServiceDeleteResponse, error) {
 	o := operations.Options{}
 	supportedOptions := []string{
@@ -668,7 +668,7 @@ func (s *RequestSchema) Delete(ctx context.Context, request operations.C1APIRequ
 }
 
 // FindBindingForAppEntitlement - Find Binding For App Entitlement
-// Invokes the c1.api.request_schema.v1.RequestSchemaService.FindBindingForAppEntitlement method.
+// Look up which request schema is bound to a given app entitlement.
 func (s *RequestSchema) FindBindingForAppEntitlement(ctx context.Context, request *shared.RequestSchemaServiceFindBindingForAppEntitlementRequest, opts ...operations.Option) (*operations.C1APIRequestSchemaV1RequestSchemaServiceFindBindingForAppEntitlementResponse, error) {
 	o := operations.Options{}
 	supportedOptions := []string{
@@ -880,7 +880,7 @@ func (s *RequestSchema) FindBindingForAppEntitlement(ctx context.Context, reques
 }
 
 // Get
-// Invokes the c1.api.request_schema.v1.RequestSchemaService.Get method.
+// Retrieve a single request schema by ID.
 func (s *RequestSchema) Get(ctx context.Context, request operations.C1APIRequestSchemaV1RequestSchemaServiceGetRequest, opts ...operations.Option) (*operations.C1APIRequestSchemaV1RequestSchemaServiceGetResponse, error) {
 	o := operations.Options{}
 	supportedOptions := []string{
@@ -1085,7 +1085,7 @@ func (s *RequestSchema) Get(ctx context.Context, request operations.C1APIRequest
 }
 
 // RemoveEntitlementBinding - Remove Entitlement Binding
-// Invokes the c1.api.request_schema.v1.RequestSchemaService.RemoveEntitlementBinding method.
+// Remove the link between a request schema and a single app entitlement.
 func (s *RequestSchema) RemoveEntitlementBinding(ctx context.Context, request *shared.RequestSchemaServiceRemoveEntitlementBindingRequest, opts ...operations.Option) (*operations.C1APIRequestSchemaV1RequestSchemaServiceRemoveEntitlementBindingResponse, error) {
 	o := operations.Options{}
 	supportedOptions := []string{
@@ -1297,7 +1297,7 @@ func (s *RequestSchema) RemoveEntitlementBinding(ctx context.Context, request *s
 }
 
 // Update
-// Invokes the c1.api.request_schema.v1.RequestSchemaService.Update method.
+// Update an existing request schema's form definition or settings.
 func (s *RequestSchema) Update(ctx context.Context, request operations.C1APIRequestSchemaV1RequestSchemaServiceUpdateRequest, opts ...operations.Option) (*operations.C1APIRequestSchemaV1RequestSchemaServiceUpdateResponse, error) {
 	o := operations.Options{}
 	supportedOptions := []string{

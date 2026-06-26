@@ -2,7 +2,7 @@
 
 package shared
 
-// The CreateAppEntitlementProxyRequest message.
+// CreateAppEntitlementProxyRequest - The request message for creating an entitlement proxy binding.
 type CreateAppEntitlementProxyRequest struct {
 	// The AppEntitlementProxyExpandMask message.
 	AppEntitlementProxyExpandMask *AppEntitlementProxyExpandMask `json:"expandMask,omitempty"`

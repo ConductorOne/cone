@@ -32,6 +32,31 @@ func (e *DirectoryStatus) IsExact() bool {
 	return false
 }
 
+// UserOrigin - The origin of the user, describing who owns the user's lifecycle.
+type UserOrigin string
+
+const (
+	UserOriginUserOriginUnspecified UserOrigin = "USER_ORIGIN_UNSPECIFIED"
+	UserOriginUserOriginDirectory   UserOrigin = "USER_ORIGIN_DIRECTORY"
+	UserOriginUserOriginLocal       UserOrigin = "USER_ORIGIN_LOCAL"
+	UserOriginUserOriginSystem      UserOrigin = "USER_ORIGIN_SYSTEM"
+)
+
+func (e UserOrigin) ToPointer() *UserOrigin {
+	return &e
+}
+
+// IsExact returns true if the value matches a known enum value, false otherwise.
+func (e *UserOrigin) IsExact() bool {
+	if e != nil {
+		switch *e {
+		case "USER_ORIGIN_UNSPECIFIED", "USER_ORIGIN_DIRECTORY", "USER_ORIGIN_LOCAL", "USER_ORIGIN_SYSTEM":
+			return true
+		}
+	}
+	return false
+}
+
 // UserSchemasStatus - The status of the user in the system.
 type UserSchemasStatus string
 
@@ -129,7 +154,9 @@ type User struct {
 	ManagerIds []string `json:"managerIds,omitempty"`
 	// A list of objects mapped based on managerId attribute mappings configured in the system.
 	ManagerSources []UserAttributeMappingSource `json:"managerSources,omitempty"`
-	Profile        map[string]any               `json:"profile,omitempty"`
+	// The origin of the user, describing who owns the user's lifecycle.
+	Origin  *UserOrigin    `json:"origin,omitempty"`
+	Profile map[string]any `json:"profile,omitempty"`
 	// A list of unique identifiers that maps to ConductorOne's user roles let you assign users permissions tailored to the work they do in the software.
 	RoleIds []string `json:"roleIds,omitempty"`
 	// The status of the user in the system.
@@ -317,6 +344,13 @@ func (u *User) GetManagerSources() []UserAttributeMappingSource {
 	return u.ManagerSources
 }
 
+func (u *User) GetOrigin() *UserOrigin {
+	if u == nil {
+		return nil
+	}
+	return u.Origin
+}
+
 func (u *User) GetProfile() map[string]any {
 	if u == nil {
 		return nil
@@ -371,4 +405,35 @@ func (u *User) GetUsernames() []string {
 		return nil
 	}
 	return u.Usernames
+}
+
+// UserInput - The User object provides all of the details for an user, as well as some configuration.
+type UserInput struct {
+	// The id of the user to whom tasks will be automatically reassigned to.
+	DelegatedUserID *string `json:"delegatedUserId,omitempty"`
+	// A list of unique identifiers that maps to ConductorOne's user roles let you assign users permissions tailored to the work they do in the software.
+	RoleIds []string `json:"roleIds,omitempty"`
+	// The status of the user in the system.
+	Status *UserSchemasStatus `json:"status,omitempty"`
+}
+
+func (u *UserInput) GetDelegatedUserID() *string {
+	if u == nil {
+		return nil
+	}
+	return u.DelegatedUserID
+}
+
+func (u *UserInput) GetRoleIds() []string {
+	if u == nil {
+		return nil
+	}
+	return u.RoleIds
+}
+
+func (u *UserInput) GetStatus() *UserSchemasStatus {
+	if u == nil {
+		return nil
+	}
+	return u.Status
 }

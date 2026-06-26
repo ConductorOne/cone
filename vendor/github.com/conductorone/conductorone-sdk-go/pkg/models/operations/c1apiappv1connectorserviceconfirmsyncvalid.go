@@ -42,8 +42,11 @@ func (c *C1APIAppV1ConnectorServiceConfirmSyncValidRequest) GetSyncLifecycleID()
 	return c.SyncLifecycleID
 }
 
+// #region class-body-c1apiappv1connectorserviceconfirmsyncvalidrequest
+// #endregion class-body-c1apiappv1connectorserviceconfirmsyncvalidrequest
+
 type C1APIAppV1ConnectorServiceConfirmSyncValidResponse struct {
-	// Successful response
+	// Empty response body. Status code indicates success.
 	ConfirmSyncValidResponse *shared.ConfirmSyncValidResponse
 	// HTTP response content type for this operation
 	ContentType string
@@ -80,3 +83,6 @@ func (c *C1APIAppV1ConnectorServiceConfirmSyncValidResponse) GetRawResponse() *h
 	}
 	return c.RawResponse
 }
+
+// #region class-body-c1apiappv1connectorserviceconfirmsyncvalidresponse
+// #endregion class-body-c1apiappv1connectorserviceconfirmsyncvalidresponse

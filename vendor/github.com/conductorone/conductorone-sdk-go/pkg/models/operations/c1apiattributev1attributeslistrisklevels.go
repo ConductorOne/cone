@@ -26,10 +26,13 @@ func (c *C1APIAttributeV1AttributesListRiskLevelsRequest) GetPageToken() *string
 	return c.PageToken
 }
 
+// #region class-body-c1apiattributev1attributeslistrisklevelsrequest
+// #endregion class-body-c1apiattributev1attributeslistrisklevelsrequest
+
 type C1APIAttributeV1AttributesListRiskLevelsResponse struct {
 	// HTTP response content type for this operation
 	ContentType string
-	// Successful response
+	// ListRiskLevelsResponse is the response for listing risk level attribute values.
 	ListRiskLevelsResponse *shared.ListRiskLevelsResponse
 	// HTTP response status code for this operation
 	StatusCode int
@@ -64,3 +67,6 @@ func (c *C1APIAttributeV1AttributesListRiskLevelsResponse) GetRawResponse() *htt
 	}
 	return c.RawResponse
 }
+
+// #region class-body-c1apiattributev1attributeslistrisklevelsresponse
+// #endregion class-body-c1apiattributev1attributeslistrisklevelsresponse

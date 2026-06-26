@@ -45,3 +45,6 @@ func (c *C1APIAppV1ConnectorServiceRotateCredentialResponse) GetRawResponse() *h
 	}
 	return c.RawResponse
 }
+
+// #region class-body-c1apiappv1connectorservicerotatecredentialresponse
+// #endregion class-body-c1apiappv1connectorservicerotatecredentialresponse

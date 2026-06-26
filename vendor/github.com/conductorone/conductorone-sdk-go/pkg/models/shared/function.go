@@ -13,6 +13,7 @@ type FunctionType string
 const (
 	FunctionTypeFunctionTypeUnspecified FunctionType = "FUNCTION_TYPE_UNSPECIFIED"
 	FunctionTypeFunctionTypeAny         FunctionType = "FUNCTION_TYPE_ANY"
+	FunctionTypeFunctionTypeCodeMode    FunctionType = "FUNCTION_TYPE_CODE_MODE"
 )
 
 func (e FunctionType) ToPointer() *FunctionType {
@@ -23,7 +24,7 @@ func (e FunctionType) ToPointer() *FunctionType {
 func (e *FunctionType) IsExact() bool {
 	if e != nil {
 		switch *e {
-		case "FUNCTION_TYPE_UNSPECIFIED", "FUNCTION_TYPE_ANY":
+		case "FUNCTION_TYPE_UNSPECIFIED", "FUNCTION_TYPE_ANY", "FUNCTION_TYPE_CODE_MODE":
 			return true
 		}
 	}
@@ -38,8 +39,6 @@ type Function struct {
 	Description *string `json:"description,omitempty"`
 	// The displayName field.
 	DisplayName *string `json:"displayName,omitempty"`
-	// The encryptedValues field.
-	EncryptedValues map[string]string `json:"encryptedValues,omitempty"`
 	// The functionType field.
 	FunctionType *FunctionType `json:"functionType,omitempty"`
 	// The head field.
@@ -58,8 +57,17 @@ type Function struct {
 	//
 	//  Currently only the "Read-Only Administrator" role (system:viewer) is supported.
 	//  The role ID can be obtained from the roles API.
-	ScopedRoleIds []string   `json:"scopedRoleIds,omitempty"`
-	UpdatedAt     *time.Time `json:"updatedAt,omitempty"`
+	ScopedRoleIds []string `json:"scopedRoleIds,omitempty"`
+	// The secret field.
+	Secret    map[string]string `json:"secret,omitempty"`
+	UpdatedAt *time.Time        `json:"updatedAt,omitempty"`
+	// FN-347 transition flag. When true, the function authenticates to c1-api
+	//  as user:<sp_id> via the AssumeIdentity token exchange using its
+	//  ServicePrincipalBinding; when false, it authenticates as
+	//  function:<id>. Read-only from clients: set by CreateFunction (when the
+	//  tenant has completed the FunctionsToSPN migration) and by the migration
+	//  itself, never by UpdateFunction. Retired once all functions are on SPN.
+	UseSpn *bool `json:"useSpn,omitempty"`
 }
 
 func (f Function) MarshalJSON() ([]byte, error) {
@@ -99,13 +107,6 @@ func (f *Function) GetDisplayName() *string {
 		return nil
 	}
 	return f.DisplayName
-}
-
-func (f *Function) GetEncryptedValues() map[string]string {
-	if f == nil {
-		return nil
-	}
-	return f.EncryptedValues
 }
 
 func (f *Function) GetFunctionType() *FunctionType {
@@ -157,11 +158,25 @@ func (f *Function) GetScopedRoleIds() []string {
 	return f.ScopedRoleIds
 }
 
+func (f *Function) GetSecret() map[string]string {
+	if f == nil {
+		return nil
+	}
+	return f.Secret
+}
+
 func (f *Function) GetUpdatedAt() *time.Time {
 	if f == nil {
 		return nil
 	}
 	return f.UpdatedAt
+}
+
+func (f *Function) GetUseSpn() *bool {
+	if f == nil {
+		return nil
+	}
+	return f.UseSpn
 }
 
 // FunctionInput - Function represents a customer-provided code extension in the API
@@ -170,8 +185,6 @@ type FunctionInput struct {
 	Description *string `json:"description,omitempty"`
 	// The displayName field.
 	DisplayName *string `json:"displayName,omitempty"`
-	// The encryptedValues field.
-	EncryptedValues map[string]string `json:"encryptedValues,omitempty"`
 	// The functionType field.
 	FunctionType *FunctionType `json:"functionType,omitempty"`
 	// The head field.
@@ -191,6 +204,8 @@ type FunctionInput struct {
 	//  Currently only the "Read-Only Administrator" role (system:viewer) is supported.
 	//  The role ID can be obtained from the roles API.
 	ScopedRoleIds []string `json:"scopedRoleIds,omitempty"`
+	// The secret field.
+	Secret map[string]string `json:"secret,omitempty"`
 }
 
 func (f *FunctionInput) GetDescription() *string {
@@ -205,13 +220,6 @@ func (f *FunctionInput) GetDisplayName() *string {
 		return nil
 	}
 	return f.DisplayName
-}
-
-func (f *FunctionInput) GetEncryptedValues() map[string]string {
-	if f == nil {
-		return nil
-	}
-	return f.EncryptedValues
 }
 
 func (f *FunctionInput) GetFunctionType() *FunctionType {
@@ -261,4 +269,11 @@ func (f *FunctionInput) GetScopedRoleIds() []string {
 		return nil
 	}
 	return f.ScopedRoleIds
+}
+
+func (f *FunctionInput) GetSecret() map[string]string {
+	if f == nil {
+		return nil
+	}
+	return f.Secret
 }

@@ -2,7 +2,7 @@
 
 package shared
 
-// PolicyType - The enum of the policy type.
+// PolicyType - The type of policy to create (grant, revoke, or certify).
 type PolicyType string
 
 const (
@@ -35,17 +35,19 @@ type CreatePolicyRequest struct {
 	Description *string `json:"description,omitempty"`
 	// The display name of the new policy.
 	DisplayName string `json:"displayName"`
-	// The map of policy type to policy steps. The key is the stringified version of the enum. See other policies for examples.
+	// Step sequences for this policy. The map must include a baseline entry keyed
+	//  by the lowercased policy type (e.g., "grant"). Additional entries with
+	//  opaque keys can be added for conditional routing via the rules array.
 	PolicySteps map[string]PolicyStepsInput `json:"policySteps,omitempty"`
-	// The enum of the policy type.
+	// The type of policy to create (grant, revoke, or certify).
 	PolicyType *PolicyType `json:"policyType,omitempty"`
-	// Actions to occur after a policy finishes. As of now this is only valid on a certify policy to remediate a denied certification immediately.
+	// Ordered actions to execute after the policy completes processing.
 	PostActions []PolicyPostActions `json:"postActions,omitempty"`
-	// Deprecated. Use setting in policy step instead
+	// This field is no longer used. Configure delegate reassignment in the policy step instead.
 	//
 	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
 	ReassignTasksToDelegates *bool `json:"reassignTasksToDelegates,omitempty"`
-	// The rules field.
+	// Conditional routing rules. See the Policy message for details on evaluation order.
 	Rules []Rule `json:"rules,omitempty"`
 }
 

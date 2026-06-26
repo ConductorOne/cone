@@ -47,3 +47,6 @@ func (c *C1APIPolicyV1PolicySearchSearchResponse) GetRawResponse() *http.Respons
 	}
 	return c.RawResponse
 }
+
+// #region class-body-c1apipolicyv1policysearchsearchresponse
+// #endregion class-body-c1apipolicyv1policysearchsearchresponse

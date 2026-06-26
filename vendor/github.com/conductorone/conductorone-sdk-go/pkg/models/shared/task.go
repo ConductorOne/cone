@@ -103,6 +103,7 @@ const (
 	OriginTaskOriginProfileMembership           Origin = "TASK_ORIGIN_PROFILE_MEMBERSHIP"
 	OriginTaskOriginAutomation                  Origin = "TASK_ORIGIN_AUTOMATION"
 	OriginTaskOriginAccessReview                Origin = "TASK_ORIGIN_ACCESS_REVIEW"
+	OriginTaskOriginCascadeDelete               Origin = "TASK_ORIGIN_CASCADE_DELETE"
 )
 
 func (e Origin) ToPointer() *Origin {
@@ -113,7 +114,7 @@ func (e Origin) ToPointer() *Origin {
 func (e *Origin) IsExact() bool {
 	if e != nil {
 		switch *e {
-		case "TASK_ORIGIN_UNSPECIFIED", "TASK_ORIGIN_PROFILE_MEMBERSHIP_AUTOMATION", "TASK_ORIGIN_SLACK", "TASK_ORIGIN_API", "TASK_ORIGIN_JIRA", "TASK_ORIGIN_COPILOT", "TASK_ORIGIN_WEBAPP", "TASK_ORIGIN_TIME_REVOKE", "TASK_ORIGIN_NON_USAGE_REVOKE", "TASK_ORIGIN_PROFILE_MEMBERSHIP_MANUAL", "TASK_ORIGIN_PROFILE_MEMBERSHIP", "TASK_ORIGIN_AUTOMATION", "TASK_ORIGIN_ACCESS_REVIEW":
+		case "TASK_ORIGIN_UNSPECIFIED", "TASK_ORIGIN_PROFILE_MEMBERSHIP_AUTOMATION", "TASK_ORIGIN_SLACK", "TASK_ORIGIN_API", "TASK_ORIGIN_JIRA", "TASK_ORIGIN_COPILOT", "TASK_ORIGIN_WEBAPP", "TASK_ORIGIN_TIME_REVOKE", "TASK_ORIGIN_NON_USAGE_REVOKE", "TASK_ORIGIN_PROFILE_MEMBERSHIP_MANUAL", "TASK_ORIGIN_PROFILE_MEMBERSHIP", "TASK_ORIGIN_AUTOMATION", "TASK_ORIGIN_ACCESS_REVIEW", "TASK_ORIGIN_CASCADE_DELETE":
 			return true
 		}
 	}
@@ -196,10 +197,10 @@ func (e *TaskState) IsExact() bool {
 
 // Task - A fully-fleged task object. Includes its policy, references to external apps, its type, its processing history, and more.
 type Task struct {
-	// A form is a collection of fields to be filled out by a user
-	Form *FormInput `json:"form,omitempty"`
 	// A policy instance is an object that contains a reference to the policy it was created from, the currently executing step, the next steps, and the history of previously completed steps.
 	PolicyInstance *PolicyInstance `json:"policy,omitempty"`
+	// A form is a collection of fields to be filled out by a user
+	RequestSchemaForm *RequestSchemaForm `json:"form,omitempty"`
 	// Task Type provides configuration for the type of task: certify, grant, or revoke
 	//
 	// This message contains a oneof named task_type. Only a single field of the following list may be set at a time:
@@ -208,6 +209,7 @@ type Task struct {
 	//   - certify
 	//   - offboarding
 	//   - action
+	//   - finding
 	//
 	TaskType *TaskType `json:"type,omitempty"`
 	// The actions that can be performed on the task by the current user.
@@ -216,6 +218,8 @@ type Task struct {
 	AnalysisID *string `json:"analysisId,omitempty"`
 	// An array of `google.protobuf.Any` annotations with various base64-encoded data.
 	Annotations []Annotations `json:"annotations,omitempty"`
+	// An array of IDs belonging to Identity Users that have approved or denied any step in this task.
+	ApproverIds []string `json:"approverIds,omitempty"`
 	// The count of comments.
 	CommentCount *int       `json:"commentCount,omitempty"`
 	CreatedAt    *time.Time `json:"createdAt,omitempty"`
@@ -245,6 +249,9 @@ type Task struct {
 	Processing *Processing `json:"processing,omitempty"`
 	// The recommendation field.
 	Recommendation *Recommendation `json:"recommendation,omitempty"`
+	// Ancestor entitlements that will also be revoked when this revoke task is approved.
+	//  Populated at ticket creation time for inherited grant revocations.
+	RevocationTargets []TaskRevocationTarget `json:"revocationTargets,omitempty"`
 	// The current state of the task as defined by the `state_enum`
 	State *TaskState `json:"state,omitempty"`
 	// An array of IDs belonging to Identity Users that are allowed to review this step in a task.
@@ -265,18 +272,18 @@ func (t *Task) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (t *Task) GetForm() *FormInput {
-	if t == nil {
-		return nil
-	}
-	return t.Form
-}
-
 func (t *Task) GetPolicyInstance() *PolicyInstance {
 	if t == nil {
 		return nil
 	}
 	return t.PolicyInstance
+}
+
+func (t *Task) GetRequestSchemaForm() *RequestSchemaForm {
+	if t == nil {
+		return nil
+	}
+	return t.RequestSchemaForm
 }
 
 func (t *Task) GetTaskType() *TaskType {
@@ -305,6 +312,13 @@ func (t *Task) GetAnnotations() []Annotations {
 		return nil
 	}
 	return t.Annotations
+}
+
+func (t *Task) GetApproverIds() []string {
+	if t == nil {
+		return nil
+	}
+	return t.ApproverIds
 }
 
 func (t *Task) GetCommentCount() *int {
@@ -417,6 +431,13 @@ func (t *Task) GetRecommendation() *Recommendation {
 		return nil
 	}
 	return t.Recommendation
+}
+
+func (t *Task) GetRevocationTargets() []TaskRevocationTarget {
+	if t == nil {
+		return nil
+	}
+	return t.RevocationTargets
 }
 
 func (t *Task) GetState() *TaskState {

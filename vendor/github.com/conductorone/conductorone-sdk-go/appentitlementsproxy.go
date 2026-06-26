@@ -31,7 +31,7 @@ func newAppEntitlementsProxy(rootSDK *ConductoroneAPI, sdkConfig config.SDKConfi
 }
 
 // Create
-// Invokes the c1.api.app.v1.AppEntitlementsProxy.Create method.
+// Create a proxy binding between a source and destination entitlement, establishing a hierarchical relationship.
 func (s *AppEntitlementsProxy) Create(ctx context.Context, request operations.C1APIAppV1AppEntitlementsProxyCreateRequest, opts ...operations.Option) (*operations.C1APIAppV1AppEntitlementsProxyCreateResponse, error) {
 	o := operations.Options{}
 	supportedOptions := []string{
@@ -243,7 +243,7 @@ func (s *AppEntitlementsProxy) Create(ctx context.Context, request operations.C1
 }
 
 // Delete
-// Invokes the c1.api.app.v1.AppEntitlementsProxy.Delete method.
+// Delete a proxy binding between a source and destination entitlement.
 func (s *AppEntitlementsProxy) Delete(ctx context.Context, request operations.C1APIAppV1AppEntitlementsProxyDeleteRequest, opts ...operations.Option) (*operations.C1APIAppV1AppEntitlementsProxyDeleteResponse, error) {
 	o := operations.Options{}
 	supportedOptions := []string{
@@ -455,7 +455,7 @@ func (s *AppEntitlementsProxy) Delete(ctx context.Context, request operations.C1
 }
 
 // Get
-// Invokes the c1.api.app.v1.AppEntitlementsProxy.Get method.
+// Retrieve a specific proxy binding between a source and destination entitlement.
 func (s *AppEntitlementsProxy) Get(ctx context.Context, request operations.C1APIAppV1AppEntitlementsProxyGetRequest, opts ...operations.Option) (*operations.C1APIAppV1AppEntitlementsProxyGetResponse, error) {
 	o := operations.Options{}
 	supportedOptions := []string{

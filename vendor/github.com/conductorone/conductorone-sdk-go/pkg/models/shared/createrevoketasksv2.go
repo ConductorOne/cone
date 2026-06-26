@@ -125,3 +125,6 @@ func (c *CreateRevokeTasksV2) GetUserIDCel() *string {
 	}
 	return c.UserIDCel
 }
+
+// #region class-body-createrevoketasksv2
+// #endregion class-body-createrevoketasksv2

@@ -2,12 +2,27 @@
 
 package shared
 
+import (
+	"github.com/conductorone/conductorone-sdk-go/pkg/utils"
+)
+
 // The TaskAuditErrorResult message.
 type TaskAuditErrorResult struct {
 	// TODO(pquerna): expand
 	ErrorCount *int64 `integer:"string" json:"errorCount,omitempty"`
 	// The errorReason field.
 	ErrorReason *string `json:"errorReason,omitempty"`
+}
+
+func (t TaskAuditErrorResult) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(t, "", false)
+}
+
+func (t *TaskAuditErrorResult) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &t, "", false, nil); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (t *TaskAuditErrorResult) GetErrorCount() *int64 {

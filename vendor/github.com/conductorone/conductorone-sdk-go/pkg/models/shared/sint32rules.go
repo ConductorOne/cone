@@ -86,3 +86,6 @@ func (s *SInt32Rules) GetNotIn() []int {
 	}
 	return s.NotIn
 }
+
+// #region class-body-sint32rules
+// #endregion class-body-sint32rules

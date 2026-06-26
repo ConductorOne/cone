@@ -10,7 +10,7 @@ import (
 type C1APIAppV1ConnectorServiceValidateHTTPConnectorConfigResponse struct {
 	// HTTP response content type for this operation
 	ContentType string
-	// Successful response
+	// The EditorValidateResponse message contains validation results.
 	EditorValidateResponse *shared.EditorValidateResponse
 	// HTTP response status code for this operation
 	StatusCode int
@@ -45,3 +45,6 @@ func (c *C1APIAppV1ConnectorServiceValidateHTTPConnectorConfigResponse) GetRawRe
 	}
 	return c.RawResponse
 }
+
+// #region class-body-c1apiappv1connectorservicevalidatehttpconnectorconfigresponse
+// #endregion class-body-c1apiappv1connectorservicevalidatehttpconnectorconfigresponse

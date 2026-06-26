@@ -2,6 +2,10 @@
 
 package shared
 
+import (
+	"github.com/conductorone/conductorone-sdk-go/pkg/utils"
+)
+
 type ExecutionStepStates string
 
 const (
@@ -36,20 +40,31 @@ func (e *ExecutionStepStates) IsExact() bool {
 type SearchAutomationExecutionsRequest struct {
 	// The AutomationExecutionExpandMask message.
 	AutomationExecutionExpandMask *AutomationExecutionExpandMask `json:"expandMask,omitempty"`
-	// The automationTemplateId field.
+	// Filter results to executions of this automation template.
 	AutomationTemplateID *string `json:"automationTemplateId,omitempty"`
-	// The executionId field.
+	// Filter results to a specific execution by its numeric identifier.
 	ExecutionID *int64 `integer:"string" json:"executionId,omitempty"`
-	// The executionStepStates field.
+	// Filter results to executions in any of the specified states.
 	ExecutionStepStates []ExecutionStepStates `json:"executionStepStates,omitempty"`
-	// The pageSize field.
+	// Maximum number of results to return per page.
 	PageSize *int `json:"pageSize,omitempty"`
-	// The pageToken field.
+	// Pagination token from a previous SearchAutomationExecutionsResponse.
 	PageToken *string `json:"pageToken,omitempty"`
-	// The query field.
+	// Free-text search query to filter executions.
 	Query *string `json:"query,omitempty"`
-	// The refs field.
+	// Restrict results to specific execution references.
 	Refs []AutomationExecutionRef `json:"refs,omitempty"`
+}
+
+func (s SearchAutomationExecutionsRequest) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SearchAutomationExecutionsRequest) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, nil); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (s *SearchAutomationExecutionsRequest) GetAutomationExecutionExpandMask() *AutomationExecutionExpandMask {

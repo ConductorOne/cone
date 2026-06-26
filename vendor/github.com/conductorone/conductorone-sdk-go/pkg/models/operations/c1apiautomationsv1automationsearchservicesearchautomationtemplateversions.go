@@ -45,3 +45,6 @@ func (c *C1APIAutomationsV1AutomationSearchServiceSearchAutomationTemplateVersio
 	}
 	return c.RawResponse
 }
+
+// #region class-body-c1apiautomationsv1automationsearchservicesearchautomationtemplateversionsresponse
+// #endregion class-body-c1apiautomationsv1automationsearchservicesearchautomationtemplateversionsresponse

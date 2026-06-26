@@ -45,3 +45,6 @@ func (c *C1APISystemlogV1ExportServiceCreateResponse) GetRawResponse() *http.Res
 	}
 	return c.RawResponse
 }
+
+// #region class-body-c1apisystemlogv1exportservicecreateresponse
+// #endregion class-body-c1apisystemlogv1exportservicecreateresponse

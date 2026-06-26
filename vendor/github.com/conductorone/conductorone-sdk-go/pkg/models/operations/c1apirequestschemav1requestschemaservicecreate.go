@@ -10,7 +10,7 @@ import (
 type C1APIRequestSchemaV1RequestSchemaServiceCreateResponse struct {
 	// HTTP response content type for this operation
 	ContentType string
-	// Successful response
+	// The response message for creating a request schema.
 	RequestSchemaServiceCreateResponse *shared.RequestSchemaServiceCreateResponse
 	// HTTP response status code for this operation
 	StatusCode int
@@ -45,3 +45,6 @@ func (c *C1APIRequestSchemaV1RequestSchemaServiceCreateResponse) GetRawResponse(
 	}
 	return c.RawResponse
 }
+
+// #region class-body-c1apirequestschemav1requestschemaservicecreateresponse
+// #endregion class-body-c1apirequestschemav1requestschemaservicecreateresponse

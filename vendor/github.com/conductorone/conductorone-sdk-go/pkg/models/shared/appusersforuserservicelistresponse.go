@@ -38,13 +38,13 @@ func (a *AppUsersForUserServiceListResponseExpanded) GetAdditionalProperties() m
 	return a.AdditionalProperties
 }
 
-// The AppUsersForUserServiceListResponse message.
+// AppUsersForUserServiceListResponse - The response message for listing app users correlated to a specific C1 user.
 type AppUsersForUserServiceListResponse struct {
-	// The expanded field.
+	// List of serialized related objects.
 	Expanded []AppUsersForUserServiceListResponseExpanded `json:"expanded,omitempty"`
-	// The list field.
+	// The list of app user results.
 	List []AppUserView `json:"list,omitempty"`
-	// The nextPageToken field.
+	// The token for fetching the next page of results.
 	NextPageToken *string `json:"nextPageToken,omitempty"`
 }
 

@@ -43,6 +43,8 @@ type SystemLogServiceListEventsRequest struct {
 	// The sortDirection field.
 	SortDirection *SortDirection `json:"sortDirection,omitempty"`
 	Until         *time.Time     `json:"until,omitempty"`
+	// The untilEventUid field.
+	UntilEventUID *string `json:"untilEventUid,omitempty"`
 }
 
 func (s SystemLogServiceListEventsRequest) MarshalJSON() ([]byte, error) {
@@ -96,4 +98,11 @@ func (s *SystemLogServiceListEventsRequest) GetUntil() *time.Time {
 		return nil
 	}
 	return s.Until
+}
+
+func (s *SystemLogServiceListEventsRequest) GetUntilEventUID() *string {
+	if s == nil {
+		return nil
+	}
+	return s.UntilEventUID
 }

@@ -11,9 +11,10 @@ import (
 type BundleAutomationCircuitBreakerState string
 
 const (
-	BundleAutomationCircuitBreakerStateCircuitBreakerStateUnspecified BundleAutomationCircuitBreakerState = "CIRCUIT_BREAKER_STATE_UNSPECIFIED"
-	BundleAutomationCircuitBreakerStateCircuitBreakerStateTriggered   BundleAutomationCircuitBreakerState = "CIRCUIT_BREAKER_STATE_TRIGGERED"
-	BundleAutomationCircuitBreakerStateCircuitBreakerStateBypass      BundleAutomationCircuitBreakerState = "CIRCUIT_BREAKER_STATE_BYPASS"
+	BundleAutomationCircuitBreakerStateCircuitBreakerStateUnspecified     BundleAutomationCircuitBreakerState = "CIRCUIT_BREAKER_STATE_UNSPECIFIED"
+	BundleAutomationCircuitBreakerStateCircuitBreakerStateTriggered       BundleAutomationCircuitBreakerState = "CIRCUIT_BREAKER_STATE_TRIGGERED"
+	BundleAutomationCircuitBreakerStateCircuitBreakerStateBypass          BundleAutomationCircuitBreakerState = "CIRCUIT_BREAKER_STATE_BYPASS"
+	BundleAutomationCircuitBreakerStateCircuitBreakerStateSupportDisabled BundleAutomationCircuitBreakerState = "CIRCUIT_BREAKER_STATE_SUPPORT_DISABLED"
 )
 
 func (e BundleAutomationCircuitBreakerState) ToPointer() *BundleAutomationCircuitBreakerState {
@@ -24,7 +25,7 @@ func (e BundleAutomationCircuitBreakerState) ToPointer() *BundleAutomationCircui
 func (e *BundleAutomationCircuitBreakerState) IsExact() bool {
 	if e != nil {
 		switch *e {
-		case "CIRCUIT_BREAKER_STATE_UNSPECIFIED", "CIRCUIT_BREAKER_STATE_TRIGGERED", "CIRCUIT_BREAKER_STATE_BYPASS":
+		case "CIRCUIT_BREAKER_STATE_UNSPECIFIED", "CIRCUIT_BREAKER_STATE_TRIGGERED", "CIRCUIT_BREAKER_STATE_BYPASS", "CIRCUIT_BREAKER_STATE_SUPPORT_DISABLED":
 			return true
 		}
 	}

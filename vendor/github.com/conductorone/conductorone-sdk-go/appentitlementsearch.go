@@ -235,37 +235,11 @@ func (s *AppEntitlementSearch) Search(ctx context.Context, request *shared.AppEn
 				return nil, nil
 			}
 		}
+		request.PageToken = &nCVal
 
 		return s.Search(
 			ctx,
-			&shared.AppEntitlementSearchServiceSearchRequest{
-				AppEntitlementExpandMask: request.AppEntitlementExpandMask,
-				AccessReviewID:           request.AccessReviewID,
-				Alias:                    request.Alias,
-				AppIds:                   request.AppIds,
-				AppUserIds:               request.AppUserIds,
-				ComplianceFrameworkIds:   request.ComplianceFrameworkIds,
-				DisplayName:              request.DisplayName,
-				ExcludeAppIds:            request.ExcludeAppIds,
-				ExcludeAppUserIds:        request.ExcludeAppUserIds,
-				ExcludeImmutable:         request.ExcludeImmutable,
-				ExcludeResourceTypeIds:   request.ExcludeResourceTypeIds,
-				ExcludedEntitlementRefs:  request.ExcludedEntitlementRefs,
-				IncludeDeleted:           request.IncludeDeleted,
-				IsAutomated:              request.IsAutomated,
-				MembershipType:           request.MembershipType,
-				OnlyGetExpiring:          request.OnlyGetExpiring,
-				PageSize:                 request.PageSize,
-				PageToken:                &nCVal,
-				PolicyRefs:               request.PolicyRefs,
-				Query:                    request.Query,
-				Refs:                     request.Refs,
-				ResourceIds:              request.ResourceIds,
-				ResourceTraitIds:         request.ResourceTraitIds,
-				ResourceTypeIds:          request.ResourceTypeIds,
-				RiskLevelIds:             request.RiskLevelIds,
-				SourceConnectorID:        request.SourceConnectorID,
-			},
+			request,
 			opts...,
 		)
 	}
@@ -317,7 +291,7 @@ func (s *AppEntitlementSearch) Search(ctx context.Context, request *shared.AppEn
 }
 
 // SearchAppEntitlementsForAppUser - Search App Entitlements For App User
-// Invokes the c1.api.app.v1.AppEntitlementSearchService.SearchAppEntitlementsForAppUser method.
+// Search for app entitlements associated with a specific app user, with optional resource type trait filtering.
 func (s *AppEntitlementSearch) SearchAppEntitlementsForAppUser(ctx context.Context, request operations.C1APIAppV1AppEntitlementSearchServiceSearchAppEntitlementsForAppUserRequest, opts ...operations.Option) (*operations.C1APIAppV1AppEntitlementSearchServiceSearchAppEntitlementsForAppUserResponse, error) {
 	o := operations.Options{}
 	supportedOptions := []string{
@@ -735,7 +709,7 @@ func (s *AppEntitlementSearch) SearchAppEntitlementsWithExpired(ctx context.Cont
 }
 
 // SearchGrants - Search Grants
-// Invokes the c1.api.app.v1.AppEntitlementSearchService.SearchGrants method.
+// Search grants (user-to-entitlement bindings) across apps, with filters for app, user, resource type, and entitlement.
 func (s *AppEntitlementSearch) SearchGrants(ctx context.Context, request *shared.AppEntitlementSearchServiceSearchGrantsRequest, opts ...operations.Option) (*operations.C1APIAppV1AppEntitlementSearchServiceSearchGrantsResponse, error) {
 	o := operations.Options{}
 	supportedOptions := []string{

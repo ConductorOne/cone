@@ -2,10 +2,25 @@
 
 package shared
 
+import (
+	"github.com/conductorone/conductorone-sdk-go/pkg/utils"
+)
+
 // The AutomationExecutionRef message.
 type AutomationExecutionRef struct {
 	// The id field.
 	ID *int64 `integer:"string" json:"id,omitempty"`
+}
+
+func (a AutomationExecutionRef) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(a, "", false)
+}
+
+func (a *AutomationExecutionRef) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &a, "", false, nil); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (a *AutomationExecutionRef) GetID() *int64 {

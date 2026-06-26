@@ -4,7 +4,7 @@ package shared
 
 // TaskExpandMask - The task expand mask is an array of strings that specifes the related objects the requester wishes to have returned when making a request where the expand mask is part of the input. Use '*' to view all possible responses.
 type TaskExpandMask struct {
-	// A list of paths to expand in the response. May be any combination of "*", "access_review_id", "user_id", "created_by_user_id", "app_id", "app_user_id", "app_entitlement_ids", "step_approver_ids", "identity_user_id", "insight_ids", and "app_user_last_usage".
+	// A list of paths to expand in the response. May be any combination of "*", "access_review_id", "user_id", "created_by_user_id", "app_id", "app_user_id", "app_entitlement_ids", "step_approver_ids", "approver_ids", "identity_user_id", "insight_ids", "app_user_last_usage", "entitlement_scope_bindings", and "scope_role_resources".
 	Paths []string `json:"paths,omitempty"`
 }
 

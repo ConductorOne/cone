@@ -45,3 +45,6 @@ func (c *C1APIAutomationsV1AutomationServiceListAutomationsResponse) GetRawRespo
 	}
 	return c.RawResponse
 }
+
+// #region class-body-c1apiautomationsv1automationservicelistautomationsresponse
+// #endregion class-body-c1apiautomationsv1automationservicelistautomationsresponse

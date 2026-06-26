@@ -32,7 +32,7 @@ func newOrgDomain(rootSDK *ConductoroneAPI, sdkConfig config.SDKConfiguration, h
 }
 
 // List
-// Invokes the c1.api.settings.v1.OrgDomainService.List method.
+// List returns all verified domains configured for the tenant.
 func (s *OrgDomain) List(ctx context.Context, request operations.C1APISettingsV1OrgDomainServiceListRequest, opts ...operations.Option) (*operations.C1APISettingsV1OrgDomainServiceListResponse, error) {
 	o := operations.Options{}
 	supportedOptions := []string{
@@ -241,7 +241,7 @@ func (s *OrgDomain) List(ctx context.Context, request operations.C1APISettingsV1
 }
 
 // Update
-// Invokes the c1.api.settings.v1.OrgDomainService.Update method.
+// Update replaces the tenant's set of verified domains with the provided list.
 func (s *OrgDomain) Update(ctx context.Context, request *shared.UpdateOrgDomainRequest, opts ...operations.Option) (*operations.C1APISettingsV1OrgDomainServiceUpdateResponse, error) {
 	o := operations.Options{}
 	supportedOptions := []string{

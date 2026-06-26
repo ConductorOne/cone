@@ -2,19 +2,53 @@
 
 package shared
 
-// The SessionSettings message.
+// ClientIDMetadataDocumentPolicy - Policy for metadata document client_id URLs.
+type ClientIDMetadataDocumentPolicy string
+
+const (
+	ClientIDMetadataDocumentPolicyClientIDMetadataDocumentPolicyUnspecified   ClientIDMetadataDocumentPolicy = "CLIENT_ID_METADATA_DOCUMENT_POLICY_UNSPECIFIED"
+	ClientIDMetadataDocumentPolicyClientIDMetadataDocumentPolicyAllowAll      ClientIDMetadataDocumentPolicy = "CLIENT_ID_METADATA_DOCUMENT_POLICY_ALLOW_ALL"
+	ClientIDMetadataDocumentPolicyClientIDMetadataDocumentPolicyRequestable   ClientIDMetadataDocumentPolicy = "CLIENT_ID_METADATA_DOCUMENT_POLICY_REQUESTABLE"
+	ClientIDMetadataDocumentPolicyClientIDMetadataDocumentPolicyAllowlistOnly ClientIDMetadataDocumentPolicy = "CLIENT_ID_METADATA_DOCUMENT_POLICY_ALLOWLIST_ONLY"
+)
+
+func (e ClientIDMetadataDocumentPolicy) ToPointer() *ClientIDMetadataDocumentPolicy {
+	return &e
+}
+
+// IsExact returns true if the value matches a known enum value, false otherwise.
+func (e *ClientIDMetadataDocumentPolicy) IsExact() bool {
+	if e != nil {
+		switch *e {
+		case "CLIENT_ID_METADATA_DOCUMENT_POLICY_UNSPECIFIED", "CLIENT_ID_METADATA_DOCUMENT_POLICY_ALLOW_ALL", "CLIENT_ID_METADATA_DOCUMENT_POLICY_REQUESTABLE", "CLIENT_ID_METADATA_DOCUMENT_POLICY_ALLOWLIST_ONLY":
+			return true
+		}
+	}
+	return false
+}
+
+// SessionSettings configures session security for the tenant, including timeouts and per-role IP restrictions.
 type SessionSettings struct {
-	// The CIDRRestriction message.
+	// CIDRRestriction defines an IP-based access restriction with an enable toggle and a list of allowed CIDRs.
 	CIDRRestriction *CIDRRestriction `json:"connectorSource,omitempty"`
-	// The CIDRRestriction message.
-	CIDRRestriction1 *CIDRRestriction `json:"pccAdminSource,omitempty"`
-	// The CIDRRestriction message.
-	CIDRRestriction2 *CIDRRestriction `json:"pccUserSource,omitempty"`
-	// The CIDRRestriction message.
-	CIDRRestriction3 *CIDRRestriction `json:"ssoAdminSource,omitempty"`
-	// The CIDRRestriction message.
-	CIDRRestriction4 *CIDRRestriction `json:"ssoUserSource,omitempty"`
-	MaxSessionLength *string          `json:"maxSessionLength,omitempty"`
+	// CIDRRestriction defines an IP-based access restriction with an enable toggle and a list of allowed CIDRs.
+	CIDRRestriction1 *CIDRRestriction `json:"externalClientSource,omitempty"`
+	// CIDRRestriction defines an IP-based access restriction with an enable toggle and a list of allowed CIDRs.
+	CIDRRestriction2 *CIDRRestriction `json:"pccAdminSource,omitempty"`
+	// CIDRRestriction defines an IP-based access restriction with an enable toggle and a list of allowed CIDRs.
+	CIDRRestriction3 *CIDRRestriction `json:"pccUserSource,omitempty"`
+	// CIDRRestriction defines an IP-based access restriction with an enable toggle and a list of allowed CIDRs.
+	CIDRRestriction4 *CIDRRestriction `json:"ssoAdminSource,omitempty"`
+	// CIDRRestriction defines an IP-based access restriction with an enable toggle and a list of allowed CIDRs.
+	CIDRRestriction5 *CIDRRestriction `json:"ssoUserSource,omitempty"`
+	// Policy ID for REQUESTABLE mode approval routing.
+	ClientIDApprovalRequestPolicyID *string `json:"clientIdApprovalRequestPolicyId,omitempty"`
+	// Policy for metadata document client_id URLs.
+	ClientIDMetadataDocumentPolicy *ClientIDMetadataDocumentPolicy `json:"clientIdMetadataDocumentPolicy,omitempty"`
+	// Enable external client registration (OAuth 2.0 DCR) for MCP clients
+	//  like Claude Desktop, Cursor, and other AI assistants.
+	ExternalClientsEnabled *bool   `json:"externalClientsEnabled,omitempty"`
+	MaxSessionLength       *string `json:"maxSessionLength,omitempty"`
 }
 
 func (s *SessionSettings) GetCIDRRestriction() *CIDRRestriction {
@@ -50,6 +84,34 @@ func (s *SessionSettings) GetCIDRRestriction4() *CIDRRestriction {
 		return nil
 	}
 	return s.CIDRRestriction4
+}
+
+func (s *SessionSettings) GetCIDRRestriction5() *CIDRRestriction {
+	if s == nil {
+		return nil
+	}
+	return s.CIDRRestriction5
+}
+
+func (s *SessionSettings) GetClientIDApprovalRequestPolicyID() *string {
+	if s == nil {
+		return nil
+	}
+	return s.ClientIDApprovalRequestPolicyID
+}
+
+func (s *SessionSettings) GetClientIDMetadataDocumentPolicy() *ClientIDMetadataDocumentPolicy {
+	if s == nil {
+		return nil
+	}
+	return s.ClientIDMetadataDocumentPolicy
+}
+
+func (s *SessionSettings) GetExternalClientsEnabled() *bool {
+	if s == nil {
+		return nil
+	}
+	return s.ExternalClientsEnabled
 }
 
 func (s *SessionSettings) GetMaxSessionLength() *string {

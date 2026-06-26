@@ -32,6 +32,8 @@ func (e *ActionInstanceState) IsExact() bool {
 //
 // This message contains a oneof named target_instance. Only a single field of the following list may be set at a time:
 //   - automation
+//   - batonResourceActionInstance
+//   - clientIdApprovalInstance
 //
 // This message contains a oneof named outcome. Only a single field of the following list may be set at a time:
 //   - success
@@ -43,6 +45,8 @@ type ActionInstance struct {
 	//
 	// This message contains a oneof named target. Only a single field of the following list may be set at a time:
 	//   - automation
+	//   - batonResourceAction
+	//   - clientIdApproval
 	//
 	Action *Action `json:"action,omitempty"`
 	// The ActionOutcomeCancelled message.
@@ -55,6 +59,11 @@ type ActionInstance struct {
 	ActionOutcomeSuccess *ActionOutcomeSuccess `json:"success,omitempty"`
 	// The ActionTargetAutomationInstance message.
 	ActionTargetAutomationInstance *ActionTargetAutomationInstance `json:"automation,omitempty"`
+	// The ActionTargetBatonResourceActionInstance message.
+	ActionTargetBatonResourceActionInstance *ActionTargetBatonResourceActionInstance `json:"batonResourceActionInstance,omitempty"`
+	// ActionTargetClientIdApprovalInstance carries the registration key of the
+	//  external OAuth client that is being reviewed.
+	ActionTargetClientIDApprovalInstance *ActionTargetClientIDApprovalInstance `json:"clientIdApprovalInstance,omitempty"`
 	// The current state of the action execution.
 	State *ActionInstanceState `json:"state,omitempty"`
 }
@@ -99,6 +108,20 @@ func (a *ActionInstance) GetActionTargetAutomationInstance() *ActionTargetAutoma
 		return nil
 	}
 	return a.ActionTargetAutomationInstance
+}
+
+func (a *ActionInstance) GetActionTargetBatonResourceActionInstance() *ActionTargetBatonResourceActionInstance {
+	if a == nil {
+		return nil
+	}
+	return a.ActionTargetBatonResourceActionInstance
+}
+
+func (a *ActionInstance) GetActionTargetClientIDApprovalInstance() *ActionTargetClientIDApprovalInstance {
+	if a == nil {
+		return nil
+	}
+	return a.ActionTargetClientIDApprovalInstance
 }
 
 func (a *ActionInstance) GetState() *ActionInstanceState {

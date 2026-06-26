@@ -271,15 +271,12 @@ func runGet(cmd *cobra.Command, args []string) error {
 		task := accessRequest.TaskView.Task
 
 		// Check if the task has form fields
-		hasFormFields := task.Form != nil
-		if hasFormFields {
-			hasFormFields = len(task.Form.Fields) > 0
-		}
+		hasFormFields := len(formFields(task.RequestSchemaForm)) > 0
 
 		if hasFormFields {
 			// Collect form fields if not already provided
 			if len(requestData) == 0 {
-				collectedData, err := collectFormFields(ctx, v, task.Form)
+				collectedData, err := collectFormFields(ctx, v, task.RequestSchemaForm)
 				if err != nil {
 					return nil, fmt.Errorf("error collecting form fields: %w", err)
 				}
@@ -293,7 +290,7 @@ func runGet(cmd *cobra.Command, args []string) error {
 				}
 			} else {
 				// Validate that provided form data matches the form structure
-				if err := validateFormData(task.Form, requestData); err != nil {
+				if err := validateFormData(task.RequestSchemaForm, requestData); err != nil {
 					pterm.Warning.Printf("Form data validation warning: %v\n", err)
 				}
 			}

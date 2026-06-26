@@ -26,10 +26,13 @@ func (c *C1APIRequestcatalogV1RequestCatalogManagementServiceResumePausedBundleA
 	return c.RequestCatalogID
 }
 
+// #region class-body-c1apirequestcatalogv1requestcatalogmanagementserviceresumepausedbundleautomationrequest
+// #endregion class-body-c1apirequestcatalogv1requestcatalogmanagementserviceresumepausedbundleautomationrequest
+
 type C1APIRequestcatalogV1RequestCatalogManagementServiceResumePausedBundleAutomationResponse struct {
 	// HTTP response content type for this operation
 	ContentType string
-	// Successful response
+	// The response message for resuming a paused bundle automation.
 	ResumePausedBundleAutomationResponse *shared.ResumePausedBundleAutomationResponse
 	// HTTP response status code for this operation
 	StatusCode int
@@ -64,3 +67,6 @@ func (c *C1APIRequestcatalogV1RequestCatalogManagementServiceResumePausedBundleA
 	}
 	return c.RawResponse
 }
+
+// #region class-body-c1apirequestcatalogv1requestcatalogmanagementserviceresumepausedbundleautomationresponse
+// #endregion class-body-c1apirequestcatalogv1requestcatalogmanagementserviceresumepausedbundleautomationresponse

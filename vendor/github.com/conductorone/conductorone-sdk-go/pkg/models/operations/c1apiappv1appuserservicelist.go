@@ -34,8 +34,11 @@ func (c *C1APIAppV1AppUserServiceListRequest) GetPageToken() *string {
 	return c.PageToken
 }
 
+// #region class-body-c1apiappv1appuserservicelistrequest
+// #endregion class-body-c1apiappv1appuserservicelistrequest
+
 type C1APIAppV1AppUserServiceListResponse struct {
-	// Successful response
+	// The response message for listing app users.
 	AppUserServiceListResponse *shared.AppUserServiceListResponse
 	// HTTP response content type for this operation
 	ContentType string
@@ -72,3 +75,6 @@ func (c *C1APIAppV1AppUserServiceListResponse) GetRawResponse() *http.Response {
 	}
 	return c.RawResponse
 }
+
+// #region class-body-c1apiappv1appuserservicelistresponse
+// #endregion class-body-c1apiappv1appuserservicelistresponse

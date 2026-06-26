@@ -44,7 +44,7 @@ type TaskActionsServiceReassignResponse struct {
 	TaskView *TaskView `json:"taskView,omitempty"`
 	// List of serialized related objects.
 	Expanded []TaskActionsServiceReassignResponseExpanded `json:"expanded,omitempty"`
-	// The ID of the ticket (task) deny action created by this request.
+	// The ID of the task reassign action created by this request.
 	TicketActionID *string `json:"ticketActionId,omitempty"`
 }
 

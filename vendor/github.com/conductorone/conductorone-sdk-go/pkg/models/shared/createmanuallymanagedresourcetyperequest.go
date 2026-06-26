@@ -2,7 +2,7 @@
 
 package shared
 
-// ResourceType - The resourceType field.
+// ResourceType - The category of the resource type (e.g., ROLE, GROUP, LICENSE).
 type ResourceType string
 
 const (
@@ -31,11 +31,11 @@ func (e *ResourceType) IsExact() bool {
 	return false
 }
 
-// The CreateManuallyManagedResourceTypeRequest message.
+// CreateManuallyManagedResourceTypeRequest - The request message for creating a manually managed resource type.
 type CreateManuallyManagedResourceTypeRequest struct {
-	// The displayName field.
+	// The display name for the new resource type.
 	DisplayName string `json:"displayName"`
-	// The resourceType field.
+	// The category of the resource type (e.g., ROLE, GROUP, LICENSE).
 	ResourceType ResourceType `json:"resourceType"`
 }
 

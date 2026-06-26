@@ -26,6 +26,9 @@ func (c *C1APIAppV1AppAccessRequestsDefaultsServiceCancelAppAccessRequestsDefaul
 	return c.AppID
 }
 
+// #region class-body-c1apiappv1appaccessrequestsdefaultsservicecancelappaccessrequestsdefaultsrequest
+// #endregion class-body-c1apiappv1appaccessrequestsdefaultsservicecancelappaccessrequestsdefaultsrequest
+
 type C1APIAppV1AppAccessRequestsDefaultsServiceCancelAppAccessRequestsDefaultsResponse struct {
 	// Successful response
 	AppAccessRequestDefaults *shared.AppAccessRequestDefaults
@@ -64,3 +67,6 @@ func (c *C1APIAppV1AppAccessRequestsDefaultsServiceCancelAppAccessRequestsDefaul
 	}
 	return c.RawResponse
 }
+
+// #region class-body-c1apiappv1appaccessrequestsdefaultsservicecancelappaccessrequestsdefaultsresponse
+// #endregion class-body-c1apiappv1appaccessrequestsdefaultsservicecancelappaccessrequestsdefaultsresponse

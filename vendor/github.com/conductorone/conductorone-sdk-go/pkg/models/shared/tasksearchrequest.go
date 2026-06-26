@@ -132,6 +132,32 @@ func (e *GrantOutcomes) IsExact() bool {
 	return false
 }
 
+// PendingActionFilter - Filter tasks by pending action status. Only applies when exactly one access_review_id is specified.
+//
+//	Requires the REVIEWS_PENDING_ACTIONS feature flag to be enabled.
+type PendingActionFilter string
+
+const (
+	PendingActionFilterPendingActionFilterUnspecified    PendingActionFilter = "PENDING_ACTION_FILTER_UNSPECIFIED"
+	PendingActionFilterPendingActionFilterWithPending    PendingActionFilter = "PENDING_ACTION_FILTER_WITH_PENDING"
+	PendingActionFilterPendingActionFilterWithoutPending PendingActionFilter = "PENDING_ACTION_FILTER_WITHOUT_PENDING"
+)
+
+func (e PendingActionFilter) ToPointer() *PendingActionFilter {
+	return &e
+}
+
+// IsExact returns true if the value matches a known enum value, false otherwise.
+func (e *PendingActionFilter) IsExact() bool {
+	if e != nil {
+		switch *e {
+		case "PENDING_ACTION_FILTER_UNSPECIFIED", "PENDING_ACTION_FILTER_WITH_PENDING", "PENDING_ACTION_FILTER_WITHOUT_PENDING":
+			return true
+		}
+	}
+	return false
+}
+
 type RevokeOutcomes string
 
 const (
@@ -158,27 +184,27 @@ func (e *RevokeOutcomes) IsExact() bool {
 	return false
 }
 
-// SortBy - Sort tasks in a specific order.
-type SortBy string
+// TaskSearchRequestSortBy - Sort tasks in a specific order.
+type TaskSearchRequestSortBy string
 
 const (
-	SortByTaskSearchSortByUnspecified                    SortBy = "TASK_SEARCH_SORT_BY_UNSPECIFIED"
-	SortByTaskSearchSortByAccount                        SortBy = "TASK_SEARCH_SORT_BY_ACCOUNT"
-	SortByTaskSearchSortByResource                       SortBy = "TASK_SEARCH_SORT_BY_RESOURCE"
-	SortByTaskSearchSortByAccountOwner                   SortBy = "TASK_SEARCH_SORT_BY_ACCOUNT_OWNER"
-	SortByTaskSearchSortByReverseTicketID                SortBy = "TASK_SEARCH_SORT_BY_REVERSE_TICKET_ID"
-	SortByTaskSearchSortByTicketID                       SortBy = "TASK_SEARCH_SORT_BY_TICKET_ID"
-	SortByTaskSearchSortByCreatedAt                      SortBy = "TASK_SEARCH_SORT_BY_CREATED_AT"
-	SortByTaskSearchSortByReverseCreatedAt               SortBy = "TASK_SEARCH_SORT_BY_REVERSE_CREATED_AT"
-	SortByTaskSearchSortByAppResourceIDAndAppEntitlement SortBy = "TASK_SEARCH_SORT_BY_APP_RESOURCE_ID_AND_APP_ENTITLEMENT"
+	TaskSearchRequestSortByTaskSearchSortByUnspecified                    TaskSearchRequestSortBy = "TASK_SEARCH_SORT_BY_UNSPECIFIED"
+	TaskSearchRequestSortByTaskSearchSortByAccount                        TaskSearchRequestSortBy = "TASK_SEARCH_SORT_BY_ACCOUNT"
+	TaskSearchRequestSortByTaskSearchSortByResource                       TaskSearchRequestSortBy = "TASK_SEARCH_SORT_BY_RESOURCE"
+	TaskSearchRequestSortByTaskSearchSortByAccountOwner                   TaskSearchRequestSortBy = "TASK_SEARCH_SORT_BY_ACCOUNT_OWNER"
+	TaskSearchRequestSortByTaskSearchSortByReverseTicketID                TaskSearchRequestSortBy = "TASK_SEARCH_SORT_BY_REVERSE_TICKET_ID"
+	TaskSearchRequestSortByTaskSearchSortByTicketID                       TaskSearchRequestSortBy = "TASK_SEARCH_SORT_BY_TICKET_ID"
+	TaskSearchRequestSortByTaskSearchSortByCreatedAt                      TaskSearchRequestSortBy = "TASK_SEARCH_SORT_BY_CREATED_AT"
+	TaskSearchRequestSortByTaskSearchSortByReverseCreatedAt               TaskSearchRequestSortBy = "TASK_SEARCH_SORT_BY_REVERSE_CREATED_AT"
+	TaskSearchRequestSortByTaskSearchSortByAppResourceIDAndAppEntitlement TaskSearchRequestSortBy = "TASK_SEARCH_SORT_BY_APP_RESOURCE_ID_AND_APP_ENTITLEMENT"
 )
 
-func (e SortBy) ToPointer() *SortBy {
+func (e TaskSearchRequestSortBy) ToPointer() *TaskSearchRequestSortBy {
 	return &e
 }
 
 // IsExact returns true if the value matches a known enum value, false otherwise.
-func (e *SortBy) IsExact() bool {
+func (e *TaskSearchRequestSortBy) IsExact() bool {
 	if e != nil {
 		switch *e {
 		case "TASK_SEARCH_SORT_BY_UNSPECIFIED", "TASK_SEARCH_SORT_BY_ACCOUNT", "TASK_SEARCH_SORT_BY_RESOURCE", "TASK_SEARCH_SORT_BY_ACCOUNT_OWNER", "TASK_SEARCH_SORT_BY_REVERSE_TICKET_ID", "TASK_SEARCH_SORT_BY_TICKET_ID", "TASK_SEARCH_SORT_BY_CREATED_AT", "TASK_SEARCH_SORT_BY_REVERSE_CREATED_AT", "TASK_SEARCH_SORT_BY_APP_RESOURCE_ID_AND_APP_ENTITLEMENT":
@@ -280,6 +306,8 @@ type TaskSearchRequest struct {
 	ExcludeAppEntitlementIds []string `json:"excludeAppEntitlementIds,omitempty"`
 	// Search tasks that do not have any of these app resource type IDs.
 	ExcludeAppResourceTypeIds []string `json:"excludeAppResourceTypeIds,omitempty"`
+	// Search tasks that do NOT have any of these apps as targets.
+	ExcludeApplicationIds []string `json:"excludeApplicationIds,omitempty"`
 	// Exclude Specific TaskIDs from this serach result.
 	ExcludeIds []string `json:"excludeIds,omitempty"`
 	// Search tasks by grant outcome
@@ -300,16 +328,23 @@ type TaskSearchRequest struct {
 	PageSize *int `json:"pageSize,omitempty"`
 	// The pageToken field.
 	PageToken *string `json:"pageToken,omitempty"`
+	// Filter tasks by pending action status. Only applies when exactly one access_review_id is specified.
+	//  Requires the REVIEWS_PENDING_ACTIONS feature flag to be enabled.
+	PendingActionFilter *PendingActionFilter `json:"pendingActionFilter,omitempty"`
 	// Search tasks that were acted on by any of these users.
 	PreviouslyActedOnIds []string `json:"previouslyActedOnIds,omitempty"`
 	// Fuzzy search tasks by display name, description, or ID.
 	Query *string `json:"query,omitempty"`
 	// Query tasks by display name, description, or numeric ID.
 	Refs []TaskRef `json:"refs,omitempty"`
+	// Filter tasks where the current approval step requires an approval reason.
+	RequireApprovalReason *bool `json:"requireApprovalReason,omitempty"`
+	// Filter tasks where the current approval step requires a denial reason.
+	RequireDenialReason *bool `json:"requireDenialReason,omitempty"`
 	// Search tasks by revoke outcome
 	RevokeOutcomes []RevokeOutcomes `json:"revokeOutcomes,omitempty"`
 	// Sort tasks in a specific order.
-	SortBy *SortBy `json:"sortBy,omitempty"`
+	SortBy *TaskSearchRequestSortBy `json:"sortBy,omitempty"`
 	// Search tasks that have a current policy step of this type
 	StepApprovalTypes []StepApprovalTypes `json:"stepApprovalTypes,omitempty"`
 	// Search tasks where these users are the subject.
@@ -466,6 +501,13 @@ func (t *TaskSearchRequest) GetExcludeAppResourceTypeIds() []string {
 	return t.ExcludeAppResourceTypeIds
 }
 
+func (t *TaskSearchRequest) GetExcludeApplicationIds() []string {
+	if t == nil {
+		return nil
+	}
+	return t.ExcludeApplicationIds
+}
+
 func (t *TaskSearchRequest) GetExcludeIds() []string {
 	if t == nil {
 		return nil
@@ -550,6 +592,13 @@ func (t *TaskSearchRequest) GetPageToken() *string {
 	return t.PageToken
 }
 
+func (t *TaskSearchRequest) GetPendingActionFilter() *PendingActionFilter {
+	if t == nil {
+		return nil
+	}
+	return t.PendingActionFilter
+}
+
 func (t *TaskSearchRequest) GetPreviouslyActedOnIds() []string {
 	if t == nil {
 		return nil
@@ -571,6 +620,20 @@ func (t *TaskSearchRequest) GetRefs() []TaskRef {
 	return t.Refs
 }
 
+func (t *TaskSearchRequest) GetRequireApprovalReason() *bool {
+	if t == nil {
+		return nil
+	}
+	return t.RequireApprovalReason
+}
+
+func (t *TaskSearchRequest) GetRequireDenialReason() *bool {
+	if t == nil {
+		return nil
+	}
+	return t.RequireDenialReason
+}
+
 func (t *TaskSearchRequest) GetRevokeOutcomes() []RevokeOutcomes {
 	if t == nil {
 		return nil
@@ -578,7 +641,7 @@ func (t *TaskSearchRequest) GetRevokeOutcomes() []RevokeOutcomes {
 	return t.RevokeOutcomes
 }
 
-func (t *TaskSearchRequest) GetSortBy() *SortBy {
+func (t *TaskSearchRequest) GetSortBy() *TaskSearchRequestSortBy {
 	if t == nil {
 		return nil
 	}

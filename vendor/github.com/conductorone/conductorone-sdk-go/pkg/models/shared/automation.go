@@ -7,6 +7,32 @@ import (
 	"time"
 )
 
+// CircuitBreakerPeriod - The circuitBreakerPeriod field.
+type CircuitBreakerPeriod string
+
+const (
+	CircuitBreakerPeriodCircuitBreakerPeriodUnspecified CircuitBreakerPeriod = "CIRCUIT_BREAKER_PERIOD_UNSPECIFIED"
+	CircuitBreakerPeriodCircuitBreakerPeriodHour        CircuitBreakerPeriod = "CIRCUIT_BREAKER_PERIOD_HOUR"
+	CircuitBreakerPeriodCircuitBreakerPeriodDay         CircuitBreakerPeriod = "CIRCUIT_BREAKER_PERIOD_DAY"
+	CircuitBreakerPeriodCircuitBreakerPeriodWeek        CircuitBreakerPeriod = "CIRCUIT_BREAKER_PERIOD_WEEK"
+	CircuitBreakerPeriodCircuitBreakerPeriodMonth       CircuitBreakerPeriod = "CIRCUIT_BREAKER_PERIOD_MONTH"
+)
+
+func (e CircuitBreakerPeriod) ToPointer() *CircuitBreakerPeriod {
+	return &e
+}
+
+// IsExact returns true if the value matches a known enum value, false otherwise.
+func (e *CircuitBreakerPeriod) IsExact() bool {
+	if e != nil {
+		switch *e {
+		case "CIRCUIT_BREAKER_PERIOD_UNSPECIFIED", "CIRCUIT_BREAKER_PERIOD_HOUR", "CIRCUIT_BREAKER_PERIOD_DAY", "CIRCUIT_BREAKER_PERIOD_WEEK", "CIRCUIT_BREAKER_PERIOD_MONTH":
+			return true
+		}
+	}
+	return false
+}
+
 // PrimaryTriggerType - The primaryTriggerType field.
 type PrimaryTriggerType string
 
@@ -24,6 +50,7 @@ const (
 	PrimaryTriggerTypeTriggerTypeForm              PrimaryTriggerType = "TRIGGER_TYPE_FORM"
 	PrimaryTriggerTypeTriggerTypeScheduleAppUser   PrimaryTriggerType = "TRIGGER_TYPE_SCHEDULE_APP_USER"
 	PrimaryTriggerTypeTriggerTypeAccessConflict    PrimaryTriggerType = "TRIGGER_TYPE_ACCESS_CONFLICT"
+	PrimaryTriggerTypeTriggerTypeScheduleNoUser    PrimaryTriggerType = "TRIGGER_TYPE_SCHEDULE_NO_USER"
 )
 
 func (e PrimaryTriggerType) ToPointer() *PrimaryTriggerType {
@@ -34,7 +61,7 @@ func (e PrimaryTriggerType) ToPointer() *PrimaryTriggerType {
 func (e *PrimaryTriggerType) IsExact() bool {
 	if e != nil {
 		switch *e {
-		case "TRIGGER_TYPE_UNSPECIFIED", "TRIGGER_TYPE_USER_PROFILE_CHANGE", "TRIGGER_TYPE_APP_USER_CREATE", "TRIGGER_TYPE_APP_USER_UPDATE", "TRIGGER_TYPE_UNUSED_ACCESS", "TRIGGER_TYPE_USER_CREATED", "TRIGGER_TYPE_GRANT_FOUND", "TRIGGER_TYPE_GRANT_DELETED", "TRIGGER_TYPE_WEBHOOK", "TRIGGER_TYPE_SCHEDULE", "TRIGGER_TYPE_FORM", "TRIGGER_TYPE_SCHEDULE_APP_USER", "TRIGGER_TYPE_ACCESS_CONFLICT":
+		case "TRIGGER_TYPE_UNSPECIFIED", "TRIGGER_TYPE_USER_PROFILE_CHANGE", "TRIGGER_TYPE_APP_USER_CREATE", "TRIGGER_TYPE_APP_USER_UPDATE", "TRIGGER_TYPE_UNUSED_ACCESS", "TRIGGER_TYPE_USER_CREATED", "TRIGGER_TYPE_GRANT_FOUND", "TRIGGER_TYPE_GRANT_DELETED", "TRIGGER_TYPE_WEBHOOK", "TRIGGER_TYPE_SCHEDULE", "TRIGGER_TYPE_FORM", "TRIGGER_TYPE_SCHEDULE_APP_USER", "TRIGGER_TYPE_ACCESS_CONFLICT", "TRIGGER_TYPE_SCHEDULE_NO_USER":
 			return true
 		}
 	}
@@ -48,13 +75,21 @@ func (e *PrimaryTriggerType) IsExact() bool {
 type Automation struct {
 	// The AutomationContext message.
 	AutomationContext *AutomationContext `json:"context,omitempty"`
-	// The DisabledReasonCircuitBreaker message.
+	// DisabledReasonCircuitBreaker carries the trip context when an automation
+	//  has been auto-disabled by its rate cap. Returned on the parent Automation
+	//  when read; not directly settable.
 	DisabledReasonCircuitBreaker *DisabledReasonCircuitBreaker `json:"circuitBreaker,omitempty"`
 	// the app id this workflow_template belongs to
 	AppID *string `json:"appId,omitempty"`
 	// The automationSteps field.
 	AutomationSteps []AutomationStep `json:"automationSteps,omitempty"`
-	CreatedAt       *time.Time       `json:"createdAt,omitempty"`
+	// Circuit breaker rate cap: disable this automation if it executes more
+	//  than circuit_breaker_max times in the trailing circuit_breaker_period.
+	//  0 = circuit breaker off (default).
+	CircuitBreakerMax *int64 `json:"circuitBreakerMax,omitempty"`
+	// The circuitBreakerPeriod field.
+	CircuitBreakerPeriod *CircuitBreakerPeriod `json:"circuitBreakerPeriod,omitempty"`
+	CreatedAt            *time.Time            `json:"createdAt,omitempty"`
 	// The currentVersion field.
 	CurrentVersion *int64 `integer:"string" json:"currentVersion,omitempty"`
 	// The description field.
@@ -115,6 +150,20 @@ func (a *Automation) GetAutomationSteps() []AutomationStep {
 		return nil
 	}
 	return a.AutomationSteps
+}
+
+func (a *Automation) GetCircuitBreakerMax() *int64 {
+	if a == nil {
+		return nil
+	}
+	return a.CircuitBreakerMax
+}
+
+func (a *Automation) GetCircuitBreakerPeriod() *CircuitBreakerPeriod {
+	if a == nil {
+		return nil
+	}
+	return a.CircuitBreakerPeriod
 }
 
 func (a *Automation) GetCreatedAt() *time.Time {
@@ -208,13 +257,21 @@ func (a *Automation) GetTriggers() []AutomationTrigger {
 type AutomationInput struct {
 	// The AutomationContext message.
 	AutomationContext *AutomationContext `json:"context,omitempty"`
-	// The DisabledReasonCircuitBreaker message.
+	// DisabledReasonCircuitBreaker carries the trip context when an automation
+	//  has been auto-disabled by its rate cap. Returned on the parent Automation
+	//  when read; not directly settable.
 	DisabledReasonCircuitBreaker *DisabledReasonCircuitBreaker `json:"circuitBreaker,omitempty"`
 	// the app id this workflow_template belongs to
 	AppID *string `json:"appId,omitempty"`
 	// The automationSteps field.
 	AutomationSteps []AutomationStep `json:"automationSteps,omitempty"`
-	CreatedAt       *time.Time       `json:"createdAt,omitempty"`
+	// Circuit breaker rate cap: disable this automation if it executes more
+	//  than circuit_breaker_max times in the trailing circuit_breaker_period.
+	//  0 = circuit breaker off (default).
+	CircuitBreakerMax *int64 `json:"circuitBreakerMax,omitempty"`
+	// The circuitBreakerPeriod field.
+	CircuitBreakerPeriod *CircuitBreakerPeriod `json:"circuitBreakerPeriod,omitempty"`
+	CreatedAt            *time.Time            `json:"createdAt,omitempty"`
 	// The currentVersion field.
 	CurrentVersion *int64 `integer:"string" json:"currentVersion,omitempty"`
 	// The description field.
@@ -273,6 +330,20 @@ func (a *AutomationInput) GetAutomationSteps() []AutomationStep {
 		return nil
 	}
 	return a.AutomationSteps
+}
+
+func (a *AutomationInput) GetCircuitBreakerMax() *int64 {
+	if a == nil {
+		return nil
+	}
+	return a.CircuitBreakerMax
+}
+
+func (a *AutomationInput) GetCircuitBreakerPeriod() *CircuitBreakerPeriod {
+	if a == nil {
+		return nil
+	}
+	return a.CircuitBreakerPeriod
 }
 
 func (a *AutomationInput) GetCreatedAt() *time.Time {

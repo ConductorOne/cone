@@ -46,7 +46,7 @@ type TaskActionsServiceApproveWithStepUpResponse struct {
 	Expanded []TaskActionsServiceApproveWithStepUpResponseExpanded `json:"expanded,omitempty"`
 	// The redirect URL the client must visit to complete the step-up authentication.
 	RedirectURL *string `json:"redirectUrl,omitempty"`
-	// The ID of the ticket (task) approve action created by this request.
+	// The ID of the task approve action created by this request.
 	TicketActionID *string `json:"ticketActionId,omitempty"`
 }
 

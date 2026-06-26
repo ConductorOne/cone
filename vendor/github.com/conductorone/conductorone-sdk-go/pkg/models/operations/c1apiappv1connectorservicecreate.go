@@ -26,6 +26,9 @@ func (c *C1APIAppV1ConnectorServiceCreateRequest) GetAppID() string {
 	return c.AppID
 }
 
+// #region class-body-c1apiappv1connectorservicecreaterequest
+// #endregion class-body-c1apiappv1connectorservicecreaterequest
+
 type C1APIAppV1ConnectorServiceCreateResponse struct {
 	// The ConnectorServiceCreateResponse is the response returned from creating a connector.
 	ConnectorServiceCreateResponse *shared.ConnectorServiceCreateResponse
@@ -64,3 +67,6 @@ func (c *C1APIAppV1ConnectorServiceCreateResponse) GetRawResponse() *http.Respon
 	}
 	return c.RawResponse
 }
+
+// #region class-body-c1apiappv1connectorservicecreateresponse
+// #endregion class-body-c1apiappv1connectorservicecreateresponse

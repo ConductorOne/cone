@@ -14,6 +14,8 @@ type TaskView struct {
 	AppUserLastUsagePath *string `json:"appUserLastUsagePath,omitempty"`
 	// JSONPATH expression indicating the location of the AppUser object in the expanded array
 	AppUserPath *string `json:"appUserPath,omitempty"`
+	// JSONPATH expression indicating the location of the ApproverUsers objects in the expanded array. These are the users who have approved or denied this task.
+	ApproversPath *string `json:"approversPath,omitempty"`
 	// JSONPATH expression indicating the location of the object of the User that created the ticket in the expanded array
 	CreatedByUserPath *string `json:"createdByUserPath,omitempty"`
 	// JSONPATH expression indicating the location of the Entitlements objects in the expanded array
@@ -22,6 +24,12 @@ type TaskView struct {
 	IdentityUserPath *string `json:"identityUserPath,omitempty"`
 	// JSONPATH expression indicating the location of the Insights objects in the expanded array
 	InsightsPath *string `json:"insightsPath,omitempty"`
+	// JSONPATH expression indicating the location of the EntitlementScopeBindingList object in the expanded array.
+	ResourceBindingsPath *string `json:"resourceBindingsPath,omitempty"`
+	// JSONPATH expression indicating the location of the role AppResource for a scope-role action task in the expanded array.
+	RoleResourcePath *string `json:"roleResourcePath,omitempty"`
+	// JSONPATH expression indicating the location of the scope AppResource for a scope-role action task in the expanded array.
+	ScopeResourcePath *string `json:"scopeResourcePath,omitempty"`
 	// JSONPATH expression indicating the location of the StepApproverUsers objects in the expanded array
 	StepApproversPath *string `json:"stepApproversPath,omitempty"`
 	// JSONPATH expression indicating the location of the User object in the expanded array. This is the user that is a direct target of the ticket without a specific relationship to a potentially non-existent app user.
@@ -63,6 +71,13 @@ func (t *TaskView) GetAppUserPath() *string {
 	return t.AppUserPath
 }
 
+func (t *TaskView) GetApproversPath() *string {
+	if t == nil {
+		return nil
+	}
+	return t.ApproversPath
+}
+
 func (t *TaskView) GetCreatedByUserPath() *string {
 	if t == nil {
 		return nil
@@ -89,6 +104,27 @@ func (t *TaskView) GetInsightsPath() *string {
 		return nil
 	}
 	return t.InsightsPath
+}
+
+func (t *TaskView) GetResourceBindingsPath() *string {
+	if t == nil {
+		return nil
+	}
+	return t.ResourceBindingsPath
+}
+
+func (t *TaskView) GetRoleResourcePath() *string {
+	if t == nil {
+		return nil
+	}
+	return t.RoleResourcePath
+}
+
+func (t *TaskView) GetScopeResourcePath() *string {
+	if t == nil {
+		return nil
+	}
+	return t.ScopeResourcePath
 }
 
 func (t *TaskView) GetStepApproversPath() *string {

@@ -2,21 +2,21 @@
 
 package shared
 
-// The ConflictMonitorCreateRequest message.
+// ConflictMonitorCreateRequest - The request message for creating a new conflict monitor.
 type ConflictMonitorCreateRequest struct {
 	// The NotificationConfig message.
-	NotificationConfig *NotificationConfig1 `json:"notificationConfig,omitempty"`
-	// The description field.
+	AccessConflictNotificationConfig *AccessConflictNotificationConfig `json:"notificationConfig,omitempty"`
+	// An optional description explaining the purpose of this Separation of Duty rule.
 	Description *string `json:"description,omitempty"`
-	// The displayName field.
+	// The human-readable name for the conflict monitor.
 	DisplayName string `json:"displayName"`
 }
 
-func (c *ConflictMonitorCreateRequest) GetNotificationConfig() *NotificationConfig1 {
+func (c *ConflictMonitorCreateRequest) GetAccessConflictNotificationConfig() *AccessConflictNotificationConfig {
 	if c == nil {
 		return nil
 	}
-	return c.NotificationConfig
+	return c.AccessConflictNotificationConfig
 }
 
 func (c *ConflictMonitorCreateRequest) GetDescription() *string {

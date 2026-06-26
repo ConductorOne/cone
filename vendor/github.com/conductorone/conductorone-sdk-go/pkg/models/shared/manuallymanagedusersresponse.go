@@ -4,8 +4,17 @@ package shared
 
 // The ManuallyManagedUsersResponse message.
 type ManuallyManagedUsersResponse struct {
-	// The failedUsersErrorMap field.
+	// The ID of the bulk action created to process the membership additions.
+	BulkActionID *string `json:"bulkActionId,omitempty"`
+	// A map of user IDs to error messages for users that could not be added.
 	FailedUsersErrorMap map[string]string `json:"failedUsersErrorMap,omitempty"`
+}
+
+func (m *ManuallyManagedUsersResponse) GetBulkActionID() *string {
+	if m == nil {
+		return nil
+	}
+	return m.BulkActionID
 }
 
 func (m *ManuallyManagedUsersResponse) GetFailedUsersErrorMap() map[string]string {

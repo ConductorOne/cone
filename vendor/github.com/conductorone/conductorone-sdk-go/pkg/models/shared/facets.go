@@ -2,12 +2,27 @@
 
 package shared
 
+import (
+	"github.com/conductorone/conductorone-sdk-go/pkg/utils"
+)
+
 // Facets - Indicates one value of a facet.
 type Facets struct {
 	// The count of items in this facet.
 	Count *int64 `integer:"string" json:"count,omitempty"`
 	// The facet being referenced.
 	Facets []FacetCategory `json:"facets,omitempty"`
+}
+
+func (f Facets) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(f, "", false)
+}
+
+func (f *Facets) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &f, "", false, nil); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (f *Facets) GetCount() *int64 {

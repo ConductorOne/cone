@@ -50,10 +50,13 @@ func (c *C1APIAppV1AppEntitlementsProxyDeleteRequest) GetSrcAppID() string {
 	return c.SrcAppID
 }
 
+// #region class-body-c1apiappv1appentitlementsproxydeleterequest
+// #endregion class-body-c1apiappv1appentitlementsproxydeleterequest
+
 type C1APIAppV1AppEntitlementsProxyDeleteResponse struct {
 	// HTTP response content type for this operation
 	ContentType string
-	// Successful response
+	// The empty response message for deleting an entitlement proxy binding.
 	DeleteAppEntitlementProxyResponse *shared.DeleteAppEntitlementProxyResponse
 	// HTTP response status code for this operation
 	StatusCode int
@@ -88,3 +91,6 @@ func (c *C1APIAppV1AppEntitlementsProxyDeleteResponse) GetRawResponse() *http.Re
 	}
 	return c.RawResponse
 }
+
+// #region class-body-c1apiappv1appentitlementsproxydeleteresponse
+// #endregion class-body-c1apiappv1appentitlementsproxydeleteresponse

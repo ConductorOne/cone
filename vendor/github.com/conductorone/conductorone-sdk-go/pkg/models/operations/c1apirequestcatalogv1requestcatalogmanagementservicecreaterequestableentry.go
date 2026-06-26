@@ -42,6 +42,9 @@ func (c *C1APIRequestcatalogV1RequestCatalogManagementServiceCreateRequestableEn
 	return c.EntitlementID
 }
 
+// #region class-body-c1apirequestcatalogv1requestcatalogmanagementservicecreaterequestableentryrequest
+// #endregion class-body-c1apirequestcatalogv1requestcatalogmanagementservicecreaterequestableentryrequest
+
 type C1APIRequestcatalogV1RequestCatalogManagementServiceCreateRequestableEntryResponse struct {
 	// HTTP response content type for this operation
 	ContentType string
@@ -80,3 +83,6 @@ func (c *C1APIRequestcatalogV1RequestCatalogManagementServiceCreateRequestableEn
 	}
 	return c.RawResponse
 }
+
+// #region class-body-c1apirequestcatalogv1requestcatalogmanagementservicecreaterequestableentryresponse
+// #endregion class-body-c1apirequestcatalogv1requestcatalogmanagementservicecreaterequestableentryresponse

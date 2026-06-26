@@ -10,7 +10,7 @@ import (
 type C1APIRequestSchemaV1RequestSchemaServiceRemoveEntitlementBindingResponse struct {
 	// HTTP response content type for this operation
 	ContentType string
-	// Successful response
+	// The response message for removing a single entitlement binding.
 	RequestSchemaServiceRemoveEntitlementBindingResponse *shared.RequestSchemaServiceRemoveEntitlementBindingResponse
 	// HTTP response status code for this operation
 	StatusCode int
@@ -45,3 +45,6 @@ func (c *C1APIRequestSchemaV1RequestSchemaServiceRemoveEntitlementBindingRespons
 	}
 	return c.RawResponse
 }
+
+// #region class-body-c1apirequestschemav1requestschemaserviceremoveentitlementbindingresponse
+// #endregion class-body-c1apirequestschemav1requestschemaserviceremoveentitlementbindingresponse

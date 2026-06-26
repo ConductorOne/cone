@@ -86,3 +86,6 @@ func (f *Fixed32Rules) GetNotIn() []int64 {
 	}
 	return f.NotIn
 }
+
+// #region class-body-fixed32rules
+// #endregion class-body-fixed32rules

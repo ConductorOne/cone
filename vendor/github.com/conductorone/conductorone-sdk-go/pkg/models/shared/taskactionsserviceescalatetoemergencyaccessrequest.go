@@ -2,13 +2,13 @@
 
 package shared
 
-// The TaskActionsServiceEscalateToEmergencyAccessRequest message.
+// The TaskActionsServiceEscalateToEmergencyAccessRequest object lets you escalate a task to the emergency access workflow.
 type TaskActionsServiceEscalateToEmergencyAccessRequest struct {
 	// The task expand mask is an array of strings that specifes the related objects the requester wishes to have returned when making a request where the expand mask is part of the input. Use '*' to view all possible responses.
 	TaskExpandMask *TaskExpandMask `json:"expandMask,omitempty"`
-	// The comment field.
+	// An optional comment attached to the escalation.
 	Comment *string `json:"comment,omitempty"`
-	// The policyStepId field.
+	// The ID of the current policy step being escalated from.
 	PolicyStepID *string `json:"policyStepId,omitempty"`
 }
 

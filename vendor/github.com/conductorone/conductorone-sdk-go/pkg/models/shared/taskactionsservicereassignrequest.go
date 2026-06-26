@@ -2,15 +2,15 @@
 
 package shared
 
-// The TaskActionsServiceReassignRequest message.
+// The TaskActionsServiceReassignRequest object lets you reassign a task's current policy step to different users.
 type TaskActionsServiceReassignRequest struct {
 	// The task expand mask is an array of strings that specifes the related objects the requester wishes to have returned when making a request where the expand mask is part of the input. Use '*' to view all possible responses.
 	TaskExpandMask *TaskExpandMask `json:"expandMask,omitempty"`
-	// The comment field.
+	// An optional comment attached to the reassignment.
 	Comment *string `json:"comment,omitempty"`
-	// The newStepUserIds field.
+	// The IDs of the users to reassign the current policy step to. Must be from the allowed reassignees list.
 	NewStepUserIds []string `json:"newStepUserIds,omitempty"`
-	// The policyStepId field.
+	// The ID of the current policy step to reassign. Must match the task's active step.
 	PolicyStepID *string `json:"policyStepId,omitempty"`
 }
 

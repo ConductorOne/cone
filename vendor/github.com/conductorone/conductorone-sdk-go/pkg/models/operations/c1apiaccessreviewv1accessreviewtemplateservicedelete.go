@@ -26,6 +26,9 @@ func (c *C1APIAccessreviewV1AccessReviewTemplateServiceDeleteRequest) GetID() st
 	return c.ID
 }
 
+// #region class-body-c1apiaccessreviewv1accessreviewtemplateservicedeleterequest
+// #endregion class-body-c1apiaccessreviewv1accessreviewtemplateservicedeleterequest
+
 type C1APIAccessreviewV1AccessReviewTemplateServiceDeleteResponse struct {
 	// Successful response
 	AccessReviewTemplateServiceDeleteResponse *shared.AccessReviewTemplateServiceDeleteResponse
@@ -64,3 +67,6 @@ func (c *C1APIAccessreviewV1AccessReviewTemplateServiceDeleteResponse) GetRawRes
 	}
 	return c.RawResponse
 }
+
+// #region class-body-c1apiaccessreviewv1accessreviewtemplateservicedeleteresponse
+// #endregion class-body-c1apiaccessreviewv1accessreviewtemplateservicedeleteresponse

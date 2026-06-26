@@ -32,7 +32,7 @@ func newAccessReviewTemplate(rootSDK *ConductoroneAPI, sdkConfig config.SDKConfi
 }
 
 // Create
-// Invokes the c1.api.accessreview.v1.AccessReviewTemplateService.Create method.
+// Create creates a new access review template that defines a reusable configuration for launching campaigns.
 func (s *AccessReviewTemplate) Create(ctx context.Context, request *shared.AccessReviewTemplateServiceCreateRequest, opts ...operations.Option) (*operations.C1APIAccessreviewV1AccessReviewTemplateServiceCreateResponse, error) {
 	o := operations.Options{}
 	supportedOptions := []string{
@@ -244,7 +244,7 @@ func (s *AccessReviewTemplate) Create(ctx context.Context, request *shared.Acces
 }
 
 // Delete
-// Invokes the c1.api.accessreview.v1.AccessReviewTemplateService.Delete method.
+// Delete an access review template. The template can no longer be used to create campaigns.
 func (s *AccessReviewTemplate) Delete(ctx context.Context, request operations.C1APIAccessreviewV1AccessReviewTemplateServiceDeleteRequest, opts ...operations.Option) (*operations.C1APIAccessreviewV1AccessReviewTemplateServiceDeleteResponse, error) {
 	o := operations.Options{}
 	supportedOptions := []string{
@@ -456,7 +456,7 @@ func (s *AccessReviewTemplate) Delete(ctx context.Context, request operations.C1
 }
 
 // Get
-// Invokes the c1.api.accessreview.v1.AccessReviewTemplateService.Get method.
+// Get retrieves a single access review template by ID.
 func (s *AccessReviewTemplate) Get(ctx context.Context, request operations.C1APIAccessreviewV1AccessReviewTemplateServiceGetRequest, opts ...operations.Option) (*operations.C1APIAccessreviewV1AccessReviewTemplateServiceGetResponse, error) {
 	o := operations.Options{}
 	supportedOptions := []string{
@@ -661,7 +661,7 @@ func (s *AccessReviewTemplate) Get(ctx context.Context, request operations.C1API
 }
 
 // Update
-// Invokes the c1.api.accessreview.v1.AccessReviewTemplateService.Update method.
+// Update modifies an existing access review template. Use the update_mask to specify which fields to change.
 func (s *AccessReviewTemplate) Update(ctx context.Context, request operations.C1APIAccessreviewV1AccessReviewTemplateServiceUpdateRequest, opts ...operations.Option) (*operations.C1APIAccessreviewV1AccessReviewTemplateServiceUpdateResponse, error) {
 	o := operations.Options{}
 	supportedOptions := []string{

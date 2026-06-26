@@ -55,23 +55,47 @@ func (c *client) CreateExternalSecret(
 // "age-encryption.org/v1"). The upload URL is self-authorizing, so a bare HTTP client is
 // used to avoid attaching the ConductorOne bearer token to the (foreign) storage host.
 func (c *client) UploadSecretFile(ctx context.Context, uploadURL string, encrypted []byte) error {
-	req, err := http.NewRequestWithContext(ctx, http.MethodPut, uploadURL, bytes.NewReader(encrypted))
+	return c.UploadSecretFileReader(ctx, uploadURL, bytes.NewReader(encrypted), int64(len(encrypted)))
+}
+
+func (c *client) UploadSecretFileReader(ctx context.Context, uploadURL string, encrypted io.Reader, contentLength int64) error {
+	req, err := http.NewRequestWithContext(ctx, http.MethodPut, uploadURL, encrypted)
 	if err != nil {
 		return err
 	}
+	req.ContentLength = contentLength
 	req.Header.Set("Content-Type", "application/octet-stream")
 
 	resp, err := http.DefaultClient.Do(req)
 	if err != nil {
 		return err
 	}
-	defer resp.Body.Close()
+	defer func() { _ = resp.Body.Close() }()
 
 	if resp.StatusCode < http.StatusOK || resp.StatusCode >= http.StatusMultipleChoices {
 		body, _ := io.ReadAll(io.LimitReader(resp.Body, 4096))
 		return fmt.Errorf("file upload failed: %s: %s", resp.Status, strings.TrimSpace(string(body)))
 	}
 	return nil
+}
+
+func (c *client) DownloadSecretFile(ctx context.Context, downloadURL string) (io.ReadCloser, error) {
+	req, err := http.NewRequestWithContext(ctx, http.MethodGet, downloadURL, nil)
+	if err != nil {
+		return nil, err
+	}
+
+	resp, err := http.DefaultClient.Do(req)
+	if err != nil {
+		return nil, err
+	}
+
+	if resp.StatusCode < http.StatusOK || resp.StatusCode >= http.StatusMultipleChoices {
+		defer func() { _ = resp.Body.Close() }()
+		body, _ := io.ReadAll(io.LimitReader(resp.Body, 4096))
+		return nil, fmt.Errorf("file download failed: %s: %s", resp.Status, strings.TrimSpace(string(body)))
+	}
+	return resp.Body, nil
 }
 
 // SetSecretTextContent uploads the encrypted content for a TEXT secret. The
@@ -137,5 +161,94 @@ func (c *client) GetSecret(ctx context.Context, vaultID string) (*shared.PaperSe
 	if err := NewHTTPError(resp.RawResponse); err != nil {
 		return nil, err
 	}
+	if resp.PaperSecretServiceGetResponse == nil || resp.PaperSecretServiceGetResponse.PaperSecret == nil {
+		return nil, fmt.Errorf("get secret response was empty")
+	}
 	return resp.PaperSecretServiceGetResponse.PaperSecret, nil
+}
+
+func (c *client) GetSecretByShareCode(ctx context.Context, shareCode string) (*shared.PaperSecret, error) {
+	resp, err := c.sdk.PaperSecret.GetByShareCode(ctx, operations.C1APISecretsV1PaperSecretServiceGetByShareCodeRequest{
+		ShareCode: shareCode,
+	})
+	if err != nil {
+		return nil, err
+	}
+
+	if err := NewHTTPError(resp.RawResponse); err != nil {
+		return nil, err
+	}
+	if resp.PaperSecretServiceGetResponse == nil || resp.PaperSecretServiceGetResponse.PaperSecret == nil {
+		return nil, fmt.Errorf("get secret by share code response was empty")
+	}
+	return resp.PaperSecretServiceGetResponse.PaperSecret, nil
+}
+
+func (c *client) SearchMySecrets(ctx context.Context, req *shared.PaperSecretServiceSearchMySecretsRequest) ([]shared.PaperSecret, error) {
+	if req == nil {
+		req = &shared.PaperSecretServiceSearchMySecretsRequest{}
+	}
+	var out []shared.PaperSecret
+	for {
+		resp, err := c.sdk.PaperSecret.SearchMySecrets(ctx, req)
+		if err != nil {
+			return nil, err
+		}
+		if err := NewHTTPError(resp.RawResponse); err != nil {
+			return nil, err
+		}
+		if resp.PaperSecretServiceSearchResponse != nil {
+			out = append(out, resp.PaperSecretServiceSearchResponse.List...)
+			token := StringFromPtr(resp.PaperSecretServiceSearchResponse.NextPageToken)
+			if token != "" {
+				req.PageToken = &token
+				continue
+			}
+		}
+		return out, nil
+	}
+}
+
+func (c *client) RevokeSecret(ctx context.Context, vaultID string) (*shared.PaperSecret, error) {
+	resp, err := c.sdk.PaperSecret.Revoke(ctx, operations.C1APISecretsV1PaperSecretServiceRevokeRequest{
+		VaultID:                         vaultID,
+		PaperSecretServiceRevokeRequest: &shared.PaperSecretServiceRevokeRequest{},
+	})
+	if err != nil {
+		return nil, err
+	}
+
+	if err := NewHTTPError(resp.RawResponse); err != nil {
+		return nil, err
+	}
+	if resp.PaperSecretServiceRevokeResponse == nil || resp.PaperSecretServiceRevokeResponse.PaperSecret == nil {
+		return nil, fmt.Errorf("revoke secret response was empty")
+	}
+	return resp.PaperSecretServiceRevokeResponse.PaperSecret, nil
+}
+
+func (c *client) SearchSecretAuditEvents(ctx context.Context, vaultID string, pageSize int) ([]map[string]any, error) {
+	req := &shared.PaperSecretServiceSearchAuditEventsRequest{
+		VaultID:  &vaultID,
+		PageSize: &pageSize,
+	}
+	var out []map[string]any
+	for {
+		resp, err := c.sdk.PaperSecret.SearchAuditEvents(ctx, req)
+		if err != nil {
+			return nil, err
+		}
+		if err := NewHTTPError(resp.RawResponse); err != nil {
+			return nil, err
+		}
+		if resp.PaperSecretServiceSearchAuditEventsResponse != nil {
+			out = append(out, resp.PaperSecretServiceSearchAuditEventsResponse.List...)
+			token := StringFromPtr(resp.PaperSecretServiceSearchAuditEventsResponse.NextPageToken)
+			if token != "" {
+				req.PageToken = &token
+				continue
+			}
+		}
+		return out, nil
+	}
 }

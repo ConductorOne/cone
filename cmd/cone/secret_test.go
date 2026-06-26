@@ -1,8 +1,12 @@
 package main
 
 import (
+	"bytes"
 	"context"
 	"encoding/base64"
+	"io"
+	"os"
+	"path/filepath"
 	"strings"
 	"testing"
 
@@ -133,26 +137,25 @@ func TestCreateInputFormat(t *testing.T) {
 
 func TestValidateSecretCreateInput(t *testing.T) {
 	tests := []struct {
-		name      string
-		userIDs   []string
-		emails    []string
-		content   string
-		filePath  string
-		expiresIn string
-		wantErr   string
+		name    string
+		input   secretCreateInput
+		wantErr string
 	}{
-		{name: "valid internal text", userIDs: []string{"u1"}, content: "hi", expiresIn: "3600s"},
-		{name: "valid external file", emails: []string{"a@b.com"}, filePath: "/tmp/f", expiresIn: "1h"},
-		{name: "valid empty content", userIDs: []string{"u1"}, expiresIn: "3600s"},
-		{name: "no recipient", expiresIn: "3600s", wantErr: "one of"},
-		{name: "both recipients", userIDs: []string{"u1"}, emails: []string{"a@b.com"}, expiresIn: "3600s", wantErr: "mutually exclusive"},
-		{name: "missing expiry", userIDs: []string{"u1"}, content: "hi", wantErr: "expires-in"},
-		{name: "content and file", userIDs: []string{"u1"}, content: "hi", filePath: "/tmp/f", expiresIn: "3600s", wantErr: "mutually exclusive"},
+		{name: "valid internal text", input: secretCreateInput{userIDs: []string{"u1"}, hasInlineContent: true, expiresIn: "3600s"}},
+		{name: "valid external file", input: secretCreateInput{emails: []string{"a@b.com"}, filePath: "/tmp/f", expiresIn: "1h"}},
+		{name: "valid content file", input: secretCreateInput{userRefs: []string{"alice@example.com"}, contentFilePath: "/tmp/content", expiresIn: "3600s"}},
+		{name: "no recipient", input: secretCreateInput{hasInlineContent: true, expiresIn: "3600s"}, wantErr: "one of"},
+		{name: "both recipients", input: secretCreateInput{userIDs: []string{"u1"}, emails: []string{"a@b.com"}, expiresIn: "3600s", hasInlineContent: true}, wantErr: "mutually exclusive"},
+		{name: "invalid email", input: secretCreateInput{emails: []string{"not an email"}, filePath: "/tmp/f", expiresIn: "3600s"}, wantErr: "invalid external email"},
+		{name: "missing content source", input: secretCreateInput{userIDs: []string{"u1"}, expiresIn: "3600s"}, wantErr: "one of"},
+		{name: "missing expiry", input: secretCreateInput{userIDs: []string{"u1"}, hasInlineContent: true}, wantErr: "expires-in"},
+		{name: "content and file", input: secretCreateInput{userIDs: []string{"u1"}, hasInlineContent: true, filePath: "/tmp/f", expiresIn: "3600s"}, wantErr: "mutually exclusive"},
+		{name: "max views too high", input: secretCreateInput{userIDs: []string{"u1"}, hasInlineContent: true, expiresIn: "3600s", maxViews: 1001}, wantErr: "between 0 and 1000"},
 	}
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			err := validateSecretCreateInput(tt.userIDs, tt.emails, tt.content, tt.filePath, tt.expiresIn)
+			err := validateSecretCreateInput(tt.input)
 			if tt.wantErr == "" {
 				if err != nil {
 					t.Fatalf("validateSecretCreateInput() unexpected error: %v", err)
@@ -407,5 +410,151 @@ func TestSetContentInputFormat(t *testing.T) {
 				t.Errorf("setContentInputFormat(%q) = %q, want %q", tt.name, *got, tt.want)
 			}
 		})
+	}
+}
+
+func TestNormalizeSecretDuration(t *testing.T) {
+	tests := []struct {
+		name    string
+		input   string
+		want    string
+		wantErr string
+	}{
+		{name: "one week", input: "1w", want: "604800s"},
+		{name: "seconds", input: "3600s", want: "3600s"},
+		{name: "too short", input: "59m", wantErr: "between 1h and 30d"},
+		{name: "too long", input: "31d", wantErr: "between 1h and 30d"},
+		{name: "empty", wantErr: "required"},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got, err := normalizeSecretDuration(tt.input)
+			if tt.wantErr == "" {
+				if err != nil {
+					t.Fatalf("normalizeSecretDuration() unexpected error: %v", err)
+				}
+				if got != tt.want {
+					t.Fatalf("normalizeSecretDuration() = %q, want %q", got, tt.want)
+				}
+				return
+			}
+			if err == nil || !strings.Contains(err.Error(), tt.wantErr) {
+				t.Fatalf("normalizeSecretDuration() error = %v, want contains %q", err, tt.wantErr)
+			}
+		})
+	}
+}
+
+func TestNormalizeSecretInputFormat(t *testing.T) {
+	tests := map[string]string{
+		"":          "plaintext",
+		"text":      "plaintext",
+		"json":      "json",
+		"yml":       "yaml",
+		"env":       "key-value",
+		"key_value": "key-value",
+	}
+	for input, want := range tests {
+		t.Run(input, func(t *testing.T) {
+			got, err := normalizeSecretInputFormat(input)
+			if err != nil {
+				t.Fatalf("normalizeSecretInputFormat() unexpected error: %v", err)
+			}
+			if got != want {
+				t.Fatalf("normalizeSecretInputFormat() = %q, want %q", got, want)
+			}
+		})
+	}
+	if _, err := normalizeSecretInputFormat("toml"); err == nil {
+		t.Fatal("normalizeSecretInputFormat() expected error")
+	}
+}
+
+func TestValidateSecretTextContent(t *testing.T) {
+	if err := validateSecretTextContent(`{"ok":true}`, "json"); err != nil {
+		t.Fatalf("validateSecretTextContent() valid json unexpected error: %v", err)
+	}
+	if err := validateSecretTextContent(`{"ok":`, "json"); err == nil {
+		t.Fatal("validateSecretTextContent() invalid json expected error")
+	}
+	if err := validateSecretTextContent("", "plaintext"); err == nil {
+		t.Fatal("validateSecretTextContent() empty content expected error")
+	}
+	if err := validateSecretTextContent(strings.Repeat("a", maxTextSecretPlaintextBytes+1), "plaintext"); err == nil {
+		t.Fatal("validateSecretTextContent() oversized content expected error")
+	}
+}
+
+func TestShareCodeFromSecretRef(t *testing.T) {
+	tests := map[string]string{
+		"ABCD-EFGH-IJKL": "ABCD-EFGH-IJKL",
+		"abcd-efgh-ijkl": "ABCD-EFGH-IJKL",
+		"https://tenant.example.com/secrets/view/abcd-efgh-ijkl":               "ABCD-EFGH-IJKL",
+		"https://tenant.example.com/ext/secrets/share/abcd-efgh-ijkl?x=ignore": "ABCD-EFGH-IJKL",
+		"not-a-share-code": "",
+	}
+	for input, want := range tests {
+		t.Run(input, func(t *testing.T) {
+			if got := shareCodeFromSecretRef(input); got != want {
+				t.Fatalf("shareCodeFromSecretRef() = %q, want %q", got, want)
+			}
+		})
+	}
+}
+
+func TestWriteDecryptedFileAtomically(t *testing.T) {
+	dir := t.TempDir()
+	dst := filepath.Join(dir, "secret.txt")
+	if err := writeDecryptedFileAtomically(dst, bytes.NewReader([]byte("secret"))); err != nil {
+		t.Fatalf("writeDecryptedFileAtomically() unexpected error: %v", err)
+	}
+	//nolint:gosec // test reads a file path created under t.TempDir.
+	got, err := os.ReadFile(dst)
+	if err != nil {
+		t.Fatalf("ReadFile() unexpected error: %v", err)
+	}
+	if string(got) != "secret" {
+		t.Fatalf("written content = %q, want secret", got)
+	}
+	entries, err := os.ReadDir(dir)
+	if err != nil {
+		t.Fatalf("ReadDir() unexpected error: %v", err)
+	}
+	if len(entries) != 1 || entries[0].Name() != "secret.txt" {
+		t.Fatalf("temp file was not cleaned up, entries=%v", entries)
+	}
+	if err := writeDecryptedFileAtomically(dst, bytes.NewReader([]byte("again"))); err == nil {
+		t.Fatal("writeDecryptedFileAtomically() expected existing destination error")
+	}
+}
+
+func TestEncryptFileToTemp(t *testing.T) {
+	identity, err := age.GenerateX25519Identity()
+	if err != nil {
+		t.Fatalf("GenerateX25519Identity() unexpected error: %v", err)
+	}
+	src := filepath.Join(t.TempDir(), "source.bin")
+	want := []byte("file secret")
+	if err := os.WriteFile(src, want, 0o600); err != nil {
+		t.Fatalf("WriteFile() unexpected error: %v", err)
+	}
+	tmp, err := encryptFileToTemp(src, identity.Recipient().String())
+	if err != nil {
+		t.Fatalf("encryptFileToTemp() unexpected error: %v", err)
+	}
+	defer func() { _ = tmp.Close() }()
+	defer func() { _ = os.Remove(tmp.Name()) }()
+
+	r, err := age.Decrypt(tmp, identity)
+	if err != nil {
+		t.Fatalf("Decrypt() unexpected error: %v", err)
+	}
+	got, err := io.ReadAll(r)
+	if err != nil {
+		t.Fatalf("ReadAll() unexpected error: %v", err)
+	}
+	if !bytes.Equal(got, want) {
+		t.Fatalf("decrypt = %q, want %q", got, want)
 	}
 }

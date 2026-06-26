@@ -82,25 +82,13 @@ func secretCreateRun(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
-	// Recipients: exactly one of team members (user IDs) or external recipients (emails).
 	userIDs := v.GetStringSlice(allowedUserIdsFlag)
 	emails := v.GetStringSlice(allowedEmailsFlag)
-	switch {
-	case len(userIDs) == 0 && len(emails) == 0:
-		return fmt.Errorf("one of --%s or --%s is required", allowedUserIdsFlag, allowedEmailsFlag)
-	case len(userIDs) > 0 && len(emails) > 0:
-		return fmt.Errorf("--%s and --%s are mutually exclusive (team vs external sharing)", allowedUserIdsFlag, allowedEmailsFlag)
-	}
-
 	expiresIn := v.GetString(expiresInFlag)
-	if expiresIn == "" {
-		return fmt.Errorf("--%s is required (e.g. 3600s)", expiresInFlag)
-	}
-
 	content := v.GetString(contentFlag)
 	filePath := v.GetString(fileFlag)
-	if content != "" && filePath != "" {
-		return fmt.Errorf("--%s and --%s are mutually exclusive", contentFlag, fileFlag)
+	if err := validateSecretCreateInput(userIDs, emails, content, filePath, expiresIn); err != nil {
+		return err
 	}
 
 	// Read the file up-front to fail fast and capture its original metadata. FileSize must
@@ -186,6 +174,33 @@ func secretCreateRun(cmd *cobra.Command, args []string) error {
 	return outputManager.Output(ctx, &resp, output.WithTransposeTable())
 }
 
+// validateSecretCreateInput enforces the create command's flag rules: exactly one recipient
+// set (team user IDs xor external emails), a required expiry, and at most one content source.
+func validateSecretCreateInput(userIDs, emails []string, content, filePath, expiresIn string) error {
+	switch {
+	case len(userIDs) == 0 && len(emails) == 0:
+		return fmt.Errorf("one of --%s or --%s is required", allowedUserIdsFlag, allowedEmailsFlag)
+	case len(userIDs) > 0 && len(emails) > 0:
+		return fmt.Errorf("--%s and --%s are mutually exclusive (team vs external sharing)", allowedUserIdsFlag, allowedEmailsFlag)
+	}
+
+	if expiresIn == "" {
+		return fmt.Errorf("--%s is required (e.g. 3600s)", expiresInFlag)
+	}
+
+	if content != "" && filePath != "" {
+		return fmt.Errorf("--%s and --%s are mutually exclusive", contentFlag, fileFlag)
+	}
+	return nil
+}
+
+// secretCreator is the subset of client.C1Client that createSecret needs, narrowed so the
+// request-building logic can be exercised with a lightweight fake in tests.
+type secretCreator interface {
+	CreateInternalSecret(ctx context.Context, req *shared.PaperSecretServiceCreateInternalRequest) (*shared.PaperSecretServiceCreateResponse, error)
+	CreateExternalSecret(ctx context.Context, req *shared.PaperSecretServiceCreateExternalRequest) (*shared.PaperSecretServiceCreateResponse, error)
+}
+
 // createSecretParams carries the inputs for building a create request. Exactly one of
 // userIDs (internal/team sharing) or emails (external sharing) is set.
 type createSecretParams struct {
@@ -204,7 +219,7 @@ type createSecretParams struct {
 // createSecret builds and sends the appropriate create request: external (allowedEmails)
 // when emails are provided, otherwise internal (allowedUserIds). FILE secrets set the file
 // metadata; TEXT secrets set the input-format hint.
-func createSecret(ctx context.Context, c client.C1Client, p createSecretParams) (*shared.PaperSecretServiceCreateResponse, error) {
+func createSecret(ctx context.Context, c secretCreator, p createSecretParams) (*shared.PaperSecretServiceCreateResponse, error) {
 	var displayName *string
 	if p.displayName != "" {
 		displayName = &p.displayName

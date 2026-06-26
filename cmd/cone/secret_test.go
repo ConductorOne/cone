@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"encoding/base64"
 	"strings"
 	"testing"
@@ -127,6 +128,201 @@ func TestCreateInputFormat(t *testing.T) {
 				t.Errorf("createInputFormat(%q) = %q, want %q", tt.name, *got, tt.want)
 			}
 		})
+	}
+}
+
+func TestValidateSecretCreateInput(t *testing.T) {
+	tests := []struct {
+		name      string
+		userIDs   []string
+		emails    []string
+		content   string
+		filePath  string
+		expiresIn string
+		wantErr   string
+	}{
+		{name: "valid internal text", userIDs: []string{"u1"}, content: "hi", expiresIn: "3600s"},
+		{name: "valid external file", emails: []string{"a@b.com"}, filePath: "/tmp/f", expiresIn: "1h"},
+		{name: "valid empty content", userIDs: []string{"u1"}, expiresIn: "3600s"},
+		{name: "no recipient", expiresIn: "3600s", wantErr: "one of"},
+		{name: "both recipients", userIDs: []string{"u1"}, emails: []string{"a@b.com"}, expiresIn: "3600s", wantErr: "mutually exclusive"},
+		{name: "missing expiry", userIDs: []string{"u1"}, content: "hi", wantErr: "expires-in"},
+		{name: "content and file", userIDs: []string{"u1"}, content: "hi", filePath: "/tmp/f", expiresIn: "3600s", wantErr: "mutually exclusive"},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			err := validateSecretCreateInput(tt.userIDs, tt.emails, tt.content, tt.filePath, tt.expiresIn)
+			if tt.wantErr == "" {
+				if err != nil {
+					t.Fatalf("validateSecretCreateInput() unexpected error: %v", err)
+				}
+				return
+			}
+			if err == nil {
+				t.Fatalf("validateSecretCreateInput() expected error containing %q, got nil", tt.wantErr)
+			}
+			if !strings.Contains(err.Error(), tt.wantErr) {
+				t.Errorf("validateSecretCreateInput() error = %q, want contains %q", err.Error(), tt.wantErr)
+			}
+		})
+	}
+}
+
+// fakeSecretCreator captures whichever create request createSecret builds so tests can
+// assert the request fields without a live API.
+type fakeSecretCreator struct {
+	internalReq *shared.PaperSecretServiceCreateInternalRequest
+	externalReq *shared.PaperSecretServiceCreateExternalRequest
+}
+
+func (f *fakeSecretCreator) CreateInternalSecret(_ context.Context, req *shared.PaperSecretServiceCreateInternalRequest) (*shared.PaperSecretServiceCreateResponse, error) {
+	f.internalReq = req
+	return &shared.PaperSecretServiceCreateResponse{}, nil
+}
+
+func (f *fakeSecretCreator) CreateExternalSecret(_ context.Context, req *shared.PaperSecretServiceCreateExternalRequest) (*shared.PaperSecretServiceCreateResponse, error) {
+	f.externalReq = req
+	return &shared.PaperSecretServiceCreateResponse{}, nil
+}
+
+func TestCreateSecretInternalText(t *testing.T) {
+	maxViews := int64(5)
+	f := &fakeSecretCreator{}
+	if _, err := createSecret(context.Background(), f, createSecretParams{
+		userIDs:     []string{"u1", "u2"},
+		expiresIn:   "3600s",
+		displayName: "label",
+		maxViews:    &maxViews,
+		inputFormat: "json",
+	}); err != nil {
+		t.Fatalf("createSecret() unexpected error: %v", err)
+	}
+
+	if f.externalReq != nil {
+		t.Fatal("expected internal request, external was called")
+	}
+	r := f.internalReq
+	if r == nil {
+		t.Fatal("internal request was not built")
+	}
+	if r.SecretType == nil || *r.SecretType != shared.PaperSecretServiceCreateInternalRequestSecretTypeSecretTypeText {
+		t.Errorf("SecretType = %v, want Text", r.SecretType)
+	}
+	if r.InputFormat == nil || *r.InputFormat != shared.PaperSecretServiceCreateInternalRequestInputFormatSecretInputFormatJSON {
+		t.Errorf("InputFormat = %v, want JSON", r.InputFormat)
+	}
+	if len(r.AllowedUserIds) != 2 {
+		t.Errorf("AllowedUserIds = %v, want 2 ids", r.AllowedUserIds)
+	}
+	if r.DisplayName == nil || *r.DisplayName != "label" {
+		t.Errorf("DisplayName = %v, want label", r.DisplayName)
+	}
+	if r.MaxViews == nil || *r.MaxViews != 5 {
+		t.Errorf("MaxViews = %v, want 5", r.MaxViews)
+	}
+	if r.ContentType != nil || r.Filename != nil || r.FileSize != nil {
+		t.Errorf("file metadata should be nil for TEXT, got contentType=%v filename=%v fileSize=%v", r.ContentType, r.Filename, r.FileSize)
+	}
+}
+
+func TestCreateSecretInternalFile(t *testing.T) {
+	f := &fakeSecretCreator{}
+	if _, err := createSecret(context.Background(), f, createSecretParams{
+		userIDs:     []string{"u1"},
+		expiresIn:   "3600s",
+		inputFormat: "json", // must be ignored for files
+		isFile:      true,
+		filename:    "data.bin",
+		contentType: "application/octet-stream",
+		fileSize:    1234,
+	}); err != nil {
+		t.Fatalf("createSecret() unexpected error: %v", err)
+	}
+
+	r := f.internalReq
+	if r == nil {
+		t.Fatal("internal request was not built")
+	}
+	if r.SecretType == nil || *r.SecretType != shared.PaperSecretServiceCreateInternalRequestSecretTypeSecretTypeFile {
+		t.Errorf("SecretType = %v, want File", r.SecretType)
+	}
+	if r.InputFormat != nil {
+		t.Errorf("InputFormat should be nil for FILE, got %v", *r.InputFormat)
+	}
+	if r.ContentType == nil || *r.ContentType != "application/octet-stream" {
+		t.Errorf("ContentType = %v, want application/octet-stream", r.ContentType)
+	}
+	if r.Filename == nil || *r.Filename != "data.bin" {
+		t.Errorf("Filename = %v, want data.bin", r.Filename)
+	}
+	if r.FileSize == nil || *r.FileSize != 1234 {
+		t.Errorf("FileSize = %v, want 1234", r.FileSize)
+	}
+	if r.DisplayName != nil {
+		t.Errorf("DisplayName should be nil when unset, got %v", *r.DisplayName)
+	}
+}
+
+func TestCreateSecretExternalText(t *testing.T) {
+	f := &fakeSecretCreator{}
+	if _, err := createSecret(context.Background(), f, createSecretParams{
+		emails:      []string{"a@b.com"},
+		expiresIn:   "1h",
+		inputFormat: "yaml",
+	}); err != nil {
+		t.Fatalf("createSecret() unexpected error: %v", err)
+	}
+
+	if f.internalReq != nil {
+		t.Fatal("expected external request, internal was called")
+	}
+	r := f.externalReq
+	if r == nil {
+		t.Fatal("external request was not built")
+	}
+	if r.SecretType == nil || *r.SecretType != shared.PaperSecretServiceCreateExternalRequestSecretTypeSecretTypeText {
+		t.Errorf("SecretType = %v, want Text", r.SecretType)
+	}
+	if r.InputFormat == nil || *r.InputFormat != shared.PaperSecretServiceCreateExternalRequestInputFormatSecretInputFormatYaml {
+		t.Errorf("InputFormat = %v, want Yaml", r.InputFormat)
+	}
+	if len(r.AllowedEmails) != 1 || r.AllowedEmails[0] != "a@b.com" {
+		t.Errorf("AllowedEmails = %v, want [a@b.com]", r.AllowedEmails)
+	}
+}
+
+func TestCreateSecretExternalFile(t *testing.T) {
+	f := &fakeSecretCreator{}
+	if _, err := createSecret(context.Background(), f, createSecretParams{
+		emails:      []string{"a@b.com"},
+		expiresIn:   "1h",
+		isFile:      true,
+		filename:    "report.pdf",
+		contentType: "application/pdf",
+		fileSize:    99,
+	}); err != nil {
+		t.Fatalf("createSecret() unexpected error: %v", err)
+	}
+
+	r := f.externalReq
+	if r == nil {
+		t.Fatal("external request was not built")
+	}
+	if r.SecretType == nil || *r.SecretType != shared.PaperSecretServiceCreateExternalRequestSecretTypeSecretTypeFile {
+		t.Errorf("SecretType = %v, want File", r.SecretType)
+	}
+	if r.InputFormat != nil {
+		t.Errorf("InputFormat should be nil for FILE, got %v", *r.InputFormat)
+	}
+	if r.ContentType == nil || *r.ContentType != "application/pdf" {
+		t.Errorf("ContentType = %v, want application/pdf", r.ContentType)
+	}
+	if r.Filename == nil || *r.Filename != "report.pdf" {
+		t.Errorf("Filename = %v, want report.pdf", r.Filename)
+	}
+	if r.FileSize == nil || *r.FileSize != 99 {
+		t.Errorf("FileSize = %v, want 99", r.FileSize)
 	}
 }
 

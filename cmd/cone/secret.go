@@ -23,6 +23,7 @@ const (
 	displayNameFlag    = "display-name"
 	contentFlag        = "content"
 	fileFlag           = "file"
+	outFlag            = "out"
 	inputFormatFlag    = "input-format"
 	allowedUserIdsFlag = "allowed-user-ids"
 	allowedEmailsFlag  = "allowed-emails"
@@ -39,6 +40,7 @@ func secretCmd() *cobra.Command {
 	cmd.AddCommand(secretCreateCmd())
 	cmd.AddCommand(secretGetCmd())
 	cmd.AddCommand(secretViewCmd())
+	cmd.AddCommand(secretDownloadCmd())
 
 	return cmd
 }
@@ -380,6 +382,20 @@ func secretViewRun(cmd *cobra.Command, args []string) error {
 	return nil
 }
 
+// decryptBytesFromAgeIdentity decrypts raw Age ciphertext bytes with the given identity.
+func decryptBytesFromAgeIdentity(identity *age.X25519Identity, raw []byte) ([]byte, error) {
+	r, err := age.Decrypt(bytes.NewReader(raw), identity)
+	if err != nil {
+		return nil, err
+	}
+
+	plaintext := &bytes.Buffer{}
+	if _, err := io.Copy(plaintext, r); err != nil {
+		return nil, err
+	}
+	return plaintext.Bytes(), nil
+}
+
 // decryptFromAgeIdentity base64-decodes the Age ciphertext and decrypts it with the given identity.
 func decryptFromAgeIdentity(identity *age.X25519Identity, encrypted string) (string, error) {
 	raw, err := base64.StdEncoding.DecodeString(encrypted)
@@ -387,16 +403,82 @@ func decryptFromAgeIdentity(identity *age.X25519Identity, encrypted string) (str
 		return "", fmt.Errorf("invalid base64 content: %w", err)
 	}
 
-	r, err := age.Decrypt(bytes.NewReader(raw), identity)
+	plaintext, err := decryptBytesFromAgeIdentity(identity, raw)
 	if err != nil {
 		return "", err
 	}
+	return string(plaintext), nil
+}
 
-	plaintext := &bytes.Buffer{}
-	if _, err := io.Copy(plaintext, r); err != nil {
-		return "", err
+func secretDownloadCmd() *cobra.Command {
+	cmd := &cobra.Command{
+		Use:   "download <vault-id>",
+		Short: "Download and decrypt a FILE secret's content to disk",
+		Long: "Fetch a FILE secret's content and decrypt it locally. A one-time Age identity is " +
+			"generated for the request; the server re-encrypts the file to it. Writes to --out, or to " +
+			"the secret's original filename in the current directory. This may count against the " +
+			"secret's view limit.",
+		RunE: secretDownloadRun,
 	}
-	return plaintext.String(), nil
+
+	cmd.Flags().String(outFlag, "", "Output path for the decrypted file (default: the secret's original filename).")
+
+	return cmd
+}
+
+func secretDownloadRun(cmd *cobra.Command, args []string) error {
+	ctx, c, v, err := cmdContext(cmd)
+	if err != nil {
+		return err
+	}
+
+	if err := validateArgLenth(1, args, cmd); err != nil {
+		return err
+	}
+
+	// Generate an ephemeral identity; the server re-encrypts the file to its recipient.
+	identity, err := age.GenerateX25519Identity()
+	if err != nil {
+		return fmt.Errorf("failed to generate Age identity: %w", err)
+	}
+
+	content, err := c.GetSecretContent(ctx, args[0], identity.Recipient().String())
+	if err != nil {
+		return err
+	}
+
+	downloadURL := client.StringFromPtr(content.DownloadURL)
+	if downloadURL == "" {
+		if client.StringFromPtr(content.EncryptedContent) != "" {
+			return fmt.Errorf("secret is a TEXT secret; use `cone secret view` instead")
+		}
+		return fmt.Errorf("secret has no downloadable file content")
+	}
+
+	encrypted, err := c.DownloadSecretFile(ctx, downloadURL)
+	if err != nil {
+		return err
+	}
+
+	plaintext, err := decryptBytesFromAgeIdentity(identity, encrypted)
+	if err != nil {
+		return fmt.Errorf("failed to decrypt file content: %w", err)
+	}
+
+	outPath := v.GetString(outFlag)
+	if outPath == "" {
+		outPath = client.StringFromPtr(content.Filename)
+	}
+	if outPath == "" {
+		return fmt.Errorf("could not determine output path; pass --%s", outFlag)
+	}
+
+	if err := os.WriteFile(outPath, plaintext, 0o600); err != nil {
+		return fmt.Errorf("failed to write %s: %w", outPath, err)
+	}
+
+	fmt.Printf("Wrote %d bytes to %s\n", len(plaintext), outPath)
+	return nil
 }
 
 func createInputFormat(name string) *shared.PaperSecretServiceCreateInternalRequestInputFormat {

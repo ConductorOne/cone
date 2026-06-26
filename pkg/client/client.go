@@ -201,6 +201,7 @@ type C1Client interface {
 	CreateExternalSecret(ctx context.Context, req *shared.PaperSecretServiceCreateExternalRequest) (*shared.PaperSecretServiceCreateResponse, error)
 	SetSecretTextContent(ctx context.Context, vaultID string, encryptedContent string, inputFormat *shared.PaperSecretServiceSetTextContentRequestInputFormat) error
 	UploadSecretFile(ctx context.Context, uploadURL string, encrypted []byte) error
+	DownloadSecretFile(ctx context.Context, downloadURL string) ([]byte, error)
 	GetSecret(ctx context.Context, vaultID string) (*shared.PaperSecret, error)
 	GetSecretContent(ctx context.Context, vaultID string, readerRecipient string) (*shared.PaperSecretServiceGetContentResponse, error)
 }

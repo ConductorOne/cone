@@ -74,6 +74,29 @@ func (c *client) UploadSecretFile(ctx context.Context, uploadURL string, encrypt
 	return nil
 }
 
+// DownloadSecretFile fetches the bytes of a FILE secret from the capability download URL
+// returned by GetSecretContent. The bytes are Age-encrypted to the reader recipient supplied
+// to GetSecretContent, so the caller decrypts them with the matching identity. A bare HTTP
+// client is used since the URL is self-authorizing.
+func (c *client) DownloadSecretFile(ctx context.Context, downloadURL string) ([]byte, error) {
+	req, err := http.NewRequestWithContext(ctx, http.MethodGet, downloadURL, nil)
+	if err != nil {
+		return nil, err
+	}
+
+	resp, err := http.DefaultClient.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+
+	if resp.StatusCode < http.StatusOK || resp.StatusCode >= http.StatusMultipleChoices {
+		body, _ := io.ReadAll(io.LimitReader(resp.Body, 4096))
+		return nil, fmt.Errorf("file download failed: %s: %s", resp.Status, strings.TrimSpace(string(body)))
+	}
+	return io.ReadAll(resp.Body)
+}
+
 // SetSecretTextContent uploads the encrypted content for a TEXT secret. The
 // encryptedContent must already be Age-encrypted to the recipient returned by
 // CreateInternalSecret; the SDK base64-encodes the bytes for transport.

@@ -379,6 +379,39 @@ func TestEncryptBytesToAgeRecipient(t *testing.T) {
 	}
 }
 
+// TestFileBytesRoundtrip mirrors the FILE upload/download path: raw Age encrypt then raw
+// decrypt, with no base64 wrapping (file bytes are PUT/GET verbatim).
+func TestFileBytesRoundtrip(t *testing.T) {
+	identity, err := age.GenerateX25519Identity()
+	if err != nil {
+		t.Fatalf("GenerateX25519Identity() unexpected error: %v", err)
+	}
+
+	plaintext := []byte("binary\x00file\xff bytes")
+	raw, err := encryptBytesToAgeRecipient(identity.Recipient().String(), plaintext)
+	if err != nil {
+		t.Fatalf("encryptBytesToAgeRecipient() unexpected error: %v", err)
+	}
+
+	got, err := decryptBytesFromAgeIdentity(identity, raw)
+	if err != nil {
+		t.Fatalf("decryptBytesFromAgeIdentity() unexpected error: %v", err)
+	}
+	if string(got) != string(plaintext) {
+		t.Errorf("roundtrip = %q, want %q", got, plaintext)
+	}
+}
+
+func TestDecryptBytesFromAgeIdentityInvalid(t *testing.T) {
+	identity, err := age.GenerateX25519Identity()
+	if err != nil {
+		t.Fatalf("GenerateX25519Identity() unexpected error: %v", err)
+	}
+	if _, err := decryptBytesFromAgeIdentity(identity, []byte("not age ciphertext")); err == nil {
+		t.Error("decryptBytesFromAgeIdentity() with non-Age bytes expected error, got nil")
+	}
+}
+
 func TestEncryptBytesToAgeRecipientInvalid(t *testing.T) {
 	if _, err := encryptBytesToAgeRecipient("not-a-valid-age-recipient", []byte("data")); err == nil {
 		t.Error("encryptBytesToAgeRecipient() with invalid recipient expected error, got nil")

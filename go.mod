@@ -46,7 +46,7 @@ require (
 	github.com/fsnotify/fsnotify v1.9.0 // indirect
 	github.com/grpc-ecosystem/go-grpc-middleware v1.4.0
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect
-	github.com/pelletier/go-toml/v2 v2.2.4 // indirect
+	github.com/pelletier/go-toml/v2 v2.2.4
 	github.com/pquerna/xjwt v0.3.0
 	github.com/spf13/afero v1.14.0 // indirect
 	github.com/spf13/cast v1.9.2 // indirect
@@ -56,7 +56,7 @@ require (
 	github.com/subosito/gotenv v1.6.0 // indirect
 	golang.org/x/exp v0.0.0-20250620022241-b7579e27df2b
 	golang.org/x/oauth2 v0.30.0
-	golang.org/x/sys v0.33.0 // indirect
+	golang.org/x/sys v0.33.0
 	golang.org/x/text v0.26.0 // indirect
 	gopkg.in/square/go-jose.v2 v2.6.0
 	gopkg.in/yaml.v3 v3.0.1

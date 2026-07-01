@@ -13,27 +13,51 @@ import (
 	conductoroneapi "github.com/conductorone/conductorone-sdk-go"
 
 	"github.com/conductorone/cone/pkg/client"
+	"github.com/conductorone/cone/pkg/managedconfig"
 )
 
 func loginCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "login <tenant-name or tenant-url>",
+		Use:   "login [tenant-name or tenant-url]",
 		Short: fmt.Sprintf("Authenticate to ConductorOne, creating config.yaml in %s if it doesn't exist.", defaultConfigPath()),
-		RunE:  loginRun,
+		Long: fmt.Sprintf("Authenticate to ConductorOne, creating config.yaml in %s if it doesn't exist.\n\n"+
+			"If a managed device configuration is present, the tenant is discovered from it automatically "+
+			"and the tenant argument may be omitted.", defaultConfigPath()),
+		RunE: loginRun,
 	}
 
 	cmd.Flags().String("profile", "default", "Config profile to create or update.")
 	return cmd
 }
 
+// resolveLoginTenant determines the tenant (name or URL) to authenticate
+// against. Managed device configuration pushed by an administrator takes
+// precedence over an argument supplied on the command line, allowing a bare
+// "cone login" to discover its tenant automatically. When no managed
+// configuration is present the behavior is unchanged: the tenant must be passed
+// as an argument. The returned bool reports whether the tenant was sourced from
+// managed configuration.
+func resolveLoginTenant(cmd *cobra.Command, args []string) (string, bool, error) {
+	if serverURL := managedconfig.Read().ControlPlaneURL(); serverURL != "" {
+		return serverURL, true, nil
+	}
+	if err := validateArgLenth(1, args, cmd); err != nil {
+		return "", false, err
+	}
+	return args[0], false, nil
+}
+
 func loginRun(cmd *cobra.Command, args []string) error {
 	ctx := cmd.Context()
 
-	if err := validateArgLenth(1, args, cmd); err != nil {
+	tenant, fromManaged, err := resolveLoginTenant(cmd, args)
+	if err != nil {
 		return err
 	}
 
-	tenant := args[0]
+	if fromManaged {
+		pterm.Info.Printfln("Using tenant %q from managed device configuration.", tenant)
+	}
 
 	spinner, err := pterm.DefaultSpinner.Start("Logging in...")
 	if err != nil {

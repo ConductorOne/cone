@@ -127,6 +127,7 @@ func TestCreateInputFormat(t *testing.T) {
 			got := createInputFormat(tt.name)
 			if got == nil {
 				t.Fatal("createInputFormat() returned nil")
+				return
 			}
 			if *got != tt.want {
 				t.Errorf("createInputFormat(%q) = %q, want %q", tt.name, *got, tt.want)
@@ -208,6 +209,7 @@ func TestCreateSecretInternalText(t *testing.T) {
 	r := f.internalReq
 	if r == nil {
 		t.Fatal("internal request was not built")
+		return
 	}
 	if r.SecretType == nil || *r.SecretType != shared.PaperSecretServiceCreateInternalRequestSecretTypeSecretTypeText {
 		t.Errorf("SecretType = %v, want Text", r.SecretType)
@@ -246,6 +248,7 @@ func TestCreateSecretInternalFile(t *testing.T) {
 	r := f.internalReq
 	if r == nil {
 		t.Fatal("internal request was not built")
+		return
 	}
 	if r.SecretType == nil || *r.SecretType != shared.PaperSecretServiceCreateInternalRequestSecretTypeSecretTypeFile {
 		t.Errorf("SecretType = %v, want File", r.SecretType)
@@ -283,6 +286,7 @@ func TestCreateSecretExternalText(t *testing.T) {
 	r := f.externalReq
 	if r == nil {
 		t.Fatal("external request was not built")
+		return
 	}
 	if r.SecretType == nil || *r.SecretType != shared.PaperSecretServiceCreateExternalRequestSecretTypeSecretTypeText {
 		t.Errorf("SecretType = %v, want Text", r.SecretType)
@@ -311,6 +315,7 @@ func TestCreateSecretExternalFile(t *testing.T) {
 	r := f.externalReq
 	if r == nil {
 		t.Fatal("external request was not built")
+		return
 	}
 	if r.SecretType == nil || *r.SecretType != shared.PaperSecretServiceCreateExternalRequestSecretTypeSecretTypeFile {
 		t.Errorf("SecretType = %v, want File", r.SecretType)
@@ -347,6 +352,7 @@ func TestCreateExternalInputFormat(t *testing.T) {
 			got := createExternalInputFormat(tt.name)
 			if got == nil {
 				t.Fatal("createExternalInputFormat() returned nil")
+				return
 			}
 			if *got != tt.want {
 				t.Errorf("createExternalInputFormat(%q) = %q, want %q", tt.name, *got, tt.want)
@@ -405,6 +411,7 @@ func TestSetContentInputFormat(t *testing.T) {
 			got := setContentInputFormat(tt.name)
 			if got == nil {
 				t.Fatal("setContentInputFormat() returned nil")
+				return
 			}
 			if *got != tt.want {
 				t.Errorf("setContentInputFormat(%q) = %q, want %q", tt.name, *got, tt.want)

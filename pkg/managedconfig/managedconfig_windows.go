@@ -14,7 +14,7 @@ func readManagedConfig() map[string]string {
 	if err != nil {
 		return nil
 	}
-	defer k.Close()
+	defer func() { _ = k.Close() }()
 
 	val, _, err := k.GetStringValue(KeyTenantDomain)
 	if err != nil {

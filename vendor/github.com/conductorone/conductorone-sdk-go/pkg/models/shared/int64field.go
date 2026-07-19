@@ -11,14 +11,12 @@ import (
 // This message contains a oneof named view. Only a single field of the following list may be set at a time:
 //   - numberField
 type Int64Field struct {
-	// Int64Rules describes the constraints applied to `int64` values
-	Int64Rules *Int64Rules `json:"rules,omitempty"`
-	// The NumberField message.
-	NumberField *NumberField `json:"numberField,omitempty"`
 	// The defaultValue field.
-	DefaultValue *int64 `integer:"string" json:"defaultValue,omitempty"`
+	DefaultValue *int64       `integer:"string" json:"defaultValue,omitempty"`
+	NumberField  *NumberField `json:"numberField,omitempty"`
 	// The placeholder field.
-	Placeholder *string `json:"placeholder,omitempty"`
+	Placeholder *string     `json:"placeholder,omitempty"`
+	Rules       *Int64Rules `json:"rules,omitempty"`
 }
 
 func (i Int64Field) MarshalJSON() ([]byte, error) {
@@ -32,11 +30,11 @@ func (i *Int64Field) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (i *Int64Field) GetInt64Rules() *Int64Rules {
+func (i *Int64Field) GetDefaultValue() *int64 {
 	if i == nil {
 		return nil
 	}
-	return i.Int64Rules
+	return i.DefaultValue
 }
 
 func (i *Int64Field) GetNumberField() *NumberField {
@@ -46,18 +44,18 @@ func (i *Int64Field) GetNumberField() *NumberField {
 	return i.NumberField
 }
 
-func (i *Int64Field) GetDefaultValue() *int64 {
-	if i == nil {
-		return nil
-	}
-	return i.DefaultValue
-}
-
 func (i *Int64Field) GetPlaceholder() *string {
 	if i == nil {
 		return nil
 	}
 	return i.Placeholder
+}
+
+func (i *Int64Field) GetRules() *Int64Rules {
+	if i == nil {
+		return nil
+	}
+	return i.Rules
 }
 
 // #region class-body-int64field

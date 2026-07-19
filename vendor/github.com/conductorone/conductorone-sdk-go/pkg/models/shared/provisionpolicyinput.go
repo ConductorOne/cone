@@ -14,63 +14,49 @@ package shared
 //   - unconfigured
 //   - action
 type ProvisionPolicyInput struct {
-	// This provision step indicates that account lifecycle action should be called to provision this entitlement.
-	ActionProvision *ActionProvision `json:"action,omitempty"`
-	// Indicates that a connector should perform the provisioning. This object has no fields.
-	//
-	// This message contains a oneof named provision_type. Only a single field of the following list may be set at a time:
-	//   - defaultBehavior
-	//   - account
-	//   - deleteAccount
-	//
-	ConnectorProvision *ConnectorProvision `json:"connector,omitempty"`
-	// This provision step indicates that we should delegate provisioning to the configuration of another app entitlement. This app entitlement does not have to be one from the same app, but MUST be configured as a proxy binding leading into this entitlement.
-	DelegatedProvision *DelegatedProvision `json:"delegated,omitempty"`
-	// This provision step indicates that we should check an external ticket to provision this entitlement
-	ExternalTicketProvision *ExternalTicketProvision `json:"externalTicket,omitempty"`
-	// Manual provisioning indicates that a human must intervene for the provisioning of this step.
-	ManualProvision *ManualProvision `json:"manual,omitempty"`
-	// MultiStep indicates that this provision step has multiple steps to process.
-	MultiStep *MultiStep `json:"multiStep,omitempty"`
-	// The UnconfiguredProvision message.
-	UnconfiguredProvision *UnconfiguredProvision `json:"unconfigured,omitempty"`
-	// This provision step indicates that a webhook should be called to provision this entitlement.
-	WebhookProvision *WebhookProvision `json:"webhook,omitempty"`
+	Action         *ActionProvision         `json:"action,omitempty"`
+	Connector      *ConnectorProvision      `json:"connector,omitempty"`
+	Delegated      *DelegatedProvision      `json:"delegated,omitempty"`
+	ExternalTicket *ExternalTicketProvision `json:"externalTicket,omitempty"`
+	Manual         *ManualProvision         `json:"manual,omitempty"`
+	MultiStep      *MultiStep               `json:"multiStep,omitempty"`
+	Unconfigured   *UnconfiguredProvision   `json:"unconfigured,omitempty"`
+	Webhook        *WebhookProvision        `json:"webhook,omitempty"`
 }
 
-func (p *ProvisionPolicyInput) GetActionProvision() *ActionProvision {
+func (p *ProvisionPolicyInput) GetAction() *ActionProvision {
 	if p == nil {
 		return nil
 	}
-	return p.ActionProvision
+	return p.Action
 }
 
-func (p *ProvisionPolicyInput) GetConnectorProvision() *ConnectorProvision {
+func (p *ProvisionPolicyInput) GetConnector() *ConnectorProvision {
 	if p == nil {
 		return nil
 	}
-	return p.ConnectorProvision
+	return p.Connector
 }
 
-func (p *ProvisionPolicyInput) GetDelegatedProvision() *DelegatedProvision {
+func (p *ProvisionPolicyInput) GetDelegated() *DelegatedProvision {
 	if p == nil {
 		return nil
 	}
-	return p.DelegatedProvision
+	return p.Delegated
 }
 
-func (p *ProvisionPolicyInput) GetExternalTicketProvision() *ExternalTicketProvision {
+func (p *ProvisionPolicyInput) GetExternalTicket() *ExternalTicketProvision {
 	if p == nil {
 		return nil
 	}
-	return p.ExternalTicketProvision
+	return p.ExternalTicket
 }
 
-func (p *ProvisionPolicyInput) GetManualProvision() *ManualProvision {
+func (p *ProvisionPolicyInput) GetManual() *ManualProvision {
 	if p == nil {
 		return nil
 	}
-	return p.ManualProvision
+	return p.Manual
 }
 
 func (p *ProvisionPolicyInput) GetMultiStep() *MultiStep {
@@ -80,16 +66,16 @@ func (p *ProvisionPolicyInput) GetMultiStep() *MultiStep {
 	return p.MultiStep
 }
 
-func (p *ProvisionPolicyInput) GetUnconfiguredProvision() *UnconfiguredProvision {
+func (p *ProvisionPolicyInput) GetUnconfigured() *UnconfiguredProvision {
 	if p == nil {
 		return nil
 	}
-	return p.UnconfiguredProvision
+	return p.Unconfigured
 }
 
-func (p *ProvisionPolicyInput) GetWebhookProvision() *WebhookProvision {
+func (p *ProvisionPolicyInput) GetWebhook() *WebhookProvision {
 	if p == nil {
 		return nil
 	}
-	return p.WebhookProvision
+	return p.Webhook
 }

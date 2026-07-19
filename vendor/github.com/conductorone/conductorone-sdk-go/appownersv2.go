@@ -65,7 +65,7 @@ func (s *AppOwnersV2) CreateEntitlementOwner(ctx context.Context, request operat
 		OAuth2Scopes:     nil,
 		SecuritySource:   s.sdkConfiguration.Security,
 	}
-	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "CreateEntitlementOwnerRequest", "json", `request:"mediaType=application/json"`)
+	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "CreateAppEntitlementOwnerRequest", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
 	}
@@ -205,12 +205,12 @@ func (s *AppOwnersV2) CreateEntitlementOwner(ctx context.Context, request operat
 				return nil, err
 			}
 
-			var out shared.CreateEntitlementOwnerResponse
+			var out shared.CreateAppEntitlementOwnerResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.CreateEntitlementOwnerResponse = &out
+			res.CreateAppEntitlementOwnerResponse = &out
 		default:
 			rawBody, err := utils.ConsumeRawBody(httpRes)
 			if err != nil {
@@ -277,7 +277,7 @@ func (s *AppOwnersV2) CreateUserOwner(ctx context.Context, request operations.C1
 		OAuth2Scopes:     nil,
 		SecuritySource:   s.sdkConfiguration.Security,
 	}
-	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "CreateUserOwnerRequest", "json", `request:"mediaType=application/json"`)
+	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "CreateAppUserOwnerRequest", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
 	}
@@ -417,12 +417,12 @@ func (s *AppOwnersV2) CreateUserOwner(ctx context.Context, request operations.C1
 				return nil, err
 			}
 
-			var out shared.CreateUserOwnerResponse
+			var out shared.CreateAppUserOwnerResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.CreateUserOwnerResponse = &out
+			res.CreateAppUserOwnerResponse = &out
 		default:
 			rawBody, err := utils.ConsumeRawBody(httpRes)
 			if err != nil {
@@ -489,7 +489,7 @@ func (s *AppOwnersV2) DeleteEntitlementOwner(ctx context.Context, request operat
 		OAuth2Scopes:     nil,
 		SecuritySource:   s.sdkConfiguration.Security,
 	}
-	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "DeleteEntitlementOwnerRequest", "json", `request:"mediaType=application/json"`)
+	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "DeleteAppEntitlementOwnerRequest", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
 	}
@@ -629,12 +629,12 @@ func (s *AppOwnersV2) DeleteEntitlementOwner(ctx context.Context, request operat
 				return nil, err
 			}
 
-			var out shared.DeleteEntitlementOwnerResponse
+			var out shared.DeleteAppEntitlementOwnerResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.DeleteEntitlementOwnerResponse = &out
+			res.DeleteAppEntitlementOwnerResponse = &out
 		default:
 			rawBody, err := utils.ConsumeRawBody(httpRes)
 			if err != nil {
@@ -701,7 +701,7 @@ func (s *AppOwnersV2) DeleteUserOwner(ctx context.Context, request operations.C1
 		OAuth2Scopes:     nil,
 		SecuritySource:   s.sdkConfiguration.Security,
 	}
-	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "DeleteUserOwnerRequest", "json", `request:"mediaType=application/json"`)
+	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, true, "DeleteAppUserOwnerRequest", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
 	}
@@ -841,12 +841,12 @@ func (s *AppOwnersV2) DeleteUserOwner(ctx context.Context, request operations.C1
 				return nil, err
 			}
 
-			var out shared.DeleteUserOwnerResponse
+			var out shared.DeleteAppUserOwnerResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.DeleteUserOwnerResponse = &out
+			res.DeleteAppUserOwnerResponse = &out
 		default:
 			rawBody, err := utils.ConsumeRawBody(httpRes)
 			if err != nil {
@@ -1046,12 +1046,12 @@ func (s *AppOwnersV2) GetEntitlementOwner(ctx context.Context, request operation
 				return nil, err
 			}
 
-			var out shared.GetEntitlementOwnerResponse
+			var out shared.GetAppEntitlementOwnerResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.GetEntitlementOwnerResponse = &out
+			res.GetAppEntitlementOwnerResponse = &out
 		default:
 			rawBody, err := utils.ConsumeRawBody(httpRes)
 			if err != nil {
@@ -1251,12 +1251,12 @@ func (s *AppOwnersV2) GetUserOwner(ctx context.Context, request operations.C1API
 				return nil, err
 			}
 
-			var out shared.GetUserOwnerResponse
+			var out shared.GetAppUserOwnerResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.GetUserOwnerResponse = &out
+			res.GetAppUserOwnerResponse = &out
 		default:
 			rawBody, err := utils.ConsumeRawBody(httpRes)
 			if err != nil {
@@ -1460,12 +1460,12 @@ func (s *AppOwnersV2) SearchEntitlementOwners(ctx context.Context, request opera
 				return nil, err
 			}
 
-			var out shared.SearchEntitlementOwnersResponse
+			var out shared.SearchAppEntitlementOwnersResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.SearchEntitlementOwnersResponse = &out
+			res.SearchAppEntitlementOwnersResponse = &out
 		default:
 			rawBody, err := utils.ConsumeRawBody(httpRes)
 			if err != nil {
@@ -1669,12 +1669,12 @@ func (s *AppOwnersV2) SearchUserOwners(ctx context.Context, request operations.C
 				return nil, err
 			}
 
-			var out shared.SearchUserOwnersResponse
+			var out shared.SearchAppUserOwnersResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.SearchUserOwnersResponse = &out
+			res.SearchAppUserOwnersResponse = &out
 		default:
 			rawBody, err := utils.ConsumeRawBody(httpRes)
 			if err != nil {

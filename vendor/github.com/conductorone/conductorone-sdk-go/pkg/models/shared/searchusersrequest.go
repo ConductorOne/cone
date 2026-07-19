@@ -125,9 +125,6 @@ func (e *SearchUsersRequestUserStatuses) IsExact() bool {
 
 // SearchUsersRequest - Search for users based on some filters.
 type SearchUsersRequest struct {
-	// The user expand mask is used to indicate which related objects should be expanded in the response.
-	//  The supported paths are 'role_ids', 'manager_ids', 'delegated_user_id', 'directory_ids', and '*'.
-	UserExpandMask *UserExpandMask `json:"expandMask,omitempty"`
 	// Filter for users based on their delegate status.
 	DelegateStatus *DelegateStatus `json:"delegateStatus,omitempty"`
 	// Filter for users that have any of the delegated user IDs on this list.
@@ -141,7 +138,8 @@ type SearchUsersRequest struct {
 	// Filter to exclude users with these origins.
 	ExcludeOrigins []ExcludeOrigins `json:"excludeOrigins,omitempty"`
 	// An array of types to exclude from the results.
-	ExcludeTypes []ExcludeTypes `json:"excludeTypes,omitempty"`
+	ExcludeTypes []ExcludeTypes  `json:"excludeTypes,omitempty"`
+	ExpandMask   *UserExpandMask `json:"expandMask,omitempty"`
 	// Deprecated. Use refs array instead.
 	Ids []string `json:"ids,omitempty"`
 	// Filter for users who are delegates of at least one other user.
@@ -164,13 +162,6 @@ type SearchUsersRequest struct {
 	RoleIds []string `json:"roleIds,omitempty"`
 	// Search for users that have any of the statuses on this list. This can only be ENABLED, DISABLED, and DELETED
 	UserStatuses []SearchUsersRequestUserStatuses `json:"userStatuses,omitempty"`
-}
-
-func (s *SearchUsersRequest) GetUserExpandMask() *UserExpandMask {
-	if s == nil {
-		return nil
-	}
-	return s.UserExpandMask
 }
 
 func (s *SearchUsersRequest) GetDelegateStatus() *DelegateStatus {
@@ -220,6 +211,13 @@ func (s *SearchUsersRequest) GetExcludeTypes() []ExcludeTypes {
 		return nil
 	}
 	return s.ExcludeTypes
+}
+
+func (s *SearchUsersRequest) GetExpandMask() *UserExpandMask {
+	if s == nil {
+		return nil
+	}
+	return s.ExpandMask
 }
 
 func (s *SearchUsersRequest) GetIds() []string {

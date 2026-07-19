@@ -9,11 +9,14 @@ import (
 
 // AppEntitlementOwnerUser represents a user ownership source for an app entitlement.
 type AppEntitlementOwnerUser struct {
-	// The User object provides all of the details for an user, as well as some configuration.
-	User      *User      `json:"user,omitempty"`
+	// The appId field.
+	AppID     *string    `json:"appId,omitempty"`
 	CreatedAt *time.Time `json:"createdAt,omitempty"`
+	// The entitlementId field.
+	EntitlementID *string `json:"entitlementId,omitempty"`
 	// The roleSlug field.
 	RoleSlug *string `json:"roleSlug,omitempty"`
+	User     *User   `json:"user,omitempty"`
 }
 
 func (a AppEntitlementOwnerUser) MarshalJSON() ([]byte, error) {
@@ -27,11 +30,11 @@ func (a *AppEntitlementOwnerUser) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (a *AppEntitlementOwnerUser) GetUser() *User {
+func (a *AppEntitlementOwnerUser) GetAppID() *string {
 	if a == nil {
 		return nil
 	}
-	return a.User
+	return a.AppID
 }
 
 func (a *AppEntitlementOwnerUser) GetCreatedAt() *time.Time {
@@ -41,9 +44,23 @@ func (a *AppEntitlementOwnerUser) GetCreatedAt() *time.Time {
 	return a.CreatedAt
 }
 
+func (a *AppEntitlementOwnerUser) GetEntitlementID() *string {
+	if a == nil {
+		return nil
+	}
+	return a.EntitlementID
+}
+
 func (a *AppEntitlementOwnerUser) GetRoleSlug() *string {
 	if a == nil {
 		return nil
 	}
 	return a.RoleSlug
+}
+
+func (a *AppEntitlementOwnerUser) GetUser() *User {
+	if a == nil {
+		return nil
+	}
+	return a.User
 }

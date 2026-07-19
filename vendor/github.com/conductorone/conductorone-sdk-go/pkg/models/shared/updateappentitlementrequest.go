@@ -4,32 +4,25 @@ package shared
 
 // The UpdateAppEntitlementRequest message contains the app entitlement and the fields to be updated.
 type UpdateAppEntitlementRequest struct {
-	// The app entitlement represents one permission in a downstream App (SAAS) that can be granted. For example, GitHub Read vs GitHub Write.
-	//
-	// This message contains a oneof named max_grant_duration. Only a single field of the following list may be set at a time:
-	//   - durationUnset
-	//   - durationGrant
-	//
-	AppEntitlement *AppEntitlementInput `json:"entitlement,omitempty"`
-	// The app entitlement expand mask allows the user to get additional information when getting responses containing app entitlement views.
-	AppEntitlementExpandMask *AppEntitlementExpandMask `json:"expandMask,omitempty"`
+	Entitlement *AppEntitlementInput      `json:"entitlement,omitempty"`
+	ExpandMask  *AppEntitlementExpandMask `json:"expandMask,omitempty"`
 	// Flag to indicate that access request defaults, if any are applied to these entitlements, should be overridden.
 	OverrideAccessRequestsDefaults *bool   `json:"overrideAccessRequestsDefaults,omitempty"`
 	UpdateMask                     *string `json:"updateMask,omitempty"`
 }
 
-func (u *UpdateAppEntitlementRequest) GetAppEntitlement() *AppEntitlementInput {
+func (u *UpdateAppEntitlementRequest) GetEntitlement() *AppEntitlementInput {
 	if u == nil {
 		return nil
 	}
-	return u.AppEntitlement
+	return u.Entitlement
 }
 
-func (u *UpdateAppEntitlementRequest) GetAppEntitlementExpandMask() *AppEntitlementExpandMask {
+func (u *UpdateAppEntitlementRequest) GetExpandMask() *AppEntitlementExpandMask {
 	if u == nil {
 		return nil
 	}
-	return u.AppEntitlementExpandMask
+	return u.ExpandMask
 }
 
 func (u *UpdateAppEntitlementRequest) GetOverrideAccessRequestsDefaults() *bool {

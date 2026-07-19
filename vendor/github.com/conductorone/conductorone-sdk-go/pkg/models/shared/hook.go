@@ -37,22 +37,8 @@ func (e *Event) IsExact() bool {
 //   - function
 //   - builtinPattern
 type Hook struct {
-	// BuiltInPattern references a ConductorOne-maintained DLP pattern.
-	//  The specific pattern and its configuration are encoded as a oneof.
-	//
-	// This message contains a oneof named config. Only a single field of the following list may be set at a time:
-	//   - piiRedaction
-	//   - creditCardBlocking
-	//   - queryScopeLimit
-	//   - writeAuthorization
-	//   - sensitiveFileGuard
-	//
-	BuiltInPattern *BuiltInPattern `json:"builtinPattern,omitempty"`
-	// HookFilter determines which tool calls a hook applies to.
-	HookFilter *HookFilter `json:"filter,omitempty"`
-	// HookFunctionRef identifies a customer-authored function to invoke.
-	HookFunctionRef *HookFunctionRef `json:"function,omitempty"`
-	CreatedAt       *time.Time       `json:"createdAt,omitempty"`
+	BuiltinPattern *BuiltInPattern `json:"builtinPattern,omitempty"`
+	CreatedAt      *time.Time      `json:"createdAt,omitempty"`
 	// The description field.
 	Description *string `json:"description,omitempty"`
 	// The displayName field.
@@ -60,7 +46,9 @@ type Hook struct {
 	// The enabled field.
 	Enabled *bool `json:"enabled,omitempty"`
 	// The event field.
-	Event *Event `json:"event,omitempty"`
+	Event    *Event           `json:"event,omitempty"`
+	Filter   *HookFilter      `json:"filter,omitempty"`
+	Function *HookFunctionRef `json:"function,omitempty"`
 	// The id field.
 	ID *string `json:"id,omitempty"`
 	// The priority field.
@@ -79,25 +67,11 @@ func (h *Hook) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (h *Hook) GetBuiltInPattern() *BuiltInPattern {
+func (h *Hook) GetBuiltinPattern() *BuiltInPattern {
 	if h == nil {
 		return nil
 	}
-	return h.BuiltInPattern
-}
-
-func (h *Hook) GetHookFilter() *HookFilter {
-	if h == nil {
-		return nil
-	}
-	return h.HookFilter
-}
-
-func (h *Hook) GetHookFunctionRef() *HookFunctionRef {
-	if h == nil {
-		return nil
-	}
-	return h.HookFunctionRef
+	return h.BuiltinPattern
 }
 
 func (h *Hook) GetCreatedAt() *time.Time {
@@ -135,6 +109,20 @@ func (h *Hook) GetEvent() *Event {
 	return h.Event
 }
 
+func (h *Hook) GetFilter() *HookFilter {
+	if h == nil {
+		return nil
+	}
+	return h.Filter
+}
+
+func (h *Hook) GetFunction() *HookFunctionRef {
+	if h == nil {
+		return nil
+	}
+	return h.Function
+}
+
 func (h *Hook) GetID() *string {
 	if h == nil {
 		return nil
@@ -162,21 +150,7 @@ func (h *Hook) GetUpdatedAt() *time.Time {
 //   - function
 //   - builtinPattern
 type HookInput struct {
-	// BuiltInPattern references a ConductorOne-maintained DLP pattern.
-	//  The specific pattern and its configuration are encoded as a oneof.
-	//
-	// This message contains a oneof named config. Only a single field of the following list may be set at a time:
-	//   - piiRedaction
-	//   - creditCardBlocking
-	//   - queryScopeLimit
-	//   - writeAuthorization
-	//   - sensitiveFileGuard
-	//
-	BuiltInPattern *BuiltInPattern `json:"builtinPattern,omitempty"`
-	// HookFilter determines which tool calls a hook applies to.
-	HookFilter *HookFilter `json:"filter,omitempty"`
-	// HookFunctionRef identifies a customer-authored function to invoke.
-	HookFunctionRef *HookFunctionRef `json:"function,omitempty"`
+	BuiltinPattern *BuiltInPattern `json:"builtinPattern,omitempty"`
 	// The description field.
 	Description *string `json:"description,omitempty"`
 	// The displayName field.
@@ -184,32 +158,20 @@ type HookInput struct {
 	// The enabled field.
 	Enabled *bool `json:"enabled,omitempty"`
 	// The event field.
-	Event *Event `json:"event,omitempty"`
+	Event    *Event           `json:"event,omitempty"`
+	Filter   *HookFilter      `json:"filter,omitempty"`
+	Function *HookFunctionRef `json:"function,omitempty"`
 	// The id field.
 	ID *string `json:"id,omitempty"`
 	// The priority field.
 	Priority *int `json:"priority,omitempty"`
 }
 
-func (h *HookInput) GetBuiltInPattern() *BuiltInPattern {
+func (h *HookInput) GetBuiltinPattern() *BuiltInPattern {
 	if h == nil {
 		return nil
 	}
-	return h.BuiltInPattern
-}
-
-func (h *HookInput) GetHookFilter() *HookFilter {
-	if h == nil {
-		return nil
-	}
-	return h.HookFilter
-}
-
-func (h *HookInput) GetHookFunctionRef() *HookFunctionRef {
-	if h == nil {
-		return nil
-	}
-	return h.HookFunctionRef
+	return h.BuiltinPattern
 }
 
 func (h *HookInput) GetDescription() *string {
@@ -238,6 +200,20 @@ func (h *HookInput) GetEvent() *Event {
 		return nil
 	}
 	return h.Event
+}
+
+func (h *HookInput) GetFilter() *HookFilter {
+	if h == nil {
+		return nil
+	}
+	return h.Filter
+}
+
+func (h *HookInput) GetFunction() *HookFunctionRef {
+	if h == nil {
+		return nil
+	}
+	return h.Function
 }
 
 func (h *HookInput) GetID() *string {

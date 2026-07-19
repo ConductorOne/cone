@@ -9,16 +9,15 @@ import (
 
 // The SearchGrantFeedRequest message.
 type SearchGrantFeedRequest struct {
-	// The AppEntitlementUserBindingExpandHistoryMask message.
-	AppEntitlementUserBindingExpandHistoryMask *AppEntitlementUserBindingExpandHistoryMask `json:"expandMask,omitempty"`
-	After                                      *time.Time                                  `json:"after,omitempty"`
+	After *time.Time `json:"after,omitempty"`
 	// The list of app entitlements to limit the search to.
 	AppEntitlementRefs []AppEntitlementRef `json:"appEntitlementRefs,omitempty"`
 	// The list of apps to limit the search to.
 	AppRefs []AppRef `json:"appRefs,omitempty"`
 	// The list of app users to limit the search to.
-	AppUserRefs []AppUserRef `json:"appUserRefs,omitempty"`
-	Before      *time.Time   `json:"before,omitempty"`
+	AppUserRefs []AppUserRef                                `json:"appUserRefs,omitempty"`
+	Before      *time.Time                                  `json:"before,omitempty"`
+	ExpandMask  *AppEntitlementUserBindingExpandHistoryMask `json:"expandMask,omitempty"`
 	// The pageSize where 10 <= pageSize <= 100, default 25.
 	PageSize *int `json:"pageSize,omitempty"`
 	// The page_token field for pagination.
@@ -36,13 +35,6 @@ func (s *SearchGrantFeedRequest) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
-}
-
-func (s *SearchGrantFeedRequest) GetAppEntitlementUserBindingExpandHistoryMask() *AppEntitlementUserBindingExpandHistoryMask {
-	if s == nil {
-		return nil
-	}
-	return s.AppEntitlementUserBindingExpandHistoryMask
 }
 
 func (s *SearchGrantFeedRequest) GetAfter() *time.Time {
@@ -78,6 +70,13 @@ func (s *SearchGrantFeedRequest) GetBefore() *time.Time {
 		return nil
 	}
 	return s.Before
+}
+
+func (s *SearchGrantFeedRequest) GetExpandMask() *AppEntitlementUserBindingExpandHistoryMask {
+	if s == nil {
+		return nil
+	}
+	return s.ExpandMask
 }
 
 func (s *SearchGrantFeedRequest) GetPageSize() *int {

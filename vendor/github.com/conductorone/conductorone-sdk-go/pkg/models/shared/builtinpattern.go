@@ -12,55 +12,54 @@ package shared
 //   - queryScopeLimit
 //   - writeAuthorization
 //   - sensitiveFileGuard
+//   - toolOutputSizeGuard
 type BuiltInPattern struct {
-	// CreditCardBlockingConfig denies any tool call whose output contains a
-	//  Luhn-valid credit card number. No configuration fields today; the
-	//  presence of the oneof arm is the whole configuration.
-	CreditCardBlockingConfig *CreditCardBlockingConfig `json:"creditCardBlocking,omitempty"`
-	// PIIRedactionConfig configures post-tool-use redaction of sensitive fields.
-	PIIRedactionConfig *PIIRedactionConfig `json:"piiRedaction,omitempty"`
-	// QueryScopeLimitConfig caps numeric fields (e.g. limit, page_size) in tool
-	//  input so callers cannot request unbounded data.
-	QueryScopeLimitConfig *QueryScopeLimitConfig `json:"queryScopeLimit,omitempty"`
-	// SensitiveFileGuardConfig blocks tool calls that reference sensitive file
-	//  paths or directories.
-	SensitiveFileGuardConfig *SensitiveFileGuardConfig `json:"sensitiveFileGuard,omitempty"`
-	// WriteAuthorizationConfig blocks tool calls whose ToolClassification is in
-	//  blocked_classifications, optionally permitting them within business hours.
-	WriteAuthorizationConfig *WriteAuthorizationConfig `json:"writeAuthorization,omitempty"`
+	CreditCardBlocking  *CreditCardBlockingConfig  `json:"creditCardBlocking,omitempty"`
+	PiiRedaction        *PIIRedactionConfig        `json:"piiRedaction,omitempty"`
+	QueryScopeLimit     *QueryScopeLimitConfig     `json:"queryScopeLimit,omitempty"`
+	SensitiveFileGuard  *SensitiveFileGuardConfig  `json:"sensitiveFileGuard,omitempty"`
+	ToolOutputSizeGuard *ToolOutputSizeGuardConfig `json:"toolOutputSizeGuard,omitempty"`
+	WriteAuthorization  *WriteAuthorizationConfig  `json:"writeAuthorization,omitempty"`
 }
 
-func (b *BuiltInPattern) GetCreditCardBlockingConfig() *CreditCardBlockingConfig {
+func (b *BuiltInPattern) GetCreditCardBlocking() *CreditCardBlockingConfig {
 	if b == nil {
 		return nil
 	}
-	return b.CreditCardBlockingConfig
+	return b.CreditCardBlocking
 }
 
-func (b *BuiltInPattern) GetPIIRedactionConfig() *PIIRedactionConfig {
+func (b *BuiltInPattern) GetPiiRedaction() *PIIRedactionConfig {
 	if b == nil {
 		return nil
 	}
-	return b.PIIRedactionConfig
+	return b.PiiRedaction
 }
 
-func (b *BuiltInPattern) GetQueryScopeLimitConfig() *QueryScopeLimitConfig {
+func (b *BuiltInPattern) GetQueryScopeLimit() *QueryScopeLimitConfig {
 	if b == nil {
 		return nil
 	}
-	return b.QueryScopeLimitConfig
+	return b.QueryScopeLimit
 }
 
-func (b *BuiltInPattern) GetSensitiveFileGuardConfig() *SensitiveFileGuardConfig {
+func (b *BuiltInPattern) GetSensitiveFileGuard() *SensitiveFileGuardConfig {
 	if b == nil {
 		return nil
 	}
-	return b.SensitiveFileGuardConfig
+	return b.SensitiveFileGuard
 }
 
-func (b *BuiltInPattern) GetWriteAuthorizationConfig() *WriteAuthorizationConfig {
+func (b *BuiltInPattern) GetToolOutputSizeGuard() *ToolOutputSizeGuardConfig {
 	if b == nil {
 		return nil
 	}
-	return b.WriteAuthorizationConfig
+	return b.ToolOutputSizeGuard
+}
+
+func (b *BuiltInPattern) GetWriteAuthorization() *WriteAuthorizationConfig {
+	if b == nil {
+		return nil
+	}
+	return b.WriteAuthorization
 }

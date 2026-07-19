@@ -32,7 +32,7 @@ func newPaperSecret(rootSDK *ConductoroneAPI, sdkConfig config.SDKConfiguration,
 }
 
 // CreateExternal - Create External
-// CreateExternal creates a secret vault for external email recipients.
+// CreateExternal creates a secret using the requested Age suite.
 func (s *PaperSecret) CreateExternal(ctx context.Context, request *shared.PaperSecretServiceCreateExternalRequest, opts ...operations.Option) (*operations.C1APISecretsV1PaperSecretServiceCreateExternalResponse, error) {
 	o := operations.Options{}
 	supportedOptions := []string{
@@ -244,7 +244,7 @@ func (s *PaperSecret) CreateExternal(ctx context.Context, request *shared.PaperS
 }
 
 // CreateInternal - Create Internal
-// CreateInternal creates a secret vault for internal C1 users.
+// CreateInternal creates a secret using the requested Age suite.
 func (s *PaperSecret) CreateInternal(ctx context.Context, request *shared.PaperSecretServiceCreateInternalRequest, opts ...operations.Option) (*operations.C1APISecretsV1PaperSecretServiceCreateInternalResponse, error) {
 	o := operations.Options{}
 	supportedOptions := []string{

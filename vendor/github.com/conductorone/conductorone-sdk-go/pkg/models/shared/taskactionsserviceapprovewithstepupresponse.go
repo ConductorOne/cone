@@ -40,21 +40,13 @@ func (t *TaskActionsServiceApproveWithStepUpResponseExpanded) GetAdditionalPrope
 
 // TaskActionsServiceApproveWithStepUpResponse is the response for approving a task with step-up authentication
 type TaskActionsServiceApproveWithStepUpResponse struct {
-	// Contains a task and JSONPATH expressions that describe where in the expanded array related objects are located. This view can be used to display a fully-detailed dashboard of task information.
-	TaskView *TaskView `json:"taskView,omitempty"`
 	// List of serialized related objects.
 	Expanded []TaskActionsServiceApproveWithStepUpResponseExpanded `json:"expanded,omitempty"`
 	// The redirect URL the client must visit to complete the step-up authentication.
-	RedirectURL *string `json:"redirectUrl,omitempty"`
+	RedirectURL *string   `json:"redirectUrl,omitempty"`
+	TaskView    *TaskView `json:"taskView,omitempty"`
 	// The ID of the task approve action created by this request.
 	TicketActionID *string `json:"ticketActionId,omitempty"`
-}
-
-func (t *TaskActionsServiceApproveWithStepUpResponse) GetTaskView() *TaskView {
-	if t == nil {
-		return nil
-	}
-	return t.TaskView
 }
 
 func (t *TaskActionsServiceApproveWithStepUpResponse) GetExpanded() []TaskActionsServiceApproveWithStepUpResponseExpanded {
@@ -69,6 +61,13 @@ func (t *TaskActionsServiceApproveWithStepUpResponse) GetRedirectURL() *string {
 		return nil
 	}
 	return t.RedirectURL
+}
+
+func (t *TaskActionsServiceApproveWithStepUpResponse) GetTaskView() *TaskView {
+	if t == nil {
+		return nil
+	}
+	return t.TaskView
 }
 
 func (t *TaskActionsServiceApproveWithStepUpResponse) GetTicketActionID() *string {

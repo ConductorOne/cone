@@ -40,17 +40,9 @@ func (u *UserServiceGetResponseExpanded) GetAdditionalProperties() map[string]an
 
 // The UserServiceGetResponse returns a user view which has a user including JSONPATHs to the expanded items in the expanded array.
 type UserServiceGetResponse struct {
-	// The UserView object provides a user response object, as well as JSONPATHs to related objects provided by expanders.
-	UserView *UserView `json:"userView,omitempty"`
 	// List of serialized related objects.
 	Expanded []UserServiceGetResponseExpanded `json:"expanded,omitempty"`
-}
-
-func (u *UserServiceGetResponse) GetUserView() *UserView {
-	if u == nil {
-		return nil
-	}
-	return u.UserView
+	UserView *UserView                        `json:"userView,omitempty"`
 }
 
 func (u *UserServiceGetResponse) GetExpanded() []UserServiceGetResponseExpanded {
@@ -58,4 +50,11 @@ func (u *UserServiceGetResponse) GetExpanded() []UserServiceGetResponseExpanded 
 		return nil
 	}
 	return u.Expanded
+}
+
+func (u *UserServiceGetResponse) GetUserView() *UserView {
+	if u == nil {
+		return nil
+	}
+	return u.UserView
 }

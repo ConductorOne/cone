@@ -40,7 +40,6 @@ func (c *CreateManuallyManagedResourceTypeResponseExpanded) GetAdditionalPropert
 
 // CreateManuallyManagedResourceTypeResponse - The response message for creating a manually managed resource type.
 type CreateManuallyManagedResourceTypeResponse struct {
-	// The AppResourceType is referenced by an app entitlement defining its resource types. Commonly things like Group or Role.
 	AppResourceType *AppResourceType `json:"appResourceType,omitempty"`
 	// List of serialized related objects.
 	Expanded []CreateManuallyManagedResourceTypeResponseExpanded `json:"expanded,omitempty"`

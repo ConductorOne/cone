@@ -37,10 +37,9 @@ func (e *ExporterState) IsExact() bool {
 // This message contains a oneof named export_to. Only a single field of the following list may be set at a time:
 //   - datasource
 type Exporter struct {
-	// The ExportToDatasource message.
-	ExportToDatasource *ExportToDatasource `json:"datasource,omitempty"`
-	CreatedAt          *time.Time          `json:"createdAt,omitempty"`
-	DeletedAt          *time.Time          `json:"deletedAt,omitempty"`
+	CreatedAt  *time.Time          `json:"createdAt,omitempty"`
+	Datasource *ExportToDatasource `json:"datasource,omitempty"`
+	DeletedAt  *time.Time          `json:"deletedAt,omitempty"`
 	// The displayName field.
 	DisplayName *string `json:"displayName,omitempty"`
 	// The exportId field.
@@ -63,18 +62,18 @@ func (e *Exporter) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (e *Exporter) GetExportToDatasource() *ExportToDatasource {
-	if e == nil {
-		return nil
-	}
-	return e.ExportToDatasource
-}
-
 func (e *Exporter) GetCreatedAt() *time.Time {
 	if e == nil {
 		return nil
 	}
 	return e.CreatedAt
+}
+
+func (e *Exporter) GetDatasource() *ExportToDatasource {
+	if e == nil {
+		return nil
+	}
+	return e.Datasource
 }
 
 func (e *Exporter) GetDeletedAt() *time.Time {

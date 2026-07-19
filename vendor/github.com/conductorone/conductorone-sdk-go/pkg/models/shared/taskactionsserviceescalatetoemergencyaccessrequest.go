@@ -4,19 +4,11 @@ package shared
 
 // The TaskActionsServiceEscalateToEmergencyAccessRequest object lets you escalate a task to the emergency access workflow.
 type TaskActionsServiceEscalateToEmergencyAccessRequest struct {
-	// The task expand mask is an array of strings that specifes the related objects the requester wishes to have returned when making a request where the expand mask is part of the input. Use '*' to view all possible responses.
-	TaskExpandMask *TaskExpandMask `json:"expandMask,omitempty"`
 	// An optional comment attached to the escalation.
-	Comment *string `json:"comment,omitempty"`
+	Comment    *string         `json:"comment,omitempty"`
+	ExpandMask *TaskExpandMask `json:"expandMask,omitempty"`
 	// The ID of the current policy step being escalated from.
 	PolicyStepID *string `json:"policyStepId,omitempty"`
-}
-
-func (t *TaskActionsServiceEscalateToEmergencyAccessRequest) GetTaskExpandMask() *TaskExpandMask {
-	if t == nil {
-		return nil
-	}
-	return t.TaskExpandMask
 }
 
 func (t *TaskActionsServiceEscalateToEmergencyAccessRequest) GetComment() *string {
@@ -24,6 +16,13 @@ func (t *TaskActionsServiceEscalateToEmergencyAccessRequest) GetComment() *strin
 		return nil
 	}
 	return t.Comment
+}
+
+func (t *TaskActionsServiceEscalateToEmergencyAccessRequest) GetExpandMask() *TaskExpandMask {
+	if t == nil {
+		return nil
+	}
+	return t.ExpandMask
 }
 
 func (t *TaskActionsServiceEscalateToEmergencyAccessRequest) GetPolicyStepID() *string {

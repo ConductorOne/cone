@@ -109,8 +109,8 @@ func collectFieldValue(ctx context.Context, field shared.FormField, displayName,
 
 	// Collect based on field type
 	switch {
-	case field.FormStringField != nil:
-		return collectStringField(ctx, field.FormStringField, displayName, description)
+	case field.StringField != nil:
+		return collectStringField(ctx, field.StringField, displayName, description)
 	case field.BoolField != nil:
 		return collectBoolField(ctx, field.BoolField, displayName, description)
 	case field.Int64Field != nil:
@@ -246,8 +246,8 @@ func collectStringSliceField(ctx context.Context, field *shared.StringSliceField
 // getFieldDefaultValue extracts the default value from a field based on its type.
 func getFieldDefaultValue(field shared.FormField) any {
 	switch {
-	case field.FormStringField != nil && field.FormStringField.DefaultValue != nil:
-		return *field.FormStringField.DefaultValue
+	case field.StringField != nil && field.StringField.DefaultValue != nil:
+		return *field.StringField.DefaultValue
 	case field.BoolField != nil && field.BoolField.DefaultValue != nil:
 		return *field.BoolField.DefaultValue
 	case field.Int64Field != nil && field.Int64Field.DefaultValue != nil:
@@ -287,7 +287,7 @@ type StringFieldValidator struct {
 func (v StringFieldValidator) IsValid(txt string) (string, bool) {
 	if txt == "" {
 		// Check if field is required
-		if v.field.StringRules != nil {
+		if v.field.Rules != nil {
 			// StringRules might have required field, but we'll be lenient here
 			// and allow empty if no explicit requirement
 			return txt, true
@@ -296,8 +296,8 @@ func (v StringFieldValidator) IsValid(txt string) (string, bool) {
 	}
 
 	// Apply validation rules if present
-	if v.field.StringRules != nil {
-		rules := v.field.StringRules
+	if v.field.Rules != nil {
+		rules := v.field.Rules
 		if rules.MinLen != nil {
 			minLen, err := strconv.Atoi(*rules.MinLen)
 			if err == nil && len(txt) < minLen {
@@ -353,8 +353,8 @@ func (v Int64FieldValidator) IsValid(txt string) (int64, bool) {
 	}
 
 	// Apply validation rules if present
-	if v.field.Int64Rules != nil {
-		rules := v.field.Int64Rules
+	if v.field.Rules != nil {
+		rules := v.field.Rules
 		if rules.Const != nil && value != *rules.Const {
 			return 0, false
 		}
@@ -396,8 +396,8 @@ func (v Int64FieldValidator) Prompt(isFirstRun bool) {
 // isFieldRequired checks if a field is required based on its validation rules.
 func isFieldRequired(field shared.FormField) bool {
 	switch {
-	case field.FormStringField != nil:
-		rules := field.FormStringField.StringRules
+	case field.StringField != nil:
+		rules := field.StringField.Rules
 		if rules == nil {
 			return false
 		}
@@ -416,7 +416,7 @@ func isFieldRequired(field shared.FormField) bool {
 	case field.Int64Field != nil:
 		// Int64 fields don't have an IgnoreEmpty concept in the same way
 		// Consider required if there are validation rules but no default
-		return field.Int64Field.Int64Rules != nil && field.Int64Field.DefaultValue == nil
+		return field.Int64Field.Rules != nil && field.Int64Field.DefaultValue == nil
 	case field.BoolField != nil:
 		// Bool fields typically have a default (false), so rarely required
 		return false

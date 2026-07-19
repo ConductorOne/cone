@@ -4,21 +4,8 @@ package shared
 
 // The VaultServiceUpdateRequest message contains the vault object to update and a field mask to indicate which fields to update.
 type VaultServiceUpdateRequest struct {
-	// Vault represents an external secret storage integration used to store connector credentials securely.
-	//
-	// This message contains a oneof named vault. Only a single field of the following list may be set at a time:
-	//   - groupAuthzVault
-	//   - magicVault
-	//
-	Vault      *VaultInput `json:"vault,omitempty"`
 	UpdateMask *string     `json:"updateMask,omitempty"`
-}
-
-func (v *VaultServiceUpdateRequest) GetVault() *VaultInput {
-	if v == nil {
-		return nil
-	}
-	return v.Vault
+	Vault      *VaultInput `json:"vault,omitempty"`
 }
 
 func (v *VaultServiceUpdateRequest) GetUpdateMask() *string {
@@ -26,4 +13,11 @@ func (v *VaultServiceUpdateRequest) GetUpdateMask() *string {
 		return nil
 	}
 	return v.UpdateMask
+}
+
+func (v *VaultServiceUpdateRequest) GetVault() *VaultInput {
+	if v == nil {
+		return nil
+	}
+	return v.Vault
 }

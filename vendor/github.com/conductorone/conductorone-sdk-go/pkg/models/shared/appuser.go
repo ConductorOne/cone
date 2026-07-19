@@ -34,8 +34,6 @@ func (e *AppUserType) IsExact() bool {
 
 // AppUser - Application User that represents an account in the application.
 type AppUser struct {
-	// The satus of the applicaiton user.
-	AppUserStatus *AppUserStatus `json:"status,omitempty"`
 	// The ID of the application.
 	AppID *string `json:"appId,omitempty"`
 	// The appplication user type. Type can be user, system or service.
@@ -57,6 +55,7 @@ type AppUser struct {
 	// The isExternal field.
 	IsExternal *bool          `json:"isExternal,omitempty"`
 	Profile    map[string]any `json:"profile,omitempty"`
+	Status     *AppUserStatus `json:"status,omitempty"`
 	UpdatedAt  *time.Time     `json:"updatedAt,omitempty"`
 	// The username field of the application user.
 	Username *string `json:"username,omitempty"`
@@ -73,13 +72,6 @@ func (a *AppUser) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
-}
-
-func (a *AppUser) GetAppUserStatus() *AppUserStatus {
-	if a == nil {
-		return nil
-	}
-	return a.AppUserStatus
 }
 
 func (a *AppUser) GetAppID() *string {
@@ -166,6 +158,13 @@ func (a *AppUser) GetProfile() map[string]any {
 	return a.Profile
 }
 
+func (a *AppUser) GetStatus() *AppUserStatus {
+	if a == nil {
+		return nil
+	}
+	return a.Status
+}
+
 func (a *AppUser) GetUpdatedAt() *time.Time {
 	if a == nil {
 		return nil
@@ -189,17 +188,9 @@ func (a *AppUser) GetUsernames() []string {
 
 // AppUserInput - Application User that represents an account in the application.
 type AppUserInput struct {
-	// The satus of the applicaiton user.
-	AppUserStatus *AppUserStatusInput `json:"status,omitempty"`
 	// The appplication user type. Type can be user, system or service.
-	AppUserType *AppUserType `json:"appUserType,omitempty"`
-}
-
-func (a *AppUserInput) GetAppUserStatus() *AppUserStatusInput {
-	if a == nil {
-		return nil
-	}
-	return a.AppUserStatus
+	AppUserType *AppUserType        `json:"appUserType,omitempty"`
+	Status      *AppUserStatusInput `json:"status,omitempty"`
 }
 
 func (a *AppUserInput) GetAppUserType() *AppUserType {
@@ -207,4 +198,11 @@ func (a *AppUserInput) GetAppUserType() *AppUserType {
 		return nil
 	}
 	return a.AppUserType
+}
+
+func (a *AppUserInput) GetStatus() *AppUserStatusInput {
+	if a == nil {
+		return nil
+	}
+	return a.Status
 }

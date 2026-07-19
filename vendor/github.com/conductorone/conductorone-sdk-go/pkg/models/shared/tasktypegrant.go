@@ -36,8 +36,6 @@ func (e *TaskTypeGrantOutcome) IsExact() bool {
 
 // The TaskTypeGrant message indicates that a task is a grant task and all related details.
 type TaskTypeGrant struct {
-	// The TaskGrantSource message tracks which external URL was the source of the specificed grant ticket.
-	TaskGrantSource *TaskGrantSource `json:"source,omitempty"`
 	// The ID of the app entitlement.
 	AppEntitlementID *string `json:"appEntitlementId,omitempty"`
 	// The ID of the app.
@@ -50,6 +48,7 @@ type TaskTypeGrant struct {
 	// The outcome of the grant.
 	Outcome     *TaskTypeGrantOutcome `json:"outcome,omitempty"`
 	OutcomeTime *time.Time            `json:"outcomeTime,omitempty"`
+	Source      *TaskGrantSource      `json:"source,omitempty"`
 }
 
 func (t TaskTypeGrant) MarshalJSON() ([]byte, error) {
@@ -61,13 +60,6 @@ func (t *TaskTypeGrant) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
-}
-
-func (t *TaskTypeGrant) GetTaskGrantSource() *TaskGrantSource {
-	if t == nil {
-		return nil
-	}
-	return t.TaskGrantSource
 }
 
 func (t *TaskTypeGrant) GetAppEntitlementID() *string {
@@ -117,4 +109,11 @@ func (t *TaskTypeGrant) GetOutcomeTime() *time.Time {
 		return nil
 	}
 	return t.OutcomeTime
+}
+
+func (t *TaskTypeGrant) GetSource() *TaskGrantSource {
+	if t == nil {
+		return nil
+	}
+	return t.Source
 }

@@ -40,17 +40,16 @@ func (a *AccessReviewServiceUpdateResponseExpanded) GetAdditionalProperties() ma
 
 // The AccessReviewServiceUpdateResponse message.
 type AccessReviewServiceUpdateResponse struct {
-	// The AccessReviewView message.
-	AccessReviewView *AccessReviewView `json:"accessReview,omitempty"`
+	AccessReview *AccessReviewView `json:"accessReview,omitempty"`
 	// Related objects requested via the expand mask.
 	Expanded []AccessReviewServiceUpdateResponseExpanded `json:"expanded,omitempty"`
 }
 
-func (a *AccessReviewServiceUpdateResponse) GetAccessReviewView() *AccessReviewView {
+func (a *AccessReviewServiceUpdateResponse) GetAccessReview() *AccessReviewView {
 	if a == nil {
 		return nil
 	}
-	return a.AccessReviewView
+	return a.AccessReview
 }
 
 func (a *AccessReviewServiceUpdateResponse) GetExpanded() []AccessReviewServiceUpdateResponseExpanded {

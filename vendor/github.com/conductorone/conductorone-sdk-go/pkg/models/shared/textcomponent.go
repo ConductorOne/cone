@@ -4,23 +4,9 @@ package shared
 
 // TextComponent displays text content.
 type TextComponent struct {
-	// DynamicString can be a literal value, a JSON pointer path, or a function call.
-	//
-	// This message contains a oneof named value. Only a single field of the following list may be set at a time:
-	//   - literal
-	//   - path
-	//   - call
-	//
-	DynamicString *DynamicString `json:"text,omitempty"`
 	// The markdown field.
-	Markdown *bool `json:"markdown,omitempty"`
-}
-
-func (t *TextComponent) GetDynamicString() *DynamicString {
-	if t == nil {
-		return nil
-	}
-	return t.DynamicString
+	Markdown *bool          `json:"markdown,omitempty"`
+	Text     *DynamicString `json:"text,omitempty"`
 }
 
 func (t *TextComponent) GetMarkdown() *bool {
@@ -28,4 +14,11 @@ func (t *TextComponent) GetMarkdown() *bool {
 		return nil
 	}
 	return t.Markdown
+}
+
+func (t *TextComponent) GetText() *DynamicString {
+	if t == nil {
+		return nil
+	}
+	return t.Text
 }

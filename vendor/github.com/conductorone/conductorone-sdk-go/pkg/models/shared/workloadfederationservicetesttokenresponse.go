@@ -4,74 +4,40 @@ package shared
 
 // The WorkloadFederationServiceTestTokenResponse message.
 type WorkloadFederationServiceTestTokenResponse struct {
-	// TestTokenStepResult represents the result of a single validation step.
-	TestTokenStepResult *TestTokenStepResult `json:"audienceValidation,omitempty"`
-	// TestTokenStepResult represents the result of a single validation step.
-	TestTokenStepResult1 *TestTokenStepResult `json:"celEvaluation,omitempty"`
-	// TestTokenStepResult represents the result of a single validation step.
-	TestTokenStepResult2 *TestTokenStepResult `json:"cidrCheck,omitempty"`
-	// TestTokenStepResult represents the result of a single validation step.
-	TestTokenStepResult3 *TestTokenStepResult `json:"issuerMatch,omitempty"`
-	// TestTokenStepResult represents the result of a single validation step.
-	TestTokenStepResult4 *TestTokenStepResult `json:"jwtDecode,omitempty"`
-	// TestTokenStepResult represents the result of a single validation step.
-	TestTokenStepResult5 *TestTokenStepResult `json:"signatureValidation,omitempty"`
-	// TestTokenStepResult represents the result of a single validation step.
-	TestTokenStepResult6 *TestTokenStepResult `json:"tokenFreshness,omitempty"`
+	AudienceValidation *TestTokenStepResult `json:"audienceValidation,omitempty"`
+	CelEvaluation      *TestTokenStepResult `json:"celEvaluation,omitempty"`
+	CidrCheck          *TestTokenStepResult `json:"cidrCheck,omitempty"`
 	// The decoded JWT claims (best-effort, even if signature fails).
 	//  Returned as JSON string for display.
-	DecodedClaimsJSON *string `json:"decodedClaimsJson,omitempty"`
+	DecodedClaimsJSON *string              `json:"decodedClaimsJson,omitempty"`
+	IssuerMatch       *TestTokenStepResult `json:"issuerMatch,omitempty"`
+	JwtDecode         *TestTokenStepResult `json:"jwtDecode,omitempty"`
 	// Overall result: true only if ALL steps passed.
-	OverallResult *bool `json:"overallResult,omitempty"`
+	OverallResult       *bool                `json:"overallResult,omitempty"`
+	SignatureValidation *TestTokenStepResult `json:"signatureValidation,omitempty"`
+	SubjectValidation   *TestTokenStepResult `json:"subjectValidation,omitempty"`
+	TokenFreshness      *TestTokenStepResult `json:"tokenFreshness,omitempty"`
 }
 
-func (w *WorkloadFederationServiceTestTokenResponse) GetTestTokenStepResult() *TestTokenStepResult {
+func (w *WorkloadFederationServiceTestTokenResponse) GetAudienceValidation() *TestTokenStepResult {
 	if w == nil {
 		return nil
 	}
-	return w.TestTokenStepResult
+	return w.AudienceValidation
 }
 
-func (w *WorkloadFederationServiceTestTokenResponse) GetTestTokenStepResult1() *TestTokenStepResult {
+func (w *WorkloadFederationServiceTestTokenResponse) GetCelEvaluation() *TestTokenStepResult {
 	if w == nil {
 		return nil
 	}
-	return w.TestTokenStepResult1
+	return w.CelEvaluation
 }
 
-func (w *WorkloadFederationServiceTestTokenResponse) GetTestTokenStepResult2() *TestTokenStepResult {
+func (w *WorkloadFederationServiceTestTokenResponse) GetCidrCheck() *TestTokenStepResult {
 	if w == nil {
 		return nil
 	}
-	return w.TestTokenStepResult2
-}
-
-func (w *WorkloadFederationServiceTestTokenResponse) GetTestTokenStepResult3() *TestTokenStepResult {
-	if w == nil {
-		return nil
-	}
-	return w.TestTokenStepResult3
-}
-
-func (w *WorkloadFederationServiceTestTokenResponse) GetTestTokenStepResult4() *TestTokenStepResult {
-	if w == nil {
-		return nil
-	}
-	return w.TestTokenStepResult4
-}
-
-func (w *WorkloadFederationServiceTestTokenResponse) GetTestTokenStepResult5() *TestTokenStepResult {
-	if w == nil {
-		return nil
-	}
-	return w.TestTokenStepResult5
-}
-
-func (w *WorkloadFederationServiceTestTokenResponse) GetTestTokenStepResult6() *TestTokenStepResult {
-	if w == nil {
-		return nil
-	}
-	return w.TestTokenStepResult6
+	return w.CidrCheck
 }
 
 func (w *WorkloadFederationServiceTestTokenResponse) GetDecodedClaimsJSON() *string {
@@ -81,9 +47,44 @@ func (w *WorkloadFederationServiceTestTokenResponse) GetDecodedClaimsJSON() *str
 	return w.DecodedClaimsJSON
 }
 
+func (w *WorkloadFederationServiceTestTokenResponse) GetIssuerMatch() *TestTokenStepResult {
+	if w == nil {
+		return nil
+	}
+	return w.IssuerMatch
+}
+
+func (w *WorkloadFederationServiceTestTokenResponse) GetJwtDecode() *TestTokenStepResult {
+	if w == nil {
+		return nil
+	}
+	return w.JwtDecode
+}
+
 func (w *WorkloadFederationServiceTestTokenResponse) GetOverallResult() *bool {
 	if w == nil {
 		return nil
 	}
 	return w.OverallResult
+}
+
+func (w *WorkloadFederationServiceTestTokenResponse) GetSignatureValidation() *TestTokenStepResult {
+	if w == nil {
+		return nil
+	}
+	return w.SignatureValidation
+}
+
+func (w *WorkloadFederationServiceTestTokenResponse) GetSubjectValidation() *TestTokenStepResult {
+	if w == nil {
+		return nil
+	}
+	return w.SubjectValidation
+}
+
+func (w *WorkloadFederationServiceTestTokenResponse) GetTokenFreshness() *TestTokenStepResult {
+	if w == nil {
+		return nil
+	}
+	return w.TokenFreshness
 }

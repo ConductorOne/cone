@@ -8,14 +8,11 @@ package shared
 //   - accountRef
 //   - accountInContext
 type AccountLifecycleAction struct {
-	// The AccountInContext message.
 	AccountInContext *AccountInContext `json:"accountInContext,omitempty"`
-	// The AccountRef message.
-	AccountRef *AccountRef `json:"accountRef,omitempty"`
-	// The ConnectorRef message.
-	ConnectorRef *ConnectorRef `json:"connectorRef,omitempty"`
+	AccountRef       *AccountRef       `json:"accountRef,omitempty"`
 	// The actionName field.
-	ActionName *string `json:"actionName,omitempty"`
+	ActionName   *string       `json:"actionName,omitempty"`
+	ConnectorRef *ConnectorRef `json:"connectorRef,omitempty"`
 }
 
 func (a *AccountLifecycleAction) GetAccountInContext() *AccountInContext {
@@ -32,16 +29,16 @@ func (a *AccountLifecycleAction) GetAccountRef() *AccountRef {
 	return a.AccountRef
 }
 
-func (a *AccountLifecycleAction) GetConnectorRef() *ConnectorRef {
-	if a == nil {
-		return nil
-	}
-	return a.ConnectorRef
-}
-
 func (a *AccountLifecycleAction) GetActionName() *string {
 	if a == nil {
 		return nil
 	}
 	return a.ActionName
+}
+
+func (a *AccountLifecycleAction) GetConnectorRef() *ConnectorRef {
+	if a == nil {
+		return nil
+	}
+	return a.ConnectorRef
 }

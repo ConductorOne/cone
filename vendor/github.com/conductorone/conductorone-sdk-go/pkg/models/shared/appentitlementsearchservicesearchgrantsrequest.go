@@ -28,8 +28,6 @@ func (e *AppEntitlementSearchServiceSearchGrantsRequestPurpose) IsExact() bool {
 
 // The AppEntitlementSearchServiceSearchGrantsRequest message.
 type AppEntitlementSearchServiceSearchGrantsRequest struct {
-	// The app entitlement expand mask allows the user to get additional information when getting responses containing app entitlement views.
-	AppEntitlementExpandMask *AppEntitlementExpandMask `json:"expandMask,omitempty"`
 	// Search for grants contained in any of these apps.
 	AppIds []string `json:"appIds,omitempty"`
 	// Search for grants that are granted to any of these app user ids.
@@ -37,7 +35,8 @@ type AppEntitlementSearchServiceSearchGrantsRequest struct {
 	// Search for grants of an entitlement
 	EntitlementRefs []AppEntitlementRef `json:"entitlementRefs,omitempty"`
 	// Filter for entitlements whose slug is in this list (e.g. "enrollment" for access profiles)
-	EntitlementSlugs []string `json:"entitlementSlugs,omitempty"`
+	EntitlementSlugs []string                  `json:"entitlementSlugs,omitempty"`
+	ExpandMask       *AppEntitlementExpandMask `json:"expandMask,omitempty"`
 	// The pageSize where 0 <= pageSize <= 100. Values < 10 will be set to 10. A value of 0 returns the default page size (currently 25)
 	PageSize *int `json:"pageSize,omitempty"`
 	// The pageToken field.
@@ -50,13 +49,6 @@ type AppEntitlementSearchServiceSearchGrantsRequest struct {
 	ResourceTypeIds []string `json:"resourceTypeIds,omitempty"`
 	// Search for grants of a user
 	UserID *string `json:"userId,omitempty"`
-}
-
-func (a *AppEntitlementSearchServiceSearchGrantsRequest) GetAppEntitlementExpandMask() *AppEntitlementExpandMask {
-	if a == nil {
-		return nil
-	}
-	return a.AppEntitlementExpandMask
 }
 
 func (a *AppEntitlementSearchServiceSearchGrantsRequest) GetAppIds() []string {
@@ -85,6 +77,13 @@ func (a *AppEntitlementSearchServiceSearchGrantsRequest) GetEntitlementSlugs() [
 		return nil
 	}
 	return a.EntitlementSlugs
+}
+
+func (a *AppEntitlementSearchServiceSearchGrantsRequest) GetExpandMask() *AppEntitlementExpandMask {
+	if a == nil {
+		return nil
+	}
+	return a.ExpandMask
 }
 
 func (a *AppEntitlementSearchServiceSearchGrantsRequest) GetPageSize() *int {

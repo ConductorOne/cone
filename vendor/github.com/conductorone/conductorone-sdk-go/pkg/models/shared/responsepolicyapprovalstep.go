@@ -10,45 +10,41 @@ package shared
 //   - reassign
 //   - replacePolicy
 type ResponsePolicyApprovalStep struct {
-	// The ResponsePolicyApprovalReplacePolicy message.
-	ResponsePolicyApprovalReplacePolicy *ResponsePolicyApprovalReplacePolicy `json:"replacePolicy,omitempty"`
-	// The ResponsePolicyApprovalStepApprove message.
-	ResponsePolicyApprovalStepApprove *ResponsePolicyApprovalStepApprove `json:"approve,omitempty"`
-	// The ResponsePolicyApprovalStepDeny message.
-	ResponsePolicyApprovalStepDeny *ResponsePolicyApprovalStepDeny `json:"deny,omitempty"`
-	// The ResponsePolicyApprovalStepReassign message.
-	ResponsePolicyApprovalStepReassign *ResponsePolicyApprovalStepReassign `json:"reassign,omitempty"`
+	Approve       *ResponsePolicyApprovalStepApprove   `json:"approve,omitempty"`
+	Deny          *ResponsePolicyApprovalStepDeny      `json:"deny,omitempty"`
+	Reassign      *ResponsePolicyApprovalStepReassign  `json:"reassign,omitempty"`
+	ReplacePolicy *ResponsePolicyApprovalReplacePolicy `json:"replacePolicy,omitempty"`
 	// version contains the constant value "v1". Future versions of the Webhook Response
 	//  will use a different string.
 	Version *string `json:"version,omitempty"`
 }
 
-func (r *ResponsePolicyApprovalStep) GetResponsePolicyApprovalReplacePolicy() *ResponsePolicyApprovalReplacePolicy {
+func (r *ResponsePolicyApprovalStep) GetApprove() *ResponsePolicyApprovalStepApprove {
 	if r == nil {
 		return nil
 	}
-	return r.ResponsePolicyApprovalReplacePolicy
+	return r.Approve
 }
 
-func (r *ResponsePolicyApprovalStep) GetResponsePolicyApprovalStepApprove() *ResponsePolicyApprovalStepApprove {
+func (r *ResponsePolicyApprovalStep) GetDeny() *ResponsePolicyApprovalStepDeny {
 	if r == nil {
 		return nil
 	}
-	return r.ResponsePolicyApprovalStepApprove
+	return r.Deny
 }
 
-func (r *ResponsePolicyApprovalStep) GetResponsePolicyApprovalStepDeny() *ResponsePolicyApprovalStepDeny {
+func (r *ResponsePolicyApprovalStep) GetReassign() *ResponsePolicyApprovalStepReassign {
 	if r == nil {
 		return nil
 	}
-	return r.ResponsePolicyApprovalStepDeny
+	return r.Reassign
 }
 
-func (r *ResponsePolicyApprovalStep) GetResponsePolicyApprovalStepReassign() *ResponsePolicyApprovalStepReassign {
+func (r *ResponsePolicyApprovalStep) GetReplacePolicy() *ResponsePolicyApprovalReplacePolicy {
 	if r == nil {
 		return nil
 	}
-	return r.ResponsePolicyApprovalStepReassign
+	return r.ReplacePolicy
 }
 
 func (r *ResponsePolicyApprovalStep) GetVersion() *string {

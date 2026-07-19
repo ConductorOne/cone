@@ -40,19 +40,11 @@ func (t *TaskActionsServiceHardResetResponseExpanded) GetAdditionalProperties() 
 
 // The TaskActionsServiceHardResetResponse returns the updated task after a hard reset.
 type TaskActionsServiceHardResetResponse struct {
-	// Contains a task and JSONPATH expressions that describe where in the expanded array related objects are located. This view can be used to display a fully-detailed dashboard of task information.
-	TaskView *TaskView `json:"taskView,omitempty"`
 	// List of serialized related objects.
 	Expanded []TaskActionsServiceHardResetResponseExpanded `json:"expanded,omitempty"`
+	TaskView *TaskView                                     `json:"taskView,omitempty"`
 	// The ID of the task reset action created by this request.
 	TicketActionID *string `json:"ticketActionId,omitempty"`
-}
-
-func (t *TaskActionsServiceHardResetResponse) GetTaskView() *TaskView {
-	if t == nil {
-		return nil
-	}
-	return t.TaskView
 }
 
 func (t *TaskActionsServiceHardResetResponse) GetExpanded() []TaskActionsServiceHardResetResponseExpanded {
@@ -60,6 +52,13 @@ func (t *TaskActionsServiceHardResetResponse) GetExpanded() []TaskActionsService
 		return nil
 	}
 	return t.Expanded
+}
+
+func (t *TaskActionsServiceHardResetResponse) GetTaskView() *TaskView {
+	if t == nil {
+		return nil
+	}
+	return t.TaskView
 }
 
 func (t *TaskActionsServiceHardResetResponse) GetTicketActionID() *string {

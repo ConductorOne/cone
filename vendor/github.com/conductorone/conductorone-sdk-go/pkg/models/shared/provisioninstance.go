@@ -44,26 +44,20 @@ func (e *ProvisionInstanceState) IsExact() bool {
 //   - reassignedByError
 //   - skipped
 type ProvisionInstance struct {
-	// The outcome of a provision instance that is cancelled.
-	CancelledAction *CancelledAction `json:"cancelled,omitempty"`
-	// The outcome of a provision instance that has been completed succesfully.
-	CompletedAction *CompletedAction `json:"completed,omitempty"`
-	// The outcome of a provision instance that has errored.
-	ErroredAction *ErroredAction `json:"errored,omitempty"`
-	// The provision step references a provision policy for this step.
-	Provision *Provision `json:"provision,omitempty"`
-	// The ReassignedByErrorAction object describes the outcome of a policy step that has been reassigned because it had an error provisioning.
-	ReassignedByErrorAction *ReassignedByErrorAction `json:"reassignedByError,omitempty"`
-	// The SkippedAction object describes the outcome of a policy step that has been skipped.
-	SkippedAction *SkippedAction `json:"skipped,omitempty"`
 	// This indicates the account lifecycle action id for this step.
-	BatonActionInvocationID *string `json:"batonActionInvocationId,omitempty"`
+	BatonActionInvocationID *string          `json:"batonActionInvocationId,omitempty"`
+	Cancelled               *CancelledAction `json:"cancelled,omitempty"`
+	Completed               *CompletedAction `json:"completed,omitempty"`
+	Errored                 *ErroredAction   `json:"errored,omitempty"`
 	// This indicates the external ticket id for this step.
 	ExternalTicketID *string `json:"externalTicketId,omitempty"`
 	// This indicates the external ticket provisioner config id for this step.
 	ExternalTicketProvisionerConfigID *string `json:"externalTicketProvisionerConfigId,omitempty"`
 	// This indicates the notification id for this step.
-	NotificationID *string `json:"notificationId,omitempty"`
+	NotificationID    *string                  `json:"notificationId,omitempty"`
+	Provision         *Provision               `json:"provision,omitempty"`
+	ReassignedByError *ReassignedByErrorAction `json:"reassignedByError,omitempty"`
+	Skipped           *SkippedAction           `json:"skipped,omitempty"`
 	// This property indicates the current state of this step.
 	State *ProvisionInstanceState `json:"state,omitempty"`
 	// This indicates the webhook id for this step.
@@ -72,53 +66,32 @@ type ProvisionInstance struct {
 	WebhookInstanceID *string `json:"webhookInstanceId,omitempty"`
 }
 
-func (p *ProvisionInstance) GetCancelledAction() *CancelledAction {
-	if p == nil {
-		return nil
-	}
-	return p.CancelledAction
-}
-
-func (p *ProvisionInstance) GetCompletedAction() *CompletedAction {
-	if p == nil {
-		return nil
-	}
-	return p.CompletedAction
-}
-
-func (p *ProvisionInstance) GetErroredAction() *ErroredAction {
-	if p == nil {
-		return nil
-	}
-	return p.ErroredAction
-}
-
-func (p *ProvisionInstance) GetProvision() *Provision {
-	if p == nil {
-		return nil
-	}
-	return p.Provision
-}
-
-func (p *ProvisionInstance) GetReassignedByErrorAction() *ReassignedByErrorAction {
-	if p == nil {
-		return nil
-	}
-	return p.ReassignedByErrorAction
-}
-
-func (p *ProvisionInstance) GetSkippedAction() *SkippedAction {
-	if p == nil {
-		return nil
-	}
-	return p.SkippedAction
-}
-
 func (p *ProvisionInstance) GetBatonActionInvocationID() *string {
 	if p == nil {
 		return nil
 	}
 	return p.BatonActionInvocationID
+}
+
+func (p *ProvisionInstance) GetCancelled() *CancelledAction {
+	if p == nil {
+		return nil
+	}
+	return p.Cancelled
+}
+
+func (p *ProvisionInstance) GetCompleted() *CompletedAction {
+	if p == nil {
+		return nil
+	}
+	return p.Completed
+}
+
+func (p *ProvisionInstance) GetErrored() *ErroredAction {
+	if p == nil {
+		return nil
+	}
+	return p.Errored
 }
 
 func (p *ProvisionInstance) GetExternalTicketID() *string {
@@ -140,6 +113,27 @@ func (p *ProvisionInstance) GetNotificationID() *string {
 		return nil
 	}
 	return p.NotificationID
+}
+
+func (p *ProvisionInstance) GetProvision() *Provision {
+	if p == nil {
+		return nil
+	}
+	return p.Provision
+}
+
+func (p *ProvisionInstance) GetReassignedByError() *ReassignedByErrorAction {
+	if p == nil {
+		return nil
+	}
+	return p.ReassignedByError
+}
+
+func (p *ProvisionInstance) GetSkipped() *SkippedAction {
+	if p == nil {
+		return nil
+	}
+	return p.Skipped
 }
 
 func (p *ProvisionInstance) GetState() *ProvisionInstanceState {

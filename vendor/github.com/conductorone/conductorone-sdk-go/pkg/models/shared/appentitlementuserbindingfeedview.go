@@ -4,23 +4,15 @@ package shared
 
 // The AppEntitlementUserBindingFeedView message.
 type AppEntitlementUserBindingFeedView struct {
-	// The AppEntitlementUserBindingFeed message.
-	AppEntitlementUserBindingFeed *AppEntitlementUserBindingFeed `json:"feed,omitempty"`
 	// The appPath field.
 	AppPath *string `json:"appPath,omitempty"`
 	// The appUserPath field.
 	AppUserPath *string `json:"appUserPath,omitempty"`
 	// The entitlementPath field.
-	EntitlementPath *string `json:"entitlementPath,omitempty"`
+	EntitlementPath *string                        `json:"entitlementPath,omitempty"`
+	Feed            *AppEntitlementUserBindingFeed `json:"feed,omitempty"`
 	// The ticketPath field.
 	TicketPath *string `json:"ticketPath,omitempty"`
-}
-
-func (a *AppEntitlementUserBindingFeedView) GetAppEntitlementUserBindingFeed() *AppEntitlementUserBindingFeed {
-	if a == nil {
-		return nil
-	}
-	return a.AppEntitlementUserBindingFeed
 }
 
 func (a *AppEntitlementUserBindingFeedView) GetAppPath() *string {
@@ -42,6 +34,13 @@ func (a *AppEntitlementUserBindingFeedView) GetEntitlementPath() *string {
 		return nil
 	}
 	return a.EntitlementPath
+}
+
+func (a *AppEntitlementUserBindingFeedView) GetFeed() *AppEntitlementUserBindingFeed {
+	if a == nil {
+		return nil
+	}
+	return a.Feed
 }
 
 func (a *AppEntitlementUserBindingFeedView) GetTicketPath() *string {

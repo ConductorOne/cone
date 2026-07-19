@@ -42,6 +42,8 @@ func (t *TaskAuditSuccessResultAnnotations) GetAdditionalProperties() map[string
 type TaskAuditSuccessResult struct {
 	// The annotations field.
 	Annotations []TaskAuditSuccessResultAnnotations `json:"annotations,omitempty"`
+	// The effects field.
+	Effects []ConnectorActionEffect `json:"effects,omitempty"`
 	// Optional human-readable note about the successful action. Rendered in
 	//  the ticket audit log when present (e.g., "Account already existed; no
 	//  change made." for the AlreadyExistsResult path). Naming mirrors
@@ -55,6 +57,13 @@ func (t *TaskAuditSuccessResult) GetAnnotations() []TaskAuditSuccessResultAnnota
 		return nil
 	}
 	return t.Annotations
+}
+
+func (t *TaskAuditSuccessResult) GetEffects() []ConnectorActionEffect {
+	if t == nil {
+		return nil
+	}
+	return t.Effects
 }
 
 func (t *TaskAuditSuccessResult) GetSuccessReason() *string {

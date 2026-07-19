@@ -49,7 +49,7 @@ type C1APIAppV2AppOwnersSearchEntitlementOwnersResponse struct {
 	// HTTP response content type for this operation
 	ContentType string
 	// SearchEntitlementOwnersResponse is the response for searching entitlement ownership sources.
-	SearchEntitlementOwnersResponse *shared.SearchEntitlementOwnersResponse
+	SearchAppEntitlementOwnersResponse *shared.SearchAppEntitlementOwnersResponse
 	// HTTP response status code for this operation
 	StatusCode int
 	// Raw HTTP response; suitable for custom response parsing
@@ -63,11 +63,11 @@ func (c *C1APIAppV2AppOwnersSearchEntitlementOwnersResponse) GetContentType() st
 	return c.ContentType
 }
 
-func (c *C1APIAppV2AppOwnersSearchEntitlementOwnersResponse) GetSearchEntitlementOwnersResponse() *shared.SearchEntitlementOwnersResponse {
+func (c *C1APIAppV2AppOwnersSearchEntitlementOwnersResponse) GetSearchAppEntitlementOwnersResponse() *shared.SearchAppEntitlementOwnersResponse {
 	if c == nil {
 		return nil
 	}
-	return c.SearchEntitlementOwnersResponse
+	return c.SearchAppEntitlementOwnersResponse
 }
 
 func (c *C1APIAppV2AppOwnersSearchEntitlementOwnersResponse) GetStatusCode() int {

@@ -40,19 +40,11 @@ func (t *TaskServiceActionResponseExpanded) GetAdditionalProperties() map[string
 
 // TaskServiceActionResponse - A generic response for task action endpoints, containing the updated task and the ID of the action that was created.
 type TaskServiceActionResponse struct {
-	// Contains a task and JSONPATH expressions that describe where in the expanded array related objects are located. This view can be used to display a fully-detailed dashboard of task information.
-	TaskView *TaskView `json:"taskView,omitempty"`
 	// List of serialized related objects.
 	Expanded []TaskServiceActionResponseExpanded `json:"expanded,omitempty"`
+	TaskView *TaskView                           `json:"taskView,omitempty"`
 	// The ID of the task action created by this request.
 	TicketActionID *string `json:"ticketActionId,omitempty"`
-}
-
-func (t *TaskServiceActionResponse) GetTaskView() *TaskView {
-	if t == nil {
-		return nil
-	}
-	return t.TaskView
 }
 
 func (t *TaskServiceActionResponse) GetExpanded() []TaskServiceActionResponseExpanded {
@@ -60,6 +52,13 @@ func (t *TaskServiceActionResponse) GetExpanded() []TaskServiceActionResponseExp
 		return nil
 	}
 	return t.Expanded
+}
+
+func (t *TaskServiceActionResponse) GetTaskView() *TaskView {
+	if t == nil {
+		return nil
+	}
+	return t.TaskView
 }
 
 func (t *TaskServiceActionResponse) GetTicketActionID() *string {

@@ -4,19 +4,11 @@ package shared
 
 // ConflictMonitorCreateRequest - The request message for creating a new conflict monitor.
 type ConflictMonitorCreateRequest struct {
-	// The NotificationConfig message.
-	AccessConflictNotificationConfig *AccessConflictNotificationConfig `json:"notificationConfig,omitempty"`
 	// An optional description explaining the purpose of this Separation of Duty rule.
 	Description *string `json:"description,omitempty"`
 	// The human-readable name for the conflict monitor.
-	DisplayName string `json:"displayName"`
-}
-
-func (c *ConflictMonitorCreateRequest) GetAccessConflictNotificationConfig() *AccessConflictNotificationConfig {
-	if c == nil {
-		return nil
-	}
-	return c.AccessConflictNotificationConfig
+	DisplayName        string                            `json:"displayName"`
+	NotificationConfig *AccessConflictNotificationConfig `json:"notificationConfig,omitempty"`
 }
 
 func (c *ConflictMonitorCreateRequest) GetDescription() *string {
@@ -31,4 +23,11 @@ func (c *ConflictMonitorCreateRequest) GetDisplayName() string {
 		return ""
 	}
 	return c.DisplayName
+}
+
+func (c *ConflictMonitorCreateRequest) GetNotificationConfig() *AccessConflictNotificationConfig {
+	if c == nil {
+		return nil
+	}
+	return c.NotificationConfig
 }

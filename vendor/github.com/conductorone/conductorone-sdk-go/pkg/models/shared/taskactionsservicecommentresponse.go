@@ -40,17 +40,9 @@ func (t *TaskActionsServiceCommentResponseExpanded) GetAdditionalProperties() ma
 
 // TaskActionsServiceCommentResponse - Task actions service comment response returns the task view inluding the expanded array of items that are indicated by the expand mask on the request.
 type TaskActionsServiceCommentResponse struct {
-	// Contains a task and JSONPATH expressions that describe where in the expanded array related objects are located. This view can be used to display a fully-detailed dashboard of task information.
-	TaskView *TaskView `json:"taskView,omitempty"`
 	// List of serialized related objects.
 	Expanded []TaskActionsServiceCommentResponseExpanded `json:"expanded,omitempty"`
-}
-
-func (t *TaskActionsServiceCommentResponse) GetTaskView() *TaskView {
-	if t == nil {
-		return nil
-	}
-	return t.TaskView
+	TaskView *TaskView                                   `json:"taskView,omitempty"`
 }
 
 func (t *TaskActionsServiceCommentResponse) GetExpanded() []TaskActionsServiceCommentResponseExpanded {
@@ -58,4 +50,11 @@ func (t *TaskActionsServiceCommentResponse) GetExpanded() []TaskActionsServiceCo
 		return nil
 	}
 	return t.Expanded
+}
+
+func (t *TaskActionsServiceCommentResponse) GetTaskView() *TaskView {
+	if t == nil {
+		return nil
+	}
+	return t.TaskView
 }

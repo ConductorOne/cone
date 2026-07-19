@@ -29,8 +29,6 @@ func (e *MembershipType) IsExact() bool {
 
 // AppEntitlementSearchServiceSearchRequest - Search app entitlements by a variety of filters.
 type AppEntitlementSearchServiceSearchRequest struct {
-	// The app entitlement expand mask allows the user to get additional information when getting responses containing app entitlement views.
-	AppEntitlementExpandMask *AppEntitlementExpandMask `json:"expandMask,omitempty"`
 	// Search for app entitlements that are being reviewed as part of this access review campaign.
 	AccessReviewID *string `json:"accessReviewId,omitempty"`
 	// Search for app entitlements that have this alias (exact match).
@@ -52,7 +50,8 @@ type AppEntitlementSearchServiceSearchRequest struct {
 	// Exclude entitlements with any of these resource type IDs from results.
 	ExcludeResourceTypeIds []string `json:"excludeResourceTypeIds,omitempty"`
 	// Exclude these specific entitlements from results.
-	ExcludedEntitlementRefs []AppEntitlementRef `json:"excludedEntitlementRefs,omitempty"`
+	ExcludedEntitlementRefs []AppEntitlementRef       `json:"excludedEntitlementRefs,omitempty"`
+	ExpandMask              *AppEntitlementExpandMask `json:"expandMask,omitempty"`
 	// Include deleted app entitlements, this includes app entitlements that have a deleted parent object (app, app resource, app resource type)
 	IncludeDeleted *bool `json:"includeDeleted,omitempty"`
 	// If true, restrict results to entitlements that have an automation rule configured.
@@ -71,6 +70,8 @@ type AppEntitlementSearchServiceSearchRequest struct {
 	Query *string `json:"query,omitempty"`
 	// Filter results to only these specific entitlements.
 	Refs []AppEntitlementRef `json:"refs,omitempty"`
+	// Search for app entitlements that are bound to any of these request schemas.
+	RequestSchemaIds []string `json:"requestSchemaIds,omitempty"`
 	// Search for app entitlements that belongs to these resources.
 	ResourceIds []string `json:"resourceIds,omitempty"`
 	// Filter results to entitlements whose resource types have any of these trait IDs.
@@ -81,13 +82,6 @@ type AppEntitlementSearchServiceSearchRequest struct {
 	RiskLevelIds []string `json:"riskLevelIds,omitempty"`
 	// Filter results to entitlements synced from this connector.
 	SourceConnectorID *string `json:"sourceConnectorId,omitempty"`
-}
-
-func (a *AppEntitlementSearchServiceSearchRequest) GetAppEntitlementExpandMask() *AppEntitlementExpandMask {
-	if a == nil {
-		return nil
-	}
-	return a.AppEntitlementExpandMask
 }
 
 func (a *AppEntitlementSearchServiceSearchRequest) GetAccessReviewID() *string {
@@ -167,6 +161,13 @@ func (a *AppEntitlementSearchServiceSearchRequest) GetExcludedEntitlementRefs() 
 	return a.ExcludedEntitlementRefs
 }
 
+func (a *AppEntitlementSearchServiceSearchRequest) GetExpandMask() *AppEntitlementExpandMask {
+	if a == nil {
+		return nil
+	}
+	return a.ExpandMask
+}
+
 func (a *AppEntitlementSearchServiceSearchRequest) GetIncludeDeleted() *bool {
 	if a == nil {
 		return nil
@@ -228,6 +229,13 @@ func (a *AppEntitlementSearchServiceSearchRequest) GetRefs() []AppEntitlementRef
 		return nil
 	}
 	return a.Refs
+}
+
+func (a *AppEntitlementSearchServiceSearchRequest) GetRequestSchemaIds() []string {
+	if a == nil {
+		return nil
+	}
+	return a.RequestSchemaIds
 }
 
 func (a *AppEntitlementSearchServiceSearchRequest) GetResourceIds() []string {

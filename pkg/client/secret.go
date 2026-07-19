@@ -3,42 +3,56 @@ package client
 import (
 	"bytes"
 	"context"
-	"encoding/json"
+	"errors"
 	"fmt"
 	"io"
 	"net/http"
-	"net/url"
 	"strings"
 
 	"github.com/conductorone/conductorone-sdk-go/pkg/models/operations"
+	"github.com/conductorone/conductorone-sdk-go/pkg/models/sdkerrors"
 	"github.com/conductorone/conductorone-sdk-go/pkg/models/shared"
 )
-
-const requiredAgeSuite = "AGE_SUITE_MLKEM768X25519"
 
 // AgeSuiteMismatchError indicates that PaperSecret did not honor the exact Age
 // suite requested by cone. Retrying is safe: no content has been encrypted or
 // decrypted when this error is returned.
 type AgeSuiteMismatchError struct {
 	Operation string
-	Returned  string
+	Returned  shared.PaperSecretServiceCreateResponseAgeSuite
 }
 
 func (e *AgeSuiteMismatchError) Error() string {
-	returned := e.Returned
-	if returned == "" || returned == "AGE_SUITE_UNSPECIFIED" {
-		returned = "AGE_SUITE_UNSPECIFIED"
+	returned := string(e.Returned)
+	if e.Returned == "" || e.Returned == shared.PaperSecretServiceCreateResponseAgeSuiteAgeSuiteUnspecified {
+		returned = string(shared.PaperSecretServiceCreateResponseAgeSuiteAgeSuiteUnspecified)
 	}
-	return fmt.Sprintf("PaperSecret %s returned Age suite %s, required %s; retry the request", e.Operation, returned, requiredAgeSuite)
+	return fmt.Sprintf(
+		"PaperSecret %s returned Age suite %s, required %s; retry the request",
+		e.Operation,
+		returned,
+		shared.PaperSecretServiceCreateResponseAgeSuiteAgeSuiteMlkem768X25519,
+	)
 }
 
 func (e *AgeSuiteMismatchError) Temporary() bool { return true }
 
-func requirePaperSecretAgeSuite(operation, returned string) error {
-	if returned != requiredAgeSuite {
-		return &AgeSuiteMismatchError{Operation: operation, Returned: returned}
+func requirePaperSecretAgeSuite(operation string, returned *shared.PaperSecretServiceCreateResponseAgeSuite) error {
+	if returned == nil {
+		return &AgeSuiteMismatchError{Operation: operation}
+	}
+	if *returned != shared.PaperSecretServiceCreateResponseAgeSuiteAgeSuiteMlkem768X25519 {
+		return &AgeSuiteMismatchError{Operation: operation, Returned: *returned}
 	}
 	return nil
+}
+
+func mapPaperSecretCreateError(err error) error {
+	var sdkErr *sdkerrors.SDKError
+	if errors.As(err, &sdkErr) && sdkErr.StatusCode >= http.StatusBadRequest {
+		return &HTTPError{StatusCode: sdkErr.StatusCode, Body: sdkErr.Body}
+	}
+	return err
 }
 
 // CreateInternalSecret creates an internal secret and returns the create response.
@@ -48,7 +62,25 @@ func (c *client) CreateInternalSecret(
 	ctx context.Context,
 	req *shared.PaperSecretServiceCreateInternalRequest,
 ) (*shared.PaperSecretServiceCreateResponse, error) {
-	return c.createSecret(ctx, "/api/v1/secrets/internal", req)
+	request := shared.PaperSecretServiceCreateInternalRequest{}
+	if req != nil {
+		request = *req
+	}
+	request.RequiredAgeSuite = shared.PaperSecretServiceCreateInternalRequestRequiredAgeSuiteAgeSuiteMlkem768X25519.ToPointer()
+
+	resp, err := c.sdk.PaperSecret.CreateInternal(ctx, &request)
+	if err != nil {
+		return nil, mapPaperSecretCreateError(err)
+	}
+	if err := NewHTTPError(resp.RawResponse); err != nil {
+		return nil, err
+	}
+
+	createResponse := resp.GetPaperSecretServiceCreateResponse()
+	if err := requirePaperSecretAgeSuite("create", createResponse.GetAgeSuite()); err != nil {
+		return nil, err
+	}
+	return createResponse, nil
 }
 
 // CreateExternalSecret creates a secret shared with external email recipients
@@ -59,66 +91,25 @@ func (c *client) CreateExternalSecret(
 	ctx context.Context,
 	req *shared.PaperSecretServiceCreateExternalRequest,
 ) (*shared.PaperSecretServiceCreateResponse, error) {
-	return c.createSecret(ctx, "/api/v1/secrets/external", req)
-}
+	request := shared.PaperSecretServiceCreateExternalRequest{}
+	if req != nil {
+		request = *req
+	}
+	request.RequiredAgeSuite = shared.RequiredAgeSuiteAgeSuiteMlkem768X25519.ToPointer()
 
-// createSecret uses the merged PaperSecret wire contract directly until a
-// conductorone-sdk-go release includes requiredAgeSuite and ageSuite. Keeping
-// this shim here ensures the request cannot silently use the API's legacy
-// UNSPECIFIED default, while the rest of the PaperSecret API remains SDK-backed.
-func (c *client) createSecret(ctx context.Context, endpoint string, payload any) (*shared.PaperSecretServiceCreateResponse, error) {
-	body, err := json.Marshal(payload)
+	resp, err := c.sdk.PaperSecret.CreateExternal(ctx, &request)
 	if err != nil {
-		return nil, err
+		return nil, mapPaperSecretCreateError(err)
 	}
-	var request map[string]any
-	if err := json.Unmarshal(body, &request); err != nil {
-		return nil, err
-	}
-	request["requiredAgeSuite"] = requiredAgeSuite
-	body, err = json.Marshal(request)
-	if err != nil {
+	if err := NewHTTPError(resp.RawResponse); err != nil {
 		return nil, err
 	}
 
-	requestURL, err := url.JoinPath(c.baseURL.String(), endpoint)
-	if err != nil {
+	createResponse := resp.GetPaperSecretServiceCreateResponse()
+	if err := requirePaperSecretAgeSuite("create", createResponse.GetAgeSuite()); err != nil {
 		return nil, err
 	}
-	httpReq, err := http.NewRequestWithContext(ctx, http.MethodPost, requestURL, bytes.NewReader(body))
-	if err != nil {
-		return nil, err
-	}
-	httpReq.Header.Set("Accept", "application/json")
-	httpReq.Header.Set("Content-Type", "application/json")
-
-	httpResp, err := c.httpClient.Do(httpReq)
-	if err != nil {
-		return nil, err
-	}
-	defer func() { _ = httpResp.Body.Close() }()
-	if err := NewHTTPError(httpResp); err != nil {
-		return nil, err
-	}
-
-	responseBody, err := io.ReadAll(httpResp.Body)
-	if err != nil {
-		return nil, err
-	}
-	var suiteResponse struct {
-		AgeSuite string `json:"ageSuite"`
-	}
-	if err := json.Unmarshal(responseBody, &suiteResponse); err != nil {
-		return nil, err
-	}
-	if err := requirePaperSecretAgeSuite("create", suiteResponse.AgeSuite); err != nil {
-		return nil, err
-	}
-	var response shared.PaperSecretServiceCreateResponse
-	if err := json.Unmarshal(responseBody, &response); err != nil {
-		return nil, err
-	}
-	return &response, nil
+	return createResponse, nil
 }
 
 // UploadSecretFile uploads the Age-encrypted bytes of a FILE secret to the capability
@@ -233,10 +224,10 @@ func (c *client) GetSecret(ctx context.Context, vaultID string) (*shared.PaperSe
 	if err := NewHTTPError(resp.RawResponse); err != nil {
 		return nil, err
 	}
-	if resp.PaperSecretServiceGetResponse == nil || resp.PaperSecretServiceGetResponse.PaperSecret == nil {
+	if resp.PaperSecretServiceGetResponse == nil || resp.PaperSecretServiceGetResponse.Secret == nil {
 		return nil, fmt.Errorf("get secret response was empty")
 	}
-	return resp.PaperSecretServiceGetResponse.PaperSecret, nil
+	return resp.PaperSecretServiceGetResponse.Secret, nil
 }
 
 func (c *client) GetSecretByShareCode(ctx context.Context, shareCode string) (*shared.PaperSecret, error) {
@@ -250,10 +241,10 @@ func (c *client) GetSecretByShareCode(ctx context.Context, shareCode string) (*s
 	if err := NewHTTPError(resp.RawResponse); err != nil {
 		return nil, err
 	}
-	if resp.PaperSecretServiceGetResponse == nil || resp.PaperSecretServiceGetResponse.PaperSecret == nil {
+	if resp.PaperSecretServiceGetResponse == nil || resp.PaperSecretServiceGetResponse.Secret == nil {
 		return nil, fmt.Errorf("get secret by share code response was empty")
 	}
-	return resp.PaperSecretServiceGetResponse.PaperSecret, nil
+	return resp.PaperSecretServiceGetResponse.Secret, nil
 }
 
 func (c *client) SearchMySecrets(ctx context.Context, req *shared.PaperSecretServiceSearchMySecretsRequest) ([]shared.PaperSecret, error) {
@@ -293,10 +284,10 @@ func (c *client) RevokeSecret(ctx context.Context, vaultID string) (*shared.Pape
 	if err := NewHTTPError(resp.RawResponse); err != nil {
 		return nil, err
 	}
-	if resp.PaperSecretServiceRevokeResponse == nil || resp.PaperSecretServiceRevokeResponse.PaperSecret == nil {
+	if resp.PaperSecretServiceRevokeResponse == nil || resp.PaperSecretServiceRevokeResponse.Secret == nil {
 		return nil, fmt.Errorf("revoke secret response was empty")
 	}
-	return resp.PaperSecretServiceRevokeResponse.PaperSecret, nil
+	return resp.PaperSecretServiceRevokeResponse.Secret, nil
 }
 
 func (c *client) SearchSecretAuditEvents(ctx context.Context, vaultID string, pageSize int) ([]map[string]any, error) {

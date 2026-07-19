@@ -4,16 +4,10 @@ package shared
 
 // AppResourceView - The app resource view returns an app resource with paths for items in the expand mask filled in when this response is returned and a request expand mask has "*" or "app_id" or "resource_type_id".
 type AppResourceView struct {
-	// The ActorObjectPermissions message.
-	ActorObjectPermissions *ActorObjectPermissions `json:"objectPermissions,omitempty"`
-	// The app resource message is a single resource that can have entitlements.
-	//
-	// This message contains a oneof named metadata. Only a single field of the following list may be set at a time:
-	//   - secretTrait
-	//
-	AppResource *AppResource `json:"appResource,omitempty"`
 	// JSONPATH expression indicating the location of the App object in the array
-	AppPath *string `json:"appPath,omitempty"`
+	AppPath           *string                 `json:"appPath,omitempty"`
+	AppResource       *AppResource            `json:"appResource,omitempty"`
+	ObjectPermissions *ActorObjectPermissions `json:"objectPermissions,omitempty"`
 	// JSONPATH expression indicating the location of the Parent Resource object in the array
 	ParentResourcePath *string `json:"parentResourcePath,omitempty"`
 	// JSONPATH expression indicating the location of the Parent Resource Type object in the array
@@ -22,11 +16,11 @@ type AppResourceView struct {
 	ResourceTypePath *string `json:"resourceTypePath,omitempty"`
 }
 
-func (a *AppResourceView) GetActorObjectPermissions() *ActorObjectPermissions {
+func (a *AppResourceView) GetAppPath() *string {
 	if a == nil {
 		return nil
 	}
-	return a.ActorObjectPermissions
+	return a.AppPath
 }
 
 func (a *AppResourceView) GetAppResource() *AppResource {
@@ -36,11 +30,11 @@ func (a *AppResourceView) GetAppResource() *AppResource {
 	return a.AppResource
 }
 
-func (a *AppResourceView) GetAppPath() *string {
+func (a *AppResourceView) GetObjectPermissions() *ActorObjectPermissions {
 	if a == nil {
 		return nil
 	}
-	return a.AppPath
+	return a.ObjectPermissions
 }
 
 func (a *AppResourceView) GetParentResourcePath() *string {

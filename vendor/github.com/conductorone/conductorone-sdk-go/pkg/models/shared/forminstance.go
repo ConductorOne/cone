@@ -34,54 +34,21 @@ func (e *FormInstanceState) IsExact() bool {
 //   - reassigned
 //   - skipped
 type FormInstance struct {
-	// The FormCompletedAction message.
-	FormCompletedAction *FormCompletedAction `json:"completed,omitempty"`
-	// The ReassignedAction object describes the outcome of a policy step that has been reassigned.
-	ReassignedAction *ReassignedAction `json:"reassigned,omitempty"`
-	// A form is a collection of fields to be filled out by a user
-	RequestSchemaForm *RequestSchemaForm `json:"form,omitempty"`
-	// The restart action describes the outcome of policy steps for when the task was restarted. This can be applied to multiple steps since restart skips all pending next steps.
-	RestartAction *RestartAction `json:"restarted,omitempty"`
-	// The SkippedAction object describes the outcome of a policy step that has been skipped.
-	SkippedAction *SkippedAction `json:"skipped,omitempty"`
-	Data          map[string]any `json:"data,omitempty"`
+	Completed  *FormCompletedAction `json:"completed,omitempty"`
+	Data       map[string]any       `json:"data,omitempty"`
+	Form       *RequestSchemaForm   `json:"form,omitempty"`
+	Reassigned *ReassignedAction    `json:"reassigned,omitempty"`
+	Restarted  *RestartAction       `json:"restarted,omitempty"`
+	Skipped    *SkippedAction       `json:"skipped,omitempty"`
 	// The state field.
 	State *FormInstanceState `json:"state,omitempty"`
 }
 
-func (f *FormInstance) GetFormCompletedAction() *FormCompletedAction {
+func (f *FormInstance) GetCompleted() *FormCompletedAction {
 	if f == nil {
 		return nil
 	}
-	return f.FormCompletedAction
-}
-
-func (f *FormInstance) GetReassignedAction() *ReassignedAction {
-	if f == nil {
-		return nil
-	}
-	return f.ReassignedAction
-}
-
-func (f *FormInstance) GetRequestSchemaForm() *RequestSchemaForm {
-	if f == nil {
-		return nil
-	}
-	return f.RequestSchemaForm
-}
-
-func (f *FormInstance) GetRestartAction() *RestartAction {
-	if f == nil {
-		return nil
-	}
-	return f.RestartAction
-}
-
-func (f *FormInstance) GetSkippedAction() *SkippedAction {
-	if f == nil {
-		return nil
-	}
-	return f.SkippedAction
+	return f.Completed
 }
 
 func (f *FormInstance) GetData() map[string]any {
@@ -89,6 +56,34 @@ func (f *FormInstance) GetData() map[string]any {
 		return nil
 	}
 	return f.Data
+}
+
+func (f *FormInstance) GetForm() *RequestSchemaForm {
+	if f == nil {
+		return nil
+	}
+	return f.Form
+}
+
+func (f *FormInstance) GetReassigned() *ReassignedAction {
+	if f == nil {
+		return nil
+	}
+	return f.Reassigned
+}
+
+func (f *FormInstance) GetRestarted() *RestartAction {
+	if f == nil {
+		return nil
+	}
+	return f.Restarted
+}
+
+func (f *FormInstance) GetSkipped() *SkippedAction {
+	if f == nil {
+		return nil
+	}
+	return f.Skipped
 }
 
 func (f *FormInstance) GetState() *FormInstanceState {

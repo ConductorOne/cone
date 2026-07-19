@@ -11,10 +11,9 @@ import (
 // This message contains a oneof named view. Only a single field of the following list may be set at a time:
 //   - fileInputField
 type FileField struct {
-	// The FileInputField message.
-	FileInputField *FileInputField `json:"fileInputField,omitempty"`
 	// The acceptedFileTypes field.
-	AcceptedFileTypes []string `json:"acceptedFileTypes,omitempty"`
+	AcceptedFileTypes []string        `json:"acceptedFileTypes,omitempty"`
+	FileInputField    *FileInputField `json:"fileInputField,omitempty"`
 	// The maxFileSize field.
 	MaxFileSize *int64 `integer:"string" json:"maxFileSize,omitempty"`
 }
@@ -30,18 +29,18 @@ func (f *FileField) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (f *FileField) GetFileInputField() *FileInputField {
-	if f == nil {
-		return nil
-	}
-	return f.FileInputField
-}
-
 func (f *FileField) GetAcceptedFileTypes() []string {
 	if f == nil {
 		return nil
 	}
 	return f.AcceptedFileTypes
+}
+
+func (f *FileField) GetFileInputField() *FileInputField {
+	if f == nil {
+		return nil
+	}
+	return f.FileInputField
 }
 
 func (f *FileField) GetMaxFileSize() *int64 {

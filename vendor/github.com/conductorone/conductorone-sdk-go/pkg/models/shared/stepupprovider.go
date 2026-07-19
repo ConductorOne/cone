@@ -13,18 +13,6 @@ import (
 //   - oauth2
 //   - microsoft
 type StepUpProvider struct {
-	// StepUpMicrosoftSettings configures a Microsoft Entra step-up provider using Conditional Access.
-	StepUpMicrosoftSettings *StepUpMicrosoftSettings `json:"microsoft,omitempty"`
-	// StepUpOAuth2Settings repersents an OAuth2 provider that supports RFC 9470 <https://www.rfc-editor.org/rfc/rfc9470>
-	//
-	//  Common ACR values for OAuth2 providers include:
-	//    - "urn:okta:loa:1fa:any" (okta)
-	//    - "urn:okta:loa:1fa:pwd" (okta)
-	//    - "urn:okta:loa:2fa:any" (okta)
-	//    - "urn:okta:loa:2fa:any:ifpossible" (okta)
-	//    - "phr" (okta)
-	//    - "phrh" (okta)
-	StepUpOAuth2Settings *StepUpOAuth2Settings `json:"oauth2,omitempty"`
 	// The OAuth2 client ID used to authenticate with the step-up provider.
 	ClientID  *string    `json:"clientId,omitempty"`
 	CreatedAt *time.Time `json:"createdAt,omitempty"`
@@ -35,9 +23,11 @@ type StepUpProvider struct {
 	// The unique identifier of the step-up provider.
 	ID *string `json:"id,omitempty"`
 	// The OIDC issuer URL for the step-up provider.
-	IssuerURL    *string    `json:"issuerUrl,omitempty"`
-	LastTestedAt *time.Time `json:"lastTestedAt,omitempty"`
-	UpdatedAt    *time.Time `json:"updatedAt,omitempty"`
+	IssuerURL    *string                  `json:"issuerUrl,omitempty"`
+	LastTestedAt *time.Time               `json:"lastTestedAt,omitempty"`
+	Microsoft    *StepUpMicrosoftSettings `json:"microsoft,omitempty"`
+	Oauth2       *StepUpOAuth2Settings    `json:"oauth2,omitempty"`
+	UpdatedAt    *time.Time               `json:"updatedAt,omitempty"`
 }
 
 func (s StepUpProvider) MarshalJSON() ([]byte, error) {
@@ -49,20 +39,6 @@ func (s *StepUpProvider) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
-}
-
-func (s *StepUpProvider) GetStepUpMicrosoftSettings() *StepUpMicrosoftSettings {
-	if s == nil {
-		return nil
-	}
-	return s.StepUpMicrosoftSettings
-}
-
-func (s *StepUpProvider) GetStepUpOAuth2Settings() *StepUpOAuth2Settings {
-	if s == nil {
-		return nil
-	}
-	return s.StepUpOAuth2Settings
 }
 
 func (s *StepUpProvider) GetClientID() *string {
@@ -112,6 +88,20 @@ func (s *StepUpProvider) GetLastTestedAt() *time.Time {
 		return nil
 	}
 	return s.LastTestedAt
+}
+
+func (s *StepUpProvider) GetMicrosoft() *StepUpMicrosoftSettings {
+	if s == nil {
+		return nil
+	}
+	return s.Microsoft
+}
+
+func (s *StepUpProvider) GetOauth2() *StepUpOAuth2Settings {
+	if s == nil {
+		return nil
+	}
+	return s.Oauth2
 }
 
 func (s *StepUpProvider) GetUpdatedAt() *time.Time {

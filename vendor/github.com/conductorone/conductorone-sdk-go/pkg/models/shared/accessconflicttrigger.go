@@ -8,19 +8,11 @@ package shared
 //   - conflictMonitorRefs
 //   - allConflictMonitors
 type AccessConflictTrigger struct {
-	// The ConflictMonitorRefs message.
-	ConflictMonitorRefs *ConflictMonitorRefs `json:"conflictMonitorRefs,omitempty"`
 	// The allConflictMonitors field.
 	// This field is part of the `conflict_monitor_selector` oneof.
 	// See the documentation for `c1.api.automations.v1.AccessConflictTrigger` for more details.
-	AllConflictMonitors *bool `json:"allConflictMonitors,omitempty"`
-}
-
-func (a *AccessConflictTrigger) GetConflictMonitorRefs() *ConflictMonitorRefs {
-	if a == nil {
-		return nil
-	}
-	return a.ConflictMonitorRefs
+	AllConflictMonitors *bool                `json:"allConflictMonitors,omitempty"`
+	ConflictMonitorRefs *ConflictMonitorRefs `json:"conflictMonitorRefs,omitempty"`
 }
 
 func (a *AccessConflictTrigger) GetAllConflictMonitors() *bool {
@@ -28,4 +20,11 @@ func (a *AccessConflictTrigger) GetAllConflictMonitors() *bool {
 		return nil
 	}
 	return a.AllConflictMonitors
+}
+
+func (a *AccessConflictTrigger) GetConflictMonitorRefs() *ConflictMonitorRefs {
+	if a == nil {
+		return nil
+	}
+	return a.ConflictMonitorRefs
 }

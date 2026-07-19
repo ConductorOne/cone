@@ -4,34 +4,18 @@ package shared
 
 // The ConnectorServiceCreateDelegatedRequest message contains the fields required to create a connector.
 type ConnectorServiceCreateDelegatedRequest struct {
-	// The AppManagedStateBindingRef message.
-	AppManagedStateBindingRef *AppManagedStateBindingRef `json:"appManagedStateBindingRef,omitempty"`
-	// The ConnectorExpandMask is used to expand related objects on a connector.
-	ConnectorExpandMask *ConnectorExpandMask `json:"expandMask,omitempty"`
 	// Sets entitlement owners on the app.
-	AppEntitlementOwnerRefs []AppEntitlementRef `json:"appEntitlementOwnerRefs,omitempty"`
+	AppEntitlementOwnerRefs   []AppEntitlementRef        `json:"appEntitlementOwnerRefs,omitempty"`
+	AppManagedStateBindingRef *AppManagedStateBindingRef `json:"appManagedStateBindingRef,omitempty"`
 	// The catalogId describes which catalog entry this connector is an instance of. For example, every Okta connector will have the same catalogId indicating it is an Okta connector.
 	CatalogID *string `json:"catalogId,omitempty"`
 	// The description of the connector.
 	Description *string `json:"description,omitempty"`
 	// The displayName of the connector.
-	DisplayName *string `json:"displayName,omitempty"`
+	DisplayName *string              `json:"displayName,omitempty"`
+	ExpandMask  *ConnectorExpandMask `json:"expandMask,omitempty"`
 	// The userIds field is used to define the integration owners of the connector.
 	UserIds []string `json:"userIds,omitempty"`
-}
-
-func (c *ConnectorServiceCreateDelegatedRequest) GetAppManagedStateBindingRef() *AppManagedStateBindingRef {
-	if c == nil {
-		return nil
-	}
-	return c.AppManagedStateBindingRef
-}
-
-func (c *ConnectorServiceCreateDelegatedRequest) GetConnectorExpandMask() *ConnectorExpandMask {
-	if c == nil {
-		return nil
-	}
-	return c.ConnectorExpandMask
 }
 
 func (c *ConnectorServiceCreateDelegatedRequest) GetAppEntitlementOwnerRefs() []AppEntitlementRef {
@@ -39,6 +23,13 @@ func (c *ConnectorServiceCreateDelegatedRequest) GetAppEntitlementOwnerRefs() []
 		return nil
 	}
 	return c.AppEntitlementOwnerRefs
+}
+
+func (c *ConnectorServiceCreateDelegatedRequest) GetAppManagedStateBindingRef() *AppManagedStateBindingRef {
+	if c == nil {
+		return nil
+	}
+	return c.AppManagedStateBindingRef
 }
 
 func (c *ConnectorServiceCreateDelegatedRequest) GetCatalogID() *string {
@@ -60,6 +51,13 @@ func (c *ConnectorServiceCreateDelegatedRequest) GetDisplayName() *string {
 		return nil
 	}
 	return c.DisplayName
+}
+
+func (c *ConnectorServiceCreateDelegatedRequest) GetExpandMask() *ConnectorExpandMask {
+	if c == nil {
+		return nil
+	}
+	return c.ExpandMask
 }
 
 func (c *ConnectorServiceCreateDelegatedRequest) GetUserIds() []string {

@@ -34,13 +34,12 @@ func (e *BundleAutomationCircuitBreakerState) IsExact() bool {
 
 // The BundleAutomationCircuitBreaker message.
 type BundleAutomationCircuitBreaker struct {
-	// A reference to a user.
-	UserRef *UserRef `json:"userRef,omitempty"`
 	// The removedMembersThresholdPercentage field.
 	RemovedMembersThresholdPercentage *int64 `integer:"string" json:"removedMembersThresholdPercentage,omitempty"`
 	// The state field.
 	State     *BundleAutomationCircuitBreakerState `json:"state,omitempty"`
 	UpdatedAt *time.Time                           `json:"updatedAt,omitempty"`
+	UserRef   *UserRef                             `json:"userRef,omitempty"`
 }
 
 func (b BundleAutomationCircuitBreaker) MarshalJSON() ([]byte, error) {
@@ -52,13 +51,6 @@ func (b *BundleAutomationCircuitBreaker) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
-}
-
-func (b *BundleAutomationCircuitBreaker) GetUserRef() *UserRef {
-	if b == nil {
-		return nil
-	}
-	return b.UserRef
 }
 
 func (b *BundleAutomationCircuitBreaker) GetRemovedMembersThresholdPercentage() *int64 {
@@ -80,4 +72,11 @@ func (b *BundleAutomationCircuitBreaker) GetUpdatedAt() *time.Time {
 		return nil
 	}
 	return b.UpdatedAt
+}
+
+func (b *BundleAutomationCircuitBreaker) GetUserRef() *UserRef {
+	if b == nil {
+		return nil
+	}
+	return b.UserRef
 }

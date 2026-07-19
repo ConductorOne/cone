@@ -8,30 +8,14 @@ package shared
 //   - value
 //   - range
 type FacetCategory struct {
-	// The FacetRangeItem message.
-	FacetRangeItem *FacetRangeItem `json:"range,omitempty"`
-	// The FacetValueItem message.
-	FacetValueItem *FacetValueItem `json:"value,omitempty"`
 	// The display name of the category.
 	DisplayName *string `json:"displayName,omitempty"`
 	// An icon for the category.
 	IconURL *string `json:"iconUrl,omitempty"`
 	// The param that is being set when checking a facet in this category.
-	Param *string `json:"param,omitempty"`
-}
-
-func (f *FacetCategory) GetFacetRangeItem() *FacetRangeItem {
-	if f == nil {
-		return nil
-	}
-	return f.FacetRangeItem
-}
-
-func (f *FacetCategory) GetFacetValueItem() *FacetValueItem {
-	if f == nil {
-		return nil
-	}
-	return f.FacetValueItem
+	Param *string         `json:"param,omitempty"`
+	Range *FacetRangeItem `json:"range,omitempty"`
+	Value *FacetValueItem `json:"value,omitempty"`
 }
 
 func (f *FacetCategory) GetDisplayName() *string {
@@ -53,4 +37,18 @@ func (f *FacetCategory) GetParam() *string {
 		return nil
 	}
 	return f.Param
+}
+
+func (f *FacetCategory) GetRange() *FacetRangeItem {
+	if f == nil {
+		return nil
+	}
+	return f.Range
+}
+
+func (f *FacetCategory) GetValue() *FacetValueItem {
+	if f == nil {
+		return nil
+	}
+	return f.Value
 }

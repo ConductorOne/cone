@@ -4,16 +4,8 @@ package shared
 
 // The WebhooksServiceUpdateRequest message contains the webhook object to update and a field mask to indicate which fields to update. It uses URL value for input.
 type WebhooksServiceUpdateRequest struct {
-	// The Webhook message.
-	WebhookEndpoint *WebhookEndpointInput `json:"webhook,omitempty"`
-	UpdateMask      *string               `json:"updateMask,omitempty"`
-}
-
-func (w *WebhooksServiceUpdateRequest) GetWebhookEndpoint() *WebhookEndpointInput {
-	if w == nil {
-		return nil
-	}
-	return w.WebhookEndpoint
+	UpdateMask *string               `json:"updateMask,omitempty"`
+	Webhook    *WebhookEndpointInput `json:"webhook,omitempty"`
 }
 
 func (w *WebhooksServiceUpdateRequest) GetUpdateMask() *string {
@@ -21,4 +13,11 @@ func (w *WebhooksServiceUpdateRequest) GetUpdateMask() *string {
 		return nil
 	}
 	return w.UpdateMask
+}
+
+func (w *WebhooksServiceUpdateRequest) GetWebhook() *WebhookEndpointInput {
+	if w == nil {
+		return nil
+	}
+	return w.Webhook
 }

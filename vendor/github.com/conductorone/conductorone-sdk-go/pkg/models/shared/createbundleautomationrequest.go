@@ -2,36 +2,48 @@
 
 package shared
 
+import (
+	"github.com/conductorone/conductorone-sdk-go/pkg/utils"
+)
+
 // CreateBundleAutomationRequest - The request message for creating a new bundle automation rule on a catalog.
 //
 // This message contains a oneof named conditions. Only a single field of the following list may be set at a time:
 //   - entitlements
 //   - cel
 type CreateBundleAutomationRequest struct {
-	// The BundleAutomationRuleCEL message.
-	BundleAutomationRuleCEL *BundleAutomationRuleCEL `json:"cel,omitempty"`
-	// The BundleAutomationRuleEntitlement message.
-	BundleAutomationRuleEntitlement *BundleAutomationRuleEntitlement `json:"entitlements,omitempty"`
+	Cel *BundleAutomationRuleCEL `json:"cel,omitempty"`
 	// Whether to create access request tasks for matched users instead of granting directly.
 	CreateTasks *bool `json:"createTasks,omitempty"`
 	// Whether to disable the circuit breaker that pauses the automation when excessive membership changes are detected.
 	DisableCircuitBreaker *bool `json:"disableCircuitBreaker,omitempty"`
 	// Whether the automation should actively run on its schedule.
 	Enabled *bool `json:"enabled,omitempty"`
+	// When true, the circuit breaker is evaluated even on profiles below the
+	//  tenant min-members floor. Defaults to false.
+	EnforceOnSmallProfiles *bool                            `json:"enforceOnSmallProfiles,omitempty"`
+	Entitlements           *BundleAutomationRuleEntitlement `json:"entitlements,omitempty"`
+	// Per-automation override for the removed-members percent that trips the
+	//  circuit breaker (1-100). 0 / unset means inherit the tenant default.
+	RemovedMembersThresholdPercent *int64 `integer:"string" json:"removedMembersThresholdPercent,omitempty"`
 }
 
-func (c *CreateBundleAutomationRequest) GetBundleAutomationRuleCEL() *BundleAutomationRuleCEL {
+func (c CreateBundleAutomationRequest) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(c, "", false)
+}
+
+func (c *CreateBundleAutomationRequest) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &c, "", false, nil); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (c *CreateBundleAutomationRequest) GetCel() *BundleAutomationRuleCEL {
 	if c == nil {
 		return nil
 	}
-	return c.BundleAutomationRuleCEL
-}
-
-func (c *CreateBundleAutomationRequest) GetBundleAutomationRuleEntitlement() *BundleAutomationRuleEntitlement {
-	if c == nil {
-		return nil
-	}
-	return c.BundleAutomationRuleEntitlement
+	return c.Cel
 }
 
 func (c *CreateBundleAutomationRequest) GetCreateTasks() *bool {
@@ -53,4 +65,25 @@ func (c *CreateBundleAutomationRequest) GetEnabled() *bool {
 		return nil
 	}
 	return c.Enabled
+}
+
+func (c *CreateBundleAutomationRequest) GetEnforceOnSmallProfiles() *bool {
+	if c == nil {
+		return nil
+	}
+	return c.EnforceOnSmallProfiles
+}
+
+func (c *CreateBundleAutomationRequest) GetEntitlements() *BundleAutomationRuleEntitlement {
+	if c == nil {
+		return nil
+	}
+	return c.Entitlements
+}
+
+func (c *CreateBundleAutomationRequest) GetRemovedMembersThresholdPercent() *int64 {
+	if c == nil {
+		return nil
+	}
+	return c.RemovedMembersThresholdPercent
 }

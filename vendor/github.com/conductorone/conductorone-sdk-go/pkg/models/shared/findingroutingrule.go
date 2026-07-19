@@ -9,14 +9,7 @@ import (
 
 // The FindingRoutingRule message.
 type FindingRoutingRule struct {
-	// The FindingRoutingRuleAction message.
-	//
-	// This message contains a oneof named action. Only a single field of the following list may be set at a time:
-	//   - createTask
-	//   - suppress
-	//   - notify
-	//
-	FindingRoutingRuleAction *FindingRoutingRuleAction `json:"action,omitempty"`
+	Action *FindingRoutingRuleAction `json:"action,omitempty"`
 	// The appId field.
 	AppID *string `json:"appId,omitempty"`
 	// The condition field.
@@ -48,11 +41,11 @@ func (f *FindingRoutingRule) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (f *FindingRoutingRule) GetFindingRoutingRuleAction() *FindingRoutingRuleAction {
+func (f *FindingRoutingRule) GetAction() *FindingRoutingRuleAction {
 	if f == nil {
 		return nil
 	}
-	return f.FindingRoutingRuleAction
+	return f.Action
 }
 
 func (f *FindingRoutingRule) GetAppID() *string {

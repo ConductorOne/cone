@@ -4,28 +4,19 @@ package shared
 
 // The TaskAuditReassignedToDelegate message.
 type TaskAuditReassignedToDelegate struct {
-	// The User object provides all of the details for an user, as well as some configuration.
-	User *User `json:"delegatedAssigneeUser,omitempty"`
-	// The User object provides all of the details for an user, as well as some configuration.
-	User1 *User `json:"originalAssigneeUser,omitempty"`
+	DelegatedAssigneeUser *User `json:"delegatedAssigneeUser,omitempty"`
 	// The delegatedAssigneeUserId field.
 	DelegatedAssigneeUserID *string `json:"delegatedAssigneeUserId,omitempty"`
+	OriginalAssigneeUser    *User   `json:"originalAssigneeUser,omitempty"`
 	// The originalAssigneeUserId field.
 	OriginalAssigneeUserID *string `json:"originalAssigneeUserId,omitempty"`
 }
 
-func (t *TaskAuditReassignedToDelegate) GetUser() *User {
+func (t *TaskAuditReassignedToDelegate) GetDelegatedAssigneeUser() *User {
 	if t == nil {
 		return nil
 	}
-	return t.User
-}
-
-func (t *TaskAuditReassignedToDelegate) GetUser1() *User {
-	if t == nil {
-		return nil
-	}
-	return t.User1
+	return t.DelegatedAssigneeUser
 }
 
 func (t *TaskAuditReassignedToDelegate) GetDelegatedAssigneeUserID() *string {
@@ -33,6 +24,13 @@ func (t *TaskAuditReassignedToDelegate) GetDelegatedAssigneeUserID() *string {
 		return nil
 	}
 	return t.DelegatedAssigneeUserID
+}
+
+func (t *TaskAuditReassignedToDelegate) GetOriginalAssigneeUser() *User {
+	if t == nil {
+		return nil
+	}
+	return t.OriginalAssigneeUser
 }
 
 func (t *TaskAuditReassignedToDelegate) GetOriginalAssigneeUserID() *string {

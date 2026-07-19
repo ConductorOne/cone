@@ -4,8 +4,7 @@ package shared
 
 // The AppEntitlementProxyView message.
 type AppEntitlementProxyView struct {
-	// An entitlement proxy binding that defines a hierarchical relationship between two entitlements.
-	AppEntitlementProxy *AppEntitlementProxy `json:"appProxyEntitlement,omitempty"`
+	AppProxyEntitlement *AppEntitlementProxy `json:"appProxyEntitlement,omitempty"`
 	// The dstAppEntitlementPath field.
 	DstAppEntitlementPath *string `json:"dstAppEntitlementPath,omitempty"`
 	// The dstAppPath field.
@@ -16,11 +15,11 @@ type AppEntitlementProxyView struct {
 	SrcAppPath *string `json:"srcAppPath,omitempty"`
 }
 
-func (a *AppEntitlementProxyView) GetAppEntitlementProxy() *AppEntitlementProxy {
+func (a *AppEntitlementProxyView) GetAppProxyEntitlement() *AppEntitlementProxy {
 	if a == nil {
 		return nil
 	}
-	return a.AppEntitlementProxy
+	return a.AppProxyEntitlement
 }
 
 func (a *AppEntitlementProxyView) GetDstAppEntitlementPath() *string {

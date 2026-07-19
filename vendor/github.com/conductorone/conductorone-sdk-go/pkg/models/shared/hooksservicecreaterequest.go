@@ -32,21 +32,7 @@ func (e *HooksServiceCreateRequestEvent) IsExact() bool {
 //   - function
 //   - builtinPattern
 type HooksServiceCreateRequest struct {
-	// BuiltInPattern references a ConductorOne-maintained DLP pattern.
-	//  The specific pattern and its configuration are encoded as a oneof.
-	//
-	// This message contains a oneof named config. Only a single field of the following list may be set at a time:
-	//   - piiRedaction
-	//   - creditCardBlocking
-	//   - queryScopeLimit
-	//   - writeAuthorization
-	//   - sensitiveFileGuard
-	//
-	BuiltInPattern *BuiltInPattern `json:"builtinPattern,omitempty"`
-	// HookFilter determines which tool calls a hook applies to.
-	HookFilter *HookFilter `json:"filter,omitempty"`
-	// HookFunctionRef identifies a customer-authored function to invoke.
-	HookFunctionRef *HookFunctionRef `json:"function,omitempty"`
+	BuiltinPattern *BuiltInPattern `json:"builtinPattern,omitempty"`
 	// The description field.
 	Description *string `json:"description,omitempty"`
 	// The displayName field.
@@ -54,30 +40,18 @@ type HooksServiceCreateRequest struct {
 	// The enabled field.
 	Enabled *bool `json:"enabled,omitempty"`
 	// The event field.
-	Event *HooksServiceCreateRequestEvent `json:"event,omitempty"`
+	Event    *HooksServiceCreateRequestEvent `json:"event,omitempty"`
+	Filter   *HookFilter                     `json:"filter,omitempty"`
+	Function *HookFunctionRef                `json:"function,omitempty"`
 	// The priority field.
 	Priority *int `json:"priority,omitempty"`
 }
 
-func (h *HooksServiceCreateRequest) GetBuiltInPattern() *BuiltInPattern {
+func (h *HooksServiceCreateRequest) GetBuiltinPattern() *BuiltInPattern {
 	if h == nil {
 		return nil
 	}
-	return h.BuiltInPattern
-}
-
-func (h *HooksServiceCreateRequest) GetHookFilter() *HookFilter {
-	if h == nil {
-		return nil
-	}
-	return h.HookFilter
-}
-
-func (h *HooksServiceCreateRequest) GetHookFunctionRef() *HookFunctionRef {
-	if h == nil {
-		return nil
-	}
-	return h.HookFunctionRef
+	return h.BuiltinPattern
 }
 
 func (h *HooksServiceCreateRequest) GetDescription() *string {
@@ -106,6 +80,20 @@ func (h *HooksServiceCreateRequest) GetEvent() *HooksServiceCreateRequestEvent {
 		return nil
 	}
 	return h.Event
+}
+
+func (h *HooksServiceCreateRequest) GetFilter() *HookFilter {
+	if h == nil {
+		return nil
+	}
+	return h.Filter
+}
+
+func (h *HooksServiceCreateRequest) GetFunction() *HookFunctionRef {
+	if h == nil {
+		return nil
+	}
+	return h.Function
 }
 
 func (h *HooksServiceCreateRequest) GetPriority() *int {

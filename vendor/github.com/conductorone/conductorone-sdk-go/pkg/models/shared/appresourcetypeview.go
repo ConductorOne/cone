@@ -4,17 +4,9 @@ package shared
 
 // The AppResourceTypeView message.
 type AppResourceTypeView struct {
-	// The AppResourceType is referenced by an app entitlement defining its resource types. Commonly things like Group or Role.
-	AppResourceType *AppResourceType `json:"appResourceType,omitempty"`
 	// JSONPATH expression indicating the location of the App object in the  array
-	AppPath *string `json:"appPath,omitempty"`
-}
-
-func (a *AppResourceTypeView) GetAppResourceType() *AppResourceType {
-	if a == nil {
-		return nil
-	}
-	return a.AppResourceType
+	AppPath         *string          `json:"appPath,omitempty"`
+	AppResourceType *AppResourceType `json:"appResourceType,omitempty"`
 }
 
 func (a *AppResourceTypeView) GetAppPath() *string {
@@ -22,4 +14,11 @@ func (a *AppResourceTypeView) GetAppPath() *string {
 		return nil
 	}
 	return a.AppPath
+}
+
+func (a *AppResourceTypeView) GetAppResourceType() *AppResourceType {
+	if a == nil {
+		return nil
+	}
+	return a.AppResourceType
 }

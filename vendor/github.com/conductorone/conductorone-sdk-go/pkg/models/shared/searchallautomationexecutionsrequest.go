@@ -5,16 +5,17 @@ package shared
 type ExecutionStates string
 
 const (
-	ExecutionStatesAutomationExecutionStateUnspecified  ExecutionStates = "AUTOMATION_EXECUTION_STATE_UNSPECIFIED"
-	ExecutionStatesAutomationExecutionStatePending      ExecutionStates = "AUTOMATION_EXECUTION_STATE_PENDING"
-	ExecutionStatesAutomationExecutionStateCreating     ExecutionStates = "AUTOMATION_EXECUTION_STATE_CREATING"
-	ExecutionStatesAutomationExecutionStateGetStep      ExecutionStates = "AUTOMATION_EXECUTION_STATE_GET_STEP"
-	ExecutionStatesAutomationExecutionStateProcessStep  ExecutionStates = "AUTOMATION_EXECUTION_STATE_PROCESS_STEP"
-	ExecutionStatesAutomationExecutionStateCompleteStep ExecutionStates = "AUTOMATION_EXECUTION_STATE_COMPLETE_STEP"
-	ExecutionStatesAutomationExecutionStateDone         ExecutionStates = "AUTOMATION_EXECUTION_STATE_DONE"
-	ExecutionStatesAutomationExecutionStateError        ExecutionStates = "AUTOMATION_EXECUTION_STATE_ERROR"
-	ExecutionStatesAutomationExecutionStateTerminate    ExecutionStates = "AUTOMATION_EXECUTION_STATE_TERMINATE"
-	ExecutionStatesAutomationExecutionStateWaiting      ExecutionStates = "AUTOMATION_EXECUTION_STATE_WAITING"
+	ExecutionStatesAutomationExecutionStateUnspecified            ExecutionStates = "AUTOMATION_EXECUTION_STATE_UNSPECIFIED"
+	ExecutionStatesAutomationExecutionStatePending                ExecutionStates = "AUTOMATION_EXECUTION_STATE_PENDING"
+	ExecutionStatesAutomationExecutionStateCreating               ExecutionStates = "AUTOMATION_EXECUTION_STATE_CREATING"
+	ExecutionStatesAutomationExecutionStateGetStep                ExecutionStates = "AUTOMATION_EXECUTION_STATE_GET_STEP"
+	ExecutionStatesAutomationExecutionStateProcessStep            ExecutionStates = "AUTOMATION_EXECUTION_STATE_PROCESS_STEP"
+	ExecutionStatesAutomationExecutionStateCompleteStep           ExecutionStates = "AUTOMATION_EXECUTION_STATE_COMPLETE_STEP"
+	ExecutionStatesAutomationExecutionStateDone                   ExecutionStates = "AUTOMATION_EXECUTION_STATE_DONE"
+	ExecutionStatesAutomationExecutionStateError                  ExecutionStates = "AUTOMATION_EXECUTION_STATE_ERROR"
+	ExecutionStatesAutomationExecutionStateTerminate              ExecutionStates = "AUTOMATION_EXECUTION_STATE_TERMINATE"
+	ExecutionStatesAutomationExecutionStateWaiting                ExecutionStates = "AUTOMATION_EXECUTION_STATE_WAITING"
+	ExecutionStatesAutomationExecutionStatePausedByCircuitBreaker ExecutionStates = "AUTOMATION_EXECUTION_STATE_PAUSED_BY_CIRCUIT_BREAKER"
 )
 
 func (e ExecutionStates) ToPointer() *ExecutionStates {
@@ -25,7 +26,7 @@ func (e ExecutionStates) ToPointer() *ExecutionStates {
 func (e *ExecutionStates) IsExact() bool {
 	if e != nil {
 		switch *e {
-		case "AUTOMATION_EXECUTION_STATE_UNSPECIFIED", "AUTOMATION_EXECUTION_STATE_PENDING", "AUTOMATION_EXECUTION_STATE_CREATING", "AUTOMATION_EXECUTION_STATE_GET_STEP", "AUTOMATION_EXECUTION_STATE_PROCESS_STEP", "AUTOMATION_EXECUTION_STATE_COMPLETE_STEP", "AUTOMATION_EXECUTION_STATE_DONE", "AUTOMATION_EXECUTION_STATE_ERROR", "AUTOMATION_EXECUTION_STATE_TERMINATE", "AUTOMATION_EXECUTION_STATE_WAITING":
+		case "AUTOMATION_EXECUTION_STATE_UNSPECIFIED", "AUTOMATION_EXECUTION_STATE_PENDING", "AUTOMATION_EXECUTION_STATE_CREATING", "AUTOMATION_EXECUTION_STATE_GET_STEP", "AUTOMATION_EXECUTION_STATE_PROCESS_STEP", "AUTOMATION_EXECUTION_STATE_COMPLETE_STEP", "AUTOMATION_EXECUTION_STATE_DONE", "AUTOMATION_EXECUTION_STATE_ERROR", "AUTOMATION_EXECUTION_STATE_TERMINATE", "AUTOMATION_EXECUTION_STATE_WAITING", "AUTOMATION_EXECUTION_STATE_PAUSED_BY_CIRCUIT_BREAKER":
 			return true
 		}
 	}
@@ -34,27 +35,19 @@ func (e *ExecutionStates) IsExact() bool {
 
 // The SearchAllAutomationExecutionsRequest message.
 type SearchAllAutomationExecutionsRequest struct {
-	// The AutomationExecutionExpandMask message.
-	AutomationExecutionExpandMask *AutomationExecutionExpandMask `json:"expandMask,omitempty"`
 	// Filter to executions associated with one or more apps.
 	AppIds []string `json:"appIds,omitempty"`
 	// Filter to one or more specific automation templates.
 	AutomationTemplateIds []string `json:"automationTemplateIds,omitempty"`
 	// Filter by execution state (e.g. DONE, ERROR).
-	ExecutionStates []ExecutionStates `json:"executionStates,omitempty"`
+	ExecutionStates []ExecutionStates              `json:"executionStates,omitempty"`
+	ExpandMask      *AutomationExecutionExpandMask `json:"expandMask,omitempty"`
 	// Maximum number of results to return per page.
 	PageSize *int `json:"pageSize,omitempty"`
 	// Pagination token from a previous SearchAllAutomationExecutionsResponse.
 	PageToken *string `json:"pageToken,omitempty"`
 	// Filter to executions where one or more C1 users are subjects.
 	SubjectUserIds []string `json:"subjectUserIds,omitempty"`
-}
-
-func (s *SearchAllAutomationExecutionsRequest) GetAutomationExecutionExpandMask() *AutomationExecutionExpandMask {
-	if s == nil {
-		return nil
-	}
-	return s.AutomationExecutionExpandMask
 }
 
 func (s *SearchAllAutomationExecutionsRequest) GetAppIds() []string {
@@ -76,6 +69,13 @@ func (s *SearchAllAutomationExecutionsRequest) GetExecutionStates() []ExecutionS
 		return nil
 	}
 	return s.ExecutionStates
+}
+
+func (s *SearchAllAutomationExecutionsRequest) GetExpandMask() *AutomationExecutionExpandMask {
+	if s == nil {
+		return nil
+	}
+	return s.ExpandMask
 }
 
 func (s *SearchAllAutomationExecutionsRequest) GetPageSize() *int {

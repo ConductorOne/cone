@@ -4,8 +4,6 @@ package shared
 
 // TaskServiceCreateRevokeRequest - Create a revoke task.
 type TaskServiceCreateRevokeRequest struct {
-	// The task expand mask is an array of strings that specifes the related objects the requester wishes to have returned when making a request where the expand mask is part of the input. Use '*' to view all possible responses.
-	TaskExpandMask *TaskExpandMask `json:"expandMask,omitempty"`
 	// The ID of the app entitlement to revoke access to.
 	AppEntitlementID string `json:"appEntitlementId"`
 	// The ID of the app associated with the entitlement.
@@ -13,16 +11,10 @@ type TaskServiceCreateRevokeRequest struct {
 	// The ID of the app user to revoke access from. This field and identityUserId cannot both be set for a given request.
 	AppUserID *string `json:"appUserId,omitempty"`
 	// The description of the request.
-	Description *string `json:"description,omitempty"`
+	Description *string         `json:"description,omitempty"`
+	ExpandMask  *TaskExpandMask `json:"expandMask,omitempty"`
 	// The ID of the user associated with the app user we are revoking access from. This field cannot be set if appUserID is also set.
 	IdentityUserID *string `json:"identityUserId,omitempty"`
-}
-
-func (t *TaskServiceCreateRevokeRequest) GetTaskExpandMask() *TaskExpandMask {
-	if t == nil {
-		return nil
-	}
-	return t.TaskExpandMask
 }
 
 func (t *TaskServiceCreateRevokeRequest) GetAppEntitlementID() string {
@@ -51,6 +43,13 @@ func (t *TaskServiceCreateRevokeRequest) GetDescription() *string {
 		return nil
 	}
 	return t.Description
+}
+
+func (t *TaskServiceCreateRevokeRequest) GetExpandMask() *TaskExpandMask {
+	if t == nil {
+		return nil
+	}
+	return t.ExpandMask
 }
 
 func (t *TaskServiceCreateRevokeRequest) GetIdentityUserID() *string {

@@ -57,31 +57,22 @@ func (e *TypeFilter) IsExact() bool {
 //   - daysSinceReviewed
 //   - grantsAddedBetween
 type GrantsByCriteriaScope struct {
-	// The GrantAccessProfileFilter message.
-	GrantAccessProfileFilter *GrantAccessProfileFilter `json:"accessProfileFilter,omitempty"`
-	// The GrantsAddedBetween message.
-	GrantsAddedBetween *GrantsAddedBetween `json:"grantsAddedBetween,omitempty"`
-	DaysSinceAdded     *string             `json:"daysSinceAdded,omitempty"`
-	DaysSinceLastUsed  *string             `json:"daysSinceLastUsed,omitempty"`
-	DaysSinceReviewed  *string             `json:"daysSinceReviewed,omitempty"`
+	AccessProfileFilter *GrantAccessProfileFilter `json:"accessProfileFilter,omitempty"`
+	DaysSinceAdded      *string                   `json:"daysSinceAdded,omitempty"`
+	DaysSinceLastUsed   *string                   `json:"daysSinceLastUsed,omitempty"`
+	DaysSinceReviewed   *string                   `json:"daysSinceReviewed,omitempty"`
+	GrantsAddedBetween  *GrantsAddedBetween       `json:"grantsAddedBetween,omitempty"`
 	// The sourceFilter field.
 	SourceFilter *SourceFilter `json:"sourceFilter,omitempty"`
 	// The typeFilter field.
 	TypeFilter *TypeFilter `json:"typeFilter,omitempty"`
 }
 
-func (g *GrantsByCriteriaScope) GetGrantAccessProfileFilter() *GrantAccessProfileFilter {
+func (g *GrantsByCriteriaScope) GetAccessProfileFilter() *GrantAccessProfileFilter {
 	if g == nil {
 		return nil
 	}
-	return g.GrantAccessProfileFilter
-}
-
-func (g *GrantsByCriteriaScope) GetGrantsAddedBetween() *GrantsAddedBetween {
-	if g == nil {
-		return nil
-	}
-	return g.GrantsAddedBetween
+	return g.AccessProfileFilter
 }
 
 func (g *GrantsByCriteriaScope) GetDaysSinceAdded() *string {
@@ -103,6 +94,13 @@ func (g *GrantsByCriteriaScope) GetDaysSinceReviewed() *string {
 		return nil
 	}
 	return g.DaysSinceReviewed
+}
+
+func (g *GrantsByCriteriaScope) GetGrantsAddedBetween() *GrantsAddedBetween {
+	if g == nil {
+		return nil
+	}
+	return g.GrantsAddedBetween
 }
 
 func (g *GrantsByCriteriaScope) GetSourceFilter() *SourceFilter {

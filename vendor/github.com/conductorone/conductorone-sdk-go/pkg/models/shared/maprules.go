@@ -4,63 +4,10 @@ package shared
 
 // MapRules describe the constraints applied to `map` values
 type MapRules struct {
-	// FieldRules encapsulates the rules for each type of field. Depending on the
-	//  field, the correct set should be used to ensure proper validations.
-	//
-	// This message contains a oneof named type. Only a single field of the following list may be set at a time:
-	//   - float
-	//   - double
-	//   - int32
-	//   - int64
-	//   - uint32
-	//   - uint64
-	//   - sint32
-	//   - sint64
-	//   - fixed32
-	//   - fixed64
-	//   - sfixed32
-	//   - sfixed64
-	//   - bool
-	//   - string
-	//   - bytes
-	//   - enum
-	//   - repeated
-	//   - map
-	//   - any
-	//   - duration
-	//   - timestamp
-	//
-	FieldRules *FieldRules `json:"keys,omitempty"`
-	// FieldRules encapsulates the rules for each type of field. Depending on the
-	//  field, the correct set should be used to ensure proper validations.
-	//
-	// This message contains a oneof named type. Only a single field of the following list may be set at a time:
-	//   - float
-	//   - double
-	//   - int32
-	//   - int64
-	//   - uint32
-	//   - uint64
-	//   - sint32
-	//   - sint64
-	//   - fixed32
-	//   - fixed64
-	//   - sfixed32
-	//   - sfixed64
-	//   - bool
-	//   - string
-	//   - bytes
-	//   - enum
-	//   - repeated
-	//   - map
-	//   - any
-	//   - duration
-	//   - timestamp
-	//
-	FieldRules1 *FieldRules `json:"values,omitempty"`
 	// IgnoreEmpty specifies that the validation rules of this field should be
 	//  evaluated only if the field is not empty
-	IgnoreEmpty *bool `json:"ignoreEmpty,omitempty"`
+	IgnoreEmpty *bool       `json:"ignoreEmpty,omitempty"`
+	Keys        *FieldRules `json:"keys,omitempty"`
 	// MaxPairs specifies that this field must have the specified number of
 	//  KVs at a maximum
 	MaxPairs *string `json:"maxPairs,omitempty"`
@@ -69,21 +16,8 @@ type MapRules struct {
 	MinPairs *string `json:"minPairs,omitempty"`
 	// NoSparse specifies values in this field cannot be unset. This only
 	//  applies to map's with message value types.
-	NoSparse *bool `json:"noSparse,omitempty"`
-}
-
-func (m *MapRules) GetFieldRules() *FieldRules {
-	if m == nil {
-		return nil
-	}
-	return m.FieldRules
-}
-
-func (m *MapRules) GetFieldRules1() *FieldRules {
-	if m == nil {
-		return nil
-	}
-	return m.FieldRules1
+	NoSparse *bool       `json:"noSparse,omitempty"`
+	Values   *FieldRules `json:"values,omitempty"`
 }
 
 func (m *MapRules) GetIgnoreEmpty() *bool {
@@ -91,6 +25,13 @@ func (m *MapRules) GetIgnoreEmpty() *bool {
 		return nil
 	}
 	return m.IgnoreEmpty
+}
+
+func (m *MapRules) GetKeys() *FieldRules {
+	if m == nil {
+		return nil
+	}
+	return m.Keys
 }
 
 func (m *MapRules) GetMaxPairs() *string {
@@ -112,4 +53,11 @@ func (m *MapRules) GetNoSparse() *bool {
 		return nil
 	}
 	return m.NoSparse
+}
+
+func (m *MapRules) GetValues() *FieldRules {
+	if m == nil {
+		return nil
+	}
+	return m.Values
 }

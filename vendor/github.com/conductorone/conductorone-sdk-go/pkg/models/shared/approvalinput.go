@@ -16,43 +16,21 @@ package shared
 //   - resourceOwners
 //   - agent
 type ApprovalInput struct {
-	// The agent to assign the task to.
-	AgentApproval *AgentApproval `json:"agent,omitempty"`
-	// The AppGroupApproval object provides the configuration for setting a group as the approvers of an approval policy step.
-	AppGroupApproval *AppGroupApproval `json:"group,omitempty"`
-	// App owner approval provides the configuration for an approval step when the app owner is the target.
-	AppOwnerApproval *AppOwnerApproval `json:"appOwners,omitempty"`
-	// The entitlement owner approval allows configuration of the approval step when the target approvers are the entitlement owners.
-	EntitlementOwnerApproval *EntitlementOwnerApproval `json:"entitlementOwners,omitempty"`
-	// The Escalation message.
-	//
-	// This message contains a oneof named escalation_policy. Only a single field of the following list may be set at a time:
-	//   - replacePolicy
-	//   - reassignToApprovers
-	//   - cancelTicket
-	//   - skipStep
-	//
-	Escalation *Escalation `json:"escalation,omitempty"`
-	// The ExpressionApproval message.
-	ExpressionApproval *ExpressionApprovalInput `json:"expression,omitempty"`
-	// The manager approval object provides configuration options for approval when the target of the approval is the manager of the user in the task.
-	ManagerApproval *ManagerApprovalInput `json:"manager,omitempty"`
-	// The resource owner approval allows configuration of the approval step when the target approvers are the resource owners.
-	ResourceOwnerApproval *ResourceOwnerApproval `json:"resourceOwners,omitempty"`
-	// The self approval object describes the configuration of a policy step that needs to be approved by the target of the request.
-	SelfApproval *SelfApprovalInput `json:"self,omitempty"`
-	// The user approval object describes the approval configuration of a policy step that needs to be approved by a specific list of users.
-	UserApproval *UserApproval `json:"users,omitempty"`
-	// The WebhookApproval message.
-	WebhookApproval *WebhookApproval `json:"webhook,omitempty"`
+	Agent *AgentApproval `json:"agent,omitempty"`
 	// Whether ticket delegation is allowed for this step.
 	AllowDelegation *bool `json:"allowDelegation,omitempty"`
 	// Configuration to allow reassignment by reviewers during this step.
 	AllowReassignment *bool `json:"allowReassignment,omitempty"`
 	// List of users for whom this step can be reassigned.
-	AllowedReassignees []string `json:"allowedReassignees,omitempty"`
+	AllowedReassignees []string                  `json:"allowedReassignees,omitempty"`
+	AppOwners          *AppOwnerApproval         `json:"appOwners,omitempty"`
+	EntitlementOwners  *EntitlementOwnerApproval `json:"entitlementOwners,omitempty"`
+	Escalation         *Escalation               `json:"escalation,omitempty"`
 	// Whether escalation is enabled for this step.
-	EscalationEnabled *bool `json:"escalationEnabled,omitempty"`
+	EscalationEnabled *bool                    `json:"escalationEnabled,omitempty"`
+	Expression        *ExpressionApprovalInput `json:"expression,omitempty"`
+	Group             *AppGroupApproval        `json:"group,omitempty"`
+	Manager           *ManagerApprovalInput    `json:"manager,omitempty"`
 	// Configuration to require a reason when approving this step.
 	RequireApprovalReason *bool `json:"requireApprovalReason,omitempty"`
 	// Configuration to require a reason when denying this step.
@@ -61,84 +39,18 @@ type ApprovalInput struct {
 	RequireReassignmentReason *bool `json:"requireReassignmentReason,omitempty"`
 	// The ID of a step-up authentication provider that will be required for approvals on this step.
 	//  If set, approvers must complete the step-up authentication flow before they can approve.
-	RequiresStepUpProviderID *string `json:"requiresStepUpProviderId,omitempty"`
+	RequiresStepUpProviderID *string                `json:"requiresStepUpProviderId,omitempty"`
+	ResourceOwners           *ResourceOwnerApproval `json:"resourceOwners,omitempty"`
+	Self                     *SelfApprovalInput     `json:"self,omitempty"`
+	Users                    *UserApproval          `json:"users,omitempty"`
+	Webhook                  *WebhookApproval       `json:"webhook,omitempty"`
 }
 
-func (a *ApprovalInput) GetAgentApproval() *AgentApproval {
+func (a *ApprovalInput) GetAgent() *AgentApproval {
 	if a == nil {
 		return nil
 	}
-	return a.AgentApproval
-}
-
-func (a *ApprovalInput) GetAppGroupApproval() *AppGroupApproval {
-	if a == nil {
-		return nil
-	}
-	return a.AppGroupApproval
-}
-
-func (a *ApprovalInput) GetAppOwnerApproval() *AppOwnerApproval {
-	if a == nil {
-		return nil
-	}
-	return a.AppOwnerApproval
-}
-
-func (a *ApprovalInput) GetEntitlementOwnerApproval() *EntitlementOwnerApproval {
-	if a == nil {
-		return nil
-	}
-	return a.EntitlementOwnerApproval
-}
-
-func (a *ApprovalInput) GetEscalation() *Escalation {
-	if a == nil {
-		return nil
-	}
-	return a.Escalation
-}
-
-func (a *ApprovalInput) GetExpressionApproval() *ExpressionApprovalInput {
-	if a == nil {
-		return nil
-	}
-	return a.ExpressionApproval
-}
-
-func (a *ApprovalInput) GetManagerApproval() *ManagerApprovalInput {
-	if a == nil {
-		return nil
-	}
-	return a.ManagerApproval
-}
-
-func (a *ApprovalInput) GetResourceOwnerApproval() *ResourceOwnerApproval {
-	if a == nil {
-		return nil
-	}
-	return a.ResourceOwnerApproval
-}
-
-func (a *ApprovalInput) GetSelfApproval() *SelfApprovalInput {
-	if a == nil {
-		return nil
-	}
-	return a.SelfApproval
-}
-
-func (a *ApprovalInput) GetUserApproval() *UserApproval {
-	if a == nil {
-		return nil
-	}
-	return a.UserApproval
-}
-
-func (a *ApprovalInput) GetWebhookApproval() *WebhookApproval {
-	if a == nil {
-		return nil
-	}
-	return a.WebhookApproval
+	return a.Agent
 }
 
 func (a *ApprovalInput) GetAllowDelegation() *bool {
@@ -162,11 +74,53 @@ func (a *ApprovalInput) GetAllowedReassignees() []string {
 	return a.AllowedReassignees
 }
 
+func (a *ApprovalInput) GetAppOwners() *AppOwnerApproval {
+	if a == nil {
+		return nil
+	}
+	return a.AppOwners
+}
+
+func (a *ApprovalInput) GetEntitlementOwners() *EntitlementOwnerApproval {
+	if a == nil {
+		return nil
+	}
+	return a.EntitlementOwners
+}
+
+func (a *ApprovalInput) GetEscalation() *Escalation {
+	if a == nil {
+		return nil
+	}
+	return a.Escalation
+}
+
 func (a *ApprovalInput) GetEscalationEnabled() *bool {
 	if a == nil {
 		return nil
 	}
 	return a.EscalationEnabled
+}
+
+func (a *ApprovalInput) GetExpression() *ExpressionApprovalInput {
+	if a == nil {
+		return nil
+	}
+	return a.Expression
+}
+
+func (a *ApprovalInput) GetGroup() *AppGroupApproval {
+	if a == nil {
+		return nil
+	}
+	return a.Group
+}
+
+func (a *ApprovalInput) GetManager() *ManagerApprovalInput {
+	if a == nil {
+		return nil
+	}
+	return a.Manager
 }
 
 func (a *ApprovalInput) GetRequireApprovalReason() *bool {
@@ -195,4 +149,32 @@ func (a *ApprovalInput) GetRequiresStepUpProviderID() *string {
 		return nil
 	}
 	return a.RequiresStepUpProviderID
+}
+
+func (a *ApprovalInput) GetResourceOwners() *ResourceOwnerApproval {
+	if a == nil {
+		return nil
+	}
+	return a.ResourceOwners
+}
+
+func (a *ApprovalInput) GetSelf() *SelfApprovalInput {
+	if a == nil {
+		return nil
+	}
+	return a.Self
+}
+
+func (a *ApprovalInput) GetUsers() *UserApproval {
+	if a == nil {
+		return nil
+	}
+	return a.Users
+}
+
+func (a *ApprovalInput) GetWebhook() *WebhookApproval {
+	if a == nil {
+		return nil
+	}
+	return a.Webhook
 }

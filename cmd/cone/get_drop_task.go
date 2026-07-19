@@ -271,12 +271,12 @@ func runGet(cmd *cobra.Command, args []string) error {
 		task := accessRequest.TaskView.Task
 
 		// Check if the task has form fields
-		hasFormFields := len(formFields(task.RequestSchemaForm)) > 0
+		hasFormFields := len(formFields(task.Form)) > 0
 
 		if hasFormFields {
 			// Collect form fields if not already provided
 			if len(requestData) == 0 {
-				collectedData, err := collectFormFields(ctx, v, task.RequestSchemaForm)
+				collectedData, err := collectFormFields(ctx, v, task.Form)
 				if err != nil {
 					return nil, fmt.Errorf("error collecting form fields: %w", err)
 				}
@@ -290,7 +290,7 @@ func runGet(cmd *cobra.Command, args []string) error {
 				}
 			} else {
 				// Validate that provided form data matches the form structure
-				if err := validateFormData(task.RequestSchemaForm, requestData); err != nil {
+				if err := validateFormData(task.Form, requestData); err != nil {
 					pterm.Warning.Printf("Form data validation warning: %v\n", err)
 				}
 			}
@@ -573,8 +573,8 @@ func handleWaitBehavior(ctx context.Context, c client.C1Client, task *shared.Tas
 			break
 		}
 	}
-	if taskItem.TaskType.TaskTypeGrant != nil {
-		taskOutcome := taskItem.TaskType.TaskTypeGrant.Outcome
+	if taskItem.Type != nil && taskItem.Type.Grant != nil {
+		taskOutcome := taskItem.Type.Grant.Outcome
 		if *taskOutcome == shared.TaskTypeGrantOutcomeGrantOutcomeGranted {
 			spinner.Success("Entitlement granted successfully.")
 		} else {
@@ -582,8 +582,8 @@ func handleWaitBehavior(ctx context.Context, c client.C1Client, task *shared.Tas
 			return fmt.Errorf("failed to grant entitlement %s", string(*taskOutcome))
 		}
 	}
-	if taskItem.TaskType.TaskTypeRevoke != nil {
-		taskOutcome := taskItem.TaskType.TaskTypeRevoke.Outcome
+	if taskItem.Type != nil && taskItem.Type.Revoke != nil {
+		taskOutcome := taskItem.Type.Revoke.Outcome
 		if *taskOutcome == shared.TaskTypeRevokeOutcomeRevokeOutcomeRevoked {
 			spinner.Success("Entitlement revoked succesfully.")
 		} else {

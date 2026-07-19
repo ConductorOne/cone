@@ -40,19 +40,11 @@ func (t *TaskActionsServiceCloseResponseExpanded) GetAdditionalProperties() map[
 
 // The TaskActionsServiceCloseResponse returns a task view with paths indicating the location of expanded items in the array.
 type TaskActionsServiceCloseResponse struct {
-	// Contains a task and JSONPATH expressions that describe where in the expanded array related objects are located. This view can be used to display a fully-detailed dashboard of task information.
-	TaskView *TaskView `json:"taskView,omitempty"`
 	// List of serialized related objects.
 	Expanded []TaskActionsServiceCloseResponseExpanded `json:"expanded,omitempty"`
 	// The ID of the task close action created by this request.
-	TaskActionID *string `json:"taskActionId,omitempty"`
-}
-
-func (t *TaskActionsServiceCloseResponse) GetTaskView() *TaskView {
-	if t == nil {
-		return nil
-	}
-	return t.TaskView
+	TaskActionID *string   `json:"taskActionId,omitempty"`
+	TaskView     *TaskView `json:"taskView,omitempty"`
 }
 
 func (t *TaskActionsServiceCloseResponse) GetExpanded() []TaskActionsServiceCloseResponseExpanded {
@@ -67,4 +59,11 @@ func (t *TaskActionsServiceCloseResponse) GetTaskActionID() *string {
 		return nil
 	}
 	return t.TaskActionID
+}
+
+func (t *TaskActionsServiceCloseResponse) GetTaskView() *TaskView {
+	if t == nil {
+		return nil
+	}
+	return t.TaskView
 }

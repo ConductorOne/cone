@@ -8,22 +8,13 @@ package shared
 //   - chipsField
 //   - pickerField
 type StringSliceField struct {
-	// The ChipsField message.
 	ChipsField *ChipsField `json:"chipsField,omitempty"`
-	// The PickerField message.
-	//
-	// This message contains a oneof named type. Only a single field of the following list may be set at a time:
-	//   - appUserPicker
-	//   - resourcePicker
-	//   - c1UserPicker
-	//
-	PickerField *PickerField `json:"pickerField,omitempty"`
-	// RepeatedRules describe the constraints applied to `repeated` values
-	RepeatedRules *RepeatedRules `json:"rules,omitempty"`
 	// The defaultValues field.
-	DefaultValues []string `json:"defaultValues,omitempty"`
+	DefaultValues []string     `json:"defaultValues,omitempty"`
+	PickerField   *PickerField `json:"pickerField,omitempty"`
 	// The placeholder field.
-	Placeholder *string `json:"placeholder,omitempty"`
+	Placeholder *string        `json:"placeholder,omitempty"`
+	Rules       *RepeatedRules `json:"rules,omitempty"`
 }
 
 func (s *StringSliceField) GetChipsField() *ChipsField {
@@ -33,20 +24,6 @@ func (s *StringSliceField) GetChipsField() *ChipsField {
 	return s.ChipsField
 }
 
-func (s *StringSliceField) GetPickerField() *PickerField {
-	if s == nil {
-		return nil
-	}
-	return s.PickerField
-}
-
-func (s *StringSliceField) GetRepeatedRules() *RepeatedRules {
-	if s == nil {
-		return nil
-	}
-	return s.RepeatedRules
-}
-
 func (s *StringSliceField) GetDefaultValues() []string {
 	if s == nil {
 		return nil
@@ -54,9 +31,23 @@ func (s *StringSliceField) GetDefaultValues() []string {
 	return s.DefaultValues
 }
 
+func (s *StringSliceField) GetPickerField() *PickerField {
+	if s == nil {
+		return nil
+	}
+	return s.PickerField
+}
+
 func (s *StringSliceField) GetPlaceholder() *string {
 	if s == nil {
 		return nil
 	}
 	return s.Placeholder
+}
+
+func (s *StringSliceField) GetRules() *RepeatedRules {
+	if s == nil {
+		return nil
+	}
+	return s.Rules
 }

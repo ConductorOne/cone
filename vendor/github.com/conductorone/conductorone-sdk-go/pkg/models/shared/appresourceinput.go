@@ -11,11 +11,24 @@ import (
 // This message contains a oneof named metadata. Only a single field of the following list may be set at a time:
 //   - secretTrait
 type AppResourceInput struct {
-	// The SecretTrait message.
-	SecretTrait *SecretTrait `json:"secretTrait,omitempty"`
 	// The access config ID for this resource. May be empty.
 	//  Must be one of the builtin access config IDs or empty.
-	AccessConfigID *string `json:"accessConfigId,omitempty"`
+	AccessConfigID *string     `json:"accessConfigId,omitempty"`
+	AgentTrait     *AgentTrait `json:"agentTrait,omitempty"`
+	// Bounded key/value metadata bag for IaC marking and customer tags.
+	//  See .rfcs/object-annotations.md §2. Limits: ≤16 entries; keys 1–128
+	//  chars matching ^[A-Za-z][A-Za-z0-9._/-]{0,127}$; values 0–256 chars
+	//  URL-safe ASCII; total serialized ≤ 4096 bytes. Keys matching ^c1/
+	//  are reserved.
+	//
+	//  Well-known keys: `managed_by`, `iac_workspace`,
+	//  `iac_resource_address`, `iac_tool_version`.
+	//
+	//  Most AppResources are connector-synced; user-supplied annotations on
+	//  a synced resource will be overwritten by the next sync. The
+	//  annotations bag is most useful on user-created groups (the
+	//  `conductorone_app_resource` TF resource).
+	Annotations map[string]string `json:"annotations,omitempty"`
 	// The app that this resource belongs to.
 	AppID *string `json:"appId,omitempty"`
 	// The resource type that this resource is.
@@ -35,7 +48,8 @@ type AppResourceInput struct {
 	// The parent resource id, if this resource is a child of another resource.
 	ParentAppResourceID *string `json:"parentAppResourceId,omitempty"`
 	// The parent resource type id, if this resource is a child of another resource.
-	ParentAppResourceTypeID *string `json:"parentAppResourceTypeId,omitempty"`
+	ParentAppResourceTypeID *string      `json:"parentAppResourceTypeId,omitempty"`
+	SecretTrait             *SecretTrait `json:"secretTrait,omitempty"`
 }
 
 func (a AppResourceInput) MarshalJSON() ([]byte, error) {
@@ -49,18 +63,25 @@ func (a *AppResourceInput) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (a *AppResourceInput) GetSecretTrait() *SecretTrait {
-	if a == nil {
-		return nil
-	}
-	return a.SecretTrait
-}
-
 func (a *AppResourceInput) GetAccessConfigID() *string {
 	if a == nil {
 		return nil
 	}
 	return a.AccessConfigID
+}
+
+func (a *AppResourceInput) GetAgentTrait() *AgentTrait {
+	if a == nil {
+		return nil
+	}
+	return a.AgentTrait
+}
+
+func (a *AppResourceInput) GetAnnotations() map[string]string {
+	if a == nil {
+		return nil
+	}
+	return a.Annotations
 }
 
 func (a *AppResourceInput) GetAppID() *string {
@@ -131,4 +152,11 @@ func (a *AppResourceInput) GetParentAppResourceTypeID() *string {
 		return nil
 	}
 	return a.ParentAppResourceTypeID
+}
+
+func (a *AppResourceInput) GetSecretTrait() *SecretTrait {
+	if a == nil {
+		return nil
+	}
+	return a.SecretTrait
 }

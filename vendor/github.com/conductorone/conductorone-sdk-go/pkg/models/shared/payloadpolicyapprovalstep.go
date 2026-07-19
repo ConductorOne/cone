@@ -40,17 +40,9 @@ func (p *PayloadPolicyApprovalStepExpanded) GetAdditionalProperties() map[string
 
 // The PayloadPolicyApprovalStep message.
 type PayloadPolicyApprovalStep struct {
-	// Contains a task and JSONPATH expressions that describe where in the expanded array related objects are located. This view can be used to display a fully-detailed dashboard of task information.
-	TaskView *TaskView `json:"taskView,omitempty"`
 	// List of serialized related objects.
 	Expanded []PayloadPolicyApprovalStepExpanded `json:"expanded,omitempty"`
-}
-
-func (p *PayloadPolicyApprovalStep) GetTaskView() *TaskView {
-	if p == nil {
-		return nil
-	}
-	return p.TaskView
+	TaskView *TaskView                           `json:"taskView,omitempty"`
 }
 
 func (p *PayloadPolicyApprovalStep) GetExpanded() []PayloadPolicyApprovalStepExpanded {
@@ -58,4 +50,11 @@ func (p *PayloadPolicyApprovalStep) GetExpanded() []PayloadPolicyApprovalStepExp
 		return nil
 	}
 	return p.Expanded
+}
+
+func (p *PayloadPolicyApprovalStep) GetTaskView() *TaskView {
+	if p == nil {
+		return nil
+	}
+	return p.TaskView
 }

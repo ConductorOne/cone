@@ -8,44 +8,19 @@ package shared
 //   - all
 //   - celExpression
 type DirectoryServiceCreateRequest struct {
-	// The DirectoryAccountFilterAll message.
-	DirectoryAccountFilterAll *DirectoryAccountFilterAll `json:"all,omitempty"`
-	// The DirectoryAccountFilterCel message.
-	DirectoryAccountFilterCel *DirectoryAccountFilterCel `json:"celExpression,omitempty"`
-	// The fields to be included in the directory response.
-	DirectoryExpandMask *DirectoryExpandMask `json:"expandMask,omitempty"`
-	// DirectoryMergeConfig configures how AppUsers from this directory are matched to C1 Users.
-	DirectoryMergeConfig *DirectoryMergeConfig `json:"mergeConfig,omitempty"`
+	All *DirectoryAccountFilterAll `json:"all,omitempty"`
 	// The AppID to make into a directory, providing identities and more for the C1 app.
-	AppID *string `json:"appId,omitempty"`
+	AppID         *string                    `json:"appId,omitempty"`
+	CelExpression *DirectoryAccountFilterCel `json:"celExpression,omitempty"`
+	ExpandMask    *DirectoryExpandMask       `json:"expandMask,omitempty"`
+	MergeConfig   *DirectoryMergeConfig      `json:"mergeConfig,omitempty"`
 }
 
-func (d *DirectoryServiceCreateRequest) GetDirectoryAccountFilterAll() *DirectoryAccountFilterAll {
+func (d *DirectoryServiceCreateRequest) GetAll() *DirectoryAccountFilterAll {
 	if d == nil {
 		return nil
 	}
-	return d.DirectoryAccountFilterAll
-}
-
-func (d *DirectoryServiceCreateRequest) GetDirectoryAccountFilterCel() *DirectoryAccountFilterCel {
-	if d == nil {
-		return nil
-	}
-	return d.DirectoryAccountFilterCel
-}
-
-func (d *DirectoryServiceCreateRequest) GetDirectoryExpandMask() *DirectoryExpandMask {
-	if d == nil {
-		return nil
-	}
-	return d.DirectoryExpandMask
-}
-
-func (d *DirectoryServiceCreateRequest) GetDirectoryMergeConfig() *DirectoryMergeConfig {
-	if d == nil {
-		return nil
-	}
-	return d.DirectoryMergeConfig
+	return d.All
 }
 
 func (d *DirectoryServiceCreateRequest) GetAppID() *string {
@@ -53,4 +28,25 @@ func (d *DirectoryServiceCreateRequest) GetAppID() *string {
 		return nil
 	}
 	return d.AppID
+}
+
+func (d *DirectoryServiceCreateRequest) GetCelExpression() *DirectoryAccountFilterCel {
+	if d == nil {
+		return nil
+	}
+	return d.CelExpression
+}
+
+func (d *DirectoryServiceCreateRequest) GetExpandMask() *DirectoryExpandMask {
+	if d == nil {
+		return nil
+	}
+	return d.ExpandMask
+}
+
+func (d *DirectoryServiceCreateRequest) GetMergeConfig() *DirectoryMergeConfig {
+	if d == nil {
+		return nil
+	}
+	return d.MergeConfig
 }

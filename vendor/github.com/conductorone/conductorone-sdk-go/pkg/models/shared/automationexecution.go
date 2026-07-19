@@ -11,16 +11,17 @@ import (
 type AutomationExecutionState string
 
 const (
-	AutomationExecutionStateAutomationExecutionStateUnspecified  AutomationExecutionState = "AUTOMATION_EXECUTION_STATE_UNSPECIFIED"
-	AutomationExecutionStateAutomationExecutionStatePending      AutomationExecutionState = "AUTOMATION_EXECUTION_STATE_PENDING"
-	AutomationExecutionStateAutomationExecutionStateCreating     AutomationExecutionState = "AUTOMATION_EXECUTION_STATE_CREATING"
-	AutomationExecutionStateAutomationExecutionStateGetStep      AutomationExecutionState = "AUTOMATION_EXECUTION_STATE_GET_STEP"
-	AutomationExecutionStateAutomationExecutionStateProcessStep  AutomationExecutionState = "AUTOMATION_EXECUTION_STATE_PROCESS_STEP"
-	AutomationExecutionStateAutomationExecutionStateCompleteStep AutomationExecutionState = "AUTOMATION_EXECUTION_STATE_COMPLETE_STEP"
-	AutomationExecutionStateAutomationExecutionStateDone         AutomationExecutionState = "AUTOMATION_EXECUTION_STATE_DONE"
-	AutomationExecutionStateAutomationExecutionStateError        AutomationExecutionState = "AUTOMATION_EXECUTION_STATE_ERROR"
-	AutomationExecutionStateAutomationExecutionStateTerminate    AutomationExecutionState = "AUTOMATION_EXECUTION_STATE_TERMINATE"
-	AutomationExecutionStateAutomationExecutionStateWaiting      AutomationExecutionState = "AUTOMATION_EXECUTION_STATE_WAITING"
+	AutomationExecutionStateAutomationExecutionStateUnspecified            AutomationExecutionState = "AUTOMATION_EXECUTION_STATE_UNSPECIFIED"
+	AutomationExecutionStateAutomationExecutionStatePending                AutomationExecutionState = "AUTOMATION_EXECUTION_STATE_PENDING"
+	AutomationExecutionStateAutomationExecutionStateCreating               AutomationExecutionState = "AUTOMATION_EXECUTION_STATE_CREATING"
+	AutomationExecutionStateAutomationExecutionStateGetStep                AutomationExecutionState = "AUTOMATION_EXECUTION_STATE_GET_STEP"
+	AutomationExecutionStateAutomationExecutionStateProcessStep            AutomationExecutionState = "AUTOMATION_EXECUTION_STATE_PROCESS_STEP"
+	AutomationExecutionStateAutomationExecutionStateCompleteStep           AutomationExecutionState = "AUTOMATION_EXECUTION_STATE_COMPLETE_STEP"
+	AutomationExecutionStateAutomationExecutionStateDone                   AutomationExecutionState = "AUTOMATION_EXECUTION_STATE_DONE"
+	AutomationExecutionStateAutomationExecutionStateError                  AutomationExecutionState = "AUTOMATION_EXECUTION_STATE_ERROR"
+	AutomationExecutionStateAutomationExecutionStateTerminate              AutomationExecutionState = "AUTOMATION_EXECUTION_STATE_TERMINATE"
+	AutomationExecutionStateAutomationExecutionStateWaiting                AutomationExecutionState = "AUTOMATION_EXECUTION_STATE_WAITING"
+	AutomationExecutionStateAutomationExecutionStatePausedByCircuitBreaker AutomationExecutionState = "AUTOMATION_EXECUTION_STATE_PAUSED_BY_CIRCUIT_BREAKER"
 )
 
 func (e AutomationExecutionState) ToPointer() *AutomationExecutionState {
@@ -31,7 +32,7 @@ func (e AutomationExecutionState) ToPointer() *AutomationExecutionState {
 func (e *AutomationExecutionState) IsExact() bool {
 	if e != nil {
 		switch *e {
-		case "AUTOMATION_EXECUTION_STATE_UNSPECIFIED", "AUTOMATION_EXECUTION_STATE_PENDING", "AUTOMATION_EXECUTION_STATE_CREATING", "AUTOMATION_EXECUTION_STATE_GET_STEP", "AUTOMATION_EXECUTION_STATE_PROCESS_STEP", "AUTOMATION_EXECUTION_STATE_COMPLETE_STEP", "AUTOMATION_EXECUTION_STATE_DONE", "AUTOMATION_EXECUTION_STATE_ERROR", "AUTOMATION_EXECUTION_STATE_TERMINATE", "AUTOMATION_EXECUTION_STATE_WAITING":
+		case "AUTOMATION_EXECUTION_STATE_UNSPECIFIED", "AUTOMATION_EXECUTION_STATE_PENDING", "AUTOMATION_EXECUTION_STATE_CREATING", "AUTOMATION_EXECUTION_STATE_GET_STEP", "AUTOMATION_EXECUTION_STATE_PROCESS_STEP", "AUTOMATION_EXECUTION_STATE_COMPLETE_STEP", "AUTOMATION_EXECUTION_STATE_DONE", "AUTOMATION_EXECUTION_STATE_ERROR", "AUTOMATION_EXECUTION_STATE_TERMINATE", "AUTOMATION_EXECUTION_STATE_WAITING", "AUTOMATION_EXECUTION_STATE_PAUSED_BY_CIRCUIT_BREAKER":
 			return true
 		}
 	}
@@ -40,12 +41,11 @@ func (e *AutomationExecutionState) IsExact() bool {
 
 // The AutomationExecution message.
 type AutomationExecution struct {
-	// The AutomationContext message.
-	AutomationContext *AutomationContext `json:"context,omitempty"`
 	// The automationTemplateId field.
-	AutomationTemplateID *string    `json:"automationTemplateId,omitempty"`
-	CompletedAt          *time.Time `json:"completedAt,omitempty"`
-	CreatedAt            *time.Time `json:"createdAt,omitempty"`
+	AutomationTemplateID *string            `json:"automationTemplateId,omitempty"`
+	CompletedAt          *time.Time         `json:"completedAt,omitempty"`
+	Context              *AutomationContext `json:"context,omitempty"`
+	CreatedAt            *time.Time         `json:"createdAt,omitempty"`
 	// The currentVersion field.
 	CurrentVersion *int       `json:"currentVersion,omitempty"`
 	DeletedAt      *time.Time `json:"deletedAt,omitempty"`
@@ -70,13 +70,6 @@ func (a *AutomationExecution) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (a *AutomationExecution) GetAutomationContext() *AutomationContext {
-	if a == nil {
-		return nil
-	}
-	return a.AutomationContext
-}
-
 func (a *AutomationExecution) GetAutomationTemplateID() *string {
 	if a == nil {
 		return nil
@@ -89,6 +82,13 @@ func (a *AutomationExecution) GetCompletedAt() *time.Time {
 		return nil
 	}
 	return a.CompletedAt
+}
+
+func (a *AutomationExecution) GetContext() *AutomationContext {
+	if a == nil {
+		return nil
+	}
+	return a.Context
 }
 
 func (a *AutomationExecution) GetCreatedAt() *time.Time {

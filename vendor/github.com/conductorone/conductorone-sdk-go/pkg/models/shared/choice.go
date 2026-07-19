@@ -4,38 +4,17 @@ package shared
 
 // Choice represents a single option in a choice picker.
 type Choice struct {
-	// DynamicString can be a literal value, a JSON pointer path, or a function call.
-	//
-	// This message contains a oneof named value. Only a single field of the following list may be set at a time:
-	//   - literal
-	//   - path
-	//   - call
-	//
-	DynamicString *DynamicString `json:"description,omitempty"`
-	// DynamicString can be a literal value, a JSON pointer path, or a function call.
-	//
-	// This message contains a oneof named value. Only a single field of the following list may be set at a time:
-	//   - literal
-	//   - path
-	//   - call
-	//
-	DynamicString1 *DynamicString `json:"label,omitempty"`
+	Description *DynamicString `json:"description,omitempty"`
 	// The id field.
-	ID *string `json:"id,omitempty"`
+	ID    *string        `json:"id,omitempty"`
+	Label *DynamicString `json:"label,omitempty"`
 }
 
-func (c *Choice) GetDynamicString() *DynamicString {
+func (c *Choice) GetDescription() *DynamicString {
 	if c == nil {
 		return nil
 	}
-	return c.DynamicString
-}
-
-func (c *Choice) GetDynamicString1() *DynamicString {
-	if c == nil {
-		return nil
-	}
-	return c.DynamicString1
+	return c.Description
 }
 
 func (c *Choice) GetID() *string {
@@ -43,4 +22,11 @@ func (c *Choice) GetID() *string {
 		return nil
 	}
 	return c.ID
+}
+
+func (c *Choice) GetLabel() *DynamicString {
+	if c == nil {
+		return nil
+	}
+	return c.Label
 }

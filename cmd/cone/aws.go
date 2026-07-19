@@ -408,16 +408,16 @@ func awsCredentialsRun(cmd *cobra.Command, args []string) error {
 			t := taskResp.TaskView.Task
 
 			// Check the current step — if it needs human action, stop polling.
-			if t.PolicyInstance != nil && t.PolicyInstance.PolicyStepInstance != nil {
-				step := t.PolicyInstance.PolicyStepInstance
+			if t.Policy != nil && t.Policy.Current != nil {
+				step := t.Policy.Current
 				switch {
-				case step.ApprovalInstance != nil:
+				case step.Approval != nil:
 					fmt.Fprintf(os.Stderr, "\n")
 					fmt.Fprintf(os.Stderr, "Request submitted for %q but requires approval.\n", profileName)
 					fmt.Fprintf(os.Stderr, "Check status: cone task get %s\n", taskNum)
 					fmt.Fprintf(os.Stderr, "Once approved, retry the command.\n")
 					return fmt.Errorf("awaiting approval")
-				case step.FormInstance != nil:
+				case step.Form != nil:
 					fmt.Fprintf(os.Stderr, "\n")
 					return fmt.Errorf("request submitted for %q but requires form input. Complete it with:\n  cone get --app-id %s --entitlement-id %s", profileName, appID, entitlementID)
 				}
@@ -427,8 +427,8 @@ func awsCredentialsRun(cmd *cobra.Command, args []string) error {
 			if t.State == nil || *t.State != shared.TaskStateTaskStateClosed {
 				continue
 			}
-			if t.TaskType.TaskTypeGrant != nil && t.TaskType.TaskTypeGrant.Outcome != nil {
-				outcome = string(*t.TaskType.TaskTypeGrant.Outcome)
+			if t.Type != nil && t.Type.Grant != nil && t.Type.Grant.Outcome != nil {
+				outcome = string(*t.Type.Grant.Outcome)
 			}
 			break
 		}

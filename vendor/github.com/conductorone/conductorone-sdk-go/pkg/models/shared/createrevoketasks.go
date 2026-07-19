@@ -4,8 +4,6 @@ package shared
 
 // The CreateRevokeTasks message.
 type CreateRevokeTasks struct {
-	// A reference to a user.
-	UserRef *UserRef `json:"userRef,omitempty"`
 	// The appEntitlementRefs field.
 	AppEntitlementRefs []AppEntitlementRef `json:"appEntitlementRefs,omitempty"`
 	// The appEntitlementRefsCel field.
@@ -19,14 +17,8 @@ type CreateRevokeTasks struct {
 	// If true, the step will use the subject user of the automation as the subject.
 	UseSubjectUser *bool `json:"useSubjectUser,omitempty"`
 	// The userIdCel field.
-	UserIDCel *string `json:"userIdCel,omitempty"`
-}
-
-func (c *CreateRevokeTasks) GetUserRef() *UserRef {
-	if c == nil {
-		return nil
-	}
-	return c.UserRef
+	UserIDCel *string  `json:"userIdCel,omitempty"`
+	UserRef   *UserRef `json:"userRef,omitempty"`
 }
 
 func (c *CreateRevokeTasks) GetAppEntitlementRefs() []AppEntitlementRef {
@@ -76,4 +68,11 @@ func (c *CreateRevokeTasks) GetUserIDCel() *string {
 		return nil
 	}
 	return c.UserIDCel
+}
+
+func (c *CreateRevokeTasks) GetUserRef() *UserRef {
+	if c == nil {
+		return nil
+	}
+	return c.UserRef
 }

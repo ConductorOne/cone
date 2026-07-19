@@ -55,23 +55,23 @@ func (e *PaperSecretAdminServiceSearchRequestSharingMode) IsExact() bool {
 	return false
 }
 
-// SortBy - Sort order
-type SortBy string
+// PaperSecretAdminServiceSearchRequestSortBy - Sort order
+type PaperSecretAdminServiceSearchRequestSortBy string
 
 const (
-	SortBySearchSortByUnspecified SortBy = "SEARCH_SORT_BY_UNSPECIFIED"
-	SortBySearchSortByCreatedDesc SortBy = "SEARCH_SORT_BY_CREATED_DESC"
-	SortBySearchSortByCreatedAsc  SortBy = "SEARCH_SORT_BY_CREATED_ASC"
-	SortBySearchSortByExpiresAsc  SortBy = "SEARCH_SORT_BY_EXPIRES_ASC"
-	SortBySearchSortByNameAsc     SortBy = "SEARCH_SORT_BY_NAME_ASC"
+	PaperSecretAdminServiceSearchRequestSortBySearchSortByUnspecified PaperSecretAdminServiceSearchRequestSortBy = "SEARCH_SORT_BY_UNSPECIFIED"
+	PaperSecretAdminServiceSearchRequestSortBySearchSortByCreatedDesc PaperSecretAdminServiceSearchRequestSortBy = "SEARCH_SORT_BY_CREATED_DESC"
+	PaperSecretAdminServiceSearchRequestSortBySearchSortByCreatedAsc  PaperSecretAdminServiceSearchRequestSortBy = "SEARCH_SORT_BY_CREATED_ASC"
+	PaperSecretAdminServiceSearchRequestSortBySearchSortByExpiresAsc  PaperSecretAdminServiceSearchRequestSortBy = "SEARCH_SORT_BY_EXPIRES_ASC"
+	PaperSecretAdminServiceSearchRequestSortBySearchSortByNameAsc     PaperSecretAdminServiceSearchRequestSortBy = "SEARCH_SORT_BY_NAME_ASC"
 )
 
-func (e SortBy) ToPointer() *SortBy {
+func (e PaperSecretAdminServiceSearchRequestSortBy) ToPointer() *PaperSecretAdminServiceSearchRequestSortBy {
 	return &e
 }
 
 // IsExact returns true if the value matches a known enum value, false otherwise.
-func (e *SortBy) IsExact() bool {
+func (e *PaperSecretAdminServiceSearchRequestSortBy) IsExact() bool {
 	if e != nil {
 		switch *e {
 		case "SEARCH_SORT_BY_UNSPECIFIED", "SEARCH_SORT_BY_CREATED_DESC", "SEARCH_SORT_BY_CREATED_ASC", "SEARCH_SORT_BY_EXPIRES_ASC", "SEARCH_SORT_BY_NAME_ASC":
@@ -81,23 +81,23 @@ func (e *SortBy) IsExact() bool {
 	return false
 }
 
-type Statuses string
+type PaperSecretAdminServiceSearchRequestStatuses string
 
 const (
-	StatusesSecretStatusUnspecified Statuses = "SECRET_STATUS_UNSPECIFIED"
-	StatusesSecretStatusActive      Statuses = "SECRET_STATUS_ACTIVE"
-	StatusesSecretStatusExpired     Statuses = "SECRET_STATUS_EXPIRED"
-	StatusesSecretStatusBurned      Statuses = "SECRET_STATUS_BURNED"
-	StatusesSecretStatusRevoked     Statuses = "SECRET_STATUS_REVOKED"
-	StatusesSecretStatusDataDeleted Statuses = "SECRET_STATUS_DATA_DELETED"
+	PaperSecretAdminServiceSearchRequestStatusesSecretStatusUnspecified PaperSecretAdminServiceSearchRequestStatuses = "SECRET_STATUS_UNSPECIFIED"
+	PaperSecretAdminServiceSearchRequestStatusesSecretStatusActive      PaperSecretAdminServiceSearchRequestStatuses = "SECRET_STATUS_ACTIVE"
+	PaperSecretAdminServiceSearchRequestStatusesSecretStatusExpired     PaperSecretAdminServiceSearchRequestStatuses = "SECRET_STATUS_EXPIRED"
+	PaperSecretAdminServiceSearchRequestStatusesSecretStatusBurned      PaperSecretAdminServiceSearchRequestStatuses = "SECRET_STATUS_BURNED"
+	PaperSecretAdminServiceSearchRequestStatusesSecretStatusRevoked     PaperSecretAdminServiceSearchRequestStatuses = "SECRET_STATUS_REVOKED"
+	PaperSecretAdminServiceSearchRequestStatusesSecretStatusDataDeleted PaperSecretAdminServiceSearchRequestStatuses = "SECRET_STATUS_DATA_DELETED"
 )
 
-func (e Statuses) ToPointer() *Statuses {
+func (e PaperSecretAdminServiceSearchRequestStatuses) ToPointer() *PaperSecretAdminServiceSearchRequestStatuses {
 	return &e
 }
 
 // IsExact returns true if the value matches a known enum value, false otherwise.
-func (e *Statuses) IsExact() bool {
+func (e *PaperSecretAdminServiceSearchRequestStatuses) IsExact() bool {
 	if e != nil {
 		switch *e {
 		case "SECRET_STATUS_UNSPECIFIED", "SECRET_STATUS_ACTIVE", "SECRET_STATUS_EXPIRED", "SECRET_STATUS_BURNED", "SECRET_STATUS_REVOKED", "SECRET_STATUS_DATA_DELETED":
@@ -126,9 +126,9 @@ type PaperSecretAdminServiceSearchRequest struct {
 	// Filter by sharing mode (optional)
 	SharingMode *PaperSecretAdminServiceSearchRequestSharingMode `json:"sharingMode,omitempty"`
 	// Sort order
-	SortBy *SortBy `json:"sortBy,omitempty"`
+	SortBy *PaperSecretAdminServiceSearchRequestSortBy `json:"sortBy,omitempty"`
 	// Filter by status (optional)
-	Statuses []Statuses `json:"statuses,omitempty"`
+	Statuses []PaperSecretAdminServiceSearchRequestStatuses `json:"statuses,omitempty"`
 }
 
 func (p PaperSecretAdminServiceSearchRequest) MarshalJSON() ([]byte, error) {
@@ -205,14 +205,14 @@ func (p *PaperSecretAdminServiceSearchRequest) GetSharingMode() *PaperSecretAdmi
 	return p.SharingMode
 }
 
-func (p *PaperSecretAdminServiceSearchRequest) GetSortBy() *SortBy {
+func (p *PaperSecretAdminServiceSearchRequest) GetSortBy() *PaperSecretAdminServiceSearchRequestSortBy {
 	if p == nil {
 		return nil
 	}
 	return p.SortBy
 }
 
-func (p *PaperSecretAdminServiceSearchRequest) GetStatuses() []Statuses {
+func (p *PaperSecretAdminServiceSearchRequest) GetStatuses() []PaperSecretAdminServiceSearchRequestStatuses {
 	if p == nil {
 		return nil
 	}

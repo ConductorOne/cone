@@ -40,7 +40,6 @@ func (c *CreateAppEntitlementResponseExpanded) GetAdditionalProperties() map[str
 
 // The CreateAppEntitlementResponse message.
 type CreateAppEntitlementResponse struct {
-	// The app entitlement view contains the serialized app entitlement and paths to objects referenced by the app entitlement.
 	AppEntitlementView *AppEntitlementView `json:"appEntitlementView,omitempty"`
 	// The expanded field.
 	Expanded []CreateAppEntitlementResponseExpanded `json:"expanded,omitempty"`

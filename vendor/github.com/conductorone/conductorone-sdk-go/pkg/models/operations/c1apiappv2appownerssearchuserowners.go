@@ -49,7 +49,7 @@ type C1APIAppV2AppOwnersSearchUserOwnersResponse struct {
 	// HTTP response content type for this operation
 	ContentType string
 	// SearchUserOwnersResponse is the response for searching user ownership sources.
-	SearchUserOwnersResponse *shared.SearchUserOwnersResponse
+	SearchAppUserOwnersResponse *shared.SearchAppUserOwnersResponse
 	// HTTP response status code for this operation
 	StatusCode int
 	// Raw HTTP response; suitable for custom response parsing
@@ -63,11 +63,11 @@ func (c *C1APIAppV2AppOwnersSearchUserOwnersResponse) GetContentType() string {
 	return c.ContentType
 }
 
-func (c *C1APIAppV2AppOwnersSearchUserOwnersResponse) GetSearchUserOwnersResponse() *shared.SearchUserOwnersResponse {
+func (c *C1APIAppV2AppOwnersSearchUserOwnersResponse) GetSearchAppUserOwnersResponse() *shared.SearchAppUserOwnersResponse {
 	if c == nil {
 		return nil
 	}
-	return c.SearchUserOwnersResponse
+	return c.SearchAppUserOwnersResponse
 }
 
 func (c *C1APIAppV2AppOwnersSearchUserOwnersResponse) GetStatusCode() int {

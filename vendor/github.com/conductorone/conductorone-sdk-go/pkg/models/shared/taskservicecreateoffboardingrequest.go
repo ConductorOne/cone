@@ -4,19 +4,11 @@ package shared
 
 // TaskServiceCreateOffboardingRequest - Create an offboarding task.
 type TaskServiceCreateOffboardingRequest struct {
-	// The task expand mask is an array of strings that specifes the related objects the requester wishes to have returned when making a request where the expand mask is part of the input. Use '*' to view all possible responses.
-	TaskExpandMask *TaskExpandMask `json:"expandMask,omitempty"`
 	// The description of the offboarding request.
-	Description *string `json:"description,omitempty"`
+	Description *string         `json:"description,omitempty"`
+	ExpandMask  *TaskExpandMask `json:"expandMask,omitempty"`
 	// The ID of the user to offboard.
 	SubjectUserID *string `json:"subjectUserId,omitempty"`
-}
-
-func (t *TaskServiceCreateOffboardingRequest) GetTaskExpandMask() *TaskExpandMask {
-	if t == nil {
-		return nil
-	}
-	return t.TaskExpandMask
 }
 
 func (t *TaskServiceCreateOffboardingRequest) GetDescription() *string {
@@ -24,6 +16,13 @@ func (t *TaskServiceCreateOffboardingRequest) GetDescription() *string {
 		return nil
 	}
 	return t.Description
+}
+
+func (t *TaskServiceCreateOffboardingRequest) GetExpandMask() *TaskExpandMask {
+	if t == nil {
+		return nil
+	}
+	return t.ExpandMask
 }
 
 func (t *TaskServiceCreateOffboardingRequest) GetSubjectUserID() *string {

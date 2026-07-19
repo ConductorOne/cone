@@ -10,50 +10,18 @@ package shared
 //   - cancelled
 //   - pending
 type TaskAuditConnectorActionResult struct {
-	// The TaskAuditCancelledResult message.
-	TaskAuditCancelledResult *TaskAuditCancelledResult `json:"cancelled,omitempty"`
-	// The TaskAuditErrorResult message.
-	TaskAuditErrorResult *TaskAuditErrorResult `json:"error,omitempty"`
-	// The TaskAuditPendingResult message.
-	TaskAuditPendingResult *TaskAuditPendingResult `json:"pending,omitempty"`
-	// The TaskAuditSuccessResult message.
-	TaskAuditSuccessResult *TaskAuditSuccessResult `json:"success,omitempty"`
 	// The appEntitlementId field.
 	AppEntitlementID *string `json:"appEntitlementId,omitempty"`
 	// The appId field.
-	AppID *string `json:"appId,omitempty"`
+	AppID     *string                   `json:"appId,omitempty"`
+	Cancelled *TaskAuditCancelledResult `json:"cancelled,omitempty"`
 	// The connectorActionId field.
 	ConnectorActionID *string `json:"connectorActionId,omitempty"`
 	// The connectorId field.
-	ConnectorID *string `json:"connectorId,omitempty"`
-}
-
-func (t *TaskAuditConnectorActionResult) GetTaskAuditCancelledResult() *TaskAuditCancelledResult {
-	if t == nil {
-		return nil
-	}
-	return t.TaskAuditCancelledResult
-}
-
-func (t *TaskAuditConnectorActionResult) GetTaskAuditErrorResult() *TaskAuditErrorResult {
-	if t == nil {
-		return nil
-	}
-	return t.TaskAuditErrorResult
-}
-
-func (t *TaskAuditConnectorActionResult) GetTaskAuditPendingResult() *TaskAuditPendingResult {
-	if t == nil {
-		return nil
-	}
-	return t.TaskAuditPendingResult
-}
-
-func (t *TaskAuditConnectorActionResult) GetTaskAuditSuccessResult() *TaskAuditSuccessResult {
-	if t == nil {
-		return nil
-	}
-	return t.TaskAuditSuccessResult
+	ConnectorID *string                 `json:"connectorId,omitempty"`
+	Error       *TaskAuditErrorResult   `json:"error,omitempty"`
+	Pending     *TaskAuditPendingResult `json:"pending,omitempty"`
+	Success     *TaskAuditSuccessResult `json:"success,omitempty"`
 }
 
 func (t *TaskAuditConnectorActionResult) GetAppEntitlementID() *string {
@@ -70,6 +38,13 @@ func (t *TaskAuditConnectorActionResult) GetAppID() *string {
 	return t.AppID
 }
 
+func (t *TaskAuditConnectorActionResult) GetCancelled() *TaskAuditCancelledResult {
+	if t == nil {
+		return nil
+	}
+	return t.Cancelled
+}
+
 func (t *TaskAuditConnectorActionResult) GetConnectorActionID() *string {
 	if t == nil {
 		return nil
@@ -82,4 +57,25 @@ func (t *TaskAuditConnectorActionResult) GetConnectorID() *string {
 		return nil
 	}
 	return t.ConnectorID
+}
+
+func (t *TaskAuditConnectorActionResult) GetError() *TaskAuditErrorResult {
+	if t == nil {
+		return nil
+	}
+	return t.Error
+}
+
+func (t *TaskAuditConnectorActionResult) GetPending() *TaskAuditPendingResult {
+	if t == nil {
+		return nil
+	}
+	return t.Pending
+}
+
+func (t *TaskAuditConnectorActionResult) GetSuccess() *TaskAuditSuccessResult {
+	if t == nil {
+		return nil
+	}
+	return t.Success
 }

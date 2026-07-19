@@ -11,10 +11,8 @@ import (
 //
 //	It detects when any user holds entitlements from both set A and set B simultaneously.
 type ConflictMonitor struct {
-	// The NotificationConfig message.
-	AccessConflictNotificationConfig *AccessConflictNotificationConfig `json:"notificationConfig,omitempty"`
-	CreatedAt                        *time.Time                        `json:"createdAt,omitempty"`
-	DeletedAt                        *time.Time                        `json:"deletedAt,omitempty"`
+	CreatedAt *time.Time `json:"createdAt,omitempty"`
+	DeletedAt *time.Time `json:"deletedAt,omitempty"`
 	// A description explaining the purpose of this Separation of Duty rule.
 	Description *string `json:"description,omitempty"`
 	// The human-readable name of the conflict monitor.
@@ -26,8 +24,12 @@ type ConflictMonitor struct {
 	// The identifier of entitlement set B in the conflict rule.
 	EntitlementSetBID *string `json:"entitlementSetBId,omitempty"`
 	// The unique identifier of this conflict monitor.
-	ID        *string    `json:"id,omitempty"`
-	UpdatedAt *time.Time `json:"updatedAt,omitempty"`
+	ID *string `json:"id,omitempty"`
+	// When true, the rule flags users who are in set A but NOT in set B ("is not
+	//  in"), instead of the default A-and-B intersection.
+	NegateGroupB       *bool                             `json:"negateGroupB,omitempty"`
+	NotificationConfig *AccessConflictNotificationConfig `json:"notificationConfig,omitempty"`
+	UpdatedAt          *time.Time                        `json:"updatedAt,omitempty"`
 }
 
 func (c ConflictMonitor) MarshalJSON() ([]byte, error) {
@@ -39,13 +41,6 @@ func (c *ConflictMonitor) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
-}
-
-func (c *ConflictMonitor) GetAccessConflictNotificationConfig() *AccessConflictNotificationConfig {
-	if c == nil {
-		return nil
-	}
-	return c.AccessConflictNotificationConfig
 }
 
 func (c *ConflictMonitor) GetCreatedAt() *time.Time {
@@ -102,6 +97,20 @@ func (c *ConflictMonitor) GetID() *string {
 		return nil
 	}
 	return c.ID
+}
+
+func (c *ConflictMonitor) GetNegateGroupB() *bool {
+	if c == nil {
+		return nil
+	}
+	return c.NegateGroupB
+}
+
+func (c *ConflictMonitor) GetNotificationConfig() *AccessConflictNotificationConfig {
+	if c == nil {
+		return nil
+	}
+	return c.NotificationConfig
 }
 
 func (c *ConflictMonitor) GetUpdatedAt() *time.Time {

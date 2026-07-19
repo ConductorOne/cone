@@ -4,11 +4,9 @@ package shared
 
 // The AppUserServiceUpdateRequest message contains the app user and the fields to be updated.
 type AppUserServiceUpdateRequest struct {
-	// Application User that represents an account in the application.
-	AppUser *AppUserInput `json:"appUser,omitempty"`
-	// The AppUserExpandMask message contains a list of paths to expand in the response.
-	AppUserExpandMask *AppUserExpandMask `json:"expandMask,omitempty"`
-	UpdateMask        *string            `json:"updateMask,omitempty"`
+	AppUser    *AppUserInput      `json:"appUser,omitempty"`
+	ExpandMask *AppUserExpandMask `json:"expandMask,omitempty"`
+	UpdateMask *string            `json:"updateMask,omitempty"`
 }
 
 func (a *AppUserServiceUpdateRequest) GetAppUser() *AppUserInput {
@@ -18,11 +16,11 @@ func (a *AppUserServiceUpdateRequest) GetAppUser() *AppUserInput {
 	return a.AppUser
 }
 
-func (a *AppUserServiceUpdateRequest) GetAppUserExpandMask() *AppUserExpandMask {
+func (a *AppUserServiceUpdateRequest) GetExpandMask() *AppUserExpandMask {
 	if a == nil {
 		return nil
 	}
-	return a.AppUserExpandMask
+	return a.ExpandMask
 }
 
 func (a *AppUserServiceUpdateRequest) GetUpdateMask() *string {

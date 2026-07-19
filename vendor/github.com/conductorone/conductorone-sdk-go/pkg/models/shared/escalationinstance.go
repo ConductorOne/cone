@@ -15,19 +15,15 @@ import (
 //   - cancelTicket
 //   - skipStep
 type EscalationInstance struct {
-	// The CancelTicket message.
-	EscalationInstanceCancelTicket *EscalationInstanceCancelTicket `json:"cancelTicket,omitempty"`
-	// The ReassignToApprovers message.
-	EscalationInstanceReassignToApprovers *EscalationInstanceReassignToApprovers `json:"reassignToApprovers,omitempty"`
-	// The ReplacePolicy message.
-	EscalationInstanceReplacePolicy *EscalationInstanceReplacePolicy `json:"replacePolicy,omitempty"`
-	// The SkipStep message.
-	EscalationInstanceSkipStep *EscalationInstanceSkipStep `json:"skipStep,omitempty"`
 	// The alreadyEscalated field.
-	AlreadyEscalated *bool `json:"alreadyEscalated,omitempty"`
+	AlreadyEscalated *bool                           `json:"alreadyEscalated,omitempty"`
+	CancelTicket     *EscalationInstanceCancelTicket `json:"cancelTicket,omitempty"`
 	// The escalationComment field.
-	EscalationComment *string    `json:"escalationComment,omitempty"`
-	ExpiresAt         *time.Time `json:"expiresAt,omitempty"`
+	EscalationComment   *string                                `json:"escalationComment,omitempty"`
+	ExpiresAt           *time.Time                             `json:"expiresAt,omitempty"`
+	ReassignToApprovers *EscalationInstanceReassignToApprovers `json:"reassignToApprovers,omitempty"`
+	ReplacePolicy       *EscalationInstanceReplacePolicy       `json:"replacePolicy,omitempty"`
+	SkipStep            *EscalationInstanceSkipStep            `json:"skipStep,omitempty"`
 }
 
 func (e EscalationInstance) MarshalJSON() ([]byte, error) {
@@ -41,39 +37,18 @@ func (e *EscalationInstance) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (e *EscalationInstance) GetEscalationInstanceCancelTicket() *EscalationInstanceCancelTicket {
-	if e == nil {
-		return nil
-	}
-	return e.EscalationInstanceCancelTicket
-}
-
-func (e *EscalationInstance) GetEscalationInstanceReassignToApprovers() *EscalationInstanceReassignToApprovers {
-	if e == nil {
-		return nil
-	}
-	return e.EscalationInstanceReassignToApprovers
-}
-
-func (e *EscalationInstance) GetEscalationInstanceReplacePolicy() *EscalationInstanceReplacePolicy {
-	if e == nil {
-		return nil
-	}
-	return e.EscalationInstanceReplacePolicy
-}
-
-func (e *EscalationInstance) GetEscalationInstanceSkipStep() *EscalationInstanceSkipStep {
-	if e == nil {
-		return nil
-	}
-	return e.EscalationInstanceSkipStep
-}
-
 func (e *EscalationInstance) GetAlreadyEscalated() *bool {
 	if e == nil {
 		return nil
 	}
 	return e.AlreadyEscalated
+}
+
+func (e *EscalationInstance) GetCancelTicket() *EscalationInstanceCancelTicket {
+	if e == nil {
+		return nil
+	}
+	return e.CancelTicket
 }
 
 func (e *EscalationInstance) GetEscalationComment() *string {
@@ -88,4 +63,25 @@ func (e *EscalationInstance) GetExpiresAt() *time.Time {
 		return nil
 	}
 	return e.ExpiresAt
+}
+
+func (e *EscalationInstance) GetReassignToApprovers() *EscalationInstanceReassignToApprovers {
+	if e == nil {
+		return nil
+	}
+	return e.ReassignToApprovers
+}
+
+func (e *EscalationInstance) GetReplacePolicy() *EscalationInstanceReplacePolicy {
+	if e == nil {
+		return nil
+	}
+	return e.ReplacePolicy
+}
+
+func (e *EscalationInstance) GetSkipStep() *EscalationInstanceSkipStep {
+	if e == nil {
+		return nil
+	}
+	return e.SkipStep
 }

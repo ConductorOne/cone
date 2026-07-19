@@ -12,15 +12,14 @@ import (
 // This message contains a oneof named credential. Only a single field of the following list may be set at a time:
 //   - encryptedData
 type AppUserCredential struct {
-	// EncryptedData is a message that contains encrypted bytes and metadata.
-	EncryptedData *EncryptedData `json:"encryptedData,omitempty"`
 	// The ID of the application.
 	AppID *string `json:"appId,omitempty"`
 	// A unique identifier of the application user.
-	AppUserID *string    `json:"appUserId,omitempty"`
-	CreatedAt *time.Time `json:"createdAt,omitempty"`
-	DeletedAt *time.Time `json:"deletedAt,omitempty"`
-	ExpiresAt *time.Time `json:"expiresAt,omitempty"`
+	AppUserID     *string        `json:"appUserId,omitempty"`
+	CreatedAt     *time.Time     `json:"createdAt,omitempty"`
+	DeletedAt     *time.Time     `json:"deletedAt,omitempty"`
+	EncryptedData *EncryptedData `json:"encryptedData,omitempty"`
+	ExpiresAt     *time.Time     `json:"expiresAt,omitempty"`
 	// A unique identifier of the credential.
 	ID        *string    `json:"id,omitempty"`
 	UpdatedAt *time.Time `json:"updatedAt,omitempty"`
@@ -35,13 +34,6 @@ func (a *AppUserCredential) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
-}
-
-func (a *AppUserCredential) GetEncryptedData() *EncryptedData {
-	if a == nil {
-		return nil
-	}
-	return a.EncryptedData
 }
 
 func (a *AppUserCredential) GetAppID() *string {
@@ -70,6 +62,13 @@ func (a *AppUserCredential) GetDeletedAt() *time.Time {
 		return nil
 	}
 	return a.DeletedAt
+}
+
+func (a *AppUserCredential) GetEncryptedData() *EncryptedData {
+	if a == nil {
+		return nil
+	}
+	return a.EncryptedData
 }
 
 func (a *AppUserCredential) GetExpiresAt() *time.Time {

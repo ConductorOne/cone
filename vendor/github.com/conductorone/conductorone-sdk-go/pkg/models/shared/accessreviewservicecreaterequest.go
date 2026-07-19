@@ -16,6 +16,7 @@ const (
 	AccessReviewServiceCreateRequestScopeTypeAccessReviewScopeTypeByAccessConflicts AccessReviewServiceCreateRequestScopeType = "ACCESS_REVIEW_SCOPE_TYPE_BY_ACCESS_CONFLICTS"
 	AccessReviewServiceCreateRequestScopeTypeAccessReviewScopeTypeByResource        AccessReviewServiceCreateRequestScopeType = "ACCESS_REVIEW_SCOPE_TYPE_BY_RESOURCE"
 	AccessReviewServiceCreateRequestScopeTypeAccessReviewScopeTypeByInheritance     AccessReviewServiceCreateRequestScopeType = "ACCESS_REVIEW_SCOPE_TYPE_BY_INHERITANCE"
+	AccessReviewServiceCreateRequestScopeTypeAccessReviewScopeTypeByUsers           AccessReviewServiceCreateRequestScopeType = "ACCESS_REVIEW_SCOPE_TYPE_BY_USERS"
 )
 
 func (e AccessReviewServiceCreateRequestScopeType) ToPointer() *AccessReviewServiceCreateRequestScopeType {
@@ -26,7 +27,7 @@ func (e AccessReviewServiceCreateRequestScopeType) ToPointer() *AccessReviewServ
 func (e *AccessReviewServiceCreateRequestScopeType) IsExact() bool {
 	if e != nil {
 		switch *e {
-		case "ACCESS_REVIEW_SCOPE_TYPE_UNSPECIFIED", "ACCESS_REVIEW_SCOPE_TYPE_BY_ENTITLEMENTS", "ACCESS_REVIEW_SCOPE_TYPE_BY_ACCESS_CONFLICTS", "ACCESS_REVIEW_SCOPE_TYPE_BY_RESOURCE", "ACCESS_REVIEW_SCOPE_TYPE_BY_INHERITANCE":
+		case "ACCESS_REVIEW_SCOPE_TYPE_UNSPECIFIED", "ACCESS_REVIEW_SCOPE_TYPE_BY_ENTITLEMENTS", "ACCESS_REVIEW_SCOPE_TYPE_BY_ACCESS_CONFLICTS", "ACCESS_REVIEW_SCOPE_TYPE_BY_RESOURCE", "ACCESS_REVIEW_SCOPE_TYPE_BY_INHERITANCE", "ACCESS_REVIEW_SCOPE_TYPE_BY_USERS":
 			return true
 		}
 	}
@@ -35,59 +36,22 @@ func (e *AccessReviewServiceCreateRequestScopeType) IsExact() bool {
 
 // The AccessReviewServiceCreateRequest message.
 type AccessReviewServiceCreateRequest struct {
-	// The AccessReviewExpandMask message.
-	AccessReviewExpandMask *AccessReviewExpandMask `json:"expandMask,omitempty"`
-	// The AccessReviewScopeV2 message.
-	//
-	// This message contains a oneof named apps_and_resources_scope. Only a single field of the following list may be set at a time:
-	//   - appAccess
-	//   - specificResources
-	//   - appSelectionCriteria
-	//   - resourceTypeSelections
-	//
-	//
-	// This message contains a oneof named users_scope. Only a single field of the following list may be set at a time:
-	//   - allUsers
-	//   - selectedUsers
-	//   - userCriteria
-	//   - celExpression
-	//
-	//
-	// This message contains a oneof named accounts_scope. Only a single field of the following list may be set at a time:
-	//   - allAccounts
-	//   - accountCriteria
-	//   - accountCelExpression
-	//
-	//
-	// This message contains a oneof named grants_scope. Only a single field of the following list may be set at a time:
-	//   - allGrants
-	//   - grantsByCriteria
-	//
-	//
-	// This message contains a oneof named access_conflicts_scope. Only a single field of the following list may be set at a time:
-	//   - allAccessConflicts
-	//   - specificAccessConflicts
-	//
-	//
-	// This message contains a oneof named resource_scope. Only a single field of the following list may be set at a time:
-	//   - resourceSelection
-	//
-	AccessReviewScopeV2 *AccessReviewScopeV2 `json:"scopeV2,omitempty"`
-	// Controls which email notifications are sent during the access review lifecycle.
-	NotificationConfig *NotificationConfig `json:"notificationConfig,omitempty"`
-	CompletionDate     *time.Time          `json:"completionDate,omitempty"`
+	CompletionDate *time.Time `json:"completionDate,omitempty"`
 	// An optional description providing context about the campaign.
 	Description *string `json:"description,omitempty"`
 	// The display name for the new campaign.
 	DisplayName *string `json:"displayName,omitempty"`
 	// The ID of an existing campaign to copy scope and entitlement configuration from. Optional.
-	DuplicateFrom *string `json:"duplicateFrom,omitempty"`
+	DuplicateFrom      *string                 `json:"duplicateFrom,omitempty"`
+	ExpandMask         *AccessReviewExpandMask `json:"expandMask,omitempty"`
+	NotificationConfig *NotificationConfig     `json:"notificationConfig,omitempty"`
 	// The IDs of the users who own and manage this campaign. At least one owner is required.
 	OwnerIds []string `json:"ownerIds,omitempty"`
 	// The ID of the review policy that governs task assignment and resolution.
 	PolicyID *string `json:"policyId,omitempty"`
 	// The type of scoping method for the campaign (e.g., by entitlements, by access conflicts, or by resource).
 	ScopeType *AccessReviewServiceCreateRequestScopeType `json:"scopeType,omitempty"`
+	ScopeV2   *AccessReviewScopeV2                       `json:"scopeV2,omitempty"`
 }
 
 func (a AccessReviewServiceCreateRequest) MarshalJSON() ([]byte, error) {
@@ -99,27 +63,6 @@ func (a *AccessReviewServiceCreateRequest) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
-}
-
-func (a *AccessReviewServiceCreateRequest) GetAccessReviewExpandMask() *AccessReviewExpandMask {
-	if a == nil {
-		return nil
-	}
-	return a.AccessReviewExpandMask
-}
-
-func (a *AccessReviewServiceCreateRequest) GetAccessReviewScopeV2() *AccessReviewScopeV2 {
-	if a == nil {
-		return nil
-	}
-	return a.AccessReviewScopeV2
-}
-
-func (a *AccessReviewServiceCreateRequest) GetNotificationConfig() *NotificationConfig {
-	if a == nil {
-		return nil
-	}
-	return a.NotificationConfig
 }
 
 func (a *AccessReviewServiceCreateRequest) GetCompletionDate() *time.Time {
@@ -150,6 +93,20 @@ func (a *AccessReviewServiceCreateRequest) GetDuplicateFrom() *string {
 	return a.DuplicateFrom
 }
 
+func (a *AccessReviewServiceCreateRequest) GetExpandMask() *AccessReviewExpandMask {
+	if a == nil {
+		return nil
+	}
+	return a.ExpandMask
+}
+
+func (a *AccessReviewServiceCreateRequest) GetNotificationConfig() *NotificationConfig {
+	if a == nil {
+		return nil
+	}
+	return a.NotificationConfig
+}
+
 func (a *AccessReviewServiceCreateRequest) GetOwnerIds() []string {
 	if a == nil {
 		return nil
@@ -169,4 +126,11 @@ func (a *AccessReviewServiceCreateRequest) GetScopeType() *AccessReviewServiceCr
 		return nil
 	}
 	return a.ScopeType
+}
+
+func (a *AccessReviewServiceCreateRequest) GetScopeV2() *AccessReviewScopeV2 {
+	if a == nil {
+		return nil
+	}
+	return a.ScopeV2
 }

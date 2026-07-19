@@ -4,36 +4,10 @@ package shared
 
 // RepeatedRules describe the constraints applied to `repeated` values
 type RepeatedRules struct {
-	// FieldRules encapsulates the rules for each type of field. Depending on the
-	//  field, the correct set should be used to ensure proper validations.
-	//
-	// This message contains a oneof named type. Only a single field of the following list may be set at a time:
-	//   - float
-	//   - double
-	//   - int32
-	//   - int64
-	//   - uint32
-	//   - uint64
-	//   - sint32
-	//   - sint64
-	//   - fixed32
-	//   - fixed64
-	//   - sfixed32
-	//   - sfixed64
-	//   - bool
-	//   - string
-	//   - bytes
-	//   - enum
-	//   - repeated
-	//   - map
-	//   - any
-	//   - duration
-	//   - timestamp
-	//
-	FieldRules *FieldRules `json:"items,omitempty"`
 	// IgnoreEmpty specifies that the validation rules of this field should be
 	//  evaluated only if the field is not empty
-	IgnoreEmpty *bool `json:"ignoreEmpty,omitempty"`
+	IgnoreEmpty *bool       `json:"ignoreEmpty,omitempty"`
+	Items       *FieldRules `json:"items,omitempty"`
 	// MaxItems specifies that this field must have the specified number of
 	//  items at a maximum
 	MaxItems *string `json:"maxItems,omitempty"`
@@ -46,18 +20,18 @@ type RepeatedRules struct {
 	Unique *bool `json:"unique,omitempty"`
 }
 
-func (r *RepeatedRules) GetFieldRules() *FieldRules {
-	if r == nil {
-		return nil
-	}
-	return r.FieldRules
-}
-
 func (r *RepeatedRules) GetIgnoreEmpty() *bool {
 	if r == nil {
 		return nil
 	}
 	return r.IgnoreEmpty
+}
+
+func (r *RepeatedRules) GetItems() *FieldRules {
+	if r == nil {
+		return nil
+	}
+	return r.Items
 }
 
 func (r *RepeatedRules) GetMaxItems() *string {

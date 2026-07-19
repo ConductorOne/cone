@@ -42,7 +42,6 @@ func (d *DirectoryServiceGetResponseExpanded) GetAdditionalProperties() map[stri
 //
 //	location in the expanded array that items are expanded as indicated by the expand mask in the request.
 type DirectoryServiceGetResponse struct {
-	// The directory view contains a directory and an app_path which is a JSONPATH set to the location in the expand mask that the expanded app will live if requested by the expander.
 	DirectoryView *DirectoryView `json:"directoryView,omitempty"`
 	// List of serialized related objects.
 	Expanded []DirectoryServiceGetResponseExpanded `json:"expanded,omitempty"`

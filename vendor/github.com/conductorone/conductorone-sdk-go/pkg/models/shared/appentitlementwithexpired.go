@@ -9,14 +9,11 @@ import (
 
 // AppEntitlementWithExpired - A grant with its expiry and discovery timestamps, along with the associated app user and ConductorOne user.
 type AppEntitlementWithExpired struct {
-	// Application User that represents an account in the application.
-	AppUser *AppUser `json:"appUser,omitempty"`
-	// The User object provides all of the details for an user, as well as some configuration.
-	User *User `json:"user,omitempty"`
 	// The ID of the app entitlement.
 	AppEntitlementID *string `json:"appEntitlementId,omitempty"`
 	// The ID of the app that contains the entitlement.
-	AppID *string `json:"appId,omitempty"`
+	AppID   *string  `json:"appId,omitempty"`
+	AppUser *AppUser `json:"appUser,omitempty"`
 	// The ID of the app user who holds the grant.
 	AppUserID  *string    `json:"appUserId,omitempty"`
 	Discovered *time.Time `json:"discovered,omitempty"`
@@ -25,6 +22,7 @@ type AppEntitlementWithExpired struct {
 	GrantReasons []GrantReason `json:"grantReasons,omitempty"`
 	// Entitlements that are the source of this grant (e.g., a group membership that implies a role).
 	GrantSources []AppEntitlementRef `json:"grantSources,omitempty"`
+	User         *User               `json:"user,omitempty"`
 }
 
 func (a AppEntitlementWithExpired) MarshalJSON() ([]byte, error) {
@@ -36,20 +34,6 @@ func (a *AppEntitlementWithExpired) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
-}
-
-func (a *AppEntitlementWithExpired) GetAppUser() *AppUser {
-	if a == nil {
-		return nil
-	}
-	return a.AppUser
-}
-
-func (a *AppEntitlementWithExpired) GetUser() *User {
-	if a == nil {
-		return nil
-	}
-	return a.User
 }
 
 func (a *AppEntitlementWithExpired) GetAppEntitlementID() *string {
@@ -64,6 +48,13 @@ func (a *AppEntitlementWithExpired) GetAppID() *string {
 		return nil
 	}
 	return a.AppID
+}
+
+func (a *AppEntitlementWithExpired) GetAppUser() *AppUser {
+	if a == nil {
+		return nil
+	}
+	return a.AppUser
 }
 
 func (a *AppEntitlementWithExpired) GetAppUserID() *string {
@@ -99,4 +90,11 @@ func (a *AppEntitlementWithExpired) GetGrantSources() []AppEntitlementRef {
 		return nil
 	}
 	return a.GrantSources
+}
+
+func (a *AppEntitlementWithExpired) GetUser() *User {
+	if a == nil {
+		return nil
+	}
+	return a.User
 }

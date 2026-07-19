@@ -58,7 +58,7 @@ type ExpandableEntitlementWithBindings struct {
 }
 
 func NewExpandableEntitlementWithBindings(v shared.AppEntitlementWithUserBindings) *ExpandableEntitlementWithBindings {
-	if v.AppEntitlementView == nil {
+	if v.Entitlement == nil {
 		return nil
 	}
 	return &ExpandableEntitlementWithBindings{
@@ -70,7 +70,7 @@ func (e *ExpandableEntitlementWithBindings) GetPaths() []PathDetails {
 	if e == nil {
 		return nil
 	}
-	view := *e.AppEntitlementView
+	view := *e.Entitlement
 	return []PathDetails{
 		{
 			Name: ExpandedApp,
@@ -101,14 +101,14 @@ func (c *client) SearchEntitlements(ctx context.Context, filter *SearchEntitleme
 	// TODO(morgabra) Pagination
 	// TODO(morgabra) Should we abstract the OpenAPI objects from the rest of cone? Kinda... no? But they aren't typed...
 	req := shared.RequestCatalogSearchServiceSearchEntitlementsRequest{
-		EntitlementAlias:         stringPtr(filter.EntitlementAlias),
-		GrantedStatus:            filter.GrantedStatus.ToPointer(),
-		PageSize:                 intPtr(100),
-		PageToken:                nil,
-		Query:                    stringPtr(filter.Query),
-		AppDisplayName:           stringPtr(filter.AppDisplayName),
-		IncludeDeleted:           &filter.IncludeDeleted,
-		AppEntitlementExpandMask: &filter.AppEntitlementExpandMask,
+		EntitlementAlias: stringPtr(filter.EntitlementAlias),
+		GrantedStatus:    filter.GrantedStatus.ToPointer(),
+		PageSize:         intPtr(100),
+		PageToken:        nil,
+		Query:            stringPtr(filter.Query),
+		AppDisplayName:   stringPtr(filter.AppDisplayName),
+		IncludeDeleted:   &filter.IncludeDeleted,
+		ExpandMask:       &filter.AppEntitlementExpandMask,
 	}
 	resp, err := c.sdk.RequestCatalogSearch.SearchEntitlements(ctx, &req)
 	if err != nil {
@@ -159,7 +159,7 @@ func (c *client) SearchEntitlements(ctx context.Context, filter *SearchEntitleme
 	rv := make([]*EntitlementWithBindings, 0, len(list))
 	for _, v := range expandableList {
 		rv = append(rv, &EntitlementWithBindings{
-			Entitlement: AppEntitlement(*v.AppEntitlementView.AppEntitlement),
+			Entitlement: AppEntitlement(*v.Entitlement.AppEntitlement),
 			Bindings:    v.AppEntitlementUserBindings,
 			expanded:    PopulateExpandedMap(v.ExpandedMap, expanded),
 		})
@@ -228,7 +228,7 @@ func (c *client) HasRequestForm(ctx context.Context, appID string, entitlementID
 	resp, err := c.sdk.RequestSchema.FindBindingForAppEntitlement(
 		ctx,
 		&shared.RequestSchemaServiceFindBindingForAppEntitlementRequest{
-			AppEntitlementRef: &shared.AppEntitlementRef{
+			EntitlementRef: &shared.AppEntitlementRef{
 				AppID: &appID,
 				ID:    &entitlementID,
 			},

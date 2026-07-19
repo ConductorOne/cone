@@ -40,32 +40,9 @@ func (g *GetFindingResponseExpanded) GetAdditionalProperties() map[string]any {
 
 // The GetFindingResponse message.
 type GetFindingResponse struct {
-	// The Finding message.
-	//
-	// This message contains a oneof named finding_type. Only a single field of the following list may be set at a time:
-	//   - similarUsernameMatch
-	//   - serviceAccountMisclassification
-	//
-	//
-	// This message contains a oneof named target. Only a single field of the following list may be set at a time:
-	//   - identityUserTarget
-	//   - appUserTarget
-	//
-	//
-	// This message contains a oneof named evidence. Only a single field of the following list may be set at a time:
-	//   - similarUsernameMatchEvidence
-	//   - serviceAccountMisclassificationEvidence
-	//
-	Finding *Finding `json:"finding,omitempty"`
 	// The expanded field.
 	Expanded []GetFindingResponseExpanded `json:"expanded,omitempty"`
-}
-
-func (g *GetFindingResponse) GetFinding() *Finding {
-	if g == nil {
-		return nil
-	}
-	return g.Finding
+	Finding  *Finding                     `json:"finding,omitempty"`
 }
 
 func (g *GetFindingResponse) GetExpanded() []GetFindingResponseExpanded {
@@ -73,4 +50,11 @@ func (g *GetFindingResponse) GetExpanded() []GetFindingResponseExpanded {
 		return nil
 	}
 	return g.Expanded
+}
+
+func (g *GetFindingResponse) GetFinding() *Finding {
+	if g == nil {
+		return nil
+	}
+	return g.Finding
 }

@@ -41,14 +41,6 @@ func (c *Config) GetAdditionalProperties() map[string]any {
 
 // A Connector is used to sync objects into Apps
 type Connector struct {
-	// The status field on the connector is used to track the status of the connectors sync, and when syncing last started, completed, or caused the connector to update.
-	ConnectorStatus *ConnectorStatus `json:"status,omitempty"`
-	// The ConnectorSyncCronSchedule message.
-	ConnectorSyncCronSchedule *ConnectorSyncCronSchedule `json:"connectorSyncCronSchedule,omitempty"`
-	// OAuth2AuthorizedAs tracks the user that OAuthed with the connector.
-	OAuth2AuthorizedAs *OAuth2AuthorizedAs `json:"oauthAuthorizedAs,omitempty"`
-	// The SyncConfig message.
-	SyncConfig *SyncConfig `json:"syncConfig,omitempty"`
 	// The id of the app the connector is associated with.
 	AppID *string `json:"appId,omitempty"`
 	// The canResumeSync field.
@@ -59,9 +51,10 @@ type Connector struct {
 	Config          *Config    `json:"config,omitempty"`
 	ConfigUpdatedAt *time.Time `json:"configUpdatedAt,omitempty"`
 	// The connectorApiVersion field.
-	ConnectorAPIVersion *int64     `json:"connectorApiVersion,omitempty"`
-	CreatedAt           *time.Time `json:"createdAt,omitempty"`
-	DeletedAt           *time.Time `json:"deletedAt,omitempty"`
+	ConnectorAPIVersion       *int64                     `json:"connectorApiVersion,omitempty"`
+	ConnectorSyncCronSchedule *ConnectorSyncCronSchedule `json:"connectorSyncCronSchedule,omitempty"`
+	CreatedAt                 *time.Time                 `json:"createdAt,omitempty"`
+	DeletedAt                 *time.Time                 `json:"deletedAt,omitempty"`
 	// The description of the connector.
 	Description *string `json:"description,omitempty"`
 	// The disableCheckBadSync field.
@@ -71,14 +64,17 @@ type Connector struct {
 	// The downloadUrl for a spreadsheet if the connector was created from uploading a file.
 	DownloadURL *string `json:"downloadUrl,omitempty"`
 	// The id of the connector.
-	ID *string `json:"id,omitempty"`
+	ID                *string             `json:"id,omitempty"`
+	OauthAuthorizedAs *OAuth2AuthorizedAs `json:"oauthAuthorizedAs,omitempty"`
 	// Number of sync workers to use for parallel sync, when the PARALLEL_SYNC feature is enabled. Zero disables parallel sync. Optional on write: omit the field in UpdateAdvancedConfig to leave the stored value unchanged. The public API allows setting up to 4.
 	ParallelSyncWorkerCount *int `json:"parallelSyncWorkerCount,omitempty"`
 	// List of profile attributes to sync, when set only these attributes will be synced
 	ProfileAllowList []string `json:"profileAllowList,omitempty"`
 	// List of profile attributes to ignore (not sync), when set other attributes will be synced, but these will not.
-	ProfileIgnoreList []string   `json:"profileIgnoreList,omitempty"`
-	SyncDisabledAt    *time.Time `json:"syncDisabledAt,omitempty"`
+	ProfileIgnoreList []string         `json:"profileIgnoreList,omitempty"`
+	Status            *ConnectorStatus `json:"status,omitempty"`
+	SyncConfig        *SyncConfig      `json:"syncConfig,omitempty"`
+	SyncDisabledAt    *time.Time       `json:"syncDisabledAt,omitempty"`
 	// The category of the connector sync that was disabled.
 	SyncDisabledCategory *string `json:"syncDisabledCategory,omitempty"`
 	// The reason the connector sync was disabled.
@@ -97,34 +93,6 @@ func (c *Connector) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
-}
-
-func (c *Connector) GetConnectorStatus() *ConnectorStatus {
-	if c == nil {
-		return nil
-	}
-	return c.ConnectorStatus
-}
-
-func (c *Connector) GetConnectorSyncCronSchedule() *ConnectorSyncCronSchedule {
-	if c == nil {
-		return nil
-	}
-	return c.ConnectorSyncCronSchedule
-}
-
-func (c *Connector) GetOAuth2AuthorizedAs() *OAuth2AuthorizedAs {
-	if c == nil {
-		return nil
-	}
-	return c.OAuth2AuthorizedAs
-}
-
-func (c *Connector) GetSyncConfig() *SyncConfig {
-	if c == nil {
-		return nil
-	}
-	return c.SyncConfig
 }
 
 func (c *Connector) GetAppID() *string {
@@ -167,6 +135,13 @@ func (c *Connector) GetConnectorAPIVersion() *int64 {
 		return nil
 	}
 	return c.ConnectorAPIVersion
+}
+
+func (c *Connector) GetConnectorSyncCronSchedule() *ConnectorSyncCronSchedule {
+	if c == nil {
+		return nil
+	}
+	return c.ConnectorSyncCronSchedule
 }
 
 func (c *Connector) GetCreatedAt() *time.Time {
@@ -218,6 +193,13 @@ func (c *Connector) GetID() *string {
 	return c.ID
 }
 
+func (c *Connector) GetOauthAuthorizedAs() *OAuth2AuthorizedAs {
+	if c == nil {
+		return nil
+	}
+	return c.OauthAuthorizedAs
+}
+
 func (c *Connector) GetParallelSyncWorkerCount() *int {
 	if c == nil {
 		return nil
@@ -237,6 +219,20 @@ func (c *Connector) GetProfileIgnoreList() []string {
 		return nil
 	}
 	return c.ProfileIgnoreList
+}
+
+func (c *Connector) GetStatus() *ConnectorStatus {
+	if c == nil {
+		return nil
+	}
+	return c.Status
+}
+
+func (c *Connector) GetSyncConfig() *SyncConfig {
+	if c == nil {
+		return nil
+	}
+	return c.SyncConfig
 }
 
 func (c *Connector) GetSyncDisabledAt() *time.Time {
@@ -276,14 +272,6 @@ func (c *Connector) GetUserIds() []string {
 
 // ConnectorInput - A Connector is used to sync objects into Apps
 type ConnectorInput struct {
-	// The status field on the connector is used to track the status of the connectors sync, and when syncing last started, completed, or caused the connector to update.
-	ConnectorStatus *ConnectorStatus `json:"status,omitempty"`
-	// The ConnectorSyncCronSchedule message.
-	ConnectorSyncCronSchedule *ConnectorSyncCronSchedule `json:"connectorSyncCronSchedule,omitempty"`
-	// OAuth2AuthorizedAs tracks the user that OAuthed with the connector.
-	OAuth2AuthorizedAs *OAuth2AuthorizedAsInput `json:"oauthAuthorizedAs,omitempty"`
-	// The SyncConfig message.
-	SyncConfig *SyncConfig `json:"syncConfig,omitempty"`
 	// The id of the app the connector is associated with.
 	AppID *string `json:"appId,omitempty"`
 	// The canResumeSync field.
@@ -291,7 +279,8 @@ type ConnectorInput struct {
 	// The catalogId describes which catalog entry this connector is an instance of. For example, every Okta connector will have the same catalogId indicating it is an Okta connector.
 	CatalogID *string `json:"catalogId,omitempty"`
 	// Contains an arbitrary serialized message along with a @type that describes the type of the serialized message.
-	Config *Config `json:"config,omitempty"`
+	Config                    *Config                    `json:"config,omitempty"`
+	ConnectorSyncCronSchedule *ConnectorSyncCronSchedule `json:"connectorSyncCronSchedule,omitempty"`
 	// The description of the connector.
 	Description *string `json:"description,omitempty"`
 	// The disableCheckBadSync field.
@@ -299,47 +288,22 @@ type ConnectorInput struct {
 	// The display name of the connector.
 	DisplayName *string `json:"displayName,omitempty"`
 	// The id of the connector.
-	ID *string `json:"id,omitempty"`
+	ID                *string                  `json:"id,omitempty"`
+	OauthAuthorizedAs *OAuth2AuthorizedAsInput `json:"oauthAuthorizedAs,omitempty"`
 	// Number of sync workers to use for parallel sync, when the PARALLEL_SYNC feature is enabled. Zero disables parallel sync. Optional on write: omit the field in UpdateAdvancedConfig to leave the stored value unchanged. The public API allows setting up to 4.
 	ParallelSyncWorkerCount *int `json:"parallelSyncWorkerCount,omitempty"`
 	// List of profile attributes to sync, when set only these attributes will be synced
 	ProfileAllowList []string `json:"profileAllowList,omitempty"`
 	// List of profile attributes to ignore (not sync), when set other attributes will be synced, but these will not.
-	ProfileIgnoreList []string `json:"profileIgnoreList,omitempty"`
+	ProfileIgnoreList []string         `json:"profileIgnoreList,omitempty"`
+	Status            *ConnectorStatus `json:"status,omitempty"`
+	SyncConfig        *SyncConfig      `json:"syncConfig,omitempty"`
 	// The category of the connector sync that was disabled.
 	SyncDisabledCategory *string `json:"syncDisabledCategory,omitempty"`
 	// The reason the connector sync was disabled.
 	SyncDisabledReason *string `json:"syncDisabledReason,omitempty"`
 	// The userIds field is used to define the integration owners of the connector.
 	UserIds []string `json:"userIds,omitempty"`
-}
-
-func (c *ConnectorInput) GetConnectorStatus() *ConnectorStatus {
-	if c == nil {
-		return nil
-	}
-	return c.ConnectorStatus
-}
-
-func (c *ConnectorInput) GetConnectorSyncCronSchedule() *ConnectorSyncCronSchedule {
-	if c == nil {
-		return nil
-	}
-	return c.ConnectorSyncCronSchedule
-}
-
-func (c *ConnectorInput) GetOAuth2AuthorizedAs() *OAuth2AuthorizedAsInput {
-	if c == nil {
-		return nil
-	}
-	return c.OAuth2AuthorizedAs
-}
-
-func (c *ConnectorInput) GetSyncConfig() *SyncConfig {
-	if c == nil {
-		return nil
-	}
-	return c.SyncConfig
 }
 
 func (c *ConnectorInput) GetAppID() *string {
@@ -370,6 +334,13 @@ func (c *ConnectorInput) GetConfig() *Config {
 	return c.Config
 }
 
+func (c *ConnectorInput) GetConnectorSyncCronSchedule() *ConnectorSyncCronSchedule {
+	if c == nil {
+		return nil
+	}
+	return c.ConnectorSyncCronSchedule
+}
+
 func (c *ConnectorInput) GetDescription() *string {
 	if c == nil {
 		return nil
@@ -398,6 +369,13 @@ func (c *ConnectorInput) GetID() *string {
 	return c.ID
 }
 
+func (c *ConnectorInput) GetOauthAuthorizedAs() *OAuth2AuthorizedAsInput {
+	if c == nil {
+		return nil
+	}
+	return c.OauthAuthorizedAs
+}
+
 func (c *ConnectorInput) GetParallelSyncWorkerCount() *int {
 	if c == nil {
 		return nil
@@ -417,6 +395,20 @@ func (c *ConnectorInput) GetProfileIgnoreList() []string {
 		return nil
 	}
 	return c.ProfileIgnoreList
+}
+
+func (c *ConnectorInput) GetStatus() *ConnectorStatus {
+	if c == nil {
+		return nil
+	}
+	return c.Status
+}
+
+func (c *ConnectorInput) GetSyncConfig() *SyncConfig {
+	if c == nil {
+		return nil
+	}
+	return c.SyncConfig
 }
 
 func (c *ConnectorInput) GetSyncDisabledCategory() *string {

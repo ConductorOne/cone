@@ -4,15 +4,9 @@ package shared
 
 // AppResourceServiceUpdateRequest - The request message for updating an app resource.
 type AppResourceServiceUpdateRequest struct {
-	// The app resource message is a single resource that can have entitlements.
-	//
-	// This message contains a oneof named metadata. Only a single field of the following list may be set at a time:
-	//   - secretTrait
-	//
-	AppResource *AppResourceInput `json:"appResource,omitempty"`
-	// The app resource expand mask lets you get information about related objects from the request.
-	AppResourceExpandMask *AppResourceExpandMask `json:"expandMask,omitempty"`
-	UpdateMask            *string                `json:"updateMask,omitempty"`
+	AppResource *AppResourceInput      `json:"appResource,omitempty"`
+	ExpandMask  *AppResourceExpandMask `json:"expandMask,omitempty"`
+	UpdateMask  *string                `json:"updateMask,omitempty"`
 }
 
 func (a *AppResourceServiceUpdateRequest) GetAppResource() *AppResourceInput {
@@ -22,11 +16,11 @@ func (a *AppResourceServiceUpdateRequest) GetAppResource() *AppResourceInput {
 	return a.AppResource
 }
 
-func (a *AppResourceServiceUpdateRequest) GetAppResourceExpandMask() *AppResourceExpandMask {
+func (a *AppResourceServiceUpdateRequest) GetExpandMask() *AppResourceExpandMask {
 	if a == nil {
 		return nil
 	}
-	return a.AppResourceExpandMask
+	return a.ExpandMask
 }
 
 func (a *AppResourceServiceUpdateRequest) GetUpdateMask() *string {

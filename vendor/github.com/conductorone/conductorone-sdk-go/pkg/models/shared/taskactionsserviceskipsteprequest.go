@@ -4,19 +4,11 @@ package shared
 
 // The TaskActionsServiceSkipStepRequest object lets you skip a policy step in a task.
 type TaskActionsServiceSkipStepRequest struct {
-	// The task expand mask is an array of strings that specifes the related objects the requester wishes to have returned when making a request where the expand mask is part of the input. Use '*' to view all possible responses.
-	TaskExpandMask *TaskExpandMask `json:"expandMask,omitempty"`
 	// The comment attached to the request.
-	Comment *string `json:"comment,omitempty"`
+	Comment    *string         `json:"comment,omitempty"`
+	ExpandMask *TaskExpandMask `json:"expandMask,omitempty"`
 	// The ID of the policy step to skip.
 	PolicyStepID string `json:"policyStepId"`
-}
-
-func (t *TaskActionsServiceSkipStepRequest) GetTaskExpandMask() *TaskExpandMask {
-	if t == nil {
-		return nil
-	}
-	return t.TaskExpandMask
 }
 
 func (t *TaskActionsServiceSkipStepRequest) GetComment() *string {
@@ -24,6 +16,13 @@ func (t *TaskActionsServiceSkipStepRequest) GetComment() *string {
 		return nil
 	}
 	return t.Comment
+}
+
+func (t *TaskActionsServiceSkipStepRequest) GetExpandMask() *TaskExpandMask {
+	if t == nil {
+		return nil
+	}
+	return t.ExpandMask
 }
 
 func (t *TaskActionsServiceSkipStepRequest) GetPolicyStepID() string {

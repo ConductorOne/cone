@@ -40,17 +40,9 @@ func (t *TaskServiceCreateGrantResponseExpanded) GetAdditionalProperties() map[s
 
 // The TaskServiceCreateGrantResponse returns a task view which has a task including JSONPATHs to the expanded items in the expanded array.
 type TaskServiceCreateGrantResponse struct {
-	// Contains a task and JSONPATH expressions that describe where in the expanded array related objects are located. This view can be used to display a fully-detailed dashboard of task information.
-	TaskView *TaskView `json:"taskView,omitempty"`
 	// List of serialized related objects.
 	Expanded []TaskServiceCreateGrantResponseExpanded `json:"expanded,omitempty"`
-}
-
-func (t *TaskServiceCreateGrantResponse) GetTaskView() *TaskView {
-	if t == nil {
-		return nil
-	}
-	return t.TaskView
+	TaskView *TaskView                                `json:"taskView,omitempty"`
 }
 
 func (t *TaskServiceCreateGrantResponse) GetExpanded() []TaskServiceCreateGrantResponseExpanded {
@@ -58,4 +50,11 @@ func (t *TaskServiceCreateGrantResponse) GetExpanded() []TaskServiceCreateGrantR
 		return nil
 	}
 	return t.Expanded
+}
+
+func (t *TaskServiceCreateGrantResponse) GetTaskView() *TaskView {
+	if t == nil {
+		return nil
+	}
+	return t.TaskView
 }

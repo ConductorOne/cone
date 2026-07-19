@@ -14,18 +14,14 @@ import (
 //   - cancelTicket
 //   - skipStep
 type Escalation struct {
-	// The CancelTicket message.
 	CancelTicket *CancelTicket `json:"cancelTicket,omitempty"`
-	// The ReassignToApprovers message.
-	ReassignToApprovers *ReassignToApprovers `json:"reassignToApprovers,omitempty"`
-	// The ReplacePolicy message.
-	ReplacePolicy *ReplacePolicy `json:"replacePolicy,omitempty"`
-	// The SkipStep message.
-	SkipStep *SkipStep `json:"skipStep,omitempty"`
 	// The escalationComment field.
 	EscalationComment *string `json:"escalationComment,omitempty"`
 	// The expiration field.
-	Expiration *int64 `integer:"string" json:"expiration,omitempty"`
+	Expiration          *int64               `integer:"string" json:"expiration,omitempty"`
+	ReassignToApprovers *ReassignToApprovers `json:"reassignToApprovers,omitempty"`
+	ReplacePolicy       *ReplacePolicy       `json:"replacePolicy,omitempty"`
+	SkipStep            *SkipStep            `json:"skipStep,omitempty"`
 }
 
 func (e Escalation) MarshalJSON() ([]byte, error) {
@@ -44,6 +40,20 @@ func (e *Escalation) GetCancelTicket() *CancelTicket {
 		return nil
 	}
 	return e.CancelTicket
+}
+
+func (e *Escalation) GetEscalationComment() *string {
+	if e == nil {
+		return nil
+	}
+	return e.EscalationComment
+}
+
+func (e *Escalation) GetExpiration() *int64 {
+	if e == nil {
+		return nil
+	}
+	return e.Expiration
 }
 
 func (e *Escalation) GetReassignToApprovers() *ReassignToApprovers {
@@ -65,18 +75,4 @@ func (e *Escalation) GetSkipStep() *SkipStep {
 		return nil
 	}
 	return e.SkipStep
-}
-
-func (e *Escalation) GetEscalationComment() *string {
-	if e == nil {
-		return nil
-	}
-	return e.EscalationComment
-}
-
-func (e *Escalation) GetExpiration() *int64 {
-	if e == nil {
-		return nil
-	}
-	return e.Expiration
 }

@@ -10,18 +10,12 @@ package shared
 //   - inclusionCriteria
 //   - inclusionListCel
 type GrantTriggerFilter struct {
-	// The AccountFilter message.
-	AccountFilter *AccountFilter `json:"accountFilter,omitempty"`
-	// The EntitlementInclusionAll message.
-	EntitlementInclusionAll *EntitlementInclusionAll `json:"inclusionAll,omitempty"`
-	// The EntitlementInclusionCriteria message.
-	EntitlementInclusionCriteria *EntitlementInclusionCriteria `json:"inclusionCriteria,omitempty"`
-	// The EntitlementInclusionList message.
-	EntitlementInclusionList *EntitlementInclusionList `json:"inclusionList,omitempty"`
-	// The EntitlementInclusionListCel message.
-	EntitlementInclusionListCel *EntitlementInclusionListCel `json:"inclusionListCel,omitempty"`
-	// The GrantFilter message.
-	GrantFilter *GrantFilter `json:"grantFilter,omitempty"`
+	AccountFilter     *AccountFilter                `json:"accountFilter,omitempty"`
+	GrantFilter       *GrantFilter                  `json:"grantFilter,omitempty"`
+	InclusionAll      *EntitlementInclusionAll      `json:"inclusionAll,omitempty"`
+	InclusionCriteria *EntitlementInclusionCriteria `json:"inclusionCriteria,omitempty"`
+	InclusionList     *EntitlementInclusionList     `json:"inclusionList,omitempty"`
+	InclusionListCel  *EntitlementInclusionListCel  `json:"inclusionListCel,omitempty"`
 }
 
 func (g *GrantTriggerFilter) GetAccountFilter() *AccountFilter {
@@ -31,37 +25,37 @@ func (g *GrantTriggerFilter) GetAccountFilter() *AccountFilter {
 	return g.AccountFilter
 }
 
-func (g *GrantTriggerFilter) GetEntitlementInclusionAll() *EntitlementInclusionAll {
-	if g == nil {
-		return nil
-	}
-	return g.EntitlementInclusionAll
-}
-
-func (g *GrantTriggerFilter) GetEntitlementInclusionCriteria() *EntitlementInclusionCriteria {
-	if g == nil {
-		return nil
-	}
-	return g.EntitlementInclusionCriteria
-}
-
-func (g *GrantTriggerFilter) GetEntitlementInclusionList() *EntitlementInclusionList {
-	if g == nil {
-		return nil
-	}
-	return g.EntitlementInclusionList
-}
-
-func (g *GrantTriggerFilter) GetEntitlementInclusionListCel() *EntitlementInclusionListCel {
-	if g == nil {
-		return nil
-	}
-	return g.EntitlementInclusionListCel
-}
-
 func (g *GrantTriggerFilter) GetGrantFilter() *GrantFilter {
 	if g == nil {
 		return nil
 	}
 	return g.GrantFilter
+}
+
+func (g *GrantTriggerFilter) GetInclusionAll() *EntitlementInclusionAll {
+	if g == nil {
+		return nil
+	}
+	return g.InclusionAll
+}
+
+func (g *GrantTriggerFilter) GetInclusionCriteria() *EntitlementInclusionCriteria {
+	if g == nil {
+		return nil
+	}
+	return g.InclusionCriteria
+}
+
+func (g *GrantTriggerFilter) GetInclusionList() *EntitlementInclusionList {
+	if g == nil {
+		return nil
+	}
+	return g.InclusionList
+}
+
+func (g *GrantTriggerFilter) GetInclusionListCel() *EntitlementInclusionListCel {
+	if g == nil {
+		return nil
+	}
+	return g.InclusionListCel
 }

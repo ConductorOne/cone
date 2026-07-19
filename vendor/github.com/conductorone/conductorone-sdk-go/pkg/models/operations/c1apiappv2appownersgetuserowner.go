@@ -41,7 +41,7 @@ type C1APIAppV2AppOwnersGetUserOwnerResponse struct {
 	// HTTP response content type for this operation
 	ContentType string
 	// GetUserOwnerResponse is the response for getting a user ownership source.
-	GetUserOwnerResponse *shared.GetUserOwnerResponse
+	GetAppUserOwnerResponse *shared.GetAppUserOwnerResponse
 	// HTTP response status code for this operation
 	StatusCode int
 	// Raw HTTP response; suitable for custom response parsing
@@ -55,11 +55,11 @@ func (c *C1APIAppV2AppOwnersGetUserOwnerResponse) GetContentType() string {
 	return c.ContentType
 }
 
-func (c *C1APIAppV2AppOwnersGetUserOwnerResponse) GetGetUserOwnerResponse() *shared.GetUserOwnerResponse {
+func (c *C1APIAppV2AppOwnersGetUserOwnerResponse) GetGetAppUserOwnerResponse() *shared.GetAppUserOwnerResponse {
 	if c == nil {
 		return nil
 	}
-	return c.GetUserOwnerResponse
+	return c.GetAppUserOwnerResponse
 }
 
 func (c *C1APIAppV2AppOwnersGetUserOwnerResponse) GetStatusCode() int {

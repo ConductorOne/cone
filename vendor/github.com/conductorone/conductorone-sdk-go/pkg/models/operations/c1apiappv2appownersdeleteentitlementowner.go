@@ -8,18 +8,18 @@ import (
 )
 
 type C1APIAppV2AppOwnersDeleteEntitlementOwnerRequest struct {
-	DeleteEntitlementOwnerRequest *shared.DeleteEntitlementOwnerRequest `request:"mediaType=application/json"`
-	AppEntitlementRefAppID        string                                `pathParam:"style=simple,explode=false,name=app_entitlement_ref_app_id"`
-	AppEntitlementRefID           string                                `pathParam:"style=simple,explode=false,name=app_entitlement_ref_id"`
-	AppID                         string                                `pathParam:"style=simple,explode=false,name=app_id"`
-	RoleSlug                      string                                `pathParam:"style=simple,explode=false,name=role_slug"`
+	DeleteAppEntitlementOwnerRequest *shared.DeleteAppEntitlementOwnerRequest `request:"mediaType=application/json"`
+	AppEntitlementRefAppID           string                                   `pathParam:"style=simple,explode=false,name=app_entitlement_ref_app_id"`
+	AppEntitlementRefID              string                                   `pathParam:"style=simple,explode=false,name=app_entitlement_ref_id"`
+	AppID                            string                                   `pathParam:"style=simple,explode=false,name=app_id"`
+	RoleSlug                         string                                   `pathParam:"style=simple,explode=false,name=role_slug"`
 }
 
-func (c *C1APIAppV2AppOwnersDeleteEntitlementOwnerRequest) GetDeleteEntitlementOwnerRequest() *shared.DeleteEntitlementOwnerRequest {
+func (c *C1APIAppV2AppOwnersDeleteEntitlementOwnerRequest) GetDeleteAppEntitlementOwnerRequest() *shared.DeleteAppEntitlementOwnerRequest {
 	if c == nil {
 		return nil
 	}
-	return c.DeleteEntitlementOwnerRequest
+	return c.DeleteAppEntitlementOwnerRequest
 }
 
 func (c *C1APIAppV2AppOwnersDeleteEntitlementOwnerRequest) GetAppEntitlementRefAppID() string {
@@ -57,7 +57,7 @@ type C1APIAppV2AppOwnersDeleteEntitlementOwnerResponse struct {
 	// HTTP response content type for this operation
 	ContentType string
 	// DeleteEntitlementOwnerResponse is the empty response for deleting an entitlement ownership source.
-	DeleteEntitlementOwnerResponse *shared.DeleteEntitlementOwnerResponse
+	DeleteAppEntitlementOwnerResponse *shared.DeleteAppEntitlementOwnerResponse
 	// HTTP response status code for this operation
 	StatusCode int
 	// Raw HTTP response; suitable for custom response parsing
@@ -71,11 +71,11 @@ func (c *C1APIAppV2AppOwnersDeleteEntitlementOwnerResponse) GetContentType() str
 	return c.ContentType
 }
 
-func (c *C1APIAppV2AppOwnersDeleteEntitlementOwnerResponse) GetDeleteEntitlementOwnerResponse() *shared.DeleteEntitlementOwnerResponse {
+func (c *C1APIAppV2AppOwnersDeleteEntitlementOwnerResponse) GetDeleteAppEntitlementOwnerResponse() *shared.DeleteAppEntitlementOwnerResponse {
 	if c == nil {
 		return nil
 	}
-	return c.DeleteEntitlementOwnerResponse
+	return c.DeleteAppEntitlementOwnerResponse
 }
 
 func (c *C1APIAppV2AppOwnersDeleteEntitlementOwnerResponse) GetStatusCode() int {

@@ -40,23 +40,15 @@ func (c *ConnectorServiceCreateRequestConfig) GetAdditionalProperties() map[stri
 
 // The ConnectorServiceCreateRequest message.
 type ConnectorServiceCreateRequest struct {
-	// The ConnectorExpandMask is used to expand related objects on a connector.
-	ConnectorExpandMask *ConnectorExpandMask `json:"expandMask,omitempty"`
 	// The catalogId field.
 	CatalogID *string `json:"catalogId,omitempty"`
 	// Contains an arbitrary serialized message along with a @type that describes the type of the serialized message.
 	Config *ConnectorServiceCreateRequestConfig `json:"config,omitempty"`
 	// The description field.
-	Description *string `json:"description,omitempty"`
+	Description *string              `json:"description,omitempty"`
+	ExpandMask  *ConnectorExpandMask `json:"expandMask,omitempty"`
 	// The userIds field.
 	UserIds []string `json:"userIds,omitempty"`
-}
-
-func (c *ConnectorServiceCreateRequest) GetConnectorExpandMask() *ConnectorExpandMask {
-	if c == nil {
-		return nil
-	}
-	return c.ConnectorExpandMask
 }
 
 func (c *ConnectorServiceCreateRequest) GetCatalogID() *string {
@@ -78,6 +70,13 @@ func (c *ConnectorServiceCreateRequest) GetDescription() *string {
 		return nil
 	}
 	return c.Description
+}
+
+func (c *ConnectorServiceCreateRequest) GetExpandMask() *ConnectorExpandMask {
+	if c == nil {
+		return nil
+	}
+	return c.ExpandMask
 }
 
 func (c *ConnectorServiceCreateRequest) GetUserIds() []string {

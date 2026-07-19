@@ -698,11 +698,11 @@ func secretGetRun(cmd *cobra.Command, args []string) error {
 	return output.NewManager(ctx, v).Output(ctx, &resp, output.WithTransposeTable())
 }
 
-// encryptBytesToAgeRecipient encrypts plaintext to an Age X25519 recipient and returns the
+// encryptBytesToAgeRecipient encrypts plaintext to an Age hybrid recipient and returns the
 // raw ciphertext bytes, which begin with the Age header "age-encryption.org/v1". FILE secrets
 // PUT these bytes verbatim to the upload URL.
 func encryptBytesToAgeRecipient(recipientKey string, plaintext []byte) ([]byte, error) {
-	recipient, err := age.ParseX25519Recipient(recipientKey)
+	recipient, err := age.ParseHybridRecipient(recipientKey)
 	if err != nil {
 		return nil, fmt.Errorf("invalid Age recipient: %w", err)
 	}
@@ -723,7 +723,7 @@ func encryptBytesToAgeRecipient(recipientKey string, plaintext []byte) ([]byte, 
 }
 
 func encryptFileToTemp(filePath string, recipientKey string) (*os.File, error) {
-	recipient, err := age.ParseX25519Recipient(recipientKey)
+	recipient, err := age.ParseHybridRecipient(recipientKey)
 	if err != nil {
 		return nil, fmt.Errorf("invalid Age recipient: %w", err)
 	}
@@ -765,7 +765,7 @@ func encryptFileToTemp(filePath string, recipientKey string) (*os.File, error) {
 	return tmp, nil
 }
 
-// encryptToAgeRecipient encrypts plaintext to an Age X25519 recipient and returns the
+// encryptToAgeRecipient encrypts plaintext to an Age hybrid recipient and returns the
 // base64-encoded ciphertext. The TEXT content API stores content in a protobuf bytes field,
 // which is base64-encoded over JSON; the decoded bytes are the raw Age format.
 func encryptToAgeRecipient(recipientKey string, plaintext []byte) (string, error) {
@@ -798,7 +798,7 @@ func secretViewRun(cmd *cobra.Command, args []string) error {
 	}
 
 	// Generate an ephemeral identity; the server re-encrypts content to its recipient.
-	identity, err := age.GenerateX25519Identity()
+	identity, err := age.GenerateHybridIdentity()
 	if err != nil {
 		return fmt.Errorf("failed to generate Age identity: %w", err)
 	}
@@ -863,7 +863,7 @@ func secretDownloadRun(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
-	identity, err := age.GenerateX25519Identity()
+	identity, err := age.GenerateHybridIdentity()
 	if err != nil {
 		return fmt.Errorf("failed to generate Age identity: %w", err)
 	}
@@ -983,7 +983,7 @@ func secretAuditRun(cmd *cobra.Command, args []string) error {
 }
 
 // decryptFromAgeIdentity base64-decodes the Age ciphertext and decrypts it with the given identity.
-func decryptFromAgeIdentity(identity *age.X25519Identity, encrypted string) (string, error) {
+func decryptFromAgeIdentity(identity age.Identity, encrypted string) (string, error) {
 	raw, err := base64.StdEncoding.DecodeString(encrypted)
 	if err != nil {
 		return "", fmt.Errorf("invalid base64 content: %w", err)

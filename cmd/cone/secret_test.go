@@ -30,9 +30,9 @@ func TestEncryptDecryptRoundtrip(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			identity, err := age.GenerateX25519Identity()
+			identity, err := age.GenerateHybridIdentity()
 			if err != nil {
-				t.Fatalf("GenerateX25519Identity() unexpected error: %v", err)
+				t.Fatalf("GenerateHybridIdentity() unexpected error: %v", err)
 			}
 
 			encrypted, err := encryptToAgeRecipient(identity.Recipient().String(), []byte(tt.plaintext))
@@ -67,9 +67,9 @@ func TestEncryptToAgeRecipientInvalid(t *testing.T) {
 }
 
 func TestDecryptFromAgeIdentityErrors(t *testing.T) {
-	identity, err := age.GenerateX25519Identity()
+	identity, err := age.GenerateHybridIdentity()
 	if err != nil {
-		t.Fatalf("GenerateX25519Identity() unexpected error: %v", err)
+		t.Fatalf("GenerateHybridIdentity() unexpected error: %v", err)
 	}
 
 	tests := []struct {
@@ -90,13 +90,13 @@ func TestDecryptFromAgeIdentityErrors(t *testing.T) {
 }
 
 func TestDecryptWithWrongIdentity(t *testing.T) {
-	sender, err := age.GenerateX25519Identity()
+	sender, err := age.GenerateHybridIdentity()
 	if err != nil {
-		t.Fatalf("GenerateX25519Identity() unexpected error: %v", err)
+		t.Fatalf("GenerateHybridIdentity() unexpected error: %v", err)
 	}
-	other, err := age.GenerateX25519Identity()
+	other, err := age.GenerateHybridIdentity()
 	if err != nil {
-		t.Fatalf("GenerateX25519Identity() unexpected error: %v", err)
+		t.Fatalf("GenerateHybridIdentity() unexpected error: %v", err)
 	}
 
 	encrypted, err := encryptToAgeRecipient(sender.Recipient().String(), []byte("secret"))
@@ -106,6 +106,34 @@ func TestDecryptWithWrongIdentity(t *testing.T) {
 
 	if _, err := decryptFromAgeIdentity(other, encrypted); err == nil {
 		t.Error("decryptFromAgeIdentity() with wrong identity expected error, got nil")
+	}
+}
+
+func TestHybridIdentityRejectsLegacyCiphertext(t *testing.T) {
+	legacyIdentity, err := age.GenerateX25519Identity()
+	if err != nil {
+		t.Fatalf("GenerateX25519Identity() unexpected error: %v", err)
+	}
+	hybridIdentity, err := age.GenerateHybridIdentity()
+	if err != nil {
+		t.Fatalf("GenerateHybridIdentity() unexpected error: %v", err)
+	}
+
+	var ciphertext bytes.Buffer
+	w, err := age.Encrypt(&ciphertext, legacyIdentity.Recipient())
+	if err != nil {
+		t.Fatalf("Encrypt() unexpected error: %v", err)
+	}
+	if _, err := w.Write([]byte("legacy")); err != nil {
+		t.Fatalf("Write() unexpected error: %v", err)
+	}
+	if err := w.Close(); err != nil {
+		t.Fatalf("Close() unexpected error: %v", err)
+	}
+
+	encoded := base64.StdEncoding.EncodeToString(ciphertext.Bytes())
+	if _, err := decryptFromAgeIdentity(hybridIdentity, encoded); err == nil {
+		t.Fatal("hybrid identity decrypted legacy X25519 ciphertext")
 	}
 }
 
@@ -358,9 +386,9 @@ func TestCreateExternalInputFormat(t *testing.T) {
 // TestEncryptBytesToAgeRecipient verifies the FILE path produces raw (non-base64) Age bytes
 // that decrypt back to the original, since file content is PUT verbatim rather than base64-encoded.
 func TestEncryptBytesToAgeRecipient(t *testing.T) {
-	identity, err := age.GenerateX25519Identity()
+	identity, err := age.GenerateHybridIdentity()
 	if err != nil {
-		t.Fatalf("GenerateX25519Identity() unexpected error: %v", err)
+		t.Fatalf("GenerateHybridIdentity() unexpected error: %v", err)
 	}
 
 	plaintext := []byte("binary\x00file\xff content")
@@ -370,6 +398,9 @@ func TestEncryptBytesToAgeRecipient(t *testing.T) {
 	}
 	if !strings.HasPrefix(string(raw), "age-encryption.org/v1") {
 		t.Errorf("raw output is not Age format, got prefix %q", string(raw[:min(len(raw), 22)]))
+	}
+	if !bytes.Contains(raw, []byte("-> mlkem768x25519 ")) {
+		t.Fatal("raw output does not contain an mlkem768x25519 recipient stanza")
 	}
 
 	// Decrypt via the base64-wrapping helper to confirm the bytes roundtrip.
@@ -385,6 +416,17 @@ func TestEncryptBytesToAgeRecipient(t *testing.T) {
 func TestEncryptBytesToAgeRecipientInvalid(t *testing.T) {
 	if _, err := encryptBytesToAgeRecipient("not-a-valid-age-recipient", []byte("data")); err == nil {
 		t.Error("encryptBytesToAgeRecipient() with invalid recipient expected error, got nil")
+	}
+}
+
+func TestEncryptBytesToAgeRecipientRejectsLegacyX25519(t *testing.T) {
+	legacyIdentity, err := age.GenerateX25519Identity()
+	if err != nil {
+		t.Fatalf("GenerateX25519Identity() unexpected error: %v", err)
+	}
+
+	if _, err := encryptBytesToAgeRecipient(legacyIdentity.Recipient().String(), []byte("data")); err == nil {
+		t.Fatal("encryptBytesToAgeRecipient() with legacy X25519 recipient expected error, got nil")
 	}
 }
 
@@ -530,9 +572,9 @@ func TestWriteDecryptedFileAtomically(t *testing.T) {
 }
 
 func TestEncryptFileToTemp(t *testing.T) {
-	identity, err := age.GenerateX25519Identity()
+	identity, err := age.GenerateHybridIdentity()
 	if err != nil {
-		t.Fatalf("GenerateX25519Identity() unexpected error: %v", err)
+		t.Fatalf("GenerateHybridIdentity() unexpected error: %v", err)
 	}
 	src := filepath.Join(t.TempDir(), "source.bin")
 	want := []byte("file secret")

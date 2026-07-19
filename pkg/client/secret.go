@@ -3,14 +3,43 @@ package client
 import (
 	"bytes"
 	"context"
+	"encoding/json"
 	"fmt"
 	"io"
 	"net/http"
+	"net/url"
 	"strings"
 
 	"github.com/conductorone/conductorone-sdk-go/pkg/models/operations"
 	"github.com/conductorone/conductorone-sdk-go/pkg/models/shared"
 )
+
+const requiredAgeSuite = "AGE_SUITE_MLKEM768X25519"
+
+// AgeSuiteMismatchError indicates that PaperSecret did not honor the exact Age
+// suite requested by cone. Retrying is safe: no content has been encrypted or
+// decrypted when this error is returned.
+type AgeSuiteMismatchError struct {
+	Operation string
+	Returned  string
+}
+
+func (e *AgeSuiteMismatchError) Error() string {
+	returned := e.Returned
+	if returned == "" || returned == "AGE_SUITE_UNSPECIFIED" {
+		returned = "AGE_SUITE_UNSPECIFIED"
+	}
+	return fmt.Sprintf("PaperSecret %s returned Age suite %s, required %s; retry the request", e.Operation, returned, requiredAgeSuite)
+}
+
+func (e *AgeSuiteMismatchError) Temporary() bool { return true }
+
+func requirePaperSecretAgeSuite(operation, returned string) error {
+	if returned != requiredAgeSuite {
+		return &AgeSuiteMismatchError{Operation: operation, Returned: returned}
+	}
+	return nil
+}
 
 // CreateInternalSecret creates an internal secret and returns the create response.
 // The response carries the vault ID (primary identifier) and the age recipient
@@ -19,15 +48,7 @@ func (c *client) CreateInternalSecret(
 	ctx context.Context,
 	req *shared.PaperSecretServiceCreateInternalRequest,
 ) (*shared.PaperSecretServiceCreateResponse, error) {
-	resp, err := c.sdk.PaperSecret.CreateInternal(ctx, req)
-	if err != nil {
-		return nil, err
-	}
-
-	if err := NewHTTPError(resp.RawResponse); err != nil {
-		return nil, err
-	}
-	return resp.PaperSecretServiceCreateResponse, nil
+	return c.createSecret(ctx, "/api/v1/secrets/internal", req)
 }
 
 // CreateExternalSecret creates a secret shared with external email recipients
@@ -38,15 +59,66 @@ func (c *client) CreateExternalSecret(
 	ctx context.Context,
 	req *shared.PaperSecretServiceCreateExternalRequest,
 ) (*shared.PaperSecretServiceCreateResponse, error) {
-	resp, err := c.sdk.PaperSecret.CreateExternal(ctx, req)
+	return c.createSecret(ctx, "/api/v1/secrets/external", req)
+}
+
+// createSecret uses the merged PaperSecret wire contract directly until a
+// conductorone-sdk-go release includes requiredAgeSuite and ageSuite. Keeping
+// this shim here ensures the request cannot silently use the API's legacy
+// UNSPECIFIED default, while the rest of the PaperSecret API remains SDK-backed.
+func (c *client) createSecret(ctx context.Context, endpoint string, payload any) (*shared.PaperSecretServiceCreateResponse, error) {
+	body, err := json.Marshal(payload)
+	if err != nil {
+		return nil, err
+	}
+	var request map[string]any
+	if err := json.Unmarshal(body, &request); err != nil {
+		return nil, err
+	}
+	request["requiredAgeSuite"] = requiredAgeSuite
+	body, err = json.Marshal(request)
 	if err != nil {
 		return nil, err
 	}
 
-	if err := NewHTTPError(resp.RawResponse); err != nil {
+	requestURL, err := url.JoinPath(c.baseURL.String(), endpoint)
+	if err != nil {
 		return nil, err
 	}
-	return resp.PaperSecretServiceCreateResponse, nil
+	httpReq, err := http.NewRequestWithContext(ctx, http.MethodPost, requestURL, bytes.NewReader(body))
+	if err != nil {
+		return nil, err
+	}
+	httpReq.Header.Set("Accept", "application/json")
+	httpReq.Header.Set("Content-Type", "application/json")
+
+	httpResp, err := c.httpClient.Do(httpReq)
+	if err != nil {
+		return nil, err
+	}
+	defer func() { _ = httpResp.Body.Close() }()
+	if err := NewHTTPError(httpResp); err != nil {
+		return nil, err
+	}
+
+	responseBody, err := io.ReadAll(httpResp.Body)
+	if err != nil {
+		return nil, err
+	}
+	var suiteResponse struct {
+		AgeSuite string `json:"ageSuite"`
+	}
+	if err := json.Unmarshal(responseBody, &suiteResponse); err != nil {
+		return nil, err
+	}
+	if err := requirePaperSecretAgeSuite("create", suiteResponse.AgeSuite); err != nil {
+		return nil, err
+	}
+	var response shared.PaperSecretServiceCreateResponse
+	if err := json.Unmarshal(responseBody, &response); err != nil {
+		return nil, err
+	}
+	return &response, nil
 }
 
 // UploadSecretFile uploads the Age-encrypted bytes of a FILE secret to the capability
@@ -125,7 +197,7 @@ func (c *client) SetSecretTextContent(
 }
 
 // GetSecretContent fetches a secret's content. The server re-encrypts the content to
-// readerRecipient (an Age "age1..." recipient), so the caller must hold the matching
+// readerRecipient (an Age "age1pq1..." hybrid recipient), so the caller must hold the matching
 // Age identity to decrypt the returned bytes. Reading may count against the secret's
 // view limit.
 func (c *client) GetSecretContent(

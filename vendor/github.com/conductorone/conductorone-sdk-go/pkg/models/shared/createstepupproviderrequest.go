@@ -8,18 +8,6 @@ package shared
 //   - oauth2
 //   - microsoft
 type CreateStepUpProviderRequest struct {
-	// StepUpMicrosoftSettings configures a Microsoft Entra step-up provider using Conditional Access.
-	StepUpMicrosoftSettings *StepUpMicrosoftSettings `json:"microsoft,omitempty"`
-	// StepUpOAuth2Settings repersents an OAuth2 provider that supports RFC 9470 <https://www.rfc-editor.org/rfc/rfc9470>
-	//
-	//  Common ACR values for OAuth2 providers include:
-	//    - "urn:okta:loa:1fa:any" (okta)
-	//    - "urn:okta:loa:1fa:pwd" (okta)
-	//    - "urn:okta:loa:2fa:any" (okta)
-	//    - "urn:okta:loa:2fa:any:ifpossible" (okta)
-	//    - "phr" (okta)
-	//    - "phrh" (okta)
-	StepUpOAuth2Settings *StepUpOAuth2Settings `json:"oauth2,omitempty"`
 	// The OAuth2 client ID used to authenticate with the step-up provider.
 	ClientID *string `json:"clientId,omitempty"`
 	// The OAuth2 client secret. Write-only; never returned in responses.
@@ -27,21 +15,9 @@ type CreateStepUpProviderRequest struct {
 	// The human-readable name for the new step-up provider.
 	DisplayName *string `json:"displayName,omitempty"`
 	// The OIDC issuer URL for the step-up provider.
-	IssuerURL *string `json:"issuerUrl,omitempty"`
-}
-
-func (c *CreateStepUpProviderRequest) GetStepUpMicrosoftSettings() *StepUpMicrosoftSettings {
-	if c == nil {
-		return nil
-	}
-	return c.StepUpMicrosoftSettings
-}
-
-func (c *CreateStepUpProviderRequest) GetStepUpOAuth2Settings() *StepUpOAuth2Settings {
-	if c == nil {
-		return nil
-	}
-	return c.StepUpOAuth2Settings
+	IssuerURL *string                  `json:"issuerUrl,omitempty"`
+	Microsoft *StepUpMicrosoftSettings `json:"microsoft,omitempty"`
+	Oauth2    *StepUpOAuth2Settings    `json:"oauth2,omitempty"`
 }
 
 func (c *CreateStepUpProviderRequest) GetClientID() *string {
@@ -70,4 +46,18 @@ func (c *CreateStepUpProviderRequest) GetIssuerURL() *string {
 		return nil
 	}
 	return c.IssuerURL
+}
+
+func (c *CreateStepUpProviderRequest) GetMicrosoft() *StepUpMicrosoftSettings {
+	if c == nil {
+		return nil
+	}
+	return c.Microsoft
+}
+
+func (c *CreateStepUpProviderRequest) GetOauth2() *StepUpOAuth2Settings {
+	if c == nil {
+		return nil
+	}
+	return c.Oauth2
 }

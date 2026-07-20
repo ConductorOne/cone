@@ -12,17 +12,12 @@ package shared
 //   - mutuallyExclusive
 //   - dependentOn
 type FieldRelationship struct {
-	// The AtLeastOne message.
-	AtLeastOne *AtLeastOne `json:"atLeastOne,omitempty"`
-	// DependentOn means the fields in field_names are only valid if all fields
-	//  in dependency_field_names are also present
+	AtLeastOne  *AtLeastOne  `json:"atLeastOne,omitempty"`
 	DependentOn *DependentOn `json:"dependentOn,omitempty"`
-	// The MutuallyExclusive message.
-	MutuallyExclusive *MutuallyExclusive `json:"mutuallyExclusive,omitempty"`
-	// The RequiredTogether message.
-	RequiredTogether *RequiredTogether `json:"requiredTogether,omitempty"`
 	// The names of the fields that share this relationship
-	FieldNames []string `json:"fieldNames,omitempty"`
+	FieldNames        []string           `json:"fieldNames,omitempty"`
+	MutuallyExclusive *MutuallyExclusive `json:"mutuallyExclusive,omitempty"`
+	RequiredTogether  *RequiredTogether  `json:"requiredTogether,omitempty"`
 }
 
 func (f *FieldRelationship) GetAtLeastOne() *AtLeastOne {
@@ -39,6 +34,13 @@ func (f *FieldRelationship) GetDependentOn() *DependentOn {
 	return f.DependentOn
 }
 
+func (f *FieldRelationship) GetFieldNames() []string {
+	if f == nil {
+		return nil
+	}
+	return f.FieldNames
+}
+
 func (f *FieldRelationship) GetMutuallyExclusive() *MutuallyExclusive {
 	if f == nil {
 		return nil
@@ -51,11 +53,4 @@ func (f *FieldRelationship) GetRequiredTogether() *RequiredTogether {
 		return nil
 	}
 	return f.RequiredTogether
-}
-
-func (f *FieldRelationship) GetFieldNames() []string {
-	if f == nil {
-		return nil
-	}
-	return f.FieldNames
 }

@@ -4,32 +4,11 @@ package shared
 
 // The ImportField message.
 type ImportField struct {
-	// StringRules describe the constraints applied to `string` values
-	//
-	// This message contains a oneof named well_known. Only a single field of the following list may be set at a time:
-	//   - email
-	//   - hostname
-	//   - ip
-	//   - ipv4
-	//   - ipv6
-	//   - uri
-	//   - uriRef
-	//   - address
-	//   - uuid
-	//   - wellKnownRegex
-	//
-	StringRules *StringRules `json:"valueValidator,omitempty"`
 	// The allowedExtensions field.
 	AllowedExtensions []string `json:"allowedExtensions,omitempty"`
 	// The secret field.
-	Secret *bool `json:"secret,omitempty"`
-}
-
-func (i *ImportField) GetStringRules() *StringRules {
-	if i == nil {
-		return nil
-	}
-	return i.StringRules
+	Secret         *bool        `json:"secret,omitempty"`
+	ValueValidator *StringRules `json:"valueValidator,omitempty"`
 }
 
 func (i *ImportField) GetAllowedExtensions() []string {
@@ -44,4 +23,11 @@ func (i *ImportField) GetSecret() *bool {
 		return nil
 	}
 	return i.Secret
+}
+
+func (i *ImportField) GetValueValidator() *StringRules {
+	if i == nil {
+		return nil
+	}
+	return i.ValueValidator
 }

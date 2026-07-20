@@ -73,12 +73,35 @@ func (e *AppUserServiceSearchRequestAppUserTypes) IsExact() bool {
 	return false
 }
 
+// SortBy - Ordering of the results. Defaults to display-name ordering.
+type SortBy string
+
+const (
+	SortByAppUserSearchSortByUnspecified SortBy = "APP_USER_SEARCH_SORT_BY_UNSPECIFIED"
+	SortByAppUserSearchSortByApp         SortBy = "APP_USER_SEARCH_SORT_BY_APP"
+)
+
+func (e SortBy) ToPointer() *SortBy {
+	return &e
+}
+
+// IsExact returns true if the value matches a known enum value, false otherwise.
+func (e *SortBy) IsExact() bool {
+	if e != nil {
+		switch *e {
+		case "APP_USER_SEARCH_SORT_BY_UNSPECIFIED", "APP_USER_SEARCH_SORT_BY_APP":
+			return true
+		}
+	}
+	return false
+}
+
 // AppUserServiceSearchRequest - Search App users based on filters specified in the request body
 type AppUserServiceSearchRequest struct {
-	// The AppUserExpandMask message contains a list of paths to expand in the response.
-	AppUserExpandMask *AppUserExpandMask `json:"expandMask,omitempty"`
 	// The app ID to restrict the search to.
 	AppID *string `json:"appId,omitempty"`
+	// A list of app IDs to restrict the search to.
+	AppIds []string `json:"appIds,omitempty"`
 	// A list of account domains to restrict the search to.
 	AppUserDomains []AppUserDomains `json:"appUserDomains,omitempty"`
 	// A list of app user IDs to restrict the search to.
@@ -91,6 +114,9 @@ type AppUserServiceSearchRequest struct {
 	AppUserTypes []AppUserServiceSearchRequestAppUserTypes `json:"appUserTypes,omitempty"`
 	// A list of app user IDs to remove from the results.
 	ExcludeAppUserIds []string `json:"excludeAppUserIds,omitempty"`
+	// When true, excludes app users belonging to soft-deleted apps.
+	ExcludeDeletedApps *bool              `json:"excludeDeletedApps,omitempty"`
+	ExpandMask         *AppUserExpandMask `json:"expandMask,omitempty"`
 	// The pageSize where 0 <= pageSize <= 100. Values < 10 will be set to 10. A value of 0 returns the default page size (currently 25)
 	PageSize *int `json:"pageSize,omitempty"`
 	// The pageToken field.
@@ -99,15 +125,16 @@ type AppUserServiceSearchRequest struct {
 	Query *string `json:"query,omitempty"`
 	// A list of app users to limit the search to.
 	Refs []AppUserRef `json:"refs,omitempty"`
+	// Ordering of the results. Defaults to display-name ordering.
+	SortBy *SortBy `json:"sortBy,omitempty"`
 	// A list of user IDs to restrict the search by.
 	UserIds []string `json:"userIds,omitempty"`
-}
-
-func (a *AppUserServiceSearchRequest) GetAppUserExpandMask() *AppUserExpandMask {
-	if a == nil {
-		return nil
-	}
-	return a.AppUserExpandMask
+	// When true, restrict results to app users that have at least one open finding
+	//  (index-backed EXISTS semi-join). When false/unset, results are unfiltered.
+	WithOpenFindings *bool `json:"withOpenFindings,omitempty"`
+	// When true, restrict results to app users with no responsible party
+	//  (identity_user_id empty) — i.e. unowned, for any app-user type.
+	WithoutResponsibleParty *bool `json:"withoutResponsibleParty,omitempty"`
 }
 
 func (a *AppUserServiceSearchRequest) GetAppID() *string {
@@ -115,6 +142,13 @@ func (a *AppUserServiceSearchRequest) GetAppID() *string {
 		return nil
 	}
 	return a.AppID
+}
+
+func (a *AppUserServiceSearchRequest) GetAppIds() []string {
+	if a == nil {
+		return nil
+	}
+	return a.AppIds
 }
 
 func (a *AppUserServiceSearchRequest) GetAppUserDomains() []AppUserDomains {
@@ -159,6 +193,20 @@ func (a *AppUserServiceSearchRequest) GetExcludeAppUserIds() []string {
 	return a.ExcludeAppUserIds
 }
 
+func (a *AppUserServiceSearchRequest) GetExcludeDeletedApps() *bool {
+	if a == nil {
+		return nil
+	}
+	return a.ExcludeDeletedApps
+}
+
+func (a *AppUserServiceSearchRequest) GetExpandMask() *AppUserExpandMask {
+	if a == nil {
+		return nil
+	}
+	return a.ExpandMask
+}
+
 func (a *AppUserServiceSearchRequest) GetPageSize() *int {
 	if a == nil {
 		return nil
@@ -187,9 +235,30 @@ func (a *AppUserServiceSearchRequest) GetRefs() []AppUserRef {
 	return a.Refs
 }
 
+func (a *AppUserServiceSearchRequest) GetSortBy() *SortBy {
+	if a == nil {
+		return nil
+	}
+	return a.SortBy
+}
+
 func (a *AppUserServiceSearchRequest) GetUserIds() []string {
 	if a == nil {
 		return nil
 	}
 	return a.UserIds
+}
+
+func (a *AppUserServiceSearchRequest) GetWithOpenFindings() *bool {
+	if a == nil {
+		return nil
+	}
+	return a.WithOpenFindings
+}
+
+func (a *AppUserServiceSearchRequest) GetWithoutResponsibleParty() *bool {
+	if a == nil {
+		return nil
+	}
+	return a.WithoutResponsibleParty
 }

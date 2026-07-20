@@ -8,18 +8,18 @@ import (
 )
 
 type C1APIAppV2AppOwnersCreateEntitlementOwnerRequest struct {
-	CreateEntitlementOwnerRequest *shared.CreateEntitlementOwnerRequest `request:"mediaType=application/json"`
-	AppEntitlementRefAppID        string                                `pathParam:"style=simple,explode=false,name=app_entitlement_ref_app_id"`
-	AppEntitlementRefID           string                                `pathParam:"style=simple,explode=false,name=app_entitlement_ref_id"`
-	AppID                         string                                `pathParam:"style=simple,explode=false,name=app_id"`
-	RoleSlug                      string                                `pathParam:"style=simple,explode=false,name=role_slug"`
+	CreateAppEntitlementOwnerRequest *shared.CreateAppEntitlementOwnerRequest `request:"mediaType=application/json"`
+	AppEntitlementRefAppID           string                                   `pathParam:"style=simple,explode=false,name=app_entitlement_ref_app_id"`
+	AppEntitlementRefID              string                                   `pathParam:"style=simple,explode=false,name=app_entitlement_ref_id"`
+	AppID                            string                                   `pathParam:"style=simple,explode=false,name=app_id"`
+	RoleSlug                         string                                   `pathParam:"style=simple,explode=false,name=role_slug"`
 }
 
-func (c *C1APIAppV2AppOwnersCreateEntitlementOwnerRequest) GetCreateEntitlementOwnerRequest() *shared.CreateEntitlementOwnerRequest {
+func (c *C1APIAppV2AppOwnersCreateEntitlementOwnerRequest) GetCreateAppEntitlementOwnerRequest() *shared.CreateAppEntitlementOwnerRequest {
 	if c == nil {
 		return nil
 	}
-	return c.CreateEntitlementOwnerRequest
+	return c.CreateAppEntitlementOwnerRequest
 }
 
 func (c *C1APIAppV2AppOwnersCreateEntitlementOwnerRequest) GetAppEntitlementRefAppID() string {
@@ -57,7 +57,7 @@ type C1APIAppV2AppOwnersCreateEntitlementOwnerResponse struct {
 	// HTTP response content type for this operation
 	ContentType string
 	// CreateEntitlementOwnerResponse is the response for creating an entitlement ownership source.
-	CreateEntitlementOwnerResponse *shared.CreateEntitlementOwnerResponse
+	CreateAppEntitlementOwnerResponse *shared.CreateAppEntitlementOwnerResponse
 	// HTTP response status code for this operation
 	StatusCode int
 	// Raw HTTP response; suitable for custom response parsing
@@ -71,11 +71,11 @@ func (c *C1APIAppV2AppOwnersCreateEntitlementOwnerResponse) GetContentType() str
 	return c.ContentType
 }
 
-func (c *C1APIAppV2AppOwnersCreateEntitlementOwnerResponse) GetCreateEntitlementOwnerResponse() *shared.CreateEntitlementOwnerResponse {
+func (c *C1APIAppV2AppOwnersCreateEntitlementOwnerResponse) GetCreateAppEntitlementOwnerResponse() *shared.CreateAppEntitlementOwnerResponse {
 	if c == nil {
 		return nil
 	}
-	return c.CreateEntitlementOwnerResponse
+	return c.CreateAppEntitlementOwnerResponse
 }
 
 func (c *C1APIAppV2AppOwnersCreateEntitlementOwnerResponse) GetStatusCode() int {

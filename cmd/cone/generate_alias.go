@@ -262,7 +262,7 @@ func processEntitlement(ctx context.Context, c client.C1Client, e *client.Entitl
 
 	if !flags.DryRun {
 		req := &shared.UpdateAppEntitlementRequest{
-			AppEntitlement: &shared.AppEntitlementInput{
+			Entitlement: &shared.AppEntitlementInput{
 				Alias: &alias,
 			},
 			UpdateMask: stringPtr("alias"),

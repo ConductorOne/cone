@@ -43,6 +43,8 @@ const (
 	TaskTypeActionTypeTypeGrant          TaskTypeActionType = "TYPE_GRANT"
 	TaskTypeActionTypeTypeWorkflow       TaskTypeActionType = "TYPE_WORKFLOW"
 	TaskTypeActionTypeTypeResourceAction TaskTypeActionType = "TYPE_RESOURCE_ACTION"
+	TaskTypeActionTypeTypeToolCall       TaskTypeActionType = "TYPE_TOOL_CALL"
+	TaskTypeActionTypeTypeManual         TaskTypeActionType = "TYPE_MANUAL"
 )
 
 func (e TaskTypeActionType) ToPointer() *TaskTypeActionType {
@@ -53,7 +55,7 @@ func (e TaskTypeActionType) ToPointer() *TaskTypeActionType {
 func (e *TaskTypeActionType) IsExact() bool {
 	if e != nil {
 		switch *e {
-		case "TYPE_UNSPECIFIED", "TYPE_GRANT", "TYPE_WORKFLOW", "TYPE_RESOURCE_ACTION":
+		case "TYPE_UNSPECIFIED", "TYPE_GRANT", "TYPE_WORKFLOW", "TYPE_RESOURCE_ACTION", "TYPE_TOOL_CALL", "TYPE_MANUAL":
 			return true
 		}
 	}
@@ -64,31 +66,38 @@ func (e *TaskTypeActionType) IsExact() bool {
 //
 // This message contains a oneof named target_object. Only a single field of the following list may be set at a time:
 //   - scopeRole
+//   - toolCall
+//   - finding
 type TaskTypeAction struct {
-	// Scope-role variant of TaskTypeAction.target_object. The UI uses the
-	//  embedded identifiers to build links and title strings without a separate
-	//  Action fetch.
-	ScopeRole *ScopeRole `json:"scopeRole,omitempty"`
-	// ActionInstance is the API mirror of the internal immutable snapshot of an
-	//  Action captured on a TaskTypeAction at ticket-creation time.
-	//
-	// This message contains a oneof named target_ref. Only a single field of the following list may be set at a time:
-	//   - connectorActionRef
-	//
-	TaskActionInstance *TaskActionInstance `json:"actionInstance,omitempty"`
 	// The ID of the admin-authored action to execute. Empty for synthesized
 	//  action tickets (e.g. scope-role grants) — those carry dispatch
 	//  configuration on action_instance and target_object instead.
-	ActionID *string `json:"actionId,omitempty"`
+	ActionID       *string             `json:"actionId,omitempty"`
+	ActionInstance *TaskActionInstance `json:"actionInstance,omitempty"`
+	// The C1 IDs of the AppEntitlements materialized from the connector response
+	//  (for a group, typically its members and owners entitlements). Use these to
+	//  request access, attach a virtual entitlement, or otherwise manage the new
+	//  resource. Empty until outcome is SUCCESS; may be empty on SUCCESS if
+	//  materialization was skipped or failed, in which case the entitlements
+	//  appear after the next connector sync.
+	CreatedAppEntitlementIds []string `json:"createdAppEntitlementIds,omitempty"`
+	// Populated when a resource-create action completes: the C1 ID of the
+	//  AppResource materialized from the connector response.
+	CreatedAppResourceID *string `json:"createdAppResourceId,omitempty"`
+	// The resource type ID of the materialized AppResource.
+	CreatedAppResourceTypeID *string `json:"createdAppResourceTypeId,omitempty"`
 	// Display label captured on the action snapshot at ticket-creation time.
 	//  Stable under admin renames to a referenced Action row and populated for
 	//  synthesized tickets that have no Action row at all. UI reads this to
 	//  render the task title without an Action fetch.
 	DisplayName *string        `json:"displayName,omitempty"`
+	Finding     *FindingTarget `json:"finding,omitempty"`
 	FormValues  map[string]any `json:"formValues,omitempty"`
 	// The outcome field.
 	Outcome     *TaskTypeActionOutcome `json:"outcome,omitempty"`
 	OutcomeTime *time.Time             `json:"outcomeTime,omitempty"`
+	ScopeRole   *ScopeRole             `json:"scopeRole,omitempty"`
+	ToolCall    *GatedToolCallTarget   `json:"toolCall,omitempty"`
 	// Flavor of action the ticket represents — mirrors the snapshot's
 	//  target_ref variant.
 	Type *TaskTypeActionType `json:"type,omitempty"`
@@ -105,20 +114,6 @@ func (t *TaskTypeAction) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (t *TaskTypeAction) GetScopeRole() *ScopeRole {
-	if t == nil {
-		return nil
-	}
-	return t.ScopeRole
-}
-
-func (t *TaskTypeAction) GetTaskActionInstance() *TaskActionInstance {
-	if t == nil {
-		return nil
-	}
-	return t.TaskActionInstance
-}
-
 func (t *TaskTypeAction) GetActionID() *string {
 	if t == nil {
 		return nil
@@ -126,11 +121,46 @@ func (t *TaskTypeAction) GetActionID() *string {
 	return t.ActionID
 }
 
+func (t *TaskTypeAction) GetActionInstance() *TaskActionInstance {
+	if t == nil {
+		return nil
+	}
+	return t.ActionInstance
+}
+
+func (t *TaskTypeAction) GetCreatedAppEntitlementIds() []string {
+	if t == nil {
+		return nil
+	}
+	return t.CreatedAppEntitlementIds
+}
+
+func (t *TaskTypeAction) GetCreatedAppResourceID() *string {
+	if t == nil {
+		return nil
+	}
+	return t.CreatedAppResourceID
+}
+
+func (t *TaskTypeAction) GetCreatedAppResourceTypeID() *string {
+	if t == nil {
+		return nil
+	}
+	return t.CreatedAppResourceTypeID
+}
+
 func (t *TaskTypeAction) GetDisplayName() *string {
 	if t == nil {
 		return nil
 	}
 	return t.DisplayName
+}
+
+func (t *TaskTypeAction) GetFinding() *FindingTarget {
+	if t == nil {
+		return nil
+	}
+	return t.Finding
 }
 
 func (t *TaskTypeAction) GetFormValues() map[string]any {
@@ -152,6 +182,20 @@ func (t *TaskTypeAction) GetOutcomeTime() *time.Time {
 		return nil
 	}
 	return t.OutcomeTime
+}
+
+func (t *TaskTypeAction) GetScopeRole() *ScopeRole {
+	if t == nil {
+		return nil
+	}
+	return t.ScopeRole
+}
+
+func (t *TaskTypeAction) GetToolCall() *GatedToolCallTarget {
+	if t == nil {
+		return nil
+	}
+	return t.ToolCall
 }
 
 func (t *TaskTypeAction) GetType() *TaskTypeActionType {

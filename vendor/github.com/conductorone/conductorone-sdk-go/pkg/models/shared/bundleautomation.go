@@ -13,14 +13,8 @@ import (
 //   - entitlements
 //   - cel
 type BundleAutomation struct {
-	// The BundleAutomationCircuitBreaker message.
-	BundleAutomationCircuitBreaker *BundleAutomationCircuitBreaker `json:"circuitBreaker,omitempty"`
-	// The BundleAutomationLastRunState message.
-	BundleAutomationLastRunState *BundleAutomationLastRunState `json:"state,omitempty"`
-	// The BundleAutomationRuleCEL message.
-	BundleAutomationRuleCEL *BundleAutomationRuleCEL `json:"cel,omitempty"`
-	// The BundleAutomationRuleEntitlement message.
-	BundleAutomationRuleEntitlement *BundleAutomationRuleEntitlement `json:"entitlements,omitempty"`
+	Cel            *BundleAutomationRuleCEL        `json:"cel,omitempty"`
+	CircuitBreaker *BundleAutomationCircuitBreaker `json:"circuitBreaker,omitempty"`
 	// The createTasks field.
 	CreateTasks *bool      `json:"createTasks,omitempty"`
 	CreatedAt   *time.Time `json:"createdAt,omitempty"`
@@ -29,8 +23,16 @@ type BundleAutomation struct {
 	DisableCircuitBreaker *bool `json:"disableCircuitBreaker,omitempty"`
 	// The enabled field.
 	Enabled *bool `json:"enabled,omitempty"`
+	// When true, the circuit breaker is evaluated even on profiles below the
+	//  tenant min-members floor.
+	EnforceOnSmallProfiles *bool                            `json:"enforceOnSmallProfiles,omitempty"`
+	Entitlements           *BundleAutomationRuleEntitlement `json:"entitlements,omitempty"`
+	// Per-automation override for the removed-members percent that trips the
+	//  circuit breaker (1-100). 0 / unset means the tenant default applies.
+	RemovedMembersThresholdPercent *int64 `integer:"string" json:"removedMembersThresholdPercent,omitempty"`
 	// The requestCatalogId field.
-	RequestCatalogID *string `json:"requestCatalogId,omitempty"`
+	RequestCatalogID *string                       `json:"requestCatalogId,omitempty"`
+	State            *BundleAutomationLastRunState `json:"state,omitempty"`
 	// The tenantId field.
 	TenantID  *string    `json:"tenantId,omitempty"`
 	UpdatedAt *time.Time `json:"updatedAt,omitempty"`
@@ -47,32 +49,18 @@ func (b *BundleAutomation) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (b *BundleAutomation) GetBundleAutomationCircuitBreaker() *BundleAutomationCircuitBreaker {
+func (b *BundleAutomation) GetCel() *BundleAutomationRuleCEL {
 	if b == nil {
 		return nil
 	}
-	return b.BundleAutomationCircuitBreaker
+	return b.Cel
 }
 
-func (b *BundleAutomation) GetBundleAutomationLastRunState() *BundleAutomationLastRunState {
+func (b *BundleAutomation) GetCircuitBreaker() *BundleAutomationCircuitBreaker {
 	if b == nil {
 		return nil
 	}
-	return b.BundleAutomationLastRunState
-}
-
-func (b *BundleAutomation) GetBundleAutomationRuleCEL() *BundleAutomationRuleCEL {
-	if b == nil {
-		return nil
-	}
-	return b.BundleAutomationRuleCEL
-}
-
-func (b *BundleAutomation) GetBundleAutomationRuleEntitlement() *BundleAutomationRuleEntitlement {
-	if b == nil {
-		return nil
-	}
-	return b.BundleAutomationRuleEntitlement
+	return b.CircuitBreaker
 }
 
 func (b *BundleAutomation) GetCreateTasks() *bool {
@@ -110,11 +98,39 @@ func (b *BundleAutomation) GetEnabled() *bool {
 	return b.Enabled
 }
 
+func (b *BundleAutomation) GetEnforceOnSmallProfiles() *bool {
+	if b == nil {
+		return nil
+	}
+	return b.EnforceOnSmallProfiles
+}
+
+func (b *BundleAutomation) GetEntitlements() *BundleAutomationRuleEntitlement {
+	if b == nil {
+		return nil
+	}
+	return b.Entitlements
+}
+
+func (b *BundleAutomation) GetRemovedMembersThresholdPercent() *int64 {
+	if b == nil {
+		return nil
+	}
+	return b.RemovedMembersThresholdPercent
+}
+
 func (b *BundleAutomation) GetRequestCatalogID() *string {
 	if b == nil {
 		return nil
 	}
 	return b.RequestCatalogID
+}
+
+func (b *BundleAutomation) GetState() *BundleAutomationLastRunState {
+	if b == nil {
+		return nil
+	}
+	return b.State
 }
 
 func (b *BundleAutomation) GetTenantID() *string {

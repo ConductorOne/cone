@@ -4,30 +4,9 @@ package shared
 
 // The StringField message.
 type StringField struct {
-	// StringRules describe the constraints applied to `string` values
-	//
-	// This message contains a oneof named well_known. Only a single field of the following list may be set at a time:
-	//   - email
-	//   - hostname
-	//   - ip
-	//   - ipv4
-	//   - ipv6
-	//   - uri
-	//   - uriRef
-	//   - address
-	//   - uuid
-	//   - wellKnownRegex
-	//
-	StringRules *StringRules `json:"valueValidator,omitempty"`
 	// If secret, value is write-only in UI and a password-type form is used.
-	Secret *bool `json:"secret,omitempty"`
-}
-
-func (s *StringField) GetStringRules() *StringRules {
-	if s == nil {
-		return nil
-	}
-	return s.StringRules
+	Secret         *bool        `json:"secret,omitempty"`
+	ValueValidator *StringRules `json:"valueValidator,omitempty"`
 }
 
 func (s *StringField) GetSecret() *bool {
@@ -35,4 +14,11 @@ func (s *StringField) GetSecret() *bool {
 		return nil
 	}
 	return s.Secret
+}
+
+func (s *StringField) GetValueValidator() *StringRules {
+	if s == nil {
+		return nil
+	}
+	return s.ValueValidator
 }

@@ -8,17 +8,17 @@ import (
 )
 
 type C1APIAppV2AppOwnersDeleteUserOwnerRequest struct {
-	DeleteUserOwnerRequest *shared.DeleteUserOwnerRequest `request:"mediaType=application/json"`
-	AppID                  string                         `pathParam:"style=simple,explode=false,name=app_id"`
-	RoleSlug               string                         `pathParam:"style=simple,explode=false,name=role_slug"`
-	UserRefID              string                         `pathParam:"style=simple,explode=false,name=user_ref_id"`
+	DeleteAppUserOwnerRequest *shared.DeleteAppUserOwnerRequest `request:"mediaType=application/json"`
+	AppID                     string                            `pathParam:"style=simple,explode=false,name=app_id"`
+	RoleSlug                  string                            `pathParam:"style=simple,explode=false,name=role_slug"`
+	UserRefID                 string                            `pathParam:"style=simple,explode=false,name=user_ref_id"`
 }
 
-func (c *C1APIAppV2AppOwnersDeleteUserOwnerRequest) GetDeleteUserOwnerRequest() *shared.DeleteUserOwnerRequest {
+func (c *C1APIAppV2AppOwnersDeleteUserOwnerRequest) GetDeleteAppUserOwnerRequest() *shared.DeleteAppUserOwnerRequest {
 	if c == nil {
 		return nil
 	}
-	return c.DeleteUserOwnerRequest
+	return c.DeleteAppUserOwnerRequest
 }
 
 func (c *C1APIAppV2AppOwnersDeleteUserOwnerRequest) GetAppID() string {
@@ -49,7 +49,7 @@ type C1APIAppV2AppOwnersDeleteUserOwnerResponse struct {
 	// HTTP response content type for this operation
 	ContentType string
 	// DeleteUserOwnerResponse is the empty response for deleting a user ownership source.
-	DeleteUserOwnerResponse *shared.DeleteUserOwnerResponse
+	DeleteAppUserOwnerResponse *shared.DeleteAppUserOwnerResponse
 	// HTTP response status code for this operation
 	StatusCode int
 	// Raw HTTP response; suitable for custom response parsing
@@ -63,11 +63,11 @@ func (c *C1APIAppV2AppOwnersDeleteUserOwnerResponse) GetContentType() string {
 	return c.ContentType
 }
 
-func (c *C1APIAppV2AppOwnersDeleteUserOwnerResponse) GetDeleteUserOwnerResponse() *shared.DeleteUserOwnerResponse {
+func (c *C1APIAppV2AppOwnersDeleteUserOwnerResponse) GetDeleteAppUserOwnerResponse() *shared.DeleteAppUserOwnerResponse {
 	if c == nil {
 		return nil
 	}
-	return c.DeleteUserOwnerResponse
+	return c.DeleteAppUserOwnerResponse
 }
 
 func (c *C1APIAppV2AppOwnersDeleteUserOwnerResponse) GetStatusCode() int {

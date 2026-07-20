@@ -40,17 +40,9 @@ func (r *RequestCatalogManagementServiceGetResponseExpanded) GetAdditionalProper
 
 // RequestCatalogManagementServiceGetResponse - The request catalog management service get response returns a request catalog view with the expanded items in the expanded array indicated by the expand mask in the request.
 type RequestCatalogManagementServiceGetResponse struct {
-	// The request catalog view contains the serialized request catalog and paths to objects referenced by the request catalog.
-	RequestCatalogView *RequestCatalogView `json:"requestCatalogView,omitempty"`
 	// List of serialized related objects.
-	Expanded []RequestCatalogManagementServiceGetResponseExpanded `json:"expanded,omitempty"`
-}
-
-func (r *RequestCatalogManagementServiceGetResponse) GetRequestCatalogView() *RequestCatalogView {
-	if r == nil {
-		return nil
-	}
-	return r.RequestCatalogView
+	Expanded           []RequestCatalogManagementServiceGetResponseExpanded `json:"expanded,omitempty"`
+	RequestCatalogView *RequestCatalogView                                  `json:"requestCatalogView,omitempty"`
 }
 
 func (r *RequestCatalogManagementServiceGetResponse) GetExpanded() []RequestCatalogManagementServiceGetResponseExpanded {
@@ -58,4 +50,11 @@ func (r *RequestCatalogManagementServiceGetResponse) GetExpanded() []RequestCata
 		return nil
 	}
 	return r.Expanded
+}
+
+func (r *RequestCatalogManagementServiceGetResponse) GetRequestCatalogView() *RequestCatalogView {
+	if r == nil {
+		return nil
+	}
+	return r.RequestCatalogView
 }

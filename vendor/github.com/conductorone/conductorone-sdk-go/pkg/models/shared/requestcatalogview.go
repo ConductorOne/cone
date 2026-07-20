@@ -8,14 +8,13 @@ import (
 
 // RequestCatalogView - The request catalog view contains the serialized request catalog and paths to objects referenced by the request catalog.
 type RequestCatalogView struct {
-	// The RequestCatalog is used for managing which entitlements are requestable, and who can request them.
-	RequestCatalog *RequestCatalog `json:"requestCatalog,omitempty"`
 	// JSONPATH expression indicating the location of the access entitlement objects, that the request catalog allows users to request, in the array.
 	AccessEntitlementsPath *string `json:"accessEntitlementsPath,omitempty"`
 	// JSONPATH expression indicating the location of the User object, that created the request catalog, in the array.
 	CreatedByUserPath *string `json:"createdByUserPath,omitempty"`
 	// Total number of the members of the catalog
-	MemberCount *int64 `integer:"string" json:"memberCount,omitempty"`
+	MemberCount    *int64          `integer:"string" json:"memberCount,omitempty"`
+	RequestCatalog *RequestCatalog `json:"requestCatalog,omitempty"`
 }
 
 func (r RequestCatalogView) MarshalJSON() ([]byte, error) {
@@ -27,13 +26,6 @@ func (r *RequestCatalogView) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
-}
-
-func (r *RequestCatalogView) GetRequestCatalog() *RequestCatalog {
-	if r == nil {
-		return nil
-	}
-	return r.RequestCatalog
 }
 
 func (r *RequestCatalogView) GetAccessEntitlementsPath() *string {
@@ -55,4 +47,11 @@ func (r *RequestCatalogView) GetMemberCount() *int64 {
 		return nil
 	}
 	return r.MemberCount
+}
+
+func (r *RequestCatalogView) GetRequestCatalog() *RequestCatalog {
+	if r == nil {
+		return nil
+	}
+	return r.RequestCatalog
 }

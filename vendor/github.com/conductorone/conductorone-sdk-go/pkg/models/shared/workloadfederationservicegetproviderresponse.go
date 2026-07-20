@@ -4,13 +4,12 @@ package shared
 
 // The WorkloadFederationServiceGetProviderResponse message.
 type WorkloadFederationServiceGetProviderResponse struct {
-	// WorkloadFederationProvider represents a tenant-level OIDC issuer registration.
-	WorkloadFederationProvider *WorkloadFederationProvider `json:"provider,omitempty"`
+	Provider *WorkloadFederationProvider `json:"provider,omitempty"`
 }
 
-func (w *WorkloadFederationServiceGetProviderResponse) GetWorkloadFederationProvider() *WorkloadFederationProvider {
+func (w *WorkloadFederationServiceGetProviderResponse) GetProvider() *WorkloadFederationProvider {
 	if w == nil {
 		return nil
 	}
-	return w.WorkloadFederationProvider
+	return w.Provider
 }

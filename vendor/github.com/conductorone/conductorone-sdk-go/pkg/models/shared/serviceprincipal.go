@@ -9,14 +9,14 @@ import (
 
 // ServicePrincipal represents a tenant-managed non-human identity.
 type ServicePrincipal struct {
-	// The User object provides all of the details for an user, as well as some configuration.
-	User      *User      `json:"user,omitempty"`
 	CreatedAt *time.Time `json:"createdAt,omitempty"`
 	// The display name of the service principal.
 	DisplayName *string `json:"displayName,omitempty"`
 	// The unique user ID of the service principal.
-	ID        *string    `json:"id,omitempty"`
-	UpdatedAt *time.Time `json:"updatedAt,omitempty"`
+	ID                *string                     `json:"id,omitempty"`
+	ObjectPermissions *UserActorObjectPermissions `json:"objectPermissions,omitempty"`
+	UpdatedAt         *time.Time                  `json:"updatedAt,omitempty"`
+	User              *User                       `json:"user,omitempty"`
 }
 
 func (s ServicePrincipal) MarshalJSON() ([]byte, error) {
@@ -28,13 +28,6 @@ func (s *ServicePrincipal) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
-}
-
-func (s *ServicePrincipal) GetUser() *User {
-	if s == nil {
-		return nil
-	}
-	return s.User
 }
 
 func (s *ServicePrincipal) GetCreatedAt() *time.Time {
@@ -58,9 +51,23 @@ func (s *ServicePrincipal) GetID() *string {
 	return s.ID
 }
 
+func (s *ServicePrincipal) GetObjectPermissions() *UserActorObjectPermissions {
+	if s == nil {
+		return nil
+	}
+	return s.ObjectPermissions
+}
+
 func (s *ServicePrincipal) GetUpdatedAt() *time.Time {
 	if s == nil {
 		return nil
 	}
 	return s.UpdatedAt
+}
+
+func (s *ServicePrincipal) GetUser() *User {
+	if s == nil {
+		return nil
+	}
+	return s.User
 }

@@ -40,17 +40,16 @@ func (g *GetAppEntitlementProxyResponseExpanded) GetAdditionalProperties() map[s
 
 // GetAppEntitlementProxyResponse - The response message for getting a specific entitlement proxy binding.
 type GetAppEntitlementProxyResponse struct {
-	// The AppEntitlementProxyView message.
-	AppEntitlementProxyView *AppEntitlementProxyView `json:"appProxyEntitlementView,omitempty"`
+	AppProxyEntitlementView *AppEntitlementProxyView `json:"appProxyEntitlementView,omitempty"`
 	// List of serialized related objects.
 	Expanded []GetAppEntitlementProxyResponseExpanded `json:"expanded,omitempty"`
 }
 
-func (g *GetAppEntitlementProxyResponse) GetAppEntitlementProxyView() *AppEntitlementProxyView {
+func (g *GetAppEntitlementProxyResponse) GetAppProxyEntitlementView() *AppEntitlementProxyView {
 	if g == nil {
 		return nil
 	}
-	return g.AppEntitlementProxyView
+	return g.AppProxyEntitlementView
 }
 
 func (g *GetAppEntitlementProxyResponse) GetExpanded() []GetAppEntitlementProxyResponseExpanded {

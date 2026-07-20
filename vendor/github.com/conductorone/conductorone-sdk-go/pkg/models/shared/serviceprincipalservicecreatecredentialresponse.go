@@ -4,17 +4,9 @@ package shared
 
 // The ServicePrincipalServiceCreateCredentialResponse message.
 type ServicePrincipalServiceCreateCredentialResponse struct {
-	// ServicePrincipalCredential represents a client credential for a service principal.
-	ServicePrincipalCredential *ServicePrincipalCredential `json:"credential,omitempty"`
 	// The client secret. Shown exactly once at creation -- cannot be retrieved again.
-	ClientSecret *string `json:"clientSecret,omitempty"`
-}
-
-func (s *ServicePrincipalServiceCreateCredentialResponse) GetServicePrincipalCredential() *ServicePrincipalCredential {
-	if s == nil {
-		return nil
-	}
-	return s.ServicePrincipalCredential
+	ClientSecret *string                     `json:"clientSecret,omitempty"`
+	Credential   *ServicePrincipalCredential `json:"credential,omitempty"`
 }
 
 func (s *ServicePrincipalServiceCreateCredentialResponse) GetClientSecret() *string {
@@ -22,4 +14,11 @@ func (s *ServicePrincipalServiceCreateCredentialResponse) GetClientSecret() *str
 		return nil
 	}
 	return s.ClientSecret
+}
+
+func (s *ServicePrincipalServiceCreateCredentialResponse) GetCredential() *ServicePrincipalCredential {
+	if s == nil {
+		return nil
+	}
+	return s.Credential
 }

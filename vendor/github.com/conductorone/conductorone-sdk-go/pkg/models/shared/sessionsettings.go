@@ -29,68 +29,20 @@ func (e *ClientIDMetadataDocumentPolicy) IsExact() bool {
 
 // SessionSettings configures session security for the tenant, including timeouts and per-role IP restrictions.
 type SessionSettings struct {
-	// CIDRRestriction defines an IP-based access restriction with an enable toggle and a list of allowed CIDRs.
-	CIDRRestriction *CIDRRestriction `json:"connectorSource,omitempty"`
-	// CIDRRestriction defines an IP-based access restriction with an enable toggle and a list of allowed CIDRs.
-	CIDRRestriction1 *CIDRRestriction `json:"externalClientSource,omitempty"`
-	// CIDRRestriction defines an IP-based access restriction with an enable toggle and a list of allowed CIDRs.
-	CIDRRestriction2 *CIDRRestriction `json:"pccAdminSource,omitempty"`
-	// CIDRRestriction defines an IP-based access restriction with an enable toggle and a list of allowed CIDRs.
-	CIDRRestriction3 *CIDRRestriction `json:"pccUserSource,omitempty"`
-	// CIDRRestriction defines an IP-based access restriction with an enable toggle and a list of allowed CIDRs.
-	CIDRRestriction4 *CIDRRestriction `json:"ssoAdminSource,omitempty"`
-	// CIDRRestriction defines an IP-based access restriction with an enable toggle and a list of allowed CIDRs.
-	CIDRRestriction5 *CIDRRestriction `json:"ssoUserSource,omitempty"`
 	// Policy ID for REQUESTABLE mode approval routing.
 	ClientIDApprovalRequestPolicyID *string `json:"clientIdApprovalRequestPolicyId,omitempty"`
 	// Policy for metadata document client_id URLs.
 	ClientIDMetadataDocumentPolicy *ClientIDMetadataDocumentPolicy `json:"clientIdMetadataDocumentPolicy,omitempty"`
+	ConnectorSource                *CIDRRestriction                `json:"connectorSource,omitempty"`
+	ExternalClientSource           *CIDRRestriction                `json:"externalClientSource,omitempty"`
 	// Enable external client registration (OAuth 2.0 DCR) for MCP clients
 	//  like Claude Desktop, Cursor, and other AI assistants.
-	ExternalClientsEnabled *bool   `json:"externalClientsEnabled,omitempty"`
-	MaxSessionLength       *string `json:"maxSessionLength,omitempty"`
-}
-
-func (s *SessionSettings) GetCIDRRestriction() *CIDRRestriction {
-	if s == nil {
-		return nil
-	}
-	return s.CIDRRestriction
-}
-
-func (s *SessionSettings) GetCIDRRestriction1() *CIDRRestriction {
-	if s == nil {
-		return nil
-	}
-	return s.CIDRRestriction1
-}
-
-func (s *SessionSettings) GetCIDRRestriction2() *CIDRRestriction {
-	if s == nil {
-		return nil
-	}
-	return s.CIDRRestriction2
-}
-
-func (s *SessionSettings) GetCIDRRestriction3() *CIDRRestriction {
-	if s == nil {
-		return nil
-	}
-	return s.CIDRRestriction3
-}
-
-func (s *SessionSettings) GetCIDRRestriction4() *CIDRRestriction {
-	if s == nil {
-		return nil
-	}
-	return s.CIDRRestriction4
-}
-
-func (s *SessionSettings) GetCIDRRestriction5() *CIDRRestriction {
-	if s == nil {
-		return nil
-	}
-	return s.CIDRRestriction5
+	ExternalClientsEnabled *bool            `json:"externalClientsEnabled,omitempty"`
+	MaxSessionLength       *string          `json:"maxSessionLength,omitempty"`
+	PccAdminSource         *CIDRRestriction `json:"pccAdminSource,omitempty"`
+	PccUserSource          *CIDRRestriction `json:"pccUserSource,omitempty"`
+	SsoAdminSource         *CIDRRestriction `json:"ssoAdminSource,omitempty"`
+	SsoUserSource          *CIDRRestriction `json:"ssoUserSource,omitempty"`
 }
 
 func (s *SessionSettings) GetClientIDApprovalRequestPolicyID() *string {
@@ -107,6 +59,20 @@ func (s *SessionSettings) GetClientIDMetadataDocumentPolicy() *ClientIDMetadataD
 	return s.ClientIDMetadataDocumentPolicy
 }
 
+func (s *SessionSettings) GetConnectorSource() *CIDRRestriction {
+	if s == nil {
+		return nil
+	}
+	return s.ConnectorSource
+}
+
+func (s *SessionSettings) GetExternalClientSource() *CIDRRestriction {
+	if s == nil {
+		return nil
+	}
+	return s.ExternalClientSource
+}
+
 func (s *SessionSettings) GetExternalClientsEnabled() *bool {
 	if s == nil {
 		return nil
@@ -119,4 +85,32 @@ func (s *SessionSettings) GetMaxSessionLength() *string {
 		return nil
 	}
 	return s.MaxSessionLength
+}
+
+func (s *SessionSettings) GetPccAdminSource() *CIDRRestriction {
+	if s == nil {
+		return nil
+	}
+	return s.PccAdminSource
+}
+
+func (s *SessionSettings) GetPccUserSource() *CIDRRestriction {
+	if s == nil {
+		return nil
+	}
+	return s.PccUserSource
+}
+
+func (s *SessionSettings) GetSsoAdminSource() *CIDRRestriction {
+	if s == nil {
+		return nil
+	}
+	return s.SsoAdminSource
+}
+
+func (s *SessionSettings) GetSsoUserSource() *CIDRRestriction {
+	if s == nil {
+		return nil
+	}
+	return s.SsoUserSource
 }

@@ -39,14 +39,13 @@ func (e *UserStatusEnum) IsExact() bool {
 //   - userStatusEnum
 //   - userStatusCel
 type UpdateUser struct {
-	// A reference to a user.
-	UserRef *UserRef `json:"userRef,omitempty"`
 	// If true, the step will use the subject user of the automation as the subject.
 	UseSubjectUser *bool `json:"useSubjectUser,omitempty"`
 	// The userIdCel field.
 	// This field is part of the `user` oneof.
 	// See the documentation for `c1.api.automations.v1.UpdateUser` for more details.
-	UserIDCel *string `json:"userIdCel,omitempty"`
+	UserIDCel *string  `json:"userIdCel,omitempty"`
+	UserRef   *UserRef `json:"userRef,omitempty"`
 	// The userStatusCel field.
 	// This field is part of the `user_status` oneof.
 	// See the documentation for `c1.api.automations.v1.UpdateUser` for more details.
@@ -55,13 +54,6 @@ type UpdateUser struct {
 	// This field is part of the `user_status` oneof.
 	// See the documentation for `c1.api.automations.v1.UpdateUser` for more details.
 	UserStatusEnum *UserStatusEnum `json:"userStatusEnum,omitempty"`
-}
-
-func (u *UpdateUser) GetUserRef() *UserRef {
-	if u == nil {
-		return nil
-	}
-	return u.UserRef
 }
 
 func (u *UpdateUser) GetUseSubjectUser() *bool {
@@ -76,6 +68,13 @@ func (u *UpdateUser) GetUserIDCel() *string {
 		return nil
 	}
 	return u.UserIDCel
+}
+
+func (u *UpdateUser) GetUserRef() *UserRef {
+	if u == nil {
+		return nil
+	}
+	return u.UserRef
 }
 
 func (u *UpdateUser) GetUserStatusCel() *string {

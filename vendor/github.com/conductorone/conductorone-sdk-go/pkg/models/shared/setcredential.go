@@ -9,19 +9,11 @@ package shared
 // This message contains a oneof named connector_identifier. Only a single field of the following list may be set at a time:
 //   - connectorRef
 type SetCredential struct {
-	// The ConnectorRef message.
-	ConnectorRef *ConnectorRef `json:"connectorRef,omitempty"`
 	// The accountIdCel field.
-	AccountIDCel *string `json:"accountIdCel,omitempty"`
+	AccountIDCel *string       `json:"accountIdCel,omitempty"`
+	ConnectorRef *ConnectorRef `json:"connectorRef,omitempty"`
 	// The passwordCel field.
 	PasswordCel *string `json:"passwordCel,omitempty"`
-}
-
-func (s *SetCredential) GetConnectorRef() *ConnectorRef {
-	if s == nil {
-		return nil
-	}
-	return s.ConnectorRef
 }
 
 func (s *SetCredential) GetAccountIDCel() *string {
@@ -29,6 +21,13 @@ func (s *SetCredential) GetAccountIDCel() *string {
 		return nil
 	}
 	return s.AccountIDCel
+}
+
+func (s *SetCredential) GetConnectorRef() *ConnectorRef {
+	if s == nil {
+		return nil
+	}
+	return s.ConnectorRef
 }
 
 func (s *SetCredential) GetPasswordCel() *string {

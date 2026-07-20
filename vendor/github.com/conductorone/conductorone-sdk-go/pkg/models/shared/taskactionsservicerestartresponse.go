@@ -40,19 +40,11 @@ func (t *TaskActionsServiceRestartResponseExpanded) GetAdditionalProperties() ma
 
 // The TaskActionsServiceRestartResponse returns the updated task after restarting.
 type TaskActionsServiceRestartResponse struct {
-	// Contains a task and JSONPATH expressions that describe where in the expanded array related objects are located. This view can be used to display a fully-detailed dashboard of task information.
-	TaskView *TaskView `json:"taskView,omitempty"`
 	// List of serialized related objects.
 	Expanded []TaskActionsServiceRestartResponseExpanded `json:"expanded,omitempty"`
+	TaskView *TaskView                                   `json:"taskView,omitempty"`
 	// The ID of the task restart action created by this request.
 	TicketActionID *string `json:"ticketActionId,omitempty"`
-}
-
-func (t *TaskActionsServiceRestartResponse) GetTaskView() *TaskView {
-	if t == nil {
-		return nil
-	}
-	return t.TaskView
 }
 
 func (t *TaskActionsServiceRestartResponse) GetExpanded() []TaskActionsServiceRestartResponseExpanded {
@@ -60,6 +52,13 @@ func (t *TaskActionsServiceRestartResponse) GetExpanded() []TaskActionsServiceRe
 		return nil
 	}
 	return t.Expanded
+}
+
+func (t *TaskActionsServiceRestartResponse) GetTaskView() *TaskView {
+	if t == nil {
+		return nil
+	}
+	return t.TaskView
 }
 
 func (t *TaskActionsServiceRestartResponse) GetTicketActionID() *string {

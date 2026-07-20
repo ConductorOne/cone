@@ -73,22 +73,27 @@ func (e *PrimaryTriggerType) IsExact() bool {
 // This message contains a oneof named disabled_reason. Only a single field of the following list may be set at a time:
 //   - circuitBreaker
 type Automation struct {
-	// The AutomationContext message.
-	AutomationContext *AutomationContext `json:"context,omitempty"`
-	// DisabledReasonCircuitBreaker carries the trip context when an automation
-	//  has been auto-disabled by its rate cap. Returned on the parent Automation
-	//  when read; not directly settable.
-	DisabledReasonCircuitBreaker *DisabledReasonCircuitBreaker `json:"circuitBreaker,omitempty"`
+	// Bounded key/value metadata bag for IaC marking and customer tags.
+	//  See .rfcs/object-annotations.md §2. Limits: ≤16 entries; keys 1–128
+	//  chars matching ^[A-Za-z][A-Za-z0-9._/-]{0,127}$; values 0–256 chars
+	//  URL-safe ASCII; total serialized ≤ 4096 bytes. Keys matching ^c1/
+	//  are reserved.
+	//
+	//  Well-known keys: `managed_by`, `iac_workspace`,
+	//  `iac_resource_address`, `iac_tool_version`.
+	Annotations map[string]string `json:"annotations,omitempty"`
 	// the app id this workflow_template belongs to
 	AppID *string `json:"appId,omitempty"`
 	// The automationSteps field.
-	AutomationSteps []AutomationStep `json:"automationSteps,omitempty"`
+	AutomationSteps []AutomationStep              `json:"automationSteps,omitempty"`
+	CircuitBreaker  *DisabledReasonCircuitBreaker `json:"circuitBreaker,omitempty"`
 	// Circuit breaker rate cap: disable this automation if it executes more
 	//  than circuit_breaker_max times in the trailing circuit_breaker_period.
 	//  0 = circuit breaker off (default).
 	CircuitBreakerMax *int64 `json:"circuitBreakerMax,omitempty"`
 	// The circuitBreakerPeriod field.
 	CircuitBreakerPeriod *CircuitBreakerPeriod `json:"circuitBreakerPeriod,omitempty"`
+	Context              *AutomationContext    `json:"context,omitempty"`
 	CreatedAt            *time.Time            `json:"createdAt,omitempty"`
 	// The currentVersion field.
 	CurrentVersion *int64 `integer:"string" json:"currentVersion,omitempty"`
@@ -124,18 +129,11 @@ func (a *Automation) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (a *Automation) GetAutomationContext() *AutomationContext {
+func (a *Automation) GetAnnotations() map[string]string {
 	if a == nil {
 		return nil
 	}
-	return a.AutomationContext
-}
-
-func (a *Automation) GetDisabledReasonCircuitBreaker() *DisabledReasonCircuitBreaker {
-	if a == nil {
-		return nil
-	}
-	return a.DisabledReasonCircuitBreaker
+	return a.Annotations
 }
 
 func (a *Automation) GetAppID() *string {
@@ -152,6 +150,13 @@ func (a *Automation) GetAutomationSteps() []AutomationStep {
 	return a.AutomationSteps
 }
 
+func (a *Automation) GetCircuitBreaker() *DisabledReasonCircuitBreaker {
+	if a == nil {
+		return nil
+	}
+	return a.CircuitBreaker
+}
+
 func (a *Automation) GetCircuitBreakerMax() *int64 {
 	if a == nil {
 		return nil
@@ -164,6 +169,13 @@ func (a *Automation) GetCircuitBreakerPeriod() *CircuitBreakerPeriod {
 		return nil
 	}
 	return a.CircuitBreakerPeriod
+}
+
+func (a *Automation) GetContext() *AutomationContext {
+	if a == nil {
+		return nil
+	}
+	return a.Context
 }
 
 func (a *Automation) GetCreatedAt() *time.Time {
@@ -255,22 +267,27 @@ func (a *Automation) GetTriggers() []AutomationTrigger {
 // This message contains a oneof named disabled_reason. Only a single field of the following list may be set at a time:
 //   - circuitBreaker
 type AutomationInput struct {
-	// The AutomationContext message.
-	AutomationContext *AutomationContext `json:"context,omitempty"`
-	// DisabledReasonCircuitBreaker carries the trip context when an automation
-	//  has been auto-disabled by its rate cap. Returned on the parent Automation
-	//  when read; not directly settable.
-	DisabledReasonCircuitBreaker *DisabledReasonCircuitBreaker `json:"circuitBreaker,omitempty"`
+	// Bounded key/value metadata bag for IaC marking and customer tags.
+	//  See .rfcs/object-annotations.md §2. Limits: ≤16 entries; keys 1–128
+	//  chars matching ^[A-Za-z][A-Za-z0-9._/-]{0,127}$; values 0–256 chars
+	//  URL-safe ASCII; total serialized ≤ 4096 bytes. Keys matching ^c1/
+	//  are reserved.
+	//
+	//  Well-known keys: `managed_by`, `iac_workspace`,
+	//  `iac_resource_address`, `iac_tool_version`.
+	Annotations map[string]string `json:"annotations,omitempty"`
 	// the app id this workflow_template belongs to
 	AppID *string `json:"appId,omitempty"`
 	// The automationSteps field.
-	AutomationSteps []AutomationStep `json:"automationSteps,omitempty"`
+	AutomationSteps []AutomationStep              `json:"automationSteps,omitempty"`
+	CircuitBreaker  *DisabledReasonCircuitBreaker `json:"circuitBreaker,omitempty"`
 	// Circuit breaker rate cap: disable this automation if it executes more
 	//  than circuit_breaker_max times in the trailing circuit_breaker_period.
 	//  0 = circuit breaker off (default).
 	CircuitBreakerMax *int64 `json:"circuitBreakerMax,omitempty"`
 	// The circuitBreakerPeriod field.
 	CircuitBreakerPeriod *CircuitBreakerPeriod `json:"circuitBreakerPeriod,omitempty"`
+	Context              *AutomationContext    `json:"context,omitempty"`
 	CreatedAt            *time.Time            `json:"createdAt,omitempty"`
 	// The currentVersion field.
 	CurrentVersion *int64 `integer:"string" json:"currentVersion,omitempty"`
@@ -304,18 +321,11 @@ func (a *AutomationInput) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (a *AutomationInput) GetAutomationContext() *AutomationContext {
+func (a *AutomationInput) GetAnnotations() map[string]string {
 	if a == nil {
 		return nil
 	}
-	return a.AutomationContext
-}
-
-func (a *AutomationInput) GetDisabledReasonCircuitBreaker() *DisabledReasonCircuitBreaker {
-	if a == nil {
-		return nil
-	}
-	return a.DisabledReasonCircuitBreaker
+	return a.Annotations
 }
 
 func (a *AutomationInput) GetAppID() *string {
@@ -332,6 +342,13 @@ func (a *AutomationInput) GetAutomationSteps() []AutomationStep {
 	return a.AutomationSteps
 }
 
+func (a *AutomationInput) GetCircuitBreaker() *DisabledReasonCircuitBreaker {
+	if a == nil {
+		return nil
+	}
+	return a.CircuitBreaker
+}
+
 func (a *AutomationInput) GetCircuitBreakerMax() *int64 {
 	if a == nil {
 		return nil
@@ -344,6 +361,13 @@ func (a *AutomationInput) GetCircuitBreakerPeriod() *CircuitBreakerPeriod {
 		return nil
 	}
 	return a.CircuitBreakerPeriod
+}
+
+func (a *AutomationInput) GetContext() *AutomationContext {
+	if a == nil {
+		return nil
+	}
+	return a.Context
 }
 
 func (a *AutomationInput) GetCreatedAt() *time.Time {

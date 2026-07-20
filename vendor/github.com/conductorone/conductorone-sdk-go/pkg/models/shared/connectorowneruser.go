@@ -9,11 +9,14 @@ import (
 
 // ConnectorOwnerUser represents a user ownership source for a connector.
 type ConnectorOwnerUser struct {
-	// The User object provides all of the details for an user, as well as some configuration.
-	User      *User      `json:"user,omitempty"`
-	CreatedAt *time.Time `json:"createdAt,omitempty"`
+	// The appId field.
+	AppID *string `json:"appId,omitempty"`
+	// The connectorId field.
+	ConnectorID *string    `json:"connectorId,omitempty"`
+	CreatedAt   *time.Time `json:"createdAt,omitempty"`
 	// The roleSlug field.
 	RoleSlug *string `json:"roleSlug,omitempty"`
+	User     *User   `json:"user,omitempty"`
 }
 
 func (c ConnectorOwnerUser) MarshalJSON() ([]byte, error) {
@@ -27,11 +30,18 @@ func (c *ConnectorOwnerUser) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (c *ConnectorOwnerUser) GetUser() *User {
+func (c *ConnectorOwnerUser) GetAppID() *string {
 	if c == nil {
 		return nil
 	}
-	return c.User
+	return c.AppID
+}
+
+func (c *ConnectorOwnerUser) GetConnectorID() *string {
+	if c == nil {
+		return nil
+	}
+	return c.ConnectorID
 }
 
 func (c *ConnectorOwnerUser) GetCreatedAt() *time.Time {
@@ -46,4 +56,11 @@ func (c *ConnectorOwnerUser) GetRoleSlug() *string {
 		return nil
 	}
 	return c.RoleSlug
+}
+
+func (c *ConnectorOwnerUser) GetUser() *User {
+	if c == nil {
+		return nil
+	}
+	return c.User
 }

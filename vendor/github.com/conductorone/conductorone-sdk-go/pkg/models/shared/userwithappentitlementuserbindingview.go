@@ -4,21 +4,13 @@ package shared
 
 // The UserWithAppEntitlementUserBindingView message.
 type UserWithAppEntitlementUserBindingView struct {
-	// The User object provides all of the details for an user, as well as some configuration.
-	User *User `json:"user,omitempty"`
 	// The ID of the app entitlement.
 	AppEntitlementID *string `json:"appEntitlementId,omitempty"`
 	// The ID of the app that contains the entitlement.
 	AppID *string `json:"appId,omitempty"`
 	// The ID of the app user associated with this binding.
 	AppUserID *string `json:"appUserId,omitempty"`
-}
-
-func (u *UserWithAppEntitlementUserBindingView) GetUser() *User {
-	if u == nil {
-		return nil
-	}
-	return u.User
+	User      *User   `json:"user,omitempty"`
 }
 
 func (u *UserWithAppEntitlementUserBindingView) GetAppEntitlementID() *string {
@@ -40,4 +32,11 @@ func (u *UserWithAppEntitlementUserBindingView) GetAppUserID() *string {
 		return nil
 	}
 	return u.AppUserID
+}
+
+func (u *UserWithAppEntitlementUserBindingView) GetUser() *User {
+	if u == nil {
+		return nil
+	}
+	return u.User
 }

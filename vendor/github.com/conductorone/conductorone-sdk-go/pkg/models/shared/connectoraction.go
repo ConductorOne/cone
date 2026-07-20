@@ -7,20 +7,12 @@ package shared
 // This message contains a oneof named connector_identifier. Only a single field of the following list may be set at a time:
 //   - connectorRef
 type ConnectorAction struct {
-	// The ConnectorRef message.
-	ConnectorRef *ConnectorRef `json:"connectorRef,omitempty"`
 	// The actionName field.
 	ActionName   *string        `json:"actionName,omitempty"`
 	ArgsTemplate map[string]any `json:"argsTemplate,omitempty"`
+	ConnectorRef *ConnectorRef  `json:"connectorRef,omitempty"`
 	// The resourceTypeId field.
 	ResourceTypeID *string `json:"resourceTypeId,omitempty"`
-}
-
-func (c *ConnectorAction) GetConnectorRef() *ConnectorRef {
-	if c == nil {
-		return nil
-	}
-	return c.ConnectorRef
 }
 
 func (c *ConnectorAction) GetActionName() *string {
@@ -35,6 +27,13 @@ func (c *ConnectorAction) GetArgsTemplate() map[string]any {
 		return nil
 	}
 	return c.ArgsTemplate
+}
+
+func (c *ConnectorAction) GetConnectorRef() *ConnectorRef {
+	if c == nil {
+		return nil
+	}
+	return c.ConnectorRef
 }
 
 func (c *ConnectorAction) GetResourceTypeID() *string {

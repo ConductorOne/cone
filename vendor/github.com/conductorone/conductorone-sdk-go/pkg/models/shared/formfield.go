@@ -18,70 +18,33 @@ package shared
 //   - adminConfig
 //   - sharedConfig
 type FormField struct {
-	// The AdminProviderConfig message.
-	AdminProviderConfig *AdminProviderConfig `json:"adminConfig,omitempty"`
-	// The BoolField message.
-	//
-	// This message contains a oneof named view. Only a single field of the following list may be set at a time:
-	//   - checkboxField
-	//   - toggleField
-	//
-	BoolField *BoolField `json:"boolField,omitempty"`
-	// The FileField message.
-	//
-	// This message contains a oneof named view. Only a single field of the following list may be set at a time:
-	//   - fileInputField
-	//
-	FileField *FileField `json:"fileField,omitempty"`
-	// The StringField message.
-	//
-	// This message contains a oneof named view. Only a single field of the following list may be set at a time:
-	//   - textField
-	//   - passwordField
-	//   - selectField
-	//   - pickerField
-	//
-	FormStringField *FormStringField `json:"stringField,omitempty"`
-	// The StringMapField message.
-	FormStringMapField *FormStringMapField `json:"stringMapField,omitempty"`
-	// The Int64Field message.
-	//
-	// This message contains a oneof named view. Only a single field of the following list may be set at a time:
-	//   - numberField
-	//
-	Int64Field *Int64Field `json:"int64Field,omitempty"`
-	// The Oauth2Field message.
-	//
-	// This message contains a oneof named view. Only a single field of the following list may be set at a time:
-	//   - oauth2FieldView
-	//
-	Oauth2Field *Oauth2Field1 `json:"oauth2Field,omitempty"`
-	// The SharedProviderConfig message.
-	SharedProviderConfig *SharedProviderConfig `json:"sharedConfig,omitempty"`
-	// The StringSliceField message.
-	//
-	// This message contains a oneof named view. Only a single field of the following list may be set at a time:
-	//   - chipsField
-	//   - pickerField
-	//
-	StringSliceField *StringSliceField `json:"stringSliceField,omitempty"`
-	// The UserProviderConfig message.
-	UserProviderConfig *UserProviderConfig `json:"userConfig,omitempty"`
+	AdminConfig *AdminProviderConfig `json:"adminConfig,omitempty"`
+	BoolField   *BoolField           `json:"boolField,omitempty"`
 	// The description field.
 	Description *string `json:"description,omitempty"`
 	// The displayName field.
-	DisplayName *string `json:"displayName,omitempty"`
+	DisplayName *string     `json:"displayName,omitempty"`
+	FileField   *FileField  `json:"fileField,omitempty"`
+	Int64Field  *Int64Field `json:"int64Field,omitempty"`
 	// The name field.
-	Name *string `json:"name,omitempty"`
+	Name        *string       `json:"name,omitempty"`
+	Oauth2Field *Oauth2Field1 `json:"oauth2Field,omitempty"`
+	// When true, this field is displayed to the user but cannot be edited.
+	ReadOnly *bool `json:"readOnly,omitempty"`
 	// The required field.
-	Required *bool `json:"required,omitempty"`
+	Required         *bool                 `json:"required,omitempty"`
+	SharedConfig     *SharedProviderConfig `json:"sharedConfig,omitempty"`
+	StringField      *FormStringField      `json:"stringField,omitempty"`
+	StringMapField   *FormStringMapField   `json:"stringMapField,omitempty"`
+	StringSliceField *StringSliceField     `json:"stringSliceField,omitempty"`
+	UserConfig       *UserProviderConfig   `json:"userConfig,omitempty"`
 }
 
-func (f *FormField) GetAdminProviderConfig() *AdminProviderConfig {
+func (f *FormField) GetAdminConfig() *AdminProviderConfig {
 	if f == nil {
 		return nil
 	}
-	return f.AdminProviderConfig
+	return f.AdminConfig
 }
 
 func (f *FormField) GetBoolField() *BoolField {
@@ -89,62 +52,6 @@ func (f *FormField) GetBoolField() *BoolField {
 		return nil
 	}
 	return f.BoolField
-}
-
-func (f *FormField) GetFileField() *FileField {
-	if f == nil {
-		return nil
-	}
-	return f.FileField
-}
-
-func (f *FormField) GetFormStringField() *FormStringField {
-	if f == nil {
-		return nil
-	}
-	return f.FormStringField
-}
-
-func (f *FormField) GetFormStringMapField() *FormStringMapField {
-	if f == nil {
-		return nil
-	}
-	return f.FormStringMapField
-}
-
-func (f *FormField) GetInt64Field() *Int64Field {
-	if f == nil {
-		return nil
-	}
-	return f.Int64Field
-}
-
-func (f *FormField) GetOauth2Field() *Oauth2Field1 {
-	if f == nil {
-		return nil
-	}
-	return f.Oauth2Field
-}
-
-func (f *FormField) GetSharedProviderConfig() *SharedProviderConfig {
-	if f == nil {
-		return nil
-	}
-	return f.SharedProviderConfig
-}
-
-func (f *FormField) GetStringSliceField() *StringSliceField {
-	if f == nil {
-		return nil
-	}
-	return f.StringSliceField
-}
-
-func (f *FormField) GetUserProviderConfig() *UserProviderConfig {
-	if f == nil {
-		return nil
-	}
-	return f.UserProviderConfig
 }
 
 func (f *FormField) GetDescription() *string {
@@ -161,6 +68,20 @@ func (f *FormField) GetDisplayName() *string {
 	return f.DisplayName
 }
 
+func (f *FormField) GetFileField() *FileField {
+	if f == nil {
+		return nil
+	}
+	return f.FileField
+}
+
+func (f *FormField) GetInt64Field() *Int64Field {
+	if f == nil {
+		return nil
+	}
+	return f.Int64Field
+}
+
 func (f *FormField) GetName() *string {
 	if f == nil {
 		return nil
@@ -168,9 +89,58 @@ func (f *FormField) GetName() *string {
 	return f.Name
 }
 
+func (f *FormField) GetOauth2Field() *Oauth2Field1 {
+	if f == nil {
+		return nil
+	}
+	return f.Oauth2Field
+}
+
+func (f *FormField) GetReadOnly() *bool {
+	if f == nil {
+		return nil
+	}
+	return f.ReadOnly
+}
+
 func (f *FormField) GetRequired() *bool {
 	if f == nil {
 		return nil
 	}
 	return f.Required
+}
+
+func (f *FormField) GetSharedConfig() *SharedProviderConfig {
+	if f == nil {
+		return nil
+	}
+	return f.SharedConfig
+}
+
+func (f *FormField) GetStringField() *FormStringField {
+	if f == nil {
+		return nil
+	}
+	return f.StringField
+}
+
+func (f *FormField) GetStringMapField() *FormStringMapField {
+	if f == nil {
+		return nil
+	}
+	return f.StringMapField
+}
+
+func (f *FormField) GetStringSliceField() *StringSliceField {
+	if f == nil {
+		return nil
+	}
+	return f.StringSliceField
+}
+
+func (f *FormField) GetUserConfig() *UserProviderConfig {
+	if f == nil {
+		return nil
+	}
+	return f.UserConfig
 }

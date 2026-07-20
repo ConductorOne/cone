@@ -7,16 +7,57 @@ import (
 	"time"
 )
 
+// NhiType - The NHI classification (K3 spine) for this resource. Populated for
+//
+//	non-human-identity resources; UNSPECIFIED for everything else. Mirrors
+//	agent_trait: read-only and translated from the model enum at the API boundary.
+type NhiType string
+
+const (
+	NhiTypeNhiTypeUnspecified     NhiType = "NHI_TYPE_UNSPECIFIED"
+	NhiTypeNhiTypeAppRegistration NhiType = "NHI_TYPE_APP_REGISTRATION"
+	NhiTypeNhiTypeAssumableRole   NhiType = "NHI_TYPE_ASSUMABLE_ROLE"
+	NhiTypeNhiTypeManagedIdentity NhiType = "NHI_TYPE_MANAGED_IDENTITY"
+)
+
+func (e NhiType) ToPointer() *NhiType {
+	return &e
+}
+
+// IsExact returns true if the value matches a known enum value, false otherwise.
+func (e *NhiType) IsExact() bool {
+	if e != nil {
+		switch *e {
+		case "NHI_TYPE_UNSPECIFIED", "NHI_TYPE_APP_REGISTRATION", "NHI_TYPE_ASSUMABLE_ROLE", "NHI_TYPE_MANAGED_IDENTITY":
+			return true
+		}
+	}
+	return false
+}
+
 // AppResource - The app resource message is a single resource that can have entitlements.
 //
 // This message contains a oneof named metadata. Only a single field of the following list may be set at a time:
 //   - secretTrait
 type AppResource struct {
-	// The SecretTrait message.
-	SecretTrait *SecretTrait `json:"secretTrait,omitempty"`
 	// The access config ID for this resource. May be empty.
 	//  Must be one of the builtin access config IDs or empty.
-	AccessConfigID *string `json:"accessConfigId,omitempty"`
+	AccessConfigID *string     `json:"accessConfigId,omitempty"`
+	AgentTrait     *AgentTrait `json:"agentTrait,omitempty"`
+	// Bounded key/value metadata bag for IaC marking and customer tags.
+	//  See .rfcs/object-annotations.md §2. Limits: ≤16 entries; keys 1–128
+	//  chars matching ^[A-Za-z][A-Za-z0-9._/-]{0,127}$; values 0–256 chars
+	//  URL-safe ASCII; total serialized ≤ 4096 bytes. Keys matching ^c1/
+	//  are reserved.
+	//
+	//  Well-known keys: `managed_by`, `iac_workspace`,
+	//  `iac_resource_address`, `iac_tool_version`.
+	//
+	//  Most AppResources are connector-synced; user-supplied annotations on
+	//  a synced resource will be overwritten by the next sync. The
+	//  annotations bag is most useful on user-created groups (the
+	//  `conductorone_app_resource` TF resource).
+	Annotations map[string]string `json:"annotations,omitempty"`
 	// The app that this resource belongs to.
 	AppID *string `json:"appId,omitempty"`
 	// The resource type that this resource is.
@@ -38,11 +79,19 @@ type AppResource struct {
 	ID *string `json:"id,omitempty"`
 	// The matchBatonId field.
 	MatchBatonID *string `json:"matchBatonId,omitempty"`
+	// Axis-2 detail refining nhi_type (e.g. "aws.role.lambda"). Read-only;
+	//  translated from the model.
+	NhiDetail *string `json:"nhiDetail,omitempty"`
+	// The NHI classification (K3 spine) for this resource. Populated for
+	//  non-human-identity resources; UNSPECIFIED for everything else. Mirrors
+	//  agent_trait: read-only and translated from the model enum at the API boundary.
+	NhiType *NhiType `json:"nhiType,omitempty"`
 	// The parent resource id, if this resource is a child of another resource.
 	ParentAppResourceID *string `json:"parentAppResourceId,omitempty"`
 	// The parent resource type id, if this resource is a child of another resource.
 	ParentAppResourceTypeID *string        `json:"parentAppResourceTypeId,omitempty"`
 	Profile                 map[string]any `json:"profile,omitempty"`
+	SecretTrait             *SecretTrait   `json:"secretTrait,omitempty"`
 	UpdatedAt               *time.Time     `json:"updatedAt,omitempty"`
 }
 
@@ -57,18 +106,25 @@ func (a *AppResource) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (a *AppResource) GetSecretTrait() *SecretTrait {
-	if a == nil {
-		return nil
-	}
-	return a.SecretTrait
-}
-
 func (a *AppResource) GetAccessConfigID() *string {
 	if a == nil {
 		return nil
 	}
 	return a.AccessConfigID
+}
+
+func (a *AppResource) GetAgentTrait() *AgentTrait {
+	if a == nil {
+		return nil
+	}
+	return a.AgentTrait
+}
+
+func (a *AppResource) GetAnnotations() map[string]string {
+	if a == nil {
+		return nil
+	}
+	return a.Annotations
 }
 
 func (a *AppResource) GetAppID() *string {
@@ -148,6 +204,20 @@ func (a *AppResource) GetMatchBatonID() *string {
 	return a.MatchBatonID
 }
 
+func (a *AppResource) GetNhiDetail() *string {
+	if a == nil {
+		return nil
+	}
+	return a.NhiDetail
+}
+
+func (a *AppResource) GetNhiType() *NhiType {
+	if a == nil {
+		return nil
+	}
+	return a.NhiType
+}
+
 func (a *AppResource) GetParentAppResourceID() *string {
 	if a == nil {
 		return nil
@@ -167,6 +237,13 @@ func (a *AppResource) GetProfile() map[string]any {
 		return nil
 	}
 	return a.Profile
+}
+
+func (a *AppResource) GetSecretTrait() *SecretTrait {
+	if a == nil {
+		return nil
+	}
+	return a.SecretTrait
 }
 
 func (a *AppResource) GetUpdatedAt() *time.Time {

@@ -9,14 +9,12 @@ import (
 
 // ConnectorOwnerEntitlement represents an entitlement ownership source for a connector.
 type ConnectorOwnerEntitlement struct {
-	// The app entitlement represents one permission in a downstream App (SAAS) that can be granted. For example, GitHub Read vs GitHub Write.
-	//
-	// This message contains a oneof named max_grant_duration. Only a single field of the following list may be set at a time:
-	//   - durationUnset
-	//   - durationGrant
-	//
 	AppEntitlement *AppEntitlement `json:"appEntitlement,omitempty"`
-	CreatedAt      *time.Time      `json:"createdAt,omitempty"`
+	// The appId field.
+	AppID *string `json:"appId,omitempty"`
+	// The connectorId field.
+	ConnectorID *string    `json:"connectorId,omitempty"`
+	CreatedAt   *time.Time `json:"createdAt,omitempty"`
 	// The roleSlug field.
 	RoleSlug *string `json:"roleSlug,omitempty"`
 }
@@ -37,6 +35,20 @@ func (c *ConnectorOwnerEntitlement) GetAppEntitlement() *AppEntitlement {
 		return nil
 	}
 	return c.AppEntitlement
+}
+
+func (c *ConnectorOwnerEntitlement) GetAppID() *string {
+	if c == nil {
+		return nil
+	}
+	return c.AppID
+}
+
+func (c *ConnectorOwnerEntitlement) GetConnectorID() *string {
+	if c == nil {
+		return nil
+	}
+	return c.ConnectorID
 }
 
 func (c *ConnectorOwnerEntitlement) GetCreatedAt() *time.Time {

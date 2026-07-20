@@ -270,8 +270,6 @@ func (e *TaskStates) IsExact() bool {
 
 // TaskSearchRequest - Search for tasks based on a plethora filters.
 type TaskSearchRequest struct {
-	// The task expand mask is an array of strings that specifes the related objects the requester wishes to have returned when making a request where the expand mask is part of the input. Use '*' to view all possible responses.
-	TaskExpandMask *TaskExpandMask `json:"expandMask,omitempty"`
 	// Search tasks that belong to any of the access reviews included in this list.
 	AccessReviewIds []string `json:"accessReviewIds,omitempty"`
 	// Search tasks that have any of these account owners.
@@ -309,7 +307,8 @@ type TaskSearchRequest struct {
 	// Search tasks that do NOT have any of these apps as targets.
 	ExcludeApplicationIds []string `json:"excludeApplicationIds,omitempty"`
 	// Exclude Specific TaskIDs from this serach result.
-	ExcludeIds []string `json:"excludeIds,omitempty"`
+	ExcludeIds []string        `json:"excludeIds,omitempty"`
+	ExpandMask *TaskExpandMask `json:"expandMask,omitempty"`
 	// Search tasks by grant outcome
 	GrantOutcomes     []GrantOutcomes `json:"grantOutcomes,omitempty"`
 	IncludeActedAfter *time.Time      `json:"includeActedAfter,omitempty"`
@@ -366,13 +365,6 @@ func (t *TaskSearchRequest) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
-}
-
-func (t *TaskSearchRequest) GetTaskExpandMask() *TaskExpandMask {
-	if t == nil {
-		return nil
-	}
-	return t.TaskExpandMask
 }
 
 func (t *TaskSearchRequest) GetAccessReviewIds() []string {
@@ -513,6 +505,13 @@ func (t *TaskSearchRequest) GetExcludeIds() []string {
 		return nil
 	}
 	return t.ExcludeIds
+}
+
+func (t *TaskSearchRequest) GetExpandMask() *TaskExpandMask {
+	if t == nil {
+		return nil
+	}
+	return t.ExpandMask
 }
 
 func (t *TaskSearchRequest) GetGrantOutcomes() []GrantOutcomes {

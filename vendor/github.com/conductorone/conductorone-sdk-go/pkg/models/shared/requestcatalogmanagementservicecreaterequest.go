@@ -77,16 +77,22 @@ func (e *RequestCatalogManagementServiceCreateRequestUnenrollmentEntitlementBeha
 
 // RequestCatalogManagementServiceCreateRequest - Create a request catalog.
 type RequestCatalogManagementServiceCreateRequest struct {
-	// The RequestCatalogExpandMask includes the paths in the catalog view to expand in the return value of this call.
-	RequestCatalogExpandMask *RequestCatalogExpandMask `json:"expandMask,omitempty"`
+	// Bounded key/value metadata bag for IaC marking and customer tags.
+	//  See .rfcs/object-annotations.md §2. Limits: ≤16 entries; keys 1–128
+	//  chars matching ^[A-Za-z][A-Za-z0-9._/-]{0,127}$; values 0–256 chars
+	//  matching URL-safe ASCII; total serialized ≤4096 bytes. Keys starting
+	//  with `c1/` are reserved for server-managed use and rejected on write.
+	//
+	//  Well-known keys: `managed_by`, `iac_workspace`,
+	//  `iac_resource_address`, `iac_tool_version`.
+	Annotations map[string]string `json:"annotations,omitempty"`
 	// The description of the new request catalog.
 	Description *string `json:"description,omitempty"`
 	// The display name of the new request catalog.
 	DisplayName string `json:"displayName"`
 	// Defines how to handle the request policies of the entitlements in the catalog during enrollment.
 	EnrollmentBehavior *RequestCatalogManagementServiceCreateRequestEnrollmentBehavior `json:"enrollmentBehavior,omitempty"`
-	// The ID of the grant policy for access requests in this catalog.
-	GrantPolicyID *string `json:"grantPolicyId,omitempty"`
+	ExpandMask         *RequestCatalogExpandMask                                       `json:"expandMask,omitempty"`
 	// Whether or not the new catalog should be created as published.
 	Published *bool `json:"published,omitempty"`
 	// Whether all the entitlements in the catalog can be requests at once. Your tenant must have the bundles feature to use this.
@@ -99,11 +105,11 @@ type RequestCatalogManagementServiceCreateRequest struct {
 	VisibleToEveryone *bool `json:"visibleToEveryone,omitempty"`
 }
 
-func (r *RequestCatalogManagementServiceCreateRequest) GetRequestCatalogExpandMask() *RequestCatalogExpandMask {
+func (r *RequestCatalogManagementServiceCreateRequest) GetAnnotations() map[string]string {
 	if r == nil {
 		return nil
 	}
-	return r.RequestCatalogExpandMask
+	return r.Annotations
 }
 
 func (r *RequestCatalogManagementServiceCreateRequest) GetDescription() *string {
@@ -127,11 +133,11 @@ func (r *RequestCatalogManagementServiceCreateRequest) GetEnrollmentBehavior() *
 	return r.EnrollmentBehavior
 }
 
-func (r *RequestCatalogManagementServiceCreateRequest) GetGrantPolicyID() *string {
+func (r *RequestCatalogManagementServiceCreateRequest) GetExpandMask() *RequestCatalogExpandMask {
 	if r == nil {
 		return nil
 	}
-	return r.GrantPolicyID
+	return r.ExpandMask
 }
 
 func (r *RequestCatalogManagementServiceCreateRequest) GetPublished() *bool {

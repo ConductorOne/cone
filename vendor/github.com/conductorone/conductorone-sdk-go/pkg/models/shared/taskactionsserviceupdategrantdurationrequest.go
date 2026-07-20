@@ -4,21 +4,20 @@ package shared
 
 // The TaskActionsServiceUpdateGrantDurationRequest object lets you change the grant duration on a grant task.
 type TaskActionsServiceUpdateGrantDurationRequest struct {
-	// The task expand mask is an array of strings that specifes the related objects the requester wishes to have returned when making a request where the expand mask is part of the input. Use '*' to view all possible responses.
-	TaskExpandMask *TaskExpandMask `json:"expandMask,omitempty"`
-	Duration       string          `json:"duration"`
+	Duration   *string         `json:"duration"`
+	ExpandMask *TaskExpandMask `json:"expandMask,omitempty"`
 }
 
-func (t *TaskActionsServiceUpdateGrantDurationRequest) GetTaskExpandMask() *TaskExpandMask {
+func (t *TaskActionsServiceUpdateGrantDurationRequest) GetDuration() *string {
 	if t == nil {
 		return nil
 	}
-	return t.TaskExpandMask
+	return t.Duration
 }
 
-func (t *TaskActionsServiceUpdateGrantDurationRequest) GetDuration() string {
+func (t *TaskActionsServiceUpdateGrantDurationRequest) GetExpandMask() *TaskExpandMask {
 	if t == nil {
-		return ""
+		return nil
 	}
-	return t.Duration
+	return t.ExpandMask
 }

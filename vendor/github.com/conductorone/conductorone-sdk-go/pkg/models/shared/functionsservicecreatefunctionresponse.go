@@ -4,10 +4,15 @@ package shared
 
 // The FunctionsServiceCreateFunctionResponse message.
 type FunctionsServiceCreateFunctionResponse struct {
-	// Function represents a customer-provided code extension in the API
-	Function *Function `json:"function,omitempty"`
-	// FunctionCommit represents a single commit in a function's history
-	FunctionCommit *FunctionCommit `json:"commit,omitempty"`
+	Commit   *FunctionCommit `json:"commit,omitempty"`
+	Function *Function       `json:"function,omitempty"`
+}
+
+func (f *FunctionsServiceCreateFunctionResponse) GetCommit() *FunctionCommit {
+	if f == nil {
+		return nil
+	}
+	return f.Commit
 }
 
 func (f *FunctionsServiceCreateFunctionResponse) GetFunction() *Function {
@@ -15,11 +20,4 @@ func (f *FunctionsServiceCreateFunctionResponse) GetFunction() *Function {
 		return nil
 	}
 	return f.Function
-}
-
-func (f *FunctionsServiceCreateFunctionResponse) GetFunctionCommit() *FunctionCommit {
-	if f == nil {
-		return nil
-	}
-	return f.FunctionCommit
 }

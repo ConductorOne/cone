@@ -29,68 +29,12 @@ func (e *InputType) IsExact() bool {
 
 // DateTimeInputComponent for date/time selection.
 type DateTimeInputComponent struct {
-	// DynamicString can be a literal value, a JSON pointer path, or a function call.
-	//
-	// This message contains a oneof named value. Only a single field of the following list may be set at a time:
-	//   - literal
-	//   - path
-	//   - call
-	//
-	DynamicString *DynamicString `json:"label,omitempty"`
-	// DynamicString can be a literal value, a JSON pointer path, or a function call.
-	//
-	// This message contains a oneof named value. Only a single field of the following list may be set at a time:
-	//   - literal
-	//   - path
-	//   - call
-	//
-	DynamicString1 *DynamicString `json:"max,omitempty"`
-	// DynamicString can be a literal value, a JSON pointer path, or a function call.
-	//
-	// This message contains a oneof named value. Only a single field of the following list may be set at a time:
-	//   - literal
-	//   - path
-	//   - call
-	//
-	DynamicString2 *DynamicString `json:"min,omitempty"`
-	// DynamicString can be a literal value, a JSON pointer path, or a function call.
-	//
-	// This message contains a oneof named value. Only a single field of the following list may be set at a time:
-	//   - literal
-	//   - path
-	//   - call
-	//
-	DynamicString3 *DynamicString `json:"value,omitempty"`
 	// The inputType field.
-	InputType *InputType `json:"inputType,omitempty"`
-}
-
-func (d *DateTimeInputComponent) GetDynamicString() *DynamicString {
-	if d == nil {
-		return nil
-	}
-	return d.DynamicString
-}
-
-func (d *DateTimeInputComponent) GetDynamicString1() *DynamicString {
-	if d == nil {
-		return nil
-	}
-	return d.DynamicString1
-}
-
-func (d *DateTimeInputComponent) GetDynamicString2() *DynamicString {
-	if d == nil {
-		return nil
-	}
-	return d.DynamicString2
-}
-
-func (d *DateTimeInputComponent) GetDynamicString3() *DynamicString {
-	if d == nil {
-		return nil
-	}
-	return d.DynamicString3
+	InputType *InputType     `json:"inputType,omitempty"`
+	Label     *DynamicString `json:"label,omitempty"`
+	Max       *DynamicString `json:"max,omitempty"`
+	Min       *DynamicString `json:"min,omitempty"`
+	Value     *DynamicString `json:"value,omitempty"`
 }
 
 func (d *DateTimeInputComponent) GetInputType() *InputType {
@@ -98,4 +42,32 @@ func (d *DateTimeInputComponent) GetInputType() *InputType {
 		return nil
 	}
 	return d.InputType
+}
+
+func (d *DateTimeInputComponent) GetLabel() *DynamicString {
+	if d == nil {
+		return nil
+	}
+	return d.Label
+}
+
+func (d *DateTimeInputComponent) GetMax() *DynamicString {
+	if d == nil {
+		return nil
+	}
+	return d.Max
+}
+
+func (d *DateTimeInputComponent) GetMin() *DynamicString {
+	if d == nil {
+		return nil
+	}
+	return d.Min
+}
+
+func (d *DateTimeInputComponent) GetValue() *DynamicString {
+	if d == nil {
+		return nil
+	}
+	return d.Value
 }

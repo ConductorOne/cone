@@ -37,10 +37,6 @@ func (e *TargetedAppUserTypes) IsExact() bool {
 //   - runImmediately
 //   - runDelayed
 type UsageBasedRevocationTrigger struct {
-	// The RunDelayed message.
-	RunDelayed *RunDelayed `json:"runDelayed,omitempty"`
-	// No fields needed; this just indicates the trigger should run immediately
-	RunImmediately *RunImmediately `json:"runImmediately,omitempty"`
 	// The appId field.
 	AppID     *string    `json:"appId,omitempty"`
 	EnabledAt *time.Time `json:"enabledAt,omitempty"`
@@ -49,7 +45,9 @@ type UsageBasedRevocationTrigger struct {
 	// The excludedUserRefs field.
 	ExcludedUserRefs []UserRef `json:"excludedUserRefs,omitempty"`
 	// The includeUsersWithNoActivity field.
-	IncludeUsersWithNoActivity *bool `json:"includeUsersWithNoActivity,omitempty"`
+	IncludeUsersWithNoActivity *bool           `json:"includeUsersWithNoActivity,omitempty"`
+	RunDelayed                 *RunDelayed     `json:"runDelayed,omitempty"`
+	RunImmediately             *RunImmediately `json:"runImmediately,omitempty"`
 	// The targetedAppUserTypes field.
 	TargetedAppUserTypes []TargetedAppUserTypes `json:"targetedAppUserTypes,omitempty"`
 	// The targetedEntitlementRefs field.
@@ -67,20 +65,6 @@ func (u *UsageBasedRevocationTrigger) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
-}
-
-func (u *UsageBasedRevocationTrigger) GetRunDelayed() *RunDelayed {
-	if u == nil {
-		return nil
-	}
-	return u.RunDelayed
-}
-
-func (u *UsageBasedRevocationTrigger) GetRunImmediately() *RunImmediately {
-	if u == nil {
-		return nil
-	}
-	return u.RunImmediately
 }
 
 func (u *UsageBasedRevocationTrigger) GetAppID() *string {
@@ -116,6 +100,20 @@ func (u *UsageBasedRevocationTrigger) GetIncludeUsersWithNoActivity() *bool {
 		return nil
 	}
 	return u.IncludeUsersWithNoActivity
+}
+
+func (u *UsageBasedRevocationTrigger) GetRunDelayed() *RunDelayed {
+	if u == nil {
+		return nil
+	}
+	return u.RunDelayed
+}
+
+func (u *UsageBasedRevocationTrigger) GetRunImmediately() *RunImmediately {
+	if u == nil {
+		return nil
+	}
+	return u.RunImmediately
 }
 
 func (u *UsageBasedRevocationTrigger) GetTargetedAppUserTypes() []TargetedAppUserTypes {

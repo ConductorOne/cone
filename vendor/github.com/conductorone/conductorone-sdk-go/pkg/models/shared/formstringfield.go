@@ -10,39 +10,22 @@ package shared
 //   - selectField
 //   - pickerField
 type FormStringField struct {
-	// The PasswordField message.
-	PasswordField *PasswordField `json:"passwordField,omitempty"`
-	// The PickerField message.
-	//
-	// This message contains a oneof named type. Only a single field of the following list may be set at a time:
-	//   - appUserPicker
-	//   - resourcePicker
-	//   - c1UserPicker
-	//
-	PickerField *PickerField `json:"pickerField,omitempty"`
-	// The SelectField message.
-	SelectField *SelectField `json:"selectField,omitempty"`
-	// StringRules describe the constraints applied to `string` values
-	//
-	// This message contains a oneof named well_known. Only a single field of the following list may be set at a time:
-	//   - email
-	//   - hostname
-	//   - ip
-	//   - ipv4
-	//   - ipv6
-	//   - uri
-	//   - uriRef
-	//   - address
-	//   - uuid
-	//   - wellKnownRegex
-	//
-	StringRules *StringRules `json:"rules,omitempty"`
-	// The TextField message.
-	TextField *TextField `json:"textField,omitempty"`
 	// The defaultValue field.
-	DefaultValue *string `json:"defaultValue,omitempty"`
+	DefaultValue  *string        `json:"defaultValue,omitempty"`
+	PasswordField *PasswordField `json:"passwordField,omitempty"`
+	PickerField   *PickerField   `json:"pickerField,omitempty"`
 	// The placeholder field.
-	Placeholder *string `json:"placeholder,omitempty"`
+	Placeholder *string      `json:"placeholder,omitempty"`
+	Rules       *StringRules `json:"rules,omitempty"`
+	SelectField *SelectField `json:"selectField,omitempty"`
+	TextField   *TextField   `json:"textField,omitempty"`
+}
+
+func (f *FormStringField) GetDefaultValue() *string {
+	if f == nil {
+		return nil
+	}
+	return f.DefaultValue
 }
 
 func (f *FormStringField) GetPasswordField() *PasswordField {
@@ -59,6 +42,20 @@ func (f *FormStringField) GetPickerField() *PickerField {
 	return f.PickerField
 }
 
+func (f *FormStringField) GetPlaceholder() *string {
+	if f == nil {
+		return nil
+	}
+	return f.Placeholder
+}
+
+func (f *FormStringField) GetRules() *StringRules {
+	if f == nil {
+		return nil
+	}
+	return f.Rules
+}
+
 func (f *FormStringField) GetSelectField() *SelectField {
 	if f == nil {
 		return nil
@@ -66,30 +63,9 @@ func (f *FormStringField) GetSelectField() *SelectField {
 	return f.SelectField
 }
 
-func (f *FormStringField) GetStringRules() *StringRules {
-	if f == nil {
-		return nil
-	}
-	return f.StringRules
-}
-
 func (f *FormStringField) GetTextField() *TextField {
 	if f == nil {
 		return nil
 	}
 	return f.TextField
-}
-
-func (f *FormStringField) GetDefaultValue() *string {
-	if f == nil {
-		return nil
-	}
-	return f.DefaultValue
-}
-
-func (f *FormStringField) GetPlaceholder() *string {
-	if f == nil {
-		return nil
-	}
-	return f.Placeholder
 }

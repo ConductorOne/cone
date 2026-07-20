@@ -14,6 +14,7 @@ package shared
 //   - inclusionAll
 //   - inclusionCriteria
 //   - inclusionListCel
+//   - inclusionAccessOnly
 //
 // This message contains a oneof named exclusion. Only a single field of the following list may be set at a time:
 //   - exclusionNone
@@ -21,24 +22,15 @@ package shared
 //   - exclusionCriteria
 //   - exclusionListCel
 type CreateRevokeTasksV2 struct {
-	// The EntitlementExclusionCriteria message.
-	EntitlementExclusionCriteria *EntitlementExclusionCriteria `json:"exclusionCriteria,omitempty"`
-	// The EntitlementExclusionList message.
-	EntitlementExclusionList *EntitlementExclusionList `json:"exclusionList,omitempty"`
-	// The EntitlementExclusionListCel message.
-	EntitlementExclusionListCel *EntitlementExclusionListCel `json:"exclusionListCel,omitempty"`
-	// The EntitlementExclusionNone message.
-	EntitlementExclusionNone *EntitlementExclusionNone `json:"exclusionNone,omitempty"`
-	// The EntitlementInclusionAll message.
-	EntitlementInclusionAll *EntitlementInclusionAll `json:"inclusionAll,omitempty"`
-	// The EntitlementInclusionCriteria message.
-	EntitlementInclusionCriteria *EntitlementInclusionCriteria `json:"inclusionCriteria,omitempty"`
-	// The EntitlementInclusionList message.
-	EntitlementInclusionList *EntitlementInclusionList `json:"inclusionList,omitempty"`
-	// The EntitlementInclusionListCel message.
-	EntitlementInclusionListCel *EntitlementInclusionListCel `json:"inclusionListCel,omitempty"`
-	// A reference to a user.
-	UserRef *UserRef `json:"userRef,omitempty"`
+	ExclusionCriteria   *EntitlementExclusionCriteria   `json:"exclusionCriteria,omitempty"`
+	ExclusionList       *EntitlementExclusionList       `json:"exclusionList,omitempty"`
+	ExclusionListCel    *EntitlementExclusionListCel    `json:"exclusionListCel,omitempty"`
+	ExclusionNone       *EntitlementExclusionNone       `json:"exclusionNone,omitempty"`
+	InclusionAccessOnly *EntitlementInclusionAccessOnly `json:"inclusionAccessOnly,omitempty"`
+	InclusionAll        *EntitlementInclusionAll        `json:"inclusionAll,omitempty"`
+	InclusionCriteria   *EntitlementInclusionCriteria   `json:"inclusionCriteria,omitempty"`
+	InclusionList       *EntitlementInclusionList       `json:"inclusionList,omitempty"`
+	InclusionListCel    *EntitlementInclusionListCel    `json:"inclusionListCel,omitempty"`
 	// The useSubjectUser field.
 	// This field is part of the `user` oneof.
 	// See the documentation for `c1.api.automations.v1.CreateRevokeTasksV2` for more details.
@@ -46,70 +38,71 @@ type CreateRevokeTasksV2 struct {
 	// The userIdCel field.
 	// This field is part of the `user` oneof.
 	// See the documentation for `c1.api.automations.v1.CreateRevokeTasksV2` for more details.
-	UserIDCel *string `json:"userIdCel,omitempty"`
+	UserIDCel *string  `json:"userIdCel,omitempty"`
+	UserRef   *UserRef `json:"userRef,omitempty"`
 }
 
-func (c *CreateRevokeTasksV2) GetEntitlementExclusionCriteria() *EntitlementExclusionCriteria {
+func (c *CreateRevokeTasksV2) GetExclusionCriteria() *EntitlementExclusionCriteria {
 	if c == nil {
 		return nil
 	}
-	return c.EntitlementExclusionCriteria
+	return c.ExclusionCriteria
 }
 
-func (c *CreateRevokeTasksV2) GetEntitlementExclusionList() *EntitlementExclusionList {
+func (c *CreateRevokeTasksV2) GetExclusionList() *EntitlementExclusionList {
 	if c == nil {
 		return nil
 	}
-	return c.EntitlementExclusionList
+	return c.ExclusionList
 }
 
-func (c *CreateRevokeTasksV2) GetEntitlementExclusionListCel() *EntitlementExclusionListCel {
+func (c *CreateRevokeTasksV2) GetExclusionListCel() *EntitlementExclusionListCel {
 	if c == nil {
 		return nil
 	}
-	return c.EntitlementExclusionListCel
+	return c.ExclusionListCel
 }
 
-func (c *CreateRevokeTasksV2) GetEntitlementExclusionNone() *EntitlementExclusionNone {
+func (c *CreateRevokeTasksV2) GetExclusionNone() *EntitlementExclusionNone {
 	if c == nil {
 		return nil
 	}
-	return c.EntitlementExclusionNone
+	return c.ExclusionNone
 }
 
-func (c *CreateRevokeTasksV2) GetEntitlementInclusionAll() *EntitlementInclusionAll {
+func (c *CreateRevokeTasksV2) GetInclusionAccessOnly() *EntitlementInclusionAccessOnly {
 	if c == nil {
 		return nil
 	}
-	return c.EntitlementInclusionAll
+	return c.InclusionAccessOnly
 }
 
-func (c *CreateRevokeTasksV2) GetEntitlementInclusionCriteria() *EntitlementInclusionCriteria {
+func (c *CreateRevokeTasksV2) GetInclusionAll() *EntitlementInclusionAll {
 	if c == nil {
 		return nil
 	}
-	return c.EntitlementInclusionCriteria
+	return c.InclusionAll
 }
 
-func (c *CreateRevokeTasksV2) GetEntitlementInclusionList() *EntitlementInclusionList {
+func (c *CreateRevokeTasksV2) GetInclusionCriteria() *EntitlementInclusionCriteria {
 	if c == nil {
 		return nil
 	}
-	return c.EntitlementInclusionList
+	return c.InclusionCriteria
 }
 
-func (c *CreateRevokeTasksV2) GetEntitlementInclusionListCel() *EntitlementInclusionListCel {
+func (c *CreateRevokeTasksV2) GetInclusionList() *EntitlementInclusionList {
 	if c == nil {
 		return nil
 	}
-	return c.EntitlementInclusionListCel
+	return c.InclusionList
 }
 
-func (c *CreateRevokeTasksV2) GetUserRef() *UserRef {
+func (c *CreateRevokeTasksV2) GetInclusionListCel() *EntitlementInclusionListCel {
 	if c == nil {
 		return nil
 	}
-	return c.UserRef
+	return c.InclusionListCel
 }
 
 func (c *CreateRevokeTasksV2) GetUseSubjectUser() *bool {
@@ -124,6 +117,13 @@ func (c *CreateRevokeTasksV2) GetUserIDCel() *string {
 		return nil
 	}
 	return c.UserIDCel
+}
+
+func (c *CreateRevokeTasksV2) GetUserRef() *UserRef {
+	if c == nil {
+		return nil
+	}
+	return c.UserRef
 }
 
 // #region class-body-createrevoketasksv2

@@ -4,17 +4,9 @@ package shared
 
 // FormStringMapField - The StringMapField message.
 type FormStringMapField struct {
-	// The StringMapRules message.
-	StringMapRules *StringMapRules `json:"rules,omitempty"`
 	// The defaultValue field.
 	DefaultValue map[string]string `json:"defaultValue,omitempty"`
-}
-
-func (f *FormStringMapField) GetStringMapRules() *StringMapRules {
-	if f == nil {
-		return nil
-	}
-	return f.StringMapRules
+	Rules        *StringMapRules   `json:"rules,omitempty"`
 }
 
 func (f *FormStringMapField) GetDefaultValue() map[string]string {
@@ -22,4 +14,11 @@ func (f *FormStringMapField) GetDefaultValue() map[string]string {
 		return nil
 	}
 	return f.DefaultValue
+}
+
+func (f *FormStringMapField) GetRules() *StringMapRules {
+	if f == nil {
+		return nil
+	}
+	return f.Rules
 }

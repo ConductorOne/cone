@@ -4,16 +4,8 @@ package shared
 
 // The TaskActionsServiceUpdateRequestDataRequest object lets you submit form data for a task that is in a form policy step.
 type TaskActionsServiceUpdateRequestDataRequest struct {
-	// The task expand mask is an array of strings that specifes the related objects the requester wishes to have returned when making a request where the expand mask is part of the input. Use '*' to view all possible responses.
-	TaskExpandMask *TaskExpandMask `json:"expandMask,omitempty"`
-	Data           map[string]any  `json:"data,omitempty"`
-}
-
-func (t *TaskActionsServiceUpdateRequestDataRequest) GetTaskExpandMask() *TaskExpandMask {
-	if t == nil {
-		return nil
-	}
-	return t.TaskExpandMask
+	Data       map[string]any  `json:"data,omitempty"`
+	ExpandMask *TaskExpandMask `json:"expandMask,omitempty"`
 }
 
 func (t *TaskActionsServiceUpdateRequestDataRequest) GetData() map[string]any {
@@ -21,4 +13,11 @@ func (t *TaskActionsServiceUpdateRequestDataRequest) GetData() map[string]any {
 		return nil
 	}
 	return t.Data
+}
+
+func (t *TaskActionsServiceUpdateRequestDataRequest) GetExpandMask() *TaskExpandMask {
+	if t == nil {
+		return nil
+	}
+	return t.ExpandMask
 }

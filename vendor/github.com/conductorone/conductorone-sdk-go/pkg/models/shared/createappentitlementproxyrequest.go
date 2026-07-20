@@ -4,13 +4,12 @@ package shared
 
 // CreateAppEntitlementProxyRequest - The request message for creating an entitlement proxy binding.
 type CreateAppEntitlementProxyRequest struct {
-	// The AppEntitlementProxyExpandMask message.
-	AppEntitlementProxyExpandMask *AppEntitlementProxyExpandMask `json:"expandMask,omitempty"`
+	ExpandMask *AppEntitlementProxyExpandMask `json:"expandMask,omitempty"`
 }
 
-func (c *CreateAppEntitlementProxyRequest) GetAppEntitlementProxyExpandMask() *AppEntitlementProxyExpandMask {
+func (c *CreateAppEntitlementProxyRequest) GetExpandMask() *AppEntitlementProxyExpandMask {
 	if c == nil {
 		return nil
 	}
-	return c.AppEntitlementProxyExpandMask
+	return c.ExpandMask
 }

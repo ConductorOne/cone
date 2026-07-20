@@ -8,31 +8,15 @@ package shared
 //   - groupAuthzVault
 //   - magicVault
 type VaultInput struct {
-	// GroupAuthzVault configures a vault that uses group-based authorization to control access to stored credentials.
-	GroupAuthzVault *GroupAuthzVault `json:"groupAuthzVault,omitempty"`
-	// MagicVault configures a vault that grants time-limited credential access via magic links.
-	MagicVault                   *MagicVault `json:"magicVault,omitempty"`
-	CredentialExpirationDuration *string     `json:"credentialExpirationDuration,omitempty"`
+	CredentialExpirationDuration *string `json:"credentialExpirationDuration,omitempty"`
 	// A free-text description of the vault's purpose or configuration.
 	Description *string `json:"description,omitempty"`
 	// The human-readable name of the vault.
-	DisplayName *string `json:"displayName,omitempty"`
+	DisplayName     *string          `json:"displayName,omitempty"`
+	GroupAuthzVault *GroupAuthzVault `json:"groupAuthzVault,omitempty"`
 	// The unique identifier of the vault.
-	ID *string `json:"id,omitempty"`
-}
-
-func (v *VaultInput) GetGroupAuthzVault() *GroupAuthzVault {
-	if v == nil {
-		return nil
-	}
-	return v.GroupAuthzVault
-}
-
-func (v *VaultInput) GetMagicVault() *MagicVault {
-	if v == nil {
-		return nil
-	}
-	return v.MagicVault
+	ID         *string     `json:"id,omitempty"`
+	MagicVault *MagicVault `json:"magicVault,omitempty"`
 }
 
 func (v *VaultInput) GetCredentialExpirationDuration() *string {
@@ -56,9 +40,23 @@ func (v *VaultInput) GetDisplayName() *string {
 	return v.DisplayName
 }
 
+func (v *VaultInput) GetGroupAuthzVault() *GroupAuthzVault {
+	if v == nil {
+		return nil
+	}
+	return v.GroupAuthzVault
+}
+
 func (v *VaultInput) GetID() *string {
 	if v == nil {
 		return nil
 	}
 	return v.ID
+}
+
+func (v *VaultInput) GetMagicVault() *MagicVault {
+	if v == nil {
+		return nil
+	}
+	return v.MagicVault
 }

@@ -4,25 +4,11 @@ package shared
 
 // The ServicePrincipalServiceListBindingsRequest message.
 type ServicePrincipalServiceListBindingsRequest struct {
-	// ServicePrincipalBindingSubject identifies the entity that is bound to a
-	//  service principal. Open-ended oneof so future subject kinds (workflows,
-	//  connectors, etc.) can be added without changing the RPC shape.
-	//
-	// This message contains a oneof named kind. Only a single field of the following list may be set at a time:
-	//   - functionId
-	//
-	ServicePrincipalBindingSubject *ServicePrincipalBindingSubject `json:"subject,omitempty"`
 	// The pageSize field.
 	PageSize *int `json:"pageSize,omitempty"`
 	// The pageToken field.
-	PageToken *string `json:"pageToken,omitempty"`
-}
-
-func (s *ServicePrincipalServiceListBindingsRequest) GetServicePrincipalBindingSubject() *ServicePrincipalBindingSubject {
-	if s == nil {
-		return nil
-	}
-	return s.ServicePrincipalBindingSubject
+	PageToken *string                         `json:"pageToken,omitempty"`
+	Subject   *ServicePrincipalBindingSubject `json:"subject,omitempty"`
 }
 
 func (s *ServicePrincipalServiceListBindingsRequest) GetPageSize() *int {
@@ -37,4 +23,11 @@ func (s *ServicePrincipalServiceListBindingsRequest) GetPageToken() *string {
 		return nil
 	}
 	return s.PageToken
+}
+
+func (s *ServicePrincipalServiceListBindingsRequest) GetSubject() *ServicePrincipalBindingSubject {
+	if s == nil {
+		return nil
+	}
+	return s.Subject
 }

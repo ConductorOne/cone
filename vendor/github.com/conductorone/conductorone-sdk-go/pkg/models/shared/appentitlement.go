@@ -41,34 +41,17 @@ func (e *Purpose) IsExact() bool {
 //   - durationUnset
 //   - durationGrant
 type AppEntitlement struct {
-	// ProvisionPolicy is a oneOf that indicates how a provision step should be processed.
-	//
-	// This message contains a oneof named typ. Only a single field of the following list may be set at a time:
-	//   - connector
-	//   - manual
-	//   - delegated
-	//   - webhook
-	//   - multiStep
-	//   - externalTicket
-	//   - unconfigured
-	//   - action
-	//
-	ProvisionPolicy *ProvisionPolicy `json:"deprovisionerPolicy,omitempty"`
-	// ProvisionPolicy is a oneOf that indicates how a provision step should be processed.
-	//
-	// This message contains a oneof named typ. Only a single field of the following list may be set at a time:
-	//   - connector
-	//   - manual
-	//   - delegated
-	//   - webhook
-	//   - multiStep
-	//   - externalTicket
-	//   - unconfigured
-	//   - action
-	//
-	ProvisionPolicy1 *ProvisionPolicy `json:"provisionerPolicy,omitempty"`
 	// The alias of the app entitlement used by Cone. Also exact-match queryable.
 	Alias *string `json:"alias,omitempty"`
+	// Bounded key/value metadata bag for IaC marking and customer tags.
+	//  See .rfcs/object-annotations.md §2. Limits: ≤16 entries; keys 1–128
+	//  chars matching ^[A-Za-z][A-Za-z0-9._/-]{0,127}$; values 0–256 chars
+	//  URL-safe ASCII; total serialized ≤ 4096 bytes. Keys matching ^c1/
+	//  are reserved.
+	//
+	//  Well-known keys: `managed_by`, `iac_workspace`,
+	//  `iac_resource_address`, `iac_tool_version`.
+	Annotations map[string]string `json:"annotations,omitempty"`
 	// The ID of the app that is associated with the app entitlement.
 	AppID *string `json:"appId,omitempty"`
 	// The ID of the app resource that is associated with the app entitlement
@@ -81,8 +64,9 @@ type AppEntitlement struct {
 	ComplianceFrameworkValueIds []string   `json:"complianceFrameworkValueIds,omitempty"`
 	CreatedAt                   *time.Time `json:"createdAt,omitempty"`
 	// Flag to indicate if app-level access request defaults have been applied to the entitlement
-	DefaultValuesApplied *bool      `json:"defaultValuesApplied,omitempty"`
-	DeletedAt            *time.Time `json:"deletedAt,omitempty"`
+	DefaultValuesApplied *bool            `json:"defaultValuesApplied,omitempty"`
+	DeletedAt            *time.Time       `json:"deletedAt,omitempty"`
+	DeprovisionerPolicy  *ProvisionPolicy `json:"deprovisionerPolicy,omitempty"`
 	// The description of the app entitlement.
 	Description *string `json:"description,omitempty"`
 	// The display name of the app entitlement.
@@ -109,7 +93,8 @@ type AppEntitlement struct {
 	// An identifier used to match this entitlement to a connector-synced entitlement during sync.
 	MatchBatonID *string `json:"matchBatonId,omitempty"`
 	// Flag to indicate if the app-level access request settings have been overridden for the entitlement
-	OverrideAccessRequestsDefaults *bool `json:"overrideAccessRequestsDefaults,omitempty"`
+	OverrideAccessRequestsDefaults *bool            `json:"overrideAccessRequestsDefaults,omitempty"`
+	ProvisionerPolicy              *ProvisionPolicy `json:"provisionerPolicy,omitempty"`
 	// The purpose of this entitlement (e.g., assignment, permission, ownership).
 	Purpose *Purpose `json:"purpose,omitempty"`
 	// The ID of the request schema associated with this app entitlement.
@@ -139,25 +124,18 @@ func (a *AppEntitlement) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (a *AppEntitlement) GetProvisionPolicy() *ProvisionPolicy {
-	if a == nil {
-		return nil
-	}
-	return a.ProvisionPolicy
-}
-
-func (a *AppEntitlement) GetProvisionPolicy1() *ProvisionPolicy {
-	if a == nil {
-		return nil
-	}
-	return a.ProvisionPolicy1
-}
-
 func (a *AppEntitlement) GetAlias() *string {
 	if a == nil {
 		return nil
 	}
 	return a.Alias
+}
+
+func (a *AppEntitlement) GetAnnotations() map[string]string {
+	if a == nil {
+		return nil
+	}
+	return a.Annotations
 }
 
 func (a *AppEntitlement) GetAppID() *string {
@@ -214,6 +192,13 @@ func (a *AppEntitlement) GetDeletedAt() *time.Time {
 		return nil
 	}
 	return a.DeletedAt
+}
+
+func (a *AppEntitlement) GetDeprovisionerPolicy() *ProvisionPolicy {
+	if a == nil {
+		return nil
+	}
+	return a.DeprovisionerPolicy
 }
 
 func (a *AppEntitlement) GetDescription() *string {
@@ -314,6 +299,13 @@ func (a *AppEntitlement) GetOverrideAccessRequestsDefaults() *bool {
 	return a.OverrideAccessRequestsDefaults
 }
 
+func (a *AppEntitlement) GetProvisionerPolicy() *ProvisionPolicy {
+	if a == nil {
+		return nil
+	}
+	return a.ProvisionerPolicy
+}
+
 func (a *AppEntitlement) GetPurpose() *Purpose {
 	if a == nil {
 		return nil
@@ -383,34 +375,17 @@ func (a *AppEntitlement) GetUserEditedMask() *string {
 //   - durationUnset
 //   - durationGrant
 type AppEntitlementInput struct {
-	// ProvisionPolicy is a oneOf that indicates how a provision step should be processed.
-	//
-	// This message contains a oneof named typ. Only a single field of the following list may be set at a time:
-	//   - connector
-	//   - manual
-	//   - delegated
-	//   - webhook
-	//   - multiStep
-	//   - externalTicket
-	//   - unconfigured
-	//   - action
-	//
-	ProvisionPolicy *ProvisionPolicyInput `json:"deprovisionerPolicy,omitempty"`
-	// ProvisionPolicy is a oneOf that indicates how a provision step should be processed.
-	//
-	// This message contains a oneof named typ. Only a single field of the following list may be set at a time:
-	//   - connector
-	//   - manual
-	//   - delegated
-	//   - webhook
-	//   - multiStep
-	//   - externalTicket
-	//   - unconfigured
-	//   - action
-	//
-	ProvisionPolicy1 *ProvisionPolicyInput `json:"provisionerPolicy,omitempty"`
 	// The alias of the app entitlement used by Cone. Also exact-match queryable.
 	Alias *string `json:"alias,omitempty"`
+	// Bounded key/value metadata bag for IaC marking and customer tags.
+	//  See .rfcs/object-annotations.md §2. Limits: ≤16 entries; keys 1–128
+	//  chars matching ^[A-Za-z][A-Za-z0-9._/-]{0,127}$; values 0–256 chars
+	//  URL-safe ASCII; total serialized ≤ 4096 bytes. Keys matching ^c1/
+	//  are reserved.
+	//
+	//  Well-known keys: `managed_by`, `iac_workspace`,
+	//  `iac_resource_address`, `iac_tool_version`.
+	Annotations map[string]string `json:"annotations,omitempty"`
 	// The ID of the app that is associated with the app entitlement.
 	AppID *string `json:"appId,omitempty"`
 	// The ID of the app resource that is associated with the app entitlement
@@ -422,7 +397,8 @@ type AppEntitlementInput struct {
 	// The IDs of different compliance frameworks associated with this app entitlement ex (SOX, HIPAA, PCI, etc.)
 	ComplianceFrameworkValueIds []string `json:"complianceFrameworkValueIds,omitempty"`
 	// Flag to indicate if app-level access request defaults have been applied to the entitlement
-	DefaultValuesApplied *bool `json:"defaultValuesApplied,omitempty"`
+	DefaultValuesApplied *bool                 `json:"defaultValuesApplied,omitempty"`
+	DeprovisionerPolicy  *ProvisionPolicyInput `json:"deprovisionerPolicy,omitempty"`
 	// The description of the app entitlement.
 	Description *string `json:"description,omitempty"`
 	// The display name of the app entitlement.
@@ -440,7 +416,8 @@ type AppEntitlementInput struct {
 	// An identifier used to match this entitlement to a connector-synced entitlement during sync.
 	MatchBatonID *string `json:"matchBatonId,omitempty"`
 	// Flag to indicate if the app-level access request settings have been overridden for the entitlement
-	OverrideAccessRequestsDefaults *bool `json:"overrideAccessRequestsDefaults,omitempty"`
+	OverrideAccessRequestsDefaults *bool                 `json:"overrideAccessRequestsDefaults,omitempty"`
+	ProvisionerPolicy              *ProvisionPolicyInput `json:"provisionerPolicy,omitempty"`
 	// The purpose of this entitlement (e.g., assignment, permission, ownership).
 	Purpose *Purpose `json:"purpose,omitempty"`
 	// The ID of the request schema associated with this app entitlement.
@@ -456,25 +433,18 @@ type AppEntitlementInput struct {
 	UserEditedMask     *string           `json:"userEditedMask,omitempty"`
 }
 
-func (a *AppEntitlementInput) GetProvisionPolicy() *ProvisionPolicyInput {
-	if a == nil {
-		return nil
-	}
-	return a.ProvisionPolicy
-}
-
-func (a *AppEntitlementInput) GetProvisionPolicy1() *ProvisionPolicyInput {
-	if a == nil {
-		return nil
-	}
-	return a.ProvisionPolicy1
-}
-
 func (a *AppEntitlementInput) GetAlias() *string {
 	if a == nil {
 		return nil
 	}
 	return a.Alias
+}
+
+func (a *AppEntitlementInput) GetAnnotations() map[string]string {
+	if a == nil {
+		return nil
+	}
+	return a.Annotations
 }
 
 func (a *AppEntitlementInput) GetAppID() *string {
@@ -517,6 +487,13 @@ func (a *AppEntitlementInput) GetDefaultValuesApplied() *bool {
 		return nil
 	}
 	return a.DefaultValuesApplied
+}
+
+func (a *AppEntitlementInput) GetDeprovisionerPolicy() *ProvisionPolicyInput {
+	if a == nil {
+		return nil
+	}
+	return a.DeprovisionerPolicy
 }
 
 func (a *AppEntitlementInput) GetDescription() *string {
@@ -587,6 +564,13 @@ func (a *AppEntitlementInput) GetOverrideAccessRequestsDefaults() *bool {
 		return nil
 	}
 	return a.OverrideAccessRequestsDefaults
+}
+
+func (a *AppEntitlementInput) GetProvisionerPolicy() *ProvisionPolicyInput {
+	if a == nil {
+		return nil
+	}
+	return a.ProvisionerPolicy
 }
 
 func (a *AppEntitlementInput) GetPurpose() *Purpose {

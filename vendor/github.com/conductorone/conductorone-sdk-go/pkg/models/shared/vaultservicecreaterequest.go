@@ -8,30 +8,14 @@ package shared
 //   - groupAuthzVault
 //   - magicVault
 type VaultServiceCreateRequest struct {
-	// GroupAuthzVault configures a vault that uses group-based authorization to control access to stored credentials.
-	GroupAuthzVault *GroupAuthzVault `json:"groupAuthzVault,omitempty"`
-	// MagicVault configures a vault that grants time-limited credential access via magic links.
-	MagicVault *MagicVault `json:"magicVault,omitempty"`
 	// A free-text description of the vault's purpose or configuration.
 	Description *string `json:"description,omitempty"`
 	// The human-readable name for the new vault.
-	DisplayName string `json:"displayName"`
+	DisplayName     string           `json:"displayName"`
+	GroupAuthzVault *GroupAuthzVault `json:"groupAuthzVault,omitempty"`
+	MagicVault      *MagicVault      `json:"magicVault,omitempty"`
 	// The IDs of users to assign as owners of this vault.
 	OwnerIds []string `json:"ownerIds,omitempty"`
-}
-
-func (v *VaultServiceCreateRequest) GetGroupAuthzVault() *GroupAuthzVault {
-	if v == nil {
-		return nil
-	}
-	return v.GroupAuthzVault
-}
-
-func (v *VaultServiceCreateRequest) GetMagicVault() *MagicVault {
-	if v == nil {
-		return nil
-	}
-	return v.MagicVault
 }
 
 func (v *VaultServiceCreateRequest) GetDescription() *string {
@@ -46,6 +30,20 @@ func (v *VaultServiceCreateRequest) GetDisplayName() string {
 		return ""
 	}
 	return v.DisplayName
+}
+
+func (v *VaultServiceCreateRequest) GetGroupAuthzVault() *GroupAuthzVault {
+	if v == nil {
+		return nil
+	}
+	return v.GroupAuthzVault
+}
+
+func (v *VaultServiceCreateRequest) GetMagicVault() *MagicVault {
+	if v == nil {
+		return nil
+	}
+	return v.MagicVault
 }
 
 func (v *VaultServiceCreateRequest) GetOwnerIds() []string {

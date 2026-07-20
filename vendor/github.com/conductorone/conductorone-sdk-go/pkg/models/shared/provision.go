@@ -4,23 +4,17 @@ package shared
 
 // Provision - The provision step references a provision policy for this step.
 type Provision struct {
-	// ProvisionPolicy is a oneOf that indicates how a provision step should be processed.
-	//
-	// This message contains a oneof named typ. Only a single field of the following list may be set at a time:
-	//   - connector
-	//   - manual
-	//   - delegated
-	//   - webhook
-	//   - multiStep
-	//   - externalTicket
-	//   - unconfigured
-	//   - action
-	//
-	ProvisionPolicy *ProvisionPolicyInput `json:"provisionPolicy,omitempty"`
-	// ProvisionTarget indicates the specific app, app entitlement, and if known, the app user and grant duration of this provision step
-	ProvisionTarget *ProvisionTarget `json:"provisionTarget,omitempty"`
 	// A field indicating whether this step is assigned.
-	Assigned *bool `json:"assigned,omitempty"`
+	Assigned        *bool                 `json:"assigned,omitempty"`
+	ProvisionPolicy *ProvisionPolicyInput `json:"provisionPolicy,omitempty"`
+	ProvisionTarget *ProvisionTarget      `json:"provisionTarget,omitempty"`
+}
+
+func (p *Provision) GetAssigned() *bool {
+	if p == nil {
+		return nil
+	}
+	return p.Assigned
 }
 
 func (p *Provision) GetProvisionPolicy() *ProvisionPolicyInput {
@@ -35,11 +29,4 @@ func (p *Provision) GetProvisionTarget() *ProvisionTarget {
 		return nil
 	}
 	return p.ProvisionTarget
-}
-
-func (p *Provision) GetAssigned() *bool {
-	if p == nil {
-		return nil
-	}
-	return p.Assigned
 }

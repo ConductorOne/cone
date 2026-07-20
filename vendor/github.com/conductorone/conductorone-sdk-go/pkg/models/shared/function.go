@@ -49,6 +49,12 @@ type Function struct {
 	IsDraft *bool `json:"isDraft,omitempty"`
 	// The outboundNetworkAllowlist field.
 	OutboundNetworkAllowlist []string `json:"outboundNetworkAllowlist,omitempty"`
+	// Number of pre-warmed Lambda instances. 0 (default) leaves the function
+	//  cold-started on first invoke. > 0 reserves and provisions that many
+	//  execution environments via AWS Lambda provisioned concurrency.
+	//  Ignored for FUNCTION_TYPE_CODE_MODE functions — that value is driven
+	//  by AIGovernanceSettings.code_mode_concurrency.
+	ProvisionedConcurrency *int `json:"provisionedConcurrency,omitempty"`
 	// The publishedCommitId field.
 	PublishedCommitID *string `json:"publishedCommitId,omitempty"`
 	// Scoped role IDs define the permissions granted to this function when calling
@@ -144,6 +150,13 @@ func (f *Function) GetOutboundNetworkAllowlist() []string {
 	return f.OutboundNetworkAllowlist
 }
 
+func (f *Function) GetProvisionedConcurrency() *int {
+	if f == nil {
+		return nil
+	}
+	return f.ProvisionedConcurrency
+}
+
 func (f *Function) GetPublishedCommitID() *string {
 	if f == nil {
 		return nil
@@ -195,6 +208,12 @@ type FunctionInput struct {
 	IsDraft *bool `json:"isDraft,omitempty"`
 	// The outboundNetworkAllowlist field.
 	OutboundNetworkAllowlist []string `json:"outboundNetworkAllowlist,omitempty"`
+	// Number of pre-warmed Lambda instances. 0 (default) leaves the function
+	//  cold-started on first invoke. > 0 reserves and provisions that many
+	//  execution environments via AWS Lambda provisioned concurrency.
+	//  Ignored for FUNCTION_TYPE_CODE_MODE functions — that value is driven
+	//  by AIGovernanceSettings.code_mode_concurrency.
+	ProvisionedConcurrency *int `json:"provisionedConcurrency,omitempty"`
 	// The publishedCommitId field.
 	PublishedCommitID *string `json:"publishedCommitId,omitempty"`
 	// Scoped role IDs define the permissions granted to this function when calling
@@ -255,6 +274,13 @@ func (f *FunctionInput) GetOutboundNetworkAllowlist() []string {
 		return nil
 	}
 	return f.OutboundNetworkAllowlist
+}
+
+func (f *FunctionInput) GetProvisionedConcurrency() *int {
+	if f == nil {
+		return nil
+	}
+	return f.ProvisionedConcurrency
 }
 
 func (f *FunctionInput) GetPublishedCommitID() *string {

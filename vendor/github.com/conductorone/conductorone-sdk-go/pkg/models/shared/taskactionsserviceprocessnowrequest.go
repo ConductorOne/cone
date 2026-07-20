@@ -4,13 +4,12 @@ package shared
 
 // The TaskActionsServiceProcessNowRequest object lets you trigger processing of a task immediately.
 type TaskActionsServiceProcessNowRequest struct {
-	// The task expand mask is an array of strings that specifes the related objects the requester wishes to have returned when making a request where the expand mask is part of the input. Use '*' to view all possible responses.
-	TaskExpandMask *TaskExpandMask `json:"expandMask,omitempty"`
+	ExpandMask *TaskExpandMask `json:"expandMask,omitempty"`
 }
 
-func (t *TaskActionsServiceProcessNowRequest) GetTaskExpandMask() *TaskExpandMask {
+func (t *TaskActionsServiceProcessNowRequest) GetExpandMask() *TaskExpandMask {
 	if t == nil {
 		return nil
 	}
-	return t.TaskExpandMask
+	return t.ExpandMask
 }

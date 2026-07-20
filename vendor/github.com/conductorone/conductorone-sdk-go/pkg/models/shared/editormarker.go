@@ -2,23 +2,23 @@
 
 package shared
 
-// Severity - The severity field.
-type Severity string
+// EditorMarkerSeverity - The severity field.
+type EditorMarkerSeverity string
 
 const (
-	SeverityUnknown Severity = "UNKNOWN"
-	SeverityHint    Severity = "HINT"
-	SeverityInfo    Severity = "INFO"
-	SeverityWarning Severity = "WARNING"
-	SeverityError   Severity = "ERROR"
+	EditorMarkerSeverityUnknown EditorMarkerSeverity = "UNKNOWN"
+	EditorMarkerSeverityHint    EditorMarkerSeverity = "HINT"
+	EditorMarkerSeverityInfo    EditorMarkerSeverity = "INFO"
+	EditorMarkerSeverityWarning EditorMarkerSeverity = "WARNING"
+	EditorMarkerSeverityError   EditorMarkerSeverity = "ERROR"
 )
 
-func (e Severity) ToPointer() *Severity {
+func (e EditorMarkerSeverity) ToPointer() *EditorMarkerSeverity {
 	return &e
 }
 
 // IsExact returns true if the value matches a known enum value, false otherwise.
-func (e *Severity) IsExact() bool {
+func (e *EditorMarkerSeverity) IsExact() bool {
 	if e != nil {
 		switch *e {
 		case "UNKNOWN", "HINT", "INFO", "WARNING", "ERROR":
@@ -37,7 +37,7 @@ type EditorMarker struct {
 	// The message field.
 	Message *string `json:"message,omitempty"`
 	// The severity field.
-	Severity *Severity `json:"severity,omitempty"`
+	Severity *EditorMarkerSeverity `json:"severity,omitempty"`
 	// The startColumn field.
 	StartColumn *int `json:"startColumn,omitempty"`
 	// The startLineNumber field.
@@ -65,7 +65,7 @@ func (e *EditorMarker) GetMessage() *string {
 	return e.Message
 }
 
-func (e *EditorMarker) GetSeverity() *Severity {
+func (e *EditorMarker) GetSeverity() *EditorMarkerSeverity {
 	if e == nil {
 		return nil
 	}

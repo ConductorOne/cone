@@ -119,6 +119,13 @@ func main() {
 
 * [Test](docs/sdks/accountprovisionpolicytest/README.md#test) - Test
 
+### [AIGovernanceSettings](docs/sdks/aigovernancesettings/README.md)
+
+* [Get](docs/sdks/aigovernancesettings/README.md#get) - Get
+* [GetTenantDefaults](docs/sdks/aigovernancesettings/README.md#gettenantdefaults) - Get Tenant Defaults
+* [ListHistory](docs/sdks/aigovernancesettings/README.md#listhistory) - List History
+* [Update](docs/sdks/aigovernancesettings/README.md#update) - Update
+
 ### [AppAccessRequestsDefaults](docs/sdks/appaccessrequestsdefaults/README.md)
 
 * [CancelAppAccessRequestsDefaults](docs/sdks/appaccessrequestsdefaults/README.md#cancelappaccessrequestsdefaults) - Cancel App Access Requests Defaults
@@ -142,9 +149,24 @@ func main() {
 
 ### [AppEntitlementOwnersV2](docs/sdks/appentitlementownersv2/README.md)
 
+* [CreateEntitlementOwner](docs/sdks/appentitlementownersv2/README.md#createentitlementowner) - Create Entitlement Owner
+* [CreateUserOwner](docs/sdks/appentitlementownersv2/README.md#createuserowner) - Create User Owner
+* [DeleteEntitlementOwner](docs/sdks/appentitlementownersv2/README.md#deleteentitlementowner) - Delete Entitlement Owner
+* [DeleteUserOwner](docs/sdks/appentitlementownersv2/README.md#deleteuserowner) - Delete User Owner
+* [GetEntitlementOwner](docs/sdks/appentitlementownersv2/README.md#getentitlementowner) - Get Entitlement Owner
+* [GetUserOwner](docs/sdks/appentitlementownersv2/README.md#getuserowner) - Get User Owner
 * [SearchEntitlementOwners](docs/sdks/appentitlementownersv2/README.md#searchentitlementowners) - Search Entitlement Owners
 * [SearchUserOwners](docs/sdks/appentitlementownersv2/README.md#searchuserowners) - Search User Owners
 * [Set](docs/sdks/appentitlementownersv2/README.md#set) - Set
+
+### [AppEntitlementRoutingRule](docs/sdks/appentitlementroutingrule/README.md)
+
+* [CreateAppEntitlementRoutingRule](docs/sdks/appentitlementroutingrule/README.md#createappentitlementroutingrule) - Create App Entitlement Routing Rule
+* [DeleteAppEntitlementRoutingRule](docs/sdks/appentitlementroutingrule/README.md#deleteappentitlementroutingrule) - Delete App Entitlement Routing Rule
+* [GetAppEntitlementRoutingRule](docs/sdks/appentitlementroutingrule/README.md#getappentitlementroutingrule) - Get App Entitlement Routing Rule
+* [ListAppEntitlementRoutingRules](docs/sdks/appentitlementroutingrule/README.md#listappentitlementroutingrules) - List App Entitlement Routing Rules
+* [ReorderAppEntitlementRoutingRules](docs/sdks/appentitlementroutingrule/README.md#reorderappentitlementroutingrules) - Reorder App Entitlement Routing Rules
+* [UpdateAppEntitlementRoutingRule](docs/sdks/appentitlementroutingrule/README.md#updateappentitlementroutingrule) - Update App Entitlement Routing Rule
 
 ### [AppEntitlements](docs/sdks/appentitlements/README.md)
 
@@ -168,10 +190,12 @@ func main() {
 
 ### [AppEntitlementSearch](docs/sdks/appentitlementsearch/README.md)
 
+* [CountGrantsForUserByApp](docs/sdks/appentitlementsearch/README.md#countgrantsforuserbyapp) - Count Grants For User By App
 * [Search](docs/sdks/appentitlementsearch/README.md#search) - Search
 * [SearchAppEntitlementsForAppUser](docs/sdks/appentitlementsearch/README.md#searchappentitlementsforappuser) - Search App Entitlements For App User
 * [SearchAppEntitlementsWithExpired](docs/sdks/appentitlementsearch/README.md#searchappentitlementswithexpired) - Search App Entitlements With Expired
 * [SearchGrants](docs/sdks/appentitlementsearch/README.md#searchgrants) - Search Grants
+* [SearchGraph](docs/sdks/appentitlementsearch/README.md#searchgraph) - Search Graph
 
 ### [AppEntitlementsProxy](docs/sdks/appentitlementsproxy/README.md)
 
@@ -233,6 +257,18 @@ func main() {
 * [Remove](docs/sdks/appresourceowners/README.md#remove) - Remove
 * [Set](docs/sdks/appresourceowners/README.md#set) - Set
 
+### [AppResourceOwnersV2](docs/sdks/appresourceownersv2/README.md)
+
+* [CreateEntitlementOwner](docs/sdks/appresourceownersv2/README.md#createentitlementowner) - Create Entitlement Owner
+* [CreateUserOwner](docs/sdks/appresourceownersv2/README.md#createuserowner) - Create User Owner
+* [DeleteEntitlementOwner](docs/sdks/appresourceownersv2/README.md#deleteentitlementowner) - Delete Entitlement Owner
+* [DeleteUserOwner](docs/sdks/appresourceownersv2/README.md#deleteuserowner) - Delete User Owner
+* [GetEntitlementOwner](docs/sdks/appresourceownersv2/README.md#getentitlementowner) - Get Entitlement Owner
+* [GetUserOwner](docs/sdks/appresourceownersv2/README.md#getuserowner) - Get User Owner
+* [SearchEntitlementOwners](docs/sdks/appresourceownersv2/README.md#searchentitlementowners) - Search Entitlement Owners
+* [SearchUserOwners](docs/sdks/appresourceownersv2/README.md#searchuserowners) - Search User Owners
+* [Set](docs/sdks/appresourceownersv2/README.md#set) - Set
+
 ### [AppResourceSearch](docs/sdks/appresourcesearch/README.md)
 
 * [SearchAppResourceTypes](docs/sdks/appresourcesearch/README.md#searchappresourcetypes) - Search App Resource Types
@@ -269,8 +305,19 @@ func main() {
 * [List](docs/sdks/appuser/README.md#list) - List
 * [ListAppUserCredentials](docs/sdks/appuser/README.md#listappusercredentials) - List App User Credentials
 * [ListAppUsersForUser](docs/sdks/appuser/README.md#listappusersforuser) - List App Users For User
+* [ListOwnedServiceAccounts](docs/sdks/appuser/README.md#listownedserviceaccounts) - List Owned Service Accounts
 * [Search](docs/sdks/appuser/README.md#search) - Search
 * [Update](docs/sdks/appuser/README.md#update) - Update
+
+### [AppUserOwnersV2](docs/sdks/appuserownersv2/README.md)
+
+* [CreateEntitlementOwner](docs/sdks/appuserownersv2/README.md#createentitlementowner) - Create Entitlement Owner
+* [CreateUserOwner](docs/sdks/appuserownersv2/README.md#createuserowner) - Create User Owner
+* [DeleteEntitlementOwner](docs/sdks/appuserownersv2/README.md#deleteentitlementowner) - Delete Entitlement Owner
+* [DeleteUserOwner](docs/sdks/appuserownersv2/README.md#deleteuserowner) - Delete User Owner
+* [SearchEntitlementOwners](docs/sdks/appuserownersv2/README.md#searchentitlementowners) - Search Entitlement Owners
+* [SearchUserOwners](docs/sdks/appuserownersv2/README.md#searchuserowners) - Search User Owners
+* [Set](docs/sdks/appuserownersv2/README.md#set) - Set
 
 ### [Attributes](docs/sdks/attributes/README.md)
 
@@ -350,12 +397,23 @@ func main() {
 * [UpdateDelegated](docs/sdks/connector/README.md#updatedelegated) - Update Delegated
 * [ValidateHTTPConnectorConfig](docs/sdks/connector/README.md#validatehttpconnectorconfig) - Validate Http Connector Config
 
+### [ConnectorAuthoringActivation](docs/sdks/connectorauthoringactivation/README.md)
+
+* [ActivateRevision](docs/sdks/connectorauthoringactivation/README.md#activaterevision) - Activate Revision
+* [RollbackRevision](docs/sdks/connectorauthoringactivation/README.md#rollbackrevision) - Rollback Revision
+
 ### [ConnectorCatalog](docs/sdks/connectorcatalog/README.md)
 
 * [ConfigurationSchema](docs/sdks/connectorcatalog/README.md#configurationschema) - Configuration Schema
 
 ### [ConnectorOwnersV2](docs/sdks/connectorownersv2/README.md)
 
+* [CreateEntitlementOwner](docs/sdks/connectorownersv2/README.md#createentitlementowner) - Create Entitlement Owner
+* [CreateUserOwner](docs/sdks/connectorownersv2/README.md#createuserowner) - Create User Owner
+* [DeleteEntitlementOwner](docs/sdks/connectorownersv2/README.md#deleteentitlementowner) - Delete Entitlement Owner
+* [DeleteUserOwner](docs/sdks/connectorownersv2/README.md#deleteuserowner) - Delete User Owner
+* [GetEntitlementOwner](docs/sdks/connectorownersv2/README.md#getentitlementowner) - Get Entitlement Owner
+* [GetUserOwner](docs/sdks/connectorownersv2/README.md#getuserowner) - Get User Owner
 * [SearchEntitlementOwners](docs/sdks/connectorownersv2/README.md#searchentitlementowners) - Search Entitlement Owners
 * [SearchUserOwners](docs/sdks/connectorownersv2/README.md#searchuserowners) - Search User Owners
 * [Set](docs/sdks/connectorownersv2/README.md#set) - Set
@@ -364,6 +422,28 @@ func main() {
 
 * [GetContacts](docs/sdks/contacts/README.md#getcontacts) - Get Contacts
 * [UpdateContacts](docs/sdks/contacts/README.md#updatecontacts) - Update Contacts
+
+### [CredentialInventoryPolicy](docs/sdks/credentialinventorypolicy/README.md)
+
+* [Create](docs/sdks/credentialinventorypolicy/README.md#create) - Create
+* [Delete](docs/sdks/credentialinventorypolicy/README.md#delete) - Delete
+* [Get](docs/sdks/credentialinventorypolicy/README.md#get) - Get
+* [List](docs/sdks/credentialinventorypolicy/README.md#list) - List
+* [Search](docs/sdks/credentialinventorypolicy/README.md#search) - Search
+* [Update](docs/sdks/credentialinventorypolicy/README.md#update) - Update
+
+### [Decoy](docs/sdks/decoy/README.md)
+
+* [Create](docs/sdks/decoy/README.md#create) - Create
+* [Delete](docs/sdks/decoy/README.md#delete) - Delete
+* [Get](docs/sdks/decoy/README.md#get) - Get
+* [List](docs/sdks/decoy/README.md#list) - List
+* [Rotate](docs/sdks/decoy/README.md#rotate) - Rotate
+* [Update](docs/sdks/decoy/README.md#update) - Update
+
+### [DecoySearch](docs/sdks/decoysearch/README.md)
+
+* [Search](docs/sdks/decoysearch/README.md#search) - Search
 
 ### [Directory](docs/sdks/directory/README.md)
 
@@ -394,9 +474,14 @@ func main() {
 
 * [BulkCreateFindingTasks](docs/sdks/finding/README.md#bulkcreatefindingtasks) - Bulk Create Finding Tasks
 * [BulkUpdateFindingState](docs/sdks/finding/README.md#bulkupdatefindingstate) - Bulk Update Finding State
+* [CreateFinding](docs/sdks/finding/README.md#createfinding) - Create Finding
 * [CreateFindingTask](docs/sdks/finding/README.md#createfindingtask) - Create Finding Task
 * [GetFinding](docs/sdks/finding/README.md#getfinding) - Get Finding
 * [UpdateFindingState](docs/sdks/finding/README.md#updatefindingstate) - Update Finding State
+
+### [FindingAudit](docs/sdks/findingaudit/README.md)
+
+* [Search](docs/sdks/findingaudit/README.md#search) - Search
 
 ### [FindingRoutingRule](docs/sdks/findingroutingrule/README.md)
 
@@ -409,6 +494,14 @@ func main() {
 ### [FindingSearch](docs/sdks/findingsearch/README.md)
 
 * [Search](docs/sdks/findingsearch/README.md#search) - Search
+
+### [FindingTransformationRule](docs/sdks/findingtransformationrule/README.md)
+
+* [CreateFindingTransformationRule](docs/sdks/findingtransformationrule/README.md#createfindingtransformationrule) - Create Finding Transformation Rule
+* [DeleteFindingTransformationRule](docs/sdks/findingtransformationrule/README.md#deletefindingtransformationrule) - Delete Finding Transformation Rule
+* [GetFindingTransformationRule](docs/sdks/findingtransformationrule/README.md#getfindingtransformationrule) - Get Finding Transformation Rule
+* [ListFindingTransformationRules](docs/sdks/findingtransformationrule/README.md#listfindingtransformationrules) - List Finding Transformation Rules
+* [UpdateFindingTransformationRule](docs/sdks/findingtransformationrule/README.md#updatefindingtransformationrule) - Update Finding Transformation Rule
 
 ### [Functions](docs/sdks/functions/README.md)
 
@@ -452,6 +545,11 @@ func main() {
 
 * [Search](docs/sdks/hookssearch/README.md#search) - Search
 
+### [IdentityPolicyTenantDefaults](docs/sdks/identitypolicytenantdefaults/README.md)
+
+* [Get](docs/sdks/identitypolicytenantdefaults/README.md#get) - Get
+* [Update](docs/sdks/identitypolicytenantdefaults/README.md#update) - Update
+
 ### [LocalDirectoryConfig](docs/sdks/localdirectoryconfig/README.md)
 
 * [Create](docs/sdks/localdirectoryconfig/README.md#create) - Create
@@ -466,6 +564,51 @@ func main() {
 * [Get](docs/sdks/localuserinvitation/README.md#get) - Get
 * [Revoke](docs/sdks/localuserinvitation/README.md#revoke) - Revoke
 * [Search](docs/sdks/localuserinvitation/README.md#search) - Search
+
+### [MCPAccessProfile](docs/sdks/mcpaccessprofile/README.md)
+
+* [Create](docs/sdks/mcpaccessprofile/README.md#create) - Create
+* [Delete](docs/sdks/mcpaccessprofile/README.md#delete) - Delete
+* [Get](docs/sdks/mcpaccessprofile/README.md#get) - Get
+* [GetByAppEntitlementID](docs/sdks/mcpaccessprofile/README.md#getbyappentitlementid) - Get By App Entitlement Id
+* [List](docs/sdks/mcpaccessprofile/README.md#list) - List
+* [ListRequestableConnectors](docs/sdks/mcpaccessprofile/README.md#listrequestableconnectors) - List Requestable Connectors
+* [SearchRequestableConnectors](docs/sdks/mcpaccessprofile/README.md#searchrequestableconnectors) - Search Requestable Connectors
+* [Update](docs/sdks/mcpaccessprofile/README.md#update) - Update
+
+### [MCPAccessProfileToolBinding](docs/sdks/mcpaccessprofiletoolbinding/README.md)
+
+* [CreateBindings](docs/sdks/mcpaccessprofiletoolbinding/README.md#createbindings) - Create Bindings
+* [DeleteBindings](docs/sdks/mcpaccessprofiletoolbinding/README.md#deletebindings) - Delete Bindings
+* [GetAccessProfilesForTools](docs/sdks/mcpaccessprofiletoolbinding/README.md#getaccessprofilesfortools) - Get Access Profiles For Tools
+* [List](docs/sdks/mcpaccessprofiletoolbinding/README.md#list) - List
+* [ListProfilesByToolHistory](docs/sdks/mcpaccessprofiletoolbinding/README.md#listprofilesbytoolhistory) - List Profiles By Tool History
+* [ListToolsByProfileHistory](docs/sdks/mcpaccessprofiletoolbinding/README.md#listtoolsbyprofilehistory) - List Tools By Profile History
+
+### [MCPServer](docs/sdks/mcpserver/README.md)
+
+* [Delete](docs/sdks/mcpserver/README.md#delete) - Delete
+* [DiscoverOIDCEndpoints](docs/sdks/mcpserver/README.md#discoveroidcendpoints) - Discover Oidc Endpoints
+* [Get](docs/sdks/mcpserver/README.md#get) - Get
+* [GetCatalog](docs/sdks/mcpserver/README.md#getcatalog) - Get Catalog
+* [List](docs/sdks/mcpserver/README.md#list) - List
+* [ListCatalog](docs/sdks/mcpserver/README.md#listcatalog) - List Catalog
+* [ListConnections](docs/sdks/mcpserver/README.md#listconnections) - List Connections
+* [Register](docs/sdks/mcpserver/README.md#register) - Register
+* [ResyncTools](docs/sdks/mcpserver/README.md#resynctools) - Resync Tools
+* [SearchWithToolCount](docs/sdks/mcpserver/README.md#searchwithtoolcount) - Search With Tool Count
+* [TestConnection](docs/sdks/mcpserver/README.md#testconnection) - Test Connection
+* [Update](docs/sdks/mcpserver/README.md#update) - Update
+* [UpdateCredentials](docs/sdks/mcpserver/README.md#updatecredentials) - Update Credentials
+
+### [MCPTool](docs/sdks/mcptool/README.md)
+
+* [Delete](docs/sdks/mcptool/README.md#delete) - Delete
+* [Get](docs/sdks/mcptool/README.md#get) - Get
+* [List](docs/sdks/mcptool/README.md#list) - List
+* [ListHistory](docs/sdks/mcptool/README.md#listhistory) - List History
+* [Search](docs/sdks/mcptool/README.md#search) - Search
+* [Update](docs/sdks/mcptool/README.md#update) - Update
 
 ### [OnboardingSettings](docs/sdks/onboardingsettings/README.md)
 
@@ -513,6 +656,15 @@ func main() {
 
 * [Search](docs/sdks/personalclientsearch/README.md#search) - NOTE: Searches personal clients for all users
 
+### [PersonalDevice](docs/sdks/personaldevice/README.md)
+
+* [GetDevice](docs/sdks/personaldevice/README.md#getdevice) - Get Device
+* [ListDeviceClients](docs/sdks/personaldevice/README.md#listdeviceclients) - List Device Clients
+* [RevokeDevice](docs/sdks/personaldevice/README.md#revokedevice) - Revoke Device
+* [RevokeDeviceClient](docs/sdks/personaldevice/README.md#revokedeviceclient) - Revoke Device Client
+* [Search](docs/sdks/personaldevice/README.md#search) - NOTE: Only shows devices for the current user.
+* [UpdateDevice](docs/sdks/personaldevice/README.md#updatedevice) - NOTE: Only updates devices owned by the current user.
+
 ### [Policies](docs/sdks/policies/README.md)
 
 * [Create](docs/sdks/policies/README.md#create) - Create
@@ -544,6 +696,15 @@ func main() {
 * [RevokeCredential](docs/sdks/principal/README.md#revokecredential) - Revoke Credential
 * [Update](docs/sdks/principal/README.md#update) - Update
 * [UpdateCredential](docs/sdks/principal/README.md#updatecredential) - Update Credential
+
+### [RecoveryPolicy](docs/sdks/recoverypolicy/README.md)
+
+* [Create](docs/sdks/recoverypolicy/README.md#create) - Create
+* [Delete](docs/sdks/recoverypolicy/README.md#delete) - Delete
+* [Get](docs/sdks/recoverypolicy/README.md#get) - Get
+* [List](docs/sdks/recoverypolicy/README.md#list) - List
+* [Search](docs/sdks/recoverypolicy/README.md#search) - Search
+* [Update](docs/sdks/recoverypolicy/README.md#update) - Update
 
 ### [RequestCatalogManagement](docs/sdks/requestcatalogmanagement/README.md)
 
@@ -584,6 +745,11 @@ func main() {
 * [RemoveEntitlementBinding](docs/sdks/requestschema/README.md#removeentitlementbinding) - Remove Entitlement Binding
 * [Update](docs/sdks/requestschema/README.md#update) - Update
 
+### [RequestSettings](docs/sdks/requestsettings/README.md)
+
+* [Get](docs/sdks/requestsettings/README.md#get) - Get
+* [Update](docs/sdks/requestsettings/README.md#update) - Update
+
 ### [RoleMiningManagement](docs/sdks/roleminingmanagement/README.md)
 
 * [CreateAccessProfileFromCohort](docs/sdks/roleminingmanagement/README.md#createaccessprofilefromcohort) - Create Access Profile From Cohort
@@ -591,6 +757,7 @@ func main() {
 * [GetLatestRun](docs/sdks/roleminingmanagement/README.md#getlatestrun) - Get Latest Run
 * [GetRoleMiningConfig](docs/sdks/roleminingmanagement/README.md#getroleminingconfig) - Get Role Mining Config
 * [GetSuggestion](docs/sdks/roleminingmanagement/README.md#getsuggestion) - Get Suggestion
+* [ListCustomAnalysisResults](docs/sdks/roleminingmanagement/README.md#listcustomanalysisresults) - List Custom Analysis Results
 * [ListRuns](docs/sdks/roleminingmanagement/README.md#listruns) - List Runs
 * [ListSuggestions](docs/sdks/roleminingmanagement/README.md#listsuggestions) - List Suggestions
 * [SearchCohortUsers](docs/sdks/roleminingmanagement/README.md#searchcohortusers) - Search Cohort Users
@@ -609,11 +776,34 @@ func main() {
 * [List](docs/sdks/roles/README.md#list) - List
 * [Update](docs/sdks/roles/README.md#update) - Update
 
+### [SessionPolicy](docs/sdks/sessionpolicy/README.md)
+
+* [AssignGroup](docs/sdks/sessionpolicy/README.md#assigngroup) - Assign Group
+* [AssignUser](docs/sdks/sessionpolicy/README.md#assignuser) - Assign User
+* [Create](docs/sdks/sessionpolicy/README.md#create) - Create
+* [Delete](docs/sdks/sessionpolicy/README.md#delete) - Delete
+* [Get](docs/sdks/sessionpolicy/README.md#get) - Get
+* [List](docs/sdks/sessionpolicy/README.md#list) - List
+* [ListAssignments](docs/sdks/sessionpolicy/README.md#listassignments) - List Assignments
+* [Search](docs/sdks/sessionpolicy/README.md#search) - Search
+* [UnassignGroup](docs/sdks/sessionpolicy/README.md#unassigngroup) - Unassign Group
+* [UnassignUser](docs/sdks/sessionpolicy/README.md#unassignuser) - Unassign User
+* [Update](docs/sdks/sessionpolicy/README.md#update) - Update
+
 ### [SessionSettings](docs/sdks/sessionsettings/README.md)
 
 * [Get](docs/sdks/sessionsettings/README.md#get) - Get
 * [TestSourceIP](docs/sdks/sessionsettings/README.md#testsourceip) - Test Source Ip
 * [Update](docs/sdks/sessionsettings/README.md#update) - Update
+
+### [SignInPolicy](docs/sdks/signinpolicy/README.md)
+
+* [Create](docs/sdks/signinpolicy/README.md#create) - Create
+* [Delete](docs/sdks/signinpolicy/README.md#delete) - Delete
+* [Get](docs/sdks/signinpolicy/README.md#get) - Get
+* [List](docs/sdks/signinpolicy/README.md#list) - List
+* [Search](docs/sdks/signinpolicy/README.md#search) - Search
+* [Update](docs/sdks/signinpolicy/README.md#update) - Update
 
 ### [SSFReceiverEvent](docs/sdks/ssfreceiverevent/README.md)
 
@@ -655,8 +845,10 @@ func main() {
 
 ### [Task](docs/sdks/task/README.md)
 
+* [CreateActionTask](docs/sdks/task/README.md#createactiontask) - Create Action Task
 * [CreateGrantTask](docs/sdks/task/README.md#creategranttask) - Create Grant Task
 * [CreateOffboardingTask](docs/sdks/task/README.md#createoffboardingtask) - Create Offboarding Task
+* [CreateResourceActionTask](docs/sdks/task/README.md#createresourceactiontask) - Create Resource Action Task
 * [CreateRevokeTask](docs/sdks/task/README.md#createrevoketask) - Create Revoke Task
 * [Get](docs/sdks/task/README.md#get) - Get
 
@@ -700,17 +892,49 @@ func main() {
 * [Test](docs/sdks/tenantemailprovider/README.md#test) - Test
 * [Update](docs/sdks/tenantemailprovider/README.md#update) - Update
 
+### [TerraformExport](docs/sdks/terraformexport/README.md)
+
+* [GetSchema](docs/sdks/terraformexport/README.md#getschema) - Get Schema
+
+### [TunnelCredentials](docs/sdks/tunnelcredentials/README.md)
+
+* [CreateBridge](docs/sdks/tunnelcredentials/README.md#createbridge) - Create Bridge
+* [CreateBridgeCredential](docs/sdks/tunnelcredentials/README.md#createbridgecredential) - Create Bridge Credential
+* [DeleteBridge](docs/sdks/tunnelcredentials/README.md#deletebridge) - Delete Bridge
+* [GetBridge](docs/sdks/tunnelcredentials/README.md#getbridge) - Get Bridge
+* [ListBridgeAnnouncedServices](docs/sdks/tunnelcredentials/README.md#listbridgeannouncedservices) - List Bridge Announced Services
+* [ListBridgeCredentials](docs/sdks/tunnelcredentials/README.md#listbridgecredentials) - List Bridge Credentials
+* [ListBridges](docs/sdks/tunnelcredentials/README.md#listbridges) - List Bridges
+* [RevokeBridgeCredential](docs/sdks/tunnelcredentials/README.md#revokebridgecredential) - Revoke Bridge Credential
+* [UpdateBridge](docs/sdks/tunnelcredentials/README.md#updatebridge) - Update Bridge
+
 ### [User](docs/sdks/user/README.md)
 
 * [Get](docs/sdks/user/README.md#get) - Get
 * [GetUserProfileTypes](docs/sdks/user/README.md#getuserprofiletypes) - Get User Profile Types
+* [Introspect](docs/sdks/user/README.md#introspect) - Introspect
 * [List](docs/sdks/user/README.md#list) - List
 * [SetExpiringUserDelegationBindingByAdmin](docs/sdks/user/README.md#setexpiringuserdelegationbindingbyadmin) - Set Expiring User Delegation Binding By Admin
+
+### [UserDeveloperPreferences](docs/sdks/userdeveloperpreferences/README.md)
+
+* [Get](docs/sdks/userdeveloperpreferences/README.md#get) - Get
+* [Update](docs/sdks/userdeveloperpreferences/README.md#update) - Update
 
 ### [UserNotificationSettings](docs/sdks/usernotificationsettings/README.md)
 
 * [Get](docs/sdks/usernotificationsettings/README.md#get) - Get
 * [Update](docs/sdks/usernotificationsettings/README.md#update) - Update
+
+### [UserOwnersV2](docs/sdks/userownersv2/README.md)
+
+* [CreateEntitlementOwner](docs/sdks/userownersv2/README.md#createentitlementowner) - Create Entitlement Owner
+* [CreateUserOwner](docs/sdks/userownersv2/README.md#createuserowner) - Create User Owner
+* [DeleteEntitlementOwner](docs/sdks/userownersv2/README.md#deleteentitlementowner) - Delete Entitlement Owner
+* [DeleteUserOwner](docs/sdks/userownersv2/README.md#deleteuserowner) - Delete User Owner
+* [SearchEntitlementOwners](docs/sdks/userownersv2/README.md#searchentitlementowners) - Search Entitlement Owners
+* [SearchUserOwners](docs/sdks/userownersv2/README.md#searchuserowners) - Search User Owners
+* [Set](docs/sdks/userownersv2/README.md#set) - Set
 
 ### [UserSearch](docs/sdks/usersearch/README.md)
 
@@ -751,6 +975,60 @@ func main() {
 * [TestToken](docs/sdks/workloadfederation/README.md#testtoken) - Test Token
 * [UpdateProvider](docs/sdks/workloadfederation/README.md#updateprovider) - Update Provider
 * [UpdateTrust](docs/sdks/workloadfederation/README.md#updatetrust) - Update Trust
+
+### [XAAAccessProfile](docs/sdks/xaaaccessprofile/README.md)
+
+* [Create](docs/sdks/xaaaccessprofile/README.md#create) - Create
+* [Delete](docs/sdks/xaaaccessprofile/README.md#delete) - Delete
+* [Get](docs/sdks/xaaaccessprofile/README.md#get) - Get
+* [GetByAppEntitlementID](docs/sdks/xaaaccessprofile/README.md#getbyappentitlementid) - Get By App Entitlement Id
+* [List](docs/sdks/xaaaccessprofile/README.md#list) - List
+* [ListHistory](docs/sdks/xaaaccessprofile/README.md#listhistory) - List History
+* [Search](docs/sdks/xaaaccessprofile/README.md#search) - Search
+* [Update](docs/sdks/xaaaccessprofile/README.md#update) - Update
+
+### [XAAAccessProfileScopeBinding](docs/sdks/xaaaccessprofilescopebinding/README.md)
+
+* [CreateBindings](docs/sdks/xaaaccessprofilescopebinding/README.md#createbindings) - Create Bindings
+* [DeleteBindings](docs/sdks/xaaaccessprofilescopebinding/README.md#deletebindings) - Delete Bindings
+* [List](docs/sdks/xaaaccessprofilescopebinding/README.md#list) - List
+* [Search](docs/sdks/xaaaccessprofilescopebinding/README.md#search) - Search
+
+### [XAAClientAudienceMapping](docs/sdks/xaaclientaudiencemapping/README.md)
+
+* [Create](docs/sdks/xaaclientaudiencemapping/README.md#create) - Create
+* [Delete](docs/sdks/xaaclientaudiencemapping/README.md#delete) - Delete
+* [Get](docs/sdks/xaaclientaudiencemapping/README.md#get) - Get
+* [List](docs/sdks/xaaclientaudiencemapping/README.md#list) - List
+* [ListHistory](docs/sdks/xaaclientaudiencemapping/README.md#listhistory) - List History
+* [Search](docs/sdks/xaaclientaudiencemapping/README.md#search) - Search
+* [Update](docs/sdks/xaaclientaudiencemapping/README.md#update) - Update
+
+### [XAAResourceServer](docs/sdks/xaaresourceserver/README.md)
+
+* [Create](docs/sdks/xaaresourceserver/README.md#create) - Create
+* [Delete](docs/sdks/xaaresourceserver/README.md#delete) - Delete
+* [Get](docs/sdks/xaaresourceserver/README.md#get) - Get
+* [List](docs/sdks/xaaresourceserver/README.md#list) - List
+* [ListHistory](docs/sdks/xaaresourceserver/README.md#listhistory) - List History
+* [Search](docs/sdks/xaaresourceserver/README.md#search) - Search
+* [Update](docs/sdks/xaaresourceserver/README.md#update) - Update
+
+### [XAAScope](docs/sdks/xaascope/README.md)
+
+* [Create](docs/sdks/xaascope/README.md#create) - Create
+* [Delete](docs/sdks/xaascope/README.md#delete) - Delete
+* [Get](docs/sdks/xaascope/README.md#get) - Get
+* [List](docs/sdks/xaascope/README.md#list) - List
+* [ListHistory](docs/sdks/xaascope/README.md#listhistory) - List History
+* [Search](docs/sdks/xaascope/README.md#search) - Search
+* [Update](docs/sdks/xaascope/README.md#update) - Update
+
+### [XAASettings](docs/sdks/xaasettings/README.md)
+
+* [Get](docs/sdks/xaasettings/README.md#get) - Get
+* [ListHistory](docs/sdks/xaasettings/README.md#listhistory) - List History
+* [Update](docs/sdks/xaasettings/README.md#update) - Update
 
 </details>
 <!-- End Available Resources and Operations [operations] -->

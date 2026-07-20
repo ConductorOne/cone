@@ -197,21 +197,6 @@ func (e *TaskState) IsExact() bool {
 
 // Task - A fully-fleged task object. Includes its policy, references to external apps, its type, its processing history, and more.
 type Task struct {
-	// A policy instance is an object that contains a reference to the policy it was created from, the currently executing step, the next steps, and the history of previously completed steps.
-	PolicyInstance *PolicyInstance `json:"policy,omitempty"`
-	// A form is a collection of fields to be filled out by a user
-	RequestSchemaForm *RequestSchemaForm `json:"form,omitempty"`
-	// Task Type provides configuration for the type of task: certify, grant, or revoke
-	//
-	// This message contains a oneof named task_type. Only a single field of the following list may be set at a time:
-	//   - grant
-	//   - revoke
-	//   - certify
-	//   - offboarding
-	//   - action
-	//   - finding
-	//
-	TaskType *TaskType `json:"type,omitempty"`
 	// The actions that can be performed on the task by the current user.
 	Actions []Actions `json:"actions,omitempty"`
 	// The ID of the analysis object associated with this task created by an analysis workflow if the analysis feature is enabled for your tenant.
@@ -234,7 +219,8 @@ type Task struct {
 	// A field indicating whether this task was created using an emergency access flow, or escalated to emergency access. On task creation, it will also use the app entitlement's emergency policy when possible.
 	EmergencyAccess *bool `json:"emergencyAccess,omitempty"`
 	// An array of external references to the task. Historically that has been items like Jira task IDs. This is currently unused, but may come back in the future for integrations.
-	ExternalRefs []ExternalRef `json:"externalRefs,omitempty"`
+	ExternalRefs []ExternalRef      `json:"externalRefs,omitempty"`
+	Form         *RequestSchemaForm `json:"form,omitempty"`
 	// The ID of the task.
 	ID *string `json:"id,omitempty"`
 	// The insightIds field.
@@ -242,7 +228,8 @@ type Task struct {
 	// A human-usable numeric ID of a task which can be included in place of the fully qualified task id in path parmeters (but not search queries).
 	NumericID *int64 `integer:"string" json:"numericId,omitempty"`
 	// The origin field.
-	Origin *Origin `json:"origin,omitempty"`
+	Origin *Origin         `json:"origin,omitempty"`
+	Policy *PolicyInstance `json:"policy,omitempty"`
 	// The policy generation id refers to the current policy's generation ID. This is changed when the policy is changed on a task.
 	PolicyGenerationID *string `json:"policyGenerationId,omitempty"`
 	// The processing state of a task as defined by the `processing_enum`
@@ -256,6 +243,7 @@ type Task struct {
 	State *TaskState `json:"state,omitempty"`
 	// An array of IDs belonging to Identity Users that are allowed to review this step in a task.
 	StepApproverIds []string   `json:"stepApproverIds,omitempty"`
+	Type            *TaskType  `json:"type,omitempty"`
 	UpdatedAt       *time.Time `json:"updatedAt,omitempty"`
 	// The ID of the user that is the target of this task. This may be empty if we're targeting a specific app user that has no known identity user.
 	UserID *string `json:"userId,omitempty"`
@@ -270,27 +258,6 @@ func (t *Task) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
-}
-
-func (t *Task) GetPolicyInstance() *PolicyInstance {
-	if t == nil {
-		return nil
-	}
-	return t.PolicyInstance
-}
-
-func (t *Task) GetRequestSchemaForm() *RequestSchemaForm {
-	if t == nil {
-		return nil
-	}
-	return t.RequestSchemaForm
-}
-
-func (t *Task) GetTaskType() *TaskType {
-	if t == nil {
-		return nil
-	}
-	return t.TaskType
 }
 
 func (t *Task) GetActions() []Actions {
@@ -384,6 +351,13 @@ func (t *Task) GetExternalRefs() []ExternalRef {
 	return t.ExternalRefs
 }
 
+func (t *Task) GetForm() *RequestSchemaForm {
+	if t == nil {
+		return nil
+	}
+	return t.Form
+}
+
 func (t *Task) GetID() *string {
 	if t == nil {
 		return nil
@@ -410,6 +384,13 @@ func (t *Task) GetOrigin() *Origin {
 		return nil
 	}
 	return t.Origin
+}
+
+func (t *Task) GetPolicy() *PolicyInstance {
+	if t == nil {
+		return nil
+	}
+	return t.Policy
 }
 
 func (t *Task) GetPolicyGenerationID() *string {
@@ -452,6 +433,13 @@ func (t *Task) GetStepApproverIds() []string {
 		return nil
 	}
 	return t.StepApproverIds
+}
+
+func (t *Task) GetType() *TaskType {
+	if t == nil {
+		return nil
+	}
+	return t.Type
 }
 
 func (t *Task) GetUpdatedAt() *time.Time {

@@ -9,16 +9,17 @@ import (
 type ExecutionStepStates string
 
 const (
-	ExecutionStepStatesAutomationExecutionStateUnspecified  ExecutionStepStates = "AUTOMATION_EXECUTION_STATE_UNSPECIFIED"
-	ExecutionStepStatesAutomationExecutionStatePending      ExecutionStepStates = "AUTOMATION_EXECUTION_STATE_PENDING"
-	ExecutionStepStatesAutomationExecutionStateCreating     ExecutionStepStates = "AUTOMATION_EXECUTION_STATE_CREATING"
-	ExecutionStepStatesAutomationExecutionStateGetStep      ExecutionStepStates = "AUTOMATION_EXECUTION_STATE_GET_STEP"
-	ExecutionStepStatesAutomationExecutionStateProcessStep  ExecutionStepStates = "AUTOMATION_EXECUTION_STATE_PROCESS_STEP"
-	ExecutionStepStatesAutomationExecutionStateCompleteStep ExecutionStepStates = "AUTOMATION_EXECUTION_STATE_COMPLETE_STEP"
-	ExecutionStepStatesAutomationExecutionStateDone         ExecutionStepStates = "AUTOMATION_EXECUTION_STATE_DONE"
-	ExecutionStepStatesAutomationExecutionStateError        ExecutionStepStates = "AUTOMATION_EXECUTION_STATE_ERROR"
-	ExecutionStepStatesAutomationExecutionStateTerminate    ExecutionStepStates = "AUTOMATION_EXECUTION_STATE_TERMINATE"
-	ExecutionStepStatesAutomationExecutionStateWaiting      ExecutionStepStates = "AUTOMATION_EXECUTION_STATE_WAITING"
+	ExecutionStepStatesAutomationExecutionStateUnspecified            ExecutionStepStates = "AUTOMATION_EXECUTION_STATE_UNSPECIFIED"
+	ExecutionStepStatesAutomationExecutionStatePending                ExecutionStepStates = "AUTOMATION_EXECUTION_STATE_PENDING"
+	ExecutionStepStatesAutomationExecutionStateCreating               ExecutionStepStates = "AUTOMATION_EXECUTION_STATE_CREATING"
+	ExecutionStepStatesAutomationExecutionStateGetStep                ExecutionStepStates = "AUTOMATION_EXECUTION_STATE_GET_STEP"
+	ExecutionStepStatesAutomationExecutionStateProcessStep            ExecutionStepStates = "AUTOMATION_EXECUTION_STATE_PROCESS_STEP"
+	ExecutionStepStatesAutomationExecutionStateCompleteStep           ExecutionStepStates = "AUTOMATION_EXECUTION_STATE_COMPLETE_STEP"
+	ExecutionStepStatesAutomationExecutionStateDone                   ExecutionStepStates = "AUTOMATION_EXECUTION_STATE_DONE"
+	ExecutionStepStatesAutomationExecutionStateError                  ExecutionStepStates = "AUTOMATION_EXECUTION_STATE_ERROR"
+	ExecutionStepStatesAutomationExecutionStateTerminate              ExecutionStepStates = "AUTOMATION_EXECUTION_STATE_TERMINATE"
+	ExecutionStepStatesAutomationExecutionStateWaiting                ExecutionStepStates = "AUTOMATION_EXECUTION_STATE_WAITING"
+	ExecutionStepStatesAutomationExecutionStatePausedByCircuitBreaker ExecutionStepStates = "AUTOMATION_EXECUTION_STATE_PAUSED_BY_CIRCUIT_BREAKER"
 )
 
 func (e ExecutionStepStates) ToPointer() *ExecutionStepStates {
@@ -29,7 +30,7 @@ func (e ExecutionStepStates) ToPointer() *ExecutionStepStates {
 func (e *ExecutionStepStates) IsExact() bool {
 	if e != nil {
 		switch *e {
-		case "AUTOMATION_EXECUTION_STATE_UNSPECIFIED", "AUTOMATION_EXECUTION_STATE_PENDING", "AUTOMATION_EXECUTION_STATE_CREATING", "AUTOMATION_EXECUTION_STATE_GET_STEP", "AUTOMATION_EXECUTION_STATE_PROCESS_STEP", "AUTOMATION_EXECUTION_STATE_COMPLETE_STEP", "AUTOMATION_EXECUTION_STATE_DONE", "AUTOMATION_EXECUTION_STATE_ERROR", "AUTOMATION_EXECUTION_STATE_TERMINATE", "AUTOMATION_EXECUTION_STATE_WAITING":
+		case "AUTOMATION_EXECUTION_STATE_UNSPECIFIED", "AUTOMATION_EXECUTION_STATE_PENDING", "AUTOMATION_EXECUTION_STATE_CREATING", "AUTOMATION_EXECUTION_STATE_GET_STEP", "AUTOMATION_EXECUTION_STATE_PROCESS_STEP", "AUTOMATION_EXECUTION_STATE_COMPLETE_STEP", "AUTOMATION_EXECUTION_STATE_DONE", "AUTOMATION_EXECUTION_STATE_ERROR", "AUTOMATION_EXECUTION_STATE_TERMINATE", "AUTOMATION_EXECUTION_STATE_WAITING", "AUTOMATION_EXECUTION_STATE_PAUSED_BY_CIRCUIT_BREAKER":
 			return true
 		}
 	}
@@ -38,14 +39,13 @@ func (e *ExecutionStepStates) IsExact() bool {
 
 // The SearchAutomationExecutionsRequest message.
 type SearchAutomationExecutionsRequest struct {
-	// The AutomationExecutionExpandMask message.
-	AutomationExecutionExpandMask *AutomationExecutionExpandMask `json:"expandMask,omitempty"`
 	// Filter results to executions of this automation template.
 	AutomationTemplateID *string `json:"automationTemplateId,omitempty"`
 	// Filter results to a specific execution by its numeric identifier.
 	ExecutionID *int64 `integer:"string" json:"executionId,omitempty"`
 	// Filter results to executions in any of the specified states.
-	ExecutionStepStates []ExecutionStepStates `json:"executionStepStates,omitempty"`
+	ExecutionStepStates []ExecutionStepStates          `json:"executionStepStates,omitempty"`
+	ExpandMask          *AutomationExecutionExpandMask `json:"expandMask,omitempty"`
 	// Maximum number of results to return per page.
 	PageSize *int `json:"pageSize,omitempty"`
 	// Pagination token from a previous SearchAutomationExecutionsResponse.
@@ -67,13 +67,6 @@ func (s *SearchAutomationExecutionsRequest) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (s *SearchAutomationExecutionsRequest) GetAutomationExecutionExpandMask() *AutomationExecutionExpandMask {
-	if s == nil {
-		return nil
-	}
-	return s.AutomationExecutionExpandMask
-}
-
 func (s *SearchAutomationExecutionsRequest) GetAutomationTemplateID() *string {
 	if s == nil {
 		return nil
@@ -93,6 +86,13 @@ func (s *SearchAutomationExecutionsRequest) GetExecutionStepStates() []Execution
 		return nil
 	}
 	return s.ExecutionStepStates
+}
+
+func (s *SearchAutomationExecutionsRequest) GetExpandMask() *AutomationExecutionExpandMask {
+	if s == nil {
+		return nil
+	}
+	return s.ExpandMask
 }
 
 func (s *SearchAutomationExecutionsRequest) GetPageSize() *int {

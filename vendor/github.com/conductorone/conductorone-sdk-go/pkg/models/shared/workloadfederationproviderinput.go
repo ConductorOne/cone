@@ -2,14 +2,30 @@
 
 package shared
 
-// WorkloadFederationProviderInput - WorkloadFederationProvider represents a tenant-level OIDC issuer registration.
+// WorkloadFederationProviderInput - WorkloadFederationProvider represents a tenant-level workload identity
+//
+//	issuer registration. Two issuer schemes are supported:
+//
+//	  - https://...   classic OIDC issuer; `settings.oidc` MUST be set.
+//	  - spiffe://...  SPIFFE trust-domain URI; `settings.spiffe` MUST be set.
+//
+//	The (well_known_provider, issuer_url scheme, settings oneof) tuple is a
+//	tri-invariant: SPIFFE wkp ⟺ spiffe:// issuer ⟺ settings.spiffe set; any
+//	other wkp ⟺ https:// issuer ⟺ settings.oidc set. Issuer URLs are unique
+//	within tenant.
+//
+// This message contains a oneof named settings. Only a single field of the following list may be set at a time:
+//   - oidc
+//   - spiffe
 type WorkloadFederationProviderInput struct {
 	// A description of what this provider is for.
 	Description *string `json:"description,omitempty"`
 	// Whether the provider is disabled. Disabled providers reject all token exchanges.
 	Disabled *bool `json:"disabled,omitempty"`
 	// The display name of the provider.
-	DisplayName *string `json:"displayName,omitempty"`
+	DisplayName *string         `json:"displayName,omitempty"`
+	Oidc        *OIDCSettings   `json:"oidc,omitempty"`
+	Spiffe      *SPIFFESettings `json:"spiffe,omitempty"`
 }
 
 func (w *WorkloadFederationProviderInput) GetDescription() *string {
@@ -31,4 +47,18 @@ func (w *WorkloadFederationProviderInput) GetDisplayName() *string {
 		return nil
 	}
 	return w.DisplayName
+}
+
+func (w *WorkloadFederationProviderInput) GetOidc() *OIDCSettings {
+	if w == nil {
+		return nil
+	}
+	return w.Oidc
+}
+
+func (w *WorkloadFederationProviderInput) GetSpiffe() *SPIFFESettings {
+	if w == nil {
+		return nil
+	}
+	return w.Spiffe
 }

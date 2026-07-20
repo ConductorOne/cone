@@ -8,29 +8,13 @@ package shared
 //   - saveToVault
 //   - doNotSave
 type AccountProvision struct {
-	// The DoNotSave message.
-	DoNotSave *DoNotSave `json:"doNotSave,omitempty"`
-	// The SaveToVault message.
-	SaveToVault *SaveToVault   `json:"saveToVault,omitempty"`
-	Config      map[string]any `json:"config,omitempty"`
+	Config map[string]any `json:"config,omitempty"`
 	// The connectorId field.
-	ConnectorID *string `json:"connectorId,omitempty"`
+	ConnectorID *string      `json:"connectorId,omitempty"`
+	DoNotSave   *DoNotSave   `json:"doNotSave,omitempty"`
+	SaveToVault *SaveToVault `json:"saveToVault,omitempty"`
 	// The schemaId field.
 	SchemaID *string `json:"schemaId,omitempty"`
-}
-
-func (a *AccountProvision) GetDoNotSave() *DoNotSave {
-	if a == nil {
-		return nil
-	}
-	return a.DoNotSave
-}
-
-func (a *AccountProvision) GetSaveToVault() *SaveToVault {
-	if a == nil {
-		return nil
-	}
-	return a.SaveToVault
 }
 
 func (a *AccountProvision) GetConfig() map[string]any {
@@ -45,6 +29,20 @@ func (a *AccountProvision) GetConnectorID() *string {
 		return nil
 	}
 	return a.ConnectorID
+}
+
+func (a *AccountProvision) GetDoNotSave() *DoNotSave {
+	if a == nil {
+		return nil
+	}
+	return a.DoNotSave
+}
+
+func (a *AccountProvision) GetSaveToVault() *SaveToVault {
+	if a == nil {
+		return nil
+	}
+	return a.SaveToVault
 }
 
 func (a *AccountProvision) GetSchemaID() *string {

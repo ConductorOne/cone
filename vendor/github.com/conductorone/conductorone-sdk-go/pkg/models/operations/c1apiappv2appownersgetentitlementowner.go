@@ -49,7 +49,7 @@ type C1APIAppV2AppOwnersGetEntitlementOwnerResponse struct {
 	// HTTP response content type for this operation
 	ContentType string
 	// GetEntitlementOwnerResponse is the response for getting an entitlement ownership source.
-	GetEntitlementOwnerResponse *shared.GetEntitlementOwnerResponse
+	GetAppEntitlementOwnerResponse *shared.GetAppEntitlementOwnerResponse
 	// HTTP response status code for this operation
 	StatusCode int
 	// Raw HTTP response; suitable for custom response parsing
@@ -63,11 +63,11 @@ func (c *C1APIAppV2AppOwnersGetEntitlementOwnerResponse) GetContentType() string
 	return c.ContentType
 }
 
-func (c *C1APIAppV2AppOwnersGetEntitlementOwnerResponse) GetGetEntitlementOwnerResponse() *shared.GetEntitlementOwnerResponse {
+func (c *C1APIAppV2AppOwnersGetEntitlementOwnerResponse) GetGetAppEntitlementOwnerResponse() *shared.GetAppEntitlementOwnerResponse {
 	if c == nil {
 		return nil
 	}
-	return c.GetEntitlementOwnerResponse
+	return c.GetAppEntitlementOwnerResponse
 }
 
 func (c *C1APIAppV2AppOwnersGetEntitlementOwnerResponse) GetStatusCode() int {

@@ -15,30 +15,25 @@ import (
 //   - cel
 //   - basic
 type AppEntitlementAutomation struct {
-	// The AppEntitlementAutomationLastRunStatus message.
-	AppEntitlementAutomationLastRunStatus *AppEntitlementAutomationLastRunStatus `json:"lastRunStatus,omitempty"`
-	// The AppEntitlementAutomationRuleBasic message.
-	AppEntitlementAutomationRuleBasic *AppEntitlementAutomationRuleBasic `json:"basic,omitempty"`
-	// The AppEntitlementAutomationRuleCEL message.
-	AppEntitlementAutomationRuleCEL *AppEntitlementAutomationRuleCEL `json:"cel,omitempty"`
-	// The AppEntitlementAutomationRuleEntitlement message.
-	AppEntitlementAutomationRuleEntitlement *AppEntitlementAutomationRuleEntitlement `json:"entitlements,omitempty"`
-	// The AppEntitlementAutomationRuleNone message.
-	AppEntitlementAutomationRuleNone *AppEntitlementAutomationRuleNone `json:"none,omitempty"`
 	// The unique ID for the App Entitlement.
 	AppEntitlementID *string `json:"appEntitlementId,omitempty"`
 	// The ID of the app that is associated with the app entitlement.
-	AppID     *string    `json:"appId,omitempty"`
-	CreatedAt *time.Time `json:"createdAt,omitempty"`
-	DeletedAt *time.Time `json:"deletedAt,omitempty"`
+	AppID     *string                            `json:"appId,omitempty"`
+	Basic     *AppEntitlementAutomationRuleBasic `json:"basic,omitempty"`
+	Cel       *AppEntitlementAutomationRuleCEL   `json:"cel,omitempty"`
+	CreatedAt *time.Time                         `json:"createdAt,omitempty"`
+	DeletedAt *time.Time                         `json:"deletedAt,omitempty"`
 	// The description of the app entitlement.
 	Description *string `json:"description,omitempty"`
 	// The display name of the app entitlement.
-	DisplayName *string `json:"displayName,omitempty"`
+	DisplayName   *string                                  `json:"displayName,omitempty"`
+	Entitlements  *AppEntitlementAutomationRuleEntitlement `json:"entitlements,omitempty"`
+	LastRunStatus *AppEntitlementAutomationLastRunStatus   `json:"lastRunStatus,omitempty"`
 	// When set, this automation is managed by an access profile's bundle automation.
 	//  Read-only. Not settable via this API.
-	ManagedByRequestCatalogID *string    `json:"managedByRequestCatalogId,omitempty"`
-	UpdatedAt                 *time.Time `json:"updatedAt,omitempty"`
+	ManagedByRequestCatalogID *string                           `json:"managedByRequestCatalogId,omitempty"`
+	None                      *AppEntitlementAutomationRuleNone `json:"none,omitempty"`
+	UpdatedAt                 *time.Time                        `json:"updatedAt,omitempty"`
 }
 
 func (a AppEntitlementAutomation) MarshalJSON() ([]byte, error) {
@@ -50,41 +45,6 @@ func (a *AppEntitlementAutomation) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
-}
-
-func (a *AppEntitlementAutomation) GetAppEntitlementAutomationLastRunStatus() *AppEntitlementAutomationLastRunStatus {
-	if a == nil {
-		return nil
-	}
-	return a.AppEntitlementAutomationLastRunStatus
-}
-
-func (a *AppEntitlementAutomation) GetAppEntitlementAutomationRuleBasic() *AppEntitlementAutomationRuleBasic {
-	if a == nil {
-		return nil
-	}
-	return a.AppEntitlementAutomationRuleBasic
-}
-
-func (a *AppEntitlementAutomation) GetAppEntitlementAutomationRuleCEL() *AppEntitlementAutomationRuleCEL {
-	if a == nil {
-		return nil
-	}
-	return a.AppEntitlementAutomationRuleCEL
-}
-
-func (a *AppEntitlementAutomation) GetAppEntitlementAutomationRuleEntitlement() *AppEntitlementAutomationRuleEntitlement {
-	if a == nil {
-		return nil
-	}
-	return a.AppEntitlementAutomationRuleEntitlement
-}
-
-func (a *AppEntitlementAutomation) GetAppEntitlementAutomationRuleNone() *AppEntitlementAutomationRuleNone {
-	if a == nil {
-		return nil
-	}
-	return a.AppEntitlementAutomationRuleNone
 }
 
 func (a *AppEntitlementAutomation) GetAppEntitlementID() *string {
@@ -99,6 +59,20 @@ func (a *AppEntitlementAutomation) GetAppID() *string {
 		return nil
 	}
 	return a.AppID
+}
+
+func (a *AppEntitlementAutomation) GetBasic() *AppEntitlementAutomationRuleBasic {
+	if a == nil {
+		return nil
+	}
+	return a.Basic
+}
+
+func (a *AppEntitlementAutomation) GetCel() *AppEntitlementAutomationRuleCEL {
+	if a == nil {
+		return nil
+	}
+	return a.Cel
 }
 
 func (a *AppEntitlementAutomation) GetCreatedAt() *time.Time {
@@ -129,11 +103,32 @@ func (a *AppEntitlementAutomation) GetDisplayName() *string {
 	return a.DisplayName
 }
 
+func (a *AppEntitlementAutomation) GetEntitlements() *AppEntitlementAutomationRuleEntitlement {
+	if a == nil {
+		return nil
+	}
+	return a.Entitlements
+}
+
+func (a *AppEntitlementAutomation) GetLastRunStatus() *AppEntitlementAutomationLastRunStatus {
+	if a == nil {
+		return nil
+	}
+	return a.LastRunStatus
+}
+
 func (a *AppEntitlementAutomation) GetManagedByRequestCatalogID() *string {
 	if a == nil {
 		return nil
 	}
 	return a.ManagedByRequestCatalogID
+}
+
+func (a *AppEntitlementAutomation) GetNone() *AppEntitlementAutomationRuleNone {
+	if a == nil {
+		return nil
+	}
+	return a.None
 }
 
 func (a *AppEntitlementAutomation) GetUpdatedAt() *time.Time {

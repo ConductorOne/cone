@@ -8,17 +8,15 @@ package shared
 //   - userIdCel
 //   - userProperties
 type ConnectorCreateAccount struct {
-	// The ConnectorRef message.
 	ConnectorRef *ConnectorRef `json:"connectorRef,omitempty"`
-	// The UserProperties message.
-	UserProperties *UserProperties `json:"userProperties,omitempty"`
 	// CEL expression referencing a GeneratePassword step output (e.g. "genStep.password").
 	//  When set, the resolved password is encrypted for the connector and sent as CredentialOptions.EncryptedPassword.
 	PasswordCel *string `json:"passwordCel,omitempty"`
 	// The userIdCel field.
 	// This field is part of the `create_account_arguments` oneof.
 	// See the documentation for `c1.api.automations.v1.ConnectorCreateAccount` for more details.
-	UserIDCel *string `json:"userIdCel,omitempty"`
+	UserIDCel      *string         `json:"userIdCel,omitempty"`
+	UserProperties *UserProperties `json:"userProperties,omitempty"`
 }
 
 func (c *ConnectorCreateAccount) GetConnectorRef() *ConnectorRef {
@@ -26,13 +24,6 @@ func (c *ConnectorCreateAccount) GetConnectorRef() *ConnectorRef {
 		return nil
 	}
 	return c.ConnectorRef
-}
-
-func (c *ConnectorCreateAccount) GetUserProperties() *UserProperties {
-	if c == nil {
-		return nil
-	}
-	return c.UserProperties
 }
 
 func (c *ConnectorCreateAccount) GetPasswordCel() *string {
@@ -47,4 +38,11 @@ func (c *ConnectorCreateAccount) GetUserIDCel() *string {
 		return nil
 	}
 	return c.UserIDCel
+}
+
+func (c *ConnectorCreateAccount) GetUserProperties() *UserProperties {
+	if c == nil {
+		return nil
+	}
+	return c.UserProperties
 }

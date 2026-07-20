@@ -30,8 +30,15 @@ func (e *AutomationsCreateAutomationRequestCircuitBreakerPeriod) IsExact() bool 
 
 // AutomationsCreateAutomationRequest - The CreateAutomationRequest message.
 type AutomationsCreateAutomationRequest struct {
-	// The AutomationContext message.
-	AutomationContext *AutomationContext `json:"context,omitempty"`
+	// Bounded key/value metadata bag for IaC marking and customer tags.
+	//  See .rfcs/object-annotations.md §2. Limits: ≤16 entries; keys 1–128
+	//  chars matching ^[A-Za-z][A-Za-z0-9._/-]{0,127}$; values 0–256 chars
+	//  matching URL-safe ASCII; total serialized ≤4096 bytes. Keys starting
+	//  with `c1/` are reserved for server-managed use and rejected on write.
+	//
+	//  Well-known keys: `managed_by`, `iac_workspace`,
+	//  `iac_resource_address`, `iac_tool_version`.
+	Annotations map[string]string `json:"annotations,omitempty"`
 	// the app id this workflow_template belongs to
 	AppID *string `json:"appId,omitempty"`
 	// Ordered list of steps that the automation executes.
@@ -40,6 +47,7 @@ type AutomationsCreateAutomationRequest struct {
 	CircuitBreakerMax *int64 `json:"circuitBreakerMax,omitempty"`
 	// The circuitBreakerPeriod field.
 	CircuitBreakerPeriod *AutomationsCreateAutomationRequestCircuitBreakerPeriod `json:"circuitBreakerPeriod,omitempty"`
+	Context              *AutomationContext                                      `json:"context,omitempty"`
 	// Optional description explaining the automation's purpose.
 	Description *string `json:"description,omitempty"`
 	// Human-readable name for the automation.
@@ -56,11 +64,11 @@ type AutomationsCreateAutomationRequest struct {
 	Triggers []AutomationTrigger `json:"triggers,omitempty"`
 }
 
-func (a *AutomationsCreateAutomationRequest) GetAutomationContext() *AutomationContext {
+func (a *AutomationsCreateAutomationRequest) GetAnnotations() map[string]string {
 	if a == nil {
 		return nil
 	}
-	return a.AutomationContext
+	return a.Annotations
 }
 
 func (a *AutomationsCreateAutomationRequest) GetAppID() *string {
@@ -89,6 +97,13 @@ func (a *AutomationsCreateAutomationRequest) GetCircuitBreakerPeriod() *Automati
 		return nil
 	}
 	return a.CircuitBreakerPeriod
+}
+
+func (a *AutomationsCreateAutomationRequest) GetContext() *AutomationContext {
+	if a == nil {
+		return nil
+	}
+	return a.Context
 }
 
 func (a *AutomationsCreateAutomationRequest) GetDescription() *string {

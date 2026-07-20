@@ -4,16 +4,15 @@ package shared
 
 // The WorkloadFederationServiceUpdateProviderRequest message.
 type WorkloadFederationServiceUpdateProviderRequest struct {
-	// WorkloadFederationProvider represents a tenant-level OIDC issuer registration.
-	WorkloadFederationProvider *WorkloadFederationProviderInput `json:"provider,omitempty"`
-	UpdateMask                 *string                          `json:"updateMask,omitempty"`
+	Provider   *WorkloadFederationProviderInput `json:"provider,omitempty"`
+	UpdateMask *string                          `json:"updateMask,omitempty"`
 }
 
-func (w *WorkloadFederationServiceUpdateProviderRequest) GetWorkloadFederationProvider() *WorkloadFederationProviderInput {
+func (w *WorkloadFederationServiceUpdateProviderRequest) GetProvider() *WorkloadFederationProviderInput {
 	if w == nil {
 		return nil
 	}
-	return w.WorkloadFederationProvider
+	return w.Provider
 }
 
 func (w *WorkloadFederationServiceUpdateProviderRequest) GetUpdateMask() *string {

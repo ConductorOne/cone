@@ -8,21 +8,13 @@ package shared
 //   - userIdCel
 //   - userRef
 type CloseAction struct {
-	// A reference to a user.
-	UserRef *UserRef `json:"userRef,omitempty"`
 	// If true, the step will use the subject user of the automation as the subject.
 	UseSubjectUser *bool `json:"useSubjectUser,omitempty"`
 	// The userIdCel field.
 	// This field is part of the `user_identifier` oneof.
 	// See the documentation for `c1.api.automations.v1.CloseAction` for more details.
-	UserIDCel *string `json:"userIdCel,omitempty"`
-}
-
-func (c *CloseAction) GetUserRef() *UserRef {
-	if c == nil {
-		return nil
-	}
-	return c.UserRef
+	UserIDCel *string  `json:"userIdCel,omitempty"`
+	UserRef   *UserRef `json:"userRef,omitempty"`
 }
 
 func (c *CloseAction) GetUseSubjectUser() *bool {
@@ -37,4 +29,11 @@ func (c *CloseAction) GetUserIDCel() *string {
 		return nil
 	}
 	return c.UserIDCel
+}
+
+func (c *CloseAction) GetUserRef() *UserRef {
+	if c == nil {
+		return nil
+	}
+	return c.UserRef
 }

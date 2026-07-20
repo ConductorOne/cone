@@ -40,17 +40,9 @@ func (p *PayloadProvisionStepExpanded) GetAdditionalProperties() map[string]any 
 
 // The PayloadProvisionStep message.
 type PayloadProvisionStep struct {
-	// Contains a task and JSONPATH expressions that describe where in the expanded array related objects are located. This view can be used to display a fully-detailed dashboard of task information.
-	TaskView *TaskView `json:"taskView,omitempty"`
 	// List of serialized related objects.
 	Expanded []PayloadProvisionStepExpanded `json:"expanded,omitempty"`
-}
-
-func (p *PayloadProvisionStep) GetTaskView() *TaskView {
-	if p == nil {
-		return nil
-	}
-	return p.TaskView
+	TaskView *TaskView                      `json:"taskView,omitempty"`
 }
 
 func (p *PayloadProvisionStep) GetExpanded() []PayloadProvisionStepExpanded {
@@ -58,4 +50,11 @@ func (p *PayloadProvisionStep) GetExpanded() []PayloadProvisionStepExpanded {
 		return nil
 	}
 	return p.Expanded
+}
+
+func (p *PayloadProvisionStep) GetTaskView() *TaskView {
+	if p == nil {
+		return nil
+	}
+	return p.TaskView
 }

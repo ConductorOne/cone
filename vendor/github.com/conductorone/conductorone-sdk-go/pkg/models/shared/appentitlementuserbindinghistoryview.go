@@ -4,21 +4,13 @@ package shared
 
 // The AppEntitlementUserBindingHistoryView message.
 type AppEntitlementUserBindingHistoryView struct {
-	// The AppEntitlementUserBindingHistory message.
-	AppEntitlementUserBindingHistory *AppEntitlementUserBindingHistory `json:"history,omitempty"`
 	// The appPath field.
 	AppPath *string `json:"appPath,omitempty"`
 	// The appUserPath field.
 	AppUserPath *string `json:"appUserPath,omitempty"`
 	// The entitlementPath field.
-	EntitlementPath *string `json:"entitlementPath,omitempty"`
-}
-
-func (a *AppEntitlementUserBindingHistoryView) GetAppEntitlementUserBindingHistory() *AppEntitlementUserBindingHistory {
-	if a == nil {
-		return nil
-	}
-	return a.AppEntitlementUserBindingHistory
+	EntitlementPath *string                           `json:"entitlementPath,omitempty"`
+	History         *AppEntitlementUserBindingHistory `json:"history,omitempty"`
 }
 
 func (a *AppEntitlementUserBindingHistoryView) GetAppPath() *string {
@@ -40,4 +32,11 @@ func (a *AppEntitlementUserBindingHistoryView) GetEntitlementPath() *string {
 		return nil
 	}
 	return a.EntitlementPath
+}
+
+func (a *AppEntitlementUserBindingHistoryView) GetHistory() *AppEntitlementUserBindingHistory {
+	if a == nil {
+		return nil
+	}
+	return a.History
 }

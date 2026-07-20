@@ -91,6 +91,7 @@ const (
 	AccessReviewTemplateScopeTypeAccessReviewScopeTypeByAccessConflicts AccessReviewTemplateScopeType = "ACCESS_REVIEW_SCOPE_TYPE_BY_ACCESS_CONFLICTS"
 	AccessReviewTemplateScopeTypeAccessReviewScopeTypeByResource        AccessReviewTemplateScopeType = "ACCESS_REVIEW_SCOPE_TYPE_BY_RESOURCE"
 	AccessReviewTemplateScopeTypeAccessReviewScopeTypeByInheritance     AccessReviewTemplateScopeType = "ACCESS_REVIEW_SCOPE_TYPE_BY_INHERITANCE"
+	AccessReviewTemplateScopeTypeAccessReviewScopeTypeByUsers           AccessReviewTemplateScopeType = "ACCESS_REVIEW_SCOPE_TYPE_BY_USERS"
 )
 
 func (e AccessReviewTemplateScopeType) ToPointer() *AccessReviewTemplateScopeType {
@@ -101,7 +102,7 @@ func (e AccessReviewTemplateScopeType) ToPointer() *AccessReviewTemplateScopeTyp
 func (e *AccessReviewTemplateScopeType) IsExact() bool {
 	if e != nil {
 		switch *e {
-		case "ACCESS_REVIEW_SCOPE_TYPE_UNSPECIFIED", "ACCESS_REVIEW_SCOPE_TYPE_BY_ENTITLEMENTS", "ACCESS_REVIEW_SCOPE_TYPE_BY_ACCESS_CONFLICTS", "ACCESS_REVIEW_SCOPE_TYPE_BY_RESOURCE", "ACCESS_REVIEW_SCOPE_TYPE_BY_INHERITANCE":
+		case "ACCESS_REVIEW_SCOPE_TYPE_UNSPECIFIED", "ACCESS_REVIEW_SCOPE_TYPE_BY_ENTITLEMENTS", "ACCESS_REVIEW_SCOPE_TYPE_BY_ACCESS_CONFLICTS", "ACCESS_REVIEW_SCOPE_TYPE_BY_RESOURCE", "ACCESS_REVIEW_SCOPE_TYPE_BY_INHERITANCE", "ACCESS_REVIEW_SCOPE_TYPE_BY_USERS":
 			return true
 		}
 	}
@@ -115,62 +116,18 @@ func (e *AccessReviewTemplateScopeType) IsExact() bool {
 // This message contains a oneof named slack_channel_details. Only a single field of the following list may be set at a time:
 //   - slackChannel
 type AccessReviewTemplate struct {
-	// Configuration for which columns are visible in the reviewer task list.
-	AccessReviewColumnConfig *AccessReviewColumnConfig `json:"columnConfig,omitempty"`
-	// The AccessReviewInclusionScope message.
-	AccessReviewInclusionScope *AccessReviewInclusionScope `json:"inclusionScope,omitempty"`
-	// The AccessReviewScopeV2 message.
-	//
-	// This message contains a oneof named apps_and_resources_scope. Only a single field of the following list may be set at a time:
-	//   - appAccess
-	//   - specificResources
-	//   - appSelectionCriteria
-	//   - resourceTypeSelections
-	//
-	//
-	// This message contains a oneof named users_scope. Only a single field of the following list may be set at a time:
-	//   - allUsers
-	//   - selectedUsers
-	//   - userCriteria
-	//   - celExpression
-	//
-	//
-	// This message contains a oneof named accounts_scope. Only a single field of the following list may be set at a time:
-	//   - allAccounts
-	//   - accountCriteria
-	//   - accountCelExpression
-	//
-	//
-	// This message contains a oneof named grants_scope. Only a single field of the following list may be set at a time:
-	//   - allGrants
-	//   - grantsByCriteria
-	//
-	//
-	// This message contains a oneof named access_conflicts_scope. Only a single field of the following list may be set at a time:
-	//   - allAccessConflicts
-	//   - specificAccessConflicts
-	//
-	//
-	// This message contains a oneof named resource_scope. Only a single field of the following list may be set at a time:
-	//   - resourceSelection
-	//
-	AccessReviewScopeV2 *AccessReviewScopeV2 `json:"scope,omitempty"`
-	// Controls which email notifications are sent during the access review lifecycle.
-	NotificationConfig *NotificationConfig `json:"notificationConfig,omitempty"`
-	// The RecurrenceRule message.
-	//
-	// This message contains a oneof named end_condition. Only a single field of the following list may be set at a time:
-	//   - endDate
-	//   - occurrences
-	//
-	RecurrenceRule *RecurrenceRule `json:"recurrenceRule,omitempty"`
-	// Signature configuration for access review submissions
-	ReviewSignatureConfig *ReviewSignatureConfig `json:"signatureConfig,omitempty"`
-	// The SlackChannel message.
-	SlackChannel         *SlackChannel `json:"slackChannel,omitempty"`
-	AccessReviewDuration *string       `json:"accessReviewDuration,omitempty"`
+	AccessReviewDuration *string `json:"accessReviewDuration,omitempty"`
 	// The accuracyIssueAction field.
 	AccuracyIssueAction *AccessReviewTemplateAccuracyIssueAction `json:"accuracyIssueAction,omitempty"`
+	// Key/value metadata. Up to 16 entries; keys 1-128 chars; values 0-256
+	//  chars; URL-safe ASCII. Keys starting with `c1/` are reserved.
+	//
+	//  Updates have PATCH semantics: keys absent from the request are
+	//  preserved; an empty value deletes the key.
+	//
+	//  Well-known keys: `managed_by`, `iac_workspace`,
+	//  `iac_resource_address`, `iac_tool_version`.
+	Annotations map[string]string `json:"annotations,omitempty"`
 	// Auto-close configuration
 	//  start date and access_review_duration will be used to calculate the scheduled close date
 	AutoCloseCampaign *bool `json:"autoCloseCampaign,omitempty"`
@@ -180,8 +137,9 @@ type AccessReviewTemplate struct {
 	AutoGenerateReport *bool `json:"autoGenerateReport,omitempty"`
 	// Auto-start configuration
 	//  next_scheduled_campaign_at will be used as the scheduled start date
-	AutoStartCampaign *bool      `json:"autoStartCampaign,omitempty"`
-	CreatedAt         *time.Time `json:"createdAt,omitempty"`
+	AutoStartCampaign *bool                     `json:"autoStartCampaign,omitempty"`
+	ColumnConfig      *AccessReviewColumnConfig `json:"columnConfig,omitempty"`
+	CreatedAt         *time.Time                `json:"createdAt,omitempty"`
 	// The defaultView field.
 	DefaultView *AccessReviewTemplateDefaultView `json:"defaultView,omitempty"`
 	DeletedAt   *time.Time                       `json:"deletedAt,omitempty"`
@@ -192,19 +150,26 @@ type AccessReviewTemplate struct {
 	// The exemptCertifiedAccessConflicts field.
 	ExemptCertifiedAccessConflicts *bool `json:"exemptCertifiedAccessConflicts,omitempty"`
 	// The unique identifier of this template.
-	ID *string `json:"id,omitempty"`
+	ID             *string                     `json:"id,omitempty"`
+	InclusionScope *AccessReviewInclusionScope `json:"inclusionScope,omitempty"`
 	// Whether automatic campaign creation on the recurrence schedule is enabled.
-	IsCampaignScheduleEnabled *bool      `json:"isCampaignScheduleEnabled,omitempty"`
-	NextScheduledCampaignAt   *time.Time `json:"nextScheduledCampaignAt,omitempty"`
+	IsCampaignScheduleEnabled *bool               `json:"isCampaignScheduleEnabled,omitempty"`
+	NextScheduledCampaignAt   *time.Time          `json:"nextScheduledCampaignAt,omitempty"`
+	NotificationConfig        *NotificationConfig `json:"notificationConfig,omitempty"`
 	// The number of campaigns that have been created from this template.
 	Occurrences *int `json:"occurrences,omitempty"`
 	// The ID of the default review policy applied to campaigns created from this template.
-	PolicyID *string `json:"policyId,omitempty"`
+	PolicyID       *string         `json:"policyId,omitempty"`
+	RecurrenceRule *RecurrenceRule `json:"recurrenceRule,omitempty"`
 	// The reviewInstructions field.
-	ReviewInstructions *string `json:"reviewInstructions,omitempty"`
+	ReviewInstructions      *string                  `json:"reviewInstructions,omitempty"`
+	ReviewerAttributeConfig *ReviewerAttributeConfig `json:"reviewerAttributeConfig,omitempty"`
+	Scope                   *AccessReviewScopeV2     `json:"scope,omitempty"`
 	// The scopeType field.
-	ScopeType *AccessReviewTemplateScopeType `json:"scopeType,omitempty"`
-	UpdatedAt *time.Time                     `json:"updatedAt,omitempty"`
+	ScopeType       *AccessReviewTemplateScopeType `json:"scopeType,omitempty"`
+	SignatureConfig *ReviewSignatureConfig         `json:"signatureConfig,omitempty"`
+	SlackChannel    *SlackChannel                  `json:"slackChannel,omitempty"`
+	UpdatedAt       *time.Time                     `json:"updatedAt,omitempty"`
 	// The usePolicyOverride field.
 	UsePolicyOverride *bool `json:"usePolicyOverride,omitempty"`
 }
@@ -220,55 +185,6 @@ func (a *AccessReviewTemplate) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (a *AccessReviewTemplate) GetAccessReviewColumnConfig() *AccessReviewColumnConfig {
-	if a == nil {
-		return nil
-	}
-	return a.AccessReviewColumnConfig
-}
-
-func (a *AccessReviewTemplate) GetAccessReviewInclusionScope() *AccessReviewInclusionScope {
-	if a == nil {
-		return nil
-	}
-	return a.AccessReviewInclusionScope
-}
-
-func (a *AccessReviewTemplate) GetAccessReviewScopeV2() *AccessReviewScopeV2 {
-	if a == nil {
-		return nil
-	}
-	return a.AccessReviewScopeV2
-}
-
-func (a *AccessReviewTemplate) GetNotificationConfig() *NotificationConfig {
-	if a == nil {
-		return nil
-	}
-	return a.NotificationConfig
-}
-
-func (a *AccessReviewTemplate) GetRecurrenceRule() *RecurrenceRule {
-	if a == nil {
-		return nil
-	}
-	return a.RecurrenceRule
-}
-
-func (a *AccessReviewTemplate) GetReviewSignatureConfig() *ReviewSignatureConfig {
-	if a == nil {
-		return nil
-	}
-	return a.ReviewSignatureConfig
-}
-
-func (a *AccessReviewTemplate) GetSlackChannel() *SlackChannel {
-	if a == nil {
-		return nil
-	}
-	return a.SlackChannel
-}
-
 func (a *AccessReviewTemplate) GetAccessReviewDuration() *string {
 	if a == nil {
 		return nil
@@ -281,6 +197,13 @@ func (a *AccessReviewTemplate) GetAccuracyIssueAction() *AccessReviewTemplateAcc
 		return nil
 	}
 	return a.AccuracyIssueAction
+}
+
+func (a *AccessReviewTemplate) GetAnnotations() map[string]string {
+	if a == nil {
+		return nil
+	}
+	return a.Annotations
 }
 
 func (a *AccessReviewTemplate) GetAutoCloseCampaign() *bool {
@@ -309,6 +232,13 @@ func (a *AccessReviewTemplate) GetAutoStartCampaign() *bool {
 		return nil
 	}
 	return a.AutoStartCampaign
+}
+
+func (a *AccessReviewTemplate) GetColumnConfig() *AccessReviewColumnConfig {
+	if a == nil {
+		return nil
+	}
+	return a.ColumnConfig
 }
 
 func (a *AccessReviewTemplate) GetCreatedAt() *time.Time {
@@ -360,6 +290,13 @@ func (a *AccessReviewTemplate) GetID() *string {
 	return a.ID
 }
 
+func (a *AccessReviewTemplate) GetInclusionScope() *AccessReviewInclusionScope {
+	if a == nil {
+		return nil
+	}
+	return a.InclusionScope
+}
+
 func (a *AccessReviewTemplate) GetIsCampaignScheduleEnabled() *bool {
 	if a == nil {
 		return nil
@@ -372,6 +309,13 @@ func (a *AccessReviewTemplate) GetNextScheduledCampaignAt() *time.Time {
 		return nil
 	}
 	return a.NextScheduledCampaignAt
+}
+
+func (a *AccessReviewTemplate) GetNotificationConfig() *NotificationConfig {
+	if a == nil {
+		return nil
+	}
+	return a.NotificationConfig
 }
 
 func (a *AccessReviewTemplate) GetOccurrences() *int {
@@ -388,6 +332,13 @@ func (a *AccessReviewTemplate) GetPolicyID() *string {
 	return a.PolicyID
 }
 
+func (a *AccessReviewTemplate) GetRecurrenceRule() *RecurrenceRule {
+	if a == nil {
+		return nil
+	}
+	return a.RecurrenceRule
+}
+
 func (a *AccessReviewTemplate) GetReviewInstructions() *string {
 	if a == nil {
 		return nil
@@ -395,11 +346,39 @@ func (a *AccessReviewTemplate) GetReviewInstructions() *string {
 	return a.ReviewInstructions
 }
 
+func (a *AccessReviewTemplate) GetReviewerAttributeConfig() *ReviewerAttributeConfig {
+	if a == nil {
+		return nil
+	}
+	return a.ReviewerAttributeConfig
+}
+
+func (a *AccessReviewTemplate) GetScope() *AccessReviewScopeV2 {
+	if a == nil {
+		return nil
+	}
+	return a.Scope
+}
+
 func (a *AccessReviewTemplate) GetScopeType() *AccessReviewTemplateScopeType {
 	if a == nil {
 		return nil
 	}
 	return a.ScopeType
+}
+
+func (a *AccessReviewTemplate) GetSignatureConfig() *ReviewSignatureConfig {
+	if a == nil {
+		return nil
+	}
+	return a.SignatureConfig
+}
+
+func (a *AccessReviewTemplate) GetSlackChannel() *SlackChannel {
+	if a == nil {
+		return nil
+	}
+	return a.SlackChannel
 }
 
 func (a *AccessReviewTemplate) GetUpdatedAt() *time.Time {
@@ -423,62 +402,18 @@ func (a *AccessReviewTemplate) GetUsePolicyOverride() *bool {
 // This message contains a oneof named slack_channel_details. Only a single field of the following list may be set at a time:
 //   - slackChannel
 type AccessReviewTemplateInput struct {
-	// Configuration for which columns are visible in the reviewer task list.
-	AccessReviewColumnConfig *AccessReviewColumnConfig `json:"columnConfig,omitempty"`
-	// The AccessReviewInclusionScope message.
-	AccessReviewInclusionScope *AccessReviewInclusionScope `json:"inclusionScope,omitempty"`
-	// The AccessReviewScopeV2 message.
-	//
-	// This message contains a oneof named apps_and_resources_scope. Only a single field of the following list may be set at a time:
-	//   - appAccess
-	//   - specificResources
-	//   - appSelectionCriteria
-	//   - resourceTypeSelections
-	//
-	//
-	// This message contains a oneof named users_scope. Only a single field of the following list may be set at a time:
-	//   - allUsers
-	//   - selectedUsers
-	//   - userCriteria
-	//   - celExpression
-	//
-	//
-	// This message contains a oneof named accounts_scope. Only a single field of the following list may be set at a time:
-	//   - allAccounts
-	//   - accountCriteria
-	//   - accountCelExpression
-	//
-	//
-	// This message contains a oneof named grants_scope. Only a single field of the following list may be set at a time:
-	//   - allGrants
-	//   - grantsByCriteria
-	//
-	//
-	// This message contains a oneof named access_conflicts_scope. Only a single field of the following list may be set at a time:
-	//   - allAccessConflicts
-	//   - specificAccessConflicts
-	//
-	//
-	// This message contains a oneof named resource_scope. Only a single field of the following list may be set at a time:
-	//   - resourceSelection
-	//
-	AccessReviewScopeV2 *AccessReviewScopeV2 `json:"scope,omitempty"`
-	// Controls which email notifications are sent during the access review lifecycle.
-	NotificationConfig *NotificationConfig `json:"notificationConfig,omitempty"`
-	// The RecurrenceRule message.
-	//
-	// This message contains a oneof named end_condition. Only a single field of the following list may be set at a time:
-	//   - endDate
-	//   - occurrences
-	//
-	RecurrenceRule *RecurrenceRule `json:"recurrenceRule,omitempty"`
-	// Signature configuration for access review submissions
-	ReviewSignatureConfig *ReviewSignatureConfig `json:"signatureConfig,omitempty"`
-	// The SlackChannel message.
-	SlackChannel         *SlackChannel `json:"slackChannel,omitempty"`
-	AccessReviewDuration *string       `json:"accessReviewDuration,omitempty"`
+	AccessReviewDuration *string `json:"accessReviewDuration,omitempty"`
 	// The accuracyIssueAction field.
 	AccuracyIssueAction *AccessReviewTemplateAccuracyIssueAction `json:"accuracyIssueAction,omitempty"`
+	// Key/value metadata. Up to 16 entries; keys 1-128 chars; values 0-256
+	//  chars; URL-safe ASCII. Keys starting with `c1/` are reserved.
+	//
+	//  Updates have PATCH semantics: keys absent from the request are
+	//  preserved; an empty value deletes the key.
+	//
+	//  Well-known keys: `managed_by`, `iac_workspace`,
+	//  `iac_resource_address`, `iac_tool_version`.
+	Annotations map[string]string `json:"annotations,omitempty"`
 	// Auto-close configuration
 	//  start date and access_review_duration will be used to calculate the scheduled close date
 	AutoCloseCampaign *bool `json:"autoCloseCampaign,omitempty"`
@@ -488,7 +423,8 @@ type AccessReviewTemplateInput struct {
 	AutoGenerateReport *bool `json:"autoGenerateReport,omitempty"`
 	// Auto-start configuration
 	//  next_scheduled_campaign_at will be used as the scheduled start date
-	AutoStartCampaign *bool `json:"autoStartCampaign,omitempty"`
+	AutoStartCampaign *bool                     `json:"autoStartCampaign,omitempty"`
+	ColumnConfig      *AccessReviewColumnConfig `json:"columnConfig,omitempty"`
 	// The defaultView field.
 	DefaultView *AccessReviewTemplateDefaultView `json:"defaultView,omitempty"`
 	// An optional description providing context about this template.
@@ -498,18 +434,25 @@ type AccessReviewTemplateInput struct {
 	// The exemptCertifiedAccessConflicts field.
 	ExemptCertifiedAccessConflicts *bool `json:"exemptCertifiedAccessConflicts,omitempty"`
 	// The unique identifier of this template.
-	ID *string `json:"id,omitempty"`
+	ID             *string                     `json:"id,omitempty"`
+	InclusionScope *AccessReviewInclusionScope `json:"inclusionScope,omitempty"`
 	// Whether automatic campaign creation on the recurrence schedule is enabled.
-	IsCampaignScheduleEnabled *bool      `json:"isCampaignScheduleEnabled,omitempty"`
-	NextScheduledCampaignAt   *time.Time `json:"nextScheduledCampaignAt,omitempty"`
+	IsCampaignScheduleEnabled *bool               `json:"isCampaignScheduleEnabled,omitempty"`
+	NextScheduledCampaignAt   *time.Time          `json:"nextScheduledCampaignAt,omitempty"`
+	NotificationConfig        *NotificationConfig `json:"notificationConfig,omitempty"`
 	// The number of campaigns that have been created from this template.
 	Occurrences *int `json:"occurrences,omitempty"`
 	// The ID of the default review policy applied to campaigns created from this template.
-	PolicyID *string `json:"policyId,omitempty"`
+	PolicyID       *string         `json:"policyId,omitempty"`
+	RecurrenceRule *RecurrenceRule `json:"recurrenceRule,omitempty"`
 	// The reviewInstructions field.
-	ReviewInstructions *string `json:"reviewInstructions,omitempty"`
+	ReviewInstructions      *string                  `json:"reviewInstructions,omitempty"`
+	ReviewerAttributeConfig *ReviewerAttributeConfig `json:"reviewerAttributeConfig,omitempty"`
+	Scope                   *AccessReviewScopeV2     `json:"scope,omitempty"`
 	// The scopeType field.
-	ScopeType *AccessReviewTemplateScopeType `json:"scopeType,omitempty"`
+	ScopeType       *AccessReviewTemplateScopeType `json:"scopeType,omitempty"`
+	SignatureConfig *ReviewSignatureConfig         `json:"signatureConfig,omitempty"`
+	SlackChannel    *SlackChannel                  `json:"slackChannel,omitempty"`
 	// The usePolicyOverride field.
 	UsePolicyOverride *bool `json:"usePolicyOverride,omitempty"`
 }
@@ -525,55 +468,6 @@ func (a *AccessReviewTemplateInput) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (a *AccessReviewTemplateInput) GetAccessReviewColumnConfig() *AccessReviewColumnConfig {
-	if a == nil {
-		return nil
-	}
-	return a.AccessReviewColumnConfig
-}
-
-func (a *AccessReviewTemplateInput) GetAccessReviewInclusionScope() *AccessReviewInclusionScope {
-	if a == nil {
-		return nil
-	}
-	return a.AccessReviewInclusionScope
-}
-
-func (a *AccessReviewTemplateInput) GetAccessReviewScopeV2() *AccessReviewScopeV2 {
-	if a == nil {
-		return nil
-	}
-	return a.AccessReviewScopeV2
-}
-
-func (a *AccessReviewTemplateInput) GetNotificationConfig() *NotificationConfig {
-	if a == nil {
-		return nil
-	}
-	return a.NotificationConfig
-}
-
-func (a *AccessReviewTemplateInput) GetRecurrenceRule() *RecurrenceRule {
-	if a == nil {
-		return nil
-	}
-	return a.RecurrenceRule
-}
-
-func (a *AccessReviewTemplateInput) GetReviewSignatureConfig() *ReviewSignatureConfig {
-	if a == nil {
-		return nil
-	}
-	return a.ReviewSignatureConfig
-}
-
-func (a *AccessReviewTemplateInput) GetSlackChannel() *SlackChannel {
-	if a == nil {
-		return nil
-	}
-	return a.SlackChannel
-}
-
 func (a *AccessReviewTemplateInput) GetAccessReviewDuration() *string {
 	if a == nil {
 		return nil
@@ -586,6 +480,13 @@ func (a *AccessReviewTemplateInput) GetAccuracyIssueAction() *AccessReviewTempla
 		return nil
 	}
 	return a.AccuracyIssueAction
+}
+
+func (a *AccessReviewTemplateInput) GetAnnotations() map[string]string {
+	if a == nil {
+		return nil
+	}
+	return a.Annotations
 }
 
 func (a *AccessReviewTemplateInput) GetAutoCloseCampaign() *bool {
@@ -614,6 +515,13 @@ func (a *AccessReviewTemplateInput) GetAutoStartCampaign() *bool {
 		return nil
 	}
 	return a.AutoStartCampaign
+}
+
+func (a *AccessReviewTemplateInput) GetColumnConfig() *AccessReviewColumnConfig {
+	if a == nil {
+		return nil
+	}
+	return a.ColumnConfig
 }
 
 func (a *AccessReviewTemplateInput) GetDefaultView() *AccessReviewTemplateDefaultView {
@@ -651,6 +559,13 @@ func (a *AccessReviewTemplateInput) GetID() *string {
 	return a.ID
 }
 
+func (a *AccessReviewTemplateInput) GetInclusionScope() *AccessReviewInclusionScope {
+	if a == nil {
+		return nil
+	}
+	return a.InclusionScope
+}
+
 func (a *AccessReviewTemplateInput) GetIsCampaignScheduleEnabled() *bool {
 	if a == nil {
 		return nil
@@ -663,6 +578,13 @@ func (a *AccessReviewTemplateInput) GetNextScheduledCampaignAt() *time.Time {
 		return nil
 	}
 	return a.NextScheduledCampaignAt
+}
+
+func (a *AccessReviewTemplateInput) GetNotificationConfig() *NotificationConfig {
+	if a == nil {
+		return nil
+	}
+	return a.NotificationConfig
 }
 
 func (a *AccessReviewTemplateInput) GetOccurrences() *int {
@@ -679,6 +601,13 @@ func (a *AccessReviewTemplateInput) GetPolicyID() *string {
 	return a.PolicyID
 }
 
+func (a *AccessReviewTemplateInput) GetRecurrenceRule() *RecurrenceRule {
+	if a == nil {
+		return nil
+	}
+	return a.RecurrenceRule
+}
+
 func (a *AccessReviewTemplateInput) GetReviewInstructions() *string {
 	if a == nil {
 		return nil
@@ -686,11 +615,39 @@ func (a *AccessReviewTemplateInput) GetReviewInstructions() *string {
 	return a.ReviewInstructions
 }
 
+func (a *AccessReviewTemplateInput) GetReviewerAttributeConfig() *ReviewerAttributeConfig {
+	if a == nil {
+		return nil
+	}
+	return a.ReviewerAttributeConfig
+}
+
+func (a *AccessReviewTemplateInput) GetScope() *AccessReviewScopeV2 {
+	if a == nil {
+		return nil
+	}
+	return a.Scope
+}
+
 func (a *AccessReviewTemplateInput) GetScopeType() *AccessReviewTemplateScopeType {
 	if a == nil {
 		return nil
 	}
 	return a.ScopeType
+}
+
+func (a *AccessReviewTemplateInput) GetSignatureConfig() *ReviewSignatureConfig {
+	if a == nil {
+		return nil
+	}
+	return a.SignatureConfig
+}
+
+func (a *AccessReviewTemplateInput) GetSlackChannel() *SlackChannel {
+	if a == nil {
+		return nil
+	}
+	return a.SlackChannel
 }
 
 func (a *AccessReviewTemplateInput) GetUsePolicyOverride() *bool {

@@ -9,40 +9,16 @@ package shared
 //   - duration
 //   - untilTime
 type Wait struct {
-	// The WaitCondition message.
-	WaitCondition *WaitCondition `json:"condition,omitempty"`
-	// The WaitDuration message.
-	WaitDuration *WaitDuration `json:"duration,omitempty"`
-	// Waits until a specific time of the day (UTC)
-	WaitUntilTime *WaitUntilTime `json:"untilTime,omitempty"`
 	// The comment to post on first failed check.
 	CommentOnFirstWait *string `json:"commentOnFirstWait,omitempty"`
 	// The comment to post if we timeout.
-	CommentOnTimeout *string `json:"commentOnTimeout,omitempty"`
+	CommentOnTimeout *string        `json:"commentOnTimeout,omitempty"`
+	Condition        *WaitCondition `json:"condition,omitempty"`
+	Duration         *WaitDuration  `json:"duration,omitempty"`
 	// The name of our condition to show on the task details page
-	Name            *string `json:"name,omitempty"`
-	TimeoutDuration *string `json:"timeoutDuration,omitempty"`
-}
-
-func (w *Wait) GetWaitCondition() *WaitCondition {
-	if w == nil {
-		return nil
-	}
-	return w.WaitCondition
-}
-
-func (w *Wait) GetWaitDuration() *WaitDuration {
-	if w == nil {
-		return nil
-	}
-	return w.WaitDuration
-}
-
-func (w *Wait) GetWaitUntilTime() *WaitUntilTime {
-	if w == nil {
-		return nil
-	}
-	return w.WaitUntilTime
+	Name            *string        `json:"name,omitempty"`
+	TimeoutDuration *string        `json:"timeoutDuration,omitempty"`
+	UntilTime       *WaitUntilTime `json:"untilTime,omitempty"`
 }
 
 func (w *Wait) GetCommentOnFirstWait() *string {
@@ -59,6 +35,20 @@ func (w *Wait) GetCommentOnTimeout() *string {
 	return w.CommentOnTimeout
 }
 
+func (w *Wait) GetCondition() *WaitCondition {
+	if w == nil {
+		return nil
+	}
+	return w.Condition
+}
+
+func (w *Wait) GetDuration() *WaitDuration {
+	if w == nil {
+		return nil
+	}
+	return w.Duration
+}
+
 func (w *Wait) GetName() *string {
 	if w == nil {
 		return nil
@@ -71,4 +61,11 @@ func (w *Wait) GetTimeoutDuration() *string {
 		return nil
 	}
 	return w.TimeoutDuration
+}
+
+func (w *Wait) GetUntilTime() *WaitUntilTime {
+	if w == nil {
+		return nil
+	}
+	return w.UntilTime
 }

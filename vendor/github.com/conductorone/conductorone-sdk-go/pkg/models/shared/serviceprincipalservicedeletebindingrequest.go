@@ -4,23 +4,9 @@ package shared
 
 // The ServicePrincipalServiceDeleteBindingRequest message.
 type ServicePrincipalServiceDeleteBindingRequest struct {
-	// ServicePrincipalBindingSubject identifies the entity that is bound to a
-	//  service principal. Open-ended oneof so future subject kinds (workflows,
-	//  connectors, etc.) can be added without changing the RPC shape.
-	//
-	// This message contains a oneof named kind. Only a single field of the following list may be set at a time:
-	//   - functionId
-	//
-	ServicePrincipalBindingSubject *ServicePrincipalBindingSubject `json:"subject,omitempty"`
 	// The servicePrincipalId field.
-	ServicePrincipalID *string `json:"servicePrincipalId,omitempty"`
-}
-
-func (s *ServicePrincipalServiceDeleteBindingRequest) GetServicePrincipalBindingSubject() *ServicePrincipalBindingSubject {
-	if s == nil {
-		return nil
-	}
-	return s.ServicePrincipalBindingSubject
+	ServicePrincipalID *string                         `json:"servicePrincipalId,omitempty"`
+	Subject            *ServicePrincipalBindingSubject `json:"subject,omitempty"`
 }
 
 func (s *ServicePrincipalServiceDeleteBindingRequest) GetServicePrincipalID() *string {
@@ -28,4 +14,11 @@ func (s *ServicePrincipalServiceDeleteBindingRequest) GetServicePrincipalID() *s
 		return nil
 	}
 	return s.ServicePrincipalID
+}
+
+func (s *ServicePrincipalServiceDeleteBindingRequest) GetSubject() *ServicePrincipalBindingSubject {
+	if s == nil {
+		return nil
+	}
+	return s.Subject
 }

@@ -33,6 +33,8 @@ func newAutomationSearch(rootSDK *ConductoroneAPI, sdkConfig config.SDKConfigura
 
 // SearchAutomationTemplateVersions - Search Automation Template Versions
 // Search for versioned snapshots of an automation template's steps and triggers.
+//
+//	Each version carries a full steps-and-triggers snapshot — request a small page_size (≤10) to keep responses small.
 func (s *AutomationSearch) SearchAutomationTemplateVersions(ctx context.Context, request *shared.SearchAutomationTemplateVersionsRequest, opts ...operations.Option) (*operations.C1APIAutomationsV1AutomationSearchServiceSearchAutomationTemplateVersionsResponse, error) {
 	o := operations.Options{}
 	supportedOptions := []string{
@@ -245,6 +247,8 @@ func (s *AutomationSearch) SearchAutomationTemplateVersions(ctx context.Context,
 
 // SearchAutomations - Search Automations
 // Search for automations matching the provided filters, including query text, template refs, app, and trigger types.
+//
+//	Each Automation row is heavy (carries its full triggers and steps) — request a small page_size (≤10) to keep responses small.
 func (s *AutomationSearch) SearchAutomations(ctx context.Context, request *shared.SearchAutomationsRequest, opts ...operations.Option) (*operations.C1APIAutomationsV1AutomationSearchServiceSearchAutomationsResponse, error) {
 	o := operations.Options{}
 	supportedOptions := []string{

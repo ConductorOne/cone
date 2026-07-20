@@ -4,11 +4,9 @@ package shared
 
 // The ConnectorServiceUpdateRequest message contains the fields required to update a connector.
 type ConnectorServiceUpdateRequest struct {
-	// A Connector is used to sync objects into Apps
-	Connector *ConnectorInput `json:"connector,omitempty"`
-	// The ConnectorExpandMask is used to expand related objects on a connector.
-	ConnectorExpandMask *ConnectorExpandMask `json:"expandMask,omitempty"`
-	UpdateMask          *string              `json:"updateMask,omitempty"`
+	Connector  *ConnectorInput      `json:"connector,omitempty"`
+	ExpandMask *ConnectorExpandMask `json:"expandMask,omitempty"`
+	UpdateMask *string              `json:"updateMask,omitempty"`
 }
 
 func (c *ConnectorServiceUpdateRequest) GetConnector() *ConnectorInput {
@@ -18,11 +16,11 @@ func (c *ConnectorServiceUpdateRequest) GetConnector() *ConnectorInput {
 	return c.Connector
 }
 
-func (c *ConnectorServiceUpdateRequest) GetConnectorExpandMask() *ConnectorExpandMask {
+func (c *ConnectorServiceUpdateRequest) GetExpandMask() *ConnectorExpandMask {
 	if c == nil {
 		return nil
 	}
-	return c.ConnectorExpandMask
+	return c.ExpandMask
 }
 
 func (c *ConnectorServiceUpdateRequest) GetUpdateMask() *string {

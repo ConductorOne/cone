@@ -40,19 +40,11 @@ func (t *TaskActionsServiceDenyResponseExpanded) GetAdditionalProperties() map[s
 
 // The TaskActionsServiceDenyResponse returns a task view with paths indicating the location of expanded items in the array.
 type TaskActionsServiceDenyResponse struct {
-	// Contains a task and JSONPATH expressions that describe where in the expanded array related objects are located. This view can be used to display a fully-detailed dashboard of task information.
-	TaskView *TaskView `json:"taskView,omitempty"`
 	// List of serialized related objects.
 	Expanded []TaskActionsServiceDenyResponseExpanded `json:"expanded,omitempty"`
+	TaskView *TaskView                                `json:"taskView,omitempty"`
 	// The ID of the task deny action created by this request.
 	TicketActionID *string `json:"ticketActionId,omitempty"`
-}
-
-func (t *TaskActionsServiceDenyResponse) GetTaskView() *TaskView {
-	if t == nil {
-		return nil
-	}
-	return t.TaskView
 }
 
 func (t *TaskActionsServiceDenyResponse) GetExpanded() []TaskActionsServiceDenyResponseExpanded {
@@ -60,6 +52,13 @@ func (t *TaskActionsServiceDenyResponse) GetExpanded() []TaskActionsServiceDenyR
 		return nil
 	}
 	return t.Expanded
+}
+
+func (t *TaskActionsServiceDenyResponse) GetTaskView() *TaskView {
+	if t == nil {
+		return nil
+	}
+	return t.TaskView
 }
 
 func (t *TaskActionsServiceDenyResponse) GetTicketActionID() *string {

@@ -38,26 +38,16 @@ func (e *WebhookInstanceState) IsExact() bool {
 
 // The WebhookInstance message.
 type WebhookInstance struct {
-	// The WebhookSource message.
-	//
-	// This message contains a oneof named source. Only a single field of the following list may be set at a time:
-	//   - test
-	//   - policyPostAction
-	//   - approvalStep
-	//   - provisionStep
-	//   - workflowStep
-	//
-	WebhookSource *WebhookSource `json:"source,omitempty"`
-	// The WebhookSpec message.
-	WebhookSpec *WebhookSpec `json:"spec,omitempty"`
 	// The attempts field.
 	Attempts    *int       `json:"attempts,omitempty"`
 	CompletedAt *time.Time `json:"completedAt,omitempty"`
 	CreatedAt   *time.Time `json:"createdAt,omitempty"`
 	ExpiresAt   *time.Time `json:"expiresAt,omitempty"`
 	// The id field.
-	ID              *string    `json:"id,omitempty"`
-	LastAttemptedAt *time.Time `json:"lastAttemptedAt,omitempty"`
+	ID              *string        `json:"id,omitempty"`
+	LastAttemptedAt *time.Time     `json:"lastAttemptedAt,omitempty"`
+	Source          *WebhookSource `json:"source,omitempty"`
+	Spec            *WebhookSpec   `json:"spec,omitempty"`
 	// The state field.
 	State     *WebhookInstanceState `json:"state,omitempty"`
 	UpdatedAt *time.Time            `json:"updatedAt,omitempty"`
@@ -74,20 +64,6 @@ func (w *WebhookInstance) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
-}
-
-func (w *WebhookInstance) GetWebhookSource() *WebhookSource {
-	if w == nil {
-		return nil
-	}
-	return w.WebhookSource
-}
-
-func (w *WebhookInstance) GetWebhookSpec() *WebhookSpec {
-	if w == nil {
-		return nil
-	}
-	return w.WebhookSpec
 }
 
 func (w *WebhookInstance) GetAttempts() *int {
@@ -130,6 +106,20 @@ func (w *WebhookInstance) GetLastAttemptedAt() *time.Time {
 		return nil
 	}
 	return w.LastAttemptedAt
+}
+
+func (w *WebhookInstance) GetSource() *WebhookSource {
+	if w == nil {
+		return nil
+	}
+	return w.Source
+}
+
+func (w *WebhookInstance) GetSpec() *WebhookSpec {
+	if w == nil {
+		return nil
+	}
+	return w.Spec
 }
 
 func (w *WebhookInstance) GetState() *WebhookInstanceState {

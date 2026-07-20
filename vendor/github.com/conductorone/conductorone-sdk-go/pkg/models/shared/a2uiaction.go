@@ -8,10 +8,15 @@ package shared
 //   - event
 //   - functionCall
 type A2UIAction struct {
-	// FunctionCall represents a client-side function invocation.
+	Event        *ServerEvent  `json:"event,omitempty"`
 	FunctionCall *FunctionCall `json:"functionCall,omitempty"`
-	// ServerEvent triggers a server-side action.
-	ServerEvent *ServerEvent `json:"event,omitempty"`
+}
+
+func (a *A2UIAction) GetEvent() *ServerEvent {
+	if a == nil {
+		return nil
+	}
+	return a.Event
 }
 
 func (a *A2UIAction) GetFunctionCall() *FunctionCall {
@@ -19,13 +24,6 @@ func (a *A2UIAction) GetFunctionCall() *FunctionCall {
 		return nil
 	}
 	return a.FunctionCall
-}
-
-func (a *A2UIAction) GetServerEvent() *ServerEvent {
-	if a == nil {
-		return nil
-	}
-	return a.ServerEvent
 }
 
 // #region class-body-a2uiaction

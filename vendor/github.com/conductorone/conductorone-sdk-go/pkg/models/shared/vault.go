@@ -13,20 +13,18 @@ import (
 //   - groupAuthzVault
 //   - magicVault
 type Vault struct {
-	// GroupAuthzVault configures a vault that uses group-based authorization to control access to stored credentials.
-	GroupAuthzVault *GroupAuthzVault `json:"groupAuthzVault,omitempty"`
-	// MagicVault configures a vault that grants time-limited credential access via magic links.
-	MagicVault                   *MagicVault `json:"magicVault,omitempty"`
-	CreatedAt                    *time.Time  `json:"createdAt,omitempty"`
-	CredentialExpirationDuration *string     `json:"credentialExpirationDuration,omitempty"`
-	DeletedAt                    *time.Time  `json:"deletedAt,omitempty"`
+	CreatedAt                    *time.Time `json:"createdAt,omitempty"`
+	CredentialExpirationDuration *string    `json:"credentialExpirationDuration,omitempty"`
+	DeletedAt                    *time.Time `json:"deletedAt,omitempty"`
 	// A free-text description of the vault's purpose or configuration.
 	Description *string `json:"description,omitempty"`
 	// The human-readable name of the vault.
-	DisplayName *string `json:"displayName,omitempty"`
+	DisplayName     *string          `json:"displayName,omitempty"`
+	GroupAuthzVault *GroupAuthzVault `json:"groupAuthzVault,omitempty"`
 	// The unique identifier of the vault.
-	ID        *string    `json:"id,omitempty"`
-	UpdatedAt *time.Time `json:"updatedAt,omitempty"`
+	ID         *string     `json:"id,omitempty"`
+	MagicVault *MagicVault `json:"magicVault,omitempty"`
+	UpdatedAt  *time.Time  `json:"updatedAt,omitempty"`
 }
 
 func (v Vault) MarshalJSON() ([]byte, error) {
@@ -38,20 +36,6 @@ func (v *Vault) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
-}
-
-func (v *Vault) GetGroupAuthzVault() *GroupAuthzVault {
-	if v == nil {
-		return nil
-	}
-	return v.GroupAuthzVault
-}
-
-func (v *Vault) GetMagicVault() *MagicVault {
-	if v == nil {
-		return nil
-	}
-	return v.MagicVault
 }
 
 func (v *Vault) GetCreatedAt() *time.Time {
@@ -89,11 +73,25 @@ func (v *Vault) GetDisplayName() *string {
 	return v.DisplayName
 }
 
+func (v *Vault) GetGroupAuthzVault() *GroupAuthzVault {
+	if v == nil {
+		return nil
+	}
+	return v.GroupAuthzVault
+}
+
 func (v *Vault) GetID() *string {
 	if v == nil {
 		return nil
 	}
 	return v.ID
+}
+
+func (v *Vault) GetMagicVault() *MagicVault {
+	if v == nil {
+		return nil
+	}
+	return v.MagicVault
 }
 
 func (v *Vault) GetUpdatedAt() *time.Time {

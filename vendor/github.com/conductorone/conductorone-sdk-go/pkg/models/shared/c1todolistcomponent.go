@@ -4,23 +4,9 @@ package shared
 
 // C1TodoListComponent renders a phase/step checklist with progress tracking.
 type C1TodoListComponent struct {
-	// DynamicString can be a literal value, a JSON pointer path, or a function call.
-	//
-	// This message contains a oneof named value. Only a single field of the following list may be set at a time:
-	//   - literal
-	//   - path
-	//   - call
-	//
-	DynamicString *DynamicString `json:"title,omitempty"`
 	// The items field.
-	Items []C1TodoItem `json:"items,omitempty"`
-}
-
-func (c *C1TodoListComponent) GetDynamicString() *DynamicString {
-	if c == nil {
-		return nil
-	}
-	return c.DynamicString
+	Items []C1TodoItem   `json:"items,omitempty"`
+	Title *DynamicString `json:"title,omitempty"`
 }
 
 func (c *C1TodoListComponent) GetItems() []C1TodoItem {
@@ -28,6 +14,13 @@ func (c *C1TodoListComponent) GetItems() []C1TodoItem {
 		return nil
 	}
 	return c.Items
+}
+
+func (c *C1TodoListComponent) GetTitle() *DynamicString {
+	if c == nil {
+		return nil
+	}
+	return c.Title
 }
 
 // #region class-body-c1todolistcomponent

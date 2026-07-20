@@ -40,17 +40,9 @@ func (p *PayloadPolicyPostActionExpanded) GetAdditionalProperties() map[string]a
 
 // The PayloadPolicyPostAction message.
 type PayloadPolicyPostAction struct {
-	// Contains a task and JSONPATH expressions that describe where in the expanded array related objects are located. This view can be used to display a fully-detailed dashboard of task information.
-	TaskView *TaskView `json:"taskView,omitempty"`
 	// List of serialized related objects.
 	Expanded []PayloadPolicyPostActionExpanded `json:"expanded,omitempty"`
-}
-
-func (p *PayloadPolicyPostAction) GetTaskView() *TaskView {
-	if p == nil {
-		return nil
-	}
-	return p.TaskView
+	TaskView *TaskView                         `json:"taskView,omitempty"`
 }
 
 func (p *PayloadPolicyPostAction) GetExpanded() []PayloadPolicyPostActionExpanded {
@@ -58,4 +50,11 @@ func (p *PayloadPolicyPostAction) GetExpanded() []PayloadPolicyPostActionExpande
 		return nil
 	}
 	return p.Expanded
+}
+
+func (p *PayloadPolicyPostAction) GetTaskView() *TaskView {
+	if p == nil {
+		return nil
+	}
+	return p.TaskView
 }

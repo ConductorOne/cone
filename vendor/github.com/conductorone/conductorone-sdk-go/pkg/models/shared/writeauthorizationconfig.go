@@ -32,18 +32,10 @@ func (e *BlockedClassifications) IsExact() bool {
 //
 //	blocked_classifications, optionally permitting them within business hours.
 type WriteAuthorizationConfig struct {
-	// BusinessHours defines a weekly time window in a specific timezone.
-	BusinessHours *BusinessHours `json:"businessHours,omitempty"`
 	// Tool classifications to block. Must have at least one entry; a hook
 	//  with no blocked classifications would be a silent misconfiguration.
 	BlockedClassifications []BlockedClassifications `json:"blockedClassifications,omitempty"`
-}
-
-func (w *WriteAuthorizationConfig) GetBusinessHours() *BusinessHours {
-	if w == nil {
-		return nil
-	}
-	return w.BusinessHours
+	BusinessHours          *BusinessHours           `json:"businessHours,omitempty"`
 }
 
 func (w *WriteAuthorizationConfig) GetBlockedClassifications() []BlockedClassifications {
@@ -51,4 +43,11 @@ func (w *WriteAuthorizationConfig) GetBlockedClassifications() []BlockedClassifi
 		return nil
 	}
 	return w.BlockedClassifications
+}
+
+func (w *WriteAuthorizationConfig) GetBusinessHours() *BusinessHours {
+	if w == nil {
+		return nil
+	}
+	return w.BusinessHours
 }

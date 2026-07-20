@@ -36,23 +36,17 @@ func (e *CreateAppEntitlementRequestPurpose) IsExact() bool {
 //   - durationUnset
 //   - durationGrant
 type CreateAppEntitlementRequest struct {
-	// The app entitlement expand mask allows the user to get additional information when getting responses containing app entitlement views.
-	AppEntitlementExpandMask *AppEntitlementExpandMask `json:"expandMask,omitempty"`
-	// ProvisionPolicy is a oneOf that indicates how a provision step should be processed.
-	//
-	// This message contains a oneof named typ. Only a single field of the following list may be set at a time:
-	//   - connector
-	//   - manual
-	//   - delegated
-	//   - webhook
-	//   - multiStep
-	//   - externalTicket
-	//   - unconfigured
-	//   - action
-	//
-	ProvisionPolicy *ProvisionPolicyInput `json:"provisionPolicy,omitempty"`
 	// A unique alias for the entitlement, used for programmatic lookups and Cone.
 	Alias *string `json:"alias,omitempty"`
+	// Bounded key/value metadata bag for IaC marking and customer tags.
+	//  See .rfcs/object-annotations.md §2. Limits: ≤16 entries; keys 1–128
+	//  chars matching ^[A-Za-z][A-Za-z0-9._/-]{0,127}$; values 0–256 chars
+	//  matching URL-safe ASCII; total serialized ≤4096 bytes. Keys starting
+	//  with `c1/` are reserved for server-managed use and rejected on write.
+	//
+	//  Well-known keys: `managed_by`, `iac_workspace`,
+	//  `iac_resource_address`, `iac_tool_version`.
+	Annotations map[string]string `json:"annotations,omitempty"`
 	// The IDs of users to set as owners of this entitlement.
 	AppEntitlementOwnerIds []string `json:"appEntitlementOwnerIds,omitempty"`
 	// The ID of the resource that this entitlement belongs to.
@@ -72,13 +66,15 @@ type CreateAppEntitlementRequest struct {
 	// Whether emergency grant requests are enabled for this entitlement.
 	EmergencyGrantEnabled *bool `json:"emergencyGrantEnabled,omitempty"`
 	// The ID of the policy to use for emergency grant tasks. Required if emergency_grant_enabled is true.
-	EmergencyGrantPolicyID *string `json:"emergencyGrantPolicyId,omitempty"`
+	EmergencyGrantPolicyID *string                   `json:"emergencyGrantPolicyId,omitempty"`
+	ExpandMask             *AppEntitlementExpandMask `json:"expandMask,omitempty"`
 	// The ID of the policy to use for grant request tasks.
 	GrantPolicyID *string `json:"grantPolicyId,omitempty"`
 	// If supplied, it's implied that the entitlement is created before sync and needs to be merged with connector entitlement.
 	MatchBatonID *string `json:"matchBatonId,omitempty"`
 	// Whether to override the app-level access request defaults for this entitlement.
-	OverrideAccessRequestsDefaults *bool `json:"overrideAccessRequestsDefaults,omitempty"`
+	OverrideAccessRequestsDefaults *bool                 `json:"overrideAccessRequestsDefaults,omitempty"`
+	ProvisionPolicy                *ProvisionPolicyInput `json:"provisionPolicy,omitempty"`
 	// The purpose of the entitlement (e.g., assignment, permission, ownership).
 	Purpose *CreateAppEntitlementRequestPurpose `json:"purpose,omitempty"`
 	// The ID of the policy to use for revoke request tasks.
@@ -89,25 +85,18 @@ type CreateAppEntitlementRequest struct {
 	Slug *string `json:"slug,omitempty"`
 }
 
-func (c *CreateAppEntitlementRequest) GetAppEntitlementExpandMask() *AppEntitlementExpandMask {
-	if c == nil {
-		return nil
-	}
-	return c.AppEntitlementExpandMask
-}
-
-func (c *CreateAppEntitlementRequest) GetProvisionPolicy() *ProvisionPolicyInput {
-	if c == nil {
-		return nil
-	}
-	return c.ProvisionPolicy
-}
-
 func (c *CreateAppEntitlementRequest) GetAlias() *string {
 	if c == nil {
 		return nil
 	}
 	return c.Alias
+}
+
+func (c *CreateAppEntitlementRequest) GetAnnotations() map[string]string {
+	if c == nil {
+		return nil
+	}
+	return c.Annotations
 }
 
 func (c *CreateAppEntitlementRequest) GetAppEntitlementOwnerIds() []string {
@@ -187,6 +176,13 @@ func (c *CreateAppEntitlementRequest) GetEmergencyGrantPolicyID() *string {
 	return c.EmergencyGrantPolicyID
 }
 
+func (c *CreateAppEntitlementRequest) GetExpandMask() *AppEntitlementExpandMask {
+	if c == nil {
+		return nil
+	}
+	return c.ExpandMask
+}
+
 func (c *CreateAppEntitlementRequest) GetGrantPolicyID() *string {
 	if c == nil {
 		return nil
@@ -206,6 +202,13 @@ func (c *CreateAppEntitlementRequest) GetOverrideAccessRequestsDefaults() *bool 
 		return nil
 	}
 	return c.OverrideAccessRequestsDefaults
+}
+
+func (c *CreateAppEntitlementRequest) GetProvisionPolicy() *ProvisionPolicyInput {
+	if c == nil {
+		return nil
+	}
+	return c.ProvisionPolicy
 }
 
 func (c *CreateAppEntitlementRequest) GetPurpose() *CreateAppEntitlementRequestPurpose {

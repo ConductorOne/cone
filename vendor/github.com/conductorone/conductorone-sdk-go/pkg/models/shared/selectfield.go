@@ -2,22 +2,22 @@
 
 package shared
 
-// Type - The type field.
-type Type string
+// SelectFieldType - The type field.
+type SelectFieldType string
 
 const (
-	TypeSelectTypeUnspecified Type = "SELECT_TYPE_UNSPECIFIED"
-	TypeSelectTypeDropdown    Type = "SELECT_TYPE_DROPDOWN"
-	TypeSelectTypeRadio       Type = "SELECT_TYPE_RADIO"
-	TypeSelectTypeButtons     Type = "SELECT_TYPE_BUTTONS"
+	SelectFieldTypeSelectTypeUnspecified SelectFieldType = "SELECT_TYPE_UNSPECIFIED"
+	SelectFieldTypeSelectTypeDropdown    SelectFieldType = "SELECT_TYPE_DROPDOWN"
+	SelectFieldTypeSelectTypeRadio       SelectFieldType = "SELECT_TYPE_RADIO"
+	SelectFieldTypeSelectTypeButtons     SelectFieldType = "SELECT_TYPE_BUTTONS"
 )
 
-func (e Type) ToPointer() *Type {
+func (e SelectFieldType) ToPointer() *SelectFieldType {
 	return &e
 }
 
 // IsExact returns true if the value matches a known enum value, false otherwise.
-func (e *Type) IsExact() bool {
+func (e *SelectFieldType) IsExact() bool {
 	if e != nil {
 		switch *e {
 		case "SELECT_TYPE_UNSPECIFIED", "SELECT_TYPE_DROPDOWN", "SELECT_TYPE_RADIO", "SELECT_TYPE_BUTTONS":
@@ -32,7 +32,7 @@ type SelectField struct {
 	// The options field.
 	Options []SelectOption `json:"options,omitempty"`
 	// The type field.
-	Type *Type `json:"type,omitempty"`
+	Type *SelectFieldType `json:"type,omitempty"`
 }
 
 func (s *SelectField) GetOptions() []SelectOption {
@@ -42,7 +42,7 @@ func (s *SelectField) GetOptions() []SelectOption {
 	return s.Options
 }
 
-func (s *SelectField) GetType() *Type {
+func (s *SelectField) GetType() *SelectFieldType {
 	if s == nil {
 		return nil
 	}

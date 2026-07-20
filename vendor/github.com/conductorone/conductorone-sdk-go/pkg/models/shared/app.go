@@ -61,17 +61,25 @@ func (e *IdentityMatching) IsExact() bool {
 
 // The App object provides all of the details for an app, as well as some configuration.
 type App struct {
-	// AppUserMapper configures custom account mapping for uplift.
-	AppUserMapper *AppUserMapper `json:"appUserMapper,omitempty"`
 	// How this app models access. Derived during uplift from the app's resource type traits.
 	//  Sparse ACL feature.
 	AccessModel *AccessModel `json:"accessModel,omitempty"`
+	// Key/value metadata. Up to 16 entries; keys 1-128 chars; values 0-256
+	//  chars; URL-safe ASCII. Keys starting with `c1/` are reserved.
+	//
+	//  Updates have PATCH semantics: keys absent from the request are
+	//  preserved; an empty value deletes the key.
+	//
+	//  Well-known keys: `managed_by`, `iac_workspace`,
+	//  `iac_resource_address`, `iac_tool_version`.
+	Annotations map[string]string `json:"annotations,omitempty"`
 	// The ID of the Account named by AccountName.
 	AppAccountID *string `json:"appAccountId,omitempty"`
 	// The AccountName of the app. For example, AWS is AccountID, Github is Org Name, and Okta is Okta Subdomain.
 	AppAccountName *string `json:"appAccountName,omitempty"`
 	// The owners of the app.
-	AppOwners []User `json:"appOwners,omitempty"`
+	AppOwners     []User         `json:"appOwners,omitempty"`
+	AppUserMapper *AppUserMapper `json:"appUserMapper,omitempty"`
 	// The ID of the Certify Policy associated with this App.
 	CertifyPolicyID *string `json:"certifyPolicyId,omitempty"`
 	// The connectorVersion field.
@@ -107,6 +115,8 @@ type App struct {
 	MonthlyCostUsd *int `json:"monthlyCostUsd,omitempty"`
 	// The ID of the app that created this app, if any.
 	ParentAppID *string `json:"parentAppId,omitempty"`
+	// When enabled, revoking a grant also revokes the grants that source it.
+	RevokeGrantSources *bool `json:"revokeGrantSources,omitempty"`
 	// The ID of the Revoke Policy associated with this App.
 	RevokePolicyID *string `json:"revokePolicyId,omitempty"`
 	// The strictAccessEntitlementProvisioning field.
@@ -127,18 +137,18 @@ func (a *App) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (a *App) GetAppUserMapper() *AppUserMapper {
-	if a == nil {
-		return nil
-	}
-	return a.AppUserMapper
-}
-
 func (a *App) GetAccessModel() *AccessModel {
 	if a == nil {
 		return nil
 	}
 	return a.AccessModel
+}
+
+func (a *App) GetAnnotations() map[string]string {
+	if a == nil {
+		return nil
+	}
+	return a.Annotations
 }
 
 func (a *App) GetAppAccountID() *string {
@@ -160,6 +170,13 @@ func (a *App) GetAppOwners() []User {
 		return nil
 	}
 	return a.AppOwners
+}
+
+func (a *App) GetAppUserMapper() *AppUserMapper {
+	if a == nil {
+		return nil
+	}
+	return a.AppUserMapper
 }
 
 func (a *App) GetCertifyPolicyID() *string {
@@ -295,6 +312,13 @@ func (a *App) GetParentAppID() *string {
 	return a.ParentAppID
 }
 
+func (a *App) GetRevokeGrantSources() *bool {
+	if a == nil {
+		return nil
+	}
+	return a.RevokeGrantSources
+}
+
 func (a *App) GetRevokePolicyID() *string {
 	if a == nil {
 		return nil
@@ -325,11 +349,19 @@ func (a *App) GetUserCount() *int64 {
 
 // AppInput - The App object provides all of the details for an app, as well as some configuration.
 type AppInput struct {
-	// AppUserMapper configures custom account mapping for uplift.
-	AppUserMapper *AppUserMapper `json:"appUserMapper,omitempty"`
 	// How this app models access. Derived during uplift from the app's resource type traits.
 	//  Sparse ACL feature.
 	AccessModel *AccessModel `json:"accessModel,omitempty"`
+	// Key/value metadata. Up to 16 entries; keys 1-128 chars; values 0-256
+	//  chars; URL-safe ASCII. Keys starting with `c1/` are reserved.
+	//
+	//  Updates have PATCH semantics: keys absent from the request are
+	//  preserved; an empty value deletes the key.
+	//
+	//  Well-known keys: `managed_by`, `iac_workspace`,
+	//  `iac_resource_address`, `iac_tool_version`.
+	Annotations   map[string]string   `json:"annotations,omitempty"`
+	AppUserMapper *AppUserMapperInput `json:"appUserMapper,omitempty"`
 	// The ID of the Certify Policy associated with this App.
 	CertifyPolicyID *string `json:"certifyPolicyId,omitempty"`
 	// The connectorVersion field.
@@ -354,17 +386,12 @@ type AppInput struct {
 	IsManuallyManaged *bool `json:"isManuallyManaged,omitempty"`
 	// The cost of an app per-seat, so that total cost can be calculated by the grant count.
 	MonthlyCostUsd *int `json:"monthlyCostUsd,omitempty"`
+	// When enabled, revoking a grant also revokes the grants that source it.
+	RevokeGrantSources *bool `json:"revokeGrantSources,omitempty"`
 	// The ID of the Revoke Policy associated with this App.
 	RevokePolicyID *string `json:"revokePolicyId,omitempty"`
 	// The strictAccessEntitlementProvisioning field.
 	StrictAccessEntitlementProvisioning *bool `json:"strictAccessEntitlementProvisioning,omitempty"`
-}
-
-func (a *AppInput) GetAppUserMapper() *AppUserMapper {
-	if a == nil {
-		return nil
-	}
-	return a.AppUserMapper
 }
 
 func (a *AppInput) GetAccessModel() *AccessModel {
@@ -372,6 +399,20 @@ func (a *AppInput) GetAccessModel() *AccessModel {
 		return nil
 	}
 	return a.AccessModel
+}
+
+func (a *AppInput) GetAnnotations() map[string]string {
+	if a == nil {
+		return nil
+	}
+	return a.Annotations
+}
+
+func (a *AppInput) GetAppUserMapper() *AppUserMapperInput {
+	if a == nil {
+		return nil
+	}
+	return a.AppUserMapper
 }
 
 func (a *AppInput) GetCertifyPolicyID() *string {
@@ -456,6 +497,13 @@ func (a *AppInput) GetMonthlyCostUsd() *int {
 		return nil
 	}
 	return a.MonthlyCostUsd
+}
+
+func (a *AppInput) GetRevokeGrantSources() *bool {
+	if a == nil {
+		return nil
+	}
+	return a.RevokeGrantSources
 }
 
 func (a *AppInput) GetRevokePolicyID() *string {

@@ -43,27 +43,22 @@ func (e *WaitInstanceState) IsExact() bool {
 //   - timedOut
 //   - skipped
 type WaitInstance struct {
-	// The ConditionSucceeded message.
-	ConditionSucceeded *ConditionSucceeded `json:"succeeded,omitempty"`
-	// The ConditionTimedOut message.
-	ConditionTimedOut *ConditionTimedOut `json:"timedOut,omitempty"`
-	// The SkippedAction object describes the outcome of a policy step that has been skipped.
-	SkippedAction *SkippedAction `json:"skipped,omitempty"`
-	// Used by the policy engine to describe an instantiated condition to wait on.
-	WaitConditionInstance *WaitConditionInstance `json:"condition,omitempty"`
-	// The WaitUntilTimeInstance message.
-	WaitUntilTimeInstance *WaitUntilTimeInstance `json:"untilTime,omitempty"`
 	// The comment to post on first failed check.
 	CommentOnFirstWait *string `json:"commentOnFirstWait,omitempty"`
 	// The comment to post if we timeout.
-	CommentOnTimeout *string `json:"commentOnTimeout,omitempty"`
+	CommentOnTimeout *string                `json:"commentOnTimeout,omitempty"`
+	Condition        *WaitConditionInstance `json:"condition,omitempty"`
 	// The name field.
-	Name             *string    `json:"name,omitempty"`
-	StartedWaitingAt *time.Time `json:"startedWaitingAt,omitempty"`
+	Name             *string        `json:"name,omitempty"`
+	Skipped          *SkippedAction `json:"skipped,omitempty"`
+	StartedWaitingAt *time.Time     `json:"startedWaitingAt,omitempty"`
 	// The state field.
-	State           *WaitInstanceState `json:"state,omitempty"`
-	Timeout         *time.Time         `json:"timeout,omitempty"`
-	TimeoutDuration *string            `json:"timeoutDuration,omitempty"`
+	State           *WaitInstanceState     `json:"state,omitempty"`
+	Succeeded       *ConditionSucceeded    `json:"succeeded,omitempty"`
+	TimedOut        *ConditionTimedOut     `json:"timedOut,omitempty"`
+	Timeout         *time.Time             `json:"timeout,omitempty"`
+	TimeoutDuration *string                `json:"timeoutDuration,omitempty"`
+	UntilTime       *WaitUntilTimeInstance `json:"untilTime,omitempty"`
 }
 
 func (w WaitInstance) MarshalJSON() ([]byte, error) {
@@ -75,41 +70,6 @@ func (w *WaitInstance) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
-}
-
-func (w *WaitInstance) GetConditionSucceeded() *ConditionSucceeded {
-	if w == nil {
-		return nil
-	}
-	return w.ConditionSucceeded
-}
-
-func (w *WaitInstance) GetConditionTimedOut() *ConditionTimedOut {
-	if w == nil {
-		return nil
-	}
-	return w.ConditionTimedOut
-}
-
-func (w *WaitInstance) GetSkippedAction() *SkippedAction {
-	if w == nil {
-		return nil
-	}
-	return w.SkippedAction
-}
-
-func (w *WaitInstance) GetWaitConditionInstance() *WaitConditionInstance {
-	if w == nil {
-		return nil
-	}
-	return w.WaitConditionInstance
-}
-
-func (w *WaitInstance) GetWaitUntilTimeInstance() *WaitUntilTimeInstance {
-	if w == nil {
-		return nil
-	}
-	return w.WaitUntilTimeInstance
 }
 
 func (w *WaitInstance) GetCommentOnFirstWait() *string {
@@ -126,11 +86,25 @@ func (w *WaitInstance) GetCommentOnTimeout() *string {
 	return w.CommentOnTimeout
 }
 
+func (w *WaitInstance) GetCondition() *WaitConditionInstance {
+	if w == nil {
+		return nil
+	}
+	return w.Condition
+}
+
 func (w *WaitInstance) GetName() *string {
 	if w == nil {
 		return nil
 	}
 	return w.Name
+}
+
+func (w *WaitInstance) GetSkipped() *SkippedAction {
+	if w == nil {
+		return nil
+	}
+	return w.Skipped
 }
 
 func (w *WaitInstance) GetStartedWaitingAt() *time.Time {
@@ -147,6 +121,20 @@ func (w *WaitInstance) GetState() *WaitInstanceState {
 	return w.State
 }
 
+func (w *WaitInstance) GetSucceeded() *ConditionSucceeded {
+	if w == nil {
+		return nil
+	}
+	return w.Succeeded
+}
+
+func (w *WaitInstance) GetTimedOut() *ConditionTimedOut {
+	if w == nil {
+		return nil
+	}
+	return w.TimedOut
+}
+
 func (w *WaitInstance) GetTimeout() *time.Time {
 	if w == nil {
 		return nil
@@ -159,4 +147,11 @@ func (w *WaitInstance) GetTimeoutDuration() *string {
 		return nil
 	}
 	return w.TimeoutDuration
+}
+
+func (w *WaitInstance) GetUntilTime() *WaitUntilTimeInstance {
+	if w == nil {
+		return nil
+	}
+	return w.UntilTime
 }

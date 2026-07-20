@@ -4,7 +4,6 @@ package shared
 
 // The FunctionsServiceUpdateFunctionRequest message.
 type FunctionsServiceUpdateFunctionRequest struct {
-	// Function represents a customer-provided code extension in the API
 	Function   *FunctionInput `json:"function,omitempty"`
 	UpdateMask *string        `json:"updateMask,omitempty"`
 }

@@ -2,15 +2,15 @@
 
 package shared
 
-// SearchUserOwnersResponse is the response for searching user ownership sources.
+// SearchUserOwnersResponse is the response for searching user ownership sources on a user (service account).
 type SearchUserOwnersResponse struct {
 	// The list field.
-	List []AppOwnerUser `json:"list,omitempty"`
+	List []UserOwnerUser `json:"list,omitempty"`
 	// The nextPageToken field.
 	NextPageToken *string `json:"nextPageToken,omitempty"`
 }
 
-func (s *SearchUserOwnersResponse) GetList() []AppOwnerUser {
+func (s *SearchUserOwnersResponse) GetList() []UserOwnerUser {
 	if s == nil {
 		return nil
 	}

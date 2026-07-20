@@ -40,12 +40,10 @@ func (g *GetAutomationExecutionResponseExpanded) GetAdditionalProperties() map[s
 
 // The GetAutomationExecutionResponse message.
 type GetAutomationExecutionResponse struct {
-	// The AutomationExecution message.
 	AutomationExecution *AutomationExecution `json:"automationExecution,omitempty"`
-	// The AutomationExecutionView message.
-	AutomationExecutionView *AutomationExecutionView `json:"view,omitempty"`
 	// Related objects requested via the expand mask.
 	Expanded []GetAutomationExecutionResponseExpanded `json:"expanded,omitempty"`
+	View     *AutomationExecutionView                 `json:"view,omitempty"`
 }
 
 func (g *GetAutomationExecutionResponse) GetAutomationExecution() *AutomationExecution {
@@ -55,16 +53,16 @@ func (g *GetAutomationExecutionResponse) GetAutomationExecution() *AutomationExe
 	return g.AutomationExecution
 }
 
-func (g *GetAutomationExecutionResponse) GetAutomationExecutionView() *AutomationExecutionView {
-	if g == nil {
-		return nil
-	}
-	return g.AutomationExecutionView
-}
-
 func (g *GetAutomationExecutionResponse) GetExpanded() []GetAutomationExecutionResponseExpanded {
 	if g == nil {
 		return nil
 	}
 	return g.Expanded
+}
+
+func (g *GetAutomationExecutionResponse) GetView() *AutomationExecutionView {
+	if g == nil {
+		return nil
+	}
+	return g.View
 }

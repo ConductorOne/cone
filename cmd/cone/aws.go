@@ -606,9 +606,33 @@ func requireAWSCLI() error {
 	return nil
 }
 
+// awsChildEnv builds the environment for an AWS CLI child process, dropping the
+// profile selectors that would route that child back into cone.
+//
+// createAWSProfile writes `credential_process = cone aws credentials "<profile>"`
+// into ~/.aws/config. An `aws` child that inherits AWS_PROFILE (or AWS_DEFAULT_PROFILE)
+// therefore resolves that profile's credential_process and re-invokes cone, which
+// shells out to `aws` again — unbounded (IGA-3789). Callers that need no profile at
+// all should also pass overrides pinning AWS_CONFIG_FILE away from ~/.aws/config, so
+// a [default] profile carrying the same credential_process cannot be picked up either.
+func awsChildEnv(overrides ...string) []string {
+	parent := os.Environ()
+	env := make([]string, 0, len(parent)+len(overrides))
+	for _, kv := range parent {
+		if strings.HasPrefix(kv, "AWS_PROFILE=") || strings.HasPrefix(kv, "AWS_DEFAULT_PROFILE=") {
+			continue
+		}
+		env = append(env, kv)
+	}
+	return append(env, overrides...)
+}
+
 func ssoLogin(ctx context.Context) error {
 	fmt.Fprintf(os.Stderr, "AWS SSO session expired. Logging in...\n")
 	loginCmd := exec.CommandContext(ctx, "aws", "sso", "login", "--sso-session", "cone-sso")
+	// `sso login` still needs ~/.aws/config for the [sso-session cone-sso] block,
+	// so only the profile selectors are dropped here.
+	loginCmd.Env = awsChildEnv()
 	loginCmd.Stdin = os.Stdin
 	loginCmd.Stdout = os.Stderr
 	loginCmd.Stderr = os.Stderr
@@ -622,6 +646,15 @@ func getRoleCredentials(ctx context.Context, token, accountID, roleName, ssoRegi
 		"--role-name", roleName,
 		"--region", ssoRegion,
 		"--output", "json")
+
+	// Everything this call needs arrives as a flag: it authenticates with the SSO
+	// bearer token, not with resolved IAM credentials. Pinning the config and
+	// credentials files away from ~/.aws leaves no profile — named or [default] —
+	// whose credential_process could re-enter cone.
+	cmd.Env = awsChildEnv(
+		"AWS_CONFIG_FILE="+os.DevNull,
+		"AWS_SHARED_CREDENTIALS_FILE="+os.DevNull,
+	)
 
 	var stdout, stderr bytes.Buffer
 	cmd.Stdout = &stdout

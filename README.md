@@ -4,17 +4,19 @@ Welcome to `cone` – a robust command-line tool from ConductorOne! Written in G
 
 # Installation
 
-Getting `cone` on your system is straightforward. You can choose one of the following two methods:
+Cone releases are available from the [official distribution center](https://dist.conductorone.com/ConductorOne/cone). Each version provides signed macOS, Linux, and Windows artifacts with checksums, provenance, and SBOM attestations.
 
-- [Download from GitHub releases](https://github.com/ConductorOne/cone/releases)
-
-- Install via [Homebrew](https://brew.sh/): If you have Homebrew installed on your system, you can use the following command to install `cone`:
+Install with [Homebrew](https://brew.sh/):
 
 ```shell
 $ brew install conductorone/cone/cone
 ```
 
-ConductorOne provides `cone` binaries for popular operating systems including macOS, Windows, and Linux on the x86 and ARM platforms. If your platform is not listed, please [contact us](mailto:support@conductorone.com) or build from source.
+Run Cone in a container with a pinned Public ECR version:
+
+```shell
+$ docker pull public.ecr.aws/conductorone/cone:<version>
+```
 
 # Authentication
 

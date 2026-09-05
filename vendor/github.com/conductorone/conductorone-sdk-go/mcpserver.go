@@ -871,7 +871,7 @@ func (s *MCPServer) GetCatalog(ctx context.Context, request operations.C1APIAiGo
 }
 
 // List
-// List retrieves MCP servers for an app.
+// List retrieves MCP servers, optionally narrowed to an app.
 func (s *MCPServer) List(ctx context.Context, request operations.C1APIAiGovernanceV1MCPServerServiceListRequest, opts ...operations.Option) (*operations.C1APIAiGovernanceV1MCPServerServiceListResponse, error) {
 	o := operations.Options{}
 	supportedOptions := []string{

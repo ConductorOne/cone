@@ -10,7 +10,7 @@ import (
 type C1APIAppV1AppsCreateResponse struct {
 	// HTTP response content type for this operation
 	ContentType string
-	// Returns the new app's values.
+	// CreateAppResponse contains the newly created application.
 	CreateAppResponse *shared.CreateAppResponse
 	// HTTP response status code for this operation
 	StatusCode int

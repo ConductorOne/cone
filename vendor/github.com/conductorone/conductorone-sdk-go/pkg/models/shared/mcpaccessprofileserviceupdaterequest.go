@@ -4,11 +4,11 @@ package shared
 
 // MCPAccessProfileServiceUpdateRequest updates an existing MCP access profile.
 type MCPAccessProfileServiceUpdateRequest struct {
-	Profile    *MCPAccessProfile `json:"profile,omitempty"`
-	UpdateMask *string           `json:"updateMask,omitempty"`
+	Profile    *MCPAccessProfileInput `json:"profile,omitempty"`
+	UpdateMask *string                `json:"updateMask,omitempty"`
 }
 
-func (m *MCPAccessProfileServiceUpdateRequest) GetProfile() *MCPAccessProfile {
+func (m *MCPAccessProfileServiceUpdateRequest) GetProfile() *MCPAccessProfileInput {
 	if m == nil {
 		return nil
 	}

@@ -9,7 +9,9 @@ package shared
 //   - passwordField
 //   - selectField
 //   - pickerField
+//   - dateField
 type FormStringField struct {
+	DateField *DateField `json:"dateField,omitempty"`
 	// The defaultValue field.
 	DefaultValue  *string        `json:"defaultValue,omitempty"`
 	PasswordField *PasswordField `json:"passwordField,omitempty"`
@@ -19,6 +21,13 @@ type FormStringField struct {
 	Rules       *StringRules `json:"rules,omitempty"`
 	SelectField *SelectField `json:"selectField,omitempty"`
 	TextField   *TextField   `json:"textField,omitempty"`
+}
+
+func (f *FormStringField) GetDateField() *DateField {
+	if f == nil {
+		return nil
+	}
+	return f.DateField
 }
 
 func (f *FormStringField) GetDefaultValue() *string {

@@ -69,6 +69,10 @@ type A2UISurface struct {
 	// The dataModelJson field.
 	DataModelJSON *string    `json:"dataModelJson,omitempty"`
 	DeletedAt     *time.Time `json:"deletedAt,omitempty"`
+	// True when this surface has executable report source behind it. The client
+	//  needs only saveability; scratch Function and commit identities stay private.
+	HasReportProgram *bool                 `json:"hasReportProgram,omitempty"`
+	ReportEditTarget *A2UIReportEditTarget `json:"reportEditTarget,omitempty"`
 	// The role field.
 	Role *A2UISurfaceRole `json:"role,omitempty"`
 	// The schemaVersion field.
@@ -135,6 +139,20 @@ func (a *A2UISurface) GetDeletedAt() *time.Time {
 		return nil
 	}
 	return a.DeletedAt
+}
+
+func (a *A2UISurface) GetHasReportProgram() *bool {
+	if a == nil {
+		return nil
+	}
+	return a.HasReportProgram
+}
+
+func (a *A2UISurface) GetReportEditTarget() *A2UIReportEditTarget {
+	if a == nil {
+		return nil
+	}
+	return a.ReportEditTarget
 }
 
 func (a *A2UISurface) GetRole() *A2UISurfaceRole {

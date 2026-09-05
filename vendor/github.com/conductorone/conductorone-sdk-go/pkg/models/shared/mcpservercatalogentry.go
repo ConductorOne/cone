@@ -164,6 +164,12 @@ type MCPServerCatalogEntry struct {
 	//
 	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
 	DefaultTokenURL *string `json:"defaultTokenUrl,omitempty"`
+	// Curated default tool-name prefix an admin gets when they register this
+	//  catalog entry and set no custom prefix: the impl's declared server_prefix,
+	//  else its service_name. Shown as a placeholder in the create wizard's tool
+	//  prefix field. Empty when the impl declares no curated default. Mirrors the
+	//  read-only default_tool_prefix on MCPServerView surfaced in the edit flow.
+	DefaultToolPrefix *string `json:"defaultToolPrefix,omitempty"`
 	// Short description of what the MCP server does.
 	Description *string `json:"description,omitempty"`
 	// Human-readable display name.
@@ -247,6 +253,13 @@ func (m *MCPServerCatalogEntry) GetDefaultTokenURL() *string {
 		return nil
 	}
 	return m.DefaultTokenURL
+}
+
+func (m *MCPServerCatalogEntry) GetDefaultToolPrefix() *string {
+	if m == nil {
+		return nil
+	}
+	return m.DefaultToolPrefix
 }
 
 func (m *MCPServerCatalogEntry) GetDescription() *string {

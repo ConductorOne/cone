@@ -2,6 +2,32 @@
 
 package shared
 
+// GrantSourceFilter - Restricts the step to grants of either DIRECT (grants the user holds directly,
+//
+//	including grants that are also inherited) or UNSPECIFIED (all grants).
+//	Composes with every inclusion mode, including inclusion_list_cel.
+type GrantSourceFilter string
+
+const (
+	GrantSourceFilterGrantSourceFilterUnspecified GrantSourceFilter = "GRANT_SOURCE_FILTER_UNSPECIFIED"
+	GrantSourceFilterGrantSourceFilterDirect      GrantSourceFilter = "GRANT_SOURCE_FILTER_DIRECT"
+)
+
+func (e GrantSourceFilter) ToPointer() *GrantSourceFilter {
+	return &e
+}
+
+// IsExact returns true if the value matches a known enum value, false otherwise.
+func (e *GrantSourceFilter) IsExact() bool {
+	if e != nil {
+		switch *e {
+		case "GRANT_SOURCE_FILTER_UNSPECIFIED", "GRANT_SOURCE_FILTER_DIRECT":
+			return true
+		}
+	}
+	return false
+}
+
 // The CreateRevokeTasksV2 message.
 //
 // This message contains a oneof named user. Only a single field of the following list may be set at a time:
@@ -22,10 +48,14 @@ package shared
 //   - exclusionCriteria
 //   - exclusionListCel
 type CreateRevokeTasksV2 struct {
-	ExclusionCriteria   *EntitlementExclusionCriteria   `json:"exclusionCriteria,omitempty"`
-	ExclusionList       *EntitlementExclusionList       `json:"exclusionList,omitempty"`
-	ExclusionListCel    *EntitlementExclusionListCel    `json:"exclusionListCel,omitempty"`
-	ExclusionNone       *EntitlementExclusionNone       `json:"exclusionNone,omitempty"`
+	ExclusionCriteria *EntitlementExclusionCriteria `json:"exclusionCriteria,omitempty"`
+	ExclusionList     *EntitlementExclusionList     `json:"exclusionList,omitempty"`
+	ExclusionListCel  *EntitlementExclusionListCel  `json:"exclusionListCel,omitempty"`
+	ExclusionNone     *EntitlementExclusionNone     `json:"exclusionNone,omitempty"`
+	// Restricts the step to grants of either DIRECT (grants the user holds directly,
+	//  including grants that are also inherited) or UNSPECIFIED (all grants).
+	//  Composes with every inclusion mode, including inclusion_list_cel.
+	GrantSourceFilter   *GrantSourceFilter              `json:"grantSourceFilter,omitempty"`
 	InclusionAccessOnly *EntitlementInclusionAccessOnly `json:"inclusionAccessOnly,omitempty"`
 	InclusionAll        *EntitlementInclusionAll        `json:"inclusionAll,omitempty"`
 	InclusionCriteria   *EntitlementInclusionCriteria   `json:"inclusionCriteria,omitempty"`
@@ -68,6 +98,13 @@ func (c *CreateRevokeTasksV2) GetExclusionNone() *EntitlementExclusionNone {
 		return nil
 	}
 	return c.ExclusionNone
+}
+
+func (c *CreateRevokeTasksV2) GetGrantSourceFilter() *GrantSourceFilter {
+	if c == nil {
+		return nil
+	}
+	return c.GrantSourceFilter
 }
 
 func (c *CreateRevokeTasksV2) GetInclusionAccessOnly() *EntitlementInclusionAccessOnly {

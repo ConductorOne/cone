@@ -13,15 +13,17 @@ package shared
 //   - externalTicket
 //   - unconfigured
 //   - action
+//   - devicePlacement
 type ProvisionPolicyInput struct {
-	Action         *ActionProvision         `json:"action,omitempty"`
-	Connector      *ConnectorProvision      `json:"connector,omitempty"`
-	Delegated      *DelegatedProvision      `json:"delegated,omitempty"`
-	ExternalTicket *ExternalTicketProvision `json:"externalTicket,omitempty"`
-	Manual         *ManualProvision         `json:"manual,omitempty"`
-	MultiStep      *MultiStep               `json:"multiStep,omitempty"`
-	Unconfigured   *UnconfiguredProvision   `json:"unconfigured,omitempty"`
-	Webhook        *WebhookProvision        `json:"webhook,omitempty"`
+	Action          *ActionProvision          `json:"action,omitempty"`
+	Connector       *ConnectorProvision       `json:"connector,omitempty"`
+	Delegated       *DelegatedProvision       `json:"delegated,omitempty"`
+	DevicePlacement *DevicePlacementProvision `json:"devicePlacement,omitempty"`
+	ExternalTicket  *ExternalTicketProvision  `json:"externalTicket,omitempty"`
+	Manual          *ManualProvision          `json:"manual,omitempty"`
+	MultiStep       *MultiStep                `json:"multiStep,omitempty"`
+	Unconfigured    *UnconfiguredProvision    `json:"unconfigured,omitempty"`
+	Webhook         *WebhookProvision         `json:"webhook,omitempty"`
 }
 
 func (p *ProvisionPolicyInput) GetAction() *ActionProvision {
@@ -43,6 +45,13 @@ func (p *ProvisionPolicyInput) GetDelegated() *DelegatedProvision {
 		return nil
 	}
 	return p.Delegated
+}
+
+func (p *ProvisionPolicyInput) GetDevicePlacement() *DevicePlacementProvision {
+	if p == nil {
+		return nil
+	}
+	return p.DevicePlacement
 }
 
 func (p *ProvisionPolicyInput) GetExternalTicket() *ExternalTicketProvision {

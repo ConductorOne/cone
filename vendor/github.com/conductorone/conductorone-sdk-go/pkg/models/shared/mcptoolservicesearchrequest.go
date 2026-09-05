@@ -55,21 +55,21 @@ func (e *MCPToolServiceSearchRequestSortBy) IsExact() bool {
 	return false
 }
 
-// SortDirection - Direction for sort_by. UNSPECIFIED means ascending.
-type SortDirection string
+// MCPToolServiceSearchRequestSortDirection - Direction for sort_by. UNSPECIFIED means ascending.
+type MCPToolServiceSearchRequestSortDirection string
 
 const (
-	SortDirectionSortDirectionUnspecified SortDirection = "SORT_DIRECTION_UNSPECIFIED"
-	SortDirectionSortDirectionAsc         SortDirection = "SORT_DIRECTION_ASC"
-	SortDirectionSortDirectionDesc        SortDirection = "SORT_DIRECTION_DESC"
+	MCPToolServiceSearchRequestSortDirectionSortDirectionUnspecified MCPToolServiceSearchRequestSortDirection = "SORT_DIRECTION_UNSPECIFIED"
+	MCPToolServiceSearchRequestSortDirectionSortDirectionAsc         MCPToolServiceSearchRequestSortDirection = "SORT_DIRECTION_ASC"
+	MCPToolServiceSearchRequestSortDirectionSortDirectionDesc        MCPToolServiceSearchRequestSortDirection = "SORT_DIRECTION_DESC"
 )
 
-func (e SortDirection) ToPointer() *SortDirection {
+func (e MCPToolServiceSearchRequestSortDirection) ToPointer() *MCPToolServiceSearchRequestSortDirection {
 	return &e
 }
 
 // IsExact returns true if the value matches a known enum value, false otherwise.
-func (e *SortDirection) IsExact() bool {
+func (e *MCPToolServiceSearchRequestSortDirection) IsExact() bool {
 	if e != nil {
 		switch *e {
 		case "SORT_DIRECTION_UNSPECIFIED", "SORT_DIRECTION_ASC", "SORT_DIRECTION_DESC":
@@ -79,22 +79,22 @@ func (e *SortDirection) IsExact() bool {
 	return false
 }
 
-type StateFilter string
+type MCPToolServiceSearchRequestStateFilter string
 
 const (
-	StateFilterMcpToolStateUnspecified   StateFilter = "MCP_TOOL_STATE_UNSPECIFIED"
-	StateFilterMcpToolStatePendingReview StateFilter = "MCP_TOOL_STATE_PENDING_REVIEW"
-	StateFilterMcpToolStateApproved      StateFilter = "MCP_TOOL_STATE_APPROVED"
-	StateFilterMcpToolStateDisabled      StateFilter = "MCP_TOOL_STATE_DISABLED"
-	StateFilterMcpToolStateRemoved       StateFilter = "MCP_TOOL_STATE_REMOVED"
+	MCPToolServiceSearchRequestStateFilterMcpToolStateUnspecified   MCPToolServiceSearchRequestStateFilter = "MCP_TOOL_STATE_UNSPECIFIED"
+	MCPToolServiceSearchRequestStateFilterMcpToolStatePendingReview MCPToolServiceSearchRequestStateFilter = "MCP_TOOL_STATE_PENDING_REVIEW"
+	MCPToolServiceSearchRequestStateFilterMcpToolStateApproved      MCPToolServiceSearchRequestStateFilter = "MCP_TOOL_STATE_APPROVED"
+	MCPToolServiceSearchRequestStateFilterMcpToolStateDisabled      MCPToolServiceSearchRequestStateFilter = "MCP_TOOL_STATE_DISABLED"
+	MCPToolServiceSearchRequestStateFilterMcpToolStateRemoved       MCPToolServiceSearchRequestStateFilter = "MCP_TOOL_STATE_REMOVED"
 )
 
-func (e StateFilter) ToPointer() *StateFilter {
+func (e MCPToolServiceSearchRequestStateFilter) ToPointer() *MCPToolServiceSearchRequestStateFilter {
 	return &e
 }
 
 // IsExact returns true if the value matches a known enum value, false otherwise.
-func (e *StateFilter) IsExact() bool {
+func (e *MCPToolServiceSearchRequestStateFilter) IsExact() bool {
 	if e != nil {
 		switch *e {
 		case "MCP_TOOL_STATE_UNSPECIFIED", "MCP_TOOL_STATE_PENDING_REVIEW", "MCP_TOOL_STATE_APPROVED", "MCP_TOOL_STATE_DISABLED", "MCP_TOOL_STATE_REMOVED":
@@ -150,6 +150,11 @@ type MCPToolServiceSearchRequest struct {
 	//  raw emit time per tool. Costs one Dynamo Limit(1) read per row;
 	//  callers that don't render the "Last used" column should leave false.
 	IncludeLastCalledAt *bool `json:"includeLastCalledAt,omitempty"`
+	// When true, populate the computed `requestable` / `requestable_via_toolset`
+	//  fields on each tool (an extra catalog-membership lookup). Off by default so
+	//  callers that don't render requestability — e.g. tool-picker and
+	//  tools-by-toolset views — don't pay for it.
+	IncludeRequestable *bool `json:"includeRequestable,omitempty"`
 	// Page size (max 100).
 	PageSize *int `json:"pageSize,omitempty"`
 	// Page token for pagination.
@@ -161,9 +166,9 @@ type MCPToolServiceSearchRequest struct {
 	// Sort order for results. UNSPECIFIED sorts by tool name ascending.
 	SortBy *MCPToolServiceSearchRequestSortBy `json:"sortBy,omitempty"`
 	// Direction for sort_by. UNSPECIFIED means ascending.
-	SortDirection *SortDirection `json:"sortDirection,omitempty"`
+	SortDirection *MCPToolServiceSearchRequestSortDirection `json:"sortDirection,omitempty"`
 	// Optional filter by tool state. 0 (UNSPECIFIED) means no filter.
-	StateFilter []StateFilter `json:"stateFilter,omitempty"`
+	StateFilter []MCPToolServiceSearchRequestStateFilter `json:"stateFilter,omitempty"`
 	// Optional filter by visibility. 0 (UNSPECIFIED) means no filter.
 	VisibilityFilter []VisibilityFilter `json:"visibilityFilter,omitempty"`
 }
@@ -210,6 +215,13 @@ func (m *MCPToolServiceSearchRequest) GetIncludeLastCalledAt() *bool {
 	return m.IncludeLastCalledAt
 }
 
+func (m *MCPToolServiceSearchRequest) GetIncludeRequestable() *bool {
+	if m == nil {
+		return nil
+	}
+	return m.IncludeRequestable
+}
+
 func (m *MCPToolServiceSearchRequest) GetPageSize() *int {
 	if m == nil {
 		return nil
@@ -245,14 +257,14 @@ func (m *MCPToolServiceSearchRequest) GetSortBy() *MCPToolServiceSearchRequestSo
 	return m.SortBy
 }
 
-func (m *MCPToolServiceSearchRequest) GetSortDirection() *SortDirection {
+func (m *MCPToolServiceSearchRequest) GetSortDirection() *MCPToolServiceSearchRequestSortDirection {
 	if m == nil {
 		return nil
 	}
 	return m.SortDirection
 }
 
-func (m *MCPToolServiceSearchRequest) GetStateFilter() []StateFilter {
+func (m *MCPToolServiceSearchRequest) GetStateFilter() []MCPToolServiceSearchRequestStateFilter {
 	if m == nil {
 		return nil
 	}

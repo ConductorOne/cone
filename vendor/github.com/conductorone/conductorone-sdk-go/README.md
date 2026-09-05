@@ -77,6 +77,7 @@ func main() {
 ### [A2Ui](docs/sdks/a2ui/README.md)
 
 * [CreateSurfaceFeedback](docs/sdks/a2ui/README.md#createsurfacefeedback) - Create Surface Feedback
+* [GetSurfaceProvenance](docs/sdks/a2ui/README.md#getsurfaceprovenance) - Get Surface Provenance
 * [ListSurfaceFeedback](docs/sdks/a2ui/README.md#listsurfacefeedback) - List Surface Feedback
 * [ListSurfaces](docs/sdks/a2ui/README.md#listsurfaces) - List Surfaces
 * [SubmitAction](docs/sdks/a2ui/README.md#submitaction) - Submit Action
@@ -95,6 +96,14 @@ func main() {
 * [Get](docs/sdks/accessreview/README.md#get) - Get
 * [List](docs/sdks/accessreview/README.md#list) - List
 * [Update](docs/sdks/accessreview/README.md#update) - Update
+
+### [AccessReviewActions](docs/sdks/accessreviewactions/README.md)
+
+* [GenerateReport](docs/sdks/accessreviewactions/README.md#generatereport) - Generate Report
+
+### [AccessReviewReport](docs/sdks/accessreviewreport/README.md)
+
+* [List](docs/sdks/accessreviewreport/README.md#list) - List
 
 ### [AccessReviewSetupEntitlement](docs/sdks/accessreviewsetupentitlement/README.md)
 
@@ -131,6 +140,16 @@ func main() {
 * [CancelAppAccessRequestsDefaults](docs/sdks/appaccessrequestsdefaults/README.md#cancelappaccessrequestsdefaults) - Cancel App Access Requests Defaults
 * [CreateAppAccessRequestsDefaults](docs/sdks/appaccessrequestsdefaults/README.md#createappaccessrequestsdefaults) - Create App Access Requests Defaults
 * [GetAppAccessRequestsDefaults](docs/sdks/appaccessrequestsdefaults/README.md#getappaccessrequestsdefaults) - Get App Access Requests Defaults
+
+### [AppCap](docs/sdks/appcap/README.md)
+
+* [Delete](docs/sdks/appcap/README.md#delete) - Delete
+* [Get](docs/sdks/appcap/README.md#get) - Get
+* [List](docs/sdks/appcap/README.md#list) - List
+* [ListHistory](docs/sdks/appcap/README.md#listhistory) - List History
+* [SetLimit](docs/sdks/appcap/README.md#setlimit) - Set Limit
+* [Suspend](docs/sdks/appcap/README.md#suspend) - Suspend
+* [Unsuspend](docs/sdks/appcap/README.md#unsuspend) - Unsuspend
 
 ### [AppEntitlementMonitorBinding](docs/sdks/appentitlementmonitorbinding/README.md)
 
@@ -196,6 +215,7 @@ func main() {
 * [SearchAppEntitlementsWithExpired](docs/sdks/appentitlementsearch/README.md#searchappentitlementswithexpired) - Search App Entitlements With Expired
 * [SearchGrants](docs/sdks/appentitlementsearch/README.md#searchgrants) - Search Grants
 * [SearchGraph](docs/sdks/appentitlementsearch/README.md#searchgraph) - Search Graph
+* [SearchReachableResourcesForUser](docs/sdks/appentitlementsearch/README.md#searchreachableresourcesforuser) - Search Reachable Resources For User
 
 ### [AppEntitlementsProxy](docs/sdks/appentitlementsproxy/README.md)
 
@@ -210,6 +230,12 @@ func main() {
 * [SearchGrantFeed](docs/sdks/appentitlementuserbinding/README.md#searchgrantfeed) - Search Grant Feed
 * [SearchPastGrants](docs/sdks/appentitlementuserbinding/README.md#searchpastgrants) - Search Past Grants
 * [UpdateGrantDuration](docs/sdks/appentitlementuserbinding/README.md#updategrantduration) - Update Grant Duration
+
+### [AppManagedState](docs/sdks/appmanagedstate/README.md)
+
+* [Get](docs/sdks/appmanagedstate/README.md#get) - Get
+* [List](docs/sdks/appmanagedstate/README.md#list) - List
+* [Promote](docs/sdks/appmanagedstate/README.md#promote) - Promote
 
 ### [AppOwners](docs/sdks/appowners/README.md)
 
@@ -470,6 +496,10 @@ func main() {
 
 * [Search](docs/sdks/externalclientsearch/README.md#search) - NOTE: Searches external client grants for all users
 
+### [Feedback](docs/sdks/feedback/README.md)
+
+* [CreateFeedback](docs/sdks/feedback/README.md#createfeedback) - Create Feedback
+
 ### [Finding](docs/sdks/finding/README.md)
 
 * [BulkCreateFindingTasks](docs/sdks/finding/README.md#bulkcreatefindingtasks) - Bulk Create Finding Tasks
@@ -477,6 +507,7 @@ func main() {
 * [CreateFinding](docs/sdks/finding/README.md#createfinding) - Create Finding
 * [CreateFindingTask](docs/sdks/finding/README.md#createfindingtask) - Create Finding Task
 * [GetFinding](docs/sdks/finding/README.md#getfinding) - Get Finding
+* [UpdateFindingAssignee](docs/sdks/finding/README.md#updatefindingassignee) - Update Finding Assignee
 * [UpdateFindingState](docs/sdks/finding/README.md#updatefindingstate) - Update Finding State
 
 ### [FindingAudit](docs/sdks/findingaudit/README.md)
@@ -494,6 +525,11 @@ func main() {
 ### [FindingSearch](docs/sdks/findingsearch/README.md)
 
 * [Search](docs/sdks/findingsearch/README.md#search) - Search
+
+### [FindingSettings](docs/sdks/findingsettings/README.md)
+
+* [ListFindingSettings](docs/sdks/findingsettings/README.md#listfindingsettings) - List Finding Settings
+* [UpdateFindingSettings](docs/sdks/findingsettings/README.md#updatefindingsettings) - Update Finding Settings
 
 ### [FindingTransformationRule](docs/sdks/findingtransformationrule/README.md)
 
@@ -523,6 +559,7 @@ func main() {
 ### [FunctionsInvocation](docs/sdks/functionsinvocation/README.md)
 
 * [Get](docs/sdks/functionsinvocation/README.md#get) - Get
+* [GetResultDownloadURL](docs/sdks/functionsinvocation/README.md#getresultdownloadurl) - Get Result Download Url
 * [List](docs/sdks/functionsinvocation/README.md#list) - List
 
 ### [FunctionsInvocationSearch](docs/sdks/functionsinvocationsearch/README.md)
@@ -532,6 +569,45 @@ func main() {
 ### [FunctionsSearch](docs/sdks/functionssearch/README.md)
 
 * [Search](docs/sdks/functionssearch/README.md#search) - Search
+
+### [FundAssignment](docs/sdks/fundassignment/README.md)
+
+* [ClearExtension](docs/sdks/fundassignment/README.md#clearextension) - Clear Extension
+* [Delete](docs/sdks/fundassignment/README.md#delete) - Delete
+* [Get](docs/sdks/fundassignment/README.md#get) - Get
+* [GrantExtension](docs/sdks/fundassignment/README.md#grantextension) - Grant Extension
+* [ListHistory](docs/sdks/fundassignment/README.md#listhistory) - List History
+* [Search](docs/sdks/fundassignment/README.md#search) - Search
+* [SetLimit](docs/sdks/fundassignment/README.md#setlimit) - Set Limit
+* [Suspend](docs/sdks/fundassignment/README.md#suspend) - Suspend
+* [Unsuspend](docs/sdks/fundassignment/README.md#unsuspend) - Unsuspend
+
+### [FundPolicy](docs/sdks/fundpolicy/README.md)
+
+* [Create](docs/sdks/fundpolicy/README.md#create) - Create
+* [Delete](docs/sdks/fundpolicy/README.md#delete) - Delete
+* [FreezeTenant](docs/sdks/fundpolicy/README.md#freezetenant) - Freeze Tenant
+* [Get](docs/sdks/fundpolicy/README.md#get) - Get
+* [ListHistory](docs/sdks/fundpolicy/README.md#listhistory) - List History
+* [SetOrgCeiling](docs/sdks/fundpolicy/README.md#setorgceiling) - Set Org Ceiling
+* [UnfreezeTenant](docs/sdks/fundpolicy/README.md#unfreezetenant) - Unfreeze Tenant
+* [Update](docs/sdks/fundpolicy/README.md#update) - Update
+
+### [FundRule](docs/sdks/fundrule/README.md)
+
+* [Create](docs/sdks/fundrule/README.md#create) - Create
+* [Delete](docs/sdks/fundrule/README.md#delete) - Delete
+* [Get](docs/sdks/fundrule/README.md#get) - Get
+* [List](docs/sdks/fundrule/README.md#list) - List
+* [ListHistory](docs/sdks/fundrule/README.md#listhistory) - List History
+* [Search](docs/sdks/fundrule/README.md#search) - Search
+* [Update](docs/sdks/fundrule/README.md#update) - Update
+
+### [GatewayKey](docs/sdks/gatewaykey/README.md)
+
+* [List](docs/sdks/gatewaykey/README.md#list) - List
+* [Mint](docs/sdks/gatewaykey/README.md#mint) - Mint
+* [Revoke](docs/sdks/gatewaykey/README.md#revoke) - Revoke
 
 ### [Hooks](docs/sdks/hooks/README.md)
 
@@ -573,6 +649,7 @@ func main() {
 * [GetByAppEntitlementID](docs/sdks/mcpaccessprofile/README.md#getbyappentitlementid) - Get By App Entitlement Id
 * [List](docs/sdks/mcpaccessprofile/README.md#list) - List
 * [ListRequestableConnectors](docs/sdks/mcpaccessprofile/README.md#listrequestableconnectors) - List Requestable Connectors
+* [SearchAccessProfiles](docs/sdks/mcpaccessprofile/README.md#searchaccessprofiles) - Search Access Profiles
 * [SearchRequestableConnectors](docs/sdks/mcpaccessprofile/README.md#searchrequestableconnectors) - Search Requestable Connectors
 * [Update](docs/sdks/mcpaccessprofile/README.md#update) - Update
 
@@ -584,6 +661,14 @@ func main() {
 * [List](docs/sdks/mcpaccessprofiletoolbinding/README.md#list) - List
 * [ListProfilesByToolHistory](docs/sdks/mcpaccessprofiletoolbinding/README.md#listprofilesbytoolhistory) - List Profiles By Tool History
 * [ListToolsByProfileHistory](docs/sdks/mcpaccessprofiletoolbinding/README.md#listtoolsbyprofilehistory) - List Tools By Profile History
+
+### [MCPResource](docs/sdks/mcpresource/README.md)
+
+* [Get](docs/sdks/mcpresource/README.md#get) - Get
+* [List](docs/sdks/mcpresource/README.md#list) - List
+* [ListHistory](docs/sdks/mcpresource/README.md#listhistory) - List History
+* [Search](docs/sdks/mcpresource/README.md#search) - Search
+* [Update](docs/sdks/mcpresource/README.md#update) - Update
 
 ### [MCPServer](docs/sdks/mcpserver/README.md)
 
@@ -610,6 +695,15 @@ func main() {
 * [Search](docs/sdks/mcptool/README.md#search) - Search
 * [Update](docs/sdks/mcptool/README.md#update) - Update
 
+### [MyFundLimits](docs/sdks/myfundlimits/README.md)
+
+* [Delete](docs/sdks/myfundlimits/README.md#delete) - Delete
+* [List](docs/sdks/myfundlimits/README.md#list) - List
+* [ListHistory](docs/sdks/myfundlimits/README.md#listhistory) - List History
+* [Pause](docs/sdks/myfundlimits/README.md#pause) - Pause
+* [Resume](docs/sdks/myfundlimits/README.md#resume) - Resume
+* [SetLimit](docs/sdks/myfundlimits/README.md#setlimit) - Set Limit
+
 ### [OnboardingSettings](docs/sdks/onboardingsettings/README.md)
 
 * [Get](docs/sdks/onboardingsettings/README.md#get) - Get
@@ -635,6 +729,7 @@ func main() {
 * [Revoke](docs/sdks/papersecret/README.md#revoke) - Revoke
 * [SearchAuditEvents](docs/sdks/papersecret/README.md#searchauditevents) - Search Audit Events
 * [SearchMySecrets](docs/sdks/papersecret/README.md#searchmysecrets) - Search My Secrets
+* [SearchSecretsSharedWithMe](docs/sdks/papersecret/README.md#searchsecretssharedwithme) - Search Secrets Shared With Me
 * [SetTextContent](docs/sdks/papersecret/README.md#settextcontent) - Set Text Content
 
 ### [PaperSecretAdmin](docs/sdks/papersecretadmin/README.md)
@@ -697,6 +792,12 @@ func main() {
 * [Update](docs/sdks/principal/README.md#update) - Update
 * [UpdateCredential](docs/sdks/principal/README.md#updatecredential) - Update Credential
 
+### [ProviderCredential](docs/sdks/providercredential/README.md)
+
+* [Clear](docs/sdks/providercredential/README.md#clear) - Clear
+* [Get](docs/sdks/providercredential/README.md#get) - Get
+* [Set](docs/sdks/providercredential/README.md#set) - Set
+
 ### [RecoveryPolicy](docs/sdks/recoverypolicy/README.md)
 
 * [Create](docs/sdks/recoverypolicy/README.md#create) - Create
@@ -705,6 +806,17 @@ func main() {
 * [List](docs/sdks/recoverypolicy/README.md#list) - List
 * [Search](docs/sdks/recoverypolicy/README.md#search) - Search
 * [Update](docs/sdks/recoverypolicy/README.md#update) - Update
+
+### [Reporting](docs/sdks/reporting/README.md)
+
+* [Delete](docs/sdks/reporting/README.md#delete) - Delete
+* [Get](docs/sdks/reporting/README.md#get) - Get
+* [GetProgram](docs/sdks/reporting/README.md#getprogram) - Get Program
+* [GetRunProvenance](docs/sdks/reporting/README.md#getrunprovenance) - Get Run Provenance
+* [List](docs/sdks/reporting/README.md#list) - List
+* [Run](docs/sdks/reporting/README.md#run) - Run
+* [Save](docs/sdks/reporting/README.md#save) - Save
+* [Update](docs/sdks/reporting/README.md#update) - Update
 
 ### [RequestCatalogManagement](docs/sdks/requestcatalogmanagement/README.md)
 
@@ -724,6 +836,7 @@ func main() {
 * [ListAllEntitlementIdsPerApp](docs/sdks/requestcatalogmanagement/README.md#listallentitlementidsperapp) - List All Entitlement Ids Per App
 * [ListEntitlementsForAccess](docs/sdks/requestcatalogmanagement/README.md#listentitlementsforaccess) - List Entitlements For Access
 * [ListEntitlementsPerCatalog](docs/sdks/requestcatalogmanagement/README.md#listentitlementspercatalog) - List Entitlements Per Catalog
+* [PlanTypeChange](docs/sdks/requestcatalogmanagement/README.md#plantypechange) - Plan Type Change
 * [RemoveAccessEntitlements](docs/sdks/requestcatalogmanagement/README.md#removeaccessentitlements) - Remove Access Entitlements
 * [RemoveAppEntitlements](docs/sdks/requestcatalogmanagement/README.md#removeappentitlements) - Remove App Entitlements
 * [ResumePausedBundleAutomation](docs/sdks/requestcatalogmanagement/README.md#resumepausedbundleautomation) - Resume Paused Bundle Automation
@@ -753,6 +866,7 @@ func main() {
 ### [RoleMiningManagement](docs/sdks/roleminingmanagement/README.md)
 
 * [CreateAccessProfileFromCohort](docs/sdks/roleminingmanagement/README.md#createaccessprofilefromcohort) - Create Access Profile From Cohort
+* [EvaluateEntitlementSelection](docs/sdks/roleminingmanagement/README.md#evaluateentitlementselection) - Evaluate Entitlement Selection
 * [GetCustomAnalysisResult](docs/sdks/roleminingmanagement/README.md#getcustomanalysisresult) - Get Custom Analysis Result
 * [GetLatestRun](docs/sdks/roleminingmanagement/README.md#getlatestrun) - Get Latest Run
 * [GetRoleMiningConfig](docs/sdks/roleminingmanagement/README.md#getroleminingconfig) - Get Role Mining Config
@@ -783,9 +897,12 @@ func main() {
 * [Create](docs/sdks/sessionpolicy/README.md#create) - Create
 * [Delete](docs/sdks/sessionpolicy/README.md#delete) - Delete
 * [Get](docs/sdks/sessionpolicy/README.md#get) - Get
+* [GetEffectiveSessionPolicy](docs/sdks/sessionpolicy/README.md#geteffectivesessionpolicy) - Get Effective Session Policy
 * [List](docs/sdks/sessionpolicy/README.md#list) - List
 * [ListAssignments](docs/sdks/sessionpolicy/README.md#listassignments) - List Assignments
+* [ListUserPolicies](docs/sdks/sessionpolicy/README.md#listuserpolicies) - List User Policies
 * [Search](docs/sdks/sessionpolicy/README.md#search) - Search
+* [SearchPolicyUsers](docs/sdks/sessionpolicy/README.md#searchpolicyusers) - Search Policy Users
 * [UnassignGroup](docs/sdks/sessionpolicy/README.md#unassigngroup) - Unassign Group
 * [UnassignUser](docs/sdks/sessionpolicy/README.md#unassignuser) - Unassign User
 * [Update](docs/sdks/sessionpolicy/README.md#update) - Update
@@ -823,6 +940,30 @@ func main() {
 * [Test](docs/sdks/ssfreceiverstream/README.md#test) - Test
 * [Update](docs/sdks/ssfreceiverstream/README.md#update) - Update
 
+### [SSOApplication](docs/sdks/ssoapplication/README.md)
+
+* [BatchDeleteSubjectCompatibility](docs/sdks/ssoapplication/README.md#batchdeletesubjectcompatibility) - Batch Delete Subject Compatibility
+* [BatchImportSubjectCompatibility](docs/sdks/ssoapplication/README.md#batchimportsubjectcompatibility) - Batch Import Subject Compatibility
+* [Create](docs/sdks/ssoapplication/README.md#create) - Create
+* [CreateClient](docs/sdks/ssoapplication/README.md#createclient) - Create Client
+* [Delete](docs/sdks/ssoapplication/README.md#delete) - Delete
+* [DeleteClient](docs/sdks/ssoapplication/README.md#deleteclient) - Delete Client
+* [Get](docs/sdks/ssoapplication/README.md#get) - Get
+* [List](docs/sdks/ssoapplication/README.md#list) - List
+* [ListClients](docs/sdks/ssoapplication/README.md#listclients) - List Clients
+* [ListHistory](docs/sdks/ssoapplication/README.md#listhistory) - List History
+* [ParseSAMLServiceProviderMetadata](docs/sdks/ssoapplication/README.md#parsesamlserviceprovidermetadata) - Parse Saml Service Provider Metadata
+* [RotateClientSecret](docs/sdks/ssoapplication/README.md#rotateclientsecret) - Rotate Client Secret
+* [Search](docs/sdks/ssoapplication/README.md#search) - Search
+* [Update](docs/sdks/ssoapplication/README.md#update) - Update
+* [UpdateClient](docs/sdks/ssoapplication/README.md#updateclient) - Update Client
+
+### [SSOSettings](docs/sdks/ssosettings/README.md)
+
+* [Get](docs/sdks/ssosettings/README.md#get) - Get
+* [ListHistory](docs/sdks/ssosettings/README.md#listhistory) - List History
+* [Update](docs/sdks/ssosettings/README.md#update) - Update
+
 ### [StepUpProvider](docs/sdks/stepupprovider/README.md)
 
 * [Create](docs/sdks/stepupprovider/README.md#create) - Create
@@ -838,6 +979,16 @@ func main() {
 
 * [Get](docs/sdks/stepuptransaction/README.md#get) - Get
 * [Search](docs/sdks/stepuptransaction/README.md#search) - Search
+
+### [SubjectAppLimit](docs/sdks/subjectapplimit/README.md)
+
+* [Delete](docs/sdks/subjectapplimit/README.md#delete) - Delete
+* [Get](docs/sdks/subjectapplimit/README.md#get) - Get
+* [ListHistory](docs/sdks/subjectapplimit/README.md#listhistory) - List History
+* [Search](docs/sdks/subjectapplimit/README.md#search) - Search
+* [SetLimit](docs/sdks/subjectapplimit/README.md#setlimit) - Set Limit
+* [Suspend](docs/sdks/subjectapplimit/README.md#suspend) - Suspend
+* [Unsuspend](docs/sdks/subjectapplimit/README.md#unsuspend) - Unsuspend
 
 ### [SystemLog](docs/sdks/systemlog/README.md)
 
@@ -864,6 +1015,7 @@ func main() {
 * [ProcessNow](docs/sdks/taskactions/README.md#processnow) - Process Now
 * [Reassign](docs/sdks/taskactions/README.md#reassign) - Reassign
 * [Restart](docs/sdks/taskactions/README.md#restart) - Restart
+* [RetryProvisioning](docs/sdks/taskactions/README.md#retryprovisioning) - Retry Provisioning
 * [SkipStep](docs/sdks/taskactions/README.md#skipstep) - Skip Step
 * [UpdateGrantDuration](docs/sdks/taskactions/README.md#updategrantduration) - Update Grant Duration
 * [UpdateRequestData](docs/sdks/taskactions/README.md#updaterequestdata) - Update Request Data
@@ -875,6 +1027,13 @@ func main() {
 ### [TaskSearch](docs/sdks/tasksearch/README.md)
 
 * [Search](docs/sdks/tasksearch/README.md#search) - Search
+
+### [TBControlPlane](docs/sdks/tbcontrolplane/README.md)
+
+* [GetDiscoverySnapshot](docs/sdks/tbcontrolplane/README.md#getdiscoverysnapshot) - Get Discovery Snapshot
+* [GetEgressPolicy](docs/sdks/tbcontrolplane/README.md#getegresspolicy) - Get Egress Policy
+* [PushDiscovery](docs/sdks/tbcontrolplane/README.md#pushdiscovery) - Push Discovery
+* [SaveEgressPolicy](docs/sdks/tbcontrolplane/README.md#saveegresspolicy) - Save Egress Policy
 
 ### [TenantAuthConfig](docs/sdks/tenantauthconfig/README.md)
 
@@ -907,6 +1066,10 @@ func main() {
 * [ListBridges](docs/sdks/tunnelcredentials/README.md#listbridges) - List Bridges
 * [RevokeBridgeCredential](docs/sdks/tunnelcredentials/README.md#revokebridgecredential) - Revoke Bridge Credential
 * [UpdateBridge](docs/sdks/tunnelcredentials/README.md#updatebridge) - Update Bridge
+
+### [UIConversations](docs/sdks/uiconversations/README.md)
+
+* [EnsureOnboardingSession](docs/sdks/uiconversations/README.md#ensureonboardingsession) - Ensure Onboarding Session
 
 ### [User](docs/sdks/user/README.md)
 

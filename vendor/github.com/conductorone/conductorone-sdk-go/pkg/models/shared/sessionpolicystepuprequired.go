@@ -2,24 +2,24 @@
 
 package shared
 
-// Level - The level field.
-type Level string
+// SessionPolicyStepUpRequiredLevel - The level field.
+type SessionPolicyStepUpRequiredLevel string
 
 const (
-	LevelAuthLevelUnspecified  Level = "AUTH_LEVEL_UNSPECIFIED"
-	LevelAuthLevelNone         Level = "AUTH_LEVEL_NONE"
-	LevelAuthLevelSingleFactor Level = "AUTH_LEVEL_SINGLE_FACTOR"
-	LevelAuthLevelMultiFactor  Level = "AUTH_LEVEL_MULTI_FACTOR"
-	LevelAuthLevelPhr          Level = "AUTH_LEVEL_PHR"
-	LevelAuthLevelPhrh         Level = "AUTH_LEVEL_PHRH"
+	SessionPolicyStepUpRequiredLevelAuthLevelUnspecified  SessionPolicyStepUpRequiredLevel = "AUTH_LEVEL_UNSPECIFIED"
+	SessionPolicyStepUpRequiredLevelAuthLevelNone         SessionPolicyStepUpRequiredLevel = "AUTH_LEVEL_NONE"
+	SessionPolicyStepUpRequiredLevelAuthLevelSingleFactor SessionPolicyStepUpRequiredLevel = "AUTH_LEVEL_SINGLE_FACTOR"
+	SessionPolicyStepUpRequiredLevelAuthLevelMultiFactor  SessionPolicyStepUpRequiredLevel = "AUTH_LEVEL_MULTI_FACTOR"
+	SessionPolicyStepUpRequiredLevelAuthLevelPhr          SessionPolicyStepUpRequiredLevel = "AUTH_LEVEL_PHR"
+	SessionPolicyStepUpRequiredLevelAuthLevelPhrh         SessionPolicyStepUpRequiredLevel = "AUTH_LEVEL_PHRH"
 )
 
-func (e Level) ToPointer() *Level {
+func (e SessionPolicyStepUpRequiredLevel) ToPointer() *SessionPolicyStepUpRequiredLevel {
 	return &e
 }
 
 // IsExact returns true if the value matches a known enum value, false otherwise.
-func (e *Level) IsExact() bool {
+func (e *SessionPolicyStepUpRequiredLevel) IsExact() bool {
 	if e != nil {
 		switch *e {
 		case "AUTH_LEVEL_UNSPECIFIED", "AUTH_LEVEL_NONE", "AUTH_LEVEL_SINGLE_FACTOR", "AUTH_LEVEL_MULTI_FACTOR", "AUTH_LEVEL_PHR", "AUTH_LEVEL_PHRH":
@@ -63,14 +63,14 @@ func (e *SessionPolicyStepUpRequiredTypes) IsExact() bool {
 //	continue.
 type SessionPolicyStepUpRequired struct {
 	// The level field.
-	Level *Level `json:"level,omitempty"`
+	Level *SessionPolicyStepUpRequiredLevel `json:"level,omitempty"`
 	// How fresh the step-up must be, in seconds.
 	MaxAgeSeconds *int `json:"maxAgeSeconds,omitempty"`
 	// The types field.
 	Types []SessionPolicyStepUpRequiredTypes `json:"types,omitempty"`
 }
 
-func (s *SessionPolicyStepUpRequired) GetLevel() *Level {
+func (s *SessionPolicyStepUpRequired) GetLevel() *SessionPolicyStepUpRequiredLevel {
 	if s == nil {
 		return nil
 	}

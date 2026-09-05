@@ -53,6 +53,8 @@ type ConductoroneAPI struct {
 	SDKVersion                           string
 	A2UI                                 *A2UI
 	AccessReview                         *AccessReview
+	AccessReviewReport                   *AccessReviewReport
+	AccessReviewActions                  *AccessReviewActions
 	AccessReviewSetupEntitlement         *AccessReviewSetupEntitlement
 	AccessReviewTemplate                 *AccessReviewTemplate
 	AccessReviewTemplateSetupEntitlement *AccessReviewTemplateSetupEntitlement
@@ -62,6 +64,7 @@ type ConductoroneAPI struct {
 	Apps                                 *Apps
 	Connector                            *Connector
 	AppAccessRequestsDefaults            *AppAccessRequestsDefaults
+	MCPResource                          *MCPResource
 	MCPTool                              *MCPTool
 	MCPAccessProfile                     *MCPAccessProfile
 	MCPAccessProfileToolBinding          *MCPAccessProfileToolBinding
@@ -76,7 +79,9 @@ type ConductoroneAPI struct {
 	AppReportAction                      *AppReportAction
 	AppResourceType                      *AppResourceType
 	AppResource                          *AppResource
+	AppManagedState                      *AppManagedState
 	AppResourceOwners                    *AppResourceOwners
+	SSOApplication                       *SSOApplication
 	AppUsageControls                     *AppUsageControls
 	XAAAccessProfile                     *XAAAccessProfile
 	XAAAccessProfileScopeBinding         *XAAAccessProfileScopeBinding
@@ -92,28 +97,40 @@ type ConductoroneAPI struct {
 	RequestCatalogManagement             *RequestCatalogManagement
 	ConnectorAuthoringActivation         *ConnectorAuthoringActivation
 	ConnectorCatalog                     *ConnectorCatalog
+	UIConversations                      *UIConversations
 	CredentialInventoryPolicy            *CredentialInventoryPolicy
 	Decoy                                *Decoy
 	DecoySearch                          *DecoySearch
 	Directory                            *Directory
+	Feedback                             *Feedback
 	Finding                              *Finding
 	FindingRoutingRule                   *FindingRoutingRule
 	FindingSearch                        *FindingSearch
+	FindingSettings                      *FindingSettings
 	FindingTransformationRule            *FindingTransformationRule
 	Functions                            *Functions
 	FunctionsInvocation                  *FunctionsInvocation
 	FunctionsInvocationSearch            *FunctionsInvocationSearch
+	AppCap                               *AppCap
+	FundAssignment                       *FundAssignment
+	MyFundLimits                         *MyFundLimits
+	FundPolicy                           *FundPolicy
+	FundRule                             *FundRule
+	SubjectAppLimit                      *SubjectAppLimit
 	Hooks                                *Hooks
 	PersonalClient                       *PersonalClient
 	PersonalDevice                       *PersonalDevice
 	Roles                                *Roles
 	TunnelCredentials                    *TunnelCredentials
+	GatewayKey                           *GatewayKey
+	ProviderCredential                   *ProviderCredential
 	LocalDirectoryConfig                 *LocalDirectoryConfig
 	LocalUserInvitation                  *LocalUserInvitation
 	Policies                             *Policies
 	AccountProvisionPolicyTest           *AccountProvisionPolicyTest
 	PolicyValidate                       *PolicyValidate
 	RecoveryPolicy                       *RecoveryPolicy
+	Reporting                            *Reporting
 	RequestSchema                        *RequestSchema
 	RoleMiningManagement                 *RoleMiningManagement
 	AutomationExecutionSearch            *AutomationExecutionSearch
@@ -156,6 +173,7 @@ type ConductoroneAPI struct {
 	OnboardingSettings                   *OnboardingSettings
 	RequestSettings                      *RequestSettings
 	SessionSettings                      *SessionSettings
+	SSOSettings                          *SSOSettings
 	SSFReceiverStream                    *SSFReceiverStream
 	SSFReceiverEvent                     *SSFReceiverEvent
 	SystemLog                            *SystemLog
@@ -163,6 +181,7 @@ type ConductoroneAPI struct {
 	Task                                 *Task
 	TaskAudit                            *TaskAudit
 	TaskActions                          *TaskActions
+	TBControlPlane                       *TBControlPlane
 	TerraformExport                      *TerraformExport
 	User                                 *User
 	Vault                                *Vault
@@ -261,9 +280,9 @@ func WithTimeout(timeout time.Duration) SDKOption {
 // New creates a new instance of the SDK with the provided options
 func New(opts ...SDKOption) *ConductoroneAPI {
 	sdk := &ConductoroneAPI{
-		SDKVersion: "1.29.0",
+		SDKVersion: "1.29.1",
 		sdkConfiguration: config.SDKConfiguration{
-			UserAgent:  "speakeasy-sdk/go 1.29.0 2.918.3 0.1.0-alpha github.com/conductorone/conductorone-sdk-go",
+			UserAgent:  "speakeasy-sdk/go 1.29.1 2.918.3 0.1.0-alpha github.com/conductorone/conductorone-sdk-go",
 			ServerList: ServerList,
 			ServerVariables: []map[string]string{
 				{
@@ -291,6 +310,8 @@ func New(opts ...SDKOption) *ConductoroneAPI {
 
 	sdk.A2UI = newA2UI(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.AccessReview = newAccessReview(sdk, sdk.sdkConfiguration, sdk.hooks)
+	sdk.AccessReviewReport = newAccessReviewReport(sdk, sdk.sdkConfiguration, sdk.hooks)
+	sdk.AccessReviewActions = newAccessReviewActions(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.AccessReviewSetupEntitlement = newAccessReviewSetupEntitlement(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.AccessReviewTemplate = newAccessReviewTemplate(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.AccessReviewTemplateSetupEntitlement = newAccessReviewTemplateSetupEntitlement(sdk, sdk.sdkConfiguration, sdk.hooks)
@@ -300,6 +321,7 @@ func New(opts ...SDKOption) *ConductoroneAPI {
 	sdk.Apps = newApps(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.Connector = newConnector(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.AppAccessRequestsDefaults = newAppAccessRequestsDefaults(sdk, sdk.sdkConfiguration, sdk.hooks)
+	sdk.MCPResource = newMCPResource(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.MCPTool = newMCPTool(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.MCPAccessProfile = newMCPAccessProfile(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.MCPAccessProfileToolBinding = newMCPAccessProfileToolBinding(sdk, sdk.sdkConfiguration, sdk.hooks)
@@ -314,7 +336,9 @@ func New(opts ...SDKOption) *ConductoroneAPI {
 	sdk.AppReportAction = newAppReportAction(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.AppResourceType = newAppResourceType(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.AppResource = newAppResource(sdk, sdk.sdkConfiguration, sdk.hooks)
+	sdk.AppManagedState = newAppManagedState(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.AppResourceOwners = newAppResourceOwners(sdk, sdk.sdkConfiguration, sdk.hooks)
+	sdk.SSOApplication = newSSOApplication(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.AppUsageControls = newAppUsageControls(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.XAAAccessProfile = newXAAAccessProfile(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.XAAAccessProfileScopeBinding = newXAAAccessProfileScopeBinding(sdk, sdk.sdkConfiguration, sdk.hooks)
@@ -330,28 +354,40 @@ func New(opts ...SDKOption) *ConductoroneAPI {
 	sdk.RequestCatalogManagement = newRequestCatalogManagement(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.ConnectorAuthoringActivation = newConnectorAuthoringActivation(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.ConnectorCatalog = newConnectorCatalog(sdk, sdk.sdkConfiguration, sdk.hooks)
+	sdk.UIConversations = newUIConversations(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.CredentialInventoryPolicy = newCredentialInventoryPolicy(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.Decoy = newDecoy(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.DecoySearch = newDecoySearch(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.Directory = newDirectory(sdk, sdk.sdkConfiguration, sdk.hooks)
+	sdk.Feedback = newFeedback(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.Finding = newFinding(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.FindingRoutingRule = newFindingRoutingRule(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.FindingSearch = newFindingSearch(sdk, sdk.sdkConfiguration, sdk.hooks)
+	sdk.FindingSettings = newFindingSettings(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.FindingTransformationRule = newFindingTransformationRule(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.Functions = newFunctions(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.FunctionsInvocation = newFunctionsInvocation(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.FunctionsInvocationSearch = newFunctionsInvocationSearch(sdk, sdk.sdkConfiguration, sdk.hooks)
+	sdk.AppCap = newAppCap(sdk, sdk.sdkConfiguration, sdk.hooks)
+	sdk.FundAssignment = newFundAssignment(sdk, sdk.sdkConfiguration, sdk.hooks)
+	sdk.MyFundLimits = newMyFundLimits(sdk, sdk.sdkConfiguration, sdk.hooks)
+	sdk.FundPolicy = newFundPolicy(sdk, sdk.sdkConfiguration, sdk.hooks)
+	sdk.FundRule = newFundRule(sdk, sdk.sdkConfiguration, sdk.hooks)
+	sdk.SubjectAppLimit = newSubjectAppLimit(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.Hooks = newHooks(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.PersonalClient = newPersonalClient(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.PersonalDevice = newPersonalDevice(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.Roles = newRoles(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.TunnelCredentials = newTunnelCredentials(sdk, sdk.sdkConfiguration, sdk.hooks)
+	sdk.GatewayKey = newGatewayKey(sdk, sdk.sdkConfiguration, sdk.hooks)
+	sdk.ProviderCredential = newProviderCredential(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.LocalDirectoryConfig = newLocalDirectoryConfig(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.LocalUserInvitation = newLocalUserInvitation(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.Policies = newPolicies(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.AccountProvisionPolicyTest = newAccountProvisionPolicyTest(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.PolicyValidate = newPolicyValidate(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.RecoveryPolicy = newRecoveryPolicy(sdk, sdk.sdkConfiguration, sdk.hooks)
+	sdk.Reporting = newReporting(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.RequestSchema = newRequestSchema(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.RoleMiningManagement = newRoleMiningManagement(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.AutomationExecutionSearch = newAutomationExecutionSearch(sdk, sdk.sdkConfiguration, sdk.hooks)
@@ -394,6 +430,7 @@ func New(opts ...SDKOption) *ConductoroneAPI {
 	sdk.OnboardingSettings = newOnboardingSettings(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.RequestSettings = newRequestSettings(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.SessionSettings = newSessionSettings(sdk, sdk.sdkConfiguration, sdk.hooks)
+	sdk.SSOSettings = newSSOSettings(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.SSFReceiverStream = newSSFReceiverStream(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.SSFReceiverEvent = newSSFReceiverEvent(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.SystemLog = newSystemLog(sdk, sdk.sdkConfiguration, sdk.hooks)
@@ -401,6 +438,7 @@ func New(opts ...SDKOption) *ConductoroneAPI {
 	sdk.Task = newTask(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.TaskAudit = newTaskAudit(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.TaskActions = newTaskActions(sdk, sdk.sdkConfiguration, sdk.hooks)
+	sdk.TBControlPlane = newTBControlPlane(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.TerraformExport = newTerraformExport(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.User = newUser(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.Vault = newVault(sdk, sdk.sdkConfiguration, sdk.hooks)

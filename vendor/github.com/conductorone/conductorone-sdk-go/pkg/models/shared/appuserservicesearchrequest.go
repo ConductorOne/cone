@@ -2,6 +2,30 @@
 
 package shared
 
+type AgentStatuses string
+
+const (
+	AgentStatusesAppUserAgentStatusUnspecified AgentStatuses = "APP_USER_AGENT_STATUS_UNSPECIFIED"
+	AgentStatusesAppUserAgentStatusReady       AgentStatuses = "APP_USER_AGENT_STATUS_READY"
+	AgentStatusesAppUserAgentStatusDisabled    AgentStatuses = "APP_USER_AGENT_STATUS_DISABLED"
+	AgentStatusesAppUserAgentStatusDeleted     AgentStatuses = "APP_USER_AGENT_STATUS_DELETED"
+)
+
+func (e AgentStatuses) ToPointer() *AgentStatuses {
+	return &e
+}
+
+// IsExact returns true if the value matches a known enum value, false otherwise.
+func (e *AgentStatuses) IsExact() bool {
+	if e != nil {
+		switch *e {
+		case "APP_USER_AGENT_STATUS_UNSPECIFIED", "APP_USER_AGENT_STATUS_READY", "APP_USER_AGENT_STATUS_DISABLED", "APP_USER_AGENT_STATUS_DELETED":
+			return true
+		}
+	}
+	return false
+}
+
 type AppUserDomains string
 
 const (
@@ -73,6 +97,30 @@ func (e *AppUserServiceSearchRequestAppUserTypes) IsExact() bool {
 	return false
 }
 
+type NhiTypes string
+
+const (
+	NhiTypesAppUserNhiTypeUnspecified     NhiTypes = "APP_USER_NHI_TYPE_UNSPECIFIED"
+	NhiTypesAppUserNhiTypeAppRegistration NhiTypes = "APP_USER_NHI_TYPE_APP_REGISTRATION"
+	NhiTypesAppUserNhiTypeAssumableRole   NhiTypes = "APP_USER_NHI_TYPE_ASSUMABLE_ROLE"
+	NhiTypesAppUserNhiTypeManagedIdentity NhiTypes = "APP_USER_NHI_TYPE_MANAGED_IDENTITY"
+)
+
+func (e NhiTypes) ToPointer() *NhiTypes {
+	return &e
+}
+
+// IsExact returns true if the value matches a known enum value, false otherwise.
+func (e *NhiTypes) IsExact() bool {
+	if e != nil {
+		switch *e {
+		case "APP_USER_NHI_TYPE_UNSPECIFIED", "APP_USER_NHI_TYPE_APP_REGISTRATION", "APP_USER_NHI_TYPE_ASSUMABLE_ROLE", "APP_USER_NHI_TYPE_MANAGED_IDENTITY":
+			return true
+		}
+	}
+	return false
+}
+
 // SortBy - Ordering of the results. Defaults to display-name ordering.
 type SortBy string
 
@@ -98,6 +146,9 @@ func (e *SortBy) IsExact() bool {
 
 // AppUserServiceSearchRequest - Search App users based on filters specified in the request body
 type AppUserServiceSearchRequest struct {
+	// Restrict to app users whose agent trait lifecycle status (agent_status)
+	//  matches one of these values. When empty, agent_status is not used as a filter.
+	AgentStatuses []AgentStatuses `json:"agentStatuses,omitempty"`
 	// The app ID to restrict the search to.
 	AppID *string `json:"appId,omitempty"`
 	// A list of app IDs to restrict the search to.
@@ -117,6 +168,9 @@ type AppUserServiceSearchRequest struct {
 	// When true, excludes app users belonging to soft-deleted apps.
 	ExcludeDeletedApps *bool              `json:"excludeDeletedApps,omitempty"`
 	ExpandMask         *AppUserExpandMask `json:"expandMask,omitempty"`
+	// Restrict to app users whose NHI trait classification (nhi_type) matches one of
+	//  these values. When empty, nhi_type is not used as a filter.
+	NhiTypes []NhiTypes `json:"nhiTypes,omitempty"`
 	// The pageSize where 0 <= pageSize <= 100. Values < 10 will be set to 10. A value of 0 returns the default page size (currently 25)
 	PageSize *int `json:"pageSize,omitempty"`
 	// The pageToken field.
@@ -135,6 +189,13 @@ type AppUserServiceSearchRequest struct {
 	// When true, restrict results to app users with no responsible party
 	//  (identity_user_id empty) — i.e. unowned, for any app-user type.
 	WithoutResponsibleParty *bool `json:"withoutResponsibleParty,omitempty"`
+}
+
+func (a *AppUserServiceSearchRequest) GetAgentStatuses() []AgentStatuses {
+	if a == nil {
+		return nil
+	}
+	return a.AgentStatuses
 }
 
 func (a *AppUserServiceSearchRequest) GetAppID() *string {
@@ -205,6 +266,13 @@ func (a *AppUserServiceSearchRequest) GetExpandMask() *AppUserExpandMask {
 		return nil
 	}
 	return a.ExpandMask
+}
+
+func (a *AppUserServiceSearchRequest) GetNhiTypes() []NhiTypes {
+	if a == nil {
+		return nil
+	}
+	return a.NhiTypes
 }
 
 func (a *AppUserServiceSearchRequest) GetPageSize() *int {

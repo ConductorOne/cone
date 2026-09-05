@@ -14,8 +14,8 @@ type XAAClientAudienceMapping struct {
 	// The client's identifier at the resource authorization server. Stamped
 	//  verbatim into the grant's client_id claim.
 	AudienceClientID *string `json:"audienceClientId,omitempty"`
-	// Stable client registration key. One of: a DCR software_id form
-	//  (dcr://<software_id>), a CIMD client_id URL, a native C1 form
+	// Stable client registration key. One of: a DCR client_id form
+	//  (dcr://<client_id>), a CIMD client_id URL, a native C1 form
 	//  (c1://<service_principal_id>), or a raw client_id.
 	ClientKey *string    `json:"clientKey,omitempty"`
 	CreatedAt *time.Time `json:"createdAt,omitempty"`

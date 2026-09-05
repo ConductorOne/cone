@@ -2,23 +2,23 @@
 
 package shared
 
-// Format - Wire format the provider expects. Defaults to
+// CompositeFormat - Wire format the provider expects. Defaults to
 //
 //	FORMAT_JSON_OBJECT.
-type Format string
+type CompositeFormat string
 
 const (
-	FormatFormatJSONObject          Format = "FORMAT_JSON_OBJECT"
-	FormatFormatColonSeparated      Format = "FORMAT_COLON_SEPARATED"
-	FormatFormatUnderscoreSeparated Format = "FORMAT_UNDERSCORE_SEPARATED"
+	CompositeFormatFormatJSONObject          CompositeFormat = "FORMAT_JSON_OBJECT"
+	CompositeFormatFormatColonSeparated      CompositeFormat = "FORMAT_COLON_SEPARATED"
+	CompositeFormatFormatUnderscoreSeparated CompositeFormat = "FORMAT_UNDERSCORE_SEPARATED"
 )
 
-func (e Format) ToPointer() *Format {
+func (e CompositeFormat) ToPointer() *CompositeFormat {
 	return &e
 }
 
 // IsExact returns true if the value matches a known enum value, false otherwise.
-func (e *Format) IsExact() bool {
+func (e *CompositeFormat) IsExact() bool {
 	if e != nil {
 		switch *e {
 		case "FORMAT_JSON_OBJECT", "FORMAT_COLON_SEPARATED", "FORMAT_UNDERSCORE_SEPARATED":
@@ -37,7 +37,7 @@ type Composite struct {
 	Fields []CompositeField `json:"fields,omitempty"`
 	// Wire format the provider expects. Defaults to
 	//  FORMAT_JSON_OBJECT.
-	Format *Format `json:"format,omitempty"`
+	Format *CompositeFormat `json:"format,omitempty"`
 }
 
 func (c *Composite) GetFields() []CompositeField {
@@ -47,7 +47,7 @@ func (c *Composite) GetFields() []CompositeField {
 	return c.Fields
 }
 
-func (c *Composite) GetFormat() *Format {
+func (c *Composite) GetFormat() *CompositeFormat {
 	if c == nil {
 		return nil
 	}

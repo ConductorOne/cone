@@ -30,6 +30,33 @@ func (e *MCPServerCatalogAuthModeAuthMethod) IsExact() bool {
 	return false
 }
 
+// MCPServerCatalogAuthModeClientIDMode - How the OAuth2 client_id is acquired for this mode. Set by the impl bundle
+//
+//	and shown read-only on the form. authorization_code grant only.
+type MCPServerCatalogAuthModeClientIDMode string
+
+const (
+	MCPServerCatalogAuthModeClientIDModeMcpServerCatalogClientIDModeUnspecified MCPServerCatalogAuthModeClientIDMode = "MCP_SERVER_CATALOG_CLIENT_ID_MODE_UNSPECIFIED"
+	MCPServerCatalogAuthModeClientIDModeMcpServerCatalogClientIDModeManual      MCPServerCatalogAuthModeClientIDMode = "MCP_SERVER_CATALOG_CLIENT_ID_MODE_MANUAL"
+	MCPServerCatalogAuthModeClientIDModeMcpServerCatalogClientIDModeDcr         MCPServerCatalogAuthModeClientIDMode = "MCP_SERVER_CATALOG_CLIENT_ID_MODE_DCR"
+	MCPServerCatalogAuthModeClientIDModeMcpServerCatalogClientIDModeCimd        MCPServerCatalogAuthModeClientIDMode = "MCP_SERVER_CATALOG_CLIENT_ID_MODE_CIMD"
+)
+
+func (e MCPServerCatalogAuthModeClientIDMode) ToPointer() *MCPServerCatalogAuthModeClientIDMode {
+	return &e
+}
+
+// IsExact returns true if the value matches a known enum value, false otherwise.
+func (e *MCPServerCatalogAuthModeClientIDMode) IsExact() bool {
+	if e != nil {
+		switch *e {
+		case "MCP_SERVER_CATALOG_CLIENT_ID_MODE_UNSPECIFIED", "MCP_SERVER_CATALOG_CLIENT_ID_MODE_MANUAL", "MCP_SERVER_CATALOG_CLIENT_ID_MODE_DCR", "MCP_SERVER_CATALOG_CLIENT_ID_MODE_CIMD":
+			return true
+		}
+	}
+	return false
+}
+
 // MCPServerCatalogAuthMode describes a single authentication method an impl
 //
 //	supports. Multiple modes mean the user/admin can pick at registration time
@@ -44,6 +71,9 @@ type MCPServerCatalogAuthMode struct {
 	AuthStyle *string `json:"authStyle,omitempty"`
 	// OAuth2 authorization endpoint URL. Empty for non-OAuth2 methods.
 	AuthorizeURL *string `json:"authorizeUrl,omitempty"`
+	// How the OAuth2 client_id is acquired for this mode. Set by the impl bundle
+	//  and shown read-only on the form. authorization_code grant only.
+	ClientIDMode *MCPServerCatalogAuthModeClientIDMode `json:"clientIdMode,omitempty"`
 	// Documentation URL where the user can obtain a credential for this method
 	//  (e.g., a link to the SaaS app's "create API token" page). Empty if not set.
 	CredentialURL *string `json:"credentialUrl,omitempty"`
@@ -69,6 +99,9 @@ type MCPServerCatalogAuthMode struct {
 	//  Raw bundle string: "client_credentials", "authorization_code",
 	//  "jwt_bearer", "google_service_account", or empty (infer from authorize_url).
 	Oauth2Grant *string `json:"oauth2Grant,omitempty"`
+	// Optional (opt-in) OAuth2 scopes from the config's optional_scopes.
+	//  Disjoint from `scopes` and not pre-selected. Empty for non-OAuth2 methods.
+	OptionalScopes []string `json:"optionalScopes,omitempty"`
 	// Per-user OAuth: each user authorizes individually instead of sharing a
 	//  service-level credential. Only meaningful for OAuth2.
 	Passthrough *bool `json:"passthrough,omitempty"`
@@ -100,6 +133,13 @@ func (m *MCPServerCatalogAuthMode) GetAuthorizeURL() *string {
 		return nil
 	}
 	return m.AuthorizeURL
+}
+
+func (m *MCPServerCatalogAuthMode) GetClientIDMode() *MCPServerCatalogAuthModeClientIDMode {
+	if m == nil {
+		return nil
+	}
+	return m.ClientIDMode
 }
 
 func (m *MCPServerCatalogAuthMode) GetCredentialURL() *string {
@@ -156,6 +196,13 @@ func (m *MCPServerCatalogAuthMode) GetOauth2Grant() *string {
 		return nil
 	}
 	return m.Oauth2Grant
+}
+
+func (m *MCPServerCatalogAuthMode) GetOptionalScopes() []string {
+	if m == nil {
+		return nil
+	}
+	return m.OptionalScopes
 }
 
 func (m *MCPServerCatalogAuthMode) GetPassthrough() *bool {

@@ -14,7 +14,9 @@ type EmailChannelSettings struct {
 	Enabled             *bool                          `json:"enabled,omitempty"`
 	ExpiringAccess      *ExpiringAccessPreference      `json:"expiringAccess,omitempty"`
 	ProvisioningRequest *ProvisioningRequestPreference `json:"provisioningRequest,omitempty"`
+	RequestCreated      *RequestCreatedPreference      `json:"requestCreated,omitempty"`
 	Reviews             *ReviewsPreference             `json:"reviews,omitempty"`
+	System              *SystemPreference              `json:"system,omitempty"`
 	TaskReminders       *TaskRemindersPreference       `json:"taskReminders,omitempty"`
 }
 
@@ -81,11 +83,25 @@ func (e *EmailChannelSettings) GetProvisioningRequest() *ProvisioningRequestPref
 	return e.ProvisioningRequest
 }
 
+func (e *EmailChannelSettings) GetRequestCreated() *RequestCreatedPreference {
+	if e == nil {
+		return nil
+	}
+	return e.RequestCreated
+}
+
 func (e *EmailChannelSettings) GetReviews() *ReviewsPreference {
 	if e == nil {
 		return nil
 	}
 	return e.Reviews
+}
+
+func (e *EmailChannelSettings) GetSystem() *SystemPreference {
+	if e == nil {
+		return nil
+	}
+	return e.System
 }
 
 func (e *EmailChannelSettings) GetTaskReminders() *TaskRemindersPreference {

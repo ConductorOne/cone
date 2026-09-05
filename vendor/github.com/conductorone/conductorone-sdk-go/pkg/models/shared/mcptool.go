@@ -194,6 +194,14 @@ type MCPTool struct {
 	// JSON-encoded input schema from MCP discovery.
 	InputSchemaJSON *string    `json:"inputSchemaJson,omitempty"`
 	LastCalledAt    *time.Time `json:"lastCalledAt,omitempty"`
+	// Whether this tool's backing entitlement is exposed in at least one request
+	//  catalog directly (i.e. can be requested on its own). Computed read-only;
+	//  populated on Search.
+	Requestable *bool `json:"requestable,omitempty"`
+	// Whether this tool is requestable indirectly — it belongs to at least one
+	//  toolset (access profile) whose backing entitlement is exposed in a request
+	//  catalog. Independent of `requestable`. Computed read-only; populated on Search.
+	RequestableViaToolset *bool `json:"requestableViaToolset,omitempty"`
 	// Tool approval/lifecycle state.
 	State *MCPToolState `json:"state,omitempty"`
 	// Native MCP tool name (unique within an MCP server).
@@ -324,6 +332,20 @@ func (m *MCPTool) GetLastCalledAt() *time.Time {
 		return nil
 	}
 	return m.LastCalledAt
+}
+
+func (m *MCPTool) GetRequestable() *bool {
+	if m == nil {
+		return nil
+	}
+	return m.Requestable
+}
+
+func (m *MCPTool) GetRequestableViaToolset() *bool {
+	if m == nil {
+		return nil
+	}
+	return m.RequestableViaToolset
 }
 
 func (m *MCPTool) GetState() *MCPToolState {

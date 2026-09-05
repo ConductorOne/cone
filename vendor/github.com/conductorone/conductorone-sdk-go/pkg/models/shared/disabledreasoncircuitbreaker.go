@@ -7,23 +7,23 @@ import (
 	"time"
 )
 
-// Period - Snapshot of the period at trip time.
-type Period string
+// DisabledReasonCircuitBreakerPeriod - Snapshot of the period at trip time.
+type DisabledReasonCircuitBreakerPeriod string
 
 const (
-	PeriodCircuitBreakerPeriodUnspecified Period = "CIRCUIT_BREAKER_PERIOD_UNSPECIFIED"
-	PeriodCircuitBreakerPeriodHour        Period = "CIRCUIT_BREAKER_PERIOD_HOUR"
-	PeriodCircuitBreakerPeriodDay         Period = "CIRCUIT_BREAKER_PERIOD_DAY"
-	PeriodCircuitBreakerPeriodWeek        Period = "CIRCUIT_BREAKER_PERIOD_WEEK"
-	PeriodCircuitBreakerPeriodMonth       Period = "CIRCUIT_BREAKER_PERIOD_MONTH"
+	DisabledReasonCircuitBreakerPeriodCircuitBreakerPeriodUnspecified DisabledReasonCircuitBreakerPeriod = "CIRCUIT_BREAKER_PERIOD_UNSPECIFIED"
+	DisabledReasonCircuitBreakerPeriodCircuitBreakerPeriodHour        DisabledReasonCircuitBreakerPeriod = "CIRCUIT_BREAKER_PERIOD_HOUR"
+	DisabledReasonCircuitBreakerPeriodCircuitBreakerPeriodDay         DisabledReasonCircuitBreakerPeriod = "CIRCUIT_BREAKER_PERIOD_DAY"
+	DisabledReasonCircuitBreakerPeriodCircuitBreakerPeriodWeek        DisabledReasonCircuitBreakerPeriod = "CIRCUIT_BREAKER_PERIOD_WEEK"
+	DisabledReasonCircuitBreakerPeriodCircuitBreakerPeriodMonth       DisabledReasonCircuitBreakerPeriod = "CIRCUIT_BREAKER_PERIOD_MONTH"
 )
 
-func (e Period) ToPointer() *Period {
+func (e DisabledReasonCircuitBreakerPeriod) ToPointer() *DisabledReasonCircuitBreakerPeriod {
 	return &e
 }
 
 // IsExact returns true if the value matches a known enum value, false otherwise.
-func (e *Period) IsExact() bool {
+func (e *DisabledReasonCircuitBreakerPeriod) IsExact() bool {
 	if e != nil {
 		switch *e {
 		case "CIRCUIT_BREAKER_PERIOD_UNSPECIFIED", "CIRCUIT_BREAKER_PERIOD_HOUR", "CIRCUIT_BREAKER_PERIOD_DAY", "CIRCUIT_BREAKER_PERIOD_WEEK", "CIRCUIT_BREAKER_PERIOD_MONTH":
@@ -41,7 +41,7 @@ type DisabledReasonCircuitBreaker struct {
 	// Observed execution count in the period at trip time.
 	ObservedCount *int64 `json:"observedCount,omitempty"`
 	// Snapshot of the period at trip time.
-	Period *Period `json:"period,omitempty"`
+	Period *DisabledReasonCircuitBreakerPeriod `json:"period,omitempty"`
 	// Snapshot of the threshold at trip time.
 	Threshold *int64     `json:"threshold,omitempty"`
 	TrippedAt *time.Time `json:"trippedAt,omitempty"`
@@ -65,7 +65,7 @@ func (d *DisabledReasonCircuitBreaker) GetObservedCount() *int64 {
 	return d.ObservedCount
 }
 
-func (d *DisabledReasonCircuitBreaker) GetPeriod() *Period {
+func (d *DisabledReasonCircuitBreaker) GetPeriod() *DisabledReasonCircuitBreakerPeriod {
 	if d == nil {
 		return nil
 	}

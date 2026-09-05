@@ -13,13 +13,41 @@ package shared
 //   - writeAuthorization
 //   - sensitiveFileGuard
 //   - toolOutputSizeGuard
+//   - secretsMasking
+//   - linkFilter
+//   - encodedContentGuard
+//   - promptInjectionScan
+//   - blockOutput
+//   - blockToolCall
+//   - preToolBlock
 type BuiltInPattern struct {
+	BlockOutput         *BlockOutputConfig         `json:"blockOutput,omitempty"`
+	BlockToolCall       *BlockToolCallConfig       `json:"blockToolCall,omitempty"`
 	CreditCardBlocking  *CreditCardBlockingConfig  `json:"creditCardBlocking,omitempty"`
+	EncodedContentGuard *EncodedContentGuardConfig `json:"encodedContentGuard,omitempty"`
+	LinkFilter          *LinkFilterConfig          `json:"linkFilter,omitempty"`
 	PiiRedaction        *PIIRedactionConfig        `json:"piiRedaction,omitempty"`
+	PreToolBlock        *PreToolBlockConfig        `json:"preToolBlock,omitempty"`
+	PromptInjectionScan *PromptInjectionScanConfig `json:"promptInjectionScan,omitempty"`
 	QueryScopeLimit     *QueryScopeLimitConfig     `json:"queryScopeLimit,omitempty"`
+	SecretsMasking      *SecretsMaskingConfig      `json:"secretsMasking,omitempty"`
 	SensitiveFileGuard  *SensitiveFileGuardConfig  `json:"sensitiveFileGuard,omitempty"`
 	ToolOutputSizeGuard *ToolOutputSizeGuardConfig `json:"toolOutputSizeGuard,omitempty"`
 	WriteAuthorization  *WriteAuthorizationConfig  `json:"writeAuthorization,omitempty"`
+}
+
+func (b *BuiltInPattern) GetBlockOutput() *BlockOutputConfig {
+	if b == nil {
+		return nil
+	}
+	return b.BlockOutput
+}
+
+func (b *BuiltInPattern) GetBlockToolCall() *BlockToolCallConfig {
+	if b == nil {
+		return nil
+	}
+	return b.BlockToolCall
 }
 
 func (b *BuiltInPattern) GetCreditCardBlocking() *CreditCardBlockingConfig {
@@ -29,6 +57,20 @@ func (b *BuiltInPattern) GetCreditCardBlocking() *CreditCardBlockingConfig {
 	return b.CreditCardBlocking
 }
 
+func (b *BuiltInPattern) GetEncodedContentGuard() *EncodedContentGuardConfig {
+	if b == nil {
+		return nil
+	}
+	return b.EncodedContentGuard
+}
+
+func (b *BuiltInPattern) GetLinkFilter() *LinkFilterConfig {
+	if b == nil {
+		return nil
+	}
+	return b.LinkFilter
+}
+
 func (b *BuiltInPattern) GetPiiRedaction() *PIIRedactionConfig {
 	if b == nil {
 		return nil
@@ -36,11 +78,32 @@ func (b *BuiltInPattern) GetPiiRedaction() *PIIRedactionConfig {
 	return b.PiiRedaction
 }
 
+func (b *BuiltInPattern) GetPreToolBlock() *PreToolBlockConfig {
+	if b == nil {
+		return nil
+	}
+	return b.PreToolBlock
+}
+
+func (b *BuiltInPattern) GetPromptInjectionScan() *PromptInjectionScanConfig {
+	if b == nil {
+		return nil
+	}
+	return b.PromptInjectionScan
+}
+
 func (b *BuiltInPattern) GetQueryScopeLimit() *QueryScopeLimitConfig {
 	if b == nil {
 		return nil
 	}
 	return b.QueryScopeLimit
+}
+
+func (b *BuiltInPattern) GetSecretsMasking() *SecretsMaskingConfig {
+	if b == nil {
+		return nil
+	}
+	return b.SecretsMasking
 }
 
 func (b *BuiltInPattern) GetSensitiveFileGuard() *SensitiveFileGuardConfig {

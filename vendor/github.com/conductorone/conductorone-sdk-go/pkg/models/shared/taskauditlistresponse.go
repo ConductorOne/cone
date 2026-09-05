@@ -2,12 +2,36 @@
 
 package shared
 
+import (
+	"github.com/conductorone/conductorone-sdk-go/pkg/utils"
+)
+
 // The TaskAuditListResponse message.
 type TaskAuditListResponse struct {
 	// The list of audit events for the task.
 	List []TaskAuditView `json:"list,omitempty"`
 	// A pagination token to retrieve the next page of results.
 	NextPageToken *string `json:"nextPageToken,omitempty"`
+	// The total number of audit events the list returns for this request:
+	//  comment events when comments_only is true, non-comment events when
+	//  exclude_comments is true, all events otherwise. This is an upper bound:
+	//  a small number of internal-only events (e.g. connector-action results
+	//  with no pending reason) are omitted from list, so the count can exceed
+	//  the rows reachable by paging. Only returned for the first page (a request
+	//  with no page_token). Unset when the request filters by refs (the count is
+	//  undefined for ref lookups) or when the count could not be computed.
+	TotalCount *int64 `integer:"string" json:"totalCount,omitempty"`
+}
+
+func (t TaskAuditListResponse) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(t, "", false)
+}
+
+func (t *TaskAuditListResponse) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &t, "", false, nil); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (t *TaskAuditListResponse) GetList() []TaskAuditView {
@@ -22,4 +46,11 @@ func (t *TaskAuditListResponse) GetNextPageToken() *string {
 		return nil
 	}
 	return t.NextPageToken
+}
+
+func (t *TaskAuditListResponse) GetTotalCount() *int64 {
+	if t == nil {
+		return nil
+	}
+	return t.TotalCount
 }

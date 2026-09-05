@@ -210,6 +210,7 @@ type C1Client interface {
 	SearchMySecrets(ctx context.Context, req *shared.PaperSecretServiceSearchMySecretsRequest) ([]shared.PaperSecret, error)
 	RevokeSecret(ctx context.Context, vaultID string) (*shared.PaperSecret, error)
 	SearchSecretAuditEvents(ctx context.Context, vaultID string, pageSize int) ([]map[string]any, error)
+	SearchSecretsSharedWithMe(ctx context.Context, req *shared.PaperSecretServiceSearchSecretsSharedWithMeRequest) ([]shared.PaperSecret, error)
 	SearchUsers(ctx context.Context, req *shared.SearchUsersRequest) ([]*shared.User, error)
 }
 

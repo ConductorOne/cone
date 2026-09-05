@@ -18,6 +18,7 @@ import (
 
 	"filippo.io/age"
 	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 
 	"github.com/conductorone/conductorone-sdk-go/pkg/models/shared"
 	"github.com/conductorone/cone/pkg/client"
@@ -44,6 +45,9 @@ const (
 	secretStatusFlag    = "status"
 	secretTypeFlag      = "type"
 	secretSharingFlag   = "sharing-mode"
+	sharedWithMeFlag    = "shared-with-me"
+	includeOwnFlag      = "include-own"
+	allFilter           = "all"
 	defaultSecretExpiry = "1w"
 	formatPlaintext     = "plaintext"
 	formatJSON          = "json"
@@ -613,14 +617,16 @@ func createSecret(ctx context.Context, c secretCreator, p createSecretParams) (*
 func secretListCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "list",
-		Short: "List secrets you created",
+		Short: "List secrets you created or that were shared with you",
 		RunE:  secretListRun,
 	}
 	cmd.Flags().String(queryFlag, "", "Fuzzy search by display name.")
 	cmd.Flags().String(secretStatusFlag, "active", "Status filter: active, expired, burned, revoked, data-deleted, or all.")
-	cmd.Flags().String(secretTypeFlag, "all", "Type filter: text, file, or all.")
-	cmd.Flags().String(secretSharingFlag, "all", "Sharing mode filter: internal, external, or all.")
-	cmd.Flags().Int(pageSizeFlag, 100, "Page size for API requests.")
+	cmd.Flags().String(secretTypeFlag, allFilter, "Type filter: text, file, or all.")
+	cmd.Flags().String(secretSharingFlag, allFilter, "Sharing mode filter: internal, external, or all. Incompatible with --shared-with-me.")
+	cmd.Flags().Bool(sharedWithMeFlag, false, "List secrets shared with you instead of secrets you created.")
+	cmd.Flags().Bool(includeOwnFlag, false, "With --shared-with-me, also include secrets you created and shared with yourself.")
+	cmd.Flags().Int(pageSizeFlag, 100, "Page size for API requests. Max 100 with --shared-with-me, 1000 otherwise.")
 	return cmd
 }
 
@@ -634,9 +640,31 @@ func secretListRun(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
+	if v.GetBool(sharedWithMeFlag) {
+		return secretListSharedWithMeRun(ctx, c, v, cmd)
+	}
+	if cmd.Flags().Changed(includeOwnFlag) {
+		return fmt.Errorf("--%s requires --%s", includeOwnFlag, sharedWithMeFlag)
+	}
+
+	req, err := buildSearchMySecretsRequest(v)
+	if err != nil {
+		return err
+	}
+	secrets, err := c.SearchMySecrets(ctx, req)
+	if err != nil {
+		return err
+	}
+
+	resp := Secrets(secrets)
+	return output.NewManager(ctx, v).Output(ctx, &resp)
+}
+
+// buildSearchMySecretsRequest assembles the creator-list request from CLI flags.
+func buildSearchMySecretsRequest(v *viper.Viper) (*shared.PaperSecretServiceSearchMySecretsRequest, error) {
 	pageSize := v.GetInt(pageSizeFlag)
 	if pageSize <= 0 || pageSize > 1000 {
-		return fmt.Errorf("--%s must be between 1 and 1000", pageSizeFlag)
+		return nil, fmt.Errorf("--%s must be between 1 and 1000", pageSizeFlag)
 	}
 	req := &shared.PaperSecretServiceSearchMySecretsRequest{
 		PageSize: &pageSize,
@@ -648,27 +676,82 @@ func secretListRun(cmd *cobra.Command, args []string) error {
 	}
 	statuses, err := secretListStatuses(v.GetString(secretStatusFlag))
 	if err != nil {
-		return err
+		return nil, err
 	}
 	req.Statuses = statuses
 	secretType, err := secretListType(v.GetString(secretTypeFlag))
 	if err != nil {
-		return err
+		return nil, err
 	}
 	req.SecretType = secretType
 	sharingMode, err := secretListSharingMode(v.GetString(secretSharingFlag))
 	if err != nil {
-		return err
+		return nil, err
 	}
 	req.SharingMode = sharingMode
+	return req, nil
+}
 
-	secrets, err := c.SearchMySecrets(ctx, req)
+// secretSharer is the subset of client.C1Client that the shared-with-me list
+// path needs, narrowed so the flag-routing logic can be exercised with a
+// lightweight fake in tests (same pattern as secretCreator).
+type secretSharer interface {
+	SearchSecretsSharedWithMe(ctx context.Context, req *shared.PaperSecretServiceSearchSecretsSharedWithMeRequest) ([]shared.PaperSecret, error)
+}
+
+// secretListSharedWithMeRun lists secrets shared with the caller. The endpoint is
+// caller-bound: it accepts no user_id, sort_by, or sharing-mode filter, so those
+// incompatibilities are rejected here rather than silently dropped.
+func secretListSharedWithMeRun(ctx context.Context, c secretSharer, v *viper.Viper, cmd *cobra.Command) error {
+	req, err := buildSearchSecretsSharedWithMeRequest(v, cmd)
+	if err != nil {
+		return err
+	}
+	secrets, err := c.SearchSecretsSharedWithMe(ctx, req)
 	if err != nil {
 		return err
 	}
 
 	resp := Secrets(secrets)
 	return output.NewManager(ctx, v).Output(ctx, &resp)
+}
+
+// buildSearchSecretsSharedWithMeRequest assembles the recipient-list request
+// from CLI flags. The endpoint is caller-bound: it accepts no user_id, sort_by,
+// or sharing-mode filter, so those incompatibilities are rejected here rather
+// than silently dropped.
+func buildSearchSecretsSharedWithMeRequest(v *viper.Viper, cmd *cobra.Command) (*shared.PaperSecretServiceSearchSecretsSharedWithMeRequest, error) {
+	if cmd.Flags().Changed(secretSharingFlag) {
+		return nil, fmt.Errorf("--%s is not supported with --%s", secretSharingFlag, sharedWithMeFlag)
+	}
+
+	pageSize := v.GetInt(pageSizeFlag)
+	if pageSize <= 0 || pageSize > 100 {
+		return nil, fmt.Errorf("--%s must be between 1 and 100 with --%s", pageSizeFlag, sharedWithMeFlag)
+	}
+	req := &shared.PaperSecretServiceSearchSecretsSharedWithMeRequest{
+		PageSize: &pageSize,
+	}
+	if query := strings.TrimSpace(v.GetString(queryFlag)); query != "" {
+		if len(query) > 256 {
+			return nil, fmt.Errorf("--%s must be at most 256 characters with --%s", queryFlag, sharedWithMeFlag)
+		}
+		req.Query = &query
+	}
+	statuses, err := secretListSharedWithMeStatuses(v.GetString(secretStatusFlag))
+	if err != nil {
+		return nil, err
+	}
+	req.Statuses = statuses
+	secretType, err := secretListSharedWithMeType(v.GetString(secretTypeFlag))
+	if err != nil {
+		return nil, err
+	}
+	req.SecretType = secretType
+	if v.GetBool(includeOwnFlag) {
+		req.IncludeOwn = new(true)
+	}
+	return req, nil
 }
 
 func secretGetCmd() *cobra.Command {
@@ -1132,7 +1215,7 @@ func secretListStatuses(input string) ([]shared.PaperSecretServiceSearchMySecret
 		return []shared.PaperSecretServiceSearchMySecretsRequestStatuses{
 			shared.PaperSecretServiceSearchMySecretsRequestStatusesSecretStatusActive,
 		}, nil
-	case "all":
+	case allFilter:
 		return nil, nil
 	case "expired":
 		return []shared.PaperSecretServiceSearchMySecretsRequestStatuses{
@@ -1158,7 +1241,7 @@ func secretListStatuses(input string) ([]shared.PaperSecretServiceSearchMySecret
 func secretListType(input string) (*shared.PaperSecretServiceSearchMySecretsRequestSecretType, error) {
 	var secretType shared.PaperSecretServiceSearchMySecretsRequestSecretType
 	switch strings.ToLower(strings.TrimSpace(input)) {
-	case "", "all":
+	case "", allFilter:
 		return nil, nil
 	case "text":
 		secretType = shared.PaperSecretServiceSearchMySecretsRequestSecretTypeSecretTypeText
@@ -1173,7 +1256,7 @@ func secretListType(input string) (*shared.PaperSecretServiceSearchMySecretsRequ
 func secretListSharingMode(input string) (*shared.PaperSecretServiceSearchMySecretsRequestSharingMode, error) {
 	var sharingMode shared.PaperSecretServiceSearchMySecretsRequestSharingMode
 	switch strings.ToLower(strings.TrimSpace(input)) {
-	case "", "all":
+	case "", allFilter:
 		return nil, nil
 	case "internal", "team":
 		sharingMode = shared.PaperSecretServiceSearchMySecretsRequestSharingModePaperVaultSharingModeInternal
@@ -1183,6 +1266,50 @@ func secretListSharingMode(input string) (*shared.PaperSecretServiceSearchMySecr
 		return nil, fmt.Errorf("--%s must be internal, external, or all", secretSharingFlag)
 	}
 	return &sharingMode, nil
+}
+
+func secretListSharedWithMeStatuses(input string) ([]shared.PaperSecretServiceSearchSecretsSharedWithMeRequestStatuses, error) {
+	switch strings.ToLower(strings.TrimSpace(input)) {
+	case "", "active":
+		return []shared.PaperSecretServiceSearchSecretsSharedWithMeRequestStatuses{
+			shared.PaperSecretServiceSearchSecretsSharedWithMeRequestStatusesSecretStatusActive,
+		}, nil
+	case allFilter:
+		return nil, nil
+	case "expired":
+		return []shared.PaperSecretServiceSearchSecretsSharedWithMeRequestStatuses{
+			shared.PaperSecretServiceSearchSecretsSharedWithMeRequestStatusesSecretStatusExpired,
+		}, nil
+	case "burned":
+		return []shared.PaperSecretServiceSearchSecretsSharedWithMeRequestStatuses{
+			shared.PaperSecretServiceSearchSecretsSharedWithMeRequestStatusesSecretStatusBurned,
+		}, nil
+	case "revoked":
+		return []shared.PaperSecretServiceSearchSecretsSharedWithMeRequestStatuses{
+			shared.PaperSecretServiceSearchSecretsSharedWithMeRequestStatusesSecretStatusRevoked,
+		}, nil
+	case "data-deleted":
+		return []shared.PaperSecretServiceSearchSecretsSharedWithMeRequestStatuses{
+			shared.PaperSecretServiceSearchSecretsSharedWithMeRequestStatusesSecretStatusDataDeleted,
+		}, nil
+	default:
+		return nil, fmt.Errorf("--%s must be active, expired, burned, revoked, data-deleted, or all", secretStatusFlag)
+	}
+}
+
+func secretListSharedWithMeType(input string) (*shared.PaperSecretServiceSearchSecretsSharedWithMeRequestSecretType, error) {
+	var secretType shared.PaperSecretServiceSearchSecretsSharedWithMeRequestSecretType
+	switch strings.ToLower(strings.TrimSpace(input)) {
+	case "", allFilter:
+		return nil, nil
+	case "text":
+		secretType = shared.PaperSecretServiceSearchSecretsSharedWithMeRequestSecretTypeSecretTypeText
+	case "file":
+		secretType = shared.PaperSecretServiceSearchSecretsSharedWithMeRequestSecretTypeSecretTypeFile
+	default:
+		return nil, fmt.Errorf("--%s must be text, file, or all", secretTypeFlag)
+	}
+	return &secretType, nil
 }
 
 func createInputFormat(name string) *shared.PaperSecretServiceCreateInternalRequestInputFormat {

@@ -47,7 +47,10 @@ func requirePaperSecretAgeSuite(operation string, returned *shared.PaperSecretSe
 	return nil
 }
 
-func mapPaperSecretCreateError(err error) error {
+// mapPaperSecretError converts the generated SDK's 4XX/5XX *sdkerrors.SDKError
+// into cone's *HTTPError so HTTP failures surface uniformly across paper-secret
+// operations. Non-HTTP errors pass through unchanged.
+func mapPaperSecretError(err error) error {
 	var sdkErr *sdkerrors.SDKError
 	if errors.As(err, &sdkErr) && sdkErr.StatusCode >= http.StatusBadRequest {
 		return &HTTPError{StatusCode: sdkErr.StatusCode, Body: sdkErr.Body}
@@ -70,7 +73,7 @@ func (c *client) CreateInternalSecret(
 
 	resp, err := c.sdk.PaperSecret.CreateInternal(ctx, &request)
 	if err != nil {
-		return nil, mapPaperSecretCreateError(err)
+		return nil, mapPaperSecretError(err)
 	}
 	if err := NewHTTPError(resp.RawResponse); err != nil {
 		return nil, err
@@ -99,7 +102,7 @@ func (c *client) CreateExternalSecret(
 
 	resp, err := c.sdk.PaperSecret.CreateExternal(ctx, &request)
 	if err != nil {
-		return nil, mapPaperSecretCreateError(err)
+		return nil, mapPaperSecretError(err)
 	}
 	if err := NewHTTPError(resp.RawResponse); err != nil {
 		return nil, err
@@ -288,6 +291,34 @@ func (c *client) RevokeSecret(ctx context.Context, vaultID string) (*shared.Pape
 		return nil, fmt.Errorf("revoke secret response was empty")
 	}
 	return resp.PaperSecretServiceRevokeResponse.Secret, nil
+}
+
+// SearchSecretsSharedWithMe returns secrets shared with the calling user, following
+// next_page_token until the listing is complete. The request is caller-bound
+// server-side; it carries no user_id and cone never sets one.
+func (c *client) SearchSecretsSharedWithMe(ctx context.Context, req *shared.PaperSecretServiceSearchSecretsSharedWithMeRequest) ([]shared.PaperSecret, error) {
+	if req == nil {
+		req = &shared.PaperSecretServiceSearchSecretsSharedWithMeRequest{}
+	}
+	var out []shared.PaperSecret
+	for {
+		resp, err := c.sdk.PaperSecret.SearchSecretsSharedWithMe(ctx, req)
+		if err != nil {
+			return nil, mapPaperSecretError(err)
+		}
+		if err := NewHTTPError(resp.RawResponse); err != nil {
+			return nil, err
+		}
+		if resp.PaperSecretServiceSearchResponse != nil {
+			out = append(out, resp.PaperSecretServiceSearchResponse.List...)
+			token := StringFromPtr(resp.PaperSecretServiceSearchResponse.NextPageToken)
+			if token != "" {
+				req.PageToken = &token
+				continue
+			}
+		}
+		return out, nil
+	}
 }
 
 func (c *client) SearchSecretAuditEvents(ctx context.Context, vaultID string, pageSize int) ([]map[string]any, error) {

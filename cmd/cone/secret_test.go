@@ -603,9 +603,9 @@ func TestEncryptFileToTemp(t *testing.T) {
 	}
 }
 
-// sharedListHarness drives the shared-with-me list flag handling against a fake
-// cobra/viper environment, without a live API: it verifies which request shape
-// the flag logic builds and which client method it selects.
+// sharedListHarness stands in for the authenticated C1Client in routing tests:
+// it records which search method the production routing selected and with
+// which request, without a live API.
 type sharedListHarness struct {
 	mySecretsCalled     bool
 	sharedWithMeCalled  bool
@@ -625,6 +625,10 @@ func (h *sharedListHarness) SearchSecretsSharedWithMe(_ context.Context, req *sh
 	return nil, nil
 }
 
+// newSecretListCmdHarness builds the real secret list command but swaps the
+// authenticated cmdContext step for the production runSecretList routing core
+// driven by the harness, so the tests exercise the actual branch selection and
+// cross-mode flag constraints the CLI uses.
 func newSecretListCmdHarness(t *testing.T, flags map[string]string, boolFlags ...string) (*sharedListHarness, *cobra.Command) {
 	t.Helper()
 	h := &sharedListHarness{}
@@ -633,35 +637,26 @@ func newSecretListCmdHarness(t *testing.T, flags map[string]string, boolFlags ..
 		ctx := cmd.Context()
 		v := viper.New()
 		for _, f := range boolFlags {
-			_ = cmd.Flags().Set(f, "true")
-			_ = v.BindPFlag(f, cmd.Flags().Lookup(f))
-		}
-		for name, value := range flags {
-			_ = cmd.Flags().Set(name, value)
-			_ = v.BindPFlag(name, cmd.Flags().Lookup(name))
-		}
-		for _, name := range []string{queryFlag, secretStatusFlag, secretTypeFlag, secretSharingFlag, pageSizeFlag, sharedWithMeFlag, includeOwnFlag} {
-			if cmd.Flags().Lookup(name) != nil && v.Get(name) == nil {
-				_ = v.BindPFlag(name, cmd.Flags().Lookup(name))
+			if err := cmd.Flags().Set(f, "true"); err != nil {
+				t.Fatalf("Set(%s) unexpected error: %v", f, err)
 			}
 		}
-		return secretListRunForTest(ctx, h, v, cmd)
+		for name, value := range flags {
+			if err := cmd.Flags().Set(name, value); err != nil {
+				t.Fatalf("Set(%s) unexpected error: %v", name, err)
+			}
+		}
+		for _, name := range []string{queryFlag, secretStatusFlag, secretTypeFlag, secretSharingFlag, pageSizeFlag, sharedWithMeFlag, includeOwnFlag, "output"} {
+			if f := cmd.Flags().Lookup(name); f != nil {
+				if err := v.BindPFlag(name, f); err != nil {
+					t.Fatalf("BindPFlag(%s) unexpected error: %v", name, err)
+				}
+			}
+		}
+		v.Set("output", "json")
+		return runSecretList(ctx, h, v, cmd)
 	}
 	return h, cmd
-}
-
-// secretListRunForTest executes the same flag-routing core secretListRun uses,
-// against the harness, without the authenticated cmdContext.
-func secretListRunForTest(ctx context.Context, h *sharedListHarness, v *viper.Viper, cmd *cobra.Command) error {
-	if v.GetBool(sharedWithMeFlag) {
-		return secretListSharedWithMeRun(ctx, h, v, cmd)
-	}
-	req, err := buildSearchMySecretsRequest(v)
-	if err != nil {
-		return err
-	}
-	_, err = h.SearchMySecrets(ctx, req)
-	return err
 }
 
 func TestSecretListDefaultUsesCreatorEndpoint(t *testing.T) {
@@ -772,5 +767,66 @@ func TestSecretListSharedWithMeInvalidStatus(t *testing.T) {
 	_, cmd := newSecretListCmdHarness(t, map[string]string{secretStatusFlag: "bogus"}, sharedWithMeFlag)
 	if err := cmd.Execute(); err == nil {
 		t.Fatal("invalid status must fail")
+	}
+}
+
+func TestSecretListSharedWithMeQueryMultibyteBoundary(t *testing.T) {
+	// The server enforces max_len:256 on Unicode code points (protoc-gen-validate
+	// string max_len), not bytes. 256 é characters are 512 UTF-8 bytes and must
+	// pass; 257 must fail.
+	atLimit := strings.Repeat("é", 256)
+	h, cmd := newSecretListCmdHarness(t, map[string]string{queryFlag: atLimit}, sharedWithMeFlag)
+	if err := cmd.Execute(); err != nil {
+		t.Fatalf("256-codepoint multibyte query must pass (bytes=%d): %v", len(atLimit), err)
+	}
+	if h.lastSharedWithMeReq == nil || h.lastSharedWithMeReq.Query == nil || *h.lastSharedWithMeReq.Query != atLimit {
+		t.Fatal("at-limit multibyte query must reach the shared request unchanged")
+	}
+
+	overLimit := strings.Repeat("é", 257)
+	_, cmd2 := newSecretListCmdHarness(t, map[string]string{queryFlag: overLimit}, sharedWithMeFlag)
+	if err := cmd2.Execute(); err == nil {
+		t.Fatal("257-codepoint multibyte query must fail")
+	}
+}
+
+func TestSecretListIncludeOwnWithoutSharedWithMeRejected(t *testing.T) {
+	// Exercises the production routing constraint: --include-own is only
+	// meaningful with --shared-with-me and must be rejected otherwise.
+	h, cmd := newSecretListCmdHarness(t, nil, includeOwnFlag)
+	err := cmd.Execute()
+	if err == nil {
+		t.Fatal("--include-own without --shared-with-me must fail")
+	}
+	if !strings.Contains(err.Error(), "requires") {
+		t.Fatalf("error = %v, want include-own requires shared-with-me message", err)
+	}
+	if h.sharedWithMeCalled || h.mySecretsCalled {
+		t.Fatal("rejected flag combination must not reach either endpoint")
+	}
+}
+
+func TestSecretListCreatorPathPreserved(t *testing.T) {
+	// The default creator path must keep its distinct contract: page size up to
+	// 1000, created-desc sort, sharing-mode filter allowed.
+	h, cmd := newSecretListCmdHarness(t, map[string]string{pageSizeFlag: "500", secretSharingFlag: "internal", secretStatusFlag: "all"})
+	if err := cmd.Execute(); err != nil {
+		t.Fatalf("Execute() unexpected error: %v", err)
+	}
+	req := h.lastMySecretsReq
+	if req == nil {
+		t.Fatal("creator request was nil")
+	}
+	if req.PageSize == nil || *req.PageSize != 500 {
+		t.Fatalf("page size = %v, want 500 (creator path allows up to 1000)", req.PageSize)
+	}
+	if req.SortBy == nil || *req.SortBy != shared.PaperSecretServiceSearchMySecretsRequestSortBySearchSortByCreatedDesc {
+		t.Fatalf("sort by = %v, want created-desc preserved", req.SortBy)
+	}
+	if req.SharingMode == nil || *req.SharingMode != shared.PaperSecretServiceSearchMySecretsRequestSharingModePaperVaultSharingModeInternal {
+		t.Fatalf("sharing mode = %v, want internal (allowed on creator path)", req.SharingMode)
+	}
+	if req.Statuses != nil {
+		t.Fatalf("statuses = %v, want no filter for all", req.Statuses)
 	}
 }

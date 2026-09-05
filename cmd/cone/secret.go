@@ -15,6 +15,7 @@ import (
 	"strconv"
 	"strings"
 	"time"
+	"unicode/utf8"
 
 	"filippo.io/age"
 	"github.com/spf13/cobra"
@@ -640,6 +641,21 @@ func secretListRun(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
+	return runSecretList(ctx, c, v, cmd)
+}
+
+// secretLister is the subset of client.C1Client that secret listing needs,
+// narrowed so the production routing logic can be exercised with a
+// lightweight fake in tests (same pattern as secretCreator/secretSharer).
+type secretLister interface {
+	secretSharer
+	SearchMySecrets(ctx context.Context, req *shared.PaperSecretServiceSearchMySecretsRequest) ([]shared.PaperSecret, error)
+}
+
+// runSecretList is the production flag-routing core shared by the CLI and tests:
+// it selects the shared-with-me or creator endpoint, enforces the cross-mode
+// flag constraints, builds the request, and renders the result.
+func runSecretList(ctx context.Context, c secretLister, v *viper.Viper, cmd *cobra.Command) error {
 	if v.GetBool(sharedWithMeFlag) {
 		return secretListSharedWithMeRun(ctx, c, v, cmd)
 	}
@@ -733,7 +749,7 @@ func buildSearchSecretsSharedWithMeRequest(v *viper.Viper, cmd *cobra.Command) (
 		PageSize: &pageSize,
 	}
 	if query := strings.TrimSpace(v.GetString(queryFlag)); query != "" {
-		if len(query) > 256 {
+		if utf8.RuneCountInString(query) > 256 {
 			return nil, fmt.Errorf("--%s must be at most 256 characters with --%s", queryFlag, sharedWithMeFlag)
 		}
 		req.Query = &query

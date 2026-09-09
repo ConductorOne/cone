@@ -252,11 +252,13 @@ func (c *client) GetSecretByShareCode(ctx context.Context, shareCode string) (*s
 
 // paginate walks a listing one page at a time: fetch returns the page's items
 // and next_page_token for the given token ("" starts the listing). The
-// caller's request is never mutated. A server that repeats a non-empty token
-// would otherwise loop forever while the result grows; stop with an error.
+// caller's request is never mutated. A server that hands out a token it
+// already returned — constant or cycling — would otherwise loop forever while
+// the result grows; stop with an error at the first repeat.
 func paginate[T any](ctx context.Context, fetch func(ctx context.Context, pageToken string) ([]T, string, error)) ([]T, error) {
 	var out []T
 	token := ""
+	seen := make(map[string]struct{})
 	for {
 		items, next, err := fetch(ctx, token)
 		if err != nil {
@@ -266,9 +268,10 @@ func paginate[T any](ctx context.Context, fetch func(ctx context.Context, pageTo
 		if next == "" {
 			return out, nil
 		}
-		if next == token {
+		if _, repeated := seen[next]; repeated {
 			return nil, fmt.Errorf("next_page_token %q repeated; stopping to avoid an unbounded listing", next)
 		}
+		seen[next] = struct{}{}
 		token = next
 	}
 }

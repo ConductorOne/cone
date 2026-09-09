@@ -845,6 +845,27 @@ func TestSecretListSharingModeViaViperRejectedWithSharedWithMe(t *testing.T) {
 	}
 }
 
+func TestSecretListSharingModeViaViperNormalized(t *testing.T) {
+	// The guard compares the viper value the way secretListSharingMode
+	// normalizes it: " ALL ", "All", and "all" all mean the no-filter default
+	// and must not be rejected on the shared-with-me path.
+	h := &sharedListHarness{}
+	v := viper.New()
+	v.Set(pageSizeFlag, 100)
+	v.Set(sharedWithMeFlag, true)
+	v.Set(secretSharingFlag, " ALL ")
+	v.Set("output", "json")
+	if err := runSecretList(context.Background(), h, v); err != nil {
+		t.Fatalf("normalized no-filter sharing-mode must be allowed: %v", err)
+	}
+	if !h.sharedWithMeCalled {
+		t.Fatal("--shared-with-me with a normalized no-filter sharing-mode must list shared secrets")
+	}
+	if h.mySecretsCalled {
+		t.Fatal("creator endpoint must not be used")
+	}
+}
+
 func TestSecretListCreatorPathPreserved(t *testing.T) {
 	// The default creator path must keep its distinct contract: page size up to
 	// 1000, created-desc sort, sharing-mode filter allowed.

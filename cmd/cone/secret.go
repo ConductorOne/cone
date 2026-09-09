@@ -741,8 +741,9 @@ func secretListSharedWithMeRun(ctx context.Context, c secretSharer, v *viper.Vip
 func buildSearchSecretsSharedWithMeRequest(v *viper.Viper) (*shared.PaperSecretServiceSearchSecretsSharedWithMeRequest, error) {
 	// sharing-mode is consumed through viper (CONE_SHARING_MODE, profile
 	// config), so the guard must read the resolved value, not
-	// cmd.Flags().Changed(). "all" is the no-filter default and stays allowed.
-	if sharingMode := v.GetString(secretSharingFlag); sharingMode != "" && sharingMode != allFilter {
+	// cmd.Flags().Changed(). Normalize exactly like secretListSharingMode, so
+	// " ALL " and "All" still mean the no-filter default and stay allowed.
+	if sharingMode := strings.ToLower(strings.TrimSpace(v.GetString(secretSharingFlag))); sharingMode != "" && sharingMode != allFilter {
 		return nil, fmt.Errorf("--%s is not supported with --%s", secretSharingFlag, sharedWithMeFlag)
 	}
 

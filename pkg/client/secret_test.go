@@ -337,6 +337,38 @@ func TestSearchSecretsSharedWithMeStopsOnRepeatedPageToken(t *testing.T) {
 	}
 }
 
+func TestSearchSecretsSharedWithMeStopsOnCyclingPageToken(t *testing.T) {
+	// A server that alternates tokens (A → B → A → …) defeats a guard that only
+	// compares against the immediately preceding token; every token the server
+	// has handed out must be tracked.
+	var requests int
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
+		requests++
+		w.Header().Set("Content-Type", "application/json")
+		tokens := []string{"a", "b", "a"}
+		resp := shared.PaperSecretServiceSearchResponse{
+			NextPageToken: &tokens[(requests-1)%len(tokens)],
+			List:          []shared.PaperSecret{{VaultID: new("vault-1")}},
+		}
+		if err := json.NewEncoder(w).Encode(resp); err != nil {
+			t.Errorf("Encode() unexpected error: %v", err)
+		}
+	}))
+	defer server.Close()
+
+	c := newPaperSecretTestClient(server.URL, server.Client())
+	_, err := c.SearchSecretsSharedWithMe(context.Background(), &shared.PaperSecretServiceSearchSecretsSharedWithMeRequest{})
+	if err == nil {
+		t.Fatal("a cycling next_page_token must abort the listing instead of looping")
+	}
+	if !strings.Contains(err.Error(), "next_page_token") {
+		t.Fatalf("error = %v, want repeated-token message", err)
+	}
+	if requests != 3 {
+		t.Fatalf("requests sent = %d, want 3 (the token cycle must stop the loop)", requests)
+	}
+}
+
 func TestSearchMySecretsDoesNotMutateCallerRequest(t *testing.T) {
 	var requests int
 	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {

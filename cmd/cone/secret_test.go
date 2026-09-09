@@ -845,6 +845,29 @@ func TestSecretListSharingModeViaViperRejectedWithSharedWithMe(t *testing.T) {
 	}
 }
 
+func TestSecretListSharingModeInvalidViaViperRejectedWithSharedWithMe(t *testing.T) {
+	// An invalid sharing-mode must surface secretListSharingMode's own
+	// validation error, not the incompatibility message the creator path
+	// never produces for it.
+	h := &sharedListHarness{}
+	v := viper.New()
+	v.Set(sharedWithMeFlag, true)
+	v.Set(secretSharingFlag, "bogus")
+	err := runSecretList(context.Background(), h, v)
+	if err == nil {
+		t.Fatal("invalid sharing-mode must fail")
+	}
+	if !strings.Contains(err.Error(), "must be internal, external, or all") {
+		t.Fatalf("error = %v, want the sharing-mode validation error", err)
+	}
+	if strings.Contains(err.Error(), "not supported") {
+		t.Fatalf("error = %v, incompatibility message must not swallow the validation error", err)
+	}
+	if h.mySecretsCalled || h.sharedWithMeCalled {
+		t.Fatal("rejected value must not reach either endpoint")
+	}
+}
+
 func TestSecretListSharingModeViaViperNormalized(t *testing.T) {
 	// The guard compares the viper value the way secretListSharingMode
 	// normalizes it: " ALL ", "All", and "all" all mean the no-filter default

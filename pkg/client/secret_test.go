@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
+	"fmt"
 	"net/http"
 	"net/http/httptest"
 	"strings"
@@ -366,6 +367,37 @@ func TestSearchSecretsSharedWithMeStopsOnCyclingPageToken(t *testing.T) {
 	}
 	if requests != 3 {
 		t.Fatalf("requests sent = %d, want 3 (the token cycle must stop the loop)", requests)
+	}
+}
+
+func TestSearchSecretsSharedWithMeStopsOnUnboundedFreshTokens(t *testing.T) {
+	// A server that mints a fresh unique token on every page defeats the
+	// repeat checks; the page cap is what finally terminates the listing.
+	var requests int
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
+		requests++
+		w.Header().Set("Content-Type", "application/json")
+		token := fmt.Sprintf("fresh-%d", requests)
+		resp := shared.PaperSecretServiceSearchResponse{
+			NextPageToken: &token,
+			List:          []shared.PaperSecret{{VaultID: new("vault-1")}},
+		}
+		if err := json.NewEncoder(w).Encode(resp); err != nil {
+			t.Errorf("Encode() unexpected error: %v", err)
+		}
+	}))
+	defer server.Close()
+
+	c := newPaperSecretTestClient(server.URL, server.Client())
+	_, err := c.SearchSecretsSharedWithMe(context.Background(), &shared.PaperSecretServiceSearchSecretsSharedWithMeRequest{})
+	if err == nil {
+		t.Fatal("an endless stream of fresh tokens must abort at the page cap instead of looping")
+	}
+	if !strings.Contains(err.Error(), "pages") {
+		t.Fatalf("error = %v, want page-cap message", err)
+	}
+	if requests != paginationPageCap {
+		t.Fatalf("requests sent = %d, want %d (the cap must stop the loop)", requests, paginationPageCap)
 	}
 }
 

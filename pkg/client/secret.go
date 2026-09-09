@@ -250,16 +250,25 @@ func (c *client) GetSecretByShareCode(ctx context.Context, shareCode string) (*s
 	return resp.PaperSecretServiceGetResponse.Secret, nil
 }
 
+// paginationPageCap bounds how many pages any listing may follow. Real
+// listings end long before this; the cap exists only so a server that keeps
+// minting fresh tokens cannot keep a caller looping and growing forever.
+const paginationPageCap = 1000
+
 // paginate walks a listing one page at a time: fetch returns the page's items
 // and next_page_token for the given token ("" starts the listing). The
-// caller's request is never mutated. A server that hands out a token it
-// already returned — constant or cycling — would otherwise loop forever while
-// the result grows; stop with an error at the first repeat.
+// caller's request is never mutated. No server behaviour can spin the listing:
+// a token the server has already handed out stops it immediately (constant or
+// cycling), and a walk that never repeats still ends at paginationPageCap
+// pages — both with an error rather than unbounded growth.
 func paginate[T any](ctx context.Context, fetch func(ctx context.Context, pageToken string) ([]T, string, error)) ([]T, error) {
 	var out []T
 	token := ""
 	seen := make(map[string]struct{})
-	for {
+	for page := 1; ; page++ {
+		if page > paginationPageCap {
+			return nil, fmt.Errorf("listing exceeded %d pages; stopping to avoid an unbounded listing", paginationPageCap)
+		}
 		items, next, err := fetch(ctx, token)
 		if err != nil {
 			return nil, err

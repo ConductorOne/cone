@@ -641,7 +641,7 @@ func secretListRun(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
-	return runSecretList(ctx, c, v, cmd)
+	return runSecretList(ctx, c, v)
 }
 
 // secretLister is the subset of client.C1Client that secret listing needs,
@@ -654,12 +654,14 @@ type secretLister interface {
 
 // runSecretList is the production flag-routing core shared by the CLI and tests:
 // it selects the shared-with-me or creator endpoint, enforces the cross-mode
-// flag constraints, builds the request, and renders the result.
-func runSecretList(ctx context.Context, c secretLister, v *viper.Viper, cmd *cobra.Command) error {
+// value constraints, builds the request, and renders the result.
+func runSecretList(ctx context.Context, c secretLister, v *viper.Viper) error {
 	if v.GetBool(sharedWithMeFlag) {
-		return secretListSharedWithMeRun(ctx, c, v, cmd)
+		return secretListSharedWithMeRun(ctx, c, v)
 	}
-	if cmd.Flags().Changed(includeOwnFlag) {
+	// include-own is consumed through viper (CONE_INCLUDE_OWN, profile config),
+	// so the guard must read the resolved value, not cmd.Flags().Changed().
+	if v.GetBool(includeOwnFlag) {
 		return fmt.Errorf("--%s requires --%s", includeOwnFlag, sharedWithMeFlag)
 	}
 
@@ -718,8 +720,8 @@ type secretSharer interface {
 // secretListSharedWithMeRun lists secrets shared with the caller. The endpoint is
 // caller-bound: it accepts no user_id, sort_by, or sharing-mode filter, so those
 // incompatibilities are rejected here rather than silently dropped.
-func secretListSharedWithMeRun(ctx context.Context, c secretSharer, v *viper.Viper, cmd *cobra.Command) error {
-	req, err := buildSearchSecretsSharedWithMeRequest(v, cmd)
+func secretListSharedWithMeRun(ctx context.Context, c secretSharer, v *viper.Viper) error {
+	req, err := buildSearchSecretsSharedWithMeRequest(v)
 	if err != nil {
 		return err
 	}
@@ -736,8 +738,11 @@ func secretListSharedWithMeRun(ctx context.Context, c secretSharer, v *viper.Vip
 // from CLI flags. The endpoint is caller-bound: it accepts no user_id, sort_by,
 // or sharing-mode filter, so those incompatibilities are rejected here rather
 // than silently dropped.
-func buildSearchSecretsSharedWithMeRequest(v *viper.Viper, cmd *cobra.Command) (*shared.PaperSecretServiceSearchSecretsSharedWithMeRequest, error) {
-	if cmd.Flags().Changed(secretSharingFlag) {
+func buildSearchSecretsSharedWithMeRequest(v *viper.Viper) (*shared.PaperSecretServiceSearchSecretsSharedWithMeRequest, error) {
+	// sharing-mode is consumed through viper (CONE_SHARING_MODE, profile
+	// config), so the guard must read the resolved value, not
+	// cmd.Flags().Changed(). "all" is the no-filter default and stays allowed.
+	if sharingMode := v.GetString(secretSharingFlag); sharingMode != "" && sharingMode != allFilter {
 		return nil, fmt.Errorf("--%s is not supported with --%s", secretSharingFlag, sharedWithMeFlag)
 	}
 

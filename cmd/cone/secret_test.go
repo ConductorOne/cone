@@ -654,7 +654,7 @@ func newSecretListCmdHarness(t *testing.T, flags map[string]string, boolFlags ..
 			}
 		}
 		v.Set("output", "json")
-		return runSecretList(ctx, h, v, cmd)
+		return runSecretList(ctx, h, v)
 	}
 	return h, cmd
 }
@@ -803,6 +803,45 @@ func TestSecretListIncludeOwnWithoutSharedWithMeRejected(t *testing.T) {
 	}
 	if h.sharedWithMeCalled || h.mySecretsCalled {
 		t.Fatal("rejected flag combination must not reach either endpoint")
+	}
+}
+
+func TestSecretListIncludeOwnViaViperRejectedWithoutSharedWithMe(t *testing.T) {
+	// include-own can arrive through viper (CONE_INCLUDE_OWN env var or a
+	// profile config key) without cmd.Flags().Changed() ever seeing it; v.Set
+	// stands in for those sources and must hit the same guard.
+	h := &sharedListHarness{}
+	v := viper.New()
+	v.Set(includeOwnFlag, true)
+	err := runSecretList(context.Background(), h, v)
+	if err == nil {
+		t.Fatal("include-own via env/profile must fail without --shared-with-me")
+	}
+	if !strings.Contains(err.Error(), "requires") {
+		t.Fatalf("error = %v, want include-own requires shared-with-me message", err)
+	}
+	if h.mySecretsCalled || h.sharedWithMeCalled {
+		t.Fatal("rejected value combination must not reach either endpoint")
+	}
+}
+
+func TestSecretListSharingModeViaViperRejectedWithSharedWithMe(t *testing.T) {
+	// sharing-mode can arrive through viper (CONE_SHARING_MODE env var or a
+	// profile config key) without cmd.Flags().Changed() ever seeing it; v.Set
+	// stands in for those sources and must hit the same guard.
+	h := &sharedListHarness{}
+	v := viper.New()
+	v.Set(sharedWithMeFlag, true)
+	v.Set(secretSharingFlag, "internal")
+	err := runSecretList(context.Background(), h, v)
+	if err == nil {
+		t.Fatal("sharing-mode via env/profile must fail with --shared-with-me")
+	}
+	if !strings.Contains(err.Error(), "not supported") {
+		t.Fatalf("error = %v, want sharing-mode incompatibility message", err)
+	}
+	if h.mySecretsCalled || h.sharedWithMeCalled {
+		t.Fatal("rejected value combination must not reach either endpoint")
 	}
 }
 

@@ -6,6 +6,7 @@ import (
 	"errors"
 	"net/http"
 	"net/http/httptest"
+	"strings"
 	"testing"
 	"time"
 
@@ -302,6 +303,65 @@ func TestSearchSecretsSharedWithMePaginatesWithFiltersPreserved(t *testing.T) {
 	}
 	if _, hasToken := requests[1].body["pageToken"]; !hasToken {
 		t.Error("second request must carry pageToken from first response")
+	}
+	if req.PageToken != nil {
+		t.Errorf("caller request was mutated: PageToken = %q, want unchanged", *req.PageToken)
+	}
+}
+
+func TestSearchSecretsSharedWithMeStopsOnRepeatedPageToken(t *testing.T) {
+	var requests int
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
+		requests++
+		w.Header().Set("Content-Type", "application/json")
+		resp := shared.PaperSecretServiceSearchResponse{
+			NextPageToken: new("same-token"),
+			List:          []shared.PaperSecret{{VaultID: new("vault-1")}},
+		}
+		if err := json.NewEncoder(w).Encode(resp); err != nil {
+			t.Errorf("Encode() unexpected error: %v", err)
+		}
+	}))
+	defer server.Close()
+
+	c := newPaperSecretTestClient(server.URL, server.Client())
+	_, err := c.SearchSecretsSharedWithMe(context.Background(), &shared.PaperSecretServiceSearchSecretsSharedWithMeRequest{})
+	if err == nil {
+		t.Fatal("a constant next_page_token must abort the listing instead of looping")
+	}
+	if !strings.Contains(err.Error(), "next_page_token") {
+		t.Fatalf("error = %v, want repeated-token message", err)
+	}
+	if requests != 2 {
+		t.Fatalf("requests sent = %d, want 2 (the repeated token must stop the loop)", requests)
+	}
+}
+
+func TestSearchMySecretsDoesNotMutateCallerRequest(t *testing.T) {
+	var requests int
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
+		requests++
+		w.Header().Set("Content-Type", "application/json")
+		resp := shared.PaperSecretServiceSearchResponse{}
+		if requests == 1 {
+			resp.NextPageToken = new("page-two")
+			resp.List = []shared.PaperSecret{{VaultID: new("vault-1")}}
+		} else {
+			resp.List = []shared.PaperSecret{{VaultID: new("vault-2")}}
+		}
+		if err := json.NewEncoder(w).Encode(resp); err != nil {
+			t.Errorf("Encode() unexpected error: %v", err)
+		}
+	}))
+	defer server.Close()
+
+	c := newPaperSecretTestClient(server.URL, server.Client())
+	req := &shared.PaperSecretServiceSearchMySecretsRequest{}
+	if _, err := c.SearchMySecrets(context.Background(), req); err != nil {
+		t.Fatalf("SearchMySecrets() unexpected error: %v", err)
+	}
+	if req.PageToken != nil {
+		t.Fatalf("caller request was mutated: PageToken = %q, want unchanged", *req.PageToken)
 	}
 }
 

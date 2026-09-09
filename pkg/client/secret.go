@@ -250,29 +250,50 @@ func (c *client) GetSecretByShareCode(ctx context.Context, shareCode string) (*s
 	return resp.PaperSecretServiceGetResponse.Secret, nil
 }
 
+// paginate walks a listing one page at a time: fetch returns the page's items
+// and next_page_token for the given token ("" starts the listing). The
+// caller's request is never mutated. A server that repeats a non-empty token
+// would otherwise loop forever while the result grows; stop with an error.
+func paginate[T any](ctx context.Context, fetch func(ctx context.Context, pageToken string) ([]T, string, error)) ([]T, error) {
+	var out []T
+	token := ""
+	for {
+		items, next, err := fetch(ctx, token)
+		if err != nil {
+			return nil, err
+		}
+		out = append(out, items...)
+		if next == "" {
+			return out, nil
+		}
+		if next == token {
+			return nil, fmt.Errorf("next_page_token %q repeated; stopping to avoid an unbounded listing", next)
+		}
+		token = next
+	}
+}
+
 func (c *client) SearchMySecrets(ctx context.Context, req *shared.PaperSecretServiceSearchMySecretsRequest) ([]shared.PaperSecret, error) {
 	if req == nil {
 		req = &shared.PaperSecretServiceSearchMySecretsRequest{}
 	}
-	var out []shared.PaperSecret
-	for {
-		resp, err := c.sdk.PaperSecret.SearchMySecrets(ctx, req)
+	return paginate(ctx, func(ctx context.Context, pageToken string) ([]shared.PaperSecret, string, error) {
+		page := *req
+		if pageToken != "" {
+			page.PageToken = &pageToken
+		}
+		resp, err := c.sdk.PaperSecret.SearchMySecrets(ctx, &page)
 		if err != nil {
-			return nil, err
+			return nil, "", err
 		}
 		if err := NewHTTPError(resp.RawResponse); err != nil {
-			return nil, err
+			return nil, "", err
 		}
-		if resp.PaperSecretServiceSearchResponse != nil {
-			out = append(out, resp.PaperSecretServiceSearchResponse.List...)
-			token := StringFromPtr(resp.PaperSecretServiceSearchResponse.NextPageToken)
-			if token != "" {
-				req.PageToken = &token
-				continue
-			}
+		if resp.PaperSecretServiceSearchResponse == nil {
+			return nil, "", nil
 		}
-		return out, nil
-	}
+		return resp.PaperSecretServiceSearchResponse.List, StringFromPtr(resp.PaperSecretServiceSearchResponse.NextPageToken), nil
+	})
 }
 
 func (c *client) RevokeSecret(ctx context.Context, vaultID string) (*shared.PaperSecret, error) {
@@ -295,54 +316,50 @@ func (c *client) RevokeSecret(ctx context.Context, vaultID string) (*shared.Pape
 
 // SearchSecretsSharedWithMe returns secrets shared with the calling user, following
 // next_page_token until the listing is complete. The request is caller-bound
-// server-side; it carries no user_id and cone never sets one.
+// server-side; it carries no user_id and cone never sets one. The caller's
+// request is copied per page and never mutated.
 func (c *client) SearchSecretsSharedWithMe(ctx context.Context, req *shared.PaperSecretServiceSearchSecretsSharedWithMeRequest) ([]shared.PaperSecret, error) {
 	if req == nil {
 		req = &shared.PaperSecretServiceSearchSecretsSharedWithMeRequest{}
 	}
-	var out []shared.PaperSecret
-	for {
-		resp, err := c.sdk.PaperSecret.SearchSecretsSharedWithMe(ctx, req)
+	return paginate(ctx, func(ctx context.Context, pageToken string) ([]shared.PaperSecret, string, error) {
+		page := *req
+		if pageToken != "" {
+			page.PageToken = &pageToken
+		}
+		resp, err := c.sdk.PaperSecret.SearchSecretsSharedWithMe(ctx, &page)
 		if err != nil {
-			return nil, mapPaperSecretError(err)
+			return nil, "", mapPaperSecretError(err)
 		}
 		if err := NewHTTPError(resp.RawResponse); err != nil {
-			return nil, err
+			return nil, "", err
 		}
-		if resp.PaperSecretServiceSearchResponse != nil {
-			out = append(out, resp.PaperSecretServiceSearchResponse.List...)
-			token := StringFromPtr(resp.PaperSecretServiceSearchResponse.NextPageToken)
-			if token != "" {
-				req.PageToken = &token
-				continue
-			}
+		if resp.PaperSecretServiceSearchResponse == nil {
+			return nil, "", nil
 		}
-		return out, nil
-	}
+		return resp.PaperSecretServiceSearchResponse.List, StringFromPtr(resp.PaperSecretServiceSearchResponse.NextPageToken), nil
+	})
 }
 
 func (c *client) SearchSecretAuditEvents(ctx context.Context, vaultID string, pageSize int) ([]map[string]any, error) {
-	req := &shared.PaperSecretServiceSearchAuditEventsRequest{
-		VaultID:  &vaultID,
-		PageSize: &pageSize,
-	}
-	var out []map[string]any
-	for {
+	return paginate(ctx, func(ctx context.Context, pageToken string) ([]map[string]any, string, error) {
+		req := &shared.PaperSecretServiceSearchAuditEventsRequest{
+			VaultID:  &vaultID,
+			PageSize: &pageSize,
+		}
+		if pageToken != "" {
+			req.PageToken = &pageToken
+		}
 		resp, err := c.sdk.PaperSecret.SearchAuditEvents(ctx, req)
 		if err != nil {
-			return nil, err
+			return nil, "", err
 		}
 		if err := NewHTTPError(resp.RawResponse); err != nil {
-			return nil, err
+			return nil, "", err
 		}
-		if resp.PaperSecretServiceSearchAuditEventsResponse != nil {
-			out = append(out, resp.PaperSecretServiceSearchAuditEventsResponse.List...)
-			token := StringFromPtr(resp.PaperSecretServiceSearchAuditEventsResponse.NextPageToken)
-			if token != "" {
-				req.PageToken = &token
-				continue
-			}
+		if resp.PaperSecretServiceSearchAuditEventsResponse == nil {
+			return nil, "", nil
 		}
-		return out, nil
-	}
+		return resp.PaperSecretServiceSearchAuditEventsResponse.List, StringFromPtr(resp.PaperSecretServiceSearchAuditEventsResponse.NextPageToken), nil
+	})
 }

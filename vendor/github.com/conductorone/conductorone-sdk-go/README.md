@@ -868,6 +868,7 @@ func main() {
 * [CreateAccessProfileFromCohort](docs/sdks/roleminingmanagement/README.md#createaccessprofilefromcohort) - Create Access Profile From Cohort
 * [EvaluateEntitlementSelection](docs/sdks/roleminingmanagement/README.md#evaluateentitlementselection) - Evaluate Entitlement Selection
 * [GetCustomAnalysisResult](docs/sdks/roleminingmanagement/README.md#getcustomanalysisresult) - Get Custom Analysis Result
+* [GetLatestCustomAnalysisResult](docs/sdks/roleminingmanagement/README.md#getlatestcustomanalysisresult) - Get Latest Custom Analysis Result
 * [GetLatestRun](docs/sdks/roleminingmanagement/README.md#getlatestrun) - Get Latest Run
 * [GetRoleMiningConfig](docs/sdks/roleminingmanagement/README.md#getroleminingconfig) - Get Role Mining Config
 * [GetSuggestion](docs/sdks/roleminingmanagement/README.md#getsuggestion) - Get Suggestion
@@ -902,6 +903,7 @@ func main() {
 * [ListAssignments](docs/sdks/sessionpolicy/README.md#listassignments) - List Assignments
 * [ListUserPolicies](docs/sdks/sessionpolicy/README.md#listuserpolicies) - List User Policies
 * [Search](docs/sdks/sessionpolicy/README.md#search) - Search
+* [SearchAppUserSessionPolicies](docs/sdks/sessionpolicy/README.md#searchappusersessionpolicies) - Search App User Session Policies
 * [SearchPolicyUsers](docs/sdks/sessionpolicy/README.md#searchpolicyusers) - Search Policy Users
 * [UnassignGroup](docs/sdks/sessionpolicy/README.md#unassigngroup) - Unassign Group
 * [UnassignUser](docs/sdks/sessionpolicy/README.md#unassignuser) - Unassign User
@@ -921,6 +923,15 @@ func main() {
 * [List](docs/sdks/signinpolicy/README.md#list) - List
 * [Search](docs/sdks/signinpolicy/README.md#search) - Search
 * [Update](docs/sdks/signinpolicy/README.md#update) - Update
+
+### [SpendInsights](docs/sdks/spendinsights/README.md)
+
+* [GetAttributionRollups](docs/sdks/spendinsights/README.md#getattributionrollups) - Get Attribution Rollups
+* [GetDenial](docs/sdks/spendinsights/README.md#getdenial) - Get Denial
+* [GetMySpendStatus](docs/sdks/spendinsights/README.md#getmyspendstatus) - Get My Spend Status
+* [GetOverview](docs/sdks/spendinsights/README.md#getoverview) - Get Overview
+* [ResolveEffectiveLimits](docs/sdks/spendinsights/README.md#resolveeffectivelimits) - Resolve Effective Limits
+* [SearchDenials](docs/sdks/spendinsights/README.md#searchdenials) - Search Denials
 
 ### [SSFReceiverEvent](docs/sdks/ssfreceiverevent/README.md)
 

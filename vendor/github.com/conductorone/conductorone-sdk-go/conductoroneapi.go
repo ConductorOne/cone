@@ -71,6 +71,7 @@ type ConductoroneAPI struct {
 	AppEntitlementRoutingRule            *AppEntitlementRoutingRule
 	AppEntitlements                      *AppEntitlements
 	AppEntitlementSearch                 *AppEntitlementSearch
+	SessionPolicy                        *SessionPolicy
 	AppEntitlementUserBinding            *AppEntitlementUserBinding
 	AppEntitlementOwners                 *AppEntitlementOwners
 	MCPServer                            *MCPServer
@@ -148,7 +149,6 @@ type ConductoroneAPI struct {
 	RoleMiningManagementSearch           *RoleMiningManagementSearch
 	PaperSecretAdmin                     *PaperSecretAdmin
 	PaperSecret                          *PaperSecret
-	SessionPolicy                        *SessionPolicy
 	SignInPolicy                         *SignInPolicy
 	SSFReceiverEventSearch               *SSFReceiverEventSearch
 	StepUpProvider                       *StepUpProvider
@@ -174,6 +174,7 @@ type ConductoroneAPI struct {
 	RequestSettings                      *RequestSettings
 	SessionSettings                      *SessionSettings
 	SSOSettings                          *SSOSettings
+	SpendInsights                        *SpendInsights
 	SSFReceiverStream                    *SSFReceiverStream
 	SSFReceiverEvent                     *SSFReceiverEvent
 	SystemLog                            *SystemLog
@@ -328,6 +329,7 @@ func New(opts ...SDKOption) *ConductoroneAPI {
 	sdk.AppEntitlementRoutingRule = newAppEntitlementRoutingRule(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.AppEntitlements = newAppEntitlements(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.AppEntitlementSearch = newAppEntitlementSearch(sdk, sdk.sdkConfiguration, sdk.hooks)
+	sdk.SessionPolicy = newSessionPolicy(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.AppEntitlementUserBinding = newAppEntitlementUserBinding(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.AppEntitlementOwners = newAppEntitlementOwners(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.MCPServer = newMCPServer(sdk, sdk.sdkConfiguration, sdk.hooks)
@@ -405,7 +407,6 @@ func New(opts ...SDKOption) *ConductoroneAPI {
 	sdk.RoleMiningManagementSearch = newRoleMiningManagementSearch(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.PaperSecretAdmin = newPaperSecretAdmin(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.PaperSecret = newPaperSecret(sdk, sdk.sdkConfiguration, sdk.hooks)
-	sdk.SessionPolicy = newSessionPolicy(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.SignInPolicy = newSignInPolicy(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.SSFReceiverEventSearch = newSSFReceiverEventSearch(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.StepUpProvider = newStepUpProvider(sdk, sdk.sdkConfiguration, sdk.hooks)
@@ -431,6 +432,7 @@ func New(opts ...SDKOption) *ConductoroneAPI {
 	sdk.RequestSettings = newRequestSettings(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.SessionSettings = newSessionSettings(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.SSOSettings = newSSOSettings(sdk, sdk.sdkConfiguration, sdk.hooks)
+	sdk.SpendInsights = newSpendInsights(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.SSFReceiverStream = newSSFReceiverStream(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.SSFReceiverEvent = newSSFReceiverEvent(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.SystemLog = newSystemLog(sdk, sdk.sdkConfiguration, sdk.hooks)

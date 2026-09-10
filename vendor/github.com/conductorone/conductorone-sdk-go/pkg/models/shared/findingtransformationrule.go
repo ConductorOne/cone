@@ -7,6 +7,42 @@ import (
 	"time"
 )
 
+// FindingTransformationRuleFindingType - The findingType field.
+type FindingTransformationRuleFindingType string
+
+const (
+	FindingTransformationRuleFindingTypeFindingTypeUnspecified                       FindingTransformationRuleFindingType = "FINDING_TYPE_UNSPECIFIED"
+	FindingTransformationRuleFindingTypeFindingTypeSimilarUsernameMatch              FindingTransformationRuleFindingType = "FINDING_TYPE_SIMILAR_USERNAME_MATCH"
+	FindingTransformationRuleFindingTypeFindingTypeServiceAccountMisclassification   FindingTransformationRuleFindingType = "FINDING_TYPE_SERVICE_ACCOUNT_MISCLASSIFICATION"
+	FindingTransformationRuleFindingTypeFindingTypeNhiUnowned                        FindingTransformationRuleFindingType = "FINDING_TYPE_NHI_UNOWNED"
+	FindingTransformationRuleFindingTypeFindingTypeServiceAccountUnowned             FindingTransformationRuleFindingType = "FINDING_TYPE_SERVICE_ACCOUNT_UNOWNED"
+	FindingTransformationRuleFindingTypeFindingTypeDecoyCredentialUsed               FindingTransformationRuleFindingType = "FINDING_TYPE_DECOY_CREDENTIAL_USED"
+	FindingTransformationRuleFindingTypeFindingTypeCustom                            FindingTransformationRuleFindingType = "FINDING_TYPE_CUSTOM"
+	FindingTransformationRuleFindingTypeFindingTypeConnectorAnomalyDetectionDisabled FindingTransformationRuleFindingType = "FINDING_TYPE_CONNECTOR_ANOMALY_DETECTION_DISABLED"
+	FindingTransformationRuleFindingTypeFindingTypeDeactivatedOwner                  FindingTransformationRuleFindingType = "FINDING_TYPE_DEACTIVATED_OWNER"
+	FindingTransformationRuleFindingTypeFindingTypeUnusedSecret                      FindingTransformationRuleFindingType = "FINDING_TYPE_UNUSED_SECRET"
+	FindingTransformationRuleFindingTypeFindingTypeCredentialPubliclyExposed         FindingTransformationRuleFindingType = "FINDING_TYPE_CREDENTIAL_PUBLICLY_EXPOSED"
+	FindingTransformationRuleFindingTypeFindingTypeDecoyPubliclyExposed              FindingTransformationRuleFindingType = "FINDING_TYPE_DECOY_PUBLICLY_EXPOSED"
+	FindingTransformationRuleFindingTypeFindingTypeCredentialExpiring                FindingTransformationRuleFindingType = "FINDING_TYPE_CREDENTIAL_EXPIRING"
+	FindingTransformationRuleFindingTypeFindingTypeConnectorSyncFailing              FindingTransformationRuleFindingType = "FINDING_TYPE_CONNECTOR_SYNC_FAILING"
+	FindingTransformationRuleFindingTypeFindingTypeShadowMcp                         FindingTransformationRuleFindingType = "FINDING_TYPE_SHADOW_MCP"
+)
+
+func (e FindingTransformationRuleFindingType) ToPointer() *FindingTransformationRuleFindingType {
+	return &e
+}
+
+// IsExact returns true if the value matches a known enum value, false otherwise.
+func (e *FindingTransformationRuleFindingType) IsExact() bool {
+	if e != nil {
+		switch *e {
+		case "FINDING_TYPE_UNSPECIFIED", "FINDING_TYPE_SIMILAR_USERNAME_MATCH", "FINDING_TYPE_SERVICE_ACCOUNT_MISCLASSIFICATION", "FINDING_TYPE_NHI_UNOWNED", "FINDING_TYPE_SERVICE_ACCOUNT_UNOWNED", "FINDING_TYPE_DECOY_CREDENTIAL_USED", "FINDING_TYPE_CUSTOM", "FINDING_TYPE_CONNECTOR_ANOMALY_DETECTION_DISABLED", "FINDING_TYPE_DEACTIVATED_OWNER", "FINDING_TYPE_UNUSED_SECRET", "FINDING_TYPE_CREDENTIAL_PUBLICLY_EXPOSED", "FINDING_TYPE_DECOY_PUBLICLY_EXPOSED", "FINDING_TYPE_CREDENTIAL_EXPIRING", "FINDING_TYPE_CONNECTOR_SYNC_FAILING", "FINDING_TYPE_SHADOW_MCP":
+			return true
+		}
+	}
+	return false
+}
+
 // FindingTransformationRule transforms a finding at processing time, before
 //
 //	routing runs. Rules fall through: every matching rule applies its transforms
@@ -27,6 +63,8 @@ type FindingTransformationRule struct {
 	// Application order (ascending; last-applied rule wins per field). A sequence,
 	//  not a precedence rank.
 	EvaluationOrder *int `json:"evaluationOrder,omitempty"`
+	// The findingType field.
+	FindingType *FindingTransformationRuleFindingType `json:"findingType,omitempty"`
 	// The id field.
 	ID *string `json:"id,omitempty"`
 	// The templateId field.
@@ -94,6 +132,13 @@ func (f *FindingTransformationRule) GetEvaluationOrder() *int {
 		return nil
 	}
 	return f.EvaluationOrder
+}
+
+func (f *FindingTransformationRule) GetFindingType() *FindingTransformationRuleFindingType {
+	if f == nil {
+		return nil
+	}
+	return f.FindingType
 }
 
 func (f *FindingTransformationRule) GetID() *string {

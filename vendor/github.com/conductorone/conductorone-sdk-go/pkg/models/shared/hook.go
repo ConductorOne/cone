@@ -14,6 +14,7 @@ const (
 	EventHookEventTypeUnspecified Event = "HOOK_EVENT_TYPE_UNSPECIFIED"
 	EventHookEventTypePreToolUse  Event = "HOOK_EVENT_TYPE_PRE_TOOL_USE"
 	EventHookEventTypePostToolUse Event = "HOOK_EVENT_TYPE_POST_TOOL_USE"
+	EventHookEventTypePreOutput   Event = "HOOK_EVENT_TYPE_PRE_OUTPUT"
 )
 
 func (e Event) ToPointer() *Event {
@@ -24,7 +25,7 @@ func (e Event) ToPointer() *Event {
 func (e *Event) IsExact() bool {
 	if e != nil {
 		switch *e {
-		case "HOOK_EVENT_TYPE_UNSPECIFIED", "HOOK_EVENT_TYPE_PRE_TOOL_USE", "HOOK_EVENT_TYPE_POST_TOOL_USE":
+		case "HOOK_EVENT_TYPE_UNSPECIFIED", "HOOK_EVENT_TYPE_PRE_TOOL_USE", "HOOK_EVENT_TYPE_POST_TOOL_USE", "HOOK_EVENT_TYPE_PRE_OUTPUT":
 			return true
 		}
 	}
@@ -36,6 +37,7 @@ func (e *Event) IsExact() bool {
 // This message contains a oneof named hook_type. Only a single field of the following list may be set at a time:
 //   - function
 //   - builtinPattern
+//   - jsonPatch
 type Hook struct {
 	BuiltinPattern *BuiltInPattern `json:"builtinPattern,omitempty"`
 	CreatedAt      *time.Time      `json:"createdAt,omitempty"`
@@ -50,7 +52,13 @@ type Hook struct {
 	Filter   *HookFilter      `json:"filter,omitempty"`
 	Function *HookFunctionRef `json:"function,omitempty"`
 	// The id field.
-	ID *string `json:"id,omitempty"`
+	ID        *string          `json:"id,omitempty"`
+	JSONPatch *JSONPatchConfig `json:"jsonPatch,omitempty"`
+	// managed_by_guardrails marks a hook as selectable in a guardrail rule's
+	//  curated pre_hook_ids/post_hook_ids. A hook left false (the default,
+	//  including every pre-existing hook) always runs regardless of guardrail
+	//  state; a hook set true only runs when a matched rule selects it.
+	ManagedByGuardrails *bool `json:"managedByGuardrails,omitempty"`
 	// The priority field.
 	Priority  *int       `json:"priority,omitempty"`
 	UpdatedAt *time.Time `json:"updatedAt,omitempty"`
@@ -130,6 +138,20 @@ func (h *Hook) GetID() *string {
 	return h.ID
 }
 
+func (h *Hook) GetJSONPatch() *JSONPatchConfig {
+	if h == nil {
+		return nil
+	}
+	return h.JSONPatch
+}
+
+func (h *Hook) GetManagedByGuardrails() *bool {
+	if h == nil {
+		return nil
+	}
+	return h.ManagedByGuardrails
+}
+
 func (h *Hook) GetPriority() *int {
 	if h == nil {
 		return nil
@@ -149,6 +171,7 @@ func (h *Hook) GetUpdatedAt() *time.Time {
 // This message contains a oneof named hook_type. Only a single field of the following list may be set at a time:
 //   - function
 //   - builtinPattern
+//   - jsonPatch
 type HookInput struct {
 	BuiltinPattern *BuiltInPattern `json:"builtinPattern,omitempty"`
 	// The description field.
@@ -162,7 +185,13 @@ type HookInput struct {
 	Filter   *HookFilter      `json:"filter,omitempty"`
 	Function *HookFunctionRef `json:"function,omitempty"`
 	// The id field.
-	ID *string `json:"id,omitempty"`
+	ID        *string          `json:"id,omitempty"`
+	JSONPatch *JSONPatchConfig `json:"jsonPatch,omitempty"`
+	// managed_by_guardrails marks a hook as selectable in a guardrail rule's
+	//  curated pre_hook_ids/post_hook_ids. A hook left false (the default,
+	//  including every pre-existing hook) always runs regardless of guardrail
+	//  state; a hook set true only runs when a matched rule selects it.
+	ManagedByGuardrails *bool `json:"managedByGuardrails,omitempty"`
 	// The priority field.
 	Priority *int `json:"priority,omitempty"`
 }
@@ -221,6 +250,20 @@ func (h *HookInput) GetID() *string {
 		return nil
 	}
 	return h.ID
+}
+
+func (h *HookInput) GetJSONPatch() *JSONPatchConfig {
+	if h == nil {
+		return nil
+	}
+	return h.JSONPatch
+}
+
+func (h *HookInput) GetManagedByGuardrails() *bool {
+	if h == nil {
+		return nil
+	}
+	return h.ManagedByGuardrails
 }
 
 func (h *HookInput) GetPriority() *int {

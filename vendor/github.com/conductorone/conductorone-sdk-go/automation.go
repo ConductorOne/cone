@@ -250,7 +250,7 @@ func (s *Automation) ClearAutomationCircuitBreaker(ctx context.Context, request 
 // Create a new automation with the specified steps, triggers, and
 //
 //	configuration. See get_authoring_guide for the AutomationStep contract
-//	(step kinds, evaluate_expressions shape, CEL identifier scope).
+//	(step kinds and their required fields, CEL identifier scope).
 //
 //	At create time, draft_automation_steps and draft_triggers default to
 //	their published counterparts when omitted — callers writing a single

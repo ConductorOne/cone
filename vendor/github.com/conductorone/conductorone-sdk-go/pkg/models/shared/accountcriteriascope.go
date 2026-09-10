@@ -57,6 +57,7 @@ const (
 	AccountCriteriaScopeAppUserStatusesAppUserStatusEnabled     AccountCriteriaScopeAppUserStatuses = "APP_USER_STATUS_ENABLED"
 	AccountCriteriaScopeAppUserStatusesAppUserStatusDisabled    AccountCriteriaScopeAppUserStatuses = "APP_USER_STATUS_DISABLED"
 	AccountCriteriaScopeAppUserStatusesAppUserStatusDeleted     AccountCriteriaScopeAppUserStatuses = "APP_USER_STATUS_DELETED"
+	AccountCriteriaScopeAppUserStatusesAppUserStatusPending     AccountCriteriaScopeAppUserStatuses = "APP_USER_STATUS_PENDING"
 )
 
 func (e AccountCriteriaScopeAppUserStatuses) ToPointer() *AccountCriteriaScopeAppUserStatuses {
@@ -67,7 +68,7 @@ func (e AccountCriteriaScopeAppUserStatuses) ToPointer() *AccountCriteriaScopeAp
 func (e *AccountCriteriaScopeAppUserStatuses) IsExact() bool {
 	if e != nil {
 		switch *e {
-		case "APP_USER_STATUS_UNSPECIFIED", "APP_USER_STATUS_ENABLED", "APP_USER_STATUS_DISABLED", "APP_USER_STATUS_DELETED":
+		case "APP_USER_STATUS_UNSPECIFIED", "APP_USER_STATUS_ENABLED", "APP_USER_STATUS_DISABLED", "APP_USER_STATUS_DELETED", "APP_USER_STATUS_PENDING":
 			return true
 		}
 	}

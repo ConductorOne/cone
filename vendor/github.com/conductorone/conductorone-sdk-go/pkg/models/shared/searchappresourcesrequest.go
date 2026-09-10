@@ -2,21 +2,21 @@
 
 package shared
 
-type AgentStatuses string
+type SearchAppResourcesRequestAgentStatuses string
 
 const (
-	AgentStatusesAgentStatusUnspecified AgentStatuses = "AGENT_STATUS_UNSPECIFIED"
-	AgentStatusesAgentStatusReady       AgentStatuses = "AGENT_STATUS_READY"
-	AgentStatusesAgentStatusDisabled    AgentStatuses = "AGENT_STATUS_DISABLED"
-	AgentStatusesAgentStatusDeleted     AgentStatuses = "AGENT_STATUS_DELETED"
+	SearchAppResourcesRequestAgentStatusesAgentStatusUnspecified SearchAppResourcesRequestAgentStatuses = "AGENT_STATUS_UNSPECIFIED"
+	SearchAppResourcesRequestAgentStatusesAgentStatusReady       SearchAppResourcesRequestAgentStatuses = "AGENT_STATUS_READY"
+	SearchAppResourcesRequestAgentStatusesAgentStatusDisabled    SearchAppResourcesRequestAgentStatuses = "AGENT_STATUS_DISABLED"
+	SearchAppResourcesRequestAgentStatusesAgentStatusDeleted     SearchAppResourcesRequestAgentStatuses = "AGENT_STATUS_DELETED"
 )
 
-func (e AgentStatuses) ToPointer() *AgentStatuses {
+func (e SearchAppResourcesRequestAgentStatuses) ToPointer() *SearchAppResourcesRequestAgentStatuses {
 	return &e
 }
 
 // IsExact returns true if the value matches a known enum value, false otherwise.
-func (e *AgentStatuses) IsExact() bool {
+func (e *SearchAppResourcesRequestAgentStatuses) IsExact() bool {
 	if e != nil {
 		switch *e {
 		case "AGENT_STATUS_UNSPECIFIED", "AGENT_STATUS_READY", "AGENT_STATUS_DISABLED", "AGENT_STATUS_DELETED":
@@ -133,7 +133,7 @@ type SearchAppResourcesRequest struct {
 	// Restrict the search to AI-agent resources with one of the given agent
 	//  lifecycle statuses (READY, DISABLED, DELETED). When empty, agent status is
 	//  not used as a filter.
-	AgentStatuses []AgentStatuses `json:"agentStatuses,omitempty"`
+	AgentStatuses []SearchAppResourcesRequestAgentStatuses `json:"agentStatuses,omitempty"`
 	// The app ID to restrict the search to.
 	AppID *string `json:"appId,omitempty"`
 	// A list of app IDs to restrict the search to. Mirrors the singular app_id;
@@ -193,7 +193,7 @@ type SearchAppResourcesRequest struct {
 	WithOpenFindings *bool `json:"withOpenFindings,omitempty"`
 }
 
-func (s *SearchAppResourcesRequest) GetAgentStatuses() []AgentStatuses {
+func (s *SearchAppResourcesRequest) GetAgentStatuses() []SearchAppResourcesRequestAgentStatuses {
 	if s == nil {
 		return nil
 	}

@@ -11,6 +11,8 @@ import (
 	"testing"
 
 	"filippo.io/age"
+	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 
 	"github.com/conductorone/conductorone-sdk-go/pkg/models/shared"
 )
@@ -598,5 +600,316 @@ func TestEncryptFileToTemp(t *testing.T) {
 	}
 	if !bytes.Equal(got, want) {
 		t.Fatalf("decrypt = %q, want %q", got, want)
+	}
+}
+
+// sharedListHarness stands in for the authenticated C1Client in routing tests:
+// it records which search method the production routing selected and with
+// which request, without a live API.
+type sharedListHarness struct {
+	mySecretsCalled     bool
+	sharedWithMeCalled  bool
+	lastMySecretsReq    *shared.PaperSecretServiceSearchMySecretsRequest
+	lastSharedWithMeReq *shared.PaperSecretServiceSearchSecretsSharedWithMeRequest
+}
+
+func (h *sharedListHarness) SearchMySecrets(_ context.Context, req *shared.PaperSecretServiceSearchMySecretsRequest) ([]shared.PaperSecret, error) {
+	h.mySecretsCalled = true
+	h.lastMySecretsReq = req
+	return nil, nil
+}
+
+func (h *sharedListHarness) SearchSecretsSharedWithMe(_ context.Context, req *shared.PaperSecretServiceSearchSecretsSharedWithMeRequest) ([]shared.PaperSecret, error) {
+	h.sharedWithMeCalled = true
+	h.lastSharedWithMeReq = req
+	return nil, nil
+}
+
+// newSecretListCmdHarness builds the real secret list command but swaps the
+// authenticated cmdContext step for the production runSecretList routing core
+// driven by the harness, so the tests exercise the actual branch selection and
+// cross-mode flag constraints the CLI uses.
+func newSecretListCmdHarness(t *testing.T, flags map[string]string, boolFlags ...string) (*sharedListHarness, *cobra.Command) {
+	t.Helper()
+	h := &sharedListHarness{}
+	cmd := secretListCmd()
+	cmd.RunE = func(cmd *cobra.Command, _ []string) error {
+		ctx := cmd.Context()
+		v := viper.New()
+		for _, f := range boolFlags {
+			if err := cmd.Flags().Set(f, "true"); err != nil {
+				t.Fatalf("Set(%s) unexpected error: %v", f, err)
+			}
+		}
+		for name, value := range flags {
+			if err := cmd.Flags().Set(name, value); err != nil {
+				t.Fatalf("Set(%s) unexpected error: %v", name, err)
+			}
+		}
+		for _, name := range []string{queryFlag, secretStatusFlag, secretTypeFlag, secretSharingFlag, pageSizeFlag, sharedWithMeFlag, includeOwnFlag, "output"} {
+			if f := cmd.Flags().Lookup(name); f != nil {
+				if err := v.BindPFlag(name, f); err != nil {
+					t.Fatalf("BindPFlag(%s) unexpected error: %v", name, err)
+				}
+			}
+		}
+		v.Set("output", "json")
+		return runSecretList(ctx, h, v)
+	}
+	return h, cmd
+}
+
+func TestSecretListDefaultUsesCreatorEndpoint(t *testing.T) {
+	h, cmd := newSecretListCmdHarness(t, map[string]string{queryFlag: "reports"})
+	if err := cmd.Execute(); err != nil {
+		t.Fatalf("Execute() unexpected error: %v", err)
+	}
+	if !h.mySecretsCalled {
+		t.Fatal("default list must call SearchMySecrets")
+	}
+	if h.sharedWithMeCalled {
+		t.Fatal("default list must not call SearchSecretsSharedWithMe")
+	}
+	if h.lastMySecretsReq == nil || h.lastMySecretsReq.Query == nil || *h.lastMySecretsReq.Query != "reports" {
+		t.Fatalf("creator request query = %+v, want reports", h.lastMySecretsReq)
+	}
+}
+
+func TestSecretListSharedWithMeSelectsSharedEndpointWithoutUserID(t *testing.T) {
+	h, cmd := newSecretListCmdHarness(t, map[string]string{queryFlag: "shared-thing"}, sharedWithMeFlag)
+	if err := cmd.Execute(); err != nil {
+		t.Fatalf("Execute() unexpected error: %v", err)
+	}
+	if !h.sharedWithMeCalled {
+		t.Fatal("--shared-with-me must call SearchSecretsSharedWithMe")
+	}
+	if h.mySecretsCalled {
+		t.Fatal("--shared-with-me must not call SearchMySecrets")
+	}
+	req := h.lastSharedWithMeReq
+	if req == nil {
+		t.Fatal("shared-with-me request was nil")
+	}
+	if req.Query == nil || *req.Query != "shared-thing" {
+		t.Fatalf("query = %v, want shared-thing", req.Query)
+	}
+	// The shared endpoint is caller-bound: the generated request type has no
+	// user_id field at all, and cone must never smuggle one into the body.
+	if req.IncludeOwn != nil && *req.IncludeOwn {
+		t.Fatal("include_own must default to false")
+	}
+	if req.Statuses == nil {
+		t.Fatal("default status filter must be active")
+	}
+	if len(req.Statuses) != 1 || req.Statuses[0] != shared.PaperSecretServiceSearchSecretsSharedWithMeRequestStatusesSecretStatusActive {
+		t.Fatalf("statuses = %v, want [active]", req.Statuses)
+	}
+}
+
+func TestSecretListSharedWithMeRejectsSharingModeFilter(t *testing.T) {
+	_, cmd := newSecretListCmdHarness(t, map[string]string{secretSharingFlag: "internal"}, sharedWithMeFlag)
+	err := cmd.Execute()
+	if err == nil {
+		t.Fatal("explicit --sharing-mode with --shared-with-me must fail")
+	}
+	if !strings.Contains(err.Error(), "not supported") {
+		t.Fatalf("error = %v, want sharing-mode incompatibility message", err)
+	}
+}
+
+func TestSecretListSharedWithMePageSizeLimit(t *testing.T) {
+	_, cmd := newSecretListCmdHarness(t, map[string]string{pageSizeFlag: "500"}, sharedWithMeFlag)
+	err := cmd.Execute()
+	if err == nil {
+		t.Fatal("page size above 100 must fail with --shared-with-me")
+	}
+	if !strings.Contains(err.Error(), "100") {
+		t.Fatalf("error = %v, want page size limit message", err)
+	}
+}
+
+func TestSecretListSharedWithMeQueryTooLong(t *testing.T) {
+	long := strings.Repeat("x", 257)
+	_, cmd := newSecretListCmdHarness(t, map[string]string{queryFlag: long}, sharedWithMeFlag)
+	if err := cmd.Execute(); err == nil {
+		t.Fatal("query longer than 256 characters must fail with --shared-with-me")
+	}
+}
+
+func TestSecretListSharedWithMeIncludeOwn(t *testing.T) {
+	h, cmd := newSecretListCmdHarness(t, nil, sharedWithMeFlag, includeOwnFlag)
+	if err := cmd.Execute(); err != nil {
+		t.Fatalf("Execute() unexpected error: %v", err)
+	}
+	if h.lastSharedWithMeReq == nil || h.lastSharedWithMeReq.IncludeOwn == nil || !*h.lastSharedWithMeReq.IncludeOwn {
+		t.Fatal("include_own must be true when --include-own is passed")
+	}
+}
+
+func TestSecretListSharedWithMeStatusesAndType(t *testing.T) {
+	h, cmd := newSecretListCmdHarness(t, map[string]string{secretStatusFlag: "burned", secretTypeFlag: "file"}, sharedWithMeFlag)
+	if err := cmd.Execute(); err != nil {
+		t.Fatalf("Execute() unexpected error: %v", err)
+	}
+	req := h.lastSharedWithMeReq
+	if req == nil {
+		t.Fatal("shared-with-me request was nil")
+	}
+	if len(req.Statuses) != 1 || req.Statuses[0] != shared.PaperSecretServiceSearchSecretsSharedWithMeRequestStatusesSecretStatusBurned {
+		t.Fatalf("statuses = %v, want [burned]", req.Statuses)
+	}
+	if req.SecretType == nil || *req.SecretType != shared.PaperSecretServiceSearchSecretsSharedWithMeRequestSecretTypeSecretTypeFile {
+		t.Fatalf("secret type = %v, want file", req.SecretType)
+	}
+}
+
+func TestSecretListSharedWithMeInvalidStatus(t *testing.T) {
+	_, cmd := newSecretListCmdHarness(t, map[string]string{secretStatusFlag: "bogus"}, sharedWithMeFlag)
+	if err := cmd.Execute(); err == nil {
+		t.Fatal("invalid status must fail")
+	}
+}
+
+func TestSecretListSharedWithMeQueryMultibyteBoundary(t *testing.T) {
+	// The server enforces max_len:256 on Unicode code points (protoc-gen-validate
+	// string max_len), not bytes. 256 é characters are 512 UTF-8 bytes and must
+	// pass; 257 must fail.
+	atLimit := strings.Repeat("é", 256)
+	h, cmd := newSecretListCmdHarness(t, map[string]string{queryFlag: atLimit}, sharedWithMeFlag)
+	if err := cmd.Execute(); err != nil {
+		t.Fatalf("256-codepoint multibyte query must pass (bytes=%d): %v", len(atLimit), err)
+	}
+	if h.lastSharedWithMeReq == nil || h.lastSharedWithMeReq.Query == nil || *h.lastSharedWithMeReq.Query != atLimit {
+		t.Fatal("at-limit multibyte query must reach the shared request unchanged")
+	}
+
+	overLimit := strings.Repeat("é", 257)
+	_, cmd2 := newSecretListCmdHarness(t, map[string]string{queryFlag: overLimit}, sharedWithMeFlag)
+	if err := cmd2.Execute(); err == nil {
+		t.Fatal("257-codepoint multibyte query must fail")
+	}
+}
+
+func TestSecretListIncludeOwnWithoutSharedWithMeRejected(t *testing.T) {
+	// Exercises the production routing constraint: --include-own is only
+	// meaningful with --shared-with-me and must be rejected otherwise.
+	h, cmd := newSecretListCmdHarness(t, nil, includeOwnFlag)
+	err := cmd.Execute()
+	if err == nil {
+		t.Fatal("--include-own without --shared-with-me must fail")
+	}
+	if !strings.Contains(err.Error(), "requires") {
+		t.Fatalf("error = %v, want include-own requires shared-with-me message", err)
+	}
+	if h.sharedWithMeCalled || h.mySecretsCalled {
+		t.Fatal("rejected flag combination must not reach either endpoint")
+	}
+}
+
+func TestSecretListIncludeOwnViaViperRejectedWithoutSharedWithMe(t *testing.T) {
+	// include-own can arrive through viper (CONE_INCLUDE_OWN env var or a
+	// profile config key) without cmd.Flags().Changed() ever seeing it; v.Set
+	// stands in for those sources and must hit the same guard.
+	h := &sharedListHarness{}
+	v := viper.New()
+	v.Set(includeOwnFlag, true)
+	err := runSecretList(context.Background(), h, v)
+	if err == nil {
+		t.Fatal("include-own via env/profile must fail without --shared-with-me")
+	}
+	if !strings.Contains(err.Error(), "requires") {
+		t.Fatalf("error = %v, want include-own requires shared-with-me message", err)
+	}
+	if h.mySecretsCalled || h.sharedWithMeCalled {
+		t.Fatal("rejected value combination must not reach either endpoint")
+	}
+}
+
+func TestSecretListSharingModeViaViperRejectedWithSharedWithMe(t *testing.T) {
+	// sharing-mode can arrive through viper (CONE_SHARING_MODE env var or a
+	// profile config key) without cmd.Flags().Changed() ever seeing it; v.Set
+	// stands in for those sources and must hit the same guard.
+	h := &sharedListHarness{}
+	v := viper.New()
+	v.Set(sharedWithMeFlag, true)
+	v.Set(secretSharingFlag, "internal")
+	err := runSecretList(context.Background(), h, v)
+	if err == nil {
+		t.Fatal("sharing-mode via env/profile must fail with --shared-with-me")
+	}
+	if !strings.Contains(err.Error(), "not supported") {
+		t.Fatalf("error = %v, want sharing-mode incompatibility message", err)
+	}
+	if h.mySecretsCalled || h.sharedWithMeCalled {
+		t.Fatal("rejected value combination must not reach either endpoint")
+	}
+}
+
+func TestSecretListSharingModeInvalidViaViperRejectedWithSharedWithMe(t *testing.T) {
+	// An invalid sharing-mode must surface secretListSharingMode's own
+	// validation error, not the incompatibility message the creator path
+	// never produces for it.
+	h := &sharedListHarness{}
+	v := viper.New()
+	v.Set(sharedWithMeFlag, true)
+	v.Set(secretSharingFlag, "bogus")
+	err := runSecretList(context.Background(), h, v)
+	if err == nil {
+		t.Fatal("invalid sharing-mode must fail")
+	}
+	if !strings.Contains(err.Error(), "must be internal, external, or all") {
+		t.Fatalf("error = %v, want the sharing-mode validation error", err)
+	}
+	if strings.Contains(err.Error(), "not supported") {
+		t.Fatalf("error = %v, incompatibility message must not swallow the validation error", err)
+	}
+	if h.mySecretsCalled || h.sharedWithMeCalled {
+		t.Fatal("rejected value must not reach either endpoint")
+	}
+}
+
+func TestSecretListSharingModeViaViperNormalized(t *testing.T) {
+	// The guard compares the viper value the way secretListSharingMode
+	// normalizes it: " ALL ", "All", and "all" all mean the no-filter default
+	// and must not be rejected on the shared-with-me path.
+	h := &sharedListHarness{}
+	v := viper.New()
+	v.Set(pageSizeFlag, 100)
+	v.Set(sharedWithMeFlag, true)
+	v.Set(secretSharingFlag, " ALL ")
+	v.Set("output", "json")
+	if err := runSecretList(context.Background(), h, v); err != nil {
+		t.Fatalf("normalized no-filter sharing-mode must be allowed: %v", err)
+	}
+	if !h.sharedWithMeCalled {
+		t.Fatal("--shared-with-me with a normalized no-filter sharing-mode must list shared secrets")
+	}
+	if h.mySecretsCalled {
+		t.Fatal("creator endpoint must not be used")
+	}
+}
+
+func TestSecretListCreatorPathPreserved(t *testing.T) {
+	// The default creator path must keep its distinct contract: page size up to
+	// 1000, created-desc sort, sharing-mode filter allowed.
+	h, cmd := newSecretListCmdHarness(t, map[string]string{pageSizeFlag: "500", secretSharingFlag: "internal", secretStatusFlag: "all"})
+	if err := cmd.Execute(); err != nil {
+		t.Fatalf("Execute() unexpected error: %v", err)
+	}
+	req := h.lastMySecretsReq
+	if req == nil {
+		t.Fatal("creator request was nil")
+	}
+	if req.PageSize == nil || *req.PageSize != 500 {
+		t.Fatalf("page size = %v, want 500 (creator path allows up to 1000)", req.PageSize)
+	}
+	if req.SortBy == nil || *req.SortBy != shared.PaperSecretServiceSearchMySecretsRequestSortBySearchSortByCreatedDesc {
+		t.Fatalf("sort by = %v, want created-desc preserved", req.SortBy)
+	}
+	if req.SharingMode == nil || *req.SharingMode != shared.PaperSecretServiceSearchMySecretsRequestSharingModePaperVaultSharingModeInternal {
+		t.Fatalf("sharing mode = %v, want internal (allowed on creator path)", req.SharingMode)
+	}
+	if req.Statuses != nil {
+		t.Fatalf("statuses = %v, want no filter for all", req.Statuses)
 	}
 }

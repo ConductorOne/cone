@@ -55,9 +55,15 @@ func (e *Columns) IsExact() bool {
 
 // AccessReviewColumnConfig - Configuration for which columns are visible in the reviewer task list.
 type AccessReviewColumnConfig struct {
-	// Ordered list of columns visible to reviewers.
-	//  If empty, the default column set for the campaign's default_view is used.
+	// Deprecated: use `ordered_columns`, which can also include app user
+	//  attribute columns.
+	//
+	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
 	Columns []Columns `json:"columns,omitempty"`
+	// Ordered columns visible to reviewers, built-ins and attributes
+	//  interleaved. Falls back to `columns`, then to the default set for the
+	//  campaign's default_view.
+	OrderedColumns []AccessReviewTaskColumnRef `json:"orderedColumns,omitempty"`
 }
 
 func (a *AccessReviewColumnConfig) GetColumns() []Columns {
@@ -65,4 +71,11 @@ func (a *AccessReviewColumnConfig) GetColumns() []Columns {
 		return nil
 	}
 	return a.Columns
+}
+
+func (a *AccessReviewColumnConfig) GetOrderedColumns() []AccessReviewTaskColumnRef {
+	if a == nil {
+		return nil
+	}
+	return a.OrderedColumns
 }

@@ -139,8 +139,14 @@ type AIGovernanceSettings struct {
 	//  describe entrypoint. Invoking such a tool opens (or reuses) an
 	//  access-request ticket and returns a request_created envelope instead of
 	//  executing. Defaults to true.
-	SurfaceRequestableTools *bool      `json:"surfaceRequestableTools,omitempty"`
-	UpdatedAt               *time.Time `json:"updatedAt,omitempty"`
+	SurfaceRequestableTools *bool `json:"surfaceRequestableTools,omitempty"`
+	// When true, the A2 (untrusted-content) judge is skipped and the untrusted
+	//  dimension always scores LOW. When false (the default), the judge scores
+	//  agent turn input and tool output for prompt-injection risk on every turn.
+	//
+	//  Defaults to false, so the judge runs by default.
+	UntrustedJudgeDisable *bool      `json:"untrustedJudgeDisable,omitempty"`
+	UpdatedAt             *time.Time `json:"updatedAt,omitempty"`
 }
 
 func (a AIGovernanceSettings) MarshalJSON() ([]byte, error) {
@@ -250,6 +256,13 @@ func (a *AIGovernanceSettings) GetSurfaceRequestableTools() *bool {
 		return nil
 	}
 	return a.SurfaceRequestableTools
+}
+
+func (a *AIGovernanceSettings) GetUntrustedJudgeDisable() *bool {
+	if a == nil {
+		return nil
+	}
+	return a.UntrustedJudgeDisable
 }
 
 func (a *AIGovernanceSettings) GetUpdatedAt() *time.Time {

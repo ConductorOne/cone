@@ -31,7 +31,11 @@ func newAppEntitlementRoutingRule(rootSDK *ConductoroneAPI, sdkConfig config.SDK
 }
 
 // CreateAppEntitlementRoutingRule - Create App Entitlement Routing Rule
-// Invokes the c1.api.app.v1.AppEntitlementRoutingRuleService.CreateAppEntitlementRoutingRule method.
+// CreateAppEntitlementRoutingRule creates an entitlement configuration rule
+//
+//	for an application. Rules are evaluated in priority order and the first
+//	rule whose condition matches supplies the entitlement's request settings.
+//	An app can have at most 5 rules.
 func (s *AppEntitlementRoutingRule) CreateAppEntitlementRoutingRule(ctx context.Context, request operations.C1APIAppV1AppEntitlementRoutingRuleServiceCreateAppEntitlementRoutingRuleRequest, opts ...operations.Option) (*operations.C1APIAppV1AppEntitlementRoutingRuleServiceCreateAppEntitlementRoutingRuleResponse, error) {
 	o := operations.Options{}
 	supportedOptions := []string{
@@ -243,7 +247,9 @@ func (s *AppEntitlementRoutingRule) CreateAppEntitlementRoutingRule(ctx context.
 }
 
 // DeleteAppEntitlementRoutingRule - Delete App Entitlement Routing Rule
-// Invokes the c1.api.app.v1.AppEntitlementRoutingRuleService.DeleteAppEntitlementRoutingRule method.
+// DeleteAppEntitlementRoutingRule deletes an entitlement configuration rule
+//
+//	by ID.
 func (s *AppEntitlementRoutingRule) DeleteAppEntitlementRoutingRule(ctx context.Context, request operations.C1APIAppV1AppEntitlementRoutingRuleServiceDeleteAppEntitlementRoutingRuleRequest, opts ...operations.Option) (*operations.C1APIAppV1AppEntitlementRoutingRuleServiceDeleteAppEntitlementRoutingRuleResponse, error) {
 	o := operations.Options{}
 	supportedOptions := []string{
@@ -455,7 +461,9 @@ func (s *AppEntitlementRoutingRule) DeleteAppEntitlementRoutingRule(ctx context.
 }
 
 // GetAppEntitlementRoutingRule - Get App Entitlement Routing Rule
-// Invokes the c1.api.app.v1.AppEntitlementRoutingRuleService.GetAppEntitlementRoutingRule method.
+// GetAppEntitlementRoutingRule returns a single entitlement configuration
+//
+//	rule by ID.
 func (s *AppEntitlementRoutingRule) GetAppEntitlementRoutingRule(ctx context.Context, request operations.C1APIAppV1AppEntitlementRoutingRuleServiceGetAppEntitlementRoutingRuleRequest, opts ...operations.Option) (*operations.C1APIAppV1AppEntitlementRoutingRuleServiceGetAppEntitlementRoutingRuleResponse, error) {
 	o := operations.Options{}
 	supportedOptions := []string{
@@ -660,7 +668,9 @@ func (s *AppEntitlementRoutingRule) GetAppEntitlementRoutingRule(ctx context.Con
 }
 
 // ListAppEntitlementRoutingRules - List App Entitlement Routing Rules
-// Invokes the c1.api.app.v1.AppEntitlementRoutingRuleService.ListAppEntitlementRoutingRules method.
+// ListAppEntitlementRoutingRules returns an application's entitlement
+//
+//	configuration rules in evaluation order, by priority then by ID.
 func (s *AppEntitlementRoutingRule) ListAppEntitlementRoutingRules(ctx context.Context, request operations.C1APIAppV1AppEntitlementRoutingRuleServiceListAppEntitlementRoutingRulesRequest, opts ...operations.Option) (*operations.C1APIAppV1AppEntitlementRoutingRuleServiceListAppEntitlementRoutingRulesResponse, error) {
 	o := operations.Options{}
 	supportedOptions := []string{

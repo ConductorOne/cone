@@ -40,7 +40,8 @@ func (c *C1APIAppV1ConnectorServiceForceSyncRequest) GetConnectorID() string {
 type C1APIAppV1ConnectorServiceForceSyncResponse struct {
 	// HTTP response content type for this operation
 	ContentType string
-	// Empty response body. Status code indicates success.
+	// Empty response body. Status code indicates success. Poll the connector sync status
+	//  for progress after ForceSync accepts the request.
 	ForceSyncResponse *shared.ForceSyncResponse
 	// HTTP response status code for this operation
 	StatusCode int

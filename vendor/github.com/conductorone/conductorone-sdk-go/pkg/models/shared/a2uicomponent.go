@@ -32,6 +32,8 @@ package shared
 //   - c1OnboardingPlan
 //   - c1ConnectorSyncDetail
 //   - c1Chart
+//   - c1MetricCards
+//   - c1Table
 type A2UIComponent struct {
 	Button                  *ButtonComponent                  `json:"button,omitempty"`
 	C1Chart                 *C1ChartComponent                 `json:"c1Chart,omitempty"`
@@ -40,12 +42,14 @@ type A2UIComponent struct {
 	C1ConnectorSyncDetail   *C1ConnectorSyncDetailComponent   `json:"c1ConnectorSyncDetail,omitempty"`
 	C1ConnectorSyncProgress *C1ConnectorSyncProgressComponent `json:"c1ConnectorSyncProgress,omitempty"`
 	C1DurationPicker        *C1DurationPickerComponent        `json:"c1DurationPicker,omitempty"`
+	C1MetricCards           *C1MetricCardsComponent           `json:"c1MetricCards,omitempty"`
 	C1MsTeamsNotifications  *C1MSTeamsNotificationsComponent  `json:"c1MsTeamsNotifications,omitempty"`
 	C1OnboardingPlan        *C1OnboardingPlanComponent        `json:"c1OnboardingPlan,omitempty"`
 	C1OnboardingWelcome     *C1OnboardingWelcomeComponent     `json:"c1OnboardingWelcome,omitempty"`
 	C1ResourcePicker        *C1ResourcePickerComponent        `json:"c1ResourcePicker,omitempty"`
 	C1SlackNotifications    *C1SlackNotificationsComponent    `json:"c1SlackNotifications,omitempty"`
 	C1StatusIndicator       *C1StatusIndicatorComponent       `json:"c1StatusIndicator,omitempty"`
+	C1Table                 *C1TableComponent                 `json:"c1Table,omitempty"`
 	C1TodoList              *C1TodoListComponent              `json:"c1TodoList,omitempty"`
 	Card                    *CardComponent                    `json:"card,omitempty"`
 	CheckBox                *CheckBoxComponent                `json:"checkBox,omitempty"`
@@ -113,6 +117,13 @@ func (a *A2UIComponent) GetC1DurationPicker() *C1DurationPickerComponent {
 	return a.C1DurationPicker
 }
 
+func (a *A2UIComponent) GetC1MetricCards() *C1MetricCardsComponent {
+	if a == nil {
+		return nil
+	}
+	return a.C1MetricCards
+}
+
 func (a *A2UIComponent) GetC1MsTeamsNotifications() *C1MSTeamsNotificationsComponent {
 	if a == nil {
 		return nil
@@ -153,6 +164,13 @@ func (a *A2UIComponent) GetC1StatusIndicator() *C1StatusIndicatorComponent {
 		return nil
 	}
 	return a.C1StatusIndicator
+}
+
+func (a *A2UIComponent) GetC1Table() *C1TableComponent {
+	if a == nil {
+		return nil
+	}
+	return a.C1Table
 }
 
 func (a *A2UIComponent) GetC1TodoList() *C1TodoListComponent {

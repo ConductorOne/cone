@@ -14,6 +14,7 @@ const (
 	FunctionTypeFunctionTypeUnspecified FunctionType = "FUNCTION_TYPE_UNSPECIFIED"
 	FunctionTypeFunctionTypeAny         FunctionType = "FUNCTION_TYPE_ANY"
 	FunctionTypeFunctionTypeCodeMode    FunctionType = "FUNCTION_TYPE_CODE_MODE"
+	FunctionTypeFunctionTypeConnector   FunctionType = "FUNCTION_TYPE_CONNECTOR"
 )
 
 func (e FunctionType) ToPointer() *FunctionType {
@@ -24,7 +25,7 @@ func (e FunctionType) ToPointer() *FunctionType {
 func (e *FunctionType) IsExact() bool {
 	if e != nil {
 		switch *e {
-		case "FUNCTION_TYPE_UNSPECIFIED", "FUNCTION_TYPE_ANY", "FUNCTION_TYPE_CODE_MODE":
+		case "FUNCTION_TYPE_UNSPECIFIED", "FUNCTION_TYPE_ANY", "FUNCTION_TYPE_CODE_MODE", "FUNCTION_TYPE_CONNECTOR":
 			return true
 		}
 	}
@@ -33,8 +34,15 @@ func (e *FunctionType) IsExact() bool {
 
 // Function represents a customer-provided code extension in the API
 type Function struct {
-	CreatedAt *time.Time `json:"createdAt,omitempty"`
-	DeletedAt *time.Time `json:"deletedAt,omitempty"`
+	// browser_enabled marks the function as browser-capable: the executor
+	//  supervises a headless Chromium plus a default-deny egress proxy and
+	//  exposes CDP on loopback to the function's sandbox. Toggling it changes
+	//  the deployed image contents and executor arguments, so an update that
+	//  touches it triggers a redeployment, same as secrets or the outbound
+	//  network allowlist.
+	BrowserEnabled *bool      `json:"browserEnabled,omitempty"`
+	CreatedAt      *time.Time `json:"createdAt,omitempty"`
+	DeletedAt      *time.Time `json:"deletedAt,omitempty"`
 	// The description field.
 	Description *string `json:"description,omitempty"`
 	// The displayName field.
@@ -43,6 +51,11 @@ type Function struct {
 	FunctionType *FunctionType `json:"functionType,omitempty"`
 	// The head field.
 	Head *string `json:"head,omitempty"`
+	// IDs of every non-deleted hook that still references this function.
+	//  Read-only: maintained by the Hook API, not by CreateFunction/UpdateFunction.
+	//  Non-empty means DeleteFunction will refuse to delete until these are
+	//  removed or retargeted.
+	HookRefs []string `json:"hookRefs,omitempty"`
 	// The id field.
 	ID *string `json:"id,omitempty"`
 	// The isDraft field.
@@ -74,6 +87,9 @@ type Function struct {
 	//  tenant has completed the FunctionsToSPN migration) and by the migration
 	//  itself, never by UpdateFunction. Retired once all functions are on SPN.
 	UseSpn *bool `json:"useSpn,omitempty"`
+	// IDs of every non-deleted workflow template whose CallFunction step still
+	//  references this function. Read-only, same semantics as hook_refs.
+	WorkflowTemplateRefs []string `json:"workflowTemplateRefs,omitempty"`
 }
 
 func (f Function) MarshalJSON() ([]byte, error) {
@@ -85,6 +101,13 @@ func (f *Function) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
+}
+
+func (f *Function) GetBrowserEnabled() *bool {
+	if f == nil {
+		return nil
+	}
+	return f.BrowserEnabled
 }
 
 func (f *Function) GetCreatedAt() *time.Time {
@@ -127,6 +150,13 @@ func (f *Function) GetHead() *string {
 		return nil
 	}
 	return f.Head
+}
+
+func (f *Function) GetHookRefs() []string {
+	if f == nil {
+		return nil
+	}
+	return f.HookRefs
 }
 
 func (f *Function) GetID() *string {
@@ -192,8 +222,22 @@ func (f *Function) GetUseSpn() *bool {
 	return f.UseSpn
 }
 
+func (f *Function) GetWorkflowTemplateRefs() []string {
+	if f == nil {
+		return nil
+	}
+	return f.WorkflowTemplateRefs
+}
+
 // FunctionInput - Function represents a customer-provided code extension in the API
 type FunctionInput struct {
+	// browser_enabled marks the function as browser-capable: the executor
+	//  supervises a headless Chromium plus a default-deny egress proxy and
+	//  exposes CDP on loopback to the function's sandbox. Toggling it changes
+	//  the deployed image contents and executor arguments, so an update that
+	//  touches it triggers a redeployment, same as secrets or the outbound
+	//  network allowlist.
+	BrowserEnabled *bool `json:"browserEnabled,omitempty"`
 	// The description field.
 	Description *string `json:"description,omitempty"`
 	// The displayName field.
@@ -225,6 +269,13 @@ type FunctionInput struct {
 	ScopedRoleIds []string `json:"scopedRoleIds,omitempty"`
 	// The secret field.
 	Secret map[string]string `json:"secret,omitempty"`
+}
+
+func (f *FunctionInput) GetBrowserEnabled() *bool {
+	if f == nil {
+		return nil
+	}
+	return f.BrowserEnabled
 }
 
 func (f *FunctionInput) GetDescription() *string {

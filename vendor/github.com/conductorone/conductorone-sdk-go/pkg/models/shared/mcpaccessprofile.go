@@ -13,6 +13,11 @@ type MCPAccessProfile struct {
 	AppEntitlementID *string `json:"appEntitlementId,omitempty"`
 	// App identifier (app that owns the connector).
 	AppID *string `json:"appId,omitempty"`
+	// Display name of the connector this toolset belongs to. Computed read-only;
+	//  populated on every read. The
+	//  auto-maintained default toolsets share a display name across connectors, so
+	//  this is what tells two of them apart.
+	ConnectorDisplayName *string `json:"connectorDisplayName,omitempty"`
 	// Connector identifier.
 	ConnectorID *string    `json:"connectorId,omitempty"`
 	CreatedAt   *time.Time `json:"createdAt,omitempty"`
@@ -23,6 +28,9 @@ type MCPAccessProfile struct {
 	DisplayName *string `json:"displayName,omitempty"`
 	// Unique identifier for this access profile.
 	ID *string `json:"id,omitempty"`
+	// Whether this toolset's backing entitlement is exposed in at least one
+	//  request catalog (i.e. can be requested). Computed read-only; populated on List.
+	Requestable *bool `json:"requestable,omitempty"`
 	// The number of tools currently bound to this profile.
 	ToolCount *int       `json:"toolCount,omitempty"`
 	UpdatedAt *time.Time `json:"updatedAt,omitempty"`
@@ -51,6 +59,13 @@ func (m *MCPAccessProfile) GetAppID() *string {
 		return nil
 	}
 	return m.AppID
+}
+
+func (m *MCPAccessProfile) GetConnectorDisplayName() *string {
+	if m == nil {
+		return nil
+	}
+	return m.ConnectorDisplayName
 }
 
 func (m *MCPAccessProfile) GetConnectorID() *string {
@@ -93,6 +108,13 @@ func (m *MCPAccessProfile) GetID() *string {
 		return nil
 	}
 	return m.ID
+}
+
+func (m *MCPAccessProfile) GetRequestable() *bool {
+	if m == nil {
+		return nil
+	}
+	return m.Requestable
 }
 
 func (m *MCPAccessProfile) GetToolCount() *int {

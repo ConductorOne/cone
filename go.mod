@@ -12,7 +12,7 @@ require (
 require (
 	filippo.io/age v1.3.1
 	github.com/conductorone/baton-sdk v0.3.17
-	github.com/conductorone/conductorone-sdk-go v1.29.0
+	github.com/conductorone/conductorone-sdk-go v1.29.1
 	github.com/pterm/pterm v0.12.81
 	github.com/toqueteos/webbrowser v1.2.0
 	github.com/xhit/go-str2duration/v2 v2.1.0

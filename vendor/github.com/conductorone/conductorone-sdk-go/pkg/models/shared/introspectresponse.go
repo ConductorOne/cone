@@ -2,6 +2,28 @@
 
 package shared
 
+type DisabledModules string
+
+const (
+	DisabledModulesModuleIDUnspecified   DisabledModules = "MODULE_ID_UNSPECIFIED"
+	DisabledModulesModuleIDSecretSharing DisabledModules = "MODULE_ID_SECRET_SHARING"
+)
+
+func (e DisabledModules) ToPointer() *DisabledModules {
+	return &e
+}
+
+// IsExact returns true if the value matches a known enum value, false otherwise.
+func (e *DisabledModules) IsExact() bool {
+	if e != nil {
+		switch *e {
+		case "MODULE_ID_UNSPECIFIED", "MODULE_ID_SECRET_SHARING":
+			return true
+		}
+	}
+	return false
+}
+
 // IntrospectResponse contains information about the current user who is authenticated.
 type IntrospectResponse struct {
 	// The OAuth client_id of the device client registered for this token. Present
@@ -9,6 +31,11 @@ type IntrospectResponse struct {
 	//  once and presents it on the subsequent token exchange. Empty for all other
 	//  tokens.
 	DeviceClientID *string `json:"deviceClientId,omitempty"`
+	// The modules turned off for the tenant the logged in user belongs to. Absent
+	//  from this list means enabled: every module is on by default. Clients MUST
+	//  treat an unrecognized value as "a module this client does not know about is
+	//  disabled".
+	DisabledModules []DisabledModules `json:"disabledModules,omitempty"`
 	// The list of feature flags enabled for the tenant the logged in user belongs to.
 	Features []string `json:"features,omitempty"`
 	// The list of permissions that the current logged in user has.
@@ -28,6 +55,13 @@ func (i *IntrospectResponse) GetDeviceClientID() *string {
 		return nil
 	}
 	return i.DeviceClientID
+}
+
+func (i *IntrospectResponse) GetDisabledModules() []DisabledModules {
+	if i == nil {
+		return nil
+	}
+	return i.DisabledModules
 }
 
 func (i *IntrospectResponse) GetFeatures() []string {

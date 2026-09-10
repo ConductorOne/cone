@@ -15,6 +15,7 @@ const (
 	ResourceTypeVault         ResourceType = "VAULT"
 	ResourceTypeProfileType   ResourceType = "PROFILE_TYPE"
 	ResourceTypeSessionPolicy ResourceType = "SESSION_POLICY"
+	ResourceTypeClawAgent     ResourceType = "CLAW_AGENT"
 )
 
 func (e ResourceType) ToPointer() *ResourceType {
@@ -25,7 +26,7 @@ func (e ResourceType) ToPointer() *ResourceType {
 func (e *ResourceType) IsExact() bool {
 	if e != nil {
 		switch *e {
-		case "ROLE", "GROUP", "LICENSE", "PROJECT", "CATALOG", "CUSTOM", "VAULT", "PROFILE_TYPE", "SESSION_POLICY":
+		case "ROLE", "GROUP", "LICENSE", "PROJECT", "CATALOG", "CUSTOM", "VAULT", "PROFILE_TYPE", "SESSION_POLICY", "CLAW_AGENT":
 			return true
 		}
 	}

@@ -146,8 +146,14 @@ func (e *TaskAuditViewSource) IsExact() bool {
 //   - taskCreatedFrom
 //   - reassignmentFallbackToAdmin
 //   - requestDefaultsApplied
+//   - provisionWaitingForEntitlementMerge
+//   - provisionEntitlementMergeCompleted
+//   - provisionEntitlementMergeTimedOut
+//   - accountDeleted
+//   - automationTriggered
 type TaskAuditView struct {
 	AccessRequestOutcome                 *TaskAuditAccessRequestOutcome                 `json:"accessRequestOutcome,omitempty"`
+	AccountDeleted                       *TaskAuditAccountDeleted                       `json:"accountDeleted,omitempty"`
 	AccountLifecycleActionCreated        *TaskAuditAccountLifecycleActionCreated        `json:"accountLifecycleActionCreated,omitempty"`
 	AccountLifecycleActionFailed         *TaskAuditAccountLifecycleActionFailed         `json:"accountLifecycleActionFailed,omitempty"`
 	ActionInstanceCreated                *TaskAuditActionInstanceCreated                `json:"actionInstanceCreated,omitempty"`
@@ -160,6 +166,7 @@ type TaskAuditView struct {
 	ApprovalInstanceChange               *TaskAuditApprovalInstanceChange               `json:"approvalInstanceChange,omitempty"`
 	ApprovalReassigned                   *TaskAuditPolicyApprovalReassigned             `json:"approvalReassigned,omitempty"`
 	ApprovedAutomatically                *TaskAuditApprovalHappenedAutomatically        `json:"approvedAutomatically,omitempty"`
+	AutomationTriggered                  *TaskAuditAutomationTriggered                  `json:"automationTriggered,omitempty"`
 	BulkActionError                      *TaskAuditBulkActionError                      `json:"bulkActionError,omitempty"`
 	CertifyOutcome                       *TaskAuditCertifyOutcome                       `json:"certifyOutcome,omitempty"`
 	Comment                              *TaskAuditComment                              `json:"comment,omitempty"`
@@ -182,19 +189,22 @@ type TaskAuditView struct {
 	GrantOutcome                        *TaskAuditGrantOutcome                        `json:"grantOutcome,omitempty"`
 	HardReset                           *TaskAuditHardReset                           `json:"hardReset,omitempty"`
 	// The id field.
-	ID                          *string                               `json:"id,omitempty"`
-	Metadata                    *TaskAuditMetaData                    `json:"metadata,omitempty"`
-	PolicyChanged               *TaskAuditPolicyChanged               `json:"policyChanged,omitempty"`
-	PolicyEvaluationStep        *TaskAuditPolicyEvaluationStep        `json:"policyEvaluationStep,omitempty"`
-	ProvisionCancelled          *TaskAuditPolicyProvisionCancelled    `json:"provisionCancelled,omitempty"`
-	ProvisionError              *TaskAuditPolicyProvisionError        `json:"provisionError,omitempty"`
-	ProvisionReassigned         *TaskAuditPolicyProvisionReassigned   `json:"provisionReassigned,omitempty"`
-	ReassignedToDelegate        *TaskAuditReassignedToDelegate        `json:"reassignedToDelegate,omitempty"`
-	ReassignmentFallbackToAdmin *TaskAuditReassignmentFallbackToAdmin `json:"reassignmentFallbackToAdmin,omitempty"`
-	ReassignmentListError       *TaskAuditReassignmentListError       `json:"reassignmentListError,omitempty"`
-	RequestDefaultsApplied      *TaskAuditRequestDefaultsApplied      `json:"requestDefaultsApplied,omitempty"`
-	RevokeOutcome               *TaskAuditRevokeOutcome               `json:"revokeOutcome,omitempty"`
-	SLAEscalation               *TaskAuditSLAEscalation               `json:"slaEscalation,omitempty"`
+	ID                                  *string                                       `json:"id,omitempty"`
+	Metadata                            *TaskAuditMetaData                            `json:"metadata,omitempty"`
+	PolicyChanged                       *TaskAuditPolicyChanged                       `json:"policyChanged,omitempty"`
+	PolicyEvaluationStep                *TaskAuditPolicyEvaluationStep                `json:"policyEvaluationStep,omitempty"`
+	ProvisionCancelled                  *TaskAuditPolicyProvisionCancelled            `json:"provisionCancelled,omitempty"`
+	ProvisionEntitlementMergeCompleted  *TaskAuditProvisionEntitlementMergeCompleted  `json:"provisionEntitlementMergeCompleted,omitempty"`
+	ProvisionEntitlementMergeTimedOut   *TaskAuditProvisionEntitlementMergeTimedOut   `json:"provisionEntitlementMergeTimedOut,omitempty"`
+	ProvisionError                      *TaskAuditPolicyProvisionError                `json:"provisionError,omitempty"`
+	ProvisionReassigned                 *TaskAuditPolicyProvisionReassigned           `json:"provisionReassigned,omitempty"`
+	ProvisionWaitingForEntitlementMerge *TaskAuditProvisionWaitingForEntitlementMerge `json:"provisionWaitingForEntitlementMerge,omitempty"`
+	ReassignedToDelegate                *TaskAuditReassignedToDelegate                `json:"reassignedToDelegate,omitempty"`
+	ReassignmentFallbackToAdmin         *TaskAuditReassignmentFallbackToAdmin         `json:"reassignmentFallbackToAdmin,omitempty"`
+	ReassignmentListError               *TaskAuditReassignmentListError               `json:"reassignmentListError,omitempty"`
+	RequestDefaultsApplied              *TaskAuditRequestDefaultsApplied              `json:"requestDefaultsApplied,omitempty"`
+	RevokeOutcome                       *TaskAuditRevokeOutcome                       `json:"revokeOutcome,omitempty"`
+	SLAEscalation                       *TaskAuditSLAEscalation                       `json:"slaEscalation,omitempty"`
 	// The source field.
 	Source          *TaskAuditViewSource                `json:"source,omitempty"`
 	StateChange     *TaskAuditStateChange               `json:"stateChange,omitempty"`
@@ -243,6 +253,13 @@ func (t *TaskAuditView) GetAccessRequestOutcome() *TaskAuditAccessRequestOutcome
 		return nil
 	}
 	return t.AccessRequestOutcome
+}
+
+func (t *TaskAuditView) GetAccountDeleted() *TaskAuditAccountDeleted {
+	if t == nil {
+		return nil
+	}
+	return t.AccountDeleted
 }
 
 func (t *TaskAuditView) GetAccountLifecycleActionCreated() *TaskAuditAccountLifecycleActionCreated {
@@ -327,6 +344,13 @@ func (t *TaskAuditView) GetApprovedAutomatically() *TaskAuditApprovalHappenedAut
 		return nil
 	}
 	return t.ApprovedAutomatically
+}
+
+func (t *TaskAuditView) GetAutomationTriggered() *TaskAuditAutomationTriggered {
+	if t == nil {
+		return nil
+	}
+	return t.AutomationTriggered
 }
 
 func (t *TaskAuditView) GetBulkActionError() *TaskAuditBulkActionError {
@@ -497,6 +521,20 @@ func (t *TaskAuditView) GetProvisionCancelled() *TaskAuditPolicyProvisionCancell
 	return t.ProvisionCancelled
 }
 
+func (t *TaskAuditView) GetProvisionEntitlementMergeCompleted() *TaskAuditProvisionEntitlementMergeCompleted {
+	if t == nil {
+		return nil
+	}
+	return t.ProvisionEntitlementMergeCompleted
+}
+
+func (t *TaskAuditView) GetProvisionEntitlementMergeTimedOut() *TaskAuditProvisionEntitlementMergeTimedOut {
+	if t == nil {
+		return nil
+	}
+	return t.ProvisionEntitlementMergeTimedOut
+}
+
 func (t *TaskAuditView) GetProvisionError() *TaskAuditPolicyProvisionError {
 	if t == nil {
 		return nil
@@ -509,6 +547,13 @@ func (t *TaskAuditView) GetProvisionReassigned() *TaskAuditPolicyProvisionReassi
 		return nil
 	}
 	return t.ProvisionReassigned
+}
+
+func (t *TaskAuditView) GetProvisionWaitingForEntitlementMerge() *TaskAuditProvisionWaitingForEntitlementMerge {
+	if t == nil {
+		return nil
+	}
+	return t.ProvisionWaitingForEntitlementMerge
 }
 
 func (t *TaskAuditView) GetReassignedToDelegate() *TaskAuditReassignedToDelegate {

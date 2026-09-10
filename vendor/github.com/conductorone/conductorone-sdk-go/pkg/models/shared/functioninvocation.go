@@ -11,11 +11,14 @@ import (
 type FunctionInvocationStatus string
 
 const (
-	FunctionInvocationStatusFunctionInvocationStatusUnspecified FunctionInvocationStatus = "FUNCTION_INVOCATION_STATUS_UNSPECIFIED"
-	FunctionInvocationStatusFunctionInvocationStatusPending     FunctionInvocationStatus = "FUNCTION_INVOCATION_STATUS_PENDING"
-	FunctionInvocationStatusFunctionInvocationStatusRunning     FunctionInvocationStatus = "FUNCTION_INVOCATION_STATUS_RUNNING"
-	FunctionInvocationStatusFunctionInvocationStatusSuccess     FunctionInvocationStatus = "FUNCTION_INVOCATION_STATUS_SUCCESS"
-	FunctionInvocationStatusFunctionInvocationStatusError       FunctionInvocationStatus = "FUNCTION_INVOCATION_STATUS_ERROR"
+	FunctionInvocationStatusFunctionInvocationStatusUnspecified           FunctionInvocationStatus = "FUNCTION_INVOCATION_STATUS_UNSPECIFIED"
+	FunctionInvocationStatusFunctionInvocationStatusPending               FunctionInvocationStatus = "FUNCTION_INVOCATION_STATUS_PENDING"
+	FunctionInvocationStatusFunctionInvocationStatusRunning               FunctionInvocationStatus = "FUNCTION_INVOCATION_STATUS_RUNNING"
+	FunctionInvocationStatusFunctionInvocationStatusSuccess               FunctionInvocationStatus = "FUNCTION_INVOCATION_STATUS_SUCCESS"
+	FunctionInvocationStatusFunctionInvocationStatusError                 FunctionInvocationStatus = "FUNCTION_INVOCATION_STATUS_ERROR"
+	FunctionInvocationStatusFunctionInvocationStatusCancellationRequested FunctionInvocationStatus = "FUNCTION_INVOCATION_STATUS_CANCELLATION_REQUESTED"
+	FunctionInvocationStatusFunctionInvocationStatusCancelled             FunctionInvocationStatus = "FUNCTION_INVOCATION_STATUS_CANCELLED"
+	FunctionInvocationStatusFunctionInvocationStatusUnknown               FunctionInvocationStatus = "FUNCTION_INVOCATION_STATUS_UNKNOWN"
 )
 
 func (e FunctionInvocationStatus) ToPointer() *FunctionInvocationStatus {
@@ -26,7 +29,7 @@ func (e FunctionInvocationStatus) ToPointer() *FunctionInvocationStatus {
 func (e *FunctionInvocationStatus) IsExact() bool {
 	if e != nil {
 		switch *e {
-		case "FUNCTION_INVOCATION_STATUS_UNSPECIFIED", "FUNCTION_INVOCATION_STATUS_PENDING", "FUNCTION_INVOCATION_STATUS_RUNNING", "FUNCTION_INVOCATION_STATUS_SUCCESS", "FUNCTION_INVOCATION_STATUS_ERROR":
+		case "FUNCTION_INVOCATION_STATUS_UNSPECIFIED", "FUNCTION_INVOCATION_STATUS_PENDING", "FUNCTION_INVOCATION_STATUS_RUNNING", "FUNCTION_INVOCATION_STATUS_SUCCESS", "FUNCTION_INVOCATION_STATUS_ERROR", "FUNCTION_INVOCATION_STATUS_CANCELLATION_REQUESTED", "FUNCTION_INVOCATION_STATUS_CANCELLED", "FUNCTION_INVOCATION_STATUS_UNKNOWN":
 			return true
 		}
 	}
@@ -43,9 +46,10 @@ type FunctionInvocation struct {
 	// The functionId field.
 	FunctionID *string `json:"functionId,omitempty"`
 	// The id field.
-	ID     *string        `json:"id,omitempty"`
-	Input  map[string]any `json:"input,omitempty"`
-	Output map[string]any `json:"output,omitempty"`
+	ID        *string                      `json:"id,omitempty"`
+	Input     map[string]any               `json:"input,omitempty"`
+	Output    map[string]any               `json:"output,omitempty"`
+	ResultRef *FunctionInvocationResultRef `json:"resultRef,omitempty"`
 	// The status field.
 	Status    *FunctionInvocationStatus `json:"status,omitempty"`
 	UpdatedAt *time.Time                `json:"updatedAt,omitempty"`
@@ -109,6 +113,13 @@ func (f *FunctionInvocation) GetOutput() map[string]any {
 		return nil
 	}
 	return f.Output
+}
+
+func (f *FunctionInvocation) GetResultRef() *FunctionInvocationResultRef {
+	if f == nil {
+		return nil
+	}
+	return f.ResultRef
 }
 
 func (f *FunctionInvocation) GetStatus() *FunctionInvocationStatus {

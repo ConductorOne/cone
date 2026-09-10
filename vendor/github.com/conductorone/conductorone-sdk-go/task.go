@@ -244,7 +244,7 @@ func (s *Task) CreateActionTask(ctx context.Context, request *shared.TaskService
 }
 
 // CreateGrantTask - Create Grant Task
-// Create a grant task
+// Create a task to grant access. Specify the recipient using identityUserId (a C1 user ID) or appUserId (an application account ID); the recipient is not inferred from the caller.
 func (s *Task) CreateGrantTask(ctx context.Context, request *shared.TaskServiceCreateGrantRequest, opts ...operations.Option) (*operations.C1APITaskV1TaskServiceCreateGrantTaskResponse, error) {
 	o := operations.Options{}
 	supportedOptions := []string{
@@ -885,7 +885,7 @@ func (s *Task) CreateResourceActionTask(ctx context.Context, request *shared.Tas
 }
 
 // CreateRevokeTask - Create Revoke Task
-// Create a revoke task
+// Create a task to revoke access. Specify the target using identityUserId (a C1 user ID) or appUserId (an application account ID); the target is not inferred from the caller.
 func (s *Task) CreateRevokeTask(ctx context.Context, request *shared.TaskServiceCreateRevokeRequest, opts ...operations.Option) (*operations.C1APITaskV1TaskServiceCreateRevokeTaskResponse, error) {
 	o := operations.Options{}
 	supportedOptions := []string{

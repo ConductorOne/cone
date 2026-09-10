@@ -16,7 +16,9 @@ type MSTeamsChannelSettings struct {
 	// The isConfigured field.
 	IsConfigured        *bool                          `json:"isConfigured,omitempty"`
 	ProvisioningRequest *ProvisioningRequestPreference `json:"provisioningRequest,omitempty"`
+	RequestCreated      *RequestCreatedPreference      `json:"requestCreated,omitempty"`
 	Reviews             *ReviewsPreference             `json:"reviews,omitempty"`
+	System              *SystemPreference              `json:"system,omitempty"`
 	TaskReminders       *TaskRemindersPreference       `json:"taskReminders,omitempty"`
 }
 
@@ -90,11 +92,25 @@ func (m *MSTeamsChannelSettings) GetProvisioningRequest() *ProvisioningRequestPr
 	return m.ProvisioningRequest
 }
 
+func (m *MSTeamsChannelSettings) GetRequestCreated() *RequestCreatedPreference {
+	if m == nil {
+		return nil
+	}
+	return m.RequestCreated
+}
+
 func (m *MSTeamsChannelSettings) GetReviews() *ReviewsPreference {
 	if m == nil {
 		return nil
 	}
 	return m.Reviews
+}
+
+func (m *MSTeamsChannelSettings) GetSystem() *SystemPreference {
+	if m == nil {
+		return nil
+	}
+	return m.System
 }
 
 func (m *MSTeamsChannelSettings) GetTaskReminders() *TaskRemindersPreference {

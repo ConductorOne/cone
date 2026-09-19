@@ -42,7 +42,14 @@ func runCli(ctx context.Context) int {
 		Use:     "cone",
 		Short:   "Cone interacts with the ConductorOne API to manage access to entitlements.",
 		Version: version,
+		RunE: func(cmd *cobra.Command, _ []string) error {
+			return cmd.Help()
+		},
 		PersistentPreRunE: func(cmd *cobra.Command, args []string) error {
+			confirm, _ := cmd.Flags().GetBool(confirmFlag)
+			if confirm && !confirmationSupported(cmd) {
+				return fmt.Errorf("--confirm is not supported by %q", cmd.CommandPath())
+			}
 			cmd.SetContext(ctx)
 			return nil
 		},
@@ -58,6 +65,7 @@ func runCli(ctx context.Context) int {
 	cliCmd.PersistentFlags().StringP("output", "o", "table", "Output format. Valid values: table, json, json-pretty, wide.")
 	cliCmd.PersistentFlags().Bool("debug", false, "Enable HTTP debug logging")
 	cliCmd.PersistentFlags().String("log-level", "", "Set log level (debug, info, warn, error)")
+	cliCmd.PersistentFlags().Bool(confirmFlag, false, "Prompt before supported task mutations")
 
 	err := initConfig(cliCmd)
 	if err != nil {

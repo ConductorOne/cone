@@ -15,7 +15,7 @@ func escalateTasksCmd() *cobra.Command {
 		Short: "Escalate an access request task to emergency access",
 		RunE:  runEscalateTasks,
 	}
-	return cmd
+	return supportsConfirmation(cmd)
 }
 
 func runEscalateTasks(cmd *cobra.Command, args []string) error {
@@ -28,9 +28,15 @@ func runEscalateTasks(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
-	taskId := args[0]
+	taskID := args[0]
+	if _, err := c.GetTask(ctx, taskID); err != nil {
+		return err
+	}
+	if err := confirmMutation(cmd, "escalating task "+taskID+" to emergency access"); err != nil {
+		return err
+	}
 
-	userResp, err := c.EscalateTask(ctx, taskId)
+	userResp, err := c.EscalateTask(ctx, taskID)
 	if err != nil {
 		return err
 	}

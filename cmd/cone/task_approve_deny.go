@@ -20,7 +20,7 @@ func approveTasksCmd() *cobra.Command {
 
 	addCommentFlag(cmd)
 	addWaitFlag(cmd)
-	return cmd
+	return supportsConfirmation(cmd)
 }
 
 func denyTasksCmd() *cobra.Command {
@@ -32,11 +32,11 @@ func denyTasksCmd() *cobra.Command {
 
 	addCommentFlag(cmd)
 	addWaitFlag(cmd)
-	return cmd
+	return supportsConfirmation(cmd)
 }
 
 func runApproveTasks(cmd *cobra.Command, args []string) error {
-	return runApproveDeny(cmd, args, func(c client.C1Client, ctx context.Context, taskId string, comment string, policyId string) (*shared.Task, error) {
+	return runApproveDeny(cmd, args, "approving", func(c client.C1Client, ctx context.Context, taskId string, comment string, policyId string) (*shared.Task, error) {
 		approveResp, err := c.ApproveTask(ctx, taskId, comment, policyId)
 		if err != nil {
 			return nil, err
@@ -46,7 +46,7 @@ func runApproveTasks(cmd *cobra.Command, args []string) error {
 }
 
 func runDenyTasks(cmd *cobra.Command, args []string) error {
-	return runApproveDeny(cmd, args, func(c client.C1Client, ctx context.Context, taskId string, comment string, policyId string) (*shared.Task, error) {
+	return runApproveDeny(cmd, args, "denying", func(c client.C1Client, ctx context.Context, taskId string, comment string, policyId string) (*shared.Task, error) {
 		approveResp, err := c.DenyTask(ctx, taskId, comment, policyId)
 		if err != nil {
 			return nil, err
@@ -58,6 +58,7 @@ func runDenyTasks(cmd *cobra.Command, args []string) error {
 func runApproveDeny(
 	cmd *cobra.Command,
 	args []string,
+	action string,
 	run func(c client.C1Client, ctx context.Context, taskId string, comment string, policyId string) (*shared.Task, error),
 ) error {
 	ctx, c, v, err := cmdContext(cmd)
@@ -79,6 +80,9 @@ func runApproveDeny(
 
 	if taskResp.TaskView.Task.Policy == nil || taskResp.TaskView.Task.Policy.Current == nil {
 		return errors.New("task does not have a current policy step id and cannot be approved or denied")
+	}
+	if err := confirmMutation(cmd, action+" task "+taskId); err != nil {
+		return err
 	}
 
 	task, err := run(c, ctx, taskId, comment, client.StringFromPtr(taskResp.TaskView.Task.Policy.Current.ID))

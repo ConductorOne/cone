@@ -43,6 +43,9 @@ func runCli(ctx context.Context) int {
 		Short:   "Cone interacts with the ConductorOne API to manage access to entitlements.",
 		Version: version,
 		PersistentPreRunE: func(cmd *cobra.Command, args []string) error {
+			if dryRunEnabled(cmd) && !dryRunSupported(cmd) {
+				return fmt.Errorf("--dry-run is not supported by %q", cmd.CommandPath())
+			}
 			cmd.SetContext(ctx)
 			return nil
 		},
@@ -58,6 +61,7 @@ func runCli(ctx context.Context) int {
 	cliCmd.PersistentFlags().StringP("output", "o", "table", "Output format. Valid values: table, json, json-pretty, wide.")
 	cliCmd.PersistentFlags().Bool("debug", false, "Enable HTTP debug logging")
 	cliCmd.PersistentFlags().String("log-level", "", "Set log level (debug, info, warn, error)")
+	cliCmd.PersistentFlags().Bool(dryRunFlag, false, "Preview supported mutations without sending them")
 
 	err := initConfig(cliCmd)
 	if err != nil {

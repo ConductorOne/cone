@@ -205,7 +205,7 @@ func (t *Transport) make(ctx context.Context) (http.RoundTripper, error) {
 		DialContext: (&net.Dialer{
 			Timeout:   30 * time.Second,
 			KeepAlive: 30 * time.Second,
-			DualStack: true,
+			DualStack: true, //nolint:staticcheck // preserve existing dialer behavior
 		}).DialContext,
 		ForceAttemptHTTP2:     true,
 		MaxIdleConns:          100,

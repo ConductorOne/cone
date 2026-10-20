@@ -25,7 +25,7 @@ func TestEncryptDecryptRoundtrip(t *testing.T) {
 		{name: "simple", plaintext: "hello world"},
 		{name: "empty", plaintext: ""},
 		{name: "multiline", plaintext: "line1\nline2\nline3"},
-		{name: "json", plaintext: `{"key":"value","n":1}`},
+		{name: "json", plaintext: `{"key":"value","n":1}`}, //nolint:goconst // test fixture
 		{name: "unicode", plaintext: "héllo 🌍 wörld"},
 		{name: "large", plaintext: strings.Repeat("a", 50000)},
 	}
@@ -145,9 +145,9 @@ func TestCreateInputFormat(t *testing.T) {
 		want shared.PaperSecretServiceCreateInternalRequestInputFormat
 	}{
 		{name: "json", want: shared.PaperSecretServiceCreateInternalRequestInputFormatSecretInputFormatJSON},
-		{name: "yaml", want: shared.PaperSecretServiceCreateInternalRequestInputFormatSecretInputFormatYaml},
-		{name: "key-value", want: shared.PaperSecretServiceCreateInternalRequestInputFormatSecretInputFormatKeyValue},
-		{name: "plaintext", want: shared.PaperSecretServiceCreateInternalRequestInputFormatSecretInputFormatPlaintext},
+		{name: "yaml", want: shared.PaperSecretServiceCreateInternalRequestInputFormatSecretInputFormatYaml},           //nolint:goconst // test fixture
+		{name: "key-value", want: shared.PaperSecretServiceCreateInternalRequestInputFormatSecretInputFormatKeyValue},  //nolint:goconst // test fixture
+		{name: "plaintext", want: shared.PaperSecretServiceCreateInternalRequestInputFormatSecretInputFormatPlaintext}, //nolint:goconst // test fixture
 		{name: "unknown", want: shared.PaperSecretServiceCreateInternalRequestInputFormatSecretInputFormatPlaintext},
 		{name: "", want: shared.PaperSecretServiceCreateInternalRequestInputFormatSecretInputFormatPlaintext},
 	}
@@ -171,8 +171,8 @@ func TestValidateSecretCreateInput(t *testing.T) {
 		input   secretCreateInput
 		wantErr string
 	}{
-		{name: "valid internal text", input: secretCreateInput{userIDs: []string{"u1"}, hasInlineContent: true, expiresIn: "3600s"}},
-		{name: "valid external file", input: secretCreateInput{emails: []string{"a@b.com"}, filePath: "/tmp/f", expiresIn: "1h"}},
+		{name: "valid internal text", input: secretCreateInput{userIDs: []string{"u1"}, hasInlineContent: true, expiresIn: "3600s"}}, //nolint:goconst // test fixture
+		{name: "valid external file", input: secretCreateInput{emails: []string{"a@b.com"}, filePath: "/tmp/f", expiresIn: "1h"}},    //nolint:goconst // test fixture
 		{name: "valid content file", input: secretCreateInput{userRefs: []string{"alice@example.com"}, contentFilePath: "/tmp/content", expiresIn: "3600s"}},
 		{name: "no recipient", input: secretCreateInput{hasInlineContent: true, expiresIn: "3600s"}, wantErr: "one of"},
 		{name: "both recipients", input: secretCreateInput{userIDs: []string{"u1"}, emails: []string{"a@b.com"}, expiresIn: "3600s", hasInlineContent: true}, wantErr: "mutually exclusive"},
@@ -532,7 +532,7 @@ func TestValidateSecretTextContent(t *testing.T) {
 
 func TestShareCodeFromSecretRef(t *testing.T) {
 	tests := map[string]string{
-		"ABCD-EFGH-IJKL": "ABCD-EFGH-IJKL",
+		"ABCD-EFGH-IJKL": "ABCD-EFGH-IJKL", //nolint:goconst // test fixture
 		"abcd-efgh-ijkl": "ABCD-EFGH-IJKL",
 		"https://tenant.example.com/secrets/view/abcd-efgh-ijkl":               "ABCD-EFGH-IJKL",
 		"https://tenant.example.com/ext/secrets/share/abcd-efgh-ijkl?x=ignore": "ABCD-EFGH-IJKL",

@@ -44,7 +44,7 @@ func (c *tableManager) sortData(header []string, tableData [][]string, out inter
 	sorter, sorterOk := out.(TableSort)
 	if sorterOk {
 		for _, col := range sorter.OrderedSortColumns() {
-			sortCol := slices.Index(header, col)
+			sortCol := slices.Index(header, col) //nolint:govet // inline analyzer false positive
 			if sortCol != -1 {
 				sortCols = append(sortCols, sortCol)
 				sortColsMap[sortCol] = true

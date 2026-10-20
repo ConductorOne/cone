@@ -222,7 +222,7 @@ func createAWSProfile(entitlement *shared.AppEntitlement, resource *shared.AppRe
 	profileName := sanitizeINIValue(fmt.Sprintf("%s-%s", accountName, strings.ToLower(roleName)))
 
 	awsConfigDir := filepath.Join(os.Getenv("HOME"), ".aws")
-	if err := os.MkdirAll(awsConfigDir, 0700); err != nil {
+	if err := os.MkdirAll(awsConfigDir, 0700); err != nil { //nolint:gosec // trusted path ~/.aws
 		return "", fmt.Errorf("failed to create ~/.aws: %w", err)
 	}
 
@@ -265,7 +265,7 @@ sso_registration_scopes = sso:account:access
 `, ssoURL, ssoRegion)
 	}
 
-	if err := os.WriteFile(configPath, append(configContent, []byte(newConfig)...), 0600); err != nil {
+	if err := os.WriteFile(configPath, append(configContent, []byte(newConfig)...), 0600); err != nil { //nolint:gosec // trusted path ~/.aws/config
 		return "", fmt.Errorf("failed to write AWS config: %w", err)
 	}
 
@@ -484,7 +484,7 @@ func awsCredentialsRun(cmd *cobra.Command, args []string) error {
 		return credErr
 	}
 
-	jsonOutput, err := json.Marshal(creds)
+	jsonOutput, err := json.Marshal(creds) //nolint:gosec // credentials are intentionally emitted for credential_process
 	if err != nil {
 		return fmt.Errorf("failed to marshal credentials: %w", err)
 	}
@@ -527,7 +527,7 @@ func sanitizeINIValue(s string) string {
 		case '\n', '\r', '\x00', '[', ']', '"', '\\':
 			continue
 		default:
-			b.WriteRune(r)
+			b.WriteRune(r) //nolint:revive // strings.Builder never returns an error
 		}
 	}
 	return b.String()
@@ -616,7 +616,7 @@ func ssoLogin(ctx context.Context) error {
 }
 
 func getRoleCredentials(ctx context.Context, token, accountID, roleName, ssoRegion string) ([]byte, error) {
-	cmd := exec.CommandContext(ctx, "aws", "sso", "get-role-credentials",
+	cmd := exec.CommandContext(ctx, "aws", "sso", "get-role-credentials", //nolint:gosec // fixed aws binary, args from validated config
 		"--access-token", token,
 		"--account-id", accountID,
 		"--role-name", roleName,

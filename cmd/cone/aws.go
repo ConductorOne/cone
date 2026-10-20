@@ -527,7 +527,7 @@ func sanitizeINIValue(s string) string {
 		case '\n', '\r', '\x00', '[', ']', '"', '\\':
 			continue
 		default:
-			b.WriteRune(r) //nolint:revive // strings.Builder never returns an error
+			b.WriteRune(r)
 		}
 	}
 	return b.String()

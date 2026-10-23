@@ -3,6 +3,7 @@ package client
 import (
 	"context"
 	"errors"
+	"fmt"
 	"net/http"
 
 	"github.com/conductorone/conductorone-sdk-go/pkg/models/operations"
@@ -97,36 +98,80 @@ func (e *ExpandableEntitlementWithBindings) SetPath(pathname string, value int) 
 	e.ExpandedMap[pathname] = value
 }
 
+// maxRepeatedSearchEntitlementsPageToken bounds how many times the server may
+// hand back a page token identical to the one just sent before we treat paging
+// as stuck. Without it a server that never advances the token spins forever.
+const maxRepeatedSearchEntitlementsPageToken = 8
+
 func (c *client) SearchEntitlements(ctx context.Context, filter *SearchEntitlementsFilter) ([]*EntitlementWithBindings, error) {
-	// TODO(morgabra) Pagination
 	// TODO(morgabra) Should we abstract the OpenAPI objects from the rest of cone? Kinda... no? But they aren't typed...
-	req := shared.RequestCatalogSearchServiceSearchEntitlementsRequest{
-		EntitlementAlias: stringPtr(filter.EntitlementAlias),
-		GrantedStatus:    filter.GrantedStatus.ToPointer(),
-		PageSize:         intPtr(100),
-		PageToken:        nil,
-		Query:            stringPtr(filter.Query),
-		AppDisplayName:   stringPtr(filter.AppDisplayName),
-		IncludeDeleted:   &filter.IncludeDeleted,
-		ExpandMask:       &filter.AppEntitlementExpandMask,
-	}
-	resp, err := c.sdk.RequestCatalogSearch.SearchEntitlements(ctx, &req)
-	if err != nil {
-		return nil, err
+	rv := make([]*EntitlementWithBindings, 0)
+	pageToken := ""
+	repeatedToken := 0
+
+	for {
+		req := shared.RequestCatalogSearchServiceSearchEntitlementsRequest{
+			EntitlementAlias: stringPtr(filter.EntitlementAlias),
+			GrantedStatus:    filter.GrantedStatus.ToPointer(),
+			PageSize:         intPtr(100),
+			PageToken:        stringPtr(pageToken),
+			Query:            stringPtr(filter.Query),
+			AppDisplayName:   stringPtr(filter.AppDisplayName),
+			IncludeDeleted:   &filter.IncludeDeleted,
+			ExpandMask:       &filter.AppEntitlementExpandMask,
+		}
+		resp, err := c.sdk.RequestCatalogSearch.SearchEntitlements(ctx, &req)
+		if err != nil {
+			return nil, err
+		}
+
+		if err := NewHTTPError(resp.RawResponse); err != nil {
+			return nil, err
+		}
+
+		page, err := convertSearchEntitlementsPage(resp.RequestCatalogSearchServiceSearchEntitlementsResponse)
+		if err != nil {
+			return nil, err
+		}
+		rv = append(rv, page...)
+
+		// Stop on an empty token, never on an empty page: the server filters
+		// granted status after it cuts the page, so a page can come back short or
+		// empty while later pages still hold results.
+		nextPageToken := StringFromPtr(resp.RequestCatalogSearchServiceSearchEntitlementsResponse.NextPageToken)
+		if nextPageToken == "" {
+			break
+		}
+		if nextPageToken == pageToken {
+			repeatedToken++
+			if repeatedToken >= maxRepeatedSearchEntitlementsPageToken {
+				return nil, fmt.Errorf("search-entitlements: page token repeated %d times, pagination is not advancing", repeatedToken)
+			}
+		} else {
+			repeatedToken = 0
+		}
+		pageToken = nextPageToken
 	}
 
-	if err := NewHTTPError(resp.RawResponse); err != nil {
-		return nil, err
-	}
+	return rv, nil
+}
 
-	list := resp.RequestCatalogSearchServiceSearchEntitlementsResponse.List
-	if list == nil {
-		return nil, errors.New("search-entitlements: list is nil")
+// convertSearchEntitlementsPage expands and converts one response page.
+//
+// This runs per page rather than once over a concatenated list because the
+// response's expanded array is indexed per response: ExpandedMap holds offsets
+// into THIS page's expanded objects, so merging raw pages first would resolve
+// those offsets against the wrong array.
+func convertSearchEntitlementsPage(
+	resp *shared.RequestCatalogSearchServiceSearchEntitlementsResponse,
+) ([]*EntitlementWithBindings, error) {
+	if resp == nil {
+		return nil, errors.New("search-entitlements: response is nil")
 	}
 
 	// Unmarshal the expanded fields
-	expanded := make([]any, 0, len(resp.RequestCatalogSearchServiceSearchEntitlementsResponse.Expanded))
-	for _, x := range resp.RequestCatalogSearchServiceSearchEntitlementsResponse.Expanded {
+	expanded := make([]any, 0, len(resp.Expanded))
+	for _, x := range resp.Expanded {
 		x := x
 		converted, err := UnmarshalAnyType[shared.RequestCatalogSearchServiceSearchEntitlementsResponseExpanded](&x)
 		if err != nil {
@@ -135,9 +180,11 @@ func (c *client) SearchEntitlements(ctx context.Context, filter *SearchEntitleme
 		expanded = append(expanded, converted)
 	}
 
-	// Convert the list of entitlements to a list of expandable entitlements
-	expandableList := make([]*ExpandableEntitlementWithBindings, 0, len(list))
-	for _, v := range list {
+	// Convert the list of entitlements to a list of expandable entitlements. A
+	// nil list is an empty page, not a fault -- the wire format omits an empty
+	// repeated field entirely.
+	expandableList := make([]*ExpandableEntitlementWithBindings, 0, len(resp.List))
+	for _, v := range resp.List {
 		ent := NewExpandableEntitlementWithBindings(v)
 		if ent == nil {
 			return nil, errors.New("search-entitlements: entitlement is nil")
@@ -147,7 +194,7 @@ func (c *client) SearchEntitlements(ctx context.Context, filter *SearchEntitleme
 	}
 
 	// Populate the expandable objects with the indexes of related objects
-	err = ExpandableReponse[*ExpandableEntitlementWithBindings]{
+	err := ExpandableReponse[*ExpandableEntitlementWithBindings]{
 		List: expandableList,
 	}.PopulateExpandedIndexes()
 
@@ -156,7 +203,7 @@ func (c *client) SearchEntitlements(ctx context.Context, filter *SearchEntitleme
 	}
 
 	// Iterate over the expandable objects and convert them to the final response
-	rv := make([]*EntitlementWithBindings, 0, len(list))
+	rv := make([]*EntitlementWithBindings, 0, len(expandableList))
 	for _, v := range expandableList {
 		rv = append(rv, &EntitlementWithBindings{
 			Entitlement: AppEntitlement(*v.Entitlement.AppEntitlement),

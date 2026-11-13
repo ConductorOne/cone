@@ -16,7 +16,7 @@ func tasksCommentCmd() *cobra.Command {
 		RunE:  tasksCommentRun,
 	}
 
-	return cmd
+	return supportsConfirmation(cmd)
 }
 
 func tasksCommentRun(cmd *cobra.Command, args []string) error {
@@ -29,10 +29,16 @@ func tasksCommentRun(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
-	taskId := args[0]
+	taskID := args[0]
 	comment := args[1]
+	if _, err := c.GetTask(ctx, taskID); err != nil {
+		return err
+	}
+	if err := confirmMutation(cmd, "commenting on task "+taskID); err != nil {
+		return err
+	}
 
-	userResp, err := c.CommentOnTask(ctx, taskId, comment)
+	userResp, err := c.CommentOnTask(ctx, taskID, comment)
 	if err != nil {
 		return err
 	}

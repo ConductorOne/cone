@@ -22,6 +22,13 @@ $ docker pull public.ecr.aws/conductorone/cone:<version>
 
 To authenticate to Cone, run `cone login <tenant-name or tenant-url>`, passing in the name (such as `example.conductor.one`) or URL (such as `https://example.conductor.one`) of your ConductorOne instance and follow the prompts. 
 
+# Confirming task mutations
+
+Add `--confirm` to `task approve`, `task deny`, `task comment`, or `task
+escalate` to require an explicit interactive confirmation after Cone has
+resolved and validated the task, immediately before it sends the change. It is
+rejected with `--non-interactive`; the default scripting behavior is unchanged.
+
 # Getting started with Cone
 
 Run `cone help` to see the full list of available Cone commands. 

@@ -98,35 +98,61 @@ func (e *ExpandableEntitlementWithBindings) SetPath(pathname string, value int) 
 }
 
 func (c *client) SearchEntitlements(ctx context.Context, filter *SearchEntitlementsFilter) ([]*EntitlementWithBindings, error) {
-	// TODO(morgabra) Pagination
 	// TODO(morgabra) Should we abstract the OpenAPI objects from the rest of cone? Kinda... no? But they aren't typed...
-	req := shared.RequestCatalogSearchServiceSearchEntitlementsRequest{
-		EntitlementAlias: stringPtr(filter.EntitlementAlias),
-		GrantedStatus:    filter.GrantedStatus.ToPointer(),
-		PageSize:         intPtr(100),
-		PageToken:        nil,
-		Query:            stringPtr(filter.Query),
-		AppDisplayName:   stringPtr(filter.AppDisplayName),
-		IncludeDeleted:   &filter.IncludeDeleted,
-		ExpandMask:       &filter.AppEntitlementExpandMask,
-	}
-	resp, err := c.sdk.RequestCatalogSearch.SearchEntitlements(ctx, &req)
-	if err != nil {
-		return nil, err
-	}
+	var rv []*EntitlementWithBindings
+	var pageToken *string
+	for page := 0; ; page++ {
+		if err := ctx.Err(); err != nil {
+			return nil, err
+		}
 
-	if err := NewHTTPError(resp.RawResponse); err != nil {
-		return nil, err
-	}
+		req := shared.RequestCatalogSearchServiceSearchEntitlementsRequest{
+			EntitlementAlias: stringPtr(filter.EntitlementAlias),
+			GrantedStatus:    filter.GrantedStatus.ToPointer(),
+			PageSize:         intPtr(100),
+			PageToken:        pageToken,
+			Query:            stringPtr(filter.Query),
+			AppDisplayName:   stringPtr(filter.AppDisplayName),
+			IncludeDeleted:   &filter.IncludeDeleted,
+			ExpandMask:       &filter.AppEntitlementExpandMask,
+		}
+		resp, err := c.sdk.RequestCatalogSearch.SearchEntitlements(ctx, &req)
+		if err != nil {
+			return nil, err
+		}
 
-	list := resp.RequestCatalogSearchServiceSearchEntitlementsResponse.List
-	if list == nil {
-		return nil, errors.New("search-entitlements: list is nil")
+		if err := NewHTTPError(resp.RawResponse); err != nil {
+			return nil, err
+		}
+
+		body := resp.RequestCatalogSearchServiceSearchEntitlementsResponse
+		if body == nil || (body.List == nil && page == 0) {
+			return nil, errors.New("search-entitlements: list is nil")
+		}
+
+		// Expanded paths (e.g. "$.expanded[0]") are indexes into this response's own
+		// Expanded slice, so each page is resolved against its own expanded objects
+		// before the results are accumulated.
+		pageResults, err := convertSearchEntitlementsPage(body)
+		if err != nil {
+			return nil, err
+		}
+		rv = append(rv, pageResults...)
+
+		if body.NextPageToken == nil || *body.NextPageToken == "" {
+			break
+		}
+		pageToken = body.NextPageToken
 	}
+	return rv, nil
+}
+
+func convertSearchEntitlementsPage(body *shared.RequestCatalogSearchServiceSearchEntitlementsResponse) ([]*EntitlementWithBindings, error) {
+	list := body.List
 
 	// Unmarshal the expanded fields
-	expanded := make([]any, 0, len(resp.RequestCatalogSearchServiceSearchEntitlementsResponse.Expanded))
-	for _, x := range resp.RequestCatalogSearchServiceSearchEntitlementsResponse.Expanded {
+	expanded := make([]any, 0, len(body.Expanded))
+	for _, x := range body.Expanded {
 		x := x
 		converted, err := UnmarshalAnyType[shared.RequestCatalogSearchServiceSearchEntitlementsResponseExpanded](&x)
 		if err != nil {
@@ -147,10 +173,9 @@ func (c *client) SearchEntitlements(ctx context.Context, filter *SearchEntitleme
 	}
 
 	// Populate the expandable objects with the indexes of related objects
-	err = ExpandableReponse[*ExpandableEntitlementWithBindings]{
+	err := ExpandableReponse[*ExpandableEntitlementWithBindings]{
 		List: expandableList,
 	}.PopulateExpandedIndexes()
-
 	if err != nil {
 		return nil, err
 	}

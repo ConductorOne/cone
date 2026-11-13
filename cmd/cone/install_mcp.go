@@ -24,10 +24,9 @@ Requires 'cone login <tenant>' to have been run first.`,
 	}
 
 	cmd.Flags().String("scope", "user", "Claude Code scope: user or project")
-	cmd.Flags().Bool("dry-run", false, "Print what would happen without doing it")
 	cmd.Flags().Bool("manual", false, "Print config snippet instead of running claude CLI")
 
-	return cmd
+	return supportsDryRun(cmd)
 }
 
 func installMCPRun(cmd *cobra.Command, _ []string) error {

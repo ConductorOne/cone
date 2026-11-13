@@ -42,14 +42,11 @@ func initConfig(cmd *cobra.Command) error {
 		viper.AddConfigPath(defaultConfigPath())
 	}
 
-	err := viper.ReadInConfig()
-	if err != nil {
+	if err := viper.ReadInConfig(); err != nil {
 		notFoundErr := &viper.ConfigFileNotFoundError{}
-		// Explicitly ignore the not found error case
-		if ok := errors.As(err, notFoundErr); ok {
-			return nil
+		if !errors.As(err, notFoundErr) {
+			return fmt.Errorf("fatal error config file: %w", err)
 		}
-		return fmt.Errorf("fatal error config file: %w", err)
 	}
 
 	if err := viper.BindPFlags(cmd.PersistentFlags()); err != nil {

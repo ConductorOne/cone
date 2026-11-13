@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"encoding/json"
 	"errors"
 	"fmt"
 	"strings"
@@ -66,7 +67,7 @@ func taskCmd(cmd *cobra.Command) *cobra.Command {
 	addForceTaskCreateFlag(cmd)
 	addEntitlementDetailsFlag(cmd)
 	addFormDataFlag(cmd)
-	return cmd
+	return supportsDryRun(cmd)
 }
 
 func strToDur(duration string) (*time.Duration, error) {
@@ -198,66 +199,105 @@ func getValidDuration(ctx context.Context, v *viper.Viper, maxProvisionTime *tim
 	return &durationInput, nil
 }
 
+type getTaskInput struct {
+	appUserID       string
+	justification   string
+	duration        string
+	emergencyAccess bool
+	requestData     map[string]any
+	formDataRaw     string
+}
+
+func buildGetTaskInput(ctx context.Context, c client.C1Client, v *viper.Viper, appID, entitlementID, userID, justification string) (*getTaskInput, error) {
+	entitlement, err := c.GetEntitlement(ctx, appID, entitlementID)
+	if err != nil {
+		return nil, err
+	}
+
+	justification, err = getValidJustification(ctx, v, justification)
+	if err != nil {
+		return nil, err
+	}
+
+	durationStr := client.StringFromPtr(entitlement.DurationGrant)
+	var maxProvision *time.Duration
+	if maxProvisionTime, err := time.ParseDuration(durationStr); err == nil {
+		maxProvision = &maxProvisionTime
+	}
+
+	validDuration, err := getValidDuration(ctx, v, maxProvision, v.GetString(durationFlag))
+	if err != nil {
+		return nil, err
+	}
+
+	appUserID, err := getAppUserId(ctx, c, v, appID, userID)
+	if err != nil {
+		return nil, err
+	}
+
+	duration := ""
+	if validDuration != nil {
+		duration = fmt.Sprintf("%ds", int(validDuration.Seconds()))
+	}
+
+	formDataRaw := v.GetString(formDataFlag)
+	var requestData map[string]any
+	if formDataRaw != "" {
+		requestData, err = parseFormDataFlag(formDataRaw)
+		if err != nil {
+			return nil, err
+		}
+	}
+
+	return &getTaskInput{
+		appUserID:       appUserID,
+		justification:   justification,
+		duration:        duration,
+		emergencyAccess: v.GetBool(emergencyAccessFlag),
+		requestData:     requestData,
+		formDataRaw:     formDataRaw,
+	}, nil
+}
+
+func (r *getTaskInput) previewDetails(userID string) []string {
+	details := []string{
+		nonEmptyDetail("Requested for user", userID),
+		nonEmptyDetail("Justification", r.justification),
+		nonEmptyDetail("App user", r.appUserID),
+		nonEmptyDetail("Requested duration", r.duration),
+	}
+	if r.emergencyAccess {
+		details = append(details, "Emergency access: true")
+	}
+	if len(r.requestData) > 0 {
+		requestData, _ := json.Marshal(r.requestData)
+		details = append(details, "Request data: "+string(requestData))
+	}
+	return details
+}
+
 func runGet(cmd *cobra.Command, args []string) error {
 	_, _, v, err := cmdContext(cmd)
 	if err != nil {
 		return err
 	}
 
-	return runTask(cmd, args, func(c client.C1Client, ctx context.Context, appId string, entitlementId string, userId string, justification string) (*shared.Task, error) {
-		duration := v.GetString(durationFlag)
-		emergencyAccess := v.GetBool(emergencyAccessFlag)
-
-		entitlement, err := c.GetEntitlement(ctx, appId, entitlementId)
+	return runTask(cmd, args, func(c client.C1Client, ctx context.Context, appID string, entitlementID string, userID string, justification string) (*shared.Task, error) {
+		input, err := buildGetTaskInput(ctx, c, v, appID, entitlementID, userID, justification)
 		if err != nil {
 			return nil, err
 		}
 
-		justification, err = getValidJustification(ctx, v, justification)
-		if err != nil {
-			return nil, err
+		if dryRunEnabled(cmd) {
+			previewMutations(cmd, c, v, mutation{
+				Action:  "Create access request",
+				Target:  fmt.Sprintf("app %s, entitlement %s", appID, entitlementID),
+				Details: input.previewDetails(userID),
+			})
+			return nil, nil
 		}
 
-		// entitlement.DurationGrant is assumed to be nil or a non-zero parsable string
-		durationStr := client.StringFromPtr(entitlement.DurationGrant)
-		var maxProvision *time.Duration
-		maxProvisionTime, err := time.ParseDuration(durationStr)
-		if err == nil {
-			maxProvision = &maxProvisionTime
-		}
-
-		validDuration, err := getValidDuration(ctx, v, maxProvision, duration)
-		if err != nil {
-			return nil, err
-		}
-
-		appUserId, err := getAppUserId(ctx, c, v, appId, userId)
-		if err != nil {
-			return nil, err
-		}
-
-		apiDuration := ""
-		if validDuration != nil {
-			// API expects seconds formated like "1s"
-			seconds := int(validDuration.Seconds())
-			apiDuration = fmt.Sprintf("%ds", seconds)
-		}
-
-		// Collect form data if provided via flags
-		var requestData map[string]any
-		formDataFlagValue := v.GetString(formDataFlag)
-
-		// Only send requestData if user explicitly provided form data
-		if formDataFlagValue != "" {
-			var err error
-			requestData, err = parseFormDataFlag(formDataFlagValue)
-			if err != nil {
-				return nil, err
-			}
-		}
-
-		// Create the task with initial form data (if any)
-		accessRequest, err := c.CreateGrantTask(ctx, appId, entitlementId, userId, appUserId, justification, apiDuration, emergencyAccess, requestData)
+		accessRequest, err := c.CreateGrantTask(ctx, appID, entitlementID, userID, input.appUserID, input.justification, input.duration, input.emergencyAccess, input.requestData)
 		if err != nil {
 			errorBody := err.Error()
 			if strings.Contains(errorBody, durationErrorMessage) {
@@ -269,34 +309,23 @@ func runGet(cmd *cobra.Command, args []string) error {
 		}
 
 		task := accessRequest.TaskView.Task
-
-		// Check if the task has form fields
 		hasFormFields := len(formFields(task.Form)) > 0
-
 		if hasFormFields {
-			// Collect form fields if not already provided
-			if len(requestData) == 0 {
+			if len(input.requestData) == 0 {
 				collectedData, err := collectFormFields(ctx, v, task.Form)
 				if err != nil {
 					return nil, fmt.Errorf("error collecting form fields: %w", err)
 				}
 				if len(collectedData) > 0 {
-					// Update the task with the collected form data
 					taskID := client.StringFromPtr(task.ID)
-					_, err := c.UpdateTaskRequestData(ctx, taskID, collectedData)
-					if err != nil {
+					if _, err := c.UpdateTaskRequestData(ctx, taskID, collectedData); err != nil {
 						return nil, fmt.Errorf("error updating task with form data: %w", err)
 					}
 				}
-			} else {
-				// Validate that provided form data matches the form structure
-				if err := validateFormData(task.Form, requestData); err != nil {
-					pterm.Warning.Printf("Form data validation warning: %v\n", err)
-				}
+			} else if err := validateFormData(task.Form, input.requestData); err != nil {
+				pterm.Warning.Printf("Form data validation warning: %v\n", err)
 			}
-		} else if formDataFlagValue != "" {
-			// Form data was provided but task doesn't have form fields
-			// The data was already sent on task creation and will be ignored by the API
+		} else if input.formDataRaw != "" {
 			logging.Debugf("Form data was provided via --form-data flag, but this entitlement does not require form fields. The data was sent but may be ignored by the API.")
 		}
 
@@ -305,8 +334,25 @@ func runGet(cmd *cobra.Command, args []string) error {
 }
 
 func runDrop(cmd *cobra.Command, args []string) error {
-	return runTask(cmd, args, func(c client.C1Client, ctx context.Context, appId string, entitlementId string, userId string, justification string) (*shared.Task, error) {
-		accessRequest, err := c.CreateRevokeTask(ctx, appId, entitlementId, userId, justification)
+	_, _, v, err := cmdContext(cmd)
+	if err != nil {
+		return err
+	}
+
+	return runTask(cmd, args, func(c client.C1Client, ctx context.Context, appID string, entitlementID string, userID string, justification string) (*shared.Task, error) {
+		if dryRunEnabled(cmd) {
+			previewMutations(cmd, c, v, mutation{
+				Action: "Create access revocation request",
+				Target: fmt.Sprintf("app %s, entitlement %s", appID, entitlementID),
+				Details: []string{
+					nonEmptyDetail("Requested for user", userID),
+					nonEmptyDetail("Justification", justification),
+				},
+			})
+			return nil, nil
+		}
+
+		accessRequest, err := c.CreateRevokeTask(ctx, appID, entitlementID, userID, justification)
 		if err != nil {
 			return nil, err
 		}
@@ -391,10 +437,12 @@ func runTask(
 			return nil
 		}
 	}
-
 	task, err := run(c, ctx, appId, entitlementId, client.StringFromPtr(resp.UserID), justification)
 	if err != nil {
 		return err
+	}
+	if task == nil {
+		return nil
 	}
 
 	if v.GetBool(extraDetailsFlag) {

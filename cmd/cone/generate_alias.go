@@ -372,13 +372,12 @@ Filtering options:
 	cmd.Flags().Bool("force", false, "Override ALL existing aliases (including AWS permission sets)")
 	cmd.Flags().Bool("force-non-aws", false, "Override existing aliases for non-AWS entitlements")
 	cmd.Flags().Bool("skip-aws", false, "Skip AWS permission sets entirely")
-	cmd.Flags().Bool("dry-run", false, "Preview changes without making them")
 	cmd.Flags().StringSlice("resource-type", []string{}, "Only process entitlements with these resource types")
 	cmd.Flags().StringSlice("entitlement-id", []string{}, "Process only these entitlements")
 
 	cmd.MarkFlagsMutuallyExclusive("force", "force-non-aws")
 
-	return cmd
+	return supportsDryRun(cmd)
 }
 
 // generateAlias generates an alias using the given format and values.

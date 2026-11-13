@@ -22,6 +22,23 @@ $ docker pull public.ecr.aws/conductorone/cone:<version>
 
 To authenticate to Cone, run `cone login <tenant-name or tenant-url>`, passing in the name (such as `example.conductor.one`) or URL (such as `https://example.conductor.one`) of your ConductorOne instance and follow the prompts. 
 
+# Previewing task changes
+
+Before creating an access request or changing a task, add `--dry-run` to print
+the resolved tenant, active profile, and planned change without sending a
+mutation:
+
+```shell
+cone get <entitlement-alias> --justification "Project work" --dry-run
+cone drop <entitlement-alias> --justification "Role change" --dry-run
+cone task deny <task-id> --comment "Duplicate request" --dry-run
+```
+
+`--dry-run` is available for `get`, `drop`, `task approve`, `task deny`,
+`task comment`, `task escalate`, `generate-alias`, and `install-mcp`. It
+validates request inputs and may read tenant state, but does not send a tenant
+mutation.
+
 # Getting started with Cone
 
 Run `cone help` to see the full list of available Cone commands. 

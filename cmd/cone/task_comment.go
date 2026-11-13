@@ -16,7 +16,7 @@ func tasksCommentCmd() *cobra.Command {
 		RunE:  tasksCommentRun,
 	}
 
-	return cmd
+	return supportsDryRun(cmd)
 }
 
 func tasksCommentRun(cmd *cobra.Command, args []string) error {
@@ -31,6 +31,13 @@ func tasksCommentRun(cmd *cobra.Command, args []string) error {
 
 	taskId := args[0]
 	comment := args[1]
+	if previewMutations(cmd, c, v, mutation{
+		Action:  "Comment on task",
+		Target:  "task " + taskId,
+		Details: []string{nonEmptyDetail("Comment", comment)},
+	}) {
+		return nil
+	}
 
 	userResp, err := c.CommentOnTask(ctx, taskId, comment)
 	if err != nil {
